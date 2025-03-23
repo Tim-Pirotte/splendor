@@ -1,5 +1,5 @@
-const GROUPNUMBER = "XX";
-const GROUPTOKEN = "TOKEN";
+const GROUPNUMBER = "04";
+const GROUPTOKEN = "Group4-9486-769";
 
 const ERRORHANDLERSELECTOR = ".errormessages p";
 
