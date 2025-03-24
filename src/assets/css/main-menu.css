@@ -17,3 +17,23 @@ header {
 label {
     display: block;
 }
+
+.avatar-selector {
+    position: relative;
+    display: inline-block;
+    margin-left: 3rem;
+}
+
+.avatar-selector section {
+    background-color: whitesmoke;
+    position: absolute;
+}
+
+.avatar-selector section ul {
+    display: flex;
+    gap: 0.5rem;
+}
+
+button[type="submit"] {
+    margin-top: 1rem;
+}
