@@ -1,9 +1,13 @@
 body {
     background-color: white;
     height: 100%;
+}
+
+body > div {
+    margin-top: 5rem;
     display: flex;
-    flex-flow: column nowrap;
     align-items: center;
+    flex-flow: column nowrap;
 }
 
 header {
