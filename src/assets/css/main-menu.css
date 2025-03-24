@@ -1,3 +1,4 @@
+/* General styling for the body and main container */
 body {
     background-color: white;
     height: 100%;
@@ -10,14 +11,17 @@ body > div {
     flex-flow: column nowrap;
 }
 
+/* Splendor logo */
 header {
     margin: 2rem 0;
 }
 
+/* Form */
 label {
     display: block;
 }
 
+/* Avatar selector */
 .avatar-selector {
     position: relative;
     display: inline-block;
@@ -34,6 +38,7 @@ label {
     gap: 0.5rem;
 }
 
+/* Join and create buttons */
 button[type="submit"] {
     margin-top: 1rem;
 }
