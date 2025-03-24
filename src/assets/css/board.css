@@ -45,10 +45,6 @@ main {
     grid-area: reserved-cards;
 }
 
-.cards-in-deck li {
-    display: inline-block;
-}
-
 /* ASIDE */
 aside {
     display: flex;
@@ -72,4 +68,72 @@ section header {
     justify-content: flex-end;
     align-items: center;
     gap: 0.5rem;
+}
+
+/* DECKS */
+.decks > li > * {
+    display: inline-block;
+}
+
+.decks > li > ul {
+    width: 100%;
+}
+
+/* CARD */
+.card {
+    display: inline-block;
+    width: 25%;
+    aspect-ratio: 70 / 100;
+    position: relative;
+}
+
+.card ul {
+    display: flex;
+    justify-content: space-around;
+    position: absolute;
+    height: 34%;
+    width: 100%;
+    bottom: 0;
+}
+
+.card > p {
+    position: absolute;
+    left: 15.5%;
+    top: 4%;
+}
+
+.card li picture {
+    width: 100%;
+}
+
+.card li img {
+    width: 100%;
+}
+
+.card li p {
+    position: absolute;
+    left: 35%;
+    top: 35%;
+}
+
+.card li {
+    display: flex;
+    align-items: center;
+    width: 25%;
+    position: relative;
+}
+
+.card li > * {
+    position: absolute;
+}
+
+.card > picture:first-of-type img {
+    width: 100%;
+}
+
+.card > picture:last-of-type img {
+    width: 60%;
+    position: absolute;
+    left: 18%;
+    bottom: 34%;
 }
