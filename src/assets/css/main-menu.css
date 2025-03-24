@@ -1,3 +1,15 @@
 body {
-    background-color: lightgrey;
+    background-color: white;
+    height: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+}
+
+header {
+    margin: 2rem 0;
+}
+
+label {
+    display: block;
 }
