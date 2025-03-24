@@ -1,3 +1,5 @@
+/* GENERAL LAY-OUT */
+
 /* Sidebar and main content alignment */
 body {
     display: grid;
@@ -44,5 +46,22 @@ main {
 }
 
 .cards-in-deck li {
+    display: inline-block;
+}
+
+/* ASIDE */
+aside {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between
+}
+
+/* Player cards */
+.player-card header *, .player-card li * {
+    display: inline-block;
+}
+
+/* History */
+.history li * {
     display: inline-block;
 }
