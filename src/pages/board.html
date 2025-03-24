@@ -105,19 +105,6 @@
     </li>
 </template>
 
-<template id="numbered-item-template">
-    <li>
-        <p>1</p>
-    </li>
-</template>
-
-<template id="image-template">
-    <picture>
-        <source srcset="#" type="image/webp">
-        <img src="#" alt="" title="">
-    </picture>
-</template>
-
 <template id="take-tokens-history-template">
     <li>
         <p><strong></strong> takes</p>
@@ -260,29 +247,13 @@
         <!-- Player tokens -->
         <section>
             <h3>Tokens</h3>
-            <h4>09/10</h4>
+            <h4 class="total-tokens">09/10</h4>
             <ul>
                 <li>
                     <p>1</p>
                     <picture>
                         <source srcset="../assets/images/UI/tokens/gold_chip.webp">
                         <img src="../assets/images/fallback/UI/tokens/gold_chip.png" alt="Gold chip" title="Gold chip">
-                    </picture>
-                    <div>
-                        <div class="progress-bar"></div>
-                        <div class="progress-bar-end"></div>
-                    </div>
-                </li>
-                <li>
-                    <p>0</p>
-                    <picture>
-                        <source srcset="assets/images/UI/cards/red_card_small.webp">
-                        <img src="" alt="">
-                    </picture>
-                    <p>1</p>
-                    <picture>
-                        <source srcset="assets/images/UI/tokens/red_chip.webp">
-                        <img src="" alt="">
                     </picture>
                     <div>
                         <div class="progress-bar"></div>
@@ -296,30 +267,45 @@
 
 <template id="deck-template">
     <li>
-        <ul></ul>
+        <ul class="cards"></ul>
     </li>
 </template>
 
 <template id="card-template">
     <li>
-        <p>2</p>
-        <ul>
-        </ul>
+        <p class="points"></p>
+        <ul class="cost"></ul>
     </li>
 </template>
 
 <template id="token-template">
     <li>
-        <p>1</p>
-        <picture>
-            <source srcset="../assets/images/UI/tokens/gold_chip.webp">
-            <img src="../assets/images/fallback/UI/tokens/gold_chip.png" alt="Gold chip" title="Gold chip">
-        </picture>
+        <p class="token-amount"></p>
         <div>
             <div class="progress-bar"></div>
             <div class="progress-bar-end"></div>
         </div>
     </li>
+</template>
+
+<template id="numbered-item-template">
+    <li>
+        <p class="amount"></p>
+    </li>
+</template>
+
+<template id="image-template">
+    <picture>
+        <source srcset="#" type="image/webp">
+        <img src="#" alt="" title="">
+    </picture>
+</template>
+
+<template id="progress-bar-template">
+    <div>
+        <div class="progress-bar"></div>
+        <div class="progress-bar-end"></div>
+    </div>
 </template>
 
 </body>
