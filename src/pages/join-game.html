@@ -21,10 +21,10 @@
     </noscript>
 
     <header>
-        <!-- Back arrow -->
+        <img src="#" alt="back arrow">
         <h1>Join game</h1>
         <p>Mobley</p>
-        <!-- Profile avatar -->
+        <img src="#" alt="profile avatar">
     </header>
 
     <form action="#">
@@ -36,7 +36,7 @@
 
     <section>
         <h2>Available games</h2>
-        <form action="#">
+        <form id="filter-form" action="#">
             <label for="game-name">Game name:</label>
             <input id="game-name" type="text" name="game-name-holder" placeholder="E.g. Mobly's game">
 
@@ -51,20 +51,26 @@
 
         <ul>
             <li data-gameState="join">
-                <h3>Game 1</h3>
-                <p>Game id: 8932</p>
+                <div class="game-info">
+                    <h3>Game 1</h3>
+                    <p>Game id: 8932</p>
+                </div>
                 <p>3/4</p>
                 <button type="button">Join game</button>
             </li>
             <li data-gameState="join">
-                <h3>Game 18</h3>
-                <p>Game id: 1932</p>
+                <div class="game-info">
+                    <h3>Game 18</h3>
+                    <p>Game id: 1932</p>
+                </div>
                 <p>1/3</p>
                 <button type="button">Join game</button>
             </li>
             <li data-gameState="spectate">
-                <h3>Game 14</h3>
-                <p>Game id: 9932</p>
+                <div class="game-info">
+                    <h3>Game 14</h3>
+                    <p>Game id: 9932</p>
+                </div>
                 <p>2/2</p>
                 <button type="button">Spectate game</button>
             </li>

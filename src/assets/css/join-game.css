@@ -1,0 +1,61 @@
+/* This will be the style of the join-game.html file */
+
+
+header {
+    display: flex;
+    margin: 2rem 0;
+}
+
+form {
+    background-color: green;
+    margin: 0 auto;
+    text-align: center;
+}
+
+section{
+    background-color: rgb(108, 148, 108);
+    width: 60%;
+    text-align: center;
+    margin: 0 auto;
+    padding: 3rem 0;
+}
+
+section h2 {
+    margin-bottom: 2rem;
+}
+
+section form {
+    margin-bottom: 2.4rem;
+}
+
+button {
+    width: 8rem; /* Added a fixed with because otherwise the flex would handle the spectate different than the join so the numbers of players are not aligned wel*/
+}
+
+label[for="game-id"]{
+    margin-right: 1.2rem;
+}
+
+#game-id {
+    margin-right: 2rem;
+}
+
+label[for="game-name"]{
+    margin-right: 1.2rem;
+}
+
+#game-name {
+    margin-right: 2rem;
+}
+
+li {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    padding: 1.2rem 0;
+}
+
+li h3 {
+    margin-bottom: 0.4rem;
+}
+
