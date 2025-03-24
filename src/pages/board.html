@@ -14,13 +14,16 @@
     support.
 </noscript>
 
+<!-- Sidebar -->
 <aside>
+    <!-- Other players -->
     <ol>
         <li>
             <header>
                 <h3>Alice</h3>
                 <h4>06 pts.</h4>
             </header>
+            <!-- Tokens -->
             <ul>
                 <li>
                     <p>1</p>
@@ -31,6 +34,7 @@
                     </picture>
                 </li>
             </ul>
+            <!-- Bought cards -->
             <ul>
                 <li>
                     <p>1</p>
@@ -40,6 +44,7 @@
                     </picture>
                 </li>
             </ul>
+            <!-- Reserved cards -->
             <ul>
                 <li>
                     <p>1</p>
@@ -51,6 +56,7 @@
             </ul>
         </li>
     </ol>
+    <!-- History -->
     <ol>
         <li>Game starts</li>
         <li>Round 1 starts</li>
@@ -88,120 +94,19 @@
 <template id="other-player-card-template">
     <li>
         <header>
-            <h3>Alice</h3>
-            <h4>06 pts.</h4>
+            <h3 class="name"></h3>
+            <h4 class="points"></h4>
         </header>
-        <ul>
-            <li>
-                <p>1</p>
-                <picture>
-                    <source srcset="../assets/images/UI/tokens/red_chip.webp">
-                    <img src="../assets/images/fallback/UI/tokens/red_chip.png" alt="Red chip" title="Red chip">
-                </picture>
-            </li>
-            <li>
-                <p>1</p>
-                <picture>
-                    <source srcset="../assets/images/UI/tokens/black_chip.webp">
-                    <img src="../assets/images/fallback/UI/tokens/black_chip.png" alt="Black chip" title="Black chip">
-                </picture>
-            </li>
-            <li>
-                <p>1</p>
-                <picture>
-                    <source srcset="../assets/images/UI/tokens/blue_chip.webp">
-                    <img src="../assets/images/fallback/UI/tokens/blue_chip.png" alt="Blue chip" title="Blue chip">
-                </picture>
-            </li>
-            <li>
-                <p>1</p>
-                <picture>
-                    <source srcset="../assets/images/UI/tokens/white_chip.webp">
-                    <img src="../assets/images/fallback/UI/tokens/white_chip.png" alt="White chip">
-                </picture>
-            </li>
-            <li>
-                <p>1</p>
-                <picture>
-                    <source srcset="../assets/images/UI/tokens/green_chip.webp">
-                    <img src="../assets/images/fallback/UI/tokens/green_chip.png" alt="Green chip">
-                </picture>
-            </li>
-            <li>
-                <p>1</p>
-                <picture>
-                    <source srcset="../assets/images/UI/tokens/gold_chip.webp">
-                    <img src="../assets/images/fallback/UI/tokens/gold_chip.png" alt="Gold chip">
-                </picture>
-            </li>
-        </ul>
-        <ul>
-            <li>
-                <p>1</p>
-                <picture>
-                    <source srcset="../assets/images/UI/cards/red_card_small.webp">
-                    <img src="../assets/images/fallback/UI/cards/red_card_small.png" alt="Red card">
-                </picture>
-            </li>
-            <li>
-                <p>1</p>
-                <picture>
-                    <source srcset="../assets/images/UI/cards/black_card_small.webp">
-                    <img src="../assets/images/fallback/UI/cards/black_card_small.png" alt="Black card">
-                </picture>
-            </li>
-            <li>
-                <p>1</p>
-                <picture>
-                    <source srcset="../assets/images/UI/cards/blue_card_small.webp">
-                    <img src="../assets/images/fallback/UI/cards/blue_card_small.png" alt="Blue card">
-                </picture>
-            </li>
-            <li>
-                <p>1</p>
-                <picture>
-                    <source srcset="../assets/images/UI/cards/white_card_small.webp">
-                    <img src="../assets/images/fallback/UI/cards/white_card_small.png" alt="White card">
-                </picture>
-            </li>
-            <li>
-                <p>1</p>
-                <picture>
-                    <source srcset="../assets/images/UI/cards/green_card_small.webp">
-                    <img src="../assets/images/fallback/UI/cards/green_card_small.png" alt="Green card">
-                </picture>
-            </li>
-        </ul>
-        <ul>
-            <li>
-                <p>1</p>
-                <picture>
-                    <source srcset="../assets/images/cards/empty/red_empty_card.webp">
-                    <img src="../assets/images/fallback/cards/empty/red_empty_card.png" alt="Red card">
-                </picture>
-            </li>
-        </ul>
+        <ul class="tokens"></ul>
+        <ul class="cards"></ul>
+        <ul class="reserved"></ul>
     </li>
-</template>
-
-<template>
-    <picture>
-        <source srcset="#" type="image/webp">
-        <img src="#" alt="Avatar" title="Avatar">
-    </picture>
 </template>
 
 <template id="numbered-item-template">
     <li>
         <p>1</p>
     </li>
-</template>
-
-<template id="small-icon-template">
-    <picture>
-        <source srcset="#" type="image/webp">
-        <img src="#" alt="" title="">
-    </picture>
 </template>
 
 <template id="image-template">
@@ -237,20 +142,183 @@
     </li>
 </template>
 
-<header>
-    <button type="button">
+<section>
+    <header>
+        <button type="button">
+            <picture>
+                <source srcset="../assets/images/UI/sound_off.webp" type="image/webp">
+                <img src="../assets/images/fallback/UI/sound_off.png" alt="Toggle sound">
+            </picture>
+        </button>
+        <button type="button">Forfeit button</button>
+        <h2>Mobly</h2>
         <picture>
-            <source srcset="../assets/images/UI/sound_off.webp" type="image/webp">
-            <img src="../assets/images/fallback/UI/sound_off.png" alt="Toggle sound">
+            <source srcset="../assets/images/UI/empty_icon.webp" type="image/webp">
+            <img src="../assets/images/fallback/UI/empty_icon.png" alt="Avatar selector">
         </picture>
-    </button>
-    <button type="button">Forfeit button</button>
-    <h2>Mobly</h2>
-    <picture>
-        <source srcset="../assets/images/UI/empty_icon.webp" type="image/webp">
-        <img src="../assets/images/fallback/UI/empty_icon.png" alt="Avatar selector">
-    </picture>
-</header>
+    </header>
+    <main>
+        <!-- Decks -->
+        <ul>
+            <li>
+                <p>Image of deck</p>
+                <!-- Cards in deck -->
+                <ul>
+                    <li>
+                        <p>2</p>
+                        <ul>
+                            <li>
+                                <picture>
+                                    <source srcset="../assets/images/UI/tokens/blue_chip.webp">
+                                    <img src="../assets/images/fallback/UI/tokens/blue_chip.png" alt="Blue chip"
+                                         title="Blue chip">
+                                </picture>
+                                <p>1</p>
+                            </li>
+                        </ul>
+                        <picture>
+                            <source srcset="../assets/images/cards/empty/black_empty_card.webp">
+                            <img src="../assets/images/fallback/cards/empty/black_empty_card.png" alt="Black card"
+                                 title="Black card">
+                        </picture>
+                        <picture>
+                            <source srcset="../assets/images/cards/illustrations/camel.webp">
+                            <img src="../assets/images/fallback/cards/illustrations/camel.png" alt="Camel illustration"
+                                 title="Camel illustration">
+                        </picture>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <!-- Board tokens -->
+        <ul>
+            <li>
+                <p>3/7</p>
+                <picture>
+                    <source srcset="../assets/images/UI/tokens/blue_chip.webp">
+                    <img src="../assets/images/fallback/UI/tokens/blue_chip.png" alt="Blue chip" title="Blue chip">
+                </picture>
+            </li>
+        </ul>
+        <!-- List of nobles -->
+        <ul>
+            <li>
+                <picture>
+                    <source srcset="assets/images/nobles/noble_border.webp">
+                    <img src="" alt="">
+                </picture>
+                <!-- List of cards needed for the noble -->
+                <ul>
+                    <li>
+                        <p>2</p>
+                        <picture>
+                            <source srcset="assets/images/UI/tokens/red_chip.webp">
+                            <img src="" alt="">
+                        </picture>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <!-- Player points -->
+        <section>
+            <h3>Points</h3>
+            <div>
+                <div class="progress-bar"></div>
+                <div class="progress-bar-end"></div>
+            </div>
+            <p>09/15</p>
+        </section>
+        <!-- Reserved cards -->
+        <section>
+            <h3>Reserved</h3>
+            <ul>
+                <li>
+                    <p>2</p>
+                    <ul>
+                        <li>
+                            <picture>
+                                <source srcset="assets/images/UI/tokens/red_chip.webp">
+                                <img src="" alt="">
+                            </picture>
+                            <p>1</p>
+                        </li>
+                    </ul>
+                    <picture>
+                        <source srcset="assets/images/cards/empty/blue_empty_card.webp">
+                        <img src="" alt="">
+                    </picture>
+                    <picture>
+                        <source srcset="../assets/images/cards/illustrations/camel.webp">
+                        <img src="../assets/images/fallback/cards/illustrations/camel.png" alt="Camel illustration"
+                             title="Camel illustration">
+                    </picture>
+                </li>
+            </ul>
+        </section>
+        <!-- Player tokens -->
+        <section>
+            <h3>Tokens</h3>
+            <h4>09/10</h4>
+            <ul>
+                <li>
+                    <p>1</p>
+                    <picture>
+                        <source srcset="../assets/images/UI/tokens/gold_chip.webp">
+                        <img src="../assets/images/fallback/UI/tokens/gold_chip.png" alt="Gold chip" title="Gold chip">
+                    </picture>
+                    <div>
+                        <div class="progress-bar"></div>
+                        <div class="progress-bar-end"></div>
+                    </div>
+                </li>
+                <li>
+                    <p>0</p>
+                    <picture>
+                        <source srcset="assets/images/UI/cards/red_card_small.webp">
+                        <img src="" alt="">
+                    </picture>
+                    <p>1</p>
+                    <picture>
+                        <source srcset="assets/images/UI/tokens/red_chip.webp">
+                        <img src="" alt="">
+                    </picture>
+                    <div>
+                        <div class="progress-bar"></div>
+                        <div class="progress-bar-end"></div>
+                    </div>
+                </li>
+            </ul>
+        </section>
+    </main>
+</section>
+
+<template id="deck-template">
+    <li>
+        <ul></ul>
+    </li>
+</template>
+
+<template id="card-template">
+    <li>
+        <p>2</p>
+        <ul>
+        </ul>
+    </li>
+</template>
+
+<template id="token-template">
+    <li>
+        <p>1</p>
+        <picture>
+            <source srcset="../assets/images/UI/tokens/gold_chip.webp">
+            <img src="../assets/images/fallback/UI/tokens/gold_chip.png" alt="Gold chip" title="Gold chip">
+        </picture>
+        <div>
+            <div class="progress-bar"></div>
+            <div class="progress-bar-end"></div>
+        </div>
+    </li>
+</template>
 
 </body>
 </html>
