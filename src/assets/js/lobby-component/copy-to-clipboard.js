@@ -5,6 +5,5 @@ function init(){
 }
 
 function copyGameIdToClipboard(){
-    const gameId = document.querySelector("#game-id").innerText;
-    navigator.clipboard.writeText(gameId);
+    navigator.clipboard.writeText(document.querySelector("#game-id").innerText);
 }
