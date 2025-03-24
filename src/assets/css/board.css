@@ -1,0 +1,48 @@
+/* Sidebar and main content alignment */
+body {
+    display: grid;
+    grid-template-columns: 20% 80%;
+}
+
+/* Main content alignment */
+body > section {
+    display: grid;
+    grid-template-rows: 10% 90%;
+}
+
+main {
+    display: grid;
+    grid-template-columns: 60% 20% 20%;
+    grid-template-rows: 60% 20% 20%;
+    grid-template-areas:    "decks board-tokens nobles"
+                            "player-points player-tokens player-tokens"
+                            "reserved-cards player-tokens player-tokens";
+}
+
+.decks {
+    grid-area: decks;
+}
+
+.board-tokens {
+    grid-area: board-tokens;
+}
+
+.nobles {
+    grid-area: nobles;
+}
+
+.player-points {
+    grid-area: player-points;
+}
+
+.player-tokens {
+    grid-area: player-tokens;
+}
+
+.reserved-cards {
+    grid-area: reserved-cards;
+}
+
+.cards-in-deck li {
+    display: inline-block;
+}
