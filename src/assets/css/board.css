@@ -77,11 +77,11 @@ section header {
 
 .decks > li > ul {
     width: 75%;
+    display: flex;
 }
 
 /* CARD */
 .card {
-    display: inline-block;
     width: 20%;
     aspect-ratio: 70 / 100;
     position: relative;
@@ -136,4 +136,9 @@ section header {
     position: absolute;
     left: 18%;
     bottom: 34%;
+}
+
+/* DECK CARDS */
+.decks > li > picture img {
+    width: 90%;
 }
