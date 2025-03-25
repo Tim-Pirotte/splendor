@@ -68,3 +68,8 @@ footer .sound-button {
     background-color: transparent;
     border: none;
 }
+
+footer picture {
+    width: 3rem;
+    height: 3rem;
+}
