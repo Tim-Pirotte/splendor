@@ -1,5 +1,5 @@
 import {loadFromStorage, saveToStorage} from "../data-connector/local-storage-abstractor.js";
-import {renderSelectableAvatars, renderSelectedAvatars} from "./renderer.js";
+import {renderSelectedAvatars} from "./renderer.js";
 
 function loadUsername() {
     const $username = document.querySelector("#username");
