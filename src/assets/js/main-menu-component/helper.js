@@ -1,4 +1,5 @@
 import {loadFromStorage, saveToStorage} from "../data-connector/local-storage-abstractor.js";
+import {renderSelectableAvatars, renderSelectedAvatars} from "./renderer.js";
 
 function loadUsername() {
     const $username = document.querySelector("#username");
@@ -9,7 +10,11 @@ function loadUsername() {
     }
 }
 
-function loadAvatar() {}
+function loadAvatar() {
+    const avatar = loadFromStorage("avatar");
+
+    renderSelectedAvatars(avatar);
+}
 
 function storeUsername(e) {
     e.preventDefault();
@@ -23,4 +28,13 @@ function storeUsername(e) {
     }
 }
 
-export {loadUsername, loadAvatar, storeUsername};
+function storeAvatar(e) {
+    e.preventDefault();
+
+    const avatar = e.target.closest("img").getAttribute("title").valueOf();
+
+    saveToStorage("avatar", avatar);
+    renderSelectedAvatars(avatar);
+}
+
+export {loadUsername, loadAvatar, storeUsername, storeAvatar};

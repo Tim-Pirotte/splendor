@@ -1,18 +1,33 @@
 import {avatars} from "./data.js";
 
 function renderSelectableAvatars() {
-    const $avatars = document.querySelector("section");
-    const $template = document.querySelector("#avatar-template")
+    const $template = document.querySelector("#avatar-template");
+    const $container = document.querySelector("section");
 
-    $avatars.innerHTML = "";
+    document.querySelectorAll("li")
+            .forEach(li => li.outerHTML = "");
+
     for (const avatar of avatars) {
-        const $picture = $template.content.firstElementChild.cloneNode(true);
-        $picture.querySelector("source").setAttribute("srcset", `./assets/images/avatars/${avatar}.webp`);
-        $picture.querySelector("img").setAttribute("src", `./assets/fallback/avatars/${avatar}.png`);
-        $picture.querySelector("img").setAttribute("alt", `${avatar}`);
-        $picture.querySelector("img").setAttribute("title", `${avatar}.`);
-        $avatars.insertAdjacentHTML("beforeend", $picture.outerHTML);
+        renderAvatar($template, $container, avatar);
     }
 }
 
-export {renderSelectableAvatars};
+function renderSelectedAvatars(avatar) {
+    const $template = document.querySelector("#avatar-template");
+    const $container = document.querySelector(".avatar-selector button");
+
+    $container.innerHTML= "";
+
+    renderAvatar($template, $container, avatar);
+}
+
+function renderAvatar($template, $container, avatar) {
+    const $picture = $template.content.firstElementChild.cloneNode(true);
+    $picture.querySelector("source").setAttribute("srcset", `./assets/images/avatars/${avatar}.webp`);
+    $picture.querySelector("img").setAttribute("src", `./assets/images/fallback/avatars/${avatar}.png`);
+    $picture.querySelector("img").setAttribute("alt", `${avatar}`);
+    $picture.querySelector("img").setAttribute("title", `${avatar}`);
+    $container.insertAdjacentHTML("beforeend", $picture.outerHTML);
+}
+
+export {renderSelectableAvatars, renderSelectedAvatars};
