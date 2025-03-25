@@ -23,14 +23,6 @@ main {
 }
 
 footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    align-self: flex-end;
     margin: 0 1rem 1rem 1rem;
-}
-
-footer div:first-child {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
 }
