@@ -52,7 +52,8 @@ main {
 aside {
     display: flex;
     flex-direction: column;
-    justify-content: space-between
+    justify-content: space-between;
+    padding: 0.5rem;
 }
 
 /* Player cards */
@@ -71,6 +72,10 @@ section header {
     justify-content: flex-end;
     align-items: center;
     gap: 0.5rem;
+}
+
+section header picture {
+    padding-right: 1rem;
 }
 
 /* DECKS */
