@@ -15,6 +15,7 @@ function renderPage(gameData) {
   renderClientUser();
   renderOtherPlayers(gameData.players);
   renderCards(gameData.market);
+  renderCurrentPlayer(gameData.players);
 }
 
 function renderClientUser() {
@@ -22,19 +23,23 @@ function renderClientUser() {
 }
 
 function renderOtherPlayers(otherPlayers) {
+  const currentPlayerName = loadFromStorage("username");
+
   const $otherPlayerContainer = document.querySelector(".other-players");
   const $template = document.querySelector("#other-player-card-template");
 
   for (const otherPlayer of otherPlayers) {
-    const $playerCard = $template.content.firstElementChild.cloneNode(true);
-    $playerCard.querySelector(".name").textContent = otherPlayer.name;
-    $playerCard.querySelector(".points").textContent = otherPlayer.totalPrestigePoints + " pts.";
+    if (otherPlayer.name !== currentPlayerName) {
+      const $playerCard = $template.content.firstElementChild.cloneNode(true);
+      $playerCard.querySelector(".name").textContent = otherPlayer.name;
+      $playerCard.querySelector(".points").textContent = otherPlayer.totalPrestigePoints + " pts.";
 
-    renderTokenList($playerCard.querySelector(".tokens"), otherPlayer.tokens);
-    renderCardList($playerCard.querySelector(".cards"), otherPlayer.bonuses);
-    renderReservedList($playerCard.querySelector(".reserved"), otherPlayer.reserve);
+      renderTokenList($playerCard.querySelector(".tokens"), otherPlayer.tokens);
+      renderCardList($playerCard.querySelector(".cards"), otherPlayer.bonuses);
+      renderReservedList($playerCard.querySelector(".reserved"), otherPlayer.reserve);
 
-    $otherPlayerContainer.appendChild($playerCard);
+      $otherPlayerContainer.appendChild($playerCard);
+    }
   }
 }
 
@@ -96,6 +101,15 @@ function renderCards(market) {
       insertImageInto($card, "cards/illustrations/camel");
 
       $currentDeck.appendChild($card);
+    }
+  }
+}
+
+function renderCurrentPlayer(players) {
+  const currentPlayerName = loadFromStorage("username");
+  for (const player of players) {
+    if (player.name === currentPlayerName) {
+      document.querySelector(".player-points p").textContent = player.totalPrestigePoints.toString().padStart(2, '0') + "/15";
     }
   }
 }

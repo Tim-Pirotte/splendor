@@ -42,6 +42,42 @@ const dummyData = {
       }
     },
     {
+      "name": "Mobali",
+      "tokens": {
+        "Diamond": 2
+      },
+      "reserve": [
+        {
+          "name": "Obsidian Workshop",
+          "level": 1,
+          "cost": {
+            "Emerald": 2,
+            "Diamond": 2
+          },
+          "bonus": "Onyx",
+          "prestigePoints": 0
+        }
+      ],
+      "built": [
+        {
+          "name": "Obsidian Workshop",
+          "level": 1,
+          "cost": {
+            "Emerald": 2,
+            "Diamond": 2
+          },
+          "bonus": "Onyx",
+          "prestigePoints": 0
+        }
+      ],
+      "nobles": [],
+      "totalPrestigePoints": 0,
+      "bonuses": {
+        "Onyx": 1,
+        "Ruby": 2
+      }
+    },
+    {
       "name": "Bob",
       "tokens": {
         "Ruby": 2
