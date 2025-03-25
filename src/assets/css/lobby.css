@@ -1,7 +1,4 @@
 /* general */
-picture {
-    vertical-align: middle;
-}
 
 button {
     vertical-align: middle;
@@ -10,7 +7,7 @@ button {
     border-radius: 0.2rem;
     border: none;
     height: 2.5rem;
-    width: 10rem
+    width: 10rem;
 }
 
 body {
@@ -37,9 +34,9 @@ h1 {
     margin-bottom: 1.5rem;
 }
 
-h2 {
+h3 {
     display: inline-block;
-    font-size: 2.5em;
+    font-size: 2.5rem;
     margin-bottom: 0.5rem;
 }
 
@@ -57,6 +54,7 @@ header ion-icon {
     transform: translateX(-50%);
     margin-top: 3rem;
 }
+
 #start-game-button {
     position: absolute;
     top: 50%;
@@ -68,13 +66,10 @@ header ion-icon {
     width: fit-content;
     margin: 0 auto 0.5rem auto;
 }
+
 main ul {
     width: 100%;
     height: 100%;
-}
-ul#player {
-    padding: 0;
-    margin: 0;
 }
 
 #players li {
@@ -87,6 +82,7 @@ ul#player {
 #players li:nth-child(3) { bottom: -15%; left: 50%; transform: translateX(-50%); }
 #players li:nth-child(4) { left: 5%; top: 50%; transform: translateY(-50%); }
  /* footer */
+
 footer {
     display: flex;
     justify-content: space-between;
@@ -95,7 +91,11 @@ footer {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
 }
+
 footer #Toggle-sound-button{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     background-color: transparent;
     border: none;
 }
