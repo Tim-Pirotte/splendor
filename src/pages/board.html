@@ -61,6 +61,17 @@
                 </li>
             </ul>
         </li>
+        <template id="other-player-card-template">
+            <li class="player-card">
+                <header>
+                    <h3 class="name"></h3>
+                    <h4 class="points"></h4>
+                </header>
+                <ul class="tokens"></ul>
+                <ul class="cards"></ul>
+                <ul class="reserved"></ul>
+            </li>
+        </template>
     </ol>
     <!-- History -->
     <ol class="history">
@@ -94,46 +105,33 @@
             </picture>
             <p>card</p>
         </li>
+        <template id="take-tokens-history-template">
+            <li>
+                <p><strong></strong> takes</p>
+            </li>
+        </template>
+
+        <template id="buy-card-history-template">
+            <li>
+                <p><strong></strong> buys a </p>
+                <p>card</p>
+            </li>
+        </template>
+
+        <template id="reserve-card-history-template">
+            <li>
+                <p><strong></strong> reserves a</p>
+                <p>card</p>
+            </li>
+        </template>
+
+        <template id="receive-noble-history-template">
+            <li>
+                <p><strong></strong> receives a noble</p>
+            </li>
+        </template>
     </ol>
 </aside>
-
-<template id="other-player-card-template">
-    <li class="player-card">
-        <header>
-            <h3 class="name"></h3>
-            <h4 class="points"></h4>
-        </header>
-        <ul class="tokens"></ul>
-        <ul class="cards"></ul>
-        <ul class="reserved"></ul>
-    </li>
-</template>
-
-<template id="take-tokens-history-template">
-    <li>
-        <p><strong></strong> takes</p>
-    </li>
-</template>
-
-<template id="buy-card-history-template">
-    <li>
-        <p><strong></strong> buys a </p>
-        <p>card</p>
-    </li>
-</template>
-
-<template id="reserve-card-history-template">
-    <li>
-        <p><strong></strong> reserves a</p>
-        <p>card</p>
-    </li>
-</template>
-
-<template id="receive-noble-history-template">
-    <li>
-        <p><strong></strong> receives a noble</p>
-    </li>
-</template>
 
 <section>
     <header class="top-bar">
