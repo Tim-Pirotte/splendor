@@ -1,4 +1,4 @@
-import {loadFromStorage} from "../data-connector/local-storage-abstractor.js";
+import {loadFromStorage, saveToStorage} from "../data-connector/local-storage-abstractor.js";
 
 function init() {
     loadUsername();
@@ -15,9 +15,10 @@ function loadUsername() {
 function storeUsername(e) {
     e.preventDefault()
 
-    const valueList = ["join-game", "create-game"];
-    if (valueList.includes(e.target.value)) {
-        console.log("hello world!");
+    const username = document.querySelector("#username").value;
+    if (username !== "") {
+        saveToStorage("username", username);
+        window.location.href = `../../../pages/${e.target.value}.html`;
     }
 }
 
