@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author"
+          content="Niels Clarysse, Alexander Engelrelst, Tristan Joos, Arne Persyn, Tim Pirotte, Niels Ryserhove">
+
+    <title>Splendor - In game</title>
+
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+
+    <link rel="stylesheet" href="../assets/css/reset.css">
+    <link rel="stylesheet" href="../assets/css/screen.css">
+    <link rel="stylesheet" href="../assets/css/board.css">
+
+    <script src="../assets/js/board/board.js"></script>
+</head>
+<body>
+<noscript>Javascript is required for this experience to work properly. Please enable it or use a modern browser with
+    support.
+</noscript>
+<!-- Sidebar -->
+<aside>
+    <!-- Other players -->
+    <ol>
+        <li class="player-card">
+            <header>
+                <h3>Alice</h3>
+                <h4>06 pts.</h4>
+            </header>
+            <!-- Tokens -->
+            <ul>
+                <li>
+                    <p>1</p>
+                    <picture>
+                        <source srcset="../assets/images/UI/tokens/black_chip.webp">
+                        <img src="../assets/images/fallback/UI/tokens/black_chip.png" alt="Black chip"
+                             title="Black chip">
+                    </picture>
+                </li>
+            </ul>
+            <!-- Bought cards -->
+            <ul>
+                <li>
+                    <p>1</p>
+                    <picture>
+                        <source srcset="../assets/images/UI/cards/red_card_small.webp">
+                        <img src="../assets/images/fallback/UI/cards/red_card_small.png" alt="Red card" title="Red  card">
+                    </picture>
+                </li>
+            </ul>
+            <!-- Reserved cards -->
+            <ul>
+                <li>
+                    <p>1</p>
+                    <picture>
+                        <source srcset="../assets/images/cards/empty/red_empty_card.webp">
+                        <img src="../assets/images/fallback/cards/empty/red_empty_card.png" alt="Red card" title="Red card">
+                    </picture>
+                </li>
+            </ul>
+        </li>
+        <template id="other-player-card-template">
+            <li class="player-card">
+                <header>
+                    <h3 class="name"></h3>
+                    <h4 class="points"></h4>
+                </header>
+                <ul class="tokens"></ul>
+                <ul class="cards"></ul>
+                <ul class="reserved"></ul>
+            </li>
+        </template>
+    </ol>
+    <!-- History -->
+    <ol class="history">
+        <li>Game starts</li>
+        <li>Round 1 starts</li>
+        <li>
+            <p><strong>Alice</strong> takes</p>
+            <picture>
+                <source srcset="../assets/images/UI/tokens/red_chip.webp">
+                <img src="../assets/images/fallback/UI/tokens/red_chip.png" alt="Red Chip" title="Red chip">
+            </picture>
+            <p>,</p>
+            <picture>
+                <source srcset="../assets/images/UI/tokens/blue_chip.webp">
+                <img src="../assets/images/fallback/UI/tokens/blue_chip.png" alt="Blue chip" title="Blue chip">
+            </picture>
+        </li>
+        <li>
+            <p><strong>Bob</strong> buys a </p>
+            <picture>
+                <source srcset="../assets/images/UI/cards/blue_card_small.webp">
+                <img src="../assets/images/fallback/UI/cards/blue_card_small.png" alt="Blue card" title="Blue card">
+            </picture>
+            <p>card</p>
+        </li>
+        <li>
+            <p><strong>You</strong> reserve a</p>
+            <picture>
+                <source srcset="../assets/images/UI/cards/green_card_small.webp">
+                <img src="../assets/images/fallback/UI/cards/green_card_small.png" alt="Green card" title="Green card">
+            </picture>
+            <p>card</p>
+        </li>
+        <template id="take-tokens-history-template">
+            <li>
+                <p><strong></strong> takes</p>
+            </li>
+        </template>
+
+        <template id="buy-card-history-template">
+            <li>
+                <p><strong></strong> buys a </p>
+                <p>card</p>
+            </li>
+        </template>
+
+        <template id="reserve-card-history-template">
+            <li>
+                <p><strong></strong> reserves a</p>
+                <p>card</p>
+            </li>
+        </template>
+
+        <template id="receive-noble-history-template">
+            <li>
+                <p><strong></strong> receives a noble</p>
+            </li>
+        </template>
+    </ol>
+</aside>
+
+<section>
+    <header class="top-bar">
+        <button type="button">
+            <picture>
+                <source srcset="../assets/images/UI/sound_off.webp" type="image/webp">
+                <img src="../assets/images/fallback/UI/sound_off.png" alt="Toggle sound" title="Toggle sound">
+            </picture>
+        </button>
+        <button type="button">Forfeit button</button>
+        <h2>Mobly</h2>
+        <picture>
+            <source srcset="../assets/images/UI/empty_icon.webp" type="image/webp">
+            <img src="../assets/images/fallback/UI/empty_icon.png" alt="Avatar selector" title="Avatar selector">
+        </picture>
+    </header>
+    <div class="main">
+        <!-- Decks -->
+        <ul class="decks">
+            <template id="deck-template">
+                <li>
+                    <ul class="cards"></ul>
+                </li>
+            </template>
+            <li>
+                <picture>
+                    <source srcset="../assets/images/cards/empty/deck_level_1_top.webp" type="image/webp">
+                    <img src="../assets/images/fallback/cards/empty/deck_level_2_top.png" alt="Deck level 1" title="Deck level 1">
+                </picture>
+                <!-- Cards in deck -->
+                <ul class="cards-in-deck">
+                    <li class="card">
+                        <p>2</p>
+                        <ul>
+                            <li>
+                                <picture>
+                                    <source srcset="../assets/images/UI/tokens/blue_chip.webp">
+                                    <img src="../assets/images/fallback/UI/tokens/blue_chip.png" alt="Blue chip"
+                                         title="Blue chip">
+                                </picture>
+                                <p>1</p>
+                            </li>
+                        </ul>
+                        <picture>
+                            <source srcset="../assets/images/cards/empty/black_empty_card.webp">
+                            <img src="../assets/images/fallback/cards/empty/black_empty_card.png" alt="Black card"
+                                 title="Black card">
+                        </picture>
+                        <picture>
+                            <source srcset="../assets/images/cards/illustrations/camel.webp">
+                            <img src="../assets/images/fallback/cards/illustrations/camel.png" alt="Camel illustration"
+                                 title="Camel illustration">
+                        </picture>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <picture>
+                    <source srcset="../assets/images/cards/empty/deck_level_2_top.webp" type="image/webp">
+                    <img src="../assets/images/fallback/cards/empty/deck_level_2_top.png" alt="Deck level 2" title="Deck level 2">
+                </picture>
+                <!-- Cards in deck -->
+                <ul class="cards-in-deck">
+
+                </ul>
+            </li>
+            <li>
+                <picture>
+                    <source srcset="../assets/images/cards/empty/deck_level_3_top.webp" type="image/webp">
+                    <img src="../assets/images/fallback/cards/empty/deck_level_3_top.png" alt="Deck level 3" title="Deck level 3">
+                </picture>
+                <!-- Cards in deck -->
+
+            </li>
+        </ul>
+        <!-- Board tokens -->
+        <ul class="board-tokens">
+            <li>
+                <p>3/7</p>
+                <picture>
+                    <source srcset="../assets/images/UI/tokens/blue_chip.webp">
+                    <img src="../assets/images/fallback/UI/tokens/blue_chip.png" alt="Blue chip" title="Blue chip">
+                </picture>
+            </li>
+        </ul>
+        <!-- Nobles -->
+        <ul class="nobles">
+            <li>
+                <picture>
+                    <source srcset="../assets/images/nobles/noble_border.webp">
+                    <img src="#" alt="Noble (+3 points)" title="Noble (+3 points)">
+                </picture>
+            </li>
+        </ul>
+        <!-- Timer -->
+        <progress></progress>
+        <!-- Player points -->
+        <section class="player-points">
+            <h3>Points</h3>
+            <div class="progress-bar-container">
+                <div class="progress-bar"></div>
+            </div>
+            <p>09/15</p>
+        </section>
+        <!-- Reserved cards -->
+        <section class="reserved-cards">
+            <h3>Reserved</h3>
+            <ul>
+                <li class="card">
+                    <p>2</p>
+                    <ul>
+                        <li>
+                            <picture>
+                                <source srcset="../assets/images/UI/tokens/red_chip.webp">
+                                <img src="#" alt="Red chip">
+                            </picture>
+                            <p>1</p>
+                        </li>
+                    </ul>
+                    <picture>
+                        <source srcset="../assets/images/cards/empty/blue_empty_card.webp">
+                        <img src="#" alt="Blue card" title="Blue card">
+                    </picture>
+                    <picture>
+                        <source srcset="../assets/images/cards/illustrations/camel.webp">
+                        <img src="../assets/images/fallback/cards/illustrations/camel.png" alt="Camel illustration"
+                             title="Camel illustration">
+                    </picture>
+                </li>
+            </ul>
+        </section>
+        <!-- Player tokens -->
+        <section class="player-tokens">
+            <header>
+                <h3>Tokens:</h3>
+                <h4 class="total-tokens">09/10</h4>
+            </header>
+            <ul>
+                <li>
+                    <p>1</p>
+                    <picture>
+                        <source srcset="../assets/images/UI/tokens/gold_chip.webp">
+                        <img src="../assets/images/fallback/UI/tokens/gold_chip.png" alt="Gold chip" title="Gold chip">
+                    </picture>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar"></div>
+                    </div>
+                </li>
+                <li>
+                    <p>1</p>
+                    <picture>
+                        <source srcset="../assets/images/UI/cards/red_card_small.webp">
+                        <img src="../assets/images/fallback/UI/cards/red_card_small.png" alt="Gold chip" title="Gold chip">
+                    </picture>
+                    <p>0</p>
+                    <picture>
+                        <source srcset="../assets/images/UI/tokens/red_chip.webp">
+                        <img src="../assets/images/fallback/UI/tokens/red_chip.png" alt="Gold chip" title="Gold chip">
+                    </picture>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar"></div>
+                    </div>
+                </li>
+            </ul>
+        </section>
+        <button type="button" class="action-button">Action</button>
+    </div>
+</section>
+
+<!-- UL is to fix sonar issues-->
+<ul>
+    <template id="card-template">
+        <li class="card">
+            <p class="points"></p>
+            <ul class="cost"></ul>
+        </li>
+    </template>
+</ul>
+
+<!-- UL is to fix sonar issues-->
+<ul>
+    <template id="numbered-item-template">
+        <li>
+            <p class="amount"></p>
+        </li>
+    </template>
+</ul>
+
+<template id="image-template">
+    <picture>
+        <source srcset="#" type="image/webp">
+        <img src="#" alt="" title="">
+    </picture>
+</template>
+
+<template id="progress-bar-template">
+    <div class="progress-bar-container">
+        <div class="progress-bar"></div>
+    </div>
+</template>
+
+</body>
+</html>

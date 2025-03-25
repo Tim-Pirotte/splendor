@@ -1,24 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Splendor</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Niels Clarysse, Alexander Engelrelst, Tristan Joos, Arne Persyn, Tim Pirotte, Niels Ryserhove">
+    <title>Splendor - Main menu</title>
 
-  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-  <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 
-  <link rel="stylesheet" href="assets/css/reset.css">
-  <link rel="stylesheet" href="assets/css/screen.css">
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/screen.css">
+    <link rel="stylesheet" href="assets/css/main-menu.css">
 
-  <script src="assets/js/index.js" type="module"></script>
+    <script src="assets/js/main-menu-component/index.js" type="module"></script>
 </head>
 <body>
-  <h1>Splendor  deployment test</h1>
-  <p>Create your amazing and wonderful interface here. Have fun!</p>
-
-  <div class="errormessages">
-    <p></p>
-  </div>
+    <noscript>
+        Javascript is required for this experience to work properly. Please enable it or use a modern browser with support.
+    </noscript>
+    <div>
+        <header>
+            <picture>
+                <source srcset="image.webp" type="image/webp">
+                <img src="image.png" alt="A Splendor game logo made in pixel art" title="Splendor logo">
+            </picture>
+        </header>
+        <main>
+            <form action="#">
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username" placeholder="E.g. Mobly" required>
+                <div class="avatar-selector">
+                    <button type="button">Select profile picture</button>
+                    <section>
+                        <h2>Choose an avatar!</h2>
+                        <ul>
+                            <li>
+                                <picture>
+                                    <source srcset="image.webp" type="image/webp">
+                                    <img src="image.png" alt="Dummy avatar one" title="Dummy avatar one">
+                                </picture>
+                            </li>
+                            <li>
+                                <picture>
+                                    <source srcset="image.webp" type="image/webp">
+                                    <img src="image.png" alt="Dummy avatar two" title="Dummy avatar two">
+                                </picture>
+                            </li>
+                            <template id="avatar-template">
+                                <li>
+                                    <picture>
+                                        <source srcset="" type="image/webp">
+                                        <img src="" alt="" title="">
+                                    </picture>
+                                </li>
+                            </template>
+                        </ul>
+                    </section>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" value="join-game">Join game</button>
+                    <button type="submit" value="create-game">Create game</button>
+                </div>
+            </form>
+        </main>
+    </div>
 </body>
 </html>

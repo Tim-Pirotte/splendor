@@ -1,0 +1,223 @@
+/* GENERAL LAY-OUT */
+
+/* Sidebar and main content alignment */
+body {
+    display: grid;
+    grid-template-columns: 20% 80%;
+}
+
+/* Main content alignment */
+body > section {
+    display: grid;
+    grid-template-rows: 10% 90%;
+}
+
+div.main {
+    display: grid;
+    grid-template-columns: 50% 30% 6% 14%;
+    grid-template-rows: 80% 5% 15%;
+    grid-template-areas:    "decks board-tokens nobles timer"
+                            "player-points player-tokens player-tokens action-button"
+                            "reserved-cards player-tokens player-tokens action-button";
+}
+
+.decks {
+    grid-area: decks;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem 0;
+}
+
+.board-tokens {
+    grid-area: board-tokens;
+}
+
+.nobles {
+    grid-area: nobles;
+}
+
+.player-tokens {
+    grid-area: player-tokens;
+}
+
+.reserved-cards {
+    grid-area: reserved-cards;
+}
+
+/* ASIDE */
+aside {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0.5rem;
+}
+
+/* Player cards */
+.player-card header *, .player-card li * {
+    display: inline-block;
+}
+
+/* History */
+.history li * {
+    display: inline-block;
+}
+
+/* HEADER */
+.top-bar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+section header picture {
+    padding-right: 1rem;
+}
+
+/* PROGRESS BAR */
+.progress-bar-container {
+    display: flex;
+    align-items: center;
+}
+
+.progress-bar picture {
+    display: flex;
+}
+
+/* CARD */
+.card {
+    flex: 0 1 6vw;
+    aspect-ratio: 70 / 100;
+    position: relative;
+}
+
+.card ul {
+    display: flex;
+    justify-content: space-around;
+    position: absolute;
+    height: 34%;
+    width: 100%;
+    bottom: 0;
+}
+
+.card > p {
+    position: absolute;
+    left: 15.5%;
+    top: 4%;
+}
+
+.card li picture {
+    width: 100%;
+}
+
+.card li img {
+    width: 100%;
+}
+
+.card li p {
+    position: absolute;
+    left: 35%;
+    top: 35%;
+}
+
+.card li {
+    display: flex;
+    align-items: center;
+    width: 25%;
+    position: relative;
+}
+
+.card li > * {
+    position: absolute;
+}
+
+.decks > li > picture img {
+    width: 100%;
+}
+
+.card > picture:first-of-type img {
+    width: 100%;
+}
+
+.card > picture:last-of-type img {
+    width: 60%;
+    position: absolute;
+    left: 18%;
+    bottom: 34%;
+}
+
+/* RESERVED */
+.reserved-cards ul {
+    display: flex;
+}
+
+/* DECKS */
+.decks > li {
+    display: flex;
+    gap: 0 1rem;
+}
+
+.decks > li > ul {
+    flex: 0 1 auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 0 0.4rem;
+}
+
+/* DECK CARDS */
+.decks > li > picture {
+    flex: 0 1 6vw;
+}
+
+/* Player points */
+.player-points {
+    display: flex;
+    align-items: center;
+    gap: 0 0.5rem;
+    grid-area: player-points;
+}
+
+.progress-bar {
+    background:
+            url("../images/UI/tokens/score_topdown_chip.webp") 0 100%,
+            url("../images/UI/tokens/score_topdown_chip.webp") 0.15rem 100%,
+            url("../images/UI/tokens/score_topdown_chip.webp") 0.3rem 100%,
+            url("../images/UI/tokens/score_topdown_chip.webp") 0.45rem 100%,
+            url("../images/UI/tokens/score_topdown_chip.webp") 0.6rem 100%,
+            url("../images/UI/tokens/score_topdown_chip_end.webp") 0.75rem 100%;
+    width: 1rem;
+    height: 0.5rem;
+    background-repeat: no-repeat;
+}
+
+/* PLAYER TOKENS */
+.player-tokens header {
+    display: flex;
+    gap: 0 0.5rem;
+}
+
+.player-tokens li {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.player-tokens li:first-of-type {
+    margin: 1rem 0;
+}
+
+/* TIMER */
+progress {
+    grid-area: timer;
+    transform: rotate(90deg);
+    margin: auto 0;
+}
+
+/* Action button */
+.action-button {
+    grid-area: action-button;
+    height: 2rem;
+    width: fit-content;
+    margin-top: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
