@@ -1,4 +1,5 @@
 import { getDummyGames } from "./data.js";
+import { getAmountText, getGameButtonText } from "./helper.js";
 import * as objectHandler from "./object-handler.js"
 
 /* 
@@ -24,11 +25,11 @@ function renderList(){
 }
 
 function populateGame($game, game){
-    $game.dataset.gameState = "test"
+    $game.dataset.gameState = objectHandler.getGameState(game);
     $game.querySelector("h3").innerText = objectHandler.getGameName(game);
-    $game.querySelector(".game-id").innerText = game['gameId'];
-    $game.querySelector(".amount-of-players").innerText = `${game['players'].length}/${game['numberOfPlayers']}`;
-    $game.querySelector("button").innerText = 'Join game';
+    $game.querySelector(".game-id").innerText = objectHandler.getGameId(game);
+    $game.querySelector(".amount-of-players").innerText = getAmountText(game);
+    $game.querySelector("button").innerText = getGameButtonText(game);
 
 }
 

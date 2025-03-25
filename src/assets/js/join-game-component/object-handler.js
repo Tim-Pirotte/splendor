@@ -1,4 +1,6 @@
-function getGameState(game){};
+function getGameState(game){
+    return game['started'] ? "spectate" : "join";
+};
 
 function getGameName(game){
     return game['gameName'] == null ? "no name loser" : game['gameName'];
@@ -12,7 +14,9 @@ function getCurrentUsersAmount(game){
     return game['players'].length;
 };
 
-function getMaxUsersAmount(game){};
+function getMaxUsersAmount(game){
+    return game['numberOfPlayers'];
+};
 
 
-export { getGameState, getGameName, getCurrentUsersAmount, getMaxUsersAmount };
+export { getGameState, getGameName, getGameId, getCurrentUsersAmount, getMaxUsersAmount };
