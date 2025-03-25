@@ -51,7 +51,8 @@ header ion-icon {
 /* main */
  /* footer */
 footer {
-    align-self: flex-end;
+    display: flex;
+    justify-content: space-between;
     flex-flow: row nowrap;
     padding: 2rem;
 }
