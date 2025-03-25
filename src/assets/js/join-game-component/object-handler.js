@@ -1,11 +1,7 @@
 function getGameState(game){};
 
 function getGameName(game){
-    if(game['gameName'] == null){
-        return "no name"
-    }else {
-        return game['gameName'];
-    }
+    return game['gameName'] == null ? "no name loser" : game['gameName']
 };
 
 function getCurrentUsersAmount(game){}
