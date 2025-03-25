@@ -1,0 +1,3 @@
+function renderSelectableAvatars() {}
+
+export {renderSelectableAvatars};
