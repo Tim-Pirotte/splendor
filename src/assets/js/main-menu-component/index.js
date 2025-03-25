@@ -17,9 +17,10 @@ function loadUsername() {
 function storeUsername(e) {
     e.preventDefault();
 
+    const valid = document.querySelector("form").reportValidity();
     const username = document.querySelector("#username").value;
 
-    if (username.trim() !== "") {
+    if (valid && (username.trim() !== "")) {
         saveToStorage("username", username);
         window.location.href = `../../../pages/${e.target.value}.html`;
     }
