@@ -63,6 +63,11 @@ label[for="game-name"]{
     margin-right: 2rem;
 }
 
+ul {
+    overflow: scroll;
+    height: 30rem;
+}
+
 li {
     display: flex;
     flex-flow: row nowrap;
