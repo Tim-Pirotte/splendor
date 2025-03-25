@@ -14,6 +14,7 @@ const mapTokens = {
 function renderPage(gameData) {
   renderClientUser();
   renderOtherPlayers(gameData.players);
+  renderCards(gameData.market);
 }
 
 function renderClientUser() {
@@ -69,6 +70,33 @@ function renderReservedList(containerToInsertInto, reservedCards) {
     $reservedCard.querySelector(".amount").textContent = reservedCard.prestigePoints;
     insertImageInto($reservedCard, "cards/empty/" + mapTokens[reservedCard.bonus] + "_empty_card");
     containerToInsertInto.appendChild($reservedCard);
+  }
+}
+
+function renderCards(market) {
+  const $numberedItemTemplate = document.querySelector("#numbered-item-template");
+  const $cardTemplate = document.querySelector("#card-template");
+
+  for (const deck of market) {
+    const $currentDeck = document.querySelector(".level-" + deck.level + " .cards-in-deck");
+
+    for (const card of deck.visibleCards) {
+      const $card = $cardTemplate.content.firstElementChild.cloneNode(true);
+      $card.querySelector(".points").textContent = card.prestigePoints;
+      const $cardCost = $card.querySelector(".cost");
+
+      for (const [type, cost] of Object.entries(card.cost)) {
+        const $costItem = $numberedItemTemplate.content.firstElementChild.cloneNode(true);
+        $costItem.querySelector(".amount").textContent = cost;
+        insertImageInto($costItem, "UI/tokens/" + mapTokens[type] + "_chip", true);
+        $cardCost.appendChild($costItem);
+      }
+
+      insertImageInto($card, "cards/empty/" + mapTokens[card.bonus] + "_empty_card");
+      insertImageInto($card, "cards/illustrations/camel");
+
+      $currentDeck.appendChild($card);
+    }
   }
 }
 
