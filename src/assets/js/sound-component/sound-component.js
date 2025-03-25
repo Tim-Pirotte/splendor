@@ -7,6 +7,7 @@ function init () {
     document.querySelector(".sound-button").addEventListener("click", toggleSound)
 }
 function setupSound() {
+    console.log('test')
     const soundEnabled = localStorageAbstractor.loadFromStorage("soundEnabled");
     if (soundEnabled === null) {
         localStorageAbstractor.saveToStorage("soundEnabled", "false");
