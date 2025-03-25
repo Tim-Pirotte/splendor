@@ -1,5 +1,8 @@
 /* This will be the style of the join-game.html file */
 
+body {
+    background-color: white;
+}
 
 header {
     display: flex;
@@ -8,25 +11,17 @@ header {
     margin: 2rem 2rem;
 }
 
-header div p{
-    display: inline-block;
-}
-
-header h1 {
-    align-self: flex-end;
-}
 
 form {
-    background-color: green;
     margin: 0 auto;
     text-align: center;
 }
 
 section{
-    background-color: rgb(108, 148, 108);
+    background-color: lightgray;
     width: 60%;
     text-align: center;
-    margin: 0 auto;
+    margin: 3rem auto 0 auto;
     padding: 3rem 0;
 }
 
