@@ -1,5 +1,16 @@
+/* general */
 picture {
     vertical-align: middle;
+}
+
+button {
+    vertical-align: middle;
+    background-color: black;
+    color: white;
+    border-radius: 0.2rem;
+    border: none;
+    height: 2.5rem;
+    width: 10rem
 }
 
 body {
@@ -43,9 +54,15 @@ header ion-icon {
 }
 
 footer {
-    padding-bottom: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    margin: 1.5rem;
 }
 footer #Toggle-sound-button{
     background-color: transparent;
     border: none;
+}
+
+footer picture source, footer picture img{
+    height: 2.5rem;
 }
