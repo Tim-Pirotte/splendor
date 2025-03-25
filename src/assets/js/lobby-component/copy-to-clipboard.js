@@ -5,5 +5,16 @@ function init(){
 }
 
 function copyGameIdToClipboard(){
-    navigator.clipboard.writeText(document.querySelector("#game-id").innerText);
+    const $button = document.querySelector("ion-icon");
+    navigator.clipboard.writeText(document.querySelector("#game-id").innerText)
+    .then( e => {
+        setCopyButtonColor($button, "blue")
+        setTimeout(setCopyButtonColor, 100, $button, "black")
+    })
+
+}
+
+function setCopyButtonColor($button, color){
+    console.log(color)
+    $button.style.setProperty("color", color);
 }

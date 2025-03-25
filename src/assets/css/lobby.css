@@ -25,3 +25,8 @@ h2 {
     font-size: 2.5em;
     margin-bottom: 0.5rem;
 }
+
+header ion-icon {
+    font-size: 2.5rem;
+    color: black;
+}
