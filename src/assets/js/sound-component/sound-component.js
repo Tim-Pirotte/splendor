@@ -50,4 +50,8 @@ function toggleSound() {
     }
 }
 
+function isSoundEnabled() {
+    return loadFromStorage("sound") === "on";
+}
+
 init();
