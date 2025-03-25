@@ -1,7 +1,6 @@
 /* General styling for the body and main container */
 body {
     background-color: white;
-    height: 100vh;
 }
 
 main {
@@ -51,8 +50,19 @@ button[type="submit"] {
 
 /* Place the audio toggle at the right side of the footer */
 footer {
-    width: 100%;
-    display: flex;
+    align-self: flex-end;
     flex-flow: row nowrap;
     justify-content: flex-end;
+    padding: 2rem;
+}
+
+footer picture source, footer picture img{
+    height: 3rem;
+}
+
+footer .sound-button {
+    width: 3rem;
+    height: 3rem;
+    background-color: transparent;
+    border: none;
 }
