@@ -12,7 +12,7 @@ body > section {
     grid-template-rows: 10% 90%;
 }
 
-main {
+div.main {
     display: grid;
     grid-template-columns: 50% 30% 6% 14%;
     grid-template-rows: 80% 5% 15%;
@@ -34,10 +34,6 @@ main {
 
 .nobles {
     grid-area: nobles;
-}
-
-.player-points {
-    grid-area: player-points;
 }
 
 .player-tokens {
@@ -78,17 +74,14 @@ section header picture {
     padding-right: 1rem;
 }
 
-/* DECKS */
-.decks > li {
+/* PROGRESS BAR */
+.progress-bar-container {
     display: flex;
-    gap: 0 1rem;
+    align-items: center;
 }
 
-.decks > li > ul {
-    flex: 0 1 auto;
+.progress-bar picture {
     display: flex;
-    justify-content: space-between;
-    gap: 0 0.4rem;
 }
 
 /* CARD */
@@ -138,6 +131,10 @@ section header picture {
     position: absolute;
 }
 
+.decks > li > picture img {
+    width: 100%;
+}
+
 .card > picture:first-of-type img {
     width: 100%;
 }
@@ -149,13 +146,27 @@ section header picture {
     bottom: 34%;
 }
 
+/* RESERVED */
+.reserved-cards ul {
+    display: flex;
+}
+
+/* DECKS */
+.decks > li {
+    display: flex;
+    gap: 0 1rem;
+}
+
+.decks > li > ul {
+    flex: 0 1 auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 0 0.4rem;
+}
+
 /* DECK CARDS */
 .decks > li > picture {
     flex: 0 1 6vw;
-}
-
-.decks > li > picture img {
-    width: 100%;
 }
 
 /* Player points */
@@ -163,6 +174,7 @@ section header picture {
     display: flex;
     align-items: center;
     gap: 0 0.5rem;
+    grid-area: player-points;
 }
 
 .progress-bar {
@@ -178,33 +190,19 @@ section header picture {
     background-repeat: no-repeat;
 }
 
-.progress-bar-container {
-    display: flex;
-    align-items: center;
-}
-
-.progress-bar picture {
-    display: flex;
-}
-
-/* RESERVED */
-.reserved-cards ul {
-    display: flex;
-}
-
 /* PLAYER TOKENS */
 .player-tokens header {
     display: flex;
     gap: 0 0.5rem;
 }
 
-.player-tokens li:first-of-type {
-    margin: 1rem 0;
-}
-
 .player-tokens li {
     display: flex;
     gap: 0.5rem;
+}
+
+.player-tokens li:first-of-type {
+    margin: 1rem 0;
 }
 
 /* TIMER */
