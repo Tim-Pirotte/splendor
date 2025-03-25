@@ -82,3 +82,7 @@ footer {
 img {
     max-width: 3rem;
 }
+
+.game-info {
+    width: 14rem;
+}
