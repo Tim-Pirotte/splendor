@@ -1,7 +1,7 @@
 import {loadFromStorage} from "../data-connector/local-storage-abstractor.js";
 import {tokensDummyData} from "./dummy-data.js";
 import {insertImageInto, renderProgressBar} from "./helper.js";
-import {PRESTIGE_POINTS_NEEDED_TO_WIN} from "./config.js";
+import {MAX_TOKENS_ALLOWED, PRESTIGE_POINTS_NEEDED_TO_WIN} from "./config.js";
 
 const mapTokens = {
     "Emerald": "green",
@@ -106,6 +106,10 @@ function renderCards(market) {
     }
 }
 
+function countTokens(tokens) {
+    return Object.values(tokens).reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+}
+
 function renderCurrentPlayer(players) {
     const currentPlayerName = loadFromStorage("username");
     for (const player of players) {
@@ -136,6 +140,8 @@ function renderCurrentPlayer(players) {
 
                 $reserved.appendChild($card);
             }
+
+            document.querySelector(".player-tokens h4").textContent = countTokens(player.tokens) + " / " + MAX_TOKENS_ALLOWED;
         }
     }
 }
