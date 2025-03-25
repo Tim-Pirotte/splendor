@@ -327,9 +327,8 @@
         <!-- Player points -->
         <section class="player-points">
             <h3>Points</h3>
-            <div>
+            <div class="progress-bar-container">
                 <div class="progress-bar"></div>
-                <div class="progress-bar-end"></div>
             </div>
             <p>09/15</p>
         </section>
@@ -337,7 +336,7 @@
         <section class="reserved-cards">
             <h3>Reserved</h3>
             <ul>
-                <li>
+                <li class="card">
                     <p>2</p>
                     <ul>
                         <li>
@@ -371,9 +370,8 @@
                         <source srcset="../assets/images/UI/tokens/gold_chip.webp">
                         <img src="../assets/images/fallback/UI/tokens/gold_chip.png" alt="Gold chip" title="Gold chip">
                     </picture>
-                    <div>
+                    <div class="progress-bar-container">
                         <div class="progress-bar"></div>
-                        <div class="progress-bar-end"></div>
                     </div>
                 </li>
             </ul>
@@ -394,16 +392,6 @@
     </li>
 </template>
 
-<template id="token-template">
-    <li>
-        <p class="token-amount"></p>
-        <div>
-            <div class="progress-bar"></div>
-            <div class="progress-bar-end"></div>
-        </div>
-    </li>
-</template>
-
 <template id="numbered-item-template">
     <li>
         <p class="amount"></p>
@@ -418,9 +406,8 @@
 </template>
 
 <template id="progress-bar-template">
-    <div>
+    <div class="progress-bar-container">
         <div class="progress-bar"></div>
-        <div class="progress-bar-end"></div>
     </div>
 </template>
 

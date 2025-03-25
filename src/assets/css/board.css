@@ -15,7 +15,7 @@ body > section {
 main {
     display: grid;
     grid-template-columns: 60% 20% 20%;
-    grid-template-rows: 60% 20% 20%;
+    grid-template-rows: 80% 5% 15%;
     grid-template-areas:    "decks board-tokens nobles"
                             "player-points player-tokens player-tokens"
                             "reserved-cards player-tokens player-tokens";
@@ -23,6 +23,9 @@ main {
 
 .decks {
     grid-area: decks;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem 0;
 }
 
 .board-tokens {
@@ -73,17 +76,19 @@ section header {
 /* DECKS */
 .decks > li {
     display: flex;
+    gap: 0 1rem;
 }
 
 .decks > li > ul {
-    flex: 0 1 80%;
+    flex: 0 1 auto;
     display: flex;
     justify-content: space-between;
+    gap: 0 0.8rem;
 }
 
 /* CARD */
 .card {
-    flex: 0 1 20%;
+    flex: 0 1 8.5vw;
     aspect-ratio: 70 / 100;
     position: relative;
 }
@@ -141,9 +146,43 @@ section header {
 
 /* DECK CARDS */
 .decks > li > picture {
-    flex: 0 1 20%;
+    flex: 0 1 8.5vw;
 }
 
 .decks > li > picture img {
-    width: 90%;
+    width: 100%;
+}
+
+/* Player points */
+.player-points {
+    display: flex;
+    align-items: center;
+    gap: 0 0.5rem;
+}
+
+.progress-bar {
+    background:
+            url("../images/UI/tokens/score_topdown_chip.webp") 0 100%,
+            url("../images/UI/tokens/score_topdown_chip.webp") 0.15rem 100%,
+            url("../images/UI/tokens/score_topdown_chip.webp") 0.3rem 100%,
+            url("../images/UI/tokens/score_topdown_chip.webp") 0.45rem 100%,
+            url("../images/UI/tokens/score_topdown_chip.webp") 0.6rem 100%,
+            url("../images/UI/tokens/score_topdown_chip_end.webp") 0.75rem 100%;
+    width: 1rem;
+    height: 0.5rem;
+    background-repeat: no-repeat;
+}
+
+.progress-bar-container {
+    display: flex;
+    align-items: center;
+}
+
+.progress-bar picture {
+    display: flex;
+}
+
+/* RESERVED */
+.reserved-cards ul {
+    display: flex;
 }
