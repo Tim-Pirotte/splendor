@@ -79,6 +79,10 @@ li h3 {
     margin-bottom: 0.4rem;
 }
 
+img {
+    max-width: 3rem;
+}
+
 footer {
     align-self: flex-end;
     padding: 2rem;
@@ -93,10 +97,6 @@ footer .sound-button {
     height: 3rem;
     background-color: transparent;
     border: none;
-}
-
-img {
-    max-width: 3rem;
 }
 
 .game-info {

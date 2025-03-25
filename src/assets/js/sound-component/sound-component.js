@@ -1,16 +1,15 @@
-import {loadFromStorage, saveToStorage} from "../data-connector/local-storage-abstractor.js"
+import {loadFromStorage, saveToStorage} from "../data-connector/local-storage-abstractor.js";
 
 function init () {
     setupSound();
-    document.querySelector(".sound-button").addEventListener("click", toggleSound)
+    document.querySelector(".sound-button").addEventListener("click", toggleSound);
 }
 function setupSound() {
     const sound = loadFromStorage("sound");
     if (sound === null) {
         saveToStorage("sound", "off");
-    } else if (sound === "on") {
-        setSoundButtonImgSource(sound);
     }
+    setSoundButtonImgSource(sound);
 }
 
 function setSoundButtonImgSource(soundStatus) {
