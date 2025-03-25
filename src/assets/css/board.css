@@ -14,7 +14,7 @@ body > section {
 
 main {
     display: grid;
-    grid-template-columns: 60% 20% 6% 14%;
+    grid-template-columns: 50% 30% 6% 14%;
     grid-template-rows: 80% 5% 15%;
     grid-template-areas:    "decks board-tokens nobles timer"
                             "player-points player-tokens player-tokens action-button"
@@ -25,7 +25,7 @@ main {
     grid-area: decks;
     display: flex;
     flex-direction: column;
-    gap: 0.8rem 0;
+    gap: 0.4rem 0;
 }
 
 .board-tokens {
@@ -88,12 +88,12 @@ section header picture {
     flex: 0 1 auto;
     display: flex;
     justify-content: space-between;
-    gap: 0 0.8rem;
+    gap: 0 0.4rem;
 }
 
 /* CARD */
 .card {
-    flex: 0 1 8.5vw;
+    flex: 0 1 6vw;
     aspect-ratio: 70 / 100;
     position: relative;
 }
@@ -151,7 +151,7 @@ section header picture {
 
 /* DECK CARDS */
 .decks > li > picture {
-    flex: 0 1 8.5vw;
+    flex: 0 1 6vw;
 }
 
 .decks > li > picture img {
