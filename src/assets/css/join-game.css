@@ -64,3 +64,10 @@ li h3 {
     margin-bottom: 0.4rem;
 }
 
+footer {
+    background-color: gray;
+}
+
+img {
+    max-width: 3rem;
+}
