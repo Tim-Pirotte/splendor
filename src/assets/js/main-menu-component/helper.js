@@ -13,16 +13,20 @@ function loadUsername() {
 function loadAvatar() {
     const avatar = loadFromStorage("avatar");
 
-    renderSelectedAvatars(avatar);
+    if (avatar) {
+        renderSelectedAvatars(avatar);
+    } else {
+        renderSelectedAvatars("placeholder");
+    }
 }
 
 function storeUsername(e) {
     e.preventDefault();
 
-    const valid = document.querySelector("form").reportValidity();
-    const username = document.querySelector("#username").value;
+    const $form = document.querySelector("form");
+    const username = document.querySelector("#username").value.trim();
 
-    if (valid && (username.trim() !== "")) {
+    if ($form.reportValidity() && username !== "") {
         saveToStorage("username", username);
         window.location.href = `./pages/${e.target.value}.html`;
     }
@@ -31,10 +35,22 @@ function storeUsername(e) {
 function storeAvatar(e) {
     e.preventDefault();
 
-    const avatar = e.target.closest("img").getAttribute("title").valueOf();
+    const avatar = e.target.closest("img").getAttribute("title");
 
-    saveToStorage("avatar", avatar);
-    renderSelectedAvatars(avatar);
+    if (avatar) {
+        saveToStorage("avatar", avatar);
+        renderSelectedAvatars(avatar);
+    }
 }
 
-export {loadUsername, loadAvatar, storeUsername, storeAvatar};
+function toggleVisibility() {
+    const $avatarList = document.querySelector("section");
+
+    if ($avatarList.style.display === "none") {
+        $avatarList.style.display = "block";
+    } else {
+        $avatarList.style.display = "none";
+    }
+}
+
+export {loadUsername, loadAvatar, storeUsername, storeAvatar, toggleVisibility};

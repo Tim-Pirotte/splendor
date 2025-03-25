@@ -1,11 +1,13 @@
-import {loadAvatar, loadUsername, storeAvatar, storeUsername} from "./helper.js";
+import {loadAvatar, loadUsername, storeAvatar, storeUsername, toggleVisibility} from "./helper.js";
 import {renderSelectableAvatars} from "./renderer.js";
 
 function init() {
-    loadUserInformation();
     renderSelectableAvatars();
+    loadUserInformation();
+
     document.querySelector(".form-actions").addEventListener("click", storeUsername);
     document.querySelector("section").addEventListener("click", storeAvatar);
+    document.querySelector(".avatar-selector button").addEventListener("click", toggleVisibility);
 }
 
 function loadUserInformation() {

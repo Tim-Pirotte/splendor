@@ -5,11 +5,9 @@ function renderSelectableAvatars() {
     const $container = document.querySelector("section");
 
     document.querySelectorAll("li")
-            .forEach(li => li.outerHTML = "");
+            .forEach(li => li.remove());
 
-    for (const avatar of avatars) {
-        renderAvatar($template, $container, avatar);
-    }
+    avatars.forEach(avatar => renderAvatar($template, $container, avatar));
 }
 
 function renderSelectedAvatars(avatar) {
@@ -23,10 +21,12 @@ function renderSelectedAvatars(avatar) {
 
 function renderAvatar($template, $container, avatar) {
     const $picture = $template.content.firstElementChild.cloneNode(true);
-    $picture.querySelector("source").setAttribute("srcset", `./assets/images/avatars/${avatar}.webp`);
-    $picture.querySelector("img").setAttribute("src", `./assets/images/fallback/avatars/${avatar}.png`);
-    $picture.querySelector("img").setAttribute("alt", `${avatar}`);
-    $picture.querySelector("img").setAttribute("title", `${avatar}`);
+    const $img = $picture.querySelector("img");
+
+    $picture.querySelector("source").srcset = `./assets/images/avatars/${avatar}.webp`;
+    $img.src = `./assets/images/fallback/avatars/${avatar}.png`;
+    $img.alt = $img.title = avatar;
+
     $container.insertAdjacentHTML("beforeend", $picture.outerHTML);
 }
 
