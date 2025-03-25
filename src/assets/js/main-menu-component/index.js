@@ -22,7 +22,7 @@ function storeUsername(e) {
 
     if (valid && (username.trim() !== "")) {
         saveToStorage("username", username);
-        window.location.href = `../src/pages/${e.target.value}.html`;
+        window.location.href = `./pages/${e.target.value}.html`;
     }
 }
 
