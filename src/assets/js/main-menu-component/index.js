@@ -10,7 +10,7 @@ function loadUsername() {
     const username = loadFromStorage("username");
 
     if (username) {
-        $username.value = username
+        $username.value = username;
     }
 }
 
