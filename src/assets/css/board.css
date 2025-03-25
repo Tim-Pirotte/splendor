@@ -67,7 +67,7 @@ aside {
 }
 
 /* HEADER */
-section header {
+.top-bar {
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -190,4 +190,19 @@ section header picture {
 /* RESERVED */
 .reserved-cards ul {
     display: flex;
+}
+
+/* PLAYER TOKENS */
+.player-tokens header {
+    display: flex;
+    gap: 0 0.5rem;
+}
+
+.player-tokens li:first-of-type {
+    margin: 1rem 0;
+}
+
+.player-tokens li {
+    display: flex;
+    gap: 0.5rem;
 }
