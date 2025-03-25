@@ -56,6 +56,16 @@ const dummyData = {
           },
           "bonus": "Onyx",
           "prestigePoints": 0
+        },
+        {
+          "name": "Obsidian Workshop",
+          "level": 1,
+          "cost": {
+            "Emerald": 2,
+            "Onyx": 2
+          },
+          "bonus": "Diamond",
+          "prestigePoints": 8
         }
       ],
       "built": [
@@ -71,7 +81,7 @@ const dummyData = {
         }
       ],
       "nobles": [],
-      "totalPrestigePoints": 0,
+      "totalPrestigePoints": 10,
       "bonuses": {
         "Onyx": 1,
         "Ruby": 2

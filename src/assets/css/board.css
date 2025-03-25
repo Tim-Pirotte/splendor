@@ -159,6 +159,7 @@ section header picture {
 /* RESERVED */
 .reserved-cards ul {
     display: flex;
+    gap: 0 1rem;
 }
 
 /* DECKS */
@@ -188,14 +189,6 @@ section header picture {
 }
 
 .progress-bar {
-    background:
-            url("../images/UI/tokens/score_topdown_chip.webp") 0 100%,
-            url("../images/UI/tokens/score_topdown_chip.webp") 0.15rem 100%,
-            url("../images/UI/tokens/score_topdown_chip.webp") 0.3rem 100%,
-            url("../images/UI/tokens/score_topdown_chip.webp") 0.45rem 100%,
-            url("../images/UI/tokens/score_topdown_chip.webp") 0.6rem 100%,
-            url("../images/UI/tokens/score_topdown_chip_end.webp") 0.75rem 100%;
-    width: 1rem;
     height: 0.5rem;
     background-repeat: no-repeat;
 }
