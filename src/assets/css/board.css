@@ -52,6 +52,16 @@ aside {
     padding: 0.5rem;
 }
 
+.player-card > ul {
+    display: flex;
+    gap: 0 0.2rem;
+}
+
+.player-card > ul > li {
+    display: flex;
+    align-items: center;
+}
+
 /* Player cards */
 .player-card header *, .player-card li * {
     display: inline-block;

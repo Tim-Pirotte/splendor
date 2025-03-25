@@ -232,4 +232,15 @@ const dummyData = {
   "winner": null
 }
 
-export { dummyData };
+const tokensDummyData = {
+  "gems": [
+    "Emerald",
+    "Sapphire",
+    "Ruby",
+    "Diamond",
+    "Onyx",
+    "Gold"
+  ]
+}
+
+export { dummyData, tokensDummyData };
