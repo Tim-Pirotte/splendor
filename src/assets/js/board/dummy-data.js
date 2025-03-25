@@ -10,7 +10,18 @@ const dummyData = {
       "tokens": {
         "Diamond": 2
       },
-      "reserve": [],
+      "reserve": [
+        {
+          "name": "Obsidian Workshop",
+          "level": 1,
+          "cost": {
+            "Emerald": 2,
+            "Diamond": 2
+          },
+          "bonus": "Onyx",
+          "prestigePoints": 0
+        }
+      ],
       "built": [
         {
           "name": "Obsidian Workshop",

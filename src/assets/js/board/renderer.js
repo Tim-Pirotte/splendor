@@ -62,7 +62,14 @@ function renderCardList(containerToInsertInto, cardAmounts) {
 }
 
 function renderReservedList(containerToInsertInto, reservedCards) {
+  const $numberedItemTemplate = document.querySelector("#numbered-item-template");
 
+  for (const reservedCard of reservedCards) {
+    const $reservedCard = $numberedItemTemplate.content.firstElementChild.cloneNode(true);
+    $reservedCard.querySelector(".amount").textContent = reservedCard.prestigePoints;
+    insertImageInto($reservedCard, "cards/empty/" + mapTokens[reservedCard.bonus] + "_empty_card");
+    containerToInsertInto.appendChild($reservedCard);
+  }
 }
 
 export { renderPage };
