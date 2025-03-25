@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author"
+          content="Niels Clarysse, Alexander Engelrelst, Tristan Joos, Arne Persyn, Tim Pirotte, Niels Ryserhove">
+    <title>Splendor - Create game</title>
+    <link rel="stylesheet" href="../assets/css/screen.css">
+    <link rel="stylesheet" href="../assets/css/reset.css">
+    <link rel="stylesheet" href="../assets/css/create-game.css">
+</head>
+<body>
+<noscript>Javascript is required for this experience to work properly. Please enable it or use a modern browser with
+    support.
+</noscript>
+<div id="page-layout">
+
+    <header>
+        <button type="button">
+            <picture>
+                <source srcset="./../assets/images/no-image-demo.jpg" type="image/webp">
+                <img src="./../assets/images/no-image-demo.jpg" alt="back arrow">
+            </picture>
+        </button>
+        <p>Mobley</p>
+    </header>
+    <main>
+        <h1>Create game</h1>
+        <form action="#">
+            <label for="game-name">Game name:</label>
+            <input type="text" id="game-name" placeholder="Alice's game">
+
+            <label>Visibility:</label>
+            <input type="radio" id="private" name="visibility" value="private" checked>
+            <label for="private">private</label>
+            <input type="radio" id="public" name="visibility" value="public">
+            <label for="public">public</label>
+
+            <label>Number of players:</label>
+            <input type="radio" id="two_players" name="players" value="2" checked>
+            <label for="two_players">2</label>
+            <input type="radio" id="three_players" name="players" value="3">
+            <label for="three_players">3</label>
+            <input type="radio" id="four_players" name="players" value="4">
+            <label for="four_players">4</label>
+
+            <button type="submit">Create game</button>
+        </form>
+    </main>
+    <footer>
+        <button type="button">
+            <picture>
+                <source srcset="./../assets/images/no-image-demo.jpg" type="image/webp">
+                <img src="./../assets/images/no-image-demo.jpg" title="sound button" alt="sound button">
+            </picture>
+        </button>
+    </footer>
+</div>
+</body>
+</html>

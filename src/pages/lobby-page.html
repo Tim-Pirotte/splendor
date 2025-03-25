@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author"
+    content="Niels Clarysse, Alexander Engelrelst, Tristan Joos, Arne Persyn, Tim Pirotte, Niels Ryserhove">
+    <title>Splendor - Lobby</title>
+
+    <link rel="stylesheet" href="../assets/css/screen.css">
+    <link rel="stylesheet" href="../assets/css/reset.css">
+    <link rel="stylesheet" href="../assets/css/lobby.css" type="text/css">
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+    <noscript>Javascript is required for this experience to work properly. Please enable it or use a modern browser with support</noscript>
+<header>
+    <h1>Lobby</h1>
+    <h2>
+        Mobly's fantastic game name /
+        <span id="game-id">123</span>
+    </h2>
+    <ion-icon id="copy-game-id-button" name="copy-outline"></ion-icon>
+    <h3>Created by Mobly</h3>
+</header>
+<main>
+    <div id="players-container">
+        <ul id="players">
+            <li id="player-one">
+                <p>Mobly</p>
+                <picture>
+                    <source srcset="../assets/images/UI/empty_icon.webp" type="images/webp">
+                    <img src="../assets/images/fallback/UI/empty_icon.png" alt="Avatar selector">
+                </picture>
+            </li>
+            <li>
+                <p>Alice</p>
+                <picture>
+                    <source srcset="../assets/images/UI/empty_icon.webp" type="images/webp">
+                    <img src="../assets/images/fallback/UI/empty_icon.png" alt="Avatar selector">
+                </picture>
+            </li>
+            <template>
+                <li class="player">
+                    <p class="player-name">Alice</p>
+                    <picture>
+                        <source srcset="../assets/images/UI/empty_icon.webp">
+                        <img src="../assets/images/fallback/UI/empty_icon.png" alt="Avatar selector">
+                    </picture>
+                </li>
+            </template>
+        </ul>
+        <div id="start-game-button">
+            <h4>2/4</h4>
+            <button type="button">Start</button>
+        </div>
+    </div>
+
+
+</main>
+<footer>
+    <button type="button">Leave</button>
+    <button type="button" id="Toggle-sound-button">
+        <picture>
+            <source srcset="../assets/images/UI/sound_off.webp" type="images/webp">
+            <img src="../assets/images/fallback/UI/sound_off.png" alt="Toggle sound">
+        </picture>
+    </button>
+</footer>
+</body>
+</html>
