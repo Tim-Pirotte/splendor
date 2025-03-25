@@ -110,6 +110,90 @@ const hardCodedGames = {
             "numberOfPlayers": 2,
             "returnExcessTokensRequired": false,
             "pickNobleRequired": false
+          },
+          {
+            "players": [
+              "Alice",
+              "Bob"
+            ],
+            "started": true,
+            "gameId": 1,
+            "gameName": "The Splendid Splendors",
+            "numberOfPlayers": 2,
+            "returnExcessTokensRequired": false,
+            "pickNobleRequired": false
+          },
+          {
+            "players": [
+              "Alice",
+              "Bob"
+            ],
+            "started": true,
+            "gameId": 1,
+            "gameName": "The Splendid Splendors",
+            "numberOfPlayers": 2,
+            "returnExcessTokensRequired": false,
+            "pickNobleRequired": false
+          },
+          {
+            "players": [
+              "Alice",
+              "Bob"
+            ],
+            "started": true,
+            "gameId": 1,
+            "gameName": "The Splendid Splendors",
+            "numberOfPlayers": 2,
+            "returnExcessTokensRequired": false,
+            "pickNobleRequired": false
+          },
+          {
+            "players": [
+              "Alice",
+              "Bob"
+            ],
+            "started": true,
+            "gameId": 1,
+            "gameName": "The Splendid Splendors",
+            "numberOfPlayers": 2,
+            "returnExcessTokensRequired": false,
+            "pickNobleRequired": false
+          },
+          {
+            "players": [
+              "Alice",
+              "Bob"
+            ],
+            "started": true,
+            "gameId": 1,
+            "gameName": "The Splendid Splendors",
+            "numberOfPlayers": 2,
+            "returnExcessTokensRequired": false,
+            "pickNobleRequired": false
+          },
+          {
+            "players": [
+              "Alice",
+              "Bob"
+            ],
+            "started": true,
+            "gameId": 1,
+            "gameName": "The Splendid Splendors",
+            "numberOfPlayers": 2,
+            "returnExcessTokensRequired": false,
+            "pickNobleRequired": false
+          },
+          {
+            "players": [
+              "Alice",
+              "Bob"
+            ],
+            "started": true,
+            "gameId": 1,
+            "gameName": "The Splendid Splendors",
+            "numberOfPlayers": 2,
+            "returnExcessTokensRequired": false,
+            "pickNobleRequired": false
           }
   ]
 }
