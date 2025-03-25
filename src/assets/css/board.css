@@ -76,13 +76,13 @@ section header {
 }
 
 .decks > li > ul {
-    width: 100%;
+    width: 75%;
 }
 
 /* CARD */
 .card {
     display: inline-block;
-    width: 25%;
+    width: 20%;
     aspect-ratio: 70 / 100;
     position: relative;
 }
