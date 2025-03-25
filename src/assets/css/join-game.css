@@ -3,7 +3,17 @@
 
 header {
     display: flex;
-    margin: 2rem 0;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    margin: 2rem 2rem;
+}
+
+header div p{
+    display: inline-block;
+}
+
+header h1 {
+    align-self: flex-end;
 }
 
 form {
