@@ -153,6 +153,11 @@
     <main>
         <!-- Decks -->
         <ul class="decks">
+            <template id="deck-template">
+                <li>
+                    <ul class="cards"></ul>
+                </li>
+            </template>
             <li>
                 <picture>
                     <source srcset="../assets/images/cards/empty/deck_level_1_top.webp" type="image/webp">
@@ -312,16 +317,6 @@
                     <source srcset="../assets/images/nobles/noble_border.webp">
                     <img src="" alt="">
                 </picture>
-                <!-- List of cards needed for the noble -->
-                <ul>
-                    <li>
-                        <p>2</p>
-                        <picture>
-                            <source srcset="../assets/images/UI/tokens/red_chip.webp">
-                            <img src="" alt="">
-                        </picture>
-                    </li>
-                </ul>
             </li>
         </ul>
         <!-- Player points -->
@@ -395,12 +390,6 @@
         </section>
     </main>
 </section>
-
-<template id="deck-template">
-    <li>
-        <ul class="cards"></ul>
-    </li>
-</template>
 
 <template id="card-template">
     <li class="card">
