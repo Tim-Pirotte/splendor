@@ -11,21 +11,20 @@
 </head>
 <body>
     <noscript>Javascript is required for this experience to work properly. Please enable it or use a modern browser with support.</noscript>
-    <nav>
-        <span id="left-side">
-        <!-- has a img that needs to be changed to a arrow icon making it go back to the home page/ previous page -->
-        <a href="../index.html"><img src="../favicon-16x16.png" alt="back button"></a>
-        </span>
-        <div id="right-side">
-            <!-- Mobey is here pure for testing reason will change with injection to match the username given also the img will get injected-->
-            <p id="username">Mobley</p>
-            <img src="../favicon-16x16.png" alt="User avatar">
-        </div>
-    </nav>
+    <div id="pageLayout">
+
     <header>
-        <h1>Create game</h1>
+        <button type="button">
+            <picture>
+                <source src="#" type="image/webp">
+                <source srcset="./../assets/images/no-image-demo.jpg" type="image/webp">
+                <img src="./../assets/images/no-image-demo.jpg" alt="back arrow">
+            </picture>
+        </button>
+        <p>Mobley</p>
     </header>
     <main>
+        <h1>Create game</h1>
         <form action="#">
             <label for="game-name">Game name:</label>
             <input type="text" id="game-name" placeholder="Alice's game">
@@ -48,7 +47,15 @@
         </form>
     </main>
     <footer>
+        <button type="button">
+            <picture>
+                <source src="#" type="image/webp">
+                <source srcset="./../assets/images/no-image-demo.jpg" type="image/webp">
+                <img src="./../assets/images/no-image-demo.jpg" title="sound button" alt="sound button">
+            </picture>
+        </button>
 
     </footer>
+    </div>
 </body>
 </html>

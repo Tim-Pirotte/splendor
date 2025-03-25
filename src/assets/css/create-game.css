@@ -1,24 +1,25 @@
-header{
-
-    margin-left: 45%;
+#pageLayout {
+    display: flex;
+    flex-flow: column nowrap;
+    min-height: 100vh;
 }
-nav{
-    height: 4rem ;
+header {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    margin: 2rem 0.5rem 2rem 2rem;
 }
-nav #left-side{
-    float: left;
-    margin-top: 0.5rem;
-    margin-left: 0.5rem;
+img {
+    max-width: 3rem;
 }
-nav #right-side{
-    float: right;
-    margin-top: 0.5rem;
-    margin-right: 0.5rem;
+main {
+    flex: 1 0 auto;
 }
 p{
    display: inline-block;
 }
 h1{
+   margin-left: 45%;
     font-size: 2.5rem;
 }
 form{
@@ -32,7 +33,15 @@ input{
 label{
     font-size: 1.5rem;
 }
-button{
+header>button{
+
+    width: 8rem;
+}
+form>button{
     margin-top: 10rem;
     margin-left: 30%;
+}
+footer {
+    background-color: gray;
+    align-self: flex-end;
 }
