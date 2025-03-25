@@ -31,7 +31,7 @@ const hardCodedGames = {
               "Niels"
             ],
             "started": true,
-            "gameId": 1,
+            "gameId": 2,
             "gameName": "Niels games",
             "numberOfPlayers": 3,
             "returnExcessTokensRequired": false,
@@ -45,162 +45,18 @@ const hardCodedGames = {
               "Alex"
             ],
             "started": false,
-            "gameId": 1,
+            "gameId": 3,
             "gameName": "The Splendid Splendors",
             "numberOfPlayers": 4,
             "returnExcessTokensRequired": false,
             "pickNobleRequired": false
-          },
-          {
-            "players": [
-              "Alice",
-              "Bob"
-            ],
-            "started": true,
-            "gameId": 1,
-            "gameName": "The Splendid Splendors",
-            "numberOfPlayers": 2,
-            "returnExcessTokensRequired": false,
-            "pickNobleRequired": false
-          },
-          {
-            "players": [
-              "Alice",
-              "Bob"
-            ],
-            "started": true,
-            "gameId": 1,
-            "gameName": "The Splendid Splendors",
-            "numberOfPlayers": 2,
-            "returnExcessTokensRequired": false,
-            "pickNobleRequired": false
-          },
-          {
-            "players": [
-              "Alice",
-              "Bob"
-            ],
-            "started": true,
-            "gameId": 1,
-            "gameName": "The Splendid Splendors",
-            "numberOfPlayers": 2,
-            "returnExcessTokensRequired": false,
-            "pickNobleRequired": false
-          },
-          {
-            "players": [
-              "Alice",
-              "Bob"
-            ],
-            "started": true,
-            "gameId": 1,
-            "gameName": "The Splendid Splendors",
-            "numberOfPlayers": 2,
-            "returnExcessTokensRequired": false,
-            "pickNobleRequired": false
-          },
-          {
-            "players": [
-              "Alice",
-              "Bob"
-            ],
-            "started": true,
-            "gameId": 1,
-            "gameName": "The Splendid Splendors",
-            "numberOfPlayers": 2,
-            "returnExcessTokensRequired": false,
-            "pickNobleRequired": false
-          },
-          {
-            "players": [
-              "Alice",
-              "Bob"
-            ],
-            "started": true,
-            "gameId": 1,
-            "gameName": "The Splendid Splendors",
-            "numberOfPlayers": 2,
-            "returnExcessTokensRequired": false,
-            "pickNobleRequired": false
-          },
-          {
-            "players": [
-              "Alice",
-              "Bob"
-            ],
-            "started": true,
-            "gameId": 1,
-            "gameName": "The Splendid Splendors",
-            "numberOfPlayers": 2,
-            "returnExcessTokensRequired": false,
-            "pickNobleRequired": false
-          },
-          {
-            "players": [
-              "Alice",
-              "Bob"
-            ],
-            "started": true,
-            "gameId": 1,
-            "gameName": "The Splendid Splendors",
-            "numberOfPlayers": 2,
-            "returnExcessTokensRequired": false,
-            "pickNobleRequired": false
-          },
-          {
-            "players": [
-              "Alice",
-              "Bob"
-            ],
-            "started": true,
-            "gameId": 1,
-            "gameName": "The Splendid Splendors",
-            "numberOfPlayers": 2,
-            "returnExcessTokensRequired": false,
-            "pickNobleRequired": false
-          },
-          {
-            "players": [
-              "Alice",
-              "Bob"
-            ],
-            "started": true,
-            "gameId": 1,
-            "gameName": "The Splendid Splendors",
-            "numberOfPlayers": 2,
-            "returnExcessTokensRequired": false,
-            "pickNobleRequired": false
-          },
-          {
-            "players": [
-              "Alice",
-              "Bob"
-            ],
-            "started": true,
-            "gameId": 1,
-            "gameName": "The Splendid Splendors",
-            "numberOfPlayers": 2,
-            "returnExcessTokensRequired": false,
-            "pickNobleRequired": false
-          },
-          {
-            "players": [
-              "Alice",
-              "Bob"
-            ],
-            "started": true,
-            "gameId": 1,
-            "gameName": "The Splendid Splendors",
-            "numberOfPlayers": 2,
-            "returnExcessTokensRequired": false,
-            "pickNobleRequired": false
           }
   ]
-}
+};
 
 function getDummyGames(){
     return hardCodedGames;
-}
+};
 
 
-export { getDummyGames }
+export { getDummyGames };

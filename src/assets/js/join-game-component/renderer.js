@@ -1,6 +1,6 @@
 import { getDummyGames } from "./data.js";
 import { getAmountText, getGameButtonText } from "./helper.js";
-import * as objectHandler from "./object-handler.js"
+import * as objectHandler from "./object-handler.js";
 
 /* 
 This function will render the list of possible games
@@ -18,7 +18,6 @@ function renderList(){
 
         populateGame($game, game);
 
-        console.log($game)
         $gameHolder.insertAdjacentHTML("beforeend", $game.outerHTML);
     });
 
@@ -33,4 +32,4 @@ function populateGame($game, game){
 
 }
 
-export { renderList }
+export { renderList };

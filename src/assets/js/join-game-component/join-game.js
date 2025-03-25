@@ -1,7 +1,7 @@
 import { renderList } from "./renderer.js";
 
 function init(){
-    renderList()
+    renderList();
 }
 
-init()
+init();

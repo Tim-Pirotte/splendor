@@ -5,7 +5,7 @@ function getAmountText(game){
 };
 
 function getGameButtonText(game){
-    return getGameState(game) == "join" ? "Join game" : "Spectate game";
+    return getGameState(game) === "join" ? "Join game" : "Spectate game";
 };
 
-export { getAmountText, getGameButtonText }
+export { getAmountText, getGameButtonText };
