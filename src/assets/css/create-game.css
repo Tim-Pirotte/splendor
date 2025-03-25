@@ -1,0 +1,38 @@
+header{
+
+    margin-left: 45%;
+}
+nav{
+    height: 4rem ;
+}
+nav #left-side{
+    float: left;
+    margin-top: 0.5rem;
+    margin-left: 0.5rem;
+}
+nav #right-side{
+    float: right;
+    margin-top: 0.5rem;
+    margin-right: 0.5rem;
+}
+p{
+   display: inline-block;
+}
+h1{
+    font-size: 2.5rem;
+}
+form{
+    width: 20rem;
+    margin:3rem auto;
+    background-color: white;
+}
+input{
+    margin-top: 3rem;
+}
+label{
+    font-size: 1.5rem;
+}
+button{
+    margin-top: 10rem;
+    margin-left: 30%;
+}
