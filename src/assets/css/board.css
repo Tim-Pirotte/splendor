@@ -71,18 +71,19 @@ section header {
 }
 
 /* DECKS */
-.decks > li > * {
-    display: inline-block;
+.decks > li {
+    display: flex;
 }
 
 .decks > li > ul {
-    width: 75%;
+    flex: 0 1 80%;
     display: flex;
+    justify-content: space-between;
 }
 
 /* CARD */
 .card {
-    width: 20%;
+    flex: 0 1 20%;
     aspect-ratio: 70 / 100;
     position: relative;
 }
@@ -139,6 +140,10 @@ section header {
 }
 
 /* DECK CARDS */
+.decks > li > picture {
+    flex: 0 1 20%;
+}
+
 .decks > li > picture img {
     width: 90%;
 }
