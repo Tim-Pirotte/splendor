@@ -1,5 +1,5 @@
 import {loadAvatar, loadUsername, storeUsername} from "./helper.js";
-import {renderSelectableAvatars} from "./renderer";
+import {renderSelectableAvatars} from "./renderer.js";
 
 function init() {
     renderSelectableAvatars();
