@@ -1,10 +1,15 @@
 import { soundButtonImagesPaths } from "./sound-Component-config.js";
 import * as localStorageAbstractor from "../data-connector/local-storage-abstractor.js"
+import {loadFromStorage} from "../data-connector/local-storage-abstractor.js";
 
+function init () {
+    setupSound();
+    document.querySelector(".sound-button").addEventListener("click", toggleSound)
+}
 function setupSound() {
-    const soundEnabled = localStorageAbstractor.loadFromStorage(soundEnabled);
+    const soundEnabled = localStorageAbstractor.loadFromStorage("soundEnabled");
     if (soundEnabled === null) {
-        localStorageAbstractor.saveToStorage("false");
+        localStorageAbstractor.saveToStorage("soundEnabled", "false");
     } else if (soundEnabled === "true") {
         setSoundButtonImgSource(getSoundStatus(soundEnabled));
     }
@@ -27,11 +32,23 @@ function getSoundImagePath(fromIndex, extension, soundStatus) {
 }
 
 function getSoundStatus(soundEnabled) {
-    if (soundEnabled) {
+    if (soundEnabled === "true") {
         return "enabled";
     } else {
         return "disabled";
     }
 }
 
-setupSound()
+function toggleSound() {
+    const previousSoundStatus = localStorageAbstractor.loadFromStorage("soundEnabled");
+    if(previousSoundStatus === false) {
+        localStorageAbstractor.saveToStorage("soundEnabled", "true");
+        setSoundButtonImgSource("enabled")
+    } else {
+        localStorageAbstractor.saveToStorage("soundEnabled", "false");
+        setSoundButtonImgSource("disabled")
+    }
+
+}
+
+init()
