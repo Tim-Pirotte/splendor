@@ -16,6 +16,7 @@ function renderOtherPlayers(otherPlayers) {
   for (const otherPlayer of otherPlayers) {
     const $playerCard = $template.content.firstElementChild.cloneNode(true);
     $playerCard.querySelector(".name").textContent = otherPlayer.name;
+    $playerCard.querySelector(".points").textContent = otherPlayer.totalPrestigePoints;
 
     $otherPlayerContainer.appendChild($playerCard);
   }
