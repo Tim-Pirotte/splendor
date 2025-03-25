@@ -1,5 +1,6 @@
 import {loadFromStorage} from "../data-connector/local-storage-abstractor.js";
 import {tokensDummyData} from "./dummy-data.js";
+import {insertImageInto} from "./helper.js";
 
 const mapTokens = {
   "Emerald": "green",
@@ -26,10 +27,11 @@ function renderOtherPlayers(otherPlayers) {
   for (const otherPlayer of otherPlayers) {
     const $playerCard = $template.content.firstElementChild.cloneNode(true);
     $playerCard.querySelector(".name").textContent = otherPlayer.name;
-    $playerCard.querySelector(".points").textContent = otherPlayer.totalPrestigePoints;
+    $playerCard.querySelector(".points").textContent = otherPlayer.totalPrestigePoints + " pts.";
 
     renderTokenList($playerCard.querySelector(".tokens"), otherPlayer.tokens);
     renderCardList($playerCard.querySelector(".cards"), otherPlayer.bonuses);
+    renderReservedList($playerCard.querySelector(".reserved"), otherPlayer.reserve);
 
     $otherPlayerContainer.appendChild($playerCard);
   }
@@ -37,35 +39,30 @@ function renderOtherPlayers(otherPlayers) {
 
 function renderTokenList(containerToInsertInto, tokenAmounts) {
   const $numberedItemTemplate = document.querySelector("#numbered-item-template");
-  const $imageTemplate = document.querySelector("#image-template");
 
   for (const token of tokensDummyData.gems) {
     const $token = $numberedItemTemplate.content.firstElementChild.cloneNode(true);
-    const $image = $imageTemplate.content.firstElementChild.cloneNode(true);
     $token.querySelector(".amount").textContent = tokenAmounts[token] || 0;
-    $image.querySelector("source").srcset = "../assets/images/UI/tokens/" + mapTokens[token] + "_chip.webp";
-    $image.querySelector("img").src = "../assets/images/fallback/UI/tokens/" + mapTokens[token] + "_chip.png";
-    $token.insertAdjacentHTML("beforeend", $image.outerHTML);
+    insertImageInto($token, "UI/tokens/" + mapTokens[token] + "_chip");
     containerToInsertInto.appendChild($token);
   }
 }
 
 function renderCardList(containerToInsertInto, cardAmounts) {
   const $numberedItemTemplate = document.querySelector("#numbered-item-template");
-  const $imageTemplate = document.querySelector("#image-template");
 
   for (const cardType of tokensDummyData.gems) {
     if (cardType !== "Gold") {
       const $card = $numberedItemTemplate.content.firstElementChild.cloneNode(true);
-      const $image = $imageTemplate.content.firstElementChild.cloneNode(true);
       $card.querySelector(".amount").textContent = cardAmounts[cardType] || 0;
-      $image.querySelector("source").srcset = "../assets/images/UI/cards/" + mapTokens[cardType] + "_card_small.webp";
-      $image.querySelector("img").src = "../assets/images/fallback/UI/cards/" + mapTokens[cardType] + "_card_small.png";
-
-      $card.insertAdjacentHTML("beforeend", $image.outerHTML);
+      insertImageInto($card, "UI/cards/" + mapTokens[cardType] + "_card_small");
       containerToInsertInto.appendChild($card);
     }
   }
+}
+
+function renderReservedList(containerToInsertInto, reservedCards) {
+
 }
 
 export { renderPage };
