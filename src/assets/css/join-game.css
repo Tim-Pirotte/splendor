@@ -4,11 +4,21 @@ body {
     background-color: white;
 }
 
+#pageLayout {
+    display: flex;
+    flex-flow: column nowrap;
+    min-height: 100vh;
+}
+
 header {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
     margin: 2rem 2rem;
+}
+
+main {
+    flex: 1 0 auto;
 }
 
 
@@ -66,6 +76,7 @@ li h3 {
 
 footer {
     background-color: gray;
+    align-self: flex-end;
 }
 
 img {
