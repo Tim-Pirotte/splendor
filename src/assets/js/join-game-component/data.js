@@ -56,7 +56,7 @@ const hardCodedGames = {
 
 function getDummyGames(){
     return hardCodedGames;
-};
+}
 
 
 export { getDummyGames };
