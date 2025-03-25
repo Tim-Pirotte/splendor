@@ -14,11 +14,11 @@ body > section {
 
 main {
     display: grid;
-    grid-template-columns: 60% 20% 20%;
+    grid-template-columns: 60% 20% 6% 14%;
     grid-template-rows: 80% 5% 15%;
-    grid-template-areas:    "decks board-tokens nobles"
-                            "player-points player-tokens player-tokens"
-                            "reserved-cards player-tokens player-tokens";
+    grid-template-areas:    "decks board-tokens nobles timer"
+                            "player-points player-tokens player-tokens action-button"
+                            "reserved-cards player-tokens player-tokens action-button";
 }
 
 .decks {
@@ -205,4 +205,21 @@ section header picture {
 .player-tokens li {
     display: flex;
     gap: 0.5rem;
+}
+
+/* TIMER */
+progress {
+    grid-area: timer;
+    transform: rotate(90deg);
+    margin: auto 0;
+}
+
+/* Action button */
+.action-button {
+    grid-area: action-button;
+    height: 2rem;
+    width: fit-content;
+    margin-top: auto;
+    margin-left: auto;
+    margin-right: auto;
 }
