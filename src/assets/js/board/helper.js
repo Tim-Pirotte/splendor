@@ -1,10 +1,12 @@
 import {CHIP_SPACING} from "./config.js";
 
-function insertImageInto($container, standardPath, before=false) {
+function insertImageInto($container, standardPath, before=false, alt="TODO") {
   const $image = document.querySelector("#image-template").content.firstElementChild.cloneNode(true);
 
   $image.querySelector("source").srcset = "../assets/images/" + standardPath + ".webp";
-  $image.querySelector("img").src = "../assets/images/fallback/" + standardPath + ".png";
+  const $img = $image.querySelector("img");
+  $img.src = "../assets/images/fallback/" + standardPath + ".png";
+  $img.alt = $img.title = alt;
 
   let position = "beforeend";
   if (before) {
