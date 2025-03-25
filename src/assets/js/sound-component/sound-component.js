@@ -42,7 +42,7 @@ function getSoundStatus(soundEnabled) {
 
 function toggleSound() {
     const previousSoundStatus = localStorageAbstractor.loadFromStorage("soundEnabled");
-    if(previousSoundStatus === false) {
+    if(previousSoundStatus === "false") {
         localStorageAbstractor.saveToStorage("soundEnabled", "true");
         setSoundButtonImgSource("enabled")
     } else {
