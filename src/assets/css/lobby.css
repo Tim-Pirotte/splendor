@@ -1,3 +1,7 @@
+picture {
+    vertical-align: middle;
+}
+
 body {
     padding-top: 2rem;
     background-color: white;
@@ -29,4 +33,9 @@ h2 {
 header ion-icon {
     font-size: 2.5rem;
     color: black;
+}
+
+footer #Toggle-sound-button{
+    background-color: transparent;
+    border: none;
 }
