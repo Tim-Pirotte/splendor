@@ -1,23 +1,20 @@
-import { soundButtonImagesPaths } from "./sound-Component-config.js";
-import * as localStorageAbstractor from "../data-connector/local-storage-abstractor.js"
-import {loadFromStorage} from "../data-connector/local-storage-abstractor.js";
+import {loadFromStorage, saveToStorage} from "../data-connector/local-storage-abstractor.js"
 
 function init () {
     setupSound();
     document.querySelector(".sound-button").addEventListener("click", toggleSound)
 }
 function setupSound() {
-    console.log('test')
-    const soundEnabled = localStorageAbstractor.loadFromStorage("soundEnabled");
-    if (soundEnabled === null) {
-        localStorageAbstractor.saveToStorage("soundEnabled", "false");
-    } else if (soundEnabled === "true") {
-        setSoundButtonImgSource(getSoundStatus(soundEnabled));
+    const sound = loadFromStorage("sound");
+    if (sound === null) {
+        saveToStorage("sound", "off");
+    } else if (sound === "on") {
+        setSoundButtonImgSource(sound);
     }
 }
 
 function setSoundButtonImgSource(soundStatus) {
-    const isFromIndex = document.querySelector(".sound-button").dataset.index === "True";
+    const isFromIndex = document.querySelector(".sound-button").dataset.index === "true";
     document.querySelector(".sound-button source")
     .setAttribute("srcset", getSoundImagePath(isFromIndex,"webp", soundStatus));
     document.querySelector(".sound-button img")
@@ -25,31 +22,33 @@ function setSoundButtonImgSource(soundStatus) {
 }
 
 function getSoundImagePath(fromIndex, extension, soundStatus) {
-    if (fromIndex) {
-        return soundButtonImagesPaths[extension][soundStatus];
-    } else {
-        return `.${soundButtonImagesPaths[extension][soundStatus]}`;
-    }
+    return `${getSourcePrefix(fromIndex)}./assets/images/${insertFallbackIntoPathIfNeeded(extension)}UI/sound_${soundStatus}.${extension}`;
 }
 
-function getSoundStatus(soundEnabled) {
-    if (soundEnabled === "true") {
-        return "enabled";
+function getSourcePrefix(fromIndex) {
+    if (fromIndex) {
+        return "";
     } else {
-        return "disabled";
+        return ".";
+    }
+}
+function insertFallbackIntoPathIfNeeded(extension) {
+    if (extension === "png") {
+        return "fallback/";
+    } else {
+        return "";
     }
 }
 
 function toggleSound() {
-    const previousSoundStatus = localStorageAbstractor.loadFromStorage("soundEnabled");
-    if(previousSoundStatus === "false") {
-        localStorageAbstractor.saveToStorage("soundEnabled", "true");
-        setSoundButtonImgSource("enabled")
+    const previousSoundStatus = loadFromStorage("sound");
+    if(previousSoundStatus === "off") {
+        saveToStorage("sound", "on");
+        setSoundButtonImgSource("on");
     } else {
-        localStorageAbstractor.saveToStorage("soundEnabled", "false");
-        setSoundButtonImgSource("disabled")
+        saveToStorage("sound", "off");
+        setSoundButtonImgSource("off");
     }
-
 }
 
-init()
+init();
