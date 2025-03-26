@@ -6,8 +6,6 @@ function init(){
 
     document.querySelector("form").addEventListener("submit", handleCreateGameSubmit);
 
-    //saveToStorage("playerName", "Johny");
-
 }
 
 function handleCreateGameSubmit(e){
@@ -35,10 +33,15 @@ function createGame(gameName, visibility, amountOfPlayers){
 
     fetchFromServer("/games", "POST", body)
     .then(data => {
-        // Rederict to the loby page
-        location.href = "./lobby-page.html"
+
+       // Save the data to localstorage
+       saveToStorage("gameId", data["gameId"]);
+       saveToStorage("playerToken", data["playerToken"]);
+
+       // Rederict to the loby page
+       location.href = "./lobby-page.html"
     });
-    
+
 }
 
 init();
