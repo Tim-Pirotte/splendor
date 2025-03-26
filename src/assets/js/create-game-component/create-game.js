@@ -1,9 +1,11 @@
 import { fetchFromServer } from "../data-connector/api-communication-abstractor.js";
-import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
+import { saveToStorage, loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 
 function init(){
 
     document.querySelector("form").addEventListener("submit", createGame);
+
+    //saveToStorage("playerName", "Johny");
 
 }
 
@@ -15,9 +17,11 @@ function createGame(e){
 
     const gameName = document.querySelector("#game-name").value.trim(); // Adding the trim() to remove the extra spaces
     const visibility = getCheckedRadioValue(visibilityList);
-    const amountOfPlayers = getCheckedRadioValue(amountOfPlayersList);
+    const amountOfPlayers = parseInt(getCheckedRadioValue(amountOfPlayersList));
 
     createGameOnServer(gameName, visibility, amountOfPlayers);
+
+    // Redirect naar de loby page
 }
 
 function getCheckedRadioValue(radioButtonList){
@@ -58,7 +62,8 @@ function createGameOnServer(gameName, visibility, amountOfPlayers){
 
     console.log(body);
 
-    //fetchFromServer("/game", "POST", body)
+    fetchFromServer("/games", "POST", body)
+    .then(data => console.log(`Succeded the game creation ${data}`));
 }
 
 init();
