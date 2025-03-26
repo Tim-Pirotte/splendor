@@ -18,6 +18,10 @@ function getCurrentPlayer() {
   }
 }
 
+function getGameCreator() {
+  return loadFromStorage("gameData")["players"][0];
+}
+
 function hasGameStarted() {
   return "started" in loadFromStorage("gameData");
 }
@@ -46,4 +50,4 @@ function initGameStatusInterface() {
   $actionButton.addEventListener("click", actionRegistryRouter);
 }
 
-export {isCurrentlyPlaying, initGameStatusInterface, setActionButtonState};
+export {isCurrentlyPlaying, initGameStatusInterface, setActionButtonState, getGameCreator};

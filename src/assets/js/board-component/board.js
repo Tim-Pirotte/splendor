@@ -1,5 +1,5 @@
 import {getGems, updateGameData} from "./game-data-handler.js";
-import {initGameStatusInterface, setActionButtonState} from "./game-status-interface.js";
+import {getGameCreator, initGameStatusInterface, setActionButtonState} from "./game-status-interface.js";
 
 function init() {
   getGems();
