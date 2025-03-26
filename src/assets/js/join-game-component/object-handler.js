@@ -19,4 +19,4 @@ function getMaxUsersAmount(game){
 }
 
 
-export { getGameState, getGameName, getGameId, getCurrentUsersAmount, getMaxUsersAmount };
+export {getGameState, getGameName, getGameId, getCurrentUsersAmount, getMaxUsersAmount};
