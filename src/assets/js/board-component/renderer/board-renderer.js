@@ -32,10 +32,7 @@ function renderBoardTokens(unclaimedTokens, playerLength) {
   for (const token of tokensDummyData.gems.reverse()) {
     const $boardToken = $numberedItemTemplate.content.firstElementChild.cloneNode(true);
 
-    let maxTokens = getMaxTokens(playerLength);
-    if (token === "Gold") {
-      maxTokens = 5;
-    }
+    const maxTokens = getMaxTokens(playerLength, token);
 
     $boardToken.querySelector(".amount").textContent = `${unclaimedTokens[token]}/${maxTokens}`;
     insertImageInto($boardToken, `UI/tokens/${TOKEN_MAPPER[token]}_chip`, false, `${TOKEN_MAPPER[token]} chip`);

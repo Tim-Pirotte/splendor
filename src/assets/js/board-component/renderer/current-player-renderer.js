@@ -46,6 +46,11 @@ function countTokens(tokens) {
     return Object.values(tokens).reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 }
 
+function insertCardCounter($token, token, currentPlayerBonuses) {
+    insertImageInto($token, `UI/cards/${TOKEN_MAPPER[token]}_card_small`, true, `${TOKEN_MAPPER[token]} card`);
+    $token.insertAdjacentHTML("afterbegin", `<p>${currentPlayerBonuses[token] || 0}</p>`)
+}
+
 function renderCurrentPlayerTokens(currentPlayerTokens, currentPlayerBonuses) {
     const $currentPlayerTokensContainer = document.querySelector(".player-tokens ul");
 
@@ -57,8 +62,7 @@ function renderCurrentPlayerTokens(currentPlayerTokens, currentPlayerBonuses) {
         const $progressBar = $progressBarTemplate.content.firstElementChild.cloneNode(true);
 
         if (token !== "Gold") {
-            insertImageInto($token, `UI/cards/${TOKEN_MAPPER[token]}_card_small`, true, `${TOKEN_MAPPER[token]} card`);
-            $token.insertAdjacentHTML("afterbegin", `<p>${currentPlayerBonuses[token] || 0}</p>`)
+            insertCardCounter($token, token, currentPlayerBonuses);
         }
 
         $token.querySelector(".amount").textContent = currentPlayerTokens[token] || 0;
