@@ -8,7 +8,7 @@ function renderList(){
 
     $container.innerHTML = "";
 
-    fetchFromServer("/games")
+    fetchFromServer(`/games`, `GET`)
         .then(gameObject => gameObject['games'].forEach(game => populateGame($template, $container, game)))
         .catch(error => console.error(error));
 }
