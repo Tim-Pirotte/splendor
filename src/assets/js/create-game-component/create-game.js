@@ -33,12 +33,12 @@ function createGame(gameName, visibility, amountOfPlayers){
     const playerName = loadFromStorage("playerName");
     const body = formGameBody(playerName, gameName, visibility, amountOfPlayers);
 
-    console.log(body);
-
     fetchFromServer("/games", "POST", body)
     .then(data => {
         // Rederict to the loby page
+        location.href = "./lobby-page.html"
     });
+    
 }
 
 init();
