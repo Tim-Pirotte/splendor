@@ -58,6 +58,7 @@ function renderCurrentPlayerTokens(currentPlayerTokens, currentPlayerBonuses, ge
 
     for (const token of gems.toReversed()) {
         const $token = $numberedItemTemplate.content.firstElementChild.cloneNode(true);
+
         const $progressBar = $progressBarTemplate.content.firstElementChild.cloneNode(true);
 
         if (token !== "Gold") {
