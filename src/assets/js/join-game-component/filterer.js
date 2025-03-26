@@ -1,3 +1,5 @@
+import { renderFilteredList } from "./renderer.js";
+
 function filterGameList(gameList){
 
     const amountValue = parseInt(document.querySelector("#amount-filter").value);
@@ -6,8 +8,10 @@ function filterGameList(gameList){
     const gameName = document.querySelector("#game-name").value;
     const nameFilteredSet = filterOnName(gameList, gameName);
 
-    console.log(peopleFilteredSet);
-    console.log(nameFilteredSet);
+    const resultList = Array.from(peopleFilteredSet.intersection(nameFilteredSet));
+    
+    // Render the resultList
+    renderFilteredList(resultList);
 }
 
 function filterOnPeopleAmount(gameList, amount){
