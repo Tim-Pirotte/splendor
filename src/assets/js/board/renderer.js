@@ -16,6 +16,7 @@ function renderPage(gameData) {
     renderClientUser();
     renderOtherPlayers(gameData.players);
     renderCards(gameData.market);
+    renderBoardTokens(gameData.unclaimedTokens, gameData.players.length);
     renderCurrentPlayer(gameData.players);
 }
 
@@ -116,7 +117,7 @@ function renderCurrentPlayerTokens(currentPlayerTokens, currentPlayerBonuses) {
     const $numberedItemTemplate = document.querySelector("#numbered-item-template");
     const $progressBarTemplate = document.querySelector("#progress-bar-template");
 
-    for (const token of tokensDummyData.gems.reverse()) {
+    for (const token of tokensDummyData.gems) {
         const $token = $numberedItemTemplate.content.firstElementChild.cloneNode(true);
         const $progressBar = $progressBarTemplate.content.firstElementChild.cloneNode(true);
 
@@ -169,6 +170,35 @@ function renderCurrentPlayer(players) {
 
             renderCurrentPlayerTokens(player.tokens, player.bonuses);
         }
+    }
+}
+
+function getMaxTokens(playerLength) {
+    if (playerLength === 2) {
+        return 4;
+    } else if (playerLength === 3) {
+        return 5;
+    } else {
+        return 7;
+    }
+}
+
+function renderBoardTokens(unclaimedTokens, playerLength) {
+    const $boardTokensContainer = document.querySelector(".board-tokens");
+
+    const $numberedItemTemplate = document.querySelector("#numbered-item-template");
+
+    for (const token of tokensDummyData.gems.reverse()) {
+        const $boardToken = $numberedItemTemplate.content.firstElementChild.cloneNode(true);
+
+        let maxTokens = getMaxTokens(playerLength);
+        if (token === "Gold") {
+            maxTokens = 5;
+        }
+
+        $boardToken.querySelector(".amount").textContent = `${unclaimedTokens[token]}/${maxTokens}`;
+        insertImageInto($boardToken, `UI/tokens/${mapTokens[token]}_chip`, false, mapTokens[token] + " chip")
+        $boardTokensContainer.appendChild($boardToken);
     }
 }
 
