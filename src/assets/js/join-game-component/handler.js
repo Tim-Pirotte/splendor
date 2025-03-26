@@ -1,5 +1,6 @@
 import {fetchFromServer} from "../data-connector/api-communication-abstractor.js";
 import {loadFromStorage, saveToStorage} from "../data-connector/local-storage-abstractor.js";
+import { filterGameList } from "./filterer.js";
 
 function playerJoinGame(e) {
     e.preventDefault();
@@ -15,4 +16,12 @@ function playerJoinGame(e) {
         .catch(error => console.error(error));
 }
 
-export {playerJoinGame};
+
+function handleFilterChange(e){
+    e.preventDefault();
+
+    console.log("We need to render the list again because we changed the filter data");
+}
+
+
+export {playerJoinGame, handleFilterChange};

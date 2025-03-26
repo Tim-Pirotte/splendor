@@ -4,20 +4,17 @@ import {fetchFromServer} from "../data-connector/api-communication-abstractor.js
 import { filterGameList } from "./filterer.js";
 
 function renderList(){
-    
-    fetchFromServer(`/games`, `GET`)
-        .then(gameObject => filterGameList(gameObject['games']))
-        .catch(error => console.error(error));
-}
 
-function renderFilteredList(gameList){
     const $template = document.querySelector("#game-template");
     const $container = document.querySelector("ul");
 
     $container.innerHTML = "";
-
-    gameList.forEach(game => populateGame($template, $container, game));
+    
+    fetchFromServer(`/games`, `GET`)
+        .then(gameObject => gameObject['games'].forEach(game => populateGame($template, $container, game)))
+        .catch(error => console.error(error));
 }
+
 
 function populateGame($template, $container, game){
     const $game = $template.content.firstElementChild.cloneNode(true);
@@ -33,4 +30,4 @@ function populateGame($template, $container, game){
     $container.insertAdjacentHTML("beforeend", $game.outerHTML);
 }
 
-export {renderList, renderFilteredList};
+export {renderList};
