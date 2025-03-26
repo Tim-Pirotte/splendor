@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="assets/css/main-menu.css">
 
     <script src="assets/js/main-menu-component/index.js" type="module"></script>
+    <script src="assets/js/sound-component/sound-component.js" type="module"></script>
 </head>
 <body>
     <noscript>
@@ -51,6 +52,14 @@
                 </div>
             </form>
         </main>
+        <footer>
+            <button type="button" class="sound-button" data-index="true">
+                <picture>
+                    <source srcset="./assets/images/UI/sound_off.webp" type="image/webp">
+                    <img src="./assets/images/fallback/UI/sound_off.png" title="sound button" alt="sound button">
+                </picture>
+            </button>
+        </footer>
     </div>
 </body>
 </html>
