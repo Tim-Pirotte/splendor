@@ -1,6 +1,7 @@
 import * as objectHandler from "./object-handler.js";
 import {getAmountText, getGameButtonText} from "./helper.js";
 import {fetchFromServer} from "../data-connector/api-communication-abstractor.js";
+import { filterGameList } from "./filterer.js";
 
 function renderList(){
     const $template = document.querySelector("#game-template");
@@ -9,7 +10,7 @@ function renderList(){
     $container.innerHTML = "";
 
     fetchFromServer(`/games`, `GET`)
-        .then(gameObject => gameObject['games'].forEach(game => populateGame($template, $container, game)))
+        .then(gameObject => filterGameList(gameObject['games'])) //populateGame($template, $container, game))
         .catch(error => console.error(error));
 }
 
