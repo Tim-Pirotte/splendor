@@ -110,6 +110,23 @@ function countTokens(tokens) {
     return Object.values(tokens).reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 }
 
+function renderCurrentPlayerTokens(currentPlayerTokens) {
+    const $currentPlayerTokensContainer = document.querySelector(".player-tokens ul");
+
+    const $numberedItemTemplate = document.querySelector("#numbered-item-template");
+    const $progressBarTemplate = document.querySelector("#progress-bar-template");
+
+    for (const token of tokensDummyData.gems) {
+        const $token = $numberedItemTemplate.content.firstElementChild.cloneNode(true);
+        const $progressBar = $progressBarTemplate.content.firstElementChild.cloneNode(true);
+        $token.querySelector(".amount").textContent = currentPlayerTokens[token] || 0;
+        insertImageInto($token, "UI/tokens/" + mapTokens[token] + "_chip", false, mapTokens[token] + " chip");
+        renderProgressBar($progressBar, currentPlayerTokens[token], mapTokens[token]);
+        $token.appendChild($progressBar);
+        $currentPlayerTokensContainer.appendChild($token);
+    }
+}
+
 function renderCurrentPlayer(players) {
     const currentPlayerName = loadFromStorage("username");
     for (const player of players) {
@@ -142,6 +159,8 @@ function renderCurrentPlayer(players) {
             }
 
             document.querySelector(".player-tokens h4").textContent = countTokens(player.tokens) + " / " + MAX_TOKENS_ALLOWED;
+
+            renderCurrentPlayerTokens(player.tokens);
         }
     }
 }
