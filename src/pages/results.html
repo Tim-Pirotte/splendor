@@ -29,32 +29,24 @@
         <div>
             <h1>DEFEAT!</h1>
             <button type="button">Back to the lobby</button>
-            <ol>
-                <table>
-                    <thead>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Positie</th>
+                        <th>Naam</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template id="result-template">
                         <tr>
-                            <th>Positie</th>
-                            <th>Naam</th>
-                            <th>Score</th>
+                            <td class="place"></td>
+                            <td class="name"></td>
+                            <td class="score"></td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <template id="result-template">
-                            <tr>
-                                <td class="place"></td>
-                                <td class="name"></td>
-                                <td class="score"></td>
-                            </tr>
-                        </template>
-                    </tbody>
-                </table>
-                <template id="result-template">
-                    <li>
-                        <p class="result-user"></p>
-                        <p class="result-score"></p>
-                    </li>
-                </template>
-            </ol>
+                    </template>
+                </tbody>
+            </table>
         </div>
     </main>
     <footer>
