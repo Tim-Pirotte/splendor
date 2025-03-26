@@ -1,4 +1,4 @@
-import * as objectHandler from "./object-handler.js";
+import * as objectHandler from "../general-logic/object-handler.js";
 import {getAmountText, getGameButtonText} from "./helper.js";
 import {fetchFromServer} from "../data-connector/api-communication-abstractor.js";
 
