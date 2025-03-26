@@ -6,7 +6,7 @@ import {hasGameStarted} from "../general-logic/object-handler.js";
 function loadLobbyInformation() {
     fetchFromServer(`/games/${loadFromStorage("gameId")}`, `GET`)
         .then(gameObject => {
-            if (hasGameStarted(gameObject)) {
+            if (!hasGameStarted(gameObject)) {
                 renderHeader(gameObject);
                 renderPlayers(gameObject);
                 renderPlayerCount(gameObject);
