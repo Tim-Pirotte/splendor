@@ -1,5 +1,7 @@
+import {processTakeTokenClick} from "./token/token-handler.js";
+
 const ACTION_REGISTRY = {
-  takeTokens: () => alert(1),
+  processTakeTokenClick: () => processTakeTokenClick(),
 };
 
 export {ACTION_REGISTRY};
