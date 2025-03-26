@@ -59,8 +59,8 @@ function renderCard($container, points, bonus, costs) {
 }
 
 function safeEmptyContainer($container) {
-  $container.querySelectorAll("> *").forEach($childElement => {
-    console.log($childElement);
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/:scope
+  $container.querySelectorAll(":scope> *").forEach($childElement => {
     if ($childElement.tagName.toLowerCase() !== "template") {
       $childElement.outerHTML = "";
     }

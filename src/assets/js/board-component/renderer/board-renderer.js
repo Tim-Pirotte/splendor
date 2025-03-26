@@ -36,6 +36,7 @@ function getMaxTokens(playerLength, tokenType) {
 
 function renderBoardTokens(unclaimedTokens, playerLength, gems) {
   const $boardTokensContainer = document.querySelector(".board-tokens");
+  safeEmptyContainer($boardTokensContainer);
 
   const $numberedItemTemplate = document.querySelector("#numbered-item-template");
 
@@ -56,6 +57,7 @@ function renderBoardTokens(unclaimedTokens, playerLength, gems) {
 
 function renderNobles(unclaimedNobles) {
   const $noblesContainer = document.querySelector(".nobles");
+  safeEmptyContainer($noblesContainer);
 
   const $nobleTemplate = document.querySelector("#noble-template");
 

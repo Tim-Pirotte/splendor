@@ -1,11 +1,13 @@
 import {loadFromStorage} from "../../data-connector/local-storage-abstractor.js";
-import {formatNumber, insertImageInto} from "./helper.js";
+import {formatNumber, insertImageInto, safeEmptyContainer} from "./helper.js";
 import {TOKEN_MAPPER} from "../config.js";
 
 function renderOtherPlayers(otherPlayers, gems) {
   const currentPlayerName = loadFromStorage("playerName");
 
   const $otherPlayerContainer = document.querySelector(".other-players");
+  safeEmptyContainer($otherPlayerContainer);
+
   const $template = document.querySelector("#other-player-card-template");
 
   for (const otherPlayer of otherPlayers) {

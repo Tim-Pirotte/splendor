@@ -11,6 +11,8 @@ function handleGameDataError(err) {
   if (statusCode === forbidden || statusCode === unauthorized) {
     location.href = "../index.html";
   }
+
+  console.error(err);
 }
 
 function updateGameData() {

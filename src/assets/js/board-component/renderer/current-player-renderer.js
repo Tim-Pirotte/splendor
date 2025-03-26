@@ -1,6 +1,6 @@
 import {loadFromStorage} from "../../data-connector/local-storage-abstractor.js";
 import {MAX_TOKENS_ALLOWED, PRESTIGE_POINTS_NEEDED_TO_WIN, TOKEN_MAPPER} from "../config.js";
-import {formatNumber, insertImageInto, renderCard, renderProgressBar} from "./helper.js";
+import {formatNumber, insertImageInto, renderCard, renderProgressBar, safeEmptyContainer} from "./helper.js";
 
 function renderHeader() {
     document.querySelector(".top-bar h2").textContent = loadFromStorage("playerName");
@@ -22,6 +22,7 @@ function renderCurrentPlayerPoints(currentPlayer) {
 
 function renderCurrentPlayerReserve(currentPlayer) {
     const $reserved = document.querySelector(".reserved-cards ul");
+    safeEmptyContainer($reserved);
 
     for (const card of currentPlayer["reserve"]) {
         renderCard($reserved, card["prestigePoints"], card["bonus"], card["cost"]);
@@ -52,6 +53,7 @@ function insertCardCounter($token, token, currentPlayerBonuses) {
 
 function renderCurrentPlayerTokens(currentPlayerTokens, currentPlayerBonuses, gems) {
     const $currentPlayerTokensContainer = document.querySelector(".player-tokens ul");
+    safeEmptyContainer($currentPlayerTokensContainer);
 
     const $numberedItemTemplate = document.querySelector("#numbered-item-template");
     const $progressBarTemplate = document.querySelector("#progress-bar-template");
