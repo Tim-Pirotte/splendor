@@ -1,5 +1,7 @@
+import {loadHeader} from "./handler.js";
+
 function init() {
-    console.log("Hello World");
+    loadHeader();
 }
 
 init();
