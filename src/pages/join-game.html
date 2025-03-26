@@ -14,6 +14,11 @@
     <link rel="stylesheet" href="./../assets/css/reset.css">
     <link rel="stylesheet" href="./../assets/css/screen.css">
     <link rel="stylesheet" href="./../assets/css/join-game.css">
+
+    <!-- Test for the render function-->
+     <script type="module" src="./../assets/js/join-game-component/join-game.js"></script>
+    <script src="../assets/js/sound-component/sound-component.js" type="module"></script>
+
 </head>
 
 <body>
@@ -88,8 +93,10 @@
 
                     <template id="game-template">
                         <li data-gameState="">
-                            <h3></h3>
-                            <p class="game-id"></p>
+                            <div class="game-info">
+                                <h3></h3>
+                                <p class="game-id"></p>
+                            </div>
                             <p class="amount-of-players"></p>
                             <button type="button"></button>
                         </li>
@@ -100,10 +107,10 @@
         </main>
 
         <footer>
-            <button type="button">
+            <button type="button" class="sound-button">
                 <picture>
-                    <source srcset="../assets/images/no-image-demo.jpg" type="image/webp">
-                    <img src="../assets/images/no-image-demo.jpg" title="sound button" alt="sound button">
+                    <source srcset="../assets/images/UI/sound_off.webp" type="image/webp">
+                    <img src="../assets/images/fallback/UI/sound_off.png" title="sound button" alt="sound button">
                 </picture>
             </button>
 
