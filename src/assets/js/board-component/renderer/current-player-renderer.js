@@ -11,9 +11,9 @@ function renderCurrentPlayer(players) {
   const currentPlayerName = loadFromStorage("username");
   for (const player of players) {
     if (player.name === currentPlayerName) {
-      document.querySelector(".player-points p").textContent = formatNumber(player.totalPrestigePoints) + "/" + PRESTIGE_POINTS_NEEDED_TO_WIN;
+      document.querySelector(".player-points p").textContent = `${formatNumber(player.totalPrestigePoints)}  / ${PRESTIGE_POINTS_NEEDED_TO_WIN}`;
 
-      renderProgressBar(document.querySelector(".player-points .progress-bar"), player.totalPrestigePoints, "red");
+      renderProgressBar(document.querySelector(".player-points .progress-bar"), player.totalPrestigePoints, "score");
 
       const $numberedItemTemplate = document.querySelector("#numbered-item-template");
       const $cardTemplate = document.querySelector("#card-template");
@@ -28,17 +28,17 @@ function renderCurrentPlayer(players) {
         for (const [type, cost] of Object.entries(card.cost)) {
           const $costItem = $numberedItemTemplate.content.firstElementChild.cloneNode(true);
           $costItem.querySelector(".amount").textContent = cost;
-          insertImageInto($costItem, "UI/tokens/" + TOKEN_MAPPER[type] + "_chip", true, TOKEN_MAPPER[type] + " chip");
+          insertImageInto($costItem, `UI/tokens/${TOKEN_MAPPER[type]}_chip`, true, `${TOKEN_MAPPER[type]} chip`);
           $cardCost.appendChild($costItem);
         }
 
-        insertImageInto($card, "cards/empty/" + TOKEN_MAPPER[card.bonus] + "_empty_card", false, TOKEN_MAPPER[card.bonus] + " card");
+        insertImageInto($card, `cards/empty/${TOKEN_MAPPER[card.bonus]}_empty_card`, false, `${TOKEN_MAPPER[card.bonus]} card`);
         insertImageInto($card, "cards/illustrations/camel", false, "camel");
 
         $reserved.appendChild($card);
       }
 
-      document.querySelector(".player-tokens h4").textContent = formatNumber(countTokens(player.tokens)) + " / " + MAX_TOKENS_ALLOWED;
+      document.querySelector(".player-tokens h4").textContent = `${formatNumber(countTokens(player.tokens))} / ${MAX_TOKENS_ALLOWED}`;
 
       renderCurrentPlayerTokens(player.tokens, player.bonuses);
     }
@@ -60,12 +60,12 @@ function renderCurrentPlayerTokens(currentPlayerTokens, currentPlayerBonuses) {
     const $progressBar = $progressBarTemplate.content.firstElementChild.cloneNode(true);
 
     if (token !== "Gold") {
-      insertImageInto($token, "UI/cards/" + TOKEN_MAPPER[token] + "_card_small", true, TOKEN_MAPPER[token] + " card");
+      insertImageInto($token, `UI/cards/${TOKEN_MAPPER[token]}_card_small`, true, `${TOKEN_MAPPER[token]} card`);
       $token.insertAdjacentHTML("afterbegin", `<p>${currentPlayerBonuses[token] || 0}</p>`)
     }
 
     $token.querySelector(".amount").textContent = currentPlayerTokens[token] || 0;
-    insertImageInto($token, "UI/tokens/" + TOKEN_MAPPER[token] + "_chip", false, TOKEN_MAPPER[token] + " chip");
+    insertImageInto($token, `UI/tokens/${TOKEN_MAPPER[token]}_chip`, false, `${TOKEN_MAPPER[token]} chip`);
     renderProgressBar($progressBar, currentPlayerTokens[token], TOKEN_MAPPER[token]);
 
     $token.appendChild($progressBar);
