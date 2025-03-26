@@ -1,16 +1,7 @@
 import {loadFromStorage} from "../data-connector/local-storage-abstractor.js";
 import {tokensDummyData} from "./dummy-data.js";
 import {insertImageInto, renderProgressBar} from "./helper.js";
-import {MAX_TOKENS_ALLOWED, NOBLES_MAPPER, PRESTIGE_POINTS_NEEDED_TO_WIN} from "./config.js";
-
-const mapTokens = {
-    "Emerald": "green",
-    "Sapphire": "blue",
-    "Ruby": "red",
-    "Diamond": "white",
-    "Onyx": "black",
-    "Gold": "gold",
-}
+import {MAX_TOKENS_ALLOWED, NOBLES_MAPPER, PRESTIGE_POINTS_NEEDED_TO_WIN, TOKEN_MAPPER} from "./config.js";
 
 function renderPage(gameData) {
     renderClientUser();
@@ -52,7 +43,7 @@ function renderTokenList(containerToInsertInto, tokenAmounts) {
     for (const token of tokensDummyData.gems) {
         const $token = $numberedItemTemplate.content.firstElementChild.cloneNode(true);
         $token.querySelector(".amount").textContent = tokenAmounts[token] || 0;
-        insertImageInto($token, "UI/tokens/" + mapTokens[token] + "_chip", false, mapTokens[token] + " chip");
+        insertImageInto($token, "UI/tokens/" + TOKEN_MAPPER[token] + "_chip", false, TOKEN_MAPPER[token] + " chip");
         containerToInsertInto.appendChild($token);
     }
 }
@@ -64,7 +55,7 @@ function renderCardList(containerToInsertInto, cardAmounts) {
         if (cardType !== "Gold") {
             const $card = $numberedItemTemplate.content.firstElementChild.cloneNode(true);
             $card.querySelector(".amount").textContent = cardAmounts[cardType] || 0;
-            insertImageInto($card, "UI/cards/" + mapTokens[cardType] + "_card_small", false, mapTokens[cardType] + " card");
+            insertImageInto($card, "UI/cards/" + TOKEN_MAPPER[cardType] + "_card_small", false, TOKEN_MAPPER[cardType] + " card");
             containerToInsertInto.appendChild($card);
         }
     }
@@ -76,7 +67,7 @@ function renderReservedList(containerToInsertInto, reservedCards) {
     for (const reservedCard of reservedCards) {
         const $reservedCard = $numberedItemTemplate.content.firstElementChild.cloneNode(true);
         $reservedCard.querySelector(".amount").textContent = reservedCard.prestigePoints;
-        insertImageInto($reservedCard, "cards/empty/" + mapTokens[reservedCard.bonus] + "_empty_card", false, mapTokens[reservedCard.bonus] + " chip");
+        insertImageInto($reservedCard, "cards/empty/" + TOKEN_MAPPER[reservedCard.bonus] + "_empty_card", false, TOKEN_MAPPER[reservedCard.bonus] + " chip");
         containerToInsertInto.appendChild($reservedCard);
     }
 }
@@ -96,11 +87,11 @@ function renderCards(market) {
             for (const [type, cost] of Object.entries(card.cost)) {
                 const $costItem = $numberedItemTemplate.content.firstElementChild.cloneNode(true);
                 $costItem.querySelector(".amount").textContent = cost;
-                insertImageInto($costItem, "UI/tokens/" + mapTokens[type] + "_chip", true, mapTokens[type] + " chip");
+                insertImageInto($costItem, "UI/tokens/" + TOKEN_MAPPER[type] + "_chip", true, TOKEN_MAPPER[type] + " chip");
                 $cardCost.appendChild($costItem);
             }
 
-            insertImageInto($card, "cards/empty/" + mapTokens[card.bonus] + "_empty_card", false, mapTokens[card.bonus] + " card");
+            insertImageInto($card, "cards/empty/" + TOKEN_MAPPER[card.bonus] + "_empty_card", false, TOKEN_MAPPER[card.bonus] + " card");
             insertImageInto($card, "cards/illustrations/camel", false, "camel");
 
             $currentDeck.appendChild($card);
@@ -123,13 +114,13 @@ function renderCurrentPlayerTokens(currentPlayerTokens, currentPlayerBonuses) {
         const $progressBar = $progressBarTemplate.content.firstElementChild.cloneNode(true);
 
         if (token !== "Gold") {
-            insertImageInto($token, "UI/cards/" + mapTokens[token] + "_card_small", true, mapTokens[token] + " card");
+            insertImageInto($token, "UI/cards/" + TOKEN_MAPPER[token] + "_card_small", true, TOKEN_MAPPER[token] + " card");
             $token.insertAdjacentHTML("afterbegin", `<p>${currentPlayerBonuses[token] || 0}</p>`)
         }
 
         $token.querySelector(".amount").textContent = currentPlayerTokens[token] || 0;
-        insertImageInto($token, "UI/tokens/" + mapTokens[token] + "_chip", false, mapTokens[token] + " chip");
-        renderProgressBar($progressBar, currentPlayerTokens[token], mapTokens[token]);
+        insertImageInto($token, "UI/tokens/" + TOKEN_MAPPER[token] + "_chip", false, TOKEN_MAPPER[token] + " chip");
+        renderProgressBar($progressBar, currentPlayerTokens[token], TOKEN_MAPPER[token]);
 
         $token.appendChild($progressBar);
         $currentPlayerTokensContainer.appendChild($token);
@@ -157,11 +148,11 @@ function renderCurrentPlayer(players) {
                 for (const [type, cost] of Object.entries(card.cost)) {
                     const $costItem = $numberedItemTemplate.content.firstElementChild.cloneNode(true);
                     $costItem.querySelector(".amount").textContent = cost;
-                    insertImageInto($costItem, "UI/tokens/" + mapTokens[type] + "_chip", true, mapTokens[type] + " chip");
+                    insertImageInto($costItem, "UI/tokens/" + TOKEN_MAPPER[type] + "_chip", true, TOKEN_MAPPER[type] + " chip");
                     $cardCost.appendChild($costItem);
                 }
 
-                insertImageInto($card, "cards/empty/" + mapTokens[card.bonus] + "_empty_card", false, mapTokens[card.bonus] + " card");
+                insertImageInto($card, "cards/empty/" + TOKEN_MAPPER[card.bonus] + "_empty_card", false, TOKEN_MAPPER[card.bonus] + " card");
                 insertImageInto($card, "cards/illustrations/camel", false, "camel");
 
                 $reserved.appendChild($card);
@@ -198,7 +189,7 @@ function renderBoardTokens(unclaimedTokens, playerLength) {
         }
 
         $boardToken.querySelector(".amount").textContent = `${unclaimedTokens[token]}/${maxTokens}`;
-        insertImageInto($boardToken, `UI/tokens/${mapTokens[token]}_chip`, false, mapTokens[token] + " chip")
+        insertImageInto($boardToken, `UI/tokens/${TOKEN_MAPPER[token]}_chip`, false, TOKEN_MAPPER[token] + " chip")
         $boardTokensContainer.appendChild($boardToken);
     }
 }

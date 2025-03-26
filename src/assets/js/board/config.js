@@ -15,4 +15,13 @@ const NOBLES_MAPPER = {
   "Francis I of France": "noble_border",
 }
 
-export { PRESTIGE_POINTS_NEEDED_TO_WIN, MAX_TOKENS_ALLOWED, CHIP_SPACING, NOBLES_MAPPER};
+const TOKEN_MAPPER = {
+  "Emerald": "green",
+  "Sapphire": "blue",
+  "Ruby": "red",
+  "Diamond": "white",
+  "Onyx": "black",
+  "Gold": "gold",
+}
+
+export { PRESTIGE_POINTS_NEEDED_TO_WIN, MAX_TOKENS_ALLOWED, CHIP_SPACING, NOBLES_MAPPER, TOKEN_MAPPER};
