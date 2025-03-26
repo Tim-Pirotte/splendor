@@ -57,6 +57,23 @@ aside {
     gap: 0 0.2rem;
 }
 
+.card li {
+    display: flex;
+    align-items: center;
+    width: 25%;
+    position: relative;
+}
+
+.decks > li {
+    display: flex;
+    gap: 0 1rem;
+}
+
+.player-tokens li {
+    display: flex;
+    gap: 0.5rem;
+}
+
 .player-card > ul > li {
     display: flex;
     align-items: center;
@@ -130,13 +147,6 @@ section header picture {
     top: 35%;
 }
 
-.card li {
-    display: flex;
-    align-items: center;
-    width: 25%;
-    position: relative;
-}
-
 .card li > * {
     position: absolute;
 }
@@ -163,11 +173,6 @@ section header picture {
 }
 
 /* DECKS */
-.decks > li {
-    display: flex;
-    gap: 0 1rem;
-}
-
 .decks > li > ul {
     flex: 0 1 auto;
     display: flex;
@@ -197,11 +202,6 @@ section header picture {
 .player-tokens header {
     display: flex;
     gap: 0 0.5rem;
-}
-
-.player-tokens li {
-    display: flex;
-    gap: 0.5rem;
 }
 
 .player-tokens li:first-of-type {
