@@ -110,18 +110,25 @@ function countTokens(tokens) {
     return Object.values(tokens).reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 }
 
-function renderCurrentPlayerTokens(currentPlayerTokens) {
+function renderCurrentPlayerTokens(currentPlayerTokens, currentPlayerBonuses) {
     const $currentPlayerTokensContainer = document.querySelector(".player-tokens ul");
 
     const $numberedItemTemplate = document.querySelector("#numbered-item-template");
     const $progressBarTemplate = document.querySelector("#progress-bar-template");
 
-    for (const token of tokensDummyData.gems) {
+    for (const token of tokensDummyData.gems.reverse()) {
         const $token = $numberedItemTemplate.content.firstElementChild.cloneNode(true);
         const $progressBar = $progressBarTemplate.content.firstElementChild.cloneNode(true);
+
+        if (token !== "Gold") {
+            insertImageInto($token, "UI/cards/" + mapTokens[token] + "_card_small", true, mapTokens[token] + " card");
+            $token.insertAdjacentHTML("afterbegin", `<p>${currentPlayerBonuses[token] || 0}</p>`)
+        }
+
         $token.querySelector(".amount").textContent = currentPlayerTokens[token] || 0;
         insertImageInto($token, "UI/tokens/" + mapTokens[token] + "_chip", false, mapTokens[token] + " chip");
         renderProgressBar($progressBar, currentPlayerTokens[token], mapTokens[token]);
+
         $token.appendChild($progressBar);
         $currentPlayerTokensContainer.appendChild($token);
     }
@@ -160,7 +167,7 @@ function renderCurrentPlayer(players) {
 
             document.querySelector(".player-tokens h4").textContent = countTokens(player.tokens) + " / " + MAX_TOKENS_ALLOWED;
 
-            renderCurrentPlayerTokens(player.tokens);
+            renderCurrentPlayerTokens(player.tokens, player.bonuses);
         }
     }
 }
