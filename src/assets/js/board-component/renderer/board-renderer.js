@@ -1,9 +1,12 @@
 import {insertImageInto, renderCard} from "./helper.js";
 import {
+  GOLD_TOKEN_LIMIT,
   NOBLES_MAPPER,
+  TOKEN_LIMIT,
+  TOKEN_LIMIT_THREE_PLAYERS,
+  TOKEN_LIMIT_TWO_PLAYERS,
   TOKEN_MAPPER
 } from "../config.js";
-import {getMaxTokens} from "../helper.js";
 
 function renderCards(market) {
   for (const deck of market) {
@@ -12,6 +15,21 @@ function renderCards(market) {
     for (const card of deck["visibleCards"]) {
       renderCard($currentDeck, card["prestigePoints"], card["bonus"], card["cost"]);
     }
+  }
+}
+
+function getMaxTokens(playerLength, tokenType) {
+  const twoPlayers = 2;
+  const threePlayers = 3;
+
+  if (tokenType === "Gold") return GOLD_TOKEN_LIMIT;
+
+  if (playerLength === twoPlayers) {
+    return TOKEN_LIMIT_TWO_PLAYERS;
+  } else if (playerLength === threePlayers) {
+    return TOKEN_LIMIT_THREE_PLAYERS;
+  } else {
+    return TOKEN_LIMIT;
   }
 }
 

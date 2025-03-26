@@ -24,12 +24,12 @@ function processTakeTokenClick(e) {
 }
 
 function updateTokens(res) {
-    for (const [token, amount] of res["tokens"]) {
+    for (const [token, amount] of Object.entries(res["tokens"])) {
      const $token = document.querySelector(`[data-type="${token}"]`);
-     $token.dataset.amount = amount;
-     $token.querySelector("p").textContent = `${amount}/${}`;
+     $token.dataset.amount -= amount;
+     const $amountText = $token.querySelector("p");
+     $amountText.textContent = `${$token.dataset.amount}${$amountText.textContent.substring(1, 3)}`;
     }
-    return console.log(res);
 }
 
 export {selectToken, processTakeTokenClick, updateTokens};
