@@ -30,4 +30,4 @@ function hasGameStarted(gameData){
     return !!gameData["started"];
 }
 
-export {getGameState, getGameName, getGameId, getCurrentUsersAmount, getMaxUsersAmount, getGameCreator, getPlayersObjects};
+export {getGameState, getGameName, getGameId, getCurrentUsersAmount, getMaxUsersAmount, getGameCreator, getPlayersObjects, hasGameStarted};

@@ -9,7 +9,7 @@ function renderHeader(g) {
 
 function renderPlayers(g) {
     const $template = document.querySelector("#joined-player-template");
-    const $container = document.querySelector("#players");
+    const $container = document.querySelector("#joined-players");
 
     document.querySelectorAll("#players li")
         .forEach(li => li.remove());
