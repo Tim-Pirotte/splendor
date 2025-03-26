@@ -1,4 +1,4 @@
-import {loadAvatar, loadUsername, storeAvatar, storeUsername, toggleVisibility} from "./helper.js";
+import {loadAvatar, loadUsername, storeAvatar, storeUsername, toggleVisibility} from "./handler.js";
 import {renderSelectableAvatars} from "./renderer.js";
 
 function init() {
