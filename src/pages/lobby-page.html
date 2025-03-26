@@ -6,12 +6,16 @@
     content="Niels Clarysse, Alexander Engelrelst, Tristan Joos, Arne Persyn, Tim Pirotte, Niels Ryserhove">
     <title>Splendor - Lobby</title>
 
-    <link rel="stylesheet" href="../assets/css/screen.css">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+
     <link rel="stylesheet" href="../assets/css/reset.css">
+    <link rel="stylesheet" href="../assets/css/screen.css">
     <link rel="stylesheet" href="../assets/css/lobby.css" type="text/css">
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="../assets/js/sound-component/sound-component.js" type="module"></script>
+
 </head>
 <body>
     <noscript>Javascript is required for this experience to work properly. Please enable it or use a modern browser with support</noscript>
@@ -61,10 +65,10 @@
 </main>
 <footer>
     <button type="button">Leave</button>
-    <button type="button" id="Toggle-sound-button">
+    <button type="button" class="sound-button">
         <picture>
-            <source srcset="../assets/images/UI/sound_off.webp" type="images/webp">
-            <img src="../assets/images/fallback/UI/sound_off.png" alt="Toggle sound">
+            <source srcset="../assets/images/UI/sound_off.webp" type="image/webp">
+            <img src="../assets/images/fallback/UI/sound_off.png" title="sound button" alt="sound button">
         </picture>
     </button>
 </footer>
