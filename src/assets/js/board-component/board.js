@@ -1,8 +1,8 @@
-import {dummyData} from "./dummy-data.js";
-import {renderPage} from "./renderer/renderer.js";
+import {getGems, updateGameData} from "./game-data-handler.js";
 
 function init() {
-  renderPage(dummyData);
+  getGems();
+  updateGameData();
 }
 
 init();
