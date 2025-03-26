@@ -1,5 +1,5 @@
-import {MINTOKENSFORPICKINGTWO,gameId} from "./config.js";
-import {fetchFromServer} from "../../data-connector/api-communication-abstractor.js";
+import {setActionButton} from "../helper.js";
+import {takeTwoGemsRequest} from "./request-handler.js";
 
 
 function canGetToken(tokenType, amount) {
@@ -7,39 +7,20 @@ function canGetToken(tokenType, amount) {
 }
 
 function selectToken(e) {
-    const selectedToken = e.target.closest("li");
-    if (canGetToken(selectedToken.dataset.type, selectedToken.dataset.amount)) {
-        // Do something
-    }
-}
-function decreaseTokenValue(){
-    let value = selectedToken.querySelector("p").innerText.substr(0 , 1);
-    const amount = selectedToken.querySelector("p").innerText.substr(1 , 2)
-    let tokenType = selectedToken.dataset.type
-    console.log(value);
-    value = parseInt(value);
-    if (value<MINTOKENSFORPICKINGTWO ) {
-        console.log("te weing tokens over kies een andere");
-    }else if( tokenType === "Gold"){
-        console.log("je kan geen joker pakke dummie");
-    }
-    else{
-        value = value -2;
-        addTokenChangToServer(tokenType);
-    }
+    const $selectedToken = e.target.closest("li");
+    const tokenType = $selectedToken.dataset.type;
 
-    selectedToken.querySelector("p").innerText = value.toString()+ amount;
-    selectedToken.style.border = "none";
-    selectedToken = ""
+    if (canGetToken(tokenType, $selectedToken.dataset.amount)) {
+        setActionButton("Take two", tokenType, "takeTokens");
+    }
+}
 
-}
-function addTokenChangToServer(tokenType) {
-    let game = fetchFromServer(`/games/${gameId}`,`GET`)
-    if (game.players.tokens.contain(tokenType)) {
-        game.players.tokens[tokenType] = game.players.tokens[tokenType] + 2;
-    }
-    else{
-        game.players.tokens.add(tokenType,2);
+function processTakeTokenClick(e) {
+    const $actionButton = document.querySelector(".action-button");
+
+    if ($actionButton.dataset.action === "takeTokens") {
+        takeTwoGemsRequest($actionButton.dataset.type);
     }
 }
-export {selectToken,decreaseTokenValue};
+
+export {selectToken, processTakeTokenClick};
