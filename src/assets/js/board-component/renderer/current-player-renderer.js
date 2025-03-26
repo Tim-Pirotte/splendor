@@ -22,7 +22,7 @@ function renderCurrentPlayerPoints(currentPlayer) {
 }
 
 function renderCurrentPlayerReserve(currentPlayer) {
-    const $reserved = document.querySelector(".reserved-cards ul")
+    const $reserved = document.querySelector(".reserved-cards ul");
 
     for (const card of currentPlayer.reserve) {
         renderCard($reserved, card.prestigePoints, card.bonus, card.cost);
@@ -48,7 +48,7 @@ function countTokens(tokens) {
 
 function insertCardCounter($token, token, currentPlayerBonuses) {
     insertImageInto($token, `UI/cards/${TOKEN_MAPPER[token]}_card_small`, true, `${TOKEN_MAPPER[token]} card`);
-    $token.insertAdjacentHTML("afterbegin", `<p>${currentPlayerBonuses[token] || 0}</p>`)
+    $token.insertAdjacentHTML("afterbegin", `<p>${currentPlayerBonuses[token] || 0}</p>`);
 }
 
 function renderCurrentPlayerTokens(currentPlayerTokens, currentPlayerBonuses) {
@@ -57,7 +57,7 @@ function renderCurrentPlayerTokens(currentPlayerTokens, currentPlayerBonuses) {
     const $numberedItemTemplate = document.querySelector("#numbered-item-template");
     const $progressBarTemplate = document.querySelector("#progress-bar-template");
 
-    for (const token of tokensDummyData.gems) {
+    for (const token of tokensDummyData.gems.toReversed()) {
         const $token = $numberedItemTemplate.content.firstElementChild.cloneNode(true);
         const $progressBar = $progressBarTemplate.content.firstElementChild.cloneNode(true);
 

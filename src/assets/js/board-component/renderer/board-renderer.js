@@ -1,6 +1,13 @@
 import {insertImageInto, renderCard} from "./helper.js";
 import {tokensDummyData} from "../dummy-data.js";
-import {NOBLES_MAPPER, TOKEN_MAPPER} from "../config.js";
+import {
+  GOLD_TOKEN_LIMIT,
+  NOBLES_MAPPER,
+  TOKEN_LIMIT,
+  TOKEN_LIMIT_THREE_PLAYERS,
+  TOKEN_LIMIT_TWO_PLAYERS,
+  TOKEN_MAPPER
+} from "../config.js";
 
 function renderCards(market) {
   for (const deck of market) {
@@ -13,14 +20,14 @@ function renderCards(market) {
 }
 
 function getMaxTokens(playerLength, tokenType) {
-  if (tokenType === "Gold") return 5;
+  if (tokenType === "Gold") return GOLD_TOKEN_LIMIT;
 
   if (playerLength === 2) {
-    return 4;
+    return TOKEN_LIMIT_TWO_PLAYERS;
   } else if (playerLength === 3) {
-    return 5;
+    return TOKEN_LIMIT_THREE_PLAYERS;
   } else {
-    return 7;
+    return TOKEN_LIMIT;
   }
 }
 
@@ -29,7 +36,7 @@ function renderBoardTokens(unclaimedTokens, playerLength) {
 
   const $numberedItemTemplate = document.querySelector("#numbered-item-template");
 
-  for (const token of tokensDummyData.gems.reverse()) {
+  for (const token of tokensDummyData.gems.toReversed()) {
     const $boardToken = $numberedItemTemplate.content.firstElementChild.cloneNode(true);
 
     const maxTokens = getMaxTokens(playerLength, token);
