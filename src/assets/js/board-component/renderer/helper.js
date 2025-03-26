@@ -1,4 +1,4 @@
-import {CHIP_SPACING} from "./config.js";
+import {CHIP_SPACING} from "../config.js";
 
 function insertImageInto($container, standardPath, before=false, alt="TODO") {
   const $image = document.querySelector("#image-template").content.firstElementChild.cloneNode(true);
@@ -32,4 +32,8 @@ function renderProgressBar($progressBar, value, color) {
   $progressBar.style.width = (value + 1) * CHIP_SPACING + "rem";
 }
 
-export { insertImageInto, renderProgressBar };
+function formatNumber(number) {
+  return number.toString().padStart(2, '0');
+}
+
+export { insertImageInto, renderProgressBar, formatNumber};
