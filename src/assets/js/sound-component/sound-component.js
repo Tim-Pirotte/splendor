@@ -29,7 +29,7 @@ function getSoundImagePath(fromIndex, extension, soundStatus) {
 }
 
 function getSourcePrefix(fromIndex) {
-    return fromIndex ? "" : "."
+    return fromIndex ? "" : ".";
 }
 
 function insertFallback(extension) {
