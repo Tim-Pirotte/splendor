@@ -1,35 +1,30 @@
-import { getDummyGames } from "./data.js";
-import { getAmountText, getGameButtonText } from "./helper.js";
 import * as objectHandler from "./object-handler.js";
+import {getAmountText, getGameButtonText} from "./helper.js";
+import {fetchFromServer} from "../data-connector/api-communication-abstractor.js";
 
-/* 
-This function will render the list of possible games
-*/
 function renderList(){
-    const gameObject = getDummyGames();
-
-    const $gameHolder = document.querySelector("ul");
     const $template = document.querySelector("#game-template");
+    const $container = document.querySelector("ul");
 
-    $gameHolder.innerHTML = "";
+    $container.innerHTML = "";
 
-    gameObject['games'].forEach(game => {
-        const $game = $template.content.firstElementChild.cloneNode(true);
-
-        populateGame($game, game);
-
-        $gameHolder.insertAdjacentHTML("beforeend", $game.outerHTML);
-    });
-
+    fetchFromServer(`/games`, `GET`)
+        .then(gameObject => gameObject['games'].forEach(game => populateGame($template, $container, game)))
+        .catch(error => console.error(error));
 }
 
-function populateGame($game, game){
+function populateGame($template, $container, game){
+    const $game = $template.content.firstElementChild.cloneNode(true);
+
     $game.dataset.gameState = objectHandler.getGameState(game);
-    $game.querySelector("h3").innerText = objectHandler.getGameName(game);
-    $game.querySelector(".game-id").innerText = objectHandler.getGameId(game);
-    $game.querySelector(".amount-of-players").innerText = getAmountText(game);
-    $game.querySelector("button").innerText = getGameButtonText(game);
+    $game.dataset.gameId = objectHandler.getGameId(game);
 
+    $game.querySelector("h3").textContent = objectHandler.getGameName(game);
+    $game.querySelector(".game-id").textContent = objectHandler.getGameId(game);
+    $game.querySelector(".amount-of-players").textContent = getAmountText(game);
+    $game.querySelector("button").textContent = getGameButtonText(game);
+
+    $container.insertAdjacentHTML("beforeend", $game.outerHTML);
 }
 
-export { renderList };
+export {renderList};
