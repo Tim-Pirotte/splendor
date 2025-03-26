@@ -8,7 +8,10 @@ function playerJoinGame(e) {
     const playerName = loadFromStorage("playerName");
 
     fetchFromServer(`/games/${gameId}/players/${playerName}`, `POST`)
-        .then(res => { saveToStorage("gameId", res.gameId); saveToStorage("playerToken", res.playerToken); })
+        .then(res => {
+            saveToStorage("gameId", res.gameId);
+            saveToStorage("playerToken", res.playerToken);
+            window.location.href = `./lobby-page.html`})
         .catch(error => console.error(error));
 }
 
