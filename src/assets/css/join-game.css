@@ -79,13 +79,24 @@ li h3 {
     margin-bottom: 0.4rem;
 }
 
-footer {
-    background-color: gray;
-    align-self: flex-end;
-}
-
 img {
     max-width: 3rem;
+}
+
+footer {
+    align-self: flex-end;
+    padding: 2rem;
+}
+
+footer picture source, footer picture img{
+    height: 3rem;
+}
+
+footer .sound-button {
+    width: 3rem;
+    height: 3rem;
+    background-color: transparent;
+    border: none;
 }
 
 .game-info {
