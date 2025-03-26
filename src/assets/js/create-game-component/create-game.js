@@ -22,10 +22,6 @@ function handleCreateGameSubmit(e){
 }
 
 
-
-
-
-
 function createGame(gameName, visibility, amountOfPlayers){
 
     const playerName = loadFromStorage("playerName");
