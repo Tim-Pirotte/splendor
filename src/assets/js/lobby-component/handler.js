@@ -1,5 +1,5 @@
 import {fetchFromServer} from "../data-connector/api-communication-abstractor.js";
-import {renderHeader} from "./renderer.js";
+import {renderHeader, renderPlayers} from "./renderer.js";
 import {loadFromStorage} from "../data-connector/local-storage-abstractor.js";
 
 function loadHeader() {
@@ -8,4 +8,10 @@ function loadHeader() {
         .catch(error => console.error(error));
 }
 
-export {loadHeader};
+function loadPlayers() {
+    fetchFromServer(`/games/${loadFromStorage("gameId")}`, `GET`)
+        .then(gameObject => renderPlayers(gameObject))
+        .catch(error => console.error(error));
+}
+
+export {loadHeader, loadPlayers};

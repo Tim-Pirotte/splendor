@@ -22,4 +22,12 @@ function getGameCreator(gameData) {
     return gameData["players"][0]["name"];
 }
 
-export {getGameState, getGameName, getGameId, getCurrentUsersAmount, getMaxUsersAmount, getGameCreator};
+function getPlayersObjects(gameData) {
+    return gameData["players"];
+}
+
+function hasGameStarted(gameData){
+    return !!gameData["started"];
+}
+
+export {getGameState, getGameName, getGameId, getCurrentUsersAmount, getMaxUsersAmount, getGameCreator, getPlayersObjects};

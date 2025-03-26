@@ -1,7 +1,8 @@
-import {loadHeader} from "./handler.js";
+import {loadHeader, loadPlayers} from "./handler.js";
 
 function init() {
     loadHeader();
+    loadPlayers();
 }
 
 init();
