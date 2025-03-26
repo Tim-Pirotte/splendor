@@ -1,6 +1,6 @@
-import * as objectHandler from "../general-logic/object-handler.js";
-import {getAmountText, getGameButtonText} from "./helper.js";
+import {getGameId, getGameName, getGameState} from "../general-logic/object-handler.js";
 import {fetchFromServer} from "../data-connector/api-communication-abstractor.js";
+import {getAmountText, getGameButtonText} from "./helper.js";
 
 function renderList(){
     const $template = document.querySelector("#game-template");
@@ -16,11 +16,11 @@ function renderList(){
 function populateGame($template, $container, game){
     const $game = $template.content.firstElementChild.cloneNode(true);
 
-    $game.dataset.gameState = objectHandler.getGameState(game);
-    $game.dataset.gameId = objectHandler.getGameId(game);
+    $game.dataset.gameState = getGameState(game);
+    $game.dataset.gameId = getGameId(game);
 
-    $game.querySelector("h3").textContent = objectHandler.getGameName(game);
-    $game.querySelector(".game-id").textContent = objectHandler.getGameId(game);
+    $game.querySelector("h3").textContent = getGameName(game);
+    $game.querySelector(".game-id").textContent = getGameId(game);
     $game.querySelector(".amount-of-players").textContent = getAmountText(game);
     $game.querySelector("button").textContent = getGameButtonText(game);
 
