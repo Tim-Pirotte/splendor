@@ -1,12 +1,14 @@
+import {loadFromStorage} from "../data-connector/local-storage-abstractor";
+
 function isCurrentlyPlaying() {
 
 }
 
 function getCurrentPlayer() {
-
+  return loadFromStorage("playerName");
 }
 
-function gameHasStarted() {
+function hasGameStarted() {
 
 }
 

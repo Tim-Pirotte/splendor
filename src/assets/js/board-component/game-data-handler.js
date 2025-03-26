@@ -15,7 +15,10 @@ function updateGameData() {
   if (gameId === null) location.href = "../index.html";
 
   fetchFromServer(`/games/${gameId}`)
-    .then(gameData => renderPage(gameData))
+    .then(gameData => {
+      saveToStorage("gameData", gameData);
+      renderPage(gameData);
+    })
     .catch(err => handleGameDataError(err));
 }
 
