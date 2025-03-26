@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="./../assets/css/reset.css">
     <link rel="stylesheet" href="./../assets/css/screen.css">
     <link rel="stylesheet" href="./../assets/css/join-game.css">
+
+    <!-- Test for the render function-->
+     <script type="module" src="./../assets/js/join-game-component/join-game.js"></script>
 </head>
 
 <body>
@@ -88,8 +91,10 @@
 
                     <template id="game-template">
                         <li data-gameState="">
-                            <h3></h3>
-                            <p class="game-id"></p>
+                            <div class="game-info">
+                                <h3></h3>
+                                <p class="game-id"></p>
+                            </div>
                             <p class="amount-of-players"></p>
                             <button type="button"></button>
                         </li>

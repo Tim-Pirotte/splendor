@@ -21,8 +21,8 @@
     <div>
         <header>
             <picture>
-                <source srcset="image.webp" type="image/webp">
-                <img src="image.png" alt="A Splendor game logo made in pixel art" title="Splendor logo">
+                <source srcset="./assets/images/logo.webp" type="image/webp">
+                <img src="./assets/images/fallback/logo.png" alt="A Splendor game logo made in pixel art" title="Splendor logo">
             </picture>
         </header>
         <main>
@@ -30,22 +30,10 @@
                 <label for="username">Username</label>
                 <input type="text" name="username" id="username" placeholder="E.g. Mobly" required>
                 <div class="avatar-selector">
-                    <button type="button">Select profile picture</button>
+                    <button></button>
                     <section>
                         <h2>Choose an avatar!</h2>
                         <ul>
-                            <li>
-                                <picture>
-                                    <source srcset="image.webp" type="image/webp">
-                                    <img src="image.png" alt="Dummy avatar one" title="Dummy avatar one">
-                                </picture>
-                            </li>
-                            <li>
-                                <picture>
-                                    <source srcset="image.webp" type="image/webp">
-                                    <img src="image.png" alt="Dummy avatar two" title="Dummy avatar two">
-                                </picture>
-                            </li>
                             <template id="avatar-template">
                                 <li>
                                     <picture>
