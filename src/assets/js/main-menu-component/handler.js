@@ -3,7 +3,7 @@ import {renderSelectedAvatars} from "./renderer.js";
 
 function loadUsername() {
     const $username = document.querySelector("#username");
-    const username = loadFromStorage("username");
+    const username = loadFromStorage("playerName");
 
     if (username) {
         $username.value = username;
@@ -27,7 +27,7 @@ function storeUsername(e) {
     const username = document.querySelector("#username").value.trim();
 
     if ($form.reportValidity() && username !== "") {
-        saveToStorage("username", username);
+        saveToStorage("playerName", username);
         window.location.href = `./pages/${e.target.value}.html`;
     }
 }

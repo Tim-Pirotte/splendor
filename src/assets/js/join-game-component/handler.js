@@ -5,7 +5,7 @@ function playerJoinGame(e) {
     e.preventDefault()
 
     const gameId = e.target.closest("li").dataset.gameId;
-    const playerName = loadFromStorage("username");
+    const playerName = loadFromStorage("playerName");
 
     fetchFromServer(`/games/${gameId}/players/${playerName}`, `POST`)
         .then(res => { saveToStorage("gameId", res.gameId); saveToStorage("playerToken", res.playerToken); })
