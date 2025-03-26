@@ -1,6 +1,6 @@
 import {loadFromStorage} from "../../data-connector/local-storage-abstractor.js";
 import {MAX_TOKENS_ALLOWED, PRESTIGE_POINTS_NEEDED_TO_WIN, TOKEN_MAPPER} from "../config.js";
-import {formatNumber, insertImageInto, renderProgressBar} from "./helper.js";
+import {formatNumber, insertImageInto, renderCard, renderProgressBar} from "./helper.js";
 import {tokensDummyData} from "../dummy-data.js";
 
 function renderHeader() {
@@ -22,27 +22,10 @@ function renderCurrentPlayerPoints(currentPlayer) {
 }
 
 function renderCurrentPlayerReserve(currentPlayer) {
-    const $numberedItemTemplate = document.querySelector("#numbered-item-template");
-    const $cardTemplate = document.querySelector("#card-template");
-
     const $reserved = document.querySelector(".reserved-cards ul")
 
     for (const card of currentPlayer.reserve) {
-        const $card = $cardTemplate.content.firstElementChild.cloneNode(true);
-        $card.querySelector(".points").textContent = card.prestigePoints;
-        const $cardCost = $card.querySelector(".cost");
-
-        for (const [type, cost] of Object.entries(card.cost)) {
-            const $costItem = $numberedItemTemplate.content.firstElementChild.cloneNode(true);
-            $costItem.querySelector(".amount").textContent = cost;
-            insertImageInto($costItem, `UI/tokens/${TOKEN_MAPPER[type]}_chip`, true, `${TOKEN_MAPPER[type]} chip`);
-            $cardCost.appendChild($costItem);
-        }
-
-        insertImageInto($card, `cards/empty/${TOKEN_MAPPER[card.bonus]}_empty_card`, false, `${TOKEN_MAPPER[card.bonus]} card`);
-        insertImageInto($card, "cards/illustrations/camel", false, "camel");
-
-        $reserved.appendChild($card);
+        renderCard($reserved, card.prestigePoints, card.bonus, card.cost);
     }
 }
 
