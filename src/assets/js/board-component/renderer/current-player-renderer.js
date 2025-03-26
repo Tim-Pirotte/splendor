@@ -1,7 +1,6 @@
 import {loadFromStorage} from "../../data-connector/local-storage-abstractor.js";
 import {MAX_TOKENS_ALLOWED, PRESTIGE_POINTS_NEEDED_TO_WIN, TOKEN_MAPPER} from "../config.js";
 import {formatNumber, insertImageInto, renderCard, renderProgressBar} from "./helper.js";
-import {tokensDummyData} from "../dummy-data.js";
 
 function renderHeader() {
     document.querySelector(".top-bar h2").textContent = loadFromStorage("username");
@@ -33,13 +32,13 @@ function renderCurrentPlayerTokenCount(currentPlayer) {
     document.querySelector(".player-tokens h4").textContent = `${formatNumber(countTokens(currentPlayer.tokens))} / ${MAX_TOKENS_ALLOWED}`;
 }
 
-function renderCurrentPlayer(players) {
+function renderCurrentPlayer(players, gems) {
     const currentPlayer = getCurrentPlayer(players, loadFromStorage("username"));
 
     renderCurrentPlayerPoints(currentPlayer);
     renderCurrentPlayerReserve(currentPlayer);
     renderCurrentPlayerTokenCount(currentPlayer);
-    renderCurrentPlayerTokens(currentPlayer.tokens, currentPlayer.bonuses);
+    renderCurrentPlayerTokens(currentPlayer.tokens, currentPlayer.bonuses, gems);
 }
 
 function countTokens(tokens) {
@@ -51,13 +50,13 @@ function insertCardCounter($token, token, currentPlayerBonuses) {
     $token.insertAdjacentHTML("afterbegin", `<p>${currentPlayerBonuses[token] || 0}</p>`);
 }
 
-function renderCurrentPlayerTokens(currentPlayerTokens, currentPlayerBonuses) {
+function renderCurrentPlayerTokens(currentPlayerTokens, currentPlayerBonuses, gems) {
     const $currentPlayerTokensContainer = document.querySelector(".player-tokens ul");
 
     const $numberedItemTemplate = document.querySelector("#numbered-item-template");
     const $progressBarTemplate = document.querySelector("#progress-bar-template");
 
-    for (const token of tokensDummyData.gems.toReversed()) {
+    for (const token of gems.toReversed()) {
         const $token = $numberedItemTemplate.content.firstElementChild.cloneNode(true);
         const $progressBar = $progressBarTemplate.content.firstElementChild.cloneNode(true);
 

@@ -1,9 +1,8 @@
 import {loadFromStorage} from "../../data-connector/local-storage-abstractor.js";
 import {formatNumber, insertImageInto} from "./helper.js";
-import {tokensDummyData} from "../dummy-data.js";
 import {TOKEN_MAPPER} from "../config.js";
 
-function renderOtherPlayers(otherPlayers) {
+function renderOtherPlayers(otherPlayers, gems) {
   const currentPlayerName = loadFromStorage("username");
 
   const $otherPlayerContainer = document.querySelector(".other-players");
@@ -15,8 +14,8 @@ function renderOtherPlayers(otherPlayers) {
       $playerCard.querySelector(".name").textContent = otherPlayer.name;
       $playerCard.querySelector(".points").textContent = `${formatNumber(otherPlayer.totalPrestigePoints)} pts.`;
 
-      renderTokenList($playerCard.querySelector(".tokens"), otherPlayer.tokens);
-      renderCardList($playerCard.querySelector(".cards"), otherPlayer.bonuses);
+      renderTokenList($playerCard.querySelector(".tokens"), otherPlayer.tokens, gems);
+      renderCardList($playerCard.querySelector(".cards"), otherPlayer.bonuses, gems);
       renderReservedList($playerCard.querySelector(".reserved"), otherPlayer.reserve);
 
       $otherPlayerContainer.appendChild($playerCard);
@@ -24,21 +23,21 @@ function renderOtherPlayers(otherPlayers) {
   }
 }
 
-function renderTokenList(containerToInsertInto, tokenAmounts) {
+function renderTokenList(containerToInsertInto, tokenAmounts, gems) {
   const $numberedItemTemplate = document.querySelector("#numbered-item-template");
 
-  for (const token of tokensDummyData.gems) {
+  for (const gem of gems) {
     const $token = $numberedItemTemplate.content.firstElementChild.cloneNode(true);
-    $token.querySelector(".amount").textContent = tokenAmounts[token] || 0;
-    insertImageInto($token, `UI/tokens/${TOKEN_MAPPER[token]}_chip`, false, `${TOKEN_MAPPER[token]} chip`);
+    $token.querySelector(".amount").textContent = tokenAmounts[gem] || 0;
+    insertImageInto($token, `UI/tokens/${TOKEN_MAPPER[gem]}_chip`, false, `${TOKEN_MAPPER[gem]} chip`);
     containerToInsertInto.appendChild($token);
   }
 }
 
-function renderCardList(containerToInsertInto, cardAmounts) {
+function renderCardList(containerToInsertInto, cardAmounts, gems) {
   const $numberedItemTemplate = document.querySelector("#numbered-item-template");
 
-  for (const cardType of tokensDummyData.gems) {
+  for (const cardType of gems) {
     if (cardType !== "Gold") {
       const $card = $numberedItemTemplate.content.firstElementChild.cloneNode(true);
       $card.querySelector(".amount").textContent = cardAmounts[cardType] || 0;

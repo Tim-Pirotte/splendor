@@ -1,4 +1,4 @@
-import {loadFromStorage} from "../data-connector/local-storage-abstractor.js";
+import {loadFromStorage, saveToStorage} from "../data-connector/local-storage-abstractor.js";
 import {fetchFromServer} from "../data-connector/api-communication-abstractor.js";
 import {renderPage} from "./renderer/renderer.js";
 
@@ -19,4 +19,13 @@ function updateGameData() {
     .catch(err => handleGameDataError(err));
 }
 
-export {updateGameData};
+function getGems() {
+  fetchFromServer("/gems").then(gems => saveToStorage("gems", gems["gems"]));
+}
+
+function waitOnTokenData() {
+  while(loadFromStorage("gems") === null) {}
+  return loadFromStorage("gems");
+}
+
+export {updateGameData, getGems, waitOnTokenData};

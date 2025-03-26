@@ -1,6 +1,7 @@
-import {updateGameData} from "./game-data-handler.js";
+import {getGems, updateGameData} from "./game-data-handler.js";
 
 function init() {
+  getGems();
   updateGameData();
 }
 
