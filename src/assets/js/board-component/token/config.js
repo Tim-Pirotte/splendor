@@ -1,6 +1,5 @@
+import {loadFromStorage} from "../../data-connector/local-storage-abstractor.js";
+
 const MINTOKENSFORPICKINGTWO = 4;
-
-
-
-
-export { MINTOKENSFORPICKINGTWO };
+const gameId = loadFromStorage("gameId");
+export { MINTOKENSFORPICKINGTWO,gameId };

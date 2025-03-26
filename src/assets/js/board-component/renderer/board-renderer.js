@@ -42,6 +42,9 @@ function renderBoardTokens(unclaimedTokens, playerLength) {
   for (const token of tokensDummyData.gems.toReversed()) {
     const $boardToken = $numberedItemTemplate.content.firstElementChild.cloneNode(true);
 
+    $boardToken.dataset.type = token;
+    $boardToken.dataset.amount = unclaimedTokens[token];
+
     const maxTokens = getMaxTokens(playerLength, token);
 
     $boardToken.querySelector(".amount").textContent = `${unclaimedTokens[token]}/${maxTokens}`;

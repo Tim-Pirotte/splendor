@@ -59,6 +59,7 @@ function renderCurrentPlayerTokens(currentPlayerTokens, currentPlayerBonuses) {
 
     for (const token of tokensDummyData.gems.toReversed()) {
         const $token = $numberedItemTemplate.content.firstElementChild.cloneNode(true);
+
         const $progressBar = $progressBarTemplate.content.firstElementChild.cloneNode(true);
 
         if (token !== "Gold") {
