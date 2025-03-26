@@ -1,4 +1,4 @@
-import { renderResults } from "./renderer";
+import { renderResults } from "./renderer.js";
 
 function init() {
     renderResults();

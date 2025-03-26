@@ -1,6 +1,5 @@
-import { fetchFromServer } from "../data-connector/api-communication-abstractor";
-import { getGameId } from "../join-game-component/object-handler";
-
+import { fetchFromServer } from "../data-connector/api-communication-abstractor.js";
+import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 
 function filterResults(data) {
     return data.players
@@ -9,9 +8,9 @@ function filterResults(data) {
 }
 
 function getResults() {
-    const gameId = getGameId();
+    const gameId = loadFromStorage("gameId");
     return fetchFromServer(`/games/${gameId}`, "GET")
         .then(data => filterResults(data));
 }
 
-export { getResults };
+export { getResults, filterResults };
