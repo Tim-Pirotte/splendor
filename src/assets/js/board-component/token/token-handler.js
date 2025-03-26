@@ -23,4 +23,13 @@ function processTakeTokenClick(e) {
     }
 }
 
-export {selectToken, processTakeTokenClick};
+function updateTokens(res) {
+    for (const [token, amount] of res["tokens"]) {
+     const $token = document.querySelector(`[data-type="${token}"]`);
+     $token.dataset.amount = amount;
+     $token.querySelector("p").textContent = `${amount}/${}`;
+    }
+    return console.log(res);
+}
+
+export {selectToken, processTakeTokenClick, updateTokens};
