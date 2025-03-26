@@ -287,7 +287,7 @@ const dummyData = {
   "gameState": "TurnAction",
   "currentPlayer": "Alice",
   "winner": null
-}
+};
 
 const tokensDummyData = {
   "gems": [
@@ -298,6 +298,6 @@ const tokensDummyData = {
     "Onyx",
     "Gold"
   ]
-}
+};
 
 export { dummyData, tokensDummyData };

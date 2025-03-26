@@ -13,7 +13,7 @@ const NOBLES_MAPPER = {
   "Anne of Brittany": "noble_border",
   "Henry the 8th": "noble_border",
   "Francis I of France": "noble_border",
-}
+};
 
 const TOKEN_MAPPER = {
   "Emerald": "green",
@@ -22,6 +22,6 @@ const TOKEN_MAPPER = {
   "Diamond": "white",
   "Onyx": "black",
   "Gold": "gold",
-}
+};
 
 export { PRESTIGE_POINTS_NEEDED_TO_WIN, MAX_TOKENS_ALLOWED, CHIP_SPACING, NOBLES_MAPPER, TOKEN_MAPPER};
