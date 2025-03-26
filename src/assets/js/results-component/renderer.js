@@ -1,5 +1,7 @@
-function renderResultStatus(){
+import { getResults } from "./helper";
 
+function renderResultStatus(isWinner){
+    
 }
 
 function renderResultTable(){
@@ -7,8 +9,10 @@ function renderResultTable(){
 }
 
 function renderResults() {
-    renderResultStatus();
-    renderResultTable();
+    getResults().then(data => {
+        renderResultStatus(data[0].name === "DFD");
+        renderResultTable(data);
+    });
 }
 
 

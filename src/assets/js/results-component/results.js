@@ -1,5 +1,7 @@
+import { renderResults } from "./renderer";
 
-
-function init(){
+function init() {
     renderResults();
 }
+
+init();
