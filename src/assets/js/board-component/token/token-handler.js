@@ -24,11 +24,14 @@ function processTakeTokenClick(e) {
 }
 
 function updateTokens(res) {
+    const beginIndexAmountText = 1;
+    const endIndexAmountText = 3;
+
     for (const [token, amount] of Object.entries(res["tokens"])) {
      const $token = document.querySelector(`[data-type="${token}"]`);
      $token.dataset.amount -= amount;
      const $amountText = $token.querySelector("p");
-     $amountText.textContent = `${$token.dataset.amount}${$amountText.textContent.substring(1, 3)}`;
+     $amountText.textContent = `${$token.dataset.amount}${$amountText.textContent.substring(beginIndexAmountText, endIndexAmountText)}`;
     }
 }
 

@@ -3,9 +3,12 @@ import {fetchFromServer} from "../data-connector/api-communication-abstractor.js
 import {renderPage} from "./renderer/renderer.js";
 
 function handleGameDataError(err) {
+  const forbidden = 403;
+  const unauthorized = 401;
+
   const statusCode = err["failure"];
 
-  if (statusCode === 403 || statusCode === 401) {
+  if (statusCode === forbidden || statusCode === unauthorized) {
     location.href = "../index.html";
   }
 }
@@ -24,7 +27,7 @@ function getGems() {
 }
 
 function waitOnTokenData() {
-  while(loadFromStorage("gems") === null) {}
+  while(loadFromStorage("gems") === null) console.log("Waiting for token data...");
   return loadFromStorage("gems");
 }
 
