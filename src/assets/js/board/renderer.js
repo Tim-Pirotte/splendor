@@ -1,7 +1,7 @@
 import {loadFromStorage} from "../data-connector/local-storage-abstractor.js";
 import {tokensDummyData} from "./dummy-data.js";
 import {insertImageInto, renderProgressBar} from "./helper.js";
-import {MAX_TOKENS_ALLOWED, PRESTIGE_POINTS_NEEDED_TO_WIN} from "./config.js";
+import {MAX_TOKENS_ALLOWED, NOBLES_MAPPER, PRESTIGE_POINTS_NEEDED_TO_WIN} from "./config.js";
 
 const mapTokens = {
     "Emerald": "green",
@@ -17,6 +17,7 @@ function renderPage(gameData) {
     renderOtherPlayers(gameData.players);
     renderCards(gameData.market);
     renderBoardTokens(gameData.unclaimedTokens, gameData.players.length);
+    renderNobles(gameData.unclaimedNobles);
     renderCurrentPlayer(gameData.players);
 }
 
@@ -199,6 +200,18 @@ function renderBoardTokens(unclaimedTokens, playerLength) {
         $boardToken.querySelector(".amount").textContent = `${unclaimedTokens[token]}/${maxTokens}`;
         insertImageInto($boardToken, `UI/tokens/${mapTokens[token]}_chip`, false, mapTokens[token] + " chip")
         $boardTokensContainer.appendChild($boardToken);
+    }
+}
+
+function renderNobles(unclaimedNobles) {
+    const $noblesContainer = document.querySelector(".nobles");
+
+    const $nobleTemplate = document.querySelector("#noble-template");
+
+    for (const noble of unclaimedNobles) {
+        const $noble = $nobleTemplate.content.firstElementChild.cloneNode(true);
+        insertImageInto($noble, "nobles/" + NOBLES_MAPPER[noble.name], false, "Noble (+3 pts.)");
+        $noblesContainer.appendChild($noble);
     }
 }
 
