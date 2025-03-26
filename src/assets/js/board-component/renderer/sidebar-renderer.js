@@ -3,7 +3,7 @@ import {formatNumber, insertImageInto} from "./helper.js";
 import {TOKEN_MAPPER} from "../config.js";
 
 function renderOtherPlayers(otherPlayers, gems) {
-  const currentPlayerName = loadFromStorage("username");
+  const currentPlayerName = loadFromStorage("playerName");
 
   const $otherPlayerContainer = document.querySelector(".other-players");
   const $template = document.querySelector("#other-player-card-template");

@@ -3,7 +3,7 @@ import {MAX_TOKENS_ALLOWED, PRESTIGE_POINTS_NEEDED_TO_WIN, TOKEN_MAPPER} from ".
 import {formatNumber, insertImageInto, renderCard, renderProgressBar} from "./helper.js";
 
 function renderHeader() {
-    document.querySelector(".top-bar h2").textContent = loadFromStorage("username");
+    document.querySelector(".top-bar h2").textContent = loadFromStorage("playerName");
 }
 
 function getCurrentPlayer(players, currentPlayerName) {
@@ -33,7 +33,7 @@ function renderCurrentPlayerTokenCount(currentPlayer) {
 }
 
 function renderCurrentPlayer(players, gems) {
-    const currentPlayer = getCurrentPlayer(players, loadFromStorage("username"));
+    const currentPlayer = getCurrentPlayer(players, loadFromStorage("playerName"));
 
     renderCurrentPlayerPoints(currentPlayer);
     renderCurrentPlayerReserve(currentPlayer);
