@@ -12,11 +12,11 @@ function renderOtherPlayers(otherPlayers, gems) {
     if (otherPlayer.name !== currentPlayerName) {
       const $playerCard = $template.content.firstElementChild.cloneNode(true);
       $playerCard.querySelector(".name").textContent = otherPlayer.name;
-      $playerCard.querySelector(".points").textContent = `${formatNumber(otherPlayer.totalPrestigePoints)} pts.`;
+      $playerCard.querySelector(".points").textContent = `${formatNumber(otherPlayer["totalPrestigePoints"])} pts.`;
 
-      renderTokenList($playerCard.querySelector(".tokens"), otherPlayer.tokens, gems);
-      renderCardList($playerCard.querySelector(".cards"), otherPlayer.bonuses, gems);
-      renderReservedList($playerCard.querySelector(".reserved"), otherPlayer.reserve);
+      renderTokenList($playerCard.querySelector(".tokens"), otherPlayer["tokens"], gems);
+      renderCardList($playerCard.querySelector(".cards"), otherPlayer["bonuses"], gems);
+      renderReservedList($playerCard.querySelector(".reserved"), otherPlayer["reserve"]);
 
       $otherPlayerContainer.appendChild($playerCard);
     }
@@ -52,8 +52,8 @@ function renderReservedList(containerToInsertInto, reservedCards) {
 
   for (const reservedCard of reservedCards) {
     const $reservedCard = $numberedItemTemplate.content.firstElementChild.cloneNode(true);
-    $reservedCard.querySelector(".amount").textContent = reservedCard.prestigePoints;
-    insertImageInto($reservedCard, `cards/empty/${TOKEN_MAPPER[reservedCard.bonus]}_empty_card`, false, `${TOKEN_MAPPER[reservedCard.bonus]} chip`);
+    $reservedCard.querySelector(".amount").textContent = reservedCard["prestigePoints"];
+    insertImageInto($reservedCard, `cards/empty/${TOKEN_MAPPER[reservedCard["bonus"]]}_empty_card`, false, `${TOKEN_MAPPER[reservedCard["bonus"]]} chip`);
     containerToInsertInto.appendChild($reservedCard);
   }
 }

@@ -10,10 +10,10 @@ import {
 
 function renderCards(market) {
   for (const deck of market) {
-    const $currentDeck = document.querySelector(`.level-${deck.level} .cards-in-deck`);
+    const $currentDeck = document.querySelector(`.level-${deck["level"]} .cards-in-deck`);
 
-    for (const card of deck.visibleCards) {
-      renderCard($currentDeck, card.prestigePoints, card.bonus, card.cost);
+    for (const card of deck["visibleCards"]) {
+      renderCard($currentDeck, card["prestigePoints"], card["bonus"], card["cost"]);
     }
   }
 }

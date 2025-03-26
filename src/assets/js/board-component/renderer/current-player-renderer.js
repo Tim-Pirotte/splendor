@@ -15,21 +15,21 @@ function getCurrentPlayer(players, currentPlayerName) {
 }
 
 function renderCurrentPlayerPoints(currentPlayer) {
-    document.querySelector(".player-points p").textContent = `${formatNumber(currentPlayer.totalPrestigePoints)}  / ${PRESTIGE_POINTS_NEEDED_TO_WIN}`;
+    document.querySelector(".player-points p").textContent = `${formatNumber(currentPlayer["totalPrestigePoints"])}  / ${PRESTIGE_POINTS_NEEDED_TO_WIN}`;
 
-    renderProgressBar(document.querySelector(".player-points .progress-bar"), currentPlayer.totalPrestigePoints, "score");
+    renderProgressBar(document.querySelector(".player-points .progress-bar"), currentPlayer["totalPrestigePoints"], "score");
 }
 
 function renderCurrentPlayerReserve(currentPlayer) {
     const $reserved = document.querySelector(".reserved-cards ul");
 
-    for (const card of currentPlayer.reserve) {
-        renderCard($reserved, card.prestigePoints, card.bonus, card.cost);
+    for (const card of currentPlayer["reserve"]) {
+        renderCard($reserved, card["prestigePoints"], card["bonus"], card["cost"]);
     }
 }
 
 function renderCurrentPlayerTokenCount(currentPlayer) {
-    document.querySelector(".player-tokens h4").textContent = `${formatNumber(countTokens(currentPlayer.tokens))} / ${MAX_TOKENS_ALLOWED}`;
+    document.querySelector(".player-tokens h4").textContent = `${formatNumber(countTokens(currentPlayer["tokens"]))} / ${MAX_TOKENS_ALLOWED}`;
 }
 
 function renderCurrentPlayer(players, gems) {
@@ -38,7 +38,7 @@ function renderCurrentPlayer(players, gems) {
     renderCurrentPlayerPoints(currentPlayer);
     renderCurrentPlayerReserve(currentPlayer);
     renderCurrentPlayerTokenCount(currentPlayer);
-    renderCurrentPlayerTokens(currentPlayer.tokens, currentPlayer.bonuses, gems);
+    renderCurrentPlayerTokens(currentPlayer["tokens"], currentPlayer["bonuses"], gems);
 }
 
 function countTokens(tokens) {
