@@ -1,4 +1,10 @@
-import {getGameCreator, getGameId, getGameName, getPlayersObjects} from "../general-logic/object-handler.js";
+import {
+    getCurrentUsersAmount,
+    getGameCreator,
+    getGameId,
+    getGameName, getMaxUsersAmount,
+    getPlayersObjects
+} from "../general-logic/object-handler.js";
 
 function renderHeader(g) {
     document.querySelector("header").insertAdjacentHTML("beforeend",
@@ -27,4 +33,8 @@ function renderPlayer($template, $container, playerName) {
     $container.insertAdjacentHTML("beforeend", $li.outerHTML);
 }
 
-export {renderHeader, renderPlayers};
+function renderPlayerCount(g) {
+    document.querySelector("#player-count").innerHTML = `${getCurrentUsersAmount(g)} / ${getMaxUsersAmount(g)}`;
+}
+
+export {renderHeader, renderPlayers, renderPlayerCount};
