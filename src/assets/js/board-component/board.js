@@ -4,6 +4,7 @@ import {getGameCreator, initGameStatusInterface, setActionButtonState} from "./g
 function init() {
   getGems();
   updateGameData();
+  updateGameData();
   setActionButtonState("Alert test", "takeTokens", {});
   initGameStatusInterface();
 }

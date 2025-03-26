@@ -60,10 +60,11 @@ function renderCard($container, points, bonus, costs) {
 
 function safeEmptyContainer($container) {
   $container.querySelectorAll("> *").forEach($childElement => {
+    console.log($childElement);
     if ($childElement.tagName.toLowerCase() !== "template") {
       $childElement.outerHTML = "";
     }
   });
 }
 
-export { insertImageInto, renderProgressBar, formatNumber, renderCard};
+export {insertImageInto, renderProgressBar, formatNumber, renderCard, safeEmptyContainer};

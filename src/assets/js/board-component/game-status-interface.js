@@ -23,7 +23,7 @@ function getGameCreator() {
 }
 
 function hasGameStarted() {
-  return "started" in loadFromStorage("gameData");
+  return !("started" in loadFromStorage("gameData"));
 }
 
 function getGameState() {

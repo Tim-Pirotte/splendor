@@ -1,4 +1,4 @@
-import {insertImageInto, renderCard} from "./helper.js";
+import {insertImageInto, renderCard, safeEmptyContainer} from "./helper.js";
 import {
   GOLD_TOKEN_LIMIT,
   NOBLES_MAPPER,
@@ -11,6 +11,7 @@ import {
 function renderCards(market) {
   for (const deck of market) {
     const $currentDeck = document.querySelector(`.level-${deck["level"]} .cards-in-deck`);
+    safeEmptyContainer($currentDeck);
 
     for (const card of deck["visibleCards"]) {
       renderCard($currentDeck, card["prestigePoints"], card["bonus"], card["cost"]);
