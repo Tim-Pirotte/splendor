@@ -1,14 +1,19 @@
 /* General styling for the body and main container */
 body {
     background-color: white;
-    height: 100%;
+}
+
+main {
+    flex: 1 0 auto;
 }
 
 body > div {
-    margin-top: 5rem;
+    padding-top: 5rem;
+    box-sizing: border-box;
     display: flex;
     align-items: center;
     flex-flow: column nowrap;
+    height: 100vh;
 }
 
 /* Splendor logo */
@@ -42,4 +47,22 @@ label {
 /* Join and create buttons */
 button[type="submit"] {
     margin-top: 1rem;
+}
+
+/* Place the audio toggle at the right side of the footer */
+footer {
+    align-self: flex-end;
+    flex-flow: row nowrap;
+    padding: 2rem;
+}
+
+footer picture source, footer picture img{
+    height: 3rem;
+}
+
+footer .sound-button {
+    width: 3rem;
+    height: 3rem;
+    background-color: transparent;
+    border: none;
 }
