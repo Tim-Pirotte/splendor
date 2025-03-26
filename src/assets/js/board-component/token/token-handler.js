@@ -2,15 +2,13 @@ import {MINTOKENSFORPICKINGTWO,gameId} from "./config.js";
 import {fetchFromServer} from "../../data-connector/api-communication-abstractor.js";
 
 
-function canGetToken(tokenType) {
-    if (tokenType === "Gold") {
-        return false;
-    }
+function canGetToken(tokenType, amount) {
+    return tokenType !== "Gold" && amount >= 4;
 }
 
 function selectToken(e) {
     const selectedToken = e.target.closest("li");
-    if (canGetToken(selectedToken.dataset.type)) {
+    if (canGetToken(selectedToken.dataset.type, selectedToken.dataset.amount)) {
         // Do something
     }
 }
