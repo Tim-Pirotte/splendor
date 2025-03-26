@@ -17,16 +17,16 @@ function formGameBody(playerName, gameName, visibility, amountOfPlayers){
             "gameName": gameName,
             "numberOfPlayers": amountOfPlayers,
             "playerName": playerName
-        }
+        };
     } else {
         body = {
             "numberOfPlayers": amountOfPlayers,
             "playerName": playerName
-        }
+        };
     }
 
     return body;
 }
 
 
-export { getCheckedRadioValue, formGameBody }
+export { getCheckedRadioValue, formGameBody };

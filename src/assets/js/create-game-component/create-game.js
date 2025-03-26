@@ -35,7 +35,7 @@ function createGame(gameName, visibility, amountOfPlayers){
        saveToStorage("playerToken", data["playerToken"]);
 
        // Rederict to the loby page
-       location.href = "./lobby-page.html"
+       location.href = "./lobby-page.html";
     });
 
 }
