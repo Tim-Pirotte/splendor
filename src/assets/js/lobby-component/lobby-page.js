@@ -1,9 +1,7 @@
-import {loadHeader, loadPlayerCount, loadPlayers} from "./handler.js";
+import {loadLobbyInformation} from "./handler.js";
 
 function init() {
-    loadHeader();
-    loadPlayers();
-    loadPlayerCount();
+    loadLobbyInformation();
 }
 
 init();
