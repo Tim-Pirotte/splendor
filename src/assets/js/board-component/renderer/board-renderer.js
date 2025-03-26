@@ -20,11 +20,14 @@ function renderCards(market) {
 }
 
 function getMaxTokens(playerLength, tokenType) {
+  const twoPlayers = 2;
+  const threePlayers = 3;
+
   if (tokenType === "Gold") return GOLD_TOKEN_LIMIT;
 
-  if (playerLength === 2) {
+  if (playerLength === twoPlayers) {
     return TOKEN_LIMIT_TWO_PLAYERS;
-  } else if (playerLength === 3) {
+  } else if (playerLength === threePlayers) {
     return TOKEN_LIMIT_THREE_PLAYERS;
   } else {
     return TOKEN_LIMIT;
