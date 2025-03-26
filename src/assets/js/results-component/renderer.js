@@ -1,16 +1,25 @@
-import { getResults } from "./helper.js";
+import { getResults, getUser } from "./helper.js";
 
-function renderResultStatus(isWinner) {
+
+/**
+ * Render the correct message
+ * @param {*} isWinner inidicates whether current user is the winner
+ */
+function renderResultMessage(isWinner) {
     const $status = document.querySelector("h1");
     $status.innerText = isWinner ? "WINNER" : "DEFEAT";
 
 };
 
+/**
+ * Render the current game results inside the table
+ * @param {*} data current game results
+ */
 function renderResultTable(data) {
     const $template = document.querySelector("#result-template");
     const $tbody = document.querySelector("tbody");
 
-    $tbody.innerHTML = "";
+    $tbody.innerHTML = ""; // clear the tbody content
 
     let pos = 1;
     data.forEach(player => {
@@ -26,9 +35,12 @@ function renderResultTable(data) {
     });
 };
 
+/**
+ * Render results page
+ */
 function renderResults() {
     getResults().then(data => {
-        renderResultStatus(data[0].name === "DFD");
+        renderResultMessage(data[0].name === getUser());
         renderResultTable(data);
     });
 };
