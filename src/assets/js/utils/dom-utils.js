@@ -1,5 +1,5 @@
 /*** Toggle the visibility of the avatar selection list ***/
-function toggleVisibility(e) {
+function toggleAvatarListVisibility(e) {
     e.preventDefault();
 
     const $avatarList = document.querySelector(".avatar-selector section");
@@ -7,4 +7,4 @@ function toggleVisibility(e) {
         ? "block" : "none";
 }
 
-export { toggleVisibility };
+export { toggleAvatarListVisibility };

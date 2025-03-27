@@ -1,5 +1,5 @@
 /* utils */
-import { toggleVisibility } from "../utils/dom-utils.js";
+import { toggleAvatarListVisibility } from "../utils/dom-utils.js";
 
 /* component exports/imports */
 import { loadAvatar, loadUsername, storeAvatar, storeUsername } from "./handler.js";
@@ -21,7 +21,7 @@ function loadSavedUserInformation() {
 /*** Add event listeners to html attributes ***/
 function addEventListeners() {
     document.querySelector(".form-actions").addEventListener("click", storeUsername);
-    document.querySelector(".avatar-selector button").addEventListener("click", toggleVisibility);
+    document.querySelector(".avatar-selector button").addEventListener("click", toggleAvatarListVisibility);
     document.querySelector(".avatar-selector section").addEventListener("click", storeAvatar);
 }
 

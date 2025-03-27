@@ -1,6 +1,6 @@
 /* utils */
 import { redirectToPage } from "../utils/navigation.js";
-import { toggleVisibility } from "../utils/dom-utils.js";
+import { toggleAvatarListVisibility } from "../utils/dom-utils.js";
 
 /* component exports/imports */
 import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
@@ -47,7 +47,7 @@ function storeAvatar(e) {
     if (avatar) {
         saveToStorage("avatar", avatar);
         renderSelectedAvatars(avatar);
-        toggleVisibility(e);
+        toggleAvatarListVisibility(e);
     }
 }
 
