@@ -13,8 +13,8 @@ function renderOtherPlayers(otherPlayers, gems) {
   for (const otherPlayer of otherPlayers) {
     if (otherPlayer.name !== currentPlayerName) {
       const $playerCard = $template.content.firstElementChild.cloneNode(true);
-      $playerCard.querySelector(".name").textContent = otherPlayer.name;
-      $playerCard.querySelector(".points").textContent = `${formatNumber(otherPlayer["totalPrestigePoints"])} pts.`;
+      setPlayerName($playerCard, otherPlayer);
+      setPlayerPoints($playerCard, otherPlayer);
 
       renderTokenList($playerCard.querySelector(".tokens"), otherPlayer["tokens"], gems);
       renderCardList($playerCard.querySelector(".cards"), otherPlayer["bonuses"], gems);
@@ -23,6 +23,14 @@ function renderOtherPlayers(otherPlayers, gems) {
       $otherPlayerContainer.appendChild($playerCard);
     }
   }
+}
+
+function setPlayerName($playerCard, otherPlayer) {
+  $playerCard.querySelector(".name").textContent = otherPlayer.name;
+}
+
+function setPlayerPoints($playerCard, otherPlayer) {
+  $playerCard.querySelector(".points").textContent = `${formatNumber(otherPlayer["totalPrestigePoints"])} pts.`;
 }
 
 function renderTokenList(containerToInsertInto, tokenAmounts, gems) {
