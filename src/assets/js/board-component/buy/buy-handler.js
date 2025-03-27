@@ -10,14 +10,14 @@ function selectCard(e) {
         {level: card.dataset.level, index: card.dataset.index},
         )
         const exchangeableTokens = getExchangeableTokens(e);
-        console.log(exchangeableTokens)
+        const defaultPayment = getDefaultPayment(getCardData(card)["cost"]);
+
     }
 }
 
 function canBuy(card) {
     const cost = getCardData(card)["cost"];
     const wallet = getPlayerWallet();
-
     return isWalletHigher(wallet, cost);
 }
 
@@ -55,17 +55,47 @@ function getPlayerWallet() {
 function isWalletHigher(wallet, cost) {
     let minimumJokersNeeded = 0;
     for (const tokenType in cost) {
-        const difference = cost[tokenType] - wallet[tokenType];
+        const difference = cost[tokenType] - (wallet[tokenType] || 0);
         if (difference > 0) {
             minimumJokersNeeded += difference;
         }
     }
 
-    return minimumJokersNeeded >= (wallet["Gold"] || 0);
+    return minimumJokersNeeded <= (wallet["Gold"] || 0);
 }
 
 function getExchangeableTokens(e) {
     return Object.keys(getCardData(getCard(e))["cost"]);
+}
+
+function getDefaultPayment(cost) {
+    const currentPlayer = getCurrentPlayer();
+    const tokens = currentPlayer["tokens"];
+    const bonuses = currentPlayer["bonuses"];
+    removeBonusesFromCost(cost, bonuses);
+    const defaultPayment = calculateDefaultPayment(cost, tokens)
+}
+
+function removeBonusesFromCost(cost, bonuses) {
+    for (const tokenType in cost) {
+        cost[tokenType] -= bonuses[tokenType] || 0;
+    }
+}
+
+function calculateDefaultPayment(cost, tokens) {
+    const payment = {"Gold": 0};
+    for (const tokenType in cost) {
+        if (!tokens.hasOwnProperty(tokenType)) {
+            payment[tokenType] = 0;
+            payment["Gold"] += cost[tokenType];
+        } else if (cost[tokenType] > (tokens[tokenType])) {
+            payment[tokenType] = tokens[tokenType];
+            payment["Gold"] += (cost[tokenType] - tokens[tokenType]);
+        } else {
+            payment[tokenType] = cost[tokenType];
+        }
+    }
+    return payment;
 }
 
 export {selectCard, processBuyCardClick};
