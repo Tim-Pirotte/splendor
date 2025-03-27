@@ -193,6 +193,10 @@ section header picture {
     grid-area: player-points;
 }
 
+.enough-points-to-win {
+    color: red;
+}
+
 .progress-bar {
     height: 0.5rem;
     background-repeat: no-repeat;
