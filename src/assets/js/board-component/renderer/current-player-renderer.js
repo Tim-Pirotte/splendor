@@ -1,4 +1,4 @@
-import {loadFromStorage} from "../../data-connector/local-storage-abstractor.js";
+import {loadFromStorage, saveToStorage} from "../../data-connector/local-storage-abstractor.js";
 import {MAX_TOKENS_ALLOWED, PRESTIGE_POINTS_NEEDED_TO_WIN, TOKEN_MAPPER} from "../config.js";
 import {
     formatNumber,
@@ -7,7 +7,13 @@ import {
     renderProgressBar,
     safeEmptyContainer
 } from "./helper.js";
-import {isAllowedToSwitchToken, getPlayerWallet} from "../buy/buy-handler.js";
+import {
+    isAllowedToSwitchToken,
+    getPlayerWallet,
+    getCurrentPlayerIndexInData,
+    updateCurrentPlayerTokensInData
+} from "../buy/buy-handler.js";
+import * as gameStatusInterface from "../game-status-interface.js";
 
 function renderHeader() {
     document.querySelector(".top-bar h2").textContent = loadFromStorage("playerName");
@@ -117,4 +123,37 @@ function renderAmountOfTokenSelected($tokenContainer, tokenType, payment) {
     $tokenContainer.querySelector("span").innerText = payment[tokenType]
 }
 
-export {renderHeader, renderCurrentPlayer, renderSwitchPaymentButtons, renderCurrentPlayerTokenCount, renderCurrentPlayerTokens};
+function renderUpdatedTokens(bonus) {
+    const gameData = loadFromStorage("gameData")
+    const indexOfPlayerInData = getCurrentPlayerIndexInData(gameData);
+    const updatedTokens = updateCurrentPlayerTokensInData(gameData, indexOfPlayerInData);
+    const updatedBonuses = updateCurrentPlayerBonuses(gameData, indexOfPlayerInData, bonus);
+
+    gameData["players"][indexOfPlayerInData]["bonuses"] = updatedBonuses;
+    gameData["players"][indexOfPlayerInData]["tokens"] = updatedTokens;
+    saveToStorage("gameData", gameData)
+
+    renderCurrentPlayerTokenCount(gameStatusInterface.getCurrentPlayer());
+    renderCurrentPlayerTokens(updatedTokens, gameData["players"][indexOfPlayerInData]["bonuses"], loadFromStorage("gems"));
+}
+
+function renderUpdatedPlayerScore(extraScore) {
+    const previousScore = document.querySelector(".points");
+    console.log(previousScore);
+}
+
+function updateCurrentPlayerBonuses(gameData, indexOfPlayerInData, bonus) {
+    const currentBonus = gameData["players"][indexOfPlayerInData]["bonuses"];
+    if (currentBonus[bonus] === undefined) {
+        currentBonus[bonus] = 1;
+    } else {
+        currentBonus[bonus]++;
+    }
+    return currentBonus;
+}
+export {renderHeader,
+    renderCurrentPlayer,
+    renderSwitchPaymentButtons,
+    renderCurrentPlayerTokenCount,renderCurrentPlayerTokens,
+    renderUpdatedTokens,
+    renderUpdatedPlayerScore};

@@ -1,11 +1,8 @@
 import {getCurrentPlayer, setActionButtonState} from "../game-status-interface.js";
 import {loadFromStorage, saveToStorage} from "../../data-connector/local-storage-abstractor.js";
 import {
-    renderCurrentPlayerTokenCount,
-    renderCurrentPlayerTokens,
-    renderSwitchPaymentButtons
+    renderSwitchPaymentButtons, renderUpdatedPlayerScore, renderUpdatedTokens
 } from "../renderer/current-player-renderer.js";
-import {getGameState} from "../../join-game-component/object-handler.js";
 
 function selectCard(e) {
     const card = getCard(e)
@@ -34,7 +31,9 @@ function getCard(e) {
 function processBuyCardClick() {
     const $actionButton = document.querySelector(".action-button");
     const cardData = getCardData($actionButton);
-    updateCurrentPlayerTokens();
+
+    renderUpdatedTokens(cardData["bonus"]);
+    renderUpdatedPlayerScore(cardData["prestigePoints"]);
 }
 
 function getCardData($target) {
@@ -145,18 +144,6 @@ function getNewPaymentMethod(tokenType) {
     return paymentMethod
 }
 
-function updateCurrentPlayerTokens() {
-    const gameData = loadFromStorage("gameData")
-    const indexOfPlayerInData = getCurrentPlayerIndexInData(gameData);
-    const updatedTokens = updateCurrentPlayerTokensInData(gameData, indexOfPlayerInData);
-
-    gameData["players"][indexOfPlayerInData]["tokens"] = updatedTokens;
-    saveToStorage("gameData", gameData)
-
-    renderCurrentPlayerTokenCount(getCurrentPlayer());
-    renderCurrentPlayerTokens(updatedTokens, gameData["players"][indexOfPlayerInData]["bonuses"], loadFromStorage("gems"));
-}
-
 function getCurrentPlayerIndexInData(gameData) {
     const playerName = getCurrentPlayer()["name"];
     for (const playerIndex in gameData["players"]) {
@@ -172,7 +159,13 @@ function updateCurrentPlayerTokensInData(gameData, indexOfPlayerInData) {
     for (const tokenType in previousTokens) {
         previousTokens[tokenType] -= (tokensPaid[tokenType] || 0);
     }
-    return previousTokens
+    return previousTokens;
 }
 
-export {selectCard, processBuyCardClick, isAllowedToSwitchToken, getPlayerWallet, handlePaymentMethodChange};
+export {selectCard,
+    processBuyCardClick,
+    isAllowedToSwitchToken,
+    getPlayerWallet,
+    handlePaymentMethodChange,
+    getCurrentPlayerIndexInData,
+    updateCurrentPlayerTokensInData};
