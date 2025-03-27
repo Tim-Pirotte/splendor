@@ -13,7 +13,7 @@ function filterOnPeopleAmount(gameList, amount) {
     let filteredList = gameList;
 
     if (amount !== "any") {
-        filteredList = gameList.filter(game => parseInt(game['numberOfPlayers']) === parseInt(amount));
+        filteredList = gameList.filter(game => parseInt(game["numberOfPlayers"]) === parseInt(amount));
     }
 
     return new Set(filteredList);
@@ -27,7 +27,7 @@ function filterOnName(gamelist, namePart) {
 
 
 function checkIfPartIsInGameName(game, namePart) {
-    const gameName = game['gameName'];
+    const gameName = game["gameName"];
 
     if (gameName !== null) {
         return gameName.toLowerCase().includes(namePart.toLowerCase().trim());
