@@ -14,7 +14,6 @@ function loadLobbyInformation() {
                 location.href = `./board.html`;
             }
         })
-        .catch(error => console.error(error));
 }
 
 export {loadLobbyInformation};
