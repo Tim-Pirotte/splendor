@@ -1,4 +1,4 @@
-import {getCurrentUsersAmount, getGameCreator, getGameId, getGameName, getMaxUsersAmount, getPlayersObjects} from "../general-logic/object-handler.js";
+import { getCurrentUsersAmount, getGameCreator, getGameId, getGameName, getMaxUsersAmount, getPlayersObjects } from "../general-logic/object-handler.js";
 
 function renderHeader(g) {
     document.querySelector("#game-name-id").innerHTML = `${getGameName(g)} / <span$>${getGameId(g)}</span>`;
@@ -30,4 +30,4 @@ function renderPlayerCount(g) {
         `${getCurrentUsersAmount(g)} / ${getMaxUsersAmount(g)}`;
 }
 
-export {renderHeader, renderPlayers, renderPlayerCount};
+export { renderHeader, renderPlayers, renderPlayerCount };
