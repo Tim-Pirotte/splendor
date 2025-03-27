@@ -1,5 +1,6 @@
-import {handleCreateGameSubmit} from "./handler.js";
-import {navigateToMain, renderPlayerInformation} from "../general-logic/join-create-game.js";
+import { navigateToMain } from "../utils/navigation.js";
+import { renderPlayerInformation } from "../utils/player-renderer.js";
+import { handleCreateGameSubmit } from "./handler.js";
 
 function init(){
     renderPlayerInformation();

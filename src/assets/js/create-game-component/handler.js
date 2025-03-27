@@ -1,6 +1,6 @@
-import {loadFromStorage} from "../data-connector/local-storage-abstractor.js";
-import {fetchFromServer} from "../data-connector/api-communication-abstractor.js";
-import {processResponse} from "../general-logic/join-create-game.js";
+import { processJoinAndCreateResponse } from "../utils/response-handler.js";
+import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
+import { fetchFromServer } from "../data-connector/api-communication-abstractor.js";
 
 function handleCreateGameSubmit(e){
     e.preventDefault();
@@ -17,7 +17,7 @@ function createGame(playerName, gameName, visibility, numberOfPlayers){
     const body = formGameBody(playerName, gameName, visibility, numberOfPlayers);
 
     fetchFromServer("/games", "POST", body)
-        .then(data => processResponse(data))
+        .then(data => processJoinAndCreateResponse(data))
         .catch(error => console.error(error));
 }
 
@@ -33,4 +33,4 @@ function formGameBody(playerName, gameName, visibility, numberOfPlayers){
                     : { numberOfPlayers, playerName };
 }
 
-export {handleCreateGameSubmit, getCheckedRadioValue, formGameBody};
+export { handleCreateGameSubmit, getCheckedRadioValue, formGameBody };

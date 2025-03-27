@@ -1,5 +1,5 @@
+import { processJoinAndCreateResponse } from "../utils/response-handler.js";
 import { fetchFromServer } from "../data-connector/api-communication-abstractor.js";
-import { processResponse } from "../general-logic/join-create-game.js";
 import { renderList } from "./renderer.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 
@@ -10,7 +10,7 @@ function playerJoinGame(e) {
         const gameId = e.target.closest("li").dataset.gameId;
 
         fetchFromServer(`/games/${gameId}/players/${loadFromStorage("playerName")}`, "POST")
-            .then(res => processResponse(res));
+            .then(res => processJoinAndCreateResponse(res));
     }
 }
 
@@ -20,7 +20,7 @@ function playerJoinGameById(e) {
     const gameId = document.querySelector("#game-id").value;
 
     fetchFromServer(`/games/${gameId}/players/${loadFromStorage("playerName")}`, "POST")
-        .then(res => processResponse(res));
+        .then(res => processJoinAndCreateResponse(res));
 
 }
 
