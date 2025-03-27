@@ -106,9 +106,14 @@ function renderSwitchPaymentButtons(currentPayment, cost) {
         const tokenType = $tokenContainer.querySelector(".switch-token").dataset.type;
 
         if (isAllowedToSwitchToken(tokenType, currentPayment, cost, wallet)) {
-            $tokenContainer.classList.remove("hidden")
+            $tokenContainer.classList.remove("hidden");
+            renderAmountOfTokenSelected($tokenContainer, tokenType, currentPayment);
         }
     }
+}
+
+function renderAmountOfTokenSelected($tokenContainer, tokenType, payment) {
+    $tokenContainer.querySelector("span").innerText = payment[tokenType]
 }
 
 export {renderHeader, renderCurrentPlayer, renderSwitchPaymentButtons};
