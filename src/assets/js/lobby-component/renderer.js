@@ -1,7 +1,7 @@
 import {getCurrentUsersAmount, getGameCreator, getGameId, getGameName, getMaxUsersAmount, getPlayersObjects} from "../general-logic/object-handler.js";
 
 function renderHeader(g) {
-    document.querySelector("#game-name-id").innerHTML = `${getGameName(g)} <span$>${getGameId(g)}</span>`;
+    document.querySelector("#game-name-id").innerHTML = `${getGameName(g)} / <span$>${getGameId(g)}</span>`;
     document.querySelector("h3").innerHTML =  `Created by ${getGameCreator(g)}`;
 }
 
