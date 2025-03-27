@@ -1,4 +1,4 @@
-import { processJoinAndCreateResponse } from "../utils/response-handler.js";
+import { processCreateAndJoinResponse } from "../utils/response-handler.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { fetchFromServer } from "../data-connector/api-communication-abstractor.js";
 
@@ -17,7 +17,7 @@ function createGame(playerName, gameName, visibility, numberOfPlayers){
     const body = formGameBody(playerName, gameName, visibility, numberOfPlayers);
 
     fetchFromServer("/games", "POST", body)
-        .then(data => processJoinAndCreateResponse(data))
+        .then(data => processCreateAndJoinResponse(data))
         .catch(error => console.error(error));
 }
 

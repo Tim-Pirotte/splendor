@@ -1,4 +1,4 @@
-import { processJoinAndCreateResponse } from "../utils/response-handler.js";
+import { processCreateAndJoinResponse } from "../utils/response-handler.js";
 import { fetchFromServer } from "../data-connector/api-communication-abstractor.js";
 import { renderList } from "./renderer.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
@@ -27,7 +27,7 @@ function handleFilterChange(e) {
 
 function joinGameRequest(gameId) {
     fetchFromServer(`/games/${gameId}/players/${loadFromStorage("playerName")}`, "POST")
-        .then(res => processJoinAndCreateResponse(res))
+        .then(res => processCreateAndJoinResponse(res))
         .catch(handleDuplicateNameError);
 }
 
