@@ -74,12 +74,13 @@ function selectToken(e) {
             setActionButtonState("Take three gems", "processTakeTokenClick", {token3: tokenType});
 
         }else{
+            //purely here so sonar doesn't complain
             console.log();
         }
     }else{
+        //purely here so sonar doesn't complain
         console.log();
     }
-
 }
 
 function processTakeTokenClick(e) {
@@ -94,8 +95,6 @@ function processTakeTokenClick(e) {
         takeGemsRequest(actionButtonData.token1 , "takeTwo");
 
     }
-
-
 }
 
 function updateTokens(res) {
