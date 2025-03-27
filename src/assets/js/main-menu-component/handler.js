@@ -28,7 +28,7 @@ function storeUsername(e) {
 
     if ($form.reportValidity() && username !== "") {
         saveToStorage("playerName", username);
-        window.location.href = `./pages/${e.target.value}.html`;
+        location.href = `./pages/${e.target.value}.html`;
     }
 }
 
