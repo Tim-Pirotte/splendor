@@ -1,4 +1,4 @@
-import { redirectToPage } from "../utils/navigation.js";
+import { redirectFromIndexToPageInPages } from "../utils/navigation.js";
 
 import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
 import { toggleAvatarListVisibility } from "./helper.js";
@@ -28,7 +28,7 @@ function storeUsername(e) {
         saveToStorage("playerName", username);
 
         if (["join-game", "create-game"].includes(e.target.value)) {
-            redirectToPage(e.target.value);
+            redirectFromIndexToPageInPages(e.target.value);
         }
     }
 }

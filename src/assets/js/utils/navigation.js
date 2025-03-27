@@ -1,6 +1,5 @@
-/*** Redirect to the specified game page ***/
-function redirectToPage(page, relativePathIndicators = ".") {
+function redirectFromIndexToPageInPages(page, relativePathIndicators = ".") {
     location.href = `${relativePathIndicators}/pages/${page}.html`;
 }
 
-export { redirectToPage };
+export { redirectFromIndexToPageInPages };
