@@ -3,7 +3,7 @@ import { MAXPRESTIGEPOINTS } from "../config.js";
 
 /**
  * Render the correct message
- * @param {*} isWinner inidicates whether current user is the winner
+ * @param {*} isWinner indicates whether current user is the winner
  */
 function renderResultMessage(isWinner) {
     const $status = document.querySelector("h1");
@@ -20,17 +20,14 @@ function renderResultTable(data) {
 
     $tbody.innerHTML = "";
 
-    let pos = 1;
     data.forEach(player => {
         const $clone = $template.content.cloneNode(true);
         const $td = $clone.querySelectorAll("td");
 
-        $td[0].textContent = pos;
-        $td[1].textContent = player.name;
-        $td[2].textContent = `${player.points}/${MAXPRESTIGEPOINTS}`;
+        $td[0].textContent = player.name;
+        $td[1].textContent = `${player.points}/${MAXPRESTIGEPOINTS}`;
 
         $tbody.appendChild($clone);
-        pos++;
     });
 }
 
