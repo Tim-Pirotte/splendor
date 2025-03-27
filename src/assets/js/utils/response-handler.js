@@ -1,4 +1,4 @@
-import { saveToStorage } from "../data-connector/local-storage-abstractor";
+import { saveToStorage } from "../data-connector/local-storage-abstractor.js";
 
 function processJoinAndCreateResponse(res) {
     saveToStorage("gameId", res["gameId"]);
