@@ -37,6 +37,7 @@ function renderCurrentPlayerReserve(currentPlayer) {
 }
 
 function renderCurrentPlayerTokenCount(currentPlayer) {
+    console.log(currentPlayer["tokens"])
     document.querySelector(".player-tokens h4").textContent = `${formatNumber(countTokens(currentPlayer["tokens"]))} / ${MAX_TOKENS_ALLOWED}`;
 }
 
@@ -116,4 +117,4 @@ function renderAmountOfTokenSelected($tokenContainer, tokenType, payment) {
     $tokenContainer.querySelector("span").innerText = payment[tokenType]
 }
 
-export {renderHeader, renderCurrentPlayer, renderSwitchPaymentButtons};
+export {renderHeader, renderCurrentPlayer, renderSwitchPaymentButtons, renderCurrentPlayerTokenCount, renderCurrentPlayerTokens};
