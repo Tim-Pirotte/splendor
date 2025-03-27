@@ -76,12 +76,12 @@ function renderCurrentPlayerTokens(currentPlayerTokens, currentPlayerBonuses, ge
 
         if (token !== "Gold") {
             insertCardCounter($token, token, currentPlayerBonuses);
-            $switchPaymentButton.dataset.type = token;
         } else {
             $switchPaymentButton = document.querySelector("#reset-payment")
                                             .content.firstElementChild.cloneNode(true);
         }
 
+        $switchPaymentButton.dataset.type = token;
         $token.querySelector(".amount").textContent = currentPlayerTokens[token] || 0;
         insertImageInto($token, `UI/tokens/${TOKEN_MAPPER[token]}_chip`, false, `${TOKEN_MAPPER[token]} chip`);
         renderProgressBar($progressBar, currentPlayerTokens[token], TOKEN_MAPPER[token]);
@@ -94,4 +94,20 @@ function renderCurrentPlayerTokens(currentPlayerTokens, currentPlayerBonuses, ge
     }
 }
 
-export {renderHeader, renderCurrentPlayer};
+function renderSwitchPaymentButtons(currentPayment, cost) {
+    const $tokens = document.querySelectorAll("button.switch-token");
+
+    $tokens.forEach($token => $token.classList.add("hidden"));
+
+    const wallet = getPlayerWallet();
+
+    for (const $token of $tokens) {
+        const tokenType = $token.dataset.type;
+
+        if (isAllowedToSwitchToken(tokenType, currentPayment, cost, wallet)) {
+            $token.classList.remove("hidden")
+        }
+    }
+}
+
+export {renderHeader, renderCurrentPlayer, renderSwitchPaymentButtons};

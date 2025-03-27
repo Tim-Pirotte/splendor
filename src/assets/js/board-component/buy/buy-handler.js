@@ -1,5 +1,6 @@
 import {getCurrentPlayer, setActionButtonState} from "../game-status-interface.js";
 import {loadFromStorage} from "../../data-connector/local-storage-abstractor.js";
+import {renderSwitchPaymentButtons} from "../renderer/current-player-renderer.js";
 
 function selectCard(e) {
     const card = getCard(e)
@@ -9,9 +10,8 @@ function selectCard(e) {
         "processBuyCardClick",
         {level: card.dataset.level, index: card.dataset.index},
         )
-        const exchangeableTokens = getExchangeableTokens(e);
         const defaultPayment = getDefaultPayment(getCardData(card)["cost"]);
-
+        renderSwitchPaymentButtons(defaultPayment, getCardData(card)["cost"]);
     }
 }
 
@@ -64,16 +64,12 @@ function isWalletHigher(wallet, cost) {
     return minimumJokersNeeded <= (wallet["Gold"] || 0);
 }
 
-function getExchangeableTokens(e) {
-    return Object.keys(getCardData(getCard(e))["cost"]);
-}
-
 function getDefaultPayment(cost) {
     const currentPlayer = getCurrentPlayer();
     const tokens = currentPlayer["tokens"];
     const bonuses = currentPlayer["bonuses"];
     removeBonusesFromCost(cost, bonuses);
-    const defaultPayment = calculateDefaultPayment(cost, tokens)
+    return calculateDefaultPayment(cost, tokens)
 }
 
 function removeBonusesFromCost(cost, bonuses) {
@@ -82,7 +78,7 @@ function removeBonusesFromCost(cost, bonuses) {
     }
 }
 
-function calculateDefaultPayment(cost, tokens) {
+function calculateDefaultPayment(cost, tokens, card) {
     const payment = {"Gold": 0};
     for (const tokenType in cost) {
         if (!tokens.hasOwnProperty(tokenType)) {
@@ -96,6 +92,18 @@ function calculateDefaultPayment(cost, tokens) {
         }
     }
     return payment;
+}
+
+function isAllowedToSwitchToken(tokenType, currentPayment, cost, wallet) {
+    if (tokenType === "Gold") {
+        return !((currentPayment["Gold"] || 0) === 0);
+    } else if ((currentPayment["Gold"] || 0) === (wallet["Gold"] || 0)) {
+        return false
+    } else if (!(cost.hasOwnProperty(tokenType))) {
+        return false;
+    } else{
+        return (currentPayment[tokenType] || 0)!==0;
+    }
 }
 
 export {selectCard, processBuyCardClick};
