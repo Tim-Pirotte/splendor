@@ -1,9 +1,9 @@
 import {renderList} from "./renderer.js";
 import {playerJoinGame, handleFilterChange} from "./handler.js";
-import {navigateToMain} from "../general-logic/join-create-game.js";
+import {navigateToMain, renderPlayerInformation} from "../general-logic/join-create-game.js";
 
 function init(){
-    
+    renderPlayerInformation();
     renderList();
 
     document.querySelector("#back-button").addEventListener("click", navigateToMain);

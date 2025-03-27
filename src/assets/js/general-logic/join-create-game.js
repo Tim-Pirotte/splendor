@@ -1,4 +1,4 @@
-import {saveToStorage} from "../data-connector/local-storage-abstractor.js";
+import {loadFromStorage, saveToStorage} from "../data-connector/local-storage-abstractor.js";
 
 function processResponse(res) {
     saveToStorage("gameId", res["gameId"]);
@@ -10,4 +10,8 @@ function navigateToMain(e) {
     location.href = "../index.html";
 }
 
-export {processResponse, navigateToMain};
+function renderPlayerInformation() {
+    document.querySelector("#playerName").innerText = loadFromStorage("playerName");
+}
+
+export {processResponse, navigateToMain, renderPlayerInformation};
