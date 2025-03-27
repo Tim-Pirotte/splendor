@@ -1,12 +1,9 @@
-/* utils */
 import { redirectToPage } from "../utils/navigation.js";
-import { toggleAvatarListVisibility } from "../utils/dom-utils.js";
 
-/* component exports/imports */
 import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
+import { toggleAvatarListVisibility } from "./helper.js";
 import { renderSelectedAvatars } from "./renderer.js";
 
-/*** Load the saved username from storage and set it in the input field ***/
 function loadUsername() {
     const $username = document.querySelector("#username");
     const username = loadFromStorage("playerName");
@@ -16,12 +13,10 @@ function loadUsername() {
     }
 }
 
-/*** Load the saved avatar from storage and render it or use a placeholder instead ***/
 function loadAvatar() {
     renderSelectedAvatars(loadFromStorage("avatar") || "placeholder");
 }
 
-/*** Store the entered username in storage and navigate if needed ***/
 function storeUsername(e) {
     e.preventDefault();
 
@@ -38,7 +33,6 @@ function storeUsername(e) {
     }
 }
 
-/*** Store the selected avatar in storage and update the html ***/
 function storeAvatar(e) {
     e.preventDefault();
 

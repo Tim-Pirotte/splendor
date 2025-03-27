@@ -1,4 +1,3 @@
-/*** Toggle the visibility of the avatar selection list ***/
 function toggleAvatarListVisibility(e) {
     e.preventDefault();
 

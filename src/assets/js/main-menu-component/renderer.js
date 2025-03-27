@@ -1,5 +1,5 @@
-import {avatars} from "./data.js";
-import {renderAvatar} from "../general-logic/join-create-game.js";
+import { avatars } from "./data.js";
+import { renderAvatar } from "../general-logic/join-create-game.js";
 
 function renderSelectableAvatars() {
     const $template = document.querySelector("#avatar-template");
@@ -20,4 +20,4 @@ function renderSelectedAvatars(avatar) {
     renderAvatar($template, $container, avatar);
 }
 
-export {renderSelectableAvatars, renderSelectedAvatars};
+export { renderSelectableAvatars, renderSelectedAvatars };
