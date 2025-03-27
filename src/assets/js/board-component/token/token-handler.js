@@ -7,27 +7,44 @@ function canGetToken(tokenType, amount) {
 
     return (tokenType !== "Gold") && amount >= MIN_TOKENS_FOR_PICKING_TWO;
 }
-function GiveTokenThatAlreadySelected(tokenType , actionButtonData){
+function giveTokenThatAlreadySelected(tokenType , actionButtonData){
+    const token1 = 1;
+    const token2 = 2;
+    const token3 = 3;
+
     if (tokenType === actionButtonData.token1) {
 
-        return actionButtonData.token1;
+        return token1;
     }
     if (tokenType === actionButtonData.token2) {
-       return actionButtonData.token2;
+       return token2;
     }
     if (tokenType === actionButtonData.token3) {
-        return actionButtonData.token3;
+        return token3;
     }
     return null;
 }
 function checkIfTokenAlreadySelected(tokenType , actionButtonData) {
-   return (GiveTokenThatAlreadySelected(tokenType , actionButtonData) !== null)
+   return (giveTokenThatAlreadySelected(tokenType , actionButtonData) !== null);
 
 
 
 }
-function removeToken(token){
-    token = ""
+function removeToken(token , actionButtonData) {
+    const token1 = 1;
+    const token2 = 2;
+    const token3 = 3;
+
+
+    if (token === token1){
+        actionButtonData.token1 = "";
+    }
+    if (token === token2){
+        actionButtonData.token2 = "";
+    }
+    if (token === token3){
+        actionButtonData.token3 = "";
+    }
 }
 
 function checkIfTokenIsEmpty(token) {
@@ -44,20 +61,23 @@ function selectToken(e) {
         setActionButtonState("Take two", "processTakeTokenClick", {token1: tokenType});
 
     }else if(checkIfTokenAlreadySelected(tokenType, $actionButtonData)){
-        removeToken(GiveTokenThatAlreadySelected(tokenType, $actionButtonData));
-    }
-        else if (tokenType !== "Gold" && $selectedToken.dataset.amount >=1 && !checkIfTokenAlreadySelected(tokenType, $actionButton)) {
+        removeToken(giveTokenThatAlreadySelected(tokenType, $actionButtonData) , $actionButtonData);
+    } else if (tokenType !== "Gold" && $selectedToken.dataset.amount >=1 && !checkIfTokenAlreadySelected(tokenType, $actionButton)) {
 
         if(checkIfTokenIsEmpty($actionButtonData.token1)) {
             setActionButtonState("select two more gems", "processTakeTokenClick", {token1: tokenType});
 
-        }else if ($actionButtonData.token2){
+        }else if (checkIfTokenIsEmpty($actionButtonData.token2)){
             setActionButtonState("select one more gems", "processTakeTokenClick", {token2: tokenType});
 
-        }else if ($actionButtonData.token3){
+        }else if (checkIfTokenIsEmpty($actionButtonData.token3)){
             setActionButtonState("Take three gems", "processTakeTokenClick", {token3: tokenType});
 
+        }else{
+            console.log();
         }
+    }else{
+        console.log();
     }
 
 }
@@ -67,8 +87,8 @@ function processTakeTokenClick(e) {
     const actionButtonData = $actionButton.dataset;
 
     if ($actionButton.textContent !== "Take two") {
-        let body = [actionButtonData.token1, actionButtonData.token2 , actionButtonData.token3];
-        takeThreeGemsRequest(body)
+        const body = [actionButtonData.token1, actionButtonData.token2 , actionButtonData.token3];
+        takeThreeGemsRequest(body);
 
     } else{
         takeTwoGemsRequest(actionButtonData.token1);
