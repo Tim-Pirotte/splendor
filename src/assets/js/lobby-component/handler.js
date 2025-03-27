@@ -11,10 +11,9 @@ function loadLobbyInformation() {
                 renderPlayers(gameObject);
                 renderPlayerCount(gameObject);
             } else {
-                window.location.href = `./board.html`;
+                location.href = `./board.html`;
             }
         })
-        .catch(error => console.error(error));
 }
 
 export {loadLobbyInformation};

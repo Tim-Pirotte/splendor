@@ -29,6 +29,7 @@ header {
 header p {
     text-align: left;
 }
+
 h1 {
     font-size: 5em;
     margin-bottom: 1.5rem;
@@ -44,8 +45,7 @@ h3 {
     width: fit-content;
 }
 
-/* main */
- /* footer */
+/* footer */
 footer {
     display: flex;
     justify-content: space-between;

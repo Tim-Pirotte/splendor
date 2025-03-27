@@ -1,7 +1,7 @@
 import {loadLobbyInformation} from "./handler.js";
 
-function init() {
+function lobbyInit () {
     loadLobbyInformation();
 }
 
-init();
+lobbyInit ();

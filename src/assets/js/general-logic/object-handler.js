@@ -3,7 +3,7 @@ function getGameState(gameData){
 }
 
 function getGameName(gameData){
-    return gameData["gameName"] == null ? `${gameData["players"][0]}'s game` : gameData["gameName"];
+    return gameData["gameName"] == null ? `${gameData["players"][0] || gameData["players"]}'s game` : gameData["gameName"];
 }
 
 function getGameId(gameData){
@@ -19,7 +19,7 @@ function getMaxUsersAmount(gameData){
 }
 
 function getGameCreator(gameData) {
-    return gameData["players"][0]["name"];
+    return gameData["players"][0]["name"] || gameData["players"];
 }
 
 function getPlayersObjects(gameData) {
