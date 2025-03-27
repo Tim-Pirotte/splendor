@@ -12,5 +12,15 @@ function takeTwoGemsRequest(tokenType) {
     fetchFromServer(`/games/${gameId}/players/${playerName}/tokens`, "PATCH", body)
         .then(res => updateTokens(res));
 }
+function takeThreeGemsRequest(tokenTypes) {
+    const gameId = loadFromStorage("gameId");
+    const playerName = loadFromStorage("playerName");
+    const body = {"take": {}};
 
-export {takeTwoGemsRequest};
+    for (const token of tokenTypes){
+        body["take"][token] = 1;
+    }
+    fetchFromServer(`/games/${gameId}/players/${playerName}/tokens`, "PATCH", body)
+        .then(res => updateTokens(res));
+}
+export {takeTwoGemsRequest , takeThreeGemsRequest};
