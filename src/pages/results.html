@@ -8,11 +8,14 @@
         content="Niels Clarysse, Alexander Engelrelst, Tristan Joos, Arne Persyn, Tim Pirotte, Niels Ryserhove">
     <title>Splendor - Results</title>
 
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 
     <link rel="stylesheet" href="../assets/css/reset.css">
     <link rel="stylesheet" href="../assets/css/screen.css">
     <link rel="stylesheet" href="../assets/css/results.css">
+
+    <script src="../assets/js/results-component/results.js" type="module"></script>
+    <script src="../assets/js/sound-component/sound-component.js" type="module"></script>
 </head>
 
 <body>
@@ -28,29 +31,29 @@
     <main>
         <div>
             <h1>DEFEAT!</h1>
-            <button type="button">Back to the lobby</button>
             <table>
                 <thead>
                     <tr>
-                        <th>Positie</th>
-                        <th>Naam</th>
-                        <th>Score</th>
+                        <th>Position</th>
+                        <th>Name</th>
+                        <th>Points</th>
                     </tr>
                 </thead>
                 <tbody>
                     <template id="result-template">
                         <tr>
-                            <td class="place"></td>
-                            <td class="name"></td>
-                            <td class="score"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                         </tr>
                     </template>
                 </tbody>
             </table>
+            <a href="./lobby-page.html">Back to the lobby</a>
         </div>
     </main>
     <footer>
-        <button type="button">
+        <button type="button" class="sound-button">
             <picture>
                 <source srcset="../assets/images/UI/sound_off.webp" type="image/webp">
                 <img src="../assets/images/fallback/UI/sound_off.png" alt="Toggle sound">
