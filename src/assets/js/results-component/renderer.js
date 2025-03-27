@@ -8,7 +8,6 @@ import { MAXPRESTIGEPOINTS } from "../config.js";
 function renderResultMessage(isWinner) {
     const $status = document.querySelector("h1");
     $status.innerText = isWinner ? "WINNER" : "DEFEAT";
-
 }
 
 /**
