@@ -1,10 +1,18 @@
+import {setActionButtonState} from "../game-status-interface.js";
+
 function selectCard(e) {
-    if (isCard(e)) {
-        console.log("clicked");
+    const card = getCard(e)
+    if (card) {
+        setActionButtonState("buy", "processBuyCardClick", {name: card.dataset.name})
     }
 }
 
-function isCard(e) {
+function getCard(e) {
     return e.target.closest(".card")
 }
-export {selectCard};
+
+function processBuyCardClick() {
+    console.log(document.querySelector(".action-button").dataset.name);
+}
+
+export {selectCard, processBuyCardClick};
