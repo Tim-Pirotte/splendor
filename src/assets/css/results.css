@@ -30,7 +30,7 @@ tbody tr {
     counter-increment: position-counter;
 }
 
-tbody tr:before {
+tbody tr td:first-child::before {
     content: counter(position-counter)
 }
 
