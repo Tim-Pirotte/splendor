@@ -1,6 +1,7 @@
 import {loadFromStorage} from "../../data-connector/local-storage-abstractor.js";
 import {formatNumber, insertImageInto, safeEmptyContainer} from "./helper.js";
 import {TOKEN_MAPPER} from "../config.js";
+import {MAXPRESTIGEPOINTS} from "../../config.js";
 
 function renderOtherPlayers(otherPlayers, gems) {
   const currentPlayerName = loadFromStorage("playerName");
@@ -14,7 +15,7 @@ function renderOtherPlayers(otherPlayers, gems) {
     if (otherPlayer.name !== currentPlayerName) {
       const $playerCard = $template.content.firstElementChild.cloneNode(true);
       setPlayerName($playerCard, otherPlayer);
-      setPlayerPoints($playerCard, otherPlayer);
+      setPlayerPoints($playerCard.querySelector(".points span"), otherPlayer["totalPrestigePoints"]);
 
       renderTokenList($playerCard.querySelector(".tokens"), otherPlayer["tokens"], gems);
       renderCardList($playerCard.querySelector(".cards"), otherPlayer["bonuses"], gems);
@@ -29,8 +30,11 @@ function setPlayerName($playerCard, otherPlayer) {
   $playerCard.querySelector(".name").textContent = otherPlayer.name;
 }
 
-function setPlayerPoints($playerCard, otherPlayer) {
-  $playerCard.querySelector(".points span").textContent = formatNumber(otherPlayer["totalPrestigePoints"]);
+function setPlayerPoints($playerPoints, prestigePoints) {
+  $playerPoints.textContent = formatNumber(prestigePoints);
+  if (prestigePoints >= MAXPRESTIGEPOINTS) {
+    $playerPoints.classList.add("enough-points-to-win");
+  }
 }
 
 function renderTokenList(containerToInsertInto, tokenAmounts, gems) {
