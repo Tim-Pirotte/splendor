@@ -7,7 +7,7 @@ function selectCard(e) {
         setActionButtonState(
         "buy",
         "processBuyCardClick",
-        {name: card.dataset.name, level: card.dataset.level},
+        {level: card.dataset.level, index: card.dataset.index},
         )
     }
 }
@@ -17,8 +17,10 @@ function getCard(e) {
 }
 
 function processBuyCardClick() {
-    const cardName = document.querySelector(".action-button").dataset.name;
-    const cardData = loadFromStorage("gameData")["market"]
+    const $actionButton = document.querySelector(".action-button");
+    const cardName = $actionButton.dataset.name;
+    const level = $actionButton.dataset.level;
+    const cardData = loadFromStorage("gameData")["market"][parseInt(level) - 1];
 }
 
 export {selectCard, processBuyCardClick};
