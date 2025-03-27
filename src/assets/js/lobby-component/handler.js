@@ -13,7 +13,7 @@ function loadLobbyInformation() {
             } else {
                 location.href = `./board.html`;
             }
-        })
+        });
 }
 
 export {loadLobbyInformation};

@@ -9,7 +9,7 @@ function renderList(){
     $container.innerHTML = "";
 
     fetchFromServer(`/games`, `GET`)
-        .then(gameObject => gameObject['games'].forEach(game => populateGame($template, $container, game)))
+        .then(gameObject => gameObject['games'].forEach(game => populateGame($template, $container, game)));
 }
 
 function populateGame($template, $container, game){
