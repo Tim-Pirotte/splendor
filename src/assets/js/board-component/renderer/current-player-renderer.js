@@ -7,6 +7,7 @@ import {
     renderProgressBar,
     safeEmptyContainer
 } from "./helper.js";
+import {isAllowedToSwitchToken, getPlayerWallet} from "../buy/buy-handler.js";
 
 function renderHeader() {
     document.querySelector(".top-bar h2").textContent = loadFromStorage("playerName");
@@ -77,7 +78,7 @@ function renderCurrentPlayerTokens(currentPlayerTokens, currentPlayerBonuses, ge
         if (token !== "Gold") {
             insertCardCounter($token, token, currentPlayerBonuses);
         } else {
-            $switchPaymentButton = document.querySelector("#reset-payment")
+            $switchPaymentButton = document.querySelector("#reset-payment-template")
                                             .content.firstElementChild.cloneNode(true);
         }
 

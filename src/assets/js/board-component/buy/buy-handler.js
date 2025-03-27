@@ -106,4 +106,4 @@ function isAllowedToSwitchToken(tokenType, currentPayment, cost, wallet) {
     }
 }
 
-export {selectCard, processBuyCardClick};
+export {selectCard, processBuyCardClick, isAllowedToSwitchToken, getPlayerWallet};
