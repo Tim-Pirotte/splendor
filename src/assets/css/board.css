@@ -208,6 +208,11 @@ section header picture {
     margin: 1rem 0;
 }
 
+/* SWITCH TOKEN BUTTONS */
+button.hidden {
+    display: none;
+}
+
 /* TIMER */
 progress {
     grid-area: timer;
