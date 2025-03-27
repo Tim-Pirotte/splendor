@@ -34,7 +34,8 @@ function selectToken(e) {
     const tokenType = $selectedToken.dataset.type;
     const $actionButton = document.querySelector(".action-button");
 
-    if (canGetToken(tokenType, $selectedToken.dataset.amount)) {
+    if (canGetToken(tokenType, $selectedToken.dataset.amount) &&( $actionButton.dataset.token1 === undefined || $actionButton.dataset.token1 === "") ) {
+        console.log("i'm here");
         setActionButtonState("Take two", "processTakeTokenClick", {token1: tokenType});
 
     }else if(checkIfTokenAlreadySelectedAndRemoveIfSo(tokenType, $actionButton)){
@@ -62,7 +63,7 @@ function selectToken(e) {
 function processTakeTokenClick(e) {
     const $actionButton = document.querySelector(".action-button");
     const actionButtonData = $actionButton.dataset;
-    if (checkIfToken1ToToken3IsNotEmpty(actionButtonData)) {
+    if ($actionButton.textContent !== "Take two") {
         let body = [actionButtonData.token1, actionButtonData.token2 , actionButtonData.token3];
         takeThreeGemsRequest(body)
     } else{
@@ -78,7 +79,7 @@ function updateTokens(res) {
 
     for (const [token, taken] of Object.entries(res["tokens"])) {
      const $token = document.querySelector(`[data-type="${token}"]`);
-     $token.dataset.amount = (parseInt($token.dataset.amount) - parseInt(taken)).toString();
+     $token.dataset.amount = (parseInt($token.dataset.amount) - parseInt(taken));
      const $amountText = $token.querySelector("p");
      $amountText.textContent = `${$token.dataset.amount}${$amountText.textContent.substring(beginIndexAmountText, endIndexAmountText)}`;
     }

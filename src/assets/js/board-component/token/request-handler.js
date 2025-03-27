@@ -18,7 +18,10 @@ function takeThreeGemsRequest(tokenTypes) {
     const body = {"take": {}};
 
     for (const token of tokenTypes){
-        body["take"][token] = 1;
+        if (token !== undefined && token !== ""){
+            body["take"][token] = 1;
+        }
+
     }
     fetchFromServer(`/games/${gameId}/players/${playerName}/tokens`, "PATCH", body)
         .then(res => updateTokens(res));
