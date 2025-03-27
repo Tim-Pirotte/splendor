@@ -5,15 +5,15 @@ import {processResponse} from "../general-logic/join-create-game.js";
 function handleCreateGameSubmit(e){
     e.preventDefault();
 
-    const gameName = document.querySelector("#game-name").value.trim();
+    const playerName = loadFromStorage("playerName");
+    const gameName = (document.querySelector("#game-name").value || `${playerName}'s game`).trim();
     const visibility = getCheckedRadioValue(document.querySelectorAll("input[name=visibility]"));
     const numberOfPlayers = parseInt(getCheckedRadioValue(document.querySelectorAll("input[name=players]")));
 
-    createGame(gameName, visibility, numberOfPlayers);
+    createGame(playerName, gameName, visibility, numberOfPlayers);
 }
 
-function createGame(gameName, visibility, numberOfPlayers){
-    const playerName = loadFromStorage("playerName");
+function createGame(playerName, gameName, visibility, numberOfPlayers){
     const body = formGameBody(playerName, gameName, visibility, numberOfPlayers);
 
     fetchFromServer("/games", "POST", body)

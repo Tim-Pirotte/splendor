@@ -3,7 +3,7 @@ function getGameState(gameData){
 }
 
 function getGameName(gameData){
-    return gameData["gameName"] == null ? `${gameData["players"][0] || gameData["players"]}'s game` : gameData["gameName"];
+    return gameData["gameName"];
 }
 
 function getGameId(gameData){
