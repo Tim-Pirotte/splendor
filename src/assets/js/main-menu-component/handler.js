@@ -44,7 +44,7 @@ function storeAvatar(e) {
 }
 
 function toggleVisibility() {
-    const $avatarList = document.querySelector("section");
+    const $avatarList = document.querySelector(".avatar-selector section");
 
     if ($avatarList.style.display === "none") {
         $avatarList.style.display = "block";
