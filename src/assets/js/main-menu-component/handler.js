@@ -1,21 +1,7 @@
 import { redirectFromIndexToPageInPages } from "../utils/navigation.js";
-
 import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
 import { toggleAvatarListVisibility } from "./helper.js";
 import { renderSelectedAvatars } from "./renderer.js";
-
-function loadUsername() {
-    const $username = document.querySelector("#username");
-    const username = loadFromStorage("playerName");
-
-    if (username) {
-        $username.value = username;
-    }
-}
-
-function loadAvatar() {
-    renderSelectedAvatars(loadFromStorage("avatar") || "placeholder");
-}
 
 function storeUsername(e) {
     e.preventDefault();
@@ -45,4 +31,4 @@ function storeAvatar(e) {
     }
 }
 
-export { loadUsername, loadAvatar, storeUsername, storeAvatar };
+export { storeUsername, storeAvatar };

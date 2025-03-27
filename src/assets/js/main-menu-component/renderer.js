@@ -1,3 +1,4 @@
+import { renderAvatar } from "../utils/player-renderer.js";
 import { avatars } from "./data.js";
 
 function renderSelectableAvatars() {

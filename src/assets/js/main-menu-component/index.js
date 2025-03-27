@@ -1,5 +1,5 @@
-import { loadAvatar, loadUsername, storeAvatar, storeUsername } from "./handler.js";
-import { toggleAvatarListVisibility } from "./helper.js";
+import { storeAvatar, storeUsername } from "./handler.js";
+import { loadAvatar, loadPlayerName, toggleAvatarListVisibility } from "./helper.js";
 import { renderSelectableAvatars } from "./renderer.js";
 
 function init() {
@@ -9,7 +9,7 @@ function init() {
 }
 
 function loadSavedUserInformation() {
-    loadUsername();
+    loadPlayerName();
     loadAvatar();
 }
 

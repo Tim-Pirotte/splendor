@@ -1,6 +1,7 @@
 import {renderList} from "./renderer.js";
 import {playerJoinGame, handleFilterChange, playerJoinGameById} from "./handler.js";
-import {navigateToMain, renderPlayerInformation} from "../general-logic/join-create-game.js";
+import {navigateToMain} from "../general-logic/join-create-game.js";
+import {renderPlayerInformation} from "../utils/player-renderer.js";
 
 function init(){
     renderPlayerInformation();
