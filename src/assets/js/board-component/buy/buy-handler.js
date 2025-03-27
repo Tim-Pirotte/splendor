@@ -1,9 +1,9 @@
-import {setActionButtonState} from "../game-status-interface.js";
+import {getCurrentPlayer, setActionButtonState} from "../game-status-interface.js";
 import {loadFromStorage} from "../../data-connector/local-storage-abstractor.js";
 
 function selectCard(e) {
     const card = getCard(e)
-    if (card) {
+    if (card && canBuy(card)) {
         setActionButtonState(
         "buy",
         "processBuyCardClick",
@@ -12,16 +12,41 @@ function selectCard(e) {
     }
 }
 
+function canBuy(card) {
+    const cost = getCardData(card)["cost"];
+    const wallet = getPlayerWallet();
+    mergeWithSum(currentPlayer["tokens"], currentPlayer["bonuses"]);
+}
+
 function getCard(e) {
     return e.target.closest(".card")
 }
 
 function processBuyCardClick() {
     const $actionButton = document.querySelector(".action-button");
-    const index = $actionButton.dataset.index;
-    const level = $actionButton.dataset.level;
-    const cardData = loadFromStorage("gameData")["market"][parseInt(level) - 1]["visibleCards"][index];
-    console.log(cardData);
+    const cardData = getCardData($actionButton);
+}
+
+function getCardData($target) {
+    const index = $target.dataset.index;
+    const level = $target.dataset.level;
+    return loadFromStorage("gameData")["market"][parseInt(level) - 1]["visibleCards"][index]
+}
+
+function getPlayerWallet() {
+    const currentPlayer = getCurrentPlayer();
+    const tokens = currentPlayer["tokens"];
+    const bonuses = currentPlayer["bonuses"];
+
+    for (const tokenType in bonuses) {
+        if (tokens.hasOwnProperty(tokenType)) {
+            tokens[tokenType] += bonuses[tokenType];
+        } else {
+            tokens[tokenType] = bonuses[tokenType];
+        }
+    }
+
+    return tokens
 }
 
 export {selectCard, processBuyCardClick};
