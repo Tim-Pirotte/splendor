@@ -26,7 +26,8 @@ function storeUsername(e) {
     const $form = document.querySelector("form");
     const username = document.querySelector("#username").value.trim();
 
-    if ($form.reportValidity() && username !== "") {
+    if ($form.reportValidity()) {
+        if (loadFromStorage("avatar") === null) { saveToStorage("avatar", "placeholder") }
         saveToStorage("playerName", username);
         location.href = `./pages/${e.target.value}.html`;
     }
