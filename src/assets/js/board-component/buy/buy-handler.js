@@ -110,18 +110,13 @@ function isAllowedToSwitchToken(tokenType, currentPayment, cost, wallet) {
 function handlePaymentMethodChange(e) {
     if (e.target.classList.contains("switch-token")) {
         const tokenType = e.target.dataset.type;
-        const cost = getCardCostFromActionButton();
+        const cost = getCardData(document.querySelector(".action-button"))["cost"];
         if (tokenType === "Gold") {
             resetPayment(cost);
         } else {
             updatePaymentMethod(tokenType, cost);
         }
     }
-}
-
-function getCardCostFromActionButton() {
-    const $buyButton = document.querySelector(".action-button");
-    return loadFromStorage("gameData")["market"][parseInt($buyButton.dataset.level) - 1]["visibleCards"][$buyButton.dataset.index]["cost"];
 }
 
 function resetPayment(cost){
