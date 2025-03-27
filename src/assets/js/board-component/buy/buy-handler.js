@@ -18,9 +18,10 @@ function getCard(e) {
 
 function processBuyCardClick() {
     const $actionButton = document.querySelector(".action-button");
-    const cardName = $actionButton.dataset.name;
+    const index = $actionButton.dataset.index;
     const level = $actionButton.dataset.level;
-    const cardData = loadFromStorage("gameData")["market"][parseInt(level) - 1];
+    const cardData = loadFromStorage("gameData")["market"][parseInt(level) - 1]["visibleCards"][index];
+    console.log(cardData);
 }
 
 export {selectCard, processBuyCardClick};
