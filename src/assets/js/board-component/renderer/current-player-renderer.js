@@ -1,6 +1,12 @@
 import {loadFromStorage} from "../../data-connector/local-storage-abstractor.js";
 import {MAX_TOKENS_ALLOWED, PRESTIGE_POINTS_NEEDED_TO_WIN, TOKEN_MAPPER} from "../config.js";
-import {formatNumber, insertImageInto, renderCard, renderProgressBar, safeEmptyContainer} from "./helper.js";
+import {
+    formatNumber,
+    insertImageInto,
+    renderCard,
+    renderProgressBar,
+    safeEmptyContainer
+} from "./helper.js";
 
 function renderHeader() {
     document.querySelector(".top-bar h2").textContent = loadFromStorage("playerName");
@@ -57,21 +63,33 @@ function renderCurrentPlayerTokens(currentPlayerTokens, currentPlayerBonuses, ge
 
     const $numberedItemTemplate = document.querySelector("#numbered-item-template");
     const $progressBarTemplate = document.querySelector("#progress-bar-template");
+    const $switchPaymentButtonTemplate = document.querySelector("#switch-to-gold-button-template");
 
     for (const token of gems.toReversed()) {
         const $token = $numberedItemTemplate.content.firstElementChild.cloneNode(true);
 
         const $progressBar = $progressBarTemplate.content.firstElementChild.cloneNode(true);
 
+        let $switchPaymentButton = $switchPaymentButtonTemplate.content.firstElementChild.cloneNode(true);
+
+        $token.dataset.tokenType = token;
+
         if (token !== "Gold") {
             insertCardCounter($token, token, currentPlayerBonuses);
+            $switchPaymentButton.dataset.type = token;
+        } else {
+            $switchPaymentButton = document.querySelector("#reset-payment")
+                                            .content.firstElementChild.cloneNode(true);
         }
 
         $token.querySelector(".amount").textContent = currentPlayerTokens[token] || 0;
         insertImageInto($token, `UI/tokens/${TOKEN_MAPPER[token]}_chip`, false, `${TOKEN_MAPPER[token]} chip`);
         renderProgressBar($progressBar, currentPlayerTokens[token], TOKEN_MAPPER[token]);
 
+
         $token.appendChild($progressBar);
+        $token.appendChild($switchPaymentButton)
+
         $currentPlayerTokensContainer.appendChild($token);
     }
 }

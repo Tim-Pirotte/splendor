@@ -9,6 +9,8 @@ function selectCard(e) {
         "processBuyCardClick",
         {level: card.dataset.level, index: card.dataset.index},
         )
+        const exchangeableTokens = getExchangeableTokens(e);
+        console.log(exchangeableTokens)
     }
 }
 
@@ -20,7 +22,7 @@ function canBuy(card) {
 }
 
 function getCard(e) {
-    return e.target.closest(".card")
+    return e.target.closest(".card");
 }
 
 function processBuyCardClick() {
@@ -60,6 +62,10 @@ function isWalletHigher(wallet, cost) {
     }
 
     return minimumJokersNeeded >= (wallet["Gold"] || 0);
+}
+
+function getExchangeableTokens(e) {
+    return Object.keys(getCardData(getCard(e))["cost"]);
 }
 
 export {selectCard, processBuyCardClick};
