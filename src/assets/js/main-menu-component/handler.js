@@ -1,6 +1,12 @@
-import {loadFromStorage, saveToStorage} from "../data-connector/local-storage-abstractor.js";
-import {renderSelectedAvatars} from "./renderer.js";
+/* utils */
+import { redirectToPage } from "../utils/navigation.js";
+import { toggleVisibility } from "../utils/dom-utils.js";
 
+/* component exports/imports */
+import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
+import { renderSelectedAvatars } from "./renderer.js";
+
+/*** Load the saved username from storage and set it in the input field ***/
 function loadUsername() {
     const $username = document.querySelector("#username");
     const username = loadFromStorage("playerName");
@@ -10,16 +16,12 @@ function loadUsername() {
     }
 }
 
+/*** Load the saved avatar from storage and render it or use a placeholder instead ***/
 function loadAvatar() {
-    const avatar = loadFromStorage("avatar");
-
-    if (avatar) {
-        renderSelectedAvatars(avatar);
-    } else {
-        renderSelectedAvatars("placeholder");
-    }
+    renderSelectedAvatars(loadFromStorage("avatar") || "placeholder");
 }
 
+/*** Store the entered username in storage and navigate if needed ***/
 function storeUsername(e) {
     e.preventDefault();
 
@@ -27,19 +29,20 @@ function storeUsername(e) {
     const username = document.querySelector("#username").value.trim();
 
     if ($form.reportValidity()) {
-        if (loadFromStorage("avatar") === null) { saveToStorage("avatar", "placeholder") }
+        saveToStorage("avatar", loadFromStorage("avatar") || "placeholder");
         saveToStorage("playerName", username);
 
         if (["join-game", "create-game"].includes(e.target.value)) {
-            location.href = `./pages/${e.target.value}.html`;
+            redirectToPage(e.target.value);
         }
     }
 }
 
+/*** Store the selected avatar in storage and update the html ***/
 function storeAvatar(e) {
     e.preventDefault();
 
-    const avatar = e.target.closest("img").getAttribute("title");
+    const avatar = e.target.closest("img").title;
 
     if (avatar) {
         saveToStorage("avatar", avatar);
@@ -48,12 +51,4 @@ function storeAvatar(e) {
     }
 }
 
-function toggleVisibility(e) {
-    e.preventDefault();
-
-    const $avatarList = document.querySelector(".avatar-selector section");
-
-    $avatarList.style.display = ($avatarList.style.display === "none") ? "block" : "none";
-}
-
-export {loadUsername, loadAvatar, storeUsername, storeAvatar, toggleVisibility};
+export { loadUsername, loadAvatar, storeUsername, storeAvatar };
