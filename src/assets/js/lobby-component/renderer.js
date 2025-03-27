@@ -12,7 +12,7 @@ function renderPlayers(g) {
     document.querySelectorAll("#players li")
         .forEach(li => li.remove());
 
-    getPlayersObjects(g).forEach(player => renderPlayer($template, $container, player["name"]));
+    getPlayersObjects(g).forEach(player => renderPlayer($template, $container, player));
 }
 
 function renderPlayer($template, $container, playerName) {
