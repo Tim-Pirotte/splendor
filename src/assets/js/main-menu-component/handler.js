@@ -41,7 +41,7 @@ function storeAvatar(e) {
     if (avatar) {
         saveToStorage("avatar", avatar);
         renderSelectedAvatars(avatar);
-        toggleVisibility();
+        toggleVisibility(e);
     }
 }
 
