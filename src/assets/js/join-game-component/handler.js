@@ -9,8 +9,7 @@ function playerJoinGame(e) {
     const playerName = loadFromStorage("playerName");
 
     fetchFromServer(`/games/${gameId}/players/${playerName}`, `POST`)
-        .then(res => processResponse(res))
-        .catch(error => console.error(error));
+        .then(res => processResponse(res));
 }
 
 export {playerJoinGame};
