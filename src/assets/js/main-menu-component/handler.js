@@ -40,17 +40,14 @@ function storeAvatar(e) {
     if (avatar) {
         saveToStorage("avatar", avatar);
         renderSelectedAvatars(avatar);
+        toggleVisibility();
     }
 }
 
 function toggleVisibility() {
     const $avatarList = document.querySelector(".avatar-selector section");
 
-    if ($avatarList.style.display === "none") {
-        $avatarList.style.display = "block";
-    } else {
-        $avatarList.style.display = "none";
-    }
+    $avatarList.style.display = ($avatarList.style.display === "none") ? "block" : "none";
 }
 
 export {loadUsername, loadAvatar, storeUsername, storeAvatar, toggleVisibility};
