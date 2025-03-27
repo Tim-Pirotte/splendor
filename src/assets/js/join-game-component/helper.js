@@ -8,4 +8,16 @@ function getGameButtonText(game){
     return getGameState(game) === "join" ? "Join game" : "Spectate game";
 }
 
-export {getAmountText, getGameButtonText};
+function intersection(setA, setB) {
+    const result = new Set();
+
+    for (const item of setA) {
+        if (setB.has(item)) {
+            result.add(item);
+        }
+    }
+
+    return result;
+}
+
+export {getAmountText, getGameButtonText, intersection};
