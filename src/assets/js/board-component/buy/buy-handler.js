@@ -10,7 +10,7 @@ function selectCard(e) {
         "processBuyCardClick",
         {level: card.dataset.level, index: card.dataset.index},
         )
-        const defaultPayment = getDefaultPayment(getCardData(card)["cost"]);
+        const defaultPayment = getDefaultPaymentMethod(getCardData(card)["cost"]);
         renderSwitchPaymentButtons(defaultPayment, getCardData(card)["cost"]);
         saveToStorage("paymentMethod", JSON.stringify(defaultPayment));
     }
@@ -65,7 +65,7 @@ function isWalletHigher(wallet, cost) {
     return minimumJokersNeeded <= (wallet["Gold"] || 0);
 }
 
-function getDefaultPayment(cost) {
+function getDefaultPaymentMethod(cost) {
     const currentPlayer = getCurrentPlayer();
     const tokens = currentPlayer["tokens"];
     const bonuses = currentPlayer["bonuses"];
@@ -123,9 +123,9 @@ function getSelectedCardFromBuyButton() {
 }
 
 function resetPayment(card){
-    const defaultPayment = getDefaultPayment(getCardData(card)["cost"]);
-    renderSwitchPaymentButtons(defaultPayment, getCardData(card)["cost"]);
-    saveToStorage("paymentMethod", JSON.stringify(defaultPayment));
+    const paymentMethod = getDefaultPaymentMethod(getCardData(card)["cost"]);
+    renderSwitchPaymentButtons(paymentMethod, getCardData(card)["cost"]);
+    saveToStorage("paymentMethod", JSON.stringify(paymentMethod));
 }
 
 export {selectCard, processBuyCardClick, isAllowedToSwitchToken, getPlayerWallet, handlePaymentMethodChange};
