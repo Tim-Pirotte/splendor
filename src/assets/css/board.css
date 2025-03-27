@@ -208,6 +208,10 @@ section header picture {
     margin: 1rem 0;
 }
 
+.highlighted-number {
+    color: red;
+}
+
 /* TIMER */
 progress {
     grid-area: timer;
@@ -215,7 +219,7 @@ progress {
     margin: auto 0;
 }
 
-/* Action button */
+/* ACTION BUTTON */
 .action-button {
     grid-area: action-button;
     height: 2rem;
