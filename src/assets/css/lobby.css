@@ -63,3 +63,7 @@ footer .sound-button {
     background-color: transparent;
     border: none;
 }
+
+.hidden {
+    visibility: hidden;
+}
