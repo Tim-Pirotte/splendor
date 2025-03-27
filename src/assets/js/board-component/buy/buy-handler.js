@@ -12,7 +12,7 @@ function selectCard(e) {
         )
         const defaultPayment = getDefaultPaymentMethod(getCardData(card)["cost"]);
         renderSwitchPaymentButtons(defaultPayment, getCardData(card)["cost"]);
-        saveToStorage("paymentMethod", JSON.stringify(defaultPayment));
+        saveToStorage("paymentMethod", defaultPayment);
     }
 }
 
@@ -109,23 +109,39 @@ function isAllowedToSwitchToken(tokenType, currentPayment, cost, wallet) {
 
 function handlePaymentMethodChange(e) {
     if (e.target.classList.contains("switch-token")) {
-        const token = e.target.dataset.type;
-        const card = getSelectedCardFromBuyButton();
-        if (token === "Gold") {
-            resetPayment(card);
+        const tokenType = e.target.dataset.type;
+        const cost = getCardCostFromActionButton();
+        if (tokenType === "Gold") {
+            resetPayment(cost);
+        } else {
+            updatePaymentMethod(tokenType, cost);
         }
     }
 }
 
-function getSelectedCardFromBuyButton() {
+function getCardCostFromActionButton() {
     const $buyButton = document.querySelector(".action-button");
-    return loadFromStorage("gameData")["market"][parseInt($buyButton.dataset.level) - 1]["visibleCards"][$buyButton.dataset.index];
+    return loadFromStorage("gameData")["market"][parseInt($buyButton.dataset.level) - 1]["visibleCards"][$buyButton.dataset.index]["cost"];
 }
 
-function resetPayment(card){
-    const paymentMethod = getDefaultPaymentMethod(getCardData(card)["cost"]);
-    renderSwitchPaymentButtons(paymentMethod, getCardData(card)["cost"]);
-    saveToStorage("paymentMethod", JSON.stringify(paymentMethod));
+function resetPayment(cost){
+    const paymentMethod = getDefaultPaymentMethod(cost);
+    renderSwitchPaymentButtons(paymentMethod, cost);
+    saveToStorage("paymentMethod", paymentMethod);
+}
+
+function updatePaymentMethod(tokenType, cost) {
+    const paymentMethod = getNewPaymentMethod(tokenType);
+    saveToStorage("paymentMethod", paymentMethod);
+    renderSwitchPaymentButtons(paymentMethod, cost);
+}
+
+function getNewPaymentMethod(tokenType) {
+    const paymentMethod = loadFromStorage("paymentMethod");
+    console.log(paymentMethod);
+    paymentMethod["Gold"]++;
+    paymentMethod[tokenType]--;
+    return paymentMethod
 }
 
 export {selectCard, processBuyCardClick, isAllowedToSwitchToken, getPlayerWallet, handlePaymentMethodChange};
