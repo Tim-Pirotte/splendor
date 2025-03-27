@@ -1,10 +1,9 @@
 import {loadFromStorage} from "../../data-connector/local-storage-abstractor.js";
 import {MAX_TOKENS_ALLOWED, PRESTIGE_POINTS_NEEDED_TO_WIN, TOKEN_MAPPER} from "../config.js";
-import {formatNumber, insertImageInto, renderCard, renderProgressBar} from "./helper.js";
-import {tokensDummyData} from "../dummy-data.js";
+import {formatNumber, insertImageInto, renderCard, renderProgressBar, safeEmptyContainer} from "./helper.js";
 
 function renderHeader() {
-    document.querySelector(".top-bar h2").textContent = loadFromStorage("username");
+    document.querySelector(".top-bar h2").textContent = loadFromStorage("playerName");
 }
 
 function getCurrentPlayer(players, currentPlayerName) {
@@ -16,30 +15,31 @@ function getCurrentPlayer(players, currentPlayerName) {
 }
 
 function renderCurrentPlayerPoints(currentPlayer) {
-    document.querySelector(".player-points p").textContent = `${formatNumber(currentPlayer.totalPrestigePoints)}  / ${PRESTIGE_POINTS_NEEDED_TO_WIN}`;
+    document.querySelector(".player-points p").textContent = `${formatNumber(currentPlayer["totalPrestigePoints"])}  / ${PRESTIGE_POINTS_NEEDED_TO_WIN}`;
 
-    renderProgressBar(document.querySelector(".player-points .progress-bar"), currentPlayer.totalPrestigePoints, "score");
+    renderProgressBar(document.querySelector(".player-points .progress-bar"), currentPlayer["totalPrestigePoints"], "score");
 }
 
 function renderCurrentPlayerReserve(currentPlayer) {
     const $reserved = document.querySelector(".reserved-cards ul");
+    safeEmptyContainer($reserved);
 
-    for (const card of currentPlayer.reserve) {
-        renderCard($reserved, card.prestigePoints, card.bonus, card.cost);
+    for (const card of currentPlayer["reserve"]) {
+        renderCard($reserved, card["prestigePoints"], card["bonus"], card["cost"]);
     }
 }
 
 function renderCurrentPlayerTokenCount(currentPlayer) {
-    document.querySelector(".player-tokens h4").textContent = `${formatNumber(countTokens(currentPlayer.tokens))} / ${MAX_TOKENS_ALLOWED}`;
+    document.querySelector(".player-tokens h4").textContent = `${formatNumber(countTokens(currentPlayer["tokens"]))} / ${MAX_TOKENS_ALLOWED}`;
 }
 
-function renderCurrentPlayer(players) {
-    const currentPlayer = getCurrentPlayer(players, loadFromStorage("username"));
+function renderCurrentPlayer(players, gems) {
+    const currentPlayer = getCurrentPlayer(players, loadFromStorage("playerName"));
 
     renderCurrentPlayerPoints(currentPlayer);
     renderCurrentPlayerReserve(currentPlayer);
     renderCurrentPlayerTokenCount(currentPlayer);
-    renderCurrentPlayerTokens(currentPlayer.tokens, currentPlayer.bonuses);
+    renderCurrentPlayerTokens(currentPlayer["tokens"], currentPlayer["bonuses"], gems);
 }
 
 function countTokens(tokens) {
@@ -51,14 +51,16 @@ function insertCardCounter($token, token, currentPlayerBonuses) {
     $token.insertAdjacentHTML("afterbegin", `<p>${currentPlayerBonuses[token] || 0}</p>`);
 }
 
-function renderCurrentPlayerTokens(currentPlayerTokens, currentPlayerBonuses) {
+function renderCurrentPlayerTokens(currentPlayerTokens, currentPlayerBonuses, gems) {
     const $currentPlayerTokensContainer = document.querySelector(".player-tokens ul");
+    safeEmptyContainer($currentPlayerTokensContainer);
 
     const $numberedItemTemplate = document.querySelector("#numbered-item-template");
     const $progressBarTemplate = document.querySelector("#progress-bar-template");
 
-    for (const token of tokensDummyData.gems.toReversed()) {
+    for (const token of gems.toReversed()) {
         const $token = $numberedItemTemplate.content.firstElementChild.cloneNode(true);
+
         const $progressBar = $progressBarTemplate.content.firstElementChild.cloneNode(true);
 
         if (token !== "Gold") {

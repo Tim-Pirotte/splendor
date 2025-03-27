@@ -1,5 +1,4 @@
-import {insertImageInto, renderCard} from "./helper.js";
-import {tokensDummyData} from "../dummy-data.js";
+import {insertImageInto, renderCard, safeEmptyContainer} from "./helper.js";
 import {
   GOLD_TOKEN_LIMIT,
   NOBLES_MAPPER,
@@ -11,10 +10,11 @@ import {
 
 function renderCards(market) {
   for (const deck of market) {
-    const $currentDeck = document.querySelector(`.level-${deck.level} .cards-in-deck`);
+    const $currentDeck = document.querySelector(`.level-${deck["level"]} .cards-in-deck`);
+    safeEmptyContainer($currentDeck);
 
-    for (const card of deck.visibleCards) {
-      renderCard($currentDeck, card.prestigePoints, card.bonus, card.cost);
+    for (const card of deck["visibleCards"]) {
+      renderCard($currentDeck, card["prestigePoints"], card["bonus"], card["cost"]);
     }
   }
 }
@@ -34,13 +34,17 @@ function getMaxTokens(playerLength, tokenType) {
   }
 }
 
-function renderBoardTokens(unclaimedTokens, playerLength) {
+function renderBoardTokens(unclaimedTokens, playerLength, gems) {
   const $boardTokensContainer = document.querySelector(".board-tokens");
+  safeEmptyContainer($boardTokensContainer);
 
   const $numberedItemTemplate = document.querySelector("#numbered-item-template");
 
-  for (const token of tokensDummyData.gems.toReversed()) {
+  for (const token of gems.toReversed()) {
     const $boardToken = $numberedItemTemplate.content.firstElementChild.cloneNode(true);
+
+    $boardToken.dataset.type = token;
+    $boardToken.dataset.amount = unclaimedTokens[token];
 
     const maxTokens = getMaxTokens(playerLength, token);
 
@@ -53,6 +57,7 @@ function renderBoardTokens(unclaimedTokens, playerLength) {
 
 function renderNobles(unclaimedNobles) {
   const $noblesContainer = document.querySelector(".nobles");
+  safeEmptyContainer($noblesContainer);
 
   const $nobleTemplate = document.querySelector("#noble-template");
 
