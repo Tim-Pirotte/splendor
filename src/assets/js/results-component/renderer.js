@@ -1,19 +1,12 @@
-import { getResults, getUser } from "./helper.js";
+import { getResults } from "./helper.js";
 import { MAXPRESTIGEPOINTS } from "../config.js";
+import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 
-/**
- * Render the correct message
- * @param {*} isWinner indicates whether current user is the winner
- */
 function renderResultMessage(isWinner) {
     const $status = document.querySelector("h1");
-    $status.innerText = isWinner ? "WINNER" : "DEFEAT";
+    $status.textContent = isWinner ? "WINNER" : "DEFEAT";
 }
 
-/**
- * Render the current game results inside the table
- * @param {*} data current game results
- */
 function renderResultTable(data) {
     const $template = document.querySelector("#result-template");
     const $tbody = document.querySelector("tbody");
@@ -31,14 +24,11 @@ function renderResultTable(data) {
     });
 }
 
-/**
- * Render results page
- */
 function renderResults() {
     getResults().then(gameResults => {
-        renderResultMessage(gameResults[0].name === getUser()); // check if first player is the current player
+        renderResultMessage(gameResults[0].name === loadFromStorage("playerName"));
         renderResultTable(gameResults);
     });
-};
+}
 
 export { renderResults };

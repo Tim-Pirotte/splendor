@@ -7,4 +7,4 @@ const avatars = [
     "snowy"
 ];
 
-export {avatars};
+export { avatars };
