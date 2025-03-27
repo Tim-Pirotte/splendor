@@ -11,7 +11,7 @@ function renderList() {
 
     fetchFromServer("/games")
         .then(gameObject => {
-            const filteredGames = filterGameList(gameObject['games']);
+            const filteredGames = filterGameList(gameObject["games"]);
 
             if (filteredGames.size === 0) {
                 renderNoGamesFoundMessage($container);
