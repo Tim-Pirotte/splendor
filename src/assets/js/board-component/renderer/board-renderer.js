@@ -14,7 +14,7 @@ function renderCards(market) {
     safeEmptyContainer($currentDeck);
 
     for (const card of deck["visibleCards"]) {
-      renderCard($currentDeck, card["prestigePoints"], card["bonus"], card["cost"]);
+      renderCard($currentDeck, card["prestigePoints"], card["bonus"], card["cost"], card["name"]);
     }
   }
 }
