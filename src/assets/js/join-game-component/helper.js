@@ -1,4 +1,4 @@
-import { getCurrentUsersAmount, getMaxUsersAmount, getGameState } from "../general-logic/object-handler.js";
+import { getCurrentUsersAmount, getGameState, getMaxUsersAmount } from "../utils/game-object-handler.js";
 
 function getAmountText(game) {
     return `${getCurrentUsersAmount(game)}/${getMaxUsersAmount(game)}`;

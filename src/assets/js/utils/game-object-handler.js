@@ -1,20 +1,20 @@
-function getGameState(gameData){
+function getGameState(gameData) {
     return gameData["started"] ? "spectate" : "join";
 }
 
-function getGameName(gameData){
+function getGameName(gameData) {
     return gameData["gameName"];
 }
 
-function getGameId(gameData){
+function getGameId(gameData) {
     return gameData["gameId"];
 }
 
-function getCurrentUsersAmount(gameData){
+function getCurrentUsersAmount(gameData) {
     return gameData["players"].length;
 }
 
-function getMaxUsersAmount(gameData){
+function getMaxUsersAmount(gameData) {
     return gameData["numberOfPlayers"];
 }
 
@@ -26,8 +26,8 @@ function getPlayersObjects(gameData) {
     return gameData["players"];
 }
 
-function hasGameStarted(gameData){
+function hasGameStarted(gameData) {
     return gameData["started"];
 }
 
-export {getGameState, getGameName, getGameId, getCurrentUsersAmount, getMaxUsersAmount, getGameCreator, getPlayersObjects, hasGameStarted};
+export { getGameState, getGameName, getGameId, getCurrentUsersAmount, getMaxUsersAmount, getGameCreator, getPlayersObjects, hasGameStarted };

@@ -1,4 +1,4 @@
-import { getGameId, getGameName, getGameState } from "../general-logic/object-handler.js";
+import { getGameId, getGameName, getGameState } from "../utils/game-object-handler.js";
 import { getAmountText, getGameButtonText } from "./helper.js";
 import { fetchFromServer } from "../data-connector/api-communication-abstractor.js";
 import { filterGameList } from "./filter.js";
