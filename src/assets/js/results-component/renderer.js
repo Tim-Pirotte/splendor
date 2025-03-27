@@ -24,8 +24,8 @@ function renderResultTable(data) {
         const $clone = $template.content.cloneNode(true);
         const $td = $clone.querySelectorAll("td");
 
-        $td[0].textContent = player.name;
-        $td[1].textContent = `${player.points}/${MAXPRESTIGEPOINTS}`;
+        $td[1].textContent = player.name;
+        $td[2].textContent = `${player.points}/${MAXPRESTIGEPOINTS}`;
 
         $tbody.appendChild($clone);
     });
