@@ -6,21 +6,20 @@ function filterGameList(gameList){
     const gameName = document.querySelector("#game-name").value;
     const nameFilteredSet = filterOnName(gameList, gameName);
 
-    const resultList = Array.from(peopleFilteredSet.intersection(nameFilteredSet));
-    return resultList;
+    return Array.from(peopleFilteredSet.intersection(nameFilteredSet));
 }
 
 function filterOnPeopleAmount(gameList, amount){
-    let filterGameList = gameList;
+    let filteredList = gameList;
     if(amount !== "any"){
-        filterGameList = gameList.filter(game => parseInt(game['numberOfPlayers']) === parseInt(amount));
+        filteredList = gameList.filter(game => parseInt(game['numberOfPlayers']) === parseInt(amount));
     }
-    return new Set(filterGameList);
+    return new Set(filteredList);
 }
 
 function filterOnName(gamelist, namePart){
-    const filterGameList = gamelist.filter(game => checkIfPartIsInGameName(game, namePart));
-    return new Set(filterGameList);
+    const filteredList = gamelist.filter(game => checkIfPartIsInGameName(game, namePart));
+    return new Set(filteredList);
 }
 
 
@@ -33,4 +32,4 @@ function checkIfPartIsInGameName(game, namePart){
     return false;
 }
 
-export { filterGameList }
+export { filterGameList };

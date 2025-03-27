@@ -19,7 +19,7 @@ function renderList(){
                 //Render a message
                 renderNoGames($container);
             }else {
-                filterestList.forEach(game => populateGame($template, $container, game))
+                filterestList.forEach(game => populateGame($template, $container, game));
             }
             
         })
@@ -41,7 +41,7 @@ function populateGame($template, $container, game){
 }
 
 function renderNoGames($container){
-    const messageItem = `<li><p>There are no games based on your selections</p></li>`
+    const messageItem = `<li><p>There are no games based on your selections</p></li>`;
     $container.insertAdjacentHTML("beforeend", messageItem);
 }
 

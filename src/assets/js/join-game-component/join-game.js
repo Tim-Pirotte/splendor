@@ -7,7 +7,6 @@ function init(){
 
     document.querySelector("ul").addEventListener("click", playerJoinGame);
 
-    // TODO: check for better way to use on the name
     document.querySelector("#amount-filter").addEventListener("change", handleFilterChange);
     document.querySelector("#filter-form").addEventListener("submit", handleFilterChange);
 }
