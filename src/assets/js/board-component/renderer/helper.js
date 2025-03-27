@@ -58,4 +58,13 @@ function renderCard($container, points, bonus, costs) {
   $container.appendChild($card);
 }
 
-export { insertImageInto, renderProgressBar, formatNumber, renderCard};
+function safeEmptyContainer($container) {
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/:scope
+  $container.querySelectorAll(":scope> *").forEach($childElement => {
+    if ($childElement.tagName.toLowerCase() !== "template") {
+      $childElement.outerHTML = "";
+    }
+  });
+}
+
+export {insertImageInto, renderProgressBar, formatNumber, renderCard, safeEmptyContainer};
