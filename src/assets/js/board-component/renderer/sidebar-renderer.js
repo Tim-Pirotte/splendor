@@ -9,13 +9,15 @@ function renderOtherPlayers(otherPlayers, gems) {
   const $otherPlayerContainer = document.querySelector(".other-players");
   safeEmptyContainer($otherPlayerContainer);
 
-  const $template = document.querySelector("#other-player-card-template");
+  const $playerTemplate = document.querySelector("#other-player-card-template");
+
+  const highestScore = getHighestScore(otherPlayers);
 
   for (const otherPlayer of otherPlayers) {
     if (otherPlayer.name !== currentPlayerName) {
-      const $playerCard = $template.content.firstElementChild.cloneNode(true);
+      const $playerCard = $playerTemplate.content.firstElementChild.cloneNode(true);
       setPlayerName($playerCard, otherPlayer);
-      setPlayerPoints($playerCard.querySelector(".points span"), otherPlayer["totalPrestigePoints"]);
+      setPlayerPoints($playerCard, otherPlayer["totalPrestigePoints"], highestScore);
 
       renderTokenList($playerCard.querySelector(".tokens"), otherPlayer["tokens"], gems);
       renderCardList($playerCard.querySelector(".cards"), otherPlayer["bonuses"], gems);
@@ -26,14 +28,24 @@ function renderOtherPlayers(otherPlayers, gems) {
   }
 }
 
+function getHighestScore(otherPlayers) {
+  return Math.max(...otherPlayers.map(player => player["totalPrestigePoints"]));
+}
+
 function setPlayerName($playerCard, otherPlayer) {
   $playerCard.querySelector(".name").textContent = otherPlayer.name;
 }
 
-function setPlayerPoints($playerPoints, prestigePoints) {
+function setPlayerPoints($playerCard, prestigePoints, highestScore) {
+  const $playerPoints = $playerCard.querySelector(".points span");
   $playerPoints.textContent = formatNumber(prestigePoints);
+
   if (prestigePoints >= MAXPRESTIGEPOINTS) {
     $playerPoints.classList.add("enough-points-to-win");
+  }
+
+  if (prestigePoints >= highestScore) {
+    insertImageInto($playerCard, "UI/tokens/white_chip", false, "Score amongst the highest");
   }
 }
 
