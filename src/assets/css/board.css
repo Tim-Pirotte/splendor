@@ -209,10 +209,13 @@ section header picture {
 }
 
 /* SWITCH TOKEN BUTTONS */
-button.hidden {
+.hidden {
     display: none;
 }
 
+.switch-token-container p {
+    display: inline-block;
+}
 /* TIMER */
 progress {
     grid-area: timer;

@@ -71,42 +71,42 @@ function renderCurrentPlayerTokens(currentPlayerTokens, currentPlayerBonuses, ge
 
         const $progressBar = $progressBarTemplate.content.firstElementChild.cloneNode(true);
 
-        let $switchPaymentButton = $switchPaymentButtonTemplate.content.firstElementChild.cloneNode(true);
+        let $switchPaymentButtonContainer = $switchPaymentButtonTemplate.content.firstElementChild.cloneNode(true);
 
         $token.dataset.tokenType = token;
 
         if (token !== "Gold") {
             insertCardCounter($token, token, currentPlayerBonuses);
         } else {
-            $switchPaymentButton = document.querySelector("#reset-payment-template")
+            $switchPaymentButtonContainer = document.querySelector("#reset-payment-template")
                                             .content.firstElementChild.cloneNode(true);
         }
 
-        $switchPaymentButton.dataset.type = token;
+        $switchPaymentButtonContainer.querySelector(".switch-token").dataset.type = token;
         $token.querySelector(".amount").textContent = currentPlayerTokens[token] || 0;
         insertImageInto($token, `UI/tokens/${TOKEN_MAPPER[token]}_chip`, false, `${TOKEN_MAPPER[token]} chip`);
         renderProgressBar($progressBar, currentPlayerTokens[token], TOKEN_MAPPER[token]);
 
 
         $token.appendChild($progressBar);
-        $token.appendChild($switchPaymentButton)
+        $token.appendChild($switchPaymentButtonContainer)
 
         $currentPlayerTokensContainer.appendChild($token);
     }
 }
 
 function renderSwitchPaymentButtons(currentPayment, cost) {
-    const $tokens = document.querySelectorAll("button.switch-token");
+    const $tokensContainers = document.querySelectorAll(".switch-token-container");
 
-    $tokens.forEach($token => $token.classList.add("hidden"));
+    $tokensContainers.forEach($token => $token.classList.add("hidden"));
 
     const wallet = getPlayerWallet();
 
-    for (const $token of $tokens) {
-        const tokenType = $token.dataset.type;
+    for (const $tokenContainer of $tokensContainers) {
+        const tokenType = $tokenContainer.querySelector(".switch-token").dataset.type;
 
         if (isAllowedToSwitchToken(tokenType, currentPayment, cost, wallet)) {
-            $token.classList.remove("hidden")
+            $tokenContainer.classList.remove("hidden")
         }
     }
 }

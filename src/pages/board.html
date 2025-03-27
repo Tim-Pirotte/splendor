@@ -201,11 +201,18 @@
 </ul>
 
 <template id="switch-to-gold-button-template">
-    <button class="hidden switch-token" data-action="switchOne">Switch one to gold</button>
+    <div class="hidden switch-token-container">
+        <button class="switch-token" data-action="switchOne">Switch one to gold</button>
+        <p>Selected: <span></span></p>
+    </div>
+
 </template>
 
 <template id="reset-payment-template" >
-    <button class="hidden switch-token" data-type="Gold" data-action="reset">Reset</button>
+    <div class="hidden switch-token-container">
+        <button class="switch-token" data-type="Gold" data-action="reset">Reset</button>
+        <p>Selected: <span></span></p>
+    </div>
 </template>
 
 <template id="image-template">
