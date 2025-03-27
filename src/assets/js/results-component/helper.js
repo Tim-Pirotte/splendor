@@ -7,23 +7,23 @@ function getUser(){
 
 /**
  * Reduce and sort current game data to only include name and points
- * @param {*} data game data
+ * @param {*} gameData game data
  * @returns
  */
-function filterResults(data) {
-    return data.players
+function filterResults(gameData) {
+    return gameData.players
         .map(player => ({ name: player.name, points: player.totalPrestigePoints }))
         .sort((a, b) => a - b);
 }
 
 /**
- * Fetch and return current game reults
+ * Fetch and return current game results
  * @returns sorted final game results
  */
 function getResults() {
     const gameId = loadFromStorage("gameId");
     return fetchFromServer(`/games/${gameId}`, "GET")
-        .then(data => filterResults(data));
+        .then(gameData => filterResults(gameData));
 }
 
 export { getResults, getUser };
