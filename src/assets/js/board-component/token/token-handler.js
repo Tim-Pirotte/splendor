@@ -7,23 +7,44 @@ function canGetToken(tokenType, amount) {
     return !(tokenType === "Gold") && amount >= MIN_TOKENS_FOR_PICKING_TWO;
 }
 
+function checkIfTokenAlreadySelectedAndRemoveIfSo(tokenType , actionButton) {
+    if (tokenType === actionButton.dataset.token1) {
+        actionButton.dataset.token1 = "leeg";
+        return true
+    }
+    if (tokenType === actionButton.dataset.token2) {
+        actionButton.dataset.token2 = "leeg"
+        return true
+    }
+    if (tokenType === actionButton.dataset.token3) {
+        actionButton.dataset.token3="leeg";
+        return true
+    }
+    return false;
+}
+function removeTokenFromDataset(dataset){
+
+}
 function selectToken(e) {
     const $selectedToken = e.target.closest("li");
     const tokenType = $selectedToken.dataset.type;
     const $actionButton = document.querySelector(".action-button");
+
     if (canGetToken(tokenType, $selectedToken.dataset.amount)) {
         setActionButtonState("Take two", "processTakeTokenClick", {token1: tokenType});
 
-    }
-  else if (tokenType !== "Gold" && $selectedToken.dataset.amount >=1) {
+    }else if(checkIfTokenAlreadySelectedAndRemoveIfSo(tokenType, $actionButton)){
+        console.log("yeet");
+        console.log($actionButton.dataset.token1+ ""+ $actionButton.dataset.token2 + ""+ $actionButton.dataset.token3 );
+    } else if (tokenType !== "Gold" && $selectedToken.dataset.amount >=1 && !checkIfTokenAlreadySelectedAndRemoveIfSo(tokenType, $actionButton)) {
 
-        if($actionButton.dataset.token1 === undefined) {
+        if($actionButton.dataset.token1 === undefined || $actionButton.dataset.token1 === "leeg" ) {
             setActionButtonState("Take three", "processTakeTokenClick", {token1: tokenType});
 
-        }else if ($actionButton.dataset.token2 === undefined){
+        }else if ($actionButton.dataset.token2 === undefined || $actionButton.dataset.token2 === "leeg"){
             setActionButtonState("Take three", "processTakeTokenClick", {token2: tokenType});
 
-        }else if ($actionButton.dataset.token3 === undefined){
+        }else if ($actionButton.dataset.token3 === undefined || $actionButton.dataset.token3 === "leeg"){
             setActionButtonState("Take three", "processTakeTokenClick", {token3: tokenType});
 
         }
