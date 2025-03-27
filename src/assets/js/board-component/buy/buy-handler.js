@@ -138,7 +138,6 @@ function updatePaymentMethod(tokenType, cost) {
 
 function getNewPaymentMethod(tokenType) {
     const paymentMethod = loadFromStorage("paymentMethod");
-    console.log(paymentMethod);
     paymentMethod["Gold"]++;
     paymentMethod[tokenType]--;
     return paymentMethod

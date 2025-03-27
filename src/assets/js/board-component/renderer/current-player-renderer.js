@@ -43,7 +43,6 @@ function renderCurrentPlayerReserve(currentPlayer) {
 }
 
 function renderCurrentPlayerTokenCount(currentPlayer) {
-    console.log(currentPlayer["tokens"])
     document.querySelector(".player-tokens h4").textContent = `${formatNumber(countTokens(currentPlayer["tokens"]))} / ${MAX_TOKENS_ALLOWED}`;
 }
 
@@ -138,8 +137,11 @@ function renderUpdatedTokens(bonus) {
 }
 
 function renderUpdatedPlayerScore(extraScore) {
-    const previousScore = document.querySelector(".points");
-    console.log(previousScore);
+
+    const $scoreContainer = document.querySelector(".points");
+    const score = parseInt($scoreContainer.innerText.split(" ")[0]) + extraScore;
+    $scoreContainer.innerText = `${formatNumber(score)} pts.`;
+
 }
 
 function updateCurrentPlayerBonuses(gameData, indexOfPlayerInData, bonus) {
