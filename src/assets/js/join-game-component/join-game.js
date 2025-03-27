@@ -1,10 +1,10 @@
-import { navigateToMain, navigateToMainIfLocalStorageIsEmpty } from "../utils/navigation.js";
+import { navigateToMain, navigateToMainIfNoPlayerName } from "../utils/navigation.js";
 import { renderList } from "./renderer.js";
 import { playerJoinGame, handleFilterChange, playerJoinGameById } from "./handler.js";
 import { renderPlayerInformation } from "../utils/player-renderer.js";
 
 function joinInit(){
-    navigateToMainIfLocalStorageIsEmpty();
+    navigateToMainIfNoPlayerName();
     renderPlayerInformation();
     renderList();
 

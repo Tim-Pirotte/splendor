@@ -8,10 +8,10 @@ function navigateToMain() {
     location.href = "../index.html";
 }
 
-function navigateToMainIfLocalStorageIsEmpty() {
+function navigateToMainIfNoPlayerName() {
     if (!loadFromStorage("playerName")) {
         navigateToMain();
     }
 }
 
-export { redirectFromIndexToPageInPages, navigateToMain, navigateToMainIfLocalStorageIsEmpty };
+export { redirectFromIndexToPageInPages, navigateToMain, navigateToMainIfNoPlayerName };

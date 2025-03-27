@@ -1,9 +1,9 @@
-import { navigateToMain, navigateToMainIfLocalStorageIsEmpty } from "../utils/navigation.js";
+import { navigateToMain, navigateToMainIfNoPlayerName } from "../utils/navigation.js";
 import { renderPlayerInformation } from "../utils/player-renderer.js";
 import { handleCreateGameSubmit } from "./handler.js";
 
 function createInit() {
-    navigateToMainIfLocalStorageIsEmpty();
+    navigateToMainIfNoPlayerName();
     renderPlayerInformation();
 
     document.querySelector("#back-button").addEventListener("click", navigateToMain);
