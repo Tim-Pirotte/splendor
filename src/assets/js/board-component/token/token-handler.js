@@ -1,4 +1,4 @@
-import {takeThreeGemsRequest, takeTwoGemsRequest} from "./request-handler.js";
+import {takeGemsRequest} from "./request-handler.js";
 import {setActionButtonState} from "../game-status-interface.js";
 import {MIN_TOKENS_FOR_PICKING_TWO} from "./config.js";
 
@@ -88,10 +88,10 @@ function processTakeTokenClick(e) {
 
     if ($actionButton.textContent !== "Take two") {
         const body = [actionButtonData.token1, actionButtonData.token2 , actionButtonData.token3];
-        takeThreeGemsRequest(body);
+        takeGemsRequest(body , "");
 
     } else{
-        takeTwoGemsRequest(actionButtonData.token1);
+        takeGemsRequest(actionButtonData.token1 , "takeTwo");
 
     }
 
