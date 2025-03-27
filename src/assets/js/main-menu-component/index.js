@@ -1,16 +1,16 @@
-import {loadAvatar, loadUsername, storeAvatar, storeUsername, toggleVisibility} from "./handler.js";
-import {renderSelectableAvatars} from "./renderer.js";
+import { loadAvatar, loadUsername, storeAvatar, storeUsername, toggleVisibility } from "./handler.js";
+import { renderSelectableAvatars } from "./renderer.js";
 
 function init() {
     renderSelectableAvatars();
-    loadUserInformation();
+    loadSavedUserInformation();
 
     document.querySelector(".form-actions").addEventListener("click", storeUsername);
-    document.querySelector("section").addEventListener("click", storeAvatar);
     document.querySelector(".avatar-selector button").addEventListener("click", toggleVisibility);
+    document.querySelector(".avatar-selector section").addEventListener("click", storeAvatar);
 }
 
-function loadUserInformation() {
+function loadSavedUserInformation() {
     loadUsername();
     loadAvatar();
 }
