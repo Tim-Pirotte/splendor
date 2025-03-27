@@ -69,10 +69,4 @@ function renderNobles(unclaimedNobles) {
   }
 }
 
-function renderNewCardInData(card, index, level) {
-  const gameData = loadFromStorage("gameData");
-  gameData["market"][parseInt(level) - 1]["visibleCards"][index] = card;
-  renderCards(gameData["market"])
-}
-
-export {renderCards, renderBoardTokens, renderNobles, renderNewCardInData};
+export {renderCards, renderBoardTokens, renderNobles};

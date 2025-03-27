@@ -4,7 +4,6 @@ import {
     renderSwitchPaymentButtons, renderUpdatedPlayerScore, renderUpdatedTokens
 } from "../renderer/current-player-renderer.js";
 import {fetchFromServer} from "../../data-connector/api-communication-abstractor.js";
-import {renderNewCardInData} from "../renderer/board-renderer.js";
 
 function selectCard(e) {
     const card = getCard(e)
@@ -117,7 +116,7 @@ function isAllowedToSwitchToken(tokenType, currentPayment, cost, wallet) {
     if (tokenType === "Gold") {
         return !((currentPayment["Gold"] || 0) === 0);
     } else if ((currentPayment["Gold"] || 0) === (wallet["Gold"] || 0)) {
-        return false
+        return false;
     } else if (!(cost.hasOwnProperty(tokenType))) {
         return false;
     } else{
@@ -191,4 +190,5 @@ export {selectCard,
     handlePaymentMethodChange,
     getCurrentPlayerIndexInData,
     updateCurrentPlayerTokensInData,
-    updateCurrentPlayerBonuses};
+    updateCurrentPlayerBonuses,
+    getDefaultPaymentMethod};
