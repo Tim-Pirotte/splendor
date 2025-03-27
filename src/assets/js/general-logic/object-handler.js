@@ -27,7 +27,7 @@ function getPlayersObjects(gameData) {
 }
 
 function hasGameStarted(gameData){
-    return !("started" in gameData);
+    return gameData["started"];
 }
 
 export {getGameState, getGameName, getGameId, getCurrentUsersAmount, getMaxUsersAmount, getGameCreator, getPlayersObjects, hasGameStarted};
