@@ -30,15 +30,17 @@ function renderCurrentPlayerReserve(currentPlayer) {
 }
 
 function renderCurrentPlayerTokenCount(currentPlayer) {
-    const $totalTokens = document.querySelector(".player-tokens h4");
+    const $totalTokenCount = document.querySelector(".player-tokens #current-tokens");
+    document.querySelector(".player-tokens #token-limit").textContent = MAX_TOKENS_ALLOWED;
+
     const amountOfTokens = formatNumber(countTokens(currentPlayer["tokens"]));
-    $totalTokens.textContent = `${amountOfTokens} / ${MAX_TOKENS_ALLOWED}`;
-    setTotalTokensColor($totalTokens, 11);
+    $totalTokenCount.textContent = amountOfTokens;
+    setTotalTokensColor($totalTokenCount, amountOfTokens);
 }
 
-function setTotalTokensColor($totalTokens, totalTokens) {
+function setTotalTokensColor($totalTokenCount, totalTokens) {
     if (totalTokens > MAX_TOKENS_ALLOWED) {
-        $totalTokens.classList.add("highlighted-number");
+        $totalTokenCount.classList.add("highlighted-number");
     }
 }
 
