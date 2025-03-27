@@ -15,7 +15,8 @@ function selectCard(e) {
 function canBuy(card) {
     const cost = getCardData(card)["cost"];
     const wallet = getPlayerWallet();
-    const canBuy = isWalletHigher(wallet, cost)
+
+    return isWalletHigher(wallet, cost);
 }
 
 function getCard(e) {
@@ -51,7 +52,6 @@ function getPlayerWallet() {
 
 function isWalletHigher(wallet, cost) {
     let minimumJokersNeeded = 0;
-
     for (const tokenType in cost) {
         const difference = cost[tokenType] - wallet[tokenType];
         if (difference > 0) {
@@ -59,7 +59,7 @@ function isWalletHigher(wallet, cost) {
         }
     }
 
-    return minimumJokersNeeded <= wallet["Gold"];
+    return minimumJokersNeeded >= (wallet["Gold"] || 0);
 }
 
 export {selectCard, processBuyCardClick};
