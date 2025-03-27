@@ -30,7 +30,7 @@ function setPlayerName($playerCard, otherPlayer) {
 }
 
 function setPlayerPoints($playerCard, otherPlayer) {
-  $playerCard.querySelector(".points").textContent = `${formatNumber(otherPlayer["totalPrestigePoints"])} pts.`;
+  $playerCard.querySelector(".points span").textContent = formatNumber(otherPlayer["totalPrestigePoints"]);
 }
 
 function renderTokenList(containerToInsertInto, tokenAmounts, gems) {
