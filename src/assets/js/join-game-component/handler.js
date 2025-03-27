@@ -6,14 +6,24 @@ import { renderList } from "./renderer.js";
 function playerJoinGame(e) {
     e.preventDefault();
 
-    // Only join when you click the button
     if (e.target.type === "button") {
         const gameId = e.target.closest("li").dataset.gameId;
         const playerName = loadFromStorage("playerName");
 
-        fetchFromServer(`/games/${gameId}/players/${playerName}`, `POST`)
+        fetchFromServer(`/games/${gameId}/players/${playerName}`, "POST")
             .then(res => processResponse(res));
     }
+}
+
+function playerJoinGameById(e) {
+    e.preventDefault();
+
+    const gameId = document.querySelector("#game-id").value;
+    const playerName = loadFromStorage("playerName");
+
+    fetchFromServer(`/games/${gameId}/players/${playerName}`, "POST")
+        .then(res => processResponse(res));
+
 }
 
 function handleFilterChange(e) {
@@ -22,4 +32,4 @@ function handleFilterChange(e) {
     renderList();
 }
 
-export { playerJoinGame, handleFilterChange };
+export { playerJoinGame, playerJoinGameById, handleFilterChange };
