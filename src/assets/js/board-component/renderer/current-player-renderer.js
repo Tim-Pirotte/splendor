@@ -30,7 +30,18 @@ function renderCurrentPlayerReserve(currentPlayer) {
 }
 
 function renderCurrentPlayerTokenCount(currentPlayer) {
-    document.querySelector(".player-tokens h4").textContent = `${formatNumber(countTokens(currentPlayer["tokens"]))} / ${MAX_TOKENS_ALLOWED}`;
+    const $totalTokenCount = document.querySelector(".player-tokens #current-tokens");
+    document.querySelector(".player-tokens #token-limit").textContent = MAX_TOKENS_ALLOWED;
+
+    const amountOfTokens = formatNumber(countTokens(currentPlayer["tokens"]));
+    $totalTokenCount.textContent = amountOfTokens;
+    setTotalTokensColor($totalTokenCount, amountOfTokens);
+}
+
+function setTotalTokensColor($totalTokenCount, totalTokens) {
+    if (totalTokens > MAX_TOKENS_ALLOWED) {
+        $totalTokenCount.classList.add("highlighted-number");
+    }
 }
 
 function renderCurrentPlayer(players, gems) {
