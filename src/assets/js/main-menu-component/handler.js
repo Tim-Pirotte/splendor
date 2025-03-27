@@ -29,7 +29,10 @@ function storeUsername(e) {
     if ($form.reportValidity()) {
         if (loadFromStorage("avatar") === null) { saveToStorage("avatar", "placeholder") }
         saveToStorage("playerName", username);
-        location.href = `./pages/${e.target.value}.html`;
+
+        if (["join-game", "create-game"].includes(e.target.value)) {
+            location.href = `./pages/${e.target.value}.html`;
+        }
     }
 }
 
