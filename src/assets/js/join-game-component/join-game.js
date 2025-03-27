@@ -1,9 +1,10 @@
-import { navigateToMain } from "../utils/navigation.js";
+import { navigateToMain, navigateToMainIfLocalStorageIsEmpty } from "../utils/navigation.js";
 import { renderList } from "./renderer.js";
 import { playerJoinGame, handleFilterChange, playerJoinGameById } from "./handler.js";
 import { renderPlayerInformation } from "../utils/player-renderer.js";
 
-function init(){
+function joinInit(){
+    navigateToMainIfLocalStorageIsEmpty();
     renderPlayerInformation();
     renderList();
 
@@ -15,4 +16,4 @@ function init(){
     document.querySelector("#filter-form").addEventListener("submit", handleFilterChange);
 }
 
-init();
+joinInit();
