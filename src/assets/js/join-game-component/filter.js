@@ -26,7 +26,7 @@ function filterOnName(gamelist, namePart) {
 function checkIfPartIsInGameName(game, namePart) {
     const gameName = game['gameName'];
     if (gameName !== null) {
-        return gameName.toLowerCase().includes(namePart.toLowerCase());
+        return gameName.toLowerCase().trim().includes(namePart.toLowerCase().trim());
     }
 
     return false;
