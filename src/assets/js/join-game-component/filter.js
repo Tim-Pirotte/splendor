@@ -21,6 +21,7 @@ function filterOnPeopleAmount(gameList, amount) {
 
 function filterOnName(gamelist, namePart) {
     const filteredList = gamelist.filter(game => checkIfPartIsInGameName(game, namePart));
+
     return new Set(filteredList);
 }
 

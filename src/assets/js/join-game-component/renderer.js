@@ -36,11 +36,11 @@ function populateGame($template, $container, game) {
 }
 
 function renderNoGamesFoundMessage($container) {
-    const $messageLi = document.querySelector("#no-games").content.firstElementChild.cloneNode(true);
+    const $message = document.querySelector("#no-games").content.firstElementChild.cloneNode(true);
 
-    $messageLi.querySelector("p").textContent = "There are no games based on your selections";
+    $message.querySelector("p").textContent = "There are no games based on your selections";
 
-    $container.insertAdjacentHTML("beforeend", $messageLi.outerHTML);
+    $container.insertAdjacentHTML("beforeend", $message.outerHTML);
 }
 
 export { renderList };

@@ -6,8 +6,4 @@ function processResponse(res) {
     location.href = "./lobby-page.html";
 }
 
-function navigateToMain(e) {
-    location.href = "../index.html";
-}
-
-export {processResponse, navigateToMain};
+export {processResponse};

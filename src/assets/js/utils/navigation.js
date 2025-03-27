@@ -2,4 +2,8 @@ function redirectFromIndexToPageInPages(page, relativePathIndicators = ".") {
     location.href = `${relativePathIndicators}/pages/${page}.html`;
 }
 
-export { redirectFromIndexToPageInPages };
+function navigateToMain(e) {
+    location.href = "../index.html";
+}
+
+export { redirectFromIndexToPageInPages, navigateToMain };

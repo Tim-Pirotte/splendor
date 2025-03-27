@@ -1,10 +1,10 @@
-import {getCurrentUsersAmount, getMaxUsersAmount, getGameState} from "../general-logic/object-handler.js";
+import { getCurrentUsersAmount, getMaxUsersAmount, getGameState } from "../general-logic/object-handler.js";
 
-function getAmountText(game){
+function getAmountText(game) {
     return `${getCurrentUsersAmount(game)}/${getMaxUsersAmount(game)}`;
 }
 
-function getGameButtonText(game){
+function getGameButtonText(game) {
     return getGameState(game) === "join" ? "Join game" : "Spectate game";
 }
 
@@ -20,4 +20,4 @@ function intersection(setA, setB) {
     return result;
 }
 
-export {getAmountText, getGameButtonText, intersection};
+export { getAmountText, getGameButtonText, intersection };
