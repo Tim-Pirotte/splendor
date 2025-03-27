@@ -6,7 +6,9 @@ function filterGameList(gameList){
     const gameName = document.querySelector("#game-name").value;
     const nameFilteredSet = filterOnName(gameList, gameName);
 
-    return Array.from(peopleFilteredSet.intersection(nameFilteredSet));
+    return peopleFilteredSet.intersection(nameFilteredSet);
+
+    // return Array.from(peopleFilteredSet.intersection(nameFilteredSet));
 }
 
 function filterOnPeopleAmount(gameList, amount){

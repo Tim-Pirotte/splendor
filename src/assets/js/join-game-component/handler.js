@@ -1,6 +1,7 @@
 import {fetchFromServer} from "../data-connector/api-communication-abstractor.js";
 import {loadFromStorage, saveToStorage} from "../data-connector/local-storage-abstractor.js";
 import {processResponse} from "../general-logic/join-create-game.js";
+import { renderList } from "./renderer.js";
 
 
 function playerJoinGame(e) {
