@@ -1,5 +1,5 @@
 import {getCurrentPlayer, setActionButtonState} from "../game-status-interface.js";
-import {loadFromStorage} from "../../data-connector/local-storage-abstractor.js";
+import {loadFromStorage, saveToStorage} from "../../data-connector/local-storage-abstractor.js";
 import {renderSwitchPaymentButtons} from "../renderer/current-player-renderer.js";
 
 function selectCard(e) {
@@ -12,6 +12,7 @@ function selectCard(e) {
         )
         const defaultPayment = getDefaultPayment(getCardData(card)["cost"]);
         renderSwitchPaymentButtons(defaultPayment, getCardData(card)["cost"]);
+        saveToStorage("paymentMethod", JSON.stringify(defaultPayment));
     }
 }
 
@@ -106,4 +107,25 @@ function isAllowedToSwitchToken(tokenType, currentPayment, cost, wallet) {
     }
 }
 
-export {selectCard, processBuyCardClick, isAllowedToSwitchToken, getPlayerWallet};
+function handlePaymentMethodChange(e) {
+    if (e.target.classList.contains("switch-token")) {
+        const token = e.target.dataset.type;
+        const card = getSelectedCardFromBuyButton();
+        if (token === "Gold") {
+            resetPayment(card);
+        }
+    }
+}
+
+function getSelectedCardFromBuyButton() {
+    const $buyButton = document.querySelector(".action-button");
+    return loadFromStorage("gameData")["market"][parseInt($buyButton.dataset.level) - 1]["visibleCards"][$buyButton.dataset.index];
+}
+
+function resetPayment(card){
+    const defaultPayment = getDefaultPayment(getCardData(card)["cost"]);
+    renderSwitchPaymentButtons(defaultPayment, getCardData(card)["cost"]);
+    saveToStorage("paymentMethod", JSON.stringify(defaultPayment));
+}
+
+export {selectCard, processBuyCardClick, isAllowedToSwitchToken, getPlayerWallet, handlePaymentMethodChange};
