@@ -9,7 +9,7 @@ const NOBLES_MAPPER = {
   "Mary Stuart": "noble_border",
   "Henry VIII": "noble_border",
   "Niccolo Machiavelli": "noble_border",
-  "Catherine of Medici": "noble_border",
+  "Catherine de Medici": "noble_border",
   "Anne of Brittany": "noble_border",
   "Charles the Fifth": "noble_border",
   "Francois the 1st": "noble_border",
