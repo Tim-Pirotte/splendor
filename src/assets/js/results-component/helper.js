@@ -1,7 +1,10 @@
-import { fetchGameStatus } from "../utils/game-fetcher.js";
+import { fetchFromServer } from "../data-connector/api-communication-abstractor.js";
+import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 
 function getResults() {
-    return fetchGameStatus("/status", filterResults);
+    const gameId = loadFromStorage("gameId");
+    return fetchFromServer(`/games/${gameId}`, "GET")
+        .then(gameData => filterResults(gameData));
 }
 
 function filterResults(gameData) {
