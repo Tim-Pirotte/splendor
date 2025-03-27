@@ -11,7 +11,7 @@ import {
     isAllowedToSwitchToken,
     getPlayerWallet,
     getCurrentPlayerIndexInData,
-    updateCurrentPlayerTokensInData
+    updateCurrentPlayerTokensInData, updateCurrentPlayerBonuses
 } from "../buy/buy-handler.js";
 import * as gameStatusInterface from "../game-status-interface.js";
 
@@ -144,15 +144,6 @@ function renderUpdatedPlayerScore(extraScore) {
 
 }
 
-function updateCurrentPlayerBonuses(gameData, indexOfPlayerInData, bonus) {
-    const currentBonus = gameData["players"][indexOfPlayerInData]["bonuses"];
-    if (currentBonus[bonus] === undefined) {
-        currentBonus[bonus] = 1;
-    } else {
-        currentBonus[bonus]++;
-    }
-    return currentBonus;
-}
 export {renderHeader,
     renderCurrentPlayer,
     renderSwitchPaymentButtons,

@@ -7,6 +7,7 @@ import {
   TOKEN_LIMIT_TWO_PLAYERS,
   TOKEN_MAPPER
 } from "../config.js";
+import {loadFromStorage} from "../../data-connector/local-storage-abstractor.js";
 
 function renderCards(market) {
   for (const deck of market) {
@@ -68,4 +69,10 @@ function renderNobles(unclaimedNobles) {
   }
 }
 
-export {renderCards, renderBoardTokens, renderNobles};
+function renderNewCardInData(card, index, level) {
+  const gameData = loadFromStorage("gameData");
+  gameData["market"][parseInt(level) - 1]["visibleCards"][index] = card;
+  renderCards(gameData["market"])
+}
+
+export {renderCards, renderBoardTokens, renderNobles, renderNewCardInData};

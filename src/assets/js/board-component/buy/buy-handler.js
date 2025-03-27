@@ -3,6 +3,8 @@ import {loadFromStorage, saveToStorage} from "../../data-connector/local-storage
 import {
     renderSwitchPaymentButtons, renderUpdatedPlayerScore, renderUpdatedTokens
 } from "../renderer/current-player-renderer.js";
+import {fetchFromServer} from "../../data-connector/api-communication-abstractor.js";
+import {renderNewCardInData} from "../renderer/board-renderer.js";
 
 function selectCard(e) {
     const card = getCard(e)
@@ -31,9 +33,20 @@ function getCard(e) {
 function processBuyCardClick() {
     const $actionButton = document.querySelector(".action-button");
     const cardData = getCardData($actionButton);
+    const requestBody =
+    {development: {name: cardData["name"]}, payment: loadFromStorage("paymentMethod")};
+
+
 
     renderUpdatedTokens(cardData["bonus"]);
     renderUpdatedPlayerScore(cardData["prestigePoints"]);
+
+    fetchFromServer(`/games/${loadFromStorage(
+    "gameId")}/players/${loadFromStorage("playerName")}/developments`,
+    "POST",
+    requestBody,
+    );
+
 }
 
 function getCardData($target) {
@@ -84,7 +97,7 @@ function removeBonusesFromCost(cost, bonuses) {
     }
 }
 
-function calculateDefaultPayment(cost, tokens, card) {
+function calculateDefaultPayment(cost, tokens) {
     const payment = {"Gold": 0};
     for (const tokenType in cost) {
         if (!tokens.hasOwnProperty(tokenType)) {
@@ -161,10 +174,21 @@ function updateCurrentPlayerTokensInData(gameData, indexOfPlayerInData) {
     return previousTokens;
 }
 
+function updateCurrentPlayerBonuses(gameData, indexOfPlayerInData, bonus) {
+    const currentBonus = gameData["players"][indexOfPlayerInData]["bonuses"];
+    if (currentBonus[bonus] === undefined) {
+        currentBonus[bonus] = 1;
+    } else {
+        currentBonus[bonus]++;
+    }
+    return currentBonus;
+}
+
 export {selectCard,
     processBuyCardClick,
     isAllowedToSwitchToken,
     getPlayerWallet,
     handlePaymentMethodChange,
     getCurrentPlayerIndexInData,
-    updateCurrentPlayerTokensInData};
+    updateCurrentPlayerTokensInData,
+    updateCurrentPlayerBonuses};
