@@ -7,12 +7,12 @@ const NOBLES_MAPPER = {
   "Suleiman the Magnificent": "noble_border",
   "Isabella of Castile": "noble_border",
   "Mary Stuart": "noble_border",
-  "Charles V": "noble_border",
-  "Machiavelli": "noble_border",
+  "Henry VIII": "noble_border",
+  "Niccolo Machiavelli": "noble_border",
   "Catherine of Medici": "noble_border",
   "Anne of Brittany": "noble_border",
-  "Henry the 8th": "noble_border",
-  "Francis I of France": "noble_border",
+  "Charles the Fifth": "noble_border",
+  "Francois the 1st": "noble_border",
 };
 
 const TOKEN_MAPPER = {
