@@ -3,7 +3,7 @@ import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 
 function getResults() {
     const gameId = loadFromStorage("gameId");
-    return fetchFromServer(`/games/${gameId}`, "GET")
+    return fetchFromServer(`/games/${gameId}`)
         .then(gameData => filterResults(gameData));
 }
 
