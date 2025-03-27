@@ -4,7 +4,7 @@ import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { renderHeader, renderPlayerCount, renderPlayers } from "./renderer.js";
 
 function loadLobbyInformation() {
-    fetchFromServer(`/games/${loadFromStorage("gameId")}`, `GET`)
+    fetchFromServer(`/games/${loadFromStorage("gameId")}`)
         .then(gameObject => {
             if (!hasGameStarted(gameObject)) {
                 renderHeader(gameObject);
