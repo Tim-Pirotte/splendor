@@ -11,10 +11,10 @@ function renderSelectableAvatars() {
 
 function renderSelectedAvatars(avatar) {
     const $template = document.querySelector("#avatar-template");
-    const $container = document.querySelector(".avatar-selector button");
+    const $button = document.querySelector(".avatar-selector button");
 
-    $container.innerHTML= "";
-    renderAvatar($template, $container, avatar);
+    $button.innerHTML= "";
+    renderAvatar($template, $button, avatar);
 }
 
 export { renderSelectableAvatars, renderSelectedAvatars };
