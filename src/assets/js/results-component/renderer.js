@@ -4,7 +4,7 @@ import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 
 function renderResultMessage(isWinner) {
     const $status = document.querySelector("h1");
-    $status.innerText = isWinner ? "WINNER" : "DEFEAT";
+    $status.textContent = isWinner ? "WINNER" : "DEFEAT";
 }
 
 function renderResultTable(data) {

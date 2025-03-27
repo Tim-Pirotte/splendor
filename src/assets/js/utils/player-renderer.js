@@ -3,7 +3,7 @@ import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 function renderPlayerInformation() {
     const avatar = loadFromStorage("avatar");
 
-    document.querySelector("#playerName").innerText = loadFromStorage("playerName");
+    document.querySelector("#playerName").textContent = loadFromStorage("playerName");
 
     renderAvatar(document.querySelector("#avatar-template"),
                  document.querySelector("#playerInformation"),

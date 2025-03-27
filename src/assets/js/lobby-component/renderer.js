@@ -1,8 +1,8 @@
 import { getCurrentUsersAmount, getGameCreator, getGameId, getGameName, getMaxUsersAmount, getPlayersObjects } from "../general-logic/object-handler.js";
 
 function renderHeader(g) {
-    document.querySelector("#game-name-id").innerHTML = `${getGameName(g)} / <span$>${getGameId(g)}</span>`;
-    document.querySelector("h3").innerHTML =  `Created by ${getGameCreator(g)}`;
+    document.querySelector("#game-name-id").innerHTML = `${getGameName(g)} / <span>${getGameId(g)}</span>`;
+    document.querySelector("h3").textContent =  `Created by ${getGameCreator(g)}`;
 }
 
 function renderPlayers(g) {
@@ -18,7 +18,7 @@ function renderPlayers(g) {
 function renderPlayer($template, $container, playerName) {
     const $li = $template.content.firstElementChild.cloneNode(true);
 
-    $li.querySelector(".player-name").innerHTML = playerName;
+    $li.querySelector(".player-name").textContent = playerName;
     // picture tag needs to be filled,
     // at the moment its hardcoded in the template!
 
