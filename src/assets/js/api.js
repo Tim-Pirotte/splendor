@@ -66,4 +66,8 @@ function getNoblesList() {
     return fetchFromServer(`/nobles`);
 }
 
-export { getGames, createGame, getGame, joinGame, takeTokens, buyCard, reserveCard, buyReserveCard, takeNobels, getGemsList, getNoblesList };
+function getDevelopmentsList() {
+    return fetchFromServer(`/developments`);
+}
+
+export { getGames, createGame, getGame, joinGame, takeTokens, buyCard, reserveCard, buyReserveCard, takeNobels, getGemsList, getNoblesList, getDevelopmentsList };
