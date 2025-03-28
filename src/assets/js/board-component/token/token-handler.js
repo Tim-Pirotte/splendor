@@ -3,9 +3,12 @@ import {setActionButtonState} from "../game-status-interface.js";
 import {MIN_TOKENS_FOR_PICKING_TWO} from "./config.js";
 
 
-function canGetToken(tokenType, amount) {
+function canGetToken(tokenType, amount , $actionButtonData) {
+    if(checkIfTokenIsEmpty($actionButtonData.token1)){
+        return (tokenType !== "Gold") && amount >= MIN_TOKENS_FOR_PICKING_TWO;
+    }
+   return false;
 
-    return (tokenType !== "Gold") && amount >= MIN_TOKENS_FOR_PICKING_TWO;
 }
 function giveTokenThatAlreadySelected(tokenType , actionButtonData){
     const token1 = 1;
@@ -52,34 +55,36 @@ function checkIfTokenIsEmpty(token) {
 
 }
 function selectToken(e) {
-    const $selectedToken = e.target.closest("li");
-    const tokenType = $selectedToken.dataset.type;
-    const $actionButton = document.querySelector(".action-button");
-    const $actionButtonData = $actionButton.dataset;
+    if (e.target.tagName.toLowerCase() === "img" ) {
+        const $selectedToken = e.target.closest("li");
+        const tokenType = $selectedToken.dataset.type;
+        const $actionButton = document.querySelector(".action-button");
+        const $actionButtonData = $actionButton.dataset;
 
-    if (canGetToken(tokenType, $selectedToken.dataset.amount) && checkIfTokenIsEmpty($actionButtonData.token1)) {
-        setActionButtonState("Take two", "processTakeTokenClick", {token1: tokenType});
+        if (canGetToken(tokenType, $selectedToken.dataset.amount , $actionButtonData)) {
+            setActionButtonState("Take two", "processTakeTokenClick", {token1: tokenType});
 
-    }else if(checkIfTokenAlreadySelected(tokenType, $actionButtonData)){
-        removeToken(giveTokenThatAlreadySelected(tokenType, $actionButtonData) , $actionButtonData);
-    } else if (tokenType !== "Gold" && $selectedToken.dataset.amount >=1 && !checkIfTokenAlreadySelected(tokenType, $actionButton)) {
+        } else if (checkIfTokenAlreadySelected(tokenType, $actionButtonData)) {
+            removeToken(giveTokenThatAlreadySelected(tokenType, $actionButtonData), $actionButtonData);
+        } else if (tokenType !== "Gold" && $selectedToken.dataset.amount >= 1 && !checkIfTokenAlreadySelected(tokenType, $actionButton)) {
 
-        if(checkIfTokenIsEmpty($actionButtonData.token1)) {
-            setActionButtonState("select two more gems", "processTakeTokenClick", {token1: tokenType});
+            if (checkIfTokenIsEmpty($actionButtonData.token1)) {
+                setActionButtonState("select two more gems", "processTakeTokenClick", {token1: tokenType});
 
-        }else if (checkIfTokenIsEmpty($actionButtonData.token2)){
-            setActionButtonState("select one more gems", "processTakeTokenClick", {token2: tokenType});
+            } else if (checkIfTokenIsEmpty($actionButtonData.token2)) {
+                setActionButtonState("select one more gems", "processTakeTokenClick", {token2: tokenType});
 
-        }else if (checkIfTokenIsEmpty($actionButtonData.token3)){
-            setActionButtonState("Take three gems", "processTakeTokenClick", {token3: tokenType});
+            } else if (checkIfTokenIsEmpty($actionButtonData.token3)) {
+                setActionButtonState("Take three gems", "processTakeTokenClick", {token3: tokenType});
 
-        }else{
+            } else {
+                //purely here so sonar doesn't complain
+            }
+        } else {
             //purely here so sonar doesn't complain
-            console.log();
         }
     }else{
-        //purely here so sonar doesn't complain
-        console.log();
+        //Again sonar complained
     }
 }
 

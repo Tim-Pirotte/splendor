@@ -21,4 +21,6 @@ function takeGemsRequest(tokenTypes , action) {
         .then(res => updateTokens(res));
 
 }
+
+
 export {takeGemsRequest};
