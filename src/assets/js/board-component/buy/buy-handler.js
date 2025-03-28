@@ -15,8 +15,9 @@ function selectCard(e) {
         "processBuyCardClick",
         {level: card.dataset.level, index: card.dataset.index},
         );
+
+        setNewPaymentMethod(defaultPayment);
         renderSwitchPaymentButtons(defaultPayment, getCardData(card)["cost"]);
-        saveToStorage("paymentMethod", defaultPayment);
     }
 }
 
@@ -34,7 +35,7 @@ function processBuyCardClick() {
     const $actionButton = document.querySelector(".action-button");
     const cardData = getCardData($actionButton);
     const requestBody =
-    {development: {name: cardData["name"]}, payment: loadFromStorage("paymentMethod")};
+    {development: {name: cardData["name"]}, payment: getCurrentPaymentMethod()};
 
     renderUpdatedTokens(cardData["bonus"]);
     renderUpdatedPlayerScore(cardData["prestigePoints"]);
@@ -44,7 +45,7 @@ function processBuyCardClick() {
     "POST",
     requestBody,
     );
-    deleteFromStorage("paymentMethod");
+    sessionStorage.removeItem("paymentMethod")
 }
 
 function getCardData($target) {
@@ -142,19 +143,19 @@ function handlePaymentMethodChange(e) {
 function resetPayment(cost){
     const paymentMethod = getDefaultPaymentMethod(cost);
 
+    setNewPaymentMethod(paymentMethod)
     renderSwitchPaymentButtons(paymentMethod, cost);
-    saveToStorage("paymentMethod", paymentMethod);
 }
 
 function updatePaymentMethod(tokenType, cost) {
     const paymentMethod = getNewPaymentMethod(tokenType);
 
-    saveToStorage("paymentMethod", paymentMethod);
+    setNewPaymentMethod(paymentMethod);
     renderSwitchPaymentButtons(paymentMethod, cost);
 }
 
 function getNewPaymentMethod(tokenType) {
-    const paymentMethod = loadFromStorage("paymentMethod");
+    const paymentMethod = getCurrentPaymentMethod();
 
     paymentMethod["Gold"]++;
     paymentMethod[tokenType]--;
@@ -172,7 +173,7 @@ function getCurrentPlayerIndexInData(gameData) {
 }
 
 function updateCurrentPlayerTokensInData(gameData, indexOfPlayerInData) {
-    const tokensPaid = loadFromStorage("paymentMethod");
+    const tokensPaid = getCurrentPaymentMethod();
     const previousTokens = gameData["players"][indexOfPlayerInData]["tokens"];
     for (const tokenType in previousTokens) {
         previousTokens[tokenType] -= (tokensPaid[tokenType] || 0);
@@ -188,6 +189,14 @@ function updateCurrentPlayerBonuses(gameData, indexOfPlayerInData, bonus) {
         currentBonus[bonus]++;
     }
     return currentBonus;
+}
+
+function getCurrentPaymentMethod() {
+    return JSON.parse(sessionStorage.getItem("paymentMethod"));
+}
+
+function setNewPaymentMethod(paymentMethod) {
+    sessionStorage.setItem("paymentMethod", JSON.stringify(paymentMethod))
 }
 
 export {selectCard,

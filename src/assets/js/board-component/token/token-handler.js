@@ -9,7 +9,7 @@ function canGetToken(tokenType, amount) {
 }
 
 function selectToken(e) {
-    deleteFromStorage("paymentMethod");
+    sessionStorage.removeItem("paymentMethod");
 
     const $selectedToken = e.target.closest("li");
     const tokenType = $selectedToken.dataset.type;
