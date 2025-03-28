@@ -33,4 +33,16 @@ function takeTokens(requestBody) {
     return fetchFromServer(`/games/${gameId}/players/${playerName}/tokens`, "PATCH", requestBody);
 }
 
-export { getGames, createGame, getGame, joinGame, takeTokens };
+function buyCard(requestBody) {
+    const gameId = loadFromStorage("gameId");
+    const playerName = loadFromStorage("playerName");
+    return fetchFromServer(`/games/${gameId}/players/${playerName}/developments`, "POST", requestBody);
+}
+
+function reserveCard(requestBody) {
+    const gameId = loadFromStorage("gameId");
+    const playerName = loadFromStorage("playerName");
+    return fetchFromServer(`/games/${gameId}/players/${playerName}/reserve`, "POST", requestBody);
+}
+
+export { getGames, createGame, getGame, joinGame, takeTokens, buyCard, reserveCard };
