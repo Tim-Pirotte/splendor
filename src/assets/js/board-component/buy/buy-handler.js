@@ -162,15 +162,6 @@ function getNewPaymentMethod(tokenType) {
     return paymentMethod;
 }
 
-function getCurrentPlayerIndexInData(gameData) {
-    const playerName = getCurrentPlayer()["name"];
-    for (const playerIndex in gameData["players"]) {
-        if (gameData["players"][playerIndex]["name"] === playerName) {
-            return playerIndex;
-        }
-    }
-}
-
 function removePaidTokens() {
     const wallet = getPlayerWallet();
     const tokensPaid = getCurrentPaymentMethod();
@@ -204,7 +195,6 @@ export {selectCard,
     isAllowedToSwitchToken,
     getPlayerWallet,
     handlePaymentMethodChange,
-    getCurrentPlayerIndexInData,
     removePaidTokens,
     updateCurrentPlayerBonuses,
     getDefaultPaymentMethod};
