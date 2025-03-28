@@ -3,8 +3,7 @@ import { hasGameStarted } from "../utils/game-object-handler.js";
 import { renderHeader, renderPlayerCount, renderPlayers } from "./renderer.js";
 
 function loadLobbyInformation() {
-    API.getGame()
-        .then(gameObject => updateLobby(gameObject));
+    API.getGame().then(gameObject => updateLobby(gameObject));
 }
 
 function updateLobby(gameObject) {
