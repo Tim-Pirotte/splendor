@@ -52,4 +52,4 @@ function initGameStatusInterface() {
   $actionButton.addEventListener("click", actionRegistryRouter);
 }
 
-export {isCurrentlyPlaying, initGameStatusInterface, setActionButtonState, getGameCreator};
+export { isCurrentlyPlaying, initGameStatusInterface, setActionButtonState, getGameCreator };

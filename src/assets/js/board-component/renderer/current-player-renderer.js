@@ -1,6 +1,7 @@
-import {loadFromStorage} from "../../data-connector/local-storage-abstractor.js";
-import {MAX_TOKENS_ALLOWED, PRESTIGE_POINTS_NEEDED_TO_WIN, TOKEN_MAPPER} from "../config.js";
-import {formatNumber, insertImageInto, renderCard, renderProgressBar, safeEmptyContainer} from "./helper.js";
+import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
+import { MAX_TOKENS_ALLOWED, PRESTIGE_POINTS_NEEDED_TO_WIN, TOKEN_MAPPER } from "../config.js";
+import { formatNumber, insertImageInto, renderCard, renderProgressBar, safeEmptyContainer } from "./helper.js";
+import { getHighestScore } from "./sidebar-renderer.js";
 
 function renderHeader() {
     document.querySelector(".top-bar h2").textContent = loadFromStorage("playerName");
@@ -14,10 +15,15 @@ function getCurrentPlayer(players, currentPlayerName) {
     }
 }
 
-function renderCurrentPlayerPoints(currentPlayer) {
+function renderCurrentPlayerPoints(currentPlayer , highestScore) {
     document.querySelector(".player-points p").textContent = `${formatNumber(currentPlayer["totalPrestigePoints"])}  / ${PRESTIGE_POINTS_NEEDED_TO_WIN}`;
 
     renderProgressBar(document.querySelector(".player-points .progress-bar"), currentPlayer["totalPrestigePoints"], "score");
+    const $playerDiamondLocation = document.querySelector(".player-points p");
+
+    if (currentPlayer["totalPrestigePoints"] >= highestScore) {
+        insertImageInto($playerDiamondLocation, "UI/tokens/white_chip", false, "Score amongst the highest");
+    }
 }
 
 function renderCurrentPlayerReserve(currentPlayer) {
@@ -46,8 +52,9 @@ function setTotalTokensColor($totalTokenCount, totalTokens) {
 
 function renderCurrentPlayer(players, gems) {
     const currentPlayer = getCurrentPlayer(players, loadFromStorage("playerName"));
+    const highestScore = getHighestScore(players);
 
-    renderCurrentPlayerPoints(currentPlayer);
+    renderCurrentPlayerPoints(currentPlayer , highestScore);
     renderCurrentPlayerReserve(currentPlayer);
     renderCurrentPlayerTokenCount(currentPlayer);
     renderCurrentPlayerTokens(currentPlayer["tokens"], currentPlayer["bonuses"], gems);
@@ -89,4 +96,4 @@ function renderCurrentPlayerTokens(currentPlayerTokens, currentPlayerBonuses, ge
     }
 }
 
-export {renderHeader, renderCurrentPlayer};
+export { renderHeader, renderCurrentPlayer };

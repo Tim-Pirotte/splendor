@@ -1,9 +1,9 @@
-import {loadFromStorage, saveToStorage} from "../data-connector/local-storage-abstractor.js";
-import {fetchFromServer} from "../data-connector/api-communication-abstractor.js";
-import {renderPage} from "./renderer/renderer.js";
-import {POLLING_TIME_OUT} from "../config.js";
+import * as API from "../api.js";
+import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
+import { renderPage } from "./renderer/renderer.js";
 import { initRoundBegin } from "./state-machine/state-machine.js";
 import {isCurrentlyPlaying} from "./game-status-interface.js";
+import {POLLING_TIME_OUT} from "../config.js";
 
 function handleGameDataError(err) {
   const forbidden = 403;
@@ -22,8 +22,7 @@ function updateGameData() {
   const gameId = loadFromStorage("gameId");
   if (gameId === null) location.href = "../index.html";
 
-  fetchFromServer(`/games/${gameId}`)
-    .then(gameData => {
+  API.getGame().then(gameData => {
       saveToStorage("gameData", gameData);
       initRoundBegin(gameData);
       renderPage(gameData);
@@ -40,7 +39,7 @@ function startGameStatePolling() {
 }
 
 function getGems() {
-  fetchFromServer("/gems").then(gems => saveToStorage("gems", gems["gems"]));
+  API.getGemsList().then(gems => saveToStorage("gems", gems["gems"]));
 }
 
 function waitOnTokenData() {

@@ -1,6 +1,6 @@
+import * as API from "../api.js";
 import { getGameId, getGameName, getGameState } from "../utils/game-object-handler.js";
 import { getAmountText, getGameButtonText } from "./helper.js";
-import { fetchFromServer } from "../data-connector/api-communication-abstractor.js";
 import { filterGameList } from "./filter.js";
 import {POLLING_TIME_OUT} from "../config.js";
 import {safeEmptyContainer} from "../board-component/renderer/helper.js";
@@ -11,8 +11,7 @@ function renderGameList() {
     const $gameListContainerCopy = $container.cloneNode(true);
     safeEmptyContainer($gameListContainerCopy);
 
-    fetchFromServer("/games")
-        .then(gameObject => {
+    API.getGames().then(gameObject => {
             const filteredGames = filterGameList(gameObject["games"]);
 
             if (filteredGames.size === 0) {

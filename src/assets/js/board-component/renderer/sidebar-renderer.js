@@ -1,7 +1,7 @@
-import {loadFromStorage} from "../../data-connector/local-storage-abstractor.js";
-import {formatNumber, insertImageInto, safeEmptyContainer} from "./helper.js";
-import {TOKEN_MAPPER} from "../config.js";
-import {MAXPRESTIGEPOINTS} from "../../config.js";
+import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
+import { formatNumber, insertImageInto, safeEmptyContainer } from "./helper.js";
+import { TOKEN_MAPPER } from "../config.js";
+import { MAXPRESTIGEPOINTS } from "../../config.js";
 
 function renderOtherPlayers(otherPlayers, gems) {
   const currentPlayerName = loadFromStorage("playerName");
@@ -84,4 +84,4 @@ function renderReservedList(containerToInsertInto, reservedCards) {
   }
 }
 
-export {renderOtherPlayers};
+export { renderOtherPlayers, getHighestScore };
