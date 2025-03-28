@@ -38,7 +38,6 @@ function getPlayerBonuses() {
 function processTakeNoble() {
   const actionButton = document.querySelector(".action-button");
   const nobleToTake = getNobleByName(actionButton.dataset.name);
-  console.log(nobleToTake)
   fetchFromServer(
     `/games/${loadFromStorage("gameId")}/players/${loadFromStorage("playerName")}/nobles`,
   "POST",
