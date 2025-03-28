@@ -1,5 +1,5 @@
 import {getCurrentPlayer, setActionButtonState} from "../game-status-interface.js";
-import {loadFromStorage, saveToStorage} from "../../data-connector/local-storage-abstractor.js";
+import {deleteFromStorage, loadFromStorage, saveToStorage} from "../../data-connector/local-storage-abstractor.js";
 import {
     renderSwitchPaymentButtons, renderUpdatedPlayerScore, renderUpdatedTokens
 } from "../renderer/current-player-renderer.js";
@@ -45,6 +45,7 @@ function processBuyCardClick() {
     "POST",
     requestBody,
     );
+    deleteFromStorage("paymentMethod")
 
 }
 
