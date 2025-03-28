@@ -113,14 +113,22 @@ function calculateDefaultPayment(cost, tokens) {
 }
 
 function isAllowedToSwitchToken(tokenType, currentPayment, cost, wallet) {
+    console.log('curr', currentPayment["Gold"])
+    console.log('wall',wallet["Gold"])
+    console.log(currentPayment["Gold"] === wallet["Gold"]);
     if (tokenType === "Gold") {
+        console.log(tokenType,'1')
         return !((currentPayment["Gold"] || 0) === 0);
-    } else if ((currentPayment["Gold"] || 0) === (wallet["Gold"] || 0)) {
+    } else if ((currentPayment["Gold"]) === (wallet["Gold"])){
+        console.log(tokenType,2)
         return false;
     } else if (!(cost.hasOwnProperty(tokenType))) {
+        console.log(tokenType,3)
         return false;
     } else{
-        return (currentPayment[tokenType] || 0)!==0;
+        console.log(tokenType,'4')
+        console.log(currentPayment[tokenType])
+        return (currentPayment[tokenType]) >0;
     }
 }
 

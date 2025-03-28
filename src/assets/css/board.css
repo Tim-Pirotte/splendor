@@ -209,7 +209,7 @@ section header picture {
 }
 
 /* SWITCH TOKEN BUTTONS */
-.hidden {
+.switch-token-container .hidden {
     display: none;
 }
 
