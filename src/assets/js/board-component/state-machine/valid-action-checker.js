@@ -1,5 +1,6 @@
 import { isCurrentlyPlaying } from "../game-status-interface.js";
 import { deckHasEnoughCards, hasReservePlace } from "./valid-resource-checker.js";
+import { DEVELOPMENT_CARDS } from "../data.js";
 
 const GAME_STATE = {
     TURN_ACTION: "TurnAction",
@@ -42,7 +43,7 @@ function getLevelFromCard(cardName) {
 }
 
 function getCardObject(cardName) {
-    return DEVELOPMENT_CARDS.find(card => card.name === cardName); //TODO: import the DEVELOPMENT_CARDS
+    return DEVELOPMENT_CARDS.find(card => card.name === cardName);
 }
 
 export { validTokenTake, validTokenDiscard, validCardBuy, validCardReserve, validDeckReserve, validNobelPick };
