@@ -84,4 +84,4 @@ function renderReservedList(containerToInsertInto, reservedCards) {
   }
 }
 
-export {renderOtherPlayers};
+export {renderOtherPlayers , getHighestScore};
