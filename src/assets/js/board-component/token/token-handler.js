@@ -1,7 +1,6 @@
 import {takeTwoGemsRequest} from "./request-handler.js";
 import {setActionButtonState} from "../game-status-interface.js";
 import {MIN_TOKENS_FOR_PICKING_TWO} from "./config.js";
-import {deleteFromStorage} from "../../data-connector/local-storage-abstractor.js";
 
 
 function canGetToken(tokenType, amount) {

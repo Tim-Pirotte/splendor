@@ -1,5 +1,5 @@
 import {getCurrentPlayer, setActionButtonState} from "../game-status-interface.js";
-import {deleteFromStorage, loadFromStorage, saveToStorage} from "../../data-connector/local-storage-abstractor.js";
+import {loadFromStorage} from "../../data-connector/local-storage-abstractor.js";
 import {
     renderSwitchPaymentButtons, renderUpdatedPlayerScore, renderUpdatedTokens
 } from "../renderer/current-player-renderer.js";
@@ -45,7 +45,7 @@ function processBuyCardClick() {
     "POST",
     requestBody,
     );
-    sessionStorage.removeItem("paymentMethod")
+    sessionStorage.removeItem("paymentMethod");
 }
 
 function getCardData($target) {
@@ -143,7 +143,7 @@ function handlePaymentMethodChange(e) {
 function resetPayment(cost){
     const paymentMethod = getDefaultPaymentMethod(cost);
 
-    setNewPaymentMethod(paymentMethod)
+    setNewPaymentMethod(paymentMethod);
     renderSwitchPaymentButtons(paymentMethod, cost);
 }
 
@@ -196,7 +196,7 @@ function getCurrentPaymentMethod() {
 }
 
 function setNewPaymentMethod(paymentMethod) {
-    sessionStorage.setItem("paymentMethod", JSON.stringify(paymentMethod))
+    sessionStorage.setItem("paymentMethod", JSON.stringify(paymentMethod));
 }
 
 export {selectCard,
