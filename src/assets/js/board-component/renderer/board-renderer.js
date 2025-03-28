@@ -84,16 +84,10 @@ function renderNobles(unclaimedNobles) {
 
 function renderUpdatedBoardTokens(tokensToAdd) {
   const amountOfPlayers = document.querySelectorAll(".player-card").length + 1;
-  const previousTokens = getUnclaimedTokens()
+  const previousTokens = getUnclaimedTokens();
   const newAmountOfTokens = mergeObjectsWithSum(previousTokens, tokensToAdd);
 
-  console.log(previousTokens);
-  console.log(tokensToAdd);
-  console.log('new', newAmountOfTokens);
-  console.log('players', amountOfPlayers);
-
   renderBoardTokens(newAmountOfTokens, amountOfPlayers, GEMS);
-
 }
 
 export {renderCards, renderBoardTokens, renderNobles, renderUpdatedBoardTokens};

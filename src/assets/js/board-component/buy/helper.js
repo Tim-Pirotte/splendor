@@ -15,7 +15,7 @@ function getUnclaimedTokens() {
     const $tokenContainers = document.querySelectorAll(".board-tokens li[data-type]");
     $tokenContainers.forEach($tokenContainer => {
         tokens[$tokenContainer.dataset.type] = $tokenContainer.querySelector(".amount").innerText.split("/")[0];
-    })
+    });
 
     return tokens;
 }

@@ -11,7 +11,6 @@ import {mergeObjectsWithSum} from "./helper.js";
 function selectCard(e) {
     const $card = getCard(e);
     if ($card && canBuy($card)) {
-        console.log('test')
         const defaultPayment = getDefaultPaymentMethod(getCardData($card.dataset.name)["cost"]);
 
         setActionButtonState(
@@ -173,7 +172,7 @@ function getCurrentPlayerIndexInData(gameData) {
 }
 
 function removePaidTokens() {
-    const wallet = getPlayerWallet()
+    const wallet = getPlayerWallet();
     const tokensPaid = getCurrentPaymentMethod();
     for (const tokenType in wallet) {
         wallet[tokenType] -= (tokensPaid[tokenType] || 0);

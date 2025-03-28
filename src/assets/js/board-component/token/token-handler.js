@@ -54,8 +54,6 @@ function selectToken(e) {
     sessionStorage.removeItem("paymentMethod");
     hideSwitchPaymentButtons();
 
-    const $selectedToken = e.target.closest("li");
-    const tokenType = $selectedToken.dataset.type;
     if (e.target.tagName.toLowerCase() === "img") {
         const $selectedToken = e.target.closest("li");
         const tokenType = $selectedToken.dataset.type;
