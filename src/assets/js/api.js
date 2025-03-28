@@ -20,8 +20,7 @@ function getGame() {
     return fetchFromServer(`/games/${gameId}`);
 }
 
-function joinGame() {
-    const gameId = loadFromStorage("gameId");
+function joinGame(gameId) {
     const playerName = loadFromStorage("playerName");
     return fetchFromServer(`/games/${gameId}/players/${playerName}`, "POST");
 }
