@@ -6,7 +6,7 @@ const GAME_STATE = {
     RETURN_GEMS: "ReturnGems",
     CHOOSE_NOBEL: "ChooseNoble",
     WINNER_IS_FOUND: "WinnerIsFound"
-}
+};
 
 function validTokenTake() {
     return isCurrentlyPlaying() && getGameState() === GAME_STATE.TURN_ACTION;

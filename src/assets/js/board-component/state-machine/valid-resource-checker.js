@@ -4,9 +4,9 @@ function hasReservePlace() {
 }
 
 function deckHasEnoughCards(level) {
-    const amount = parseInt(document.querySelector(`.level-${deck["level"]} .cards-in-deck`).dataset.amount);
+    const amount = parseInt(document.querySelector(`.level-deck["${level}"] .cards-in-deck`).dataset.amount);
     return amount > 0;
 }
 
 
-export { hasReservePlace, deckHasEnoughCards }
+export { hasReservePlace, deckHasEnoughCards };
