@@ -197,6 +197,10 @@ section header picture {
     color: red;
 }
 
+.selected {
+    background-color: deepskyblue;
+}
+
 .progress-bar {
     height: 0.5rem;
     background-repeat: no-repeat;
