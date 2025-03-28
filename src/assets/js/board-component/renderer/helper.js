@@ -70,13 +70,13 @@ function safeEmptyContainer($container) {
 }
 
 function getSwitchButtonTemplate(token) {
+  const $switchButtonContainerTemplate = document.querySelector("#switch-to-gold-button-template");
+  const $container = $switchButtonContainerTemplate.content.firstElementChild.cloneNode(true);
+
   if (token === "Gold") {
-    return document.querySelector("#reset-payment-template")
-    .content.firstElementChild.cloneNode(true);
-  } else {
-    return document.querySelector("#switch-to-gold-button-template")
-    .content.firstElementChild.cloneNode(true);
+    $container.querySelector(".switch-token").textContent = "Reset";
   }
+  return $container
 }
 
 export {insertImageInto, renderProgressBar, formatNumber, renderCard, safeEmptyContainer, getSwitchButtonTemplate};
