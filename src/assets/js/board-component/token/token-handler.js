@@ -9,6 +9,32 @@ function canGetToken(tokenType, amount , $actionButtonData) {
    return false;
 }
 
+// Is there already a stack of tokens available
+// No
+// Is tokenAmount > 0
+    // No
+// Yes
+    // Create new token stack with pointer
+// Yes
+// Read pointer
+// Is pointer === token limit
+    // yes
+// no
+// Is token already in stack
+    // yes
+    // Deselect
+// No
+// Is tokenType === Gold
+    // Push token to stack
+    // Increase stack pointer by one
+
+// Set action button
+// If pointer === 1 && CanTakeTwo
+    // SetActionButton => take two tokens
+// Else
+    // SetActionButton => take up to three (1/3)
+
+
 function giveTokenThatAlreadySelected(tokenType , actionButtonData){
     const token1 = 1;
     const token2 = 2;
