@@ -1,7 +1,7 @@
-import {loadFromStorage} from "../../data-connector/local-storage-abstractor.js";
-import {MAX_TOKENS_ALLOWED, PRESTIGE_POINTS_NEEDED_TO_WIN, TOKEN_MAPPER} from "../config.js";
-import {formatNumber, insertImageInto, renderCard, renderProgressBar, safeEmptyContainer} from "./helper.js";
-import {getHighestScore} from "./sidebar-renderer.js";
+import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
+import { MAX_TOKENS_ALLOWED, PRESTIGE_POINTS_NEEDED_TO_WIN, TOKEN_MAPPER } from "../config.js";
+import { formatNumber, insertImageInto, renderCard, renderProgressBar, safeEmptyContainer } from "./helper.js";
+import { getHighestScore } from "./sidebar-renderer.js";
 
 function renderHeader() {
     document.querySelector(".top-bar h2").textContent = loadFromStorage("playerName");
@@ -67,6 +67,8 @@ function countTokens(tokens) {
 function insertCardCounter($token, token, currentPlayerBonuses) {
     insertImageInto($token, `UI/cards/${TOKEN_MAPPER[token]}_card_small`, true, `${TOKEN_MAPPER[token]} card`);
     $token.insertAdjacentHTML("afterbegin", `<p>${currentPlayerBonuses[token] || 0}</p>`);
+    $token.dataset.bonuses = currentPlayerBonuses[token] || 0;
+    $token.dataset.type = token;
 }
 
 function renderCurrentPlayerTokens(currentPlayerTokens, currentPlayerBonuses, gems) {
@@ -94,4 +96,4 @@ function renderCurrentPlayerTokens(currentPlayerTokens, currentPlayerBonuses, ge
     }
 }
 
-export {renderHeader, renderCurrentPlayer};
+export { renderHeader, renderCurrentPlayer };
