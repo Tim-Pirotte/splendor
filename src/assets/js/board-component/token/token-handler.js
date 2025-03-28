@@ -94,23 +94,22 @@ function deselectToken($selectedToken) {
     $selectedToken.classList.remove("selected");
 }
 
-function removeTokenFromStack($selectedToken, $actionButton, stackPointer) {
+function removeTokenFromStack($selectedToken, $actionButton) {
     let shiftStackDown = false;
-    for (let i = 0; i < stackPointer; i++) {
+    for (let i = 0; i < MAX_TAKE_TOKENS; i++) {
         const token = $actionButton.dataset[`token${i}`];
-
-        if ($selectedToken.dataset.type === token) {
-            shiftStackDown = true;
-        }
 
         if (shiftStackDown) {
             $actionButton.dataset[`token${i - 1}`] = token;
+        }
+
+        if ($selectedToken.dataset.type === token) {
+            shiftStackDown = true;
         }
     }
 }
 
 function pushTokenToStack($selectedToken, $actionButton, stackPointer) {
-    console.log(stackPointer)
     $actionButton.dataset[`token${stackPointer}`] = $selectedToken.dataset.type;
 }
 
@@ -132,7 +131,6 @@ function selectToken(e) {
     if (!stackExists($actionButton)) createStack($actionButton);
 
     let stackPointer = parseInt($actionButton.dataset.stackPointer);
-    if (stackPointer > MAX_TAKE_TOKENS - 1) return;
 
     if (tokenInStack($selectedToken, $actionButton, stackPointer)) {
         deselectToken($selectedToken);
@@ -143,6 +141,8 @@ function selectToken(e) {
         setActionToTokenAction(stackPointer, $selectedToken);
         return;
     }
+
+    if (stackPointer > MAX_TAKE_TOKENS - 1) return;
 
     if ($selectedToken.dataset.type === "Gold") return;
 
