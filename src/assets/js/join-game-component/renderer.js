@@ -20,7 +20,6 @@ function renderGameList() {
                 filteredGames.forEach(game => populateGame($template, $gameListContainerCopy, game));
             }
 
-            $container.querySelectorAll(":scope > li").forEach(li => li.remove());
             $container.innerHTML = $gameListContainerCopy.innerHTML;
 
             startGameListPolling();
