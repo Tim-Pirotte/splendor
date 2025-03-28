@@ -148,9 +148,16 @@ function renderUpdatedPlayerScore(extraScore) {
     $scoreContainer.innerText = `${formatNumber(score)} pts.`;
 }
 
+function hideSwitchPaymentButtons() {
+    document.querySelectorAll(".switch-token-container").forEach(($container) => {
+        $container.querySelector(".switch-token").classList.add("hidden");
+        $container.querySelector("p").classList.add("hidden");
+    })
+}
 export {renderHeader,
     renderCurrentPlayer,
     renderSwitchPaymentButtons,
     renderCurrentPlayerTokenCount,renderCurrentPlayerTokens,
     renderUpdatedTokens,
-    renderUpdatedPlayerScore};
+    renderUpdatedPlayerScore,
+    hideSwitchPaymentButtons};

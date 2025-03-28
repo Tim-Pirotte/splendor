@@ -1,6 +1,7 @@
 import {takeTwoGemsRequest} from "./request-handler.js";
 import {setActionButtonState} from "../game-status-interface.js";
 import {MIN_TOKENS_FOR_PICKING_TWO} from "./config.js";
+import {hideSwitchPaymentButtons} from "../renderer/current-player-renderer.js";
 
 
 function canGetToken(tokenType, amount) {
@@ -9,6 +10,7 @@ function canGetToken(tokenType, amount) {
 
 function selectToken(e) {
     sessionStorage.removeItem("paymentMethod");
+    hideSwitchPaymentButtons();
 
     const $selectedToken = e.target.closest("li");
     const tokenType = $selectedToken.dataset.type;
