@@ -1,13 +1,13 @@
-import {insertImageInto, renderCard, safeEmptyContainer} from "./helper.js";
+import { insertImageInto, renderCard, safeEmptyContainer } from "./helper.js";
 import {
-  GOLD_TOKEN_LIMIT, MAX_TOKENS_ALLOWED,
+  GOLD_TOKEN_LIMIT,
+  MAX_TOKENS_ALLOWED,
   NOBLES_MAPPER,
   TOKEN_LIMIT,
   TOKEN_LIMIT_THREE_PLAYERS,
   TOKEN_LIMIT_TWO_PLAYERS,
   TOKEN_MAPPER
 } from "../config.js";
-import {fetchFromServer} from "../../data-connector/api-communication-abstractor";
 
 function renderCards(market) {
   for (const deck of market) {

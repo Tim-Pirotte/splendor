@@ -5,4 +5,4 @@ function setActionButton(message, tokenType, action) {
     $actionButton.dataset.action = action;
 }
 
-export {setActionButton};
+export { setActionButton };

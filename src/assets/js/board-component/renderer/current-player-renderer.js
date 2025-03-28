@@ -1,3 +1,4 @@
+import * as gameStatusInterface from "../game-status-interface.js";
 import {loadFromStorage} from "../../data-connector/local-storage-abstractor.js";
 import {MAX_TOKENS_ALLOWED, PRESTIGE_POINTS_NEEDED_TO_WIN, TOKEN_MAPPER} from "../config.js";
 import {
@@ -8,8 +9,8 @@ import {
     renderProgressBar,
     safeEmptyContainer
 } from "./helper.js";
+import { getHighestScore } from "./sidebar-renderer.js";
 import {isAllowedToSwitchToken, removePaidTokens, updateCurrentPlayerBonuses} from "../buy/buy-handler.js";
-import * as gameStatusInterface from "../game-status-interface.js";
 import {GEMS} from "../data.js";
 
 function renderHeader() {
@@ -29,6 +30,11 @@ function renderCurrentPlayerPoints(currentPlayer, extraScore = 0) {
     `${formatNumber(parseInt(currentPlayer["totalPrestigePoints"]) + extraScore)}  / ${PRESTIGE_POINTS_NEEDED_TO_WIN}`;
 
     renderProgressBar(document.querySelector(".player-points .progress-bar"), currentPlayer["totalPrestigePoints"], "score");
+    const $playerDiamondLocation = document.querySelector(".player-points p");
+
+    if (currentPlayer["totalPrestigePoints"] >= highestScore) {
+        insertImageInto($playerDiamondLocation, "UI/tokens/white_chip", false, "Score amongst the highest");
+    }
 }
 
 function renderCurrentPlayerReserve(currentPlayer) {
@@ -57,8 +63,9 @@ function setTotalTokensColor($totalTokenCount, totalTokens) {
 
 function renderCurrentPlayer(players, gems) {
     const currentPlayer = getCurrentPlayer(players, loadFromStorage("playerName"));
+    const highestScore = getHighestScore(players);
 
-    renderCurrentPlayerPoints(currentPlayer);
+    renderCurrentPlayerPoints(currentPlayer , highestScore);
     renderCurrentPlayerReserve(currentPlayer);
     renderCurrentPlayerTokenCount(currentPlayer["tokens"]);
     renderCurrentPlayerTokens(currentPlayer["tokens"], currentPlayer["bonuses"], gems);
@@ -78,11 +85,13 @@ function insertCardCounter($token, token, currentPlayerBonuses) {
 function renderCurrentPlayerTokens(currentPlayerTokens, currentPlayerBonuses, gems) {
     const $currentPlayerTokensContainer = document.querySelector(".player-tokens ul");
     safeEmptyContainer($currentPlayerTokensContainer);
+
     const $numberedItemTemplate = document.querySelector("#numbered-item-template");
     const $progressBarTemplate = document.querySelector("#progress-bar-template");
 
     for (const token of gems.toReversed()) {
         const $token = $numberedItemTemplate.content.firstElementChild.cloneNode(true);
+
         const $progressBar = $progressBarTemplate.content.firstElementChild.cloneNode(true);
         const $switchPaymentButtonContainer = getSwitchButtonTemplate(token);
 
@@ -94,6 +103,7 @@ function renderCurrentPlayerTokens(currentPlayerTokens, currentPlayerBonuses, ge
         $token.querySelector(".amount").textContent = (currentPlayerTokens[token] || 0);
         insertImageInto($token, `UI/tokens/${TOKEN_MAPPER[token]}_chip`, false, `${TOKEN_MAPPER[token]} chip`);
         renderProgressBar($progressBar, currentPlayerTokens[token], TOKEN_MAPPER[token]);
+
         $token.appendChild($progressBar);
         $token.appendChild($switchPaymentButtonContainer);
         $currentPlayerTokensContainer.appendChild($token);

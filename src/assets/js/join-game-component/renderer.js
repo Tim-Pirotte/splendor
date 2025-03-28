@@ -1,6 +1,6 @@
+import * as API from "../api.js";
 import { getGameId, getGameName, getGameState } from "../utils/game-object-handler.js";
 import { getAmountText, getGameButtonText } from "./helper.js";
-import { fetchFromServer } from "../data-connector/api-communication-abstractor.js";
 import { filterGameList } from "./filter.js";
 
 function renderList() {
@@ -9,8 +9,7 @@ function renderList() {
 
     $container.querySelectorAll("li").forEach(li => li.remove());
 
-    fetchFromServer("/games")
-        .then(gameObject => {
+    API.getGames().then(gameObject => {
             const filteredGames = filterGameList(gameObject["games"]);
 
             if (filteredGames.size === 0) {
@@ -18,7 +17,7 @@ function renderList() {
             } else {
                 filteredGames.forEach(game => populateGame($template, $container, game));
             }
-        });
+    });
 }
 
 function populateGame($template, $container, game) {
