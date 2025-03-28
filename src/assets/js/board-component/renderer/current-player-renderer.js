@@ -1,17 +1,14 @@
-import {loadFromStorage, saveToStorage} from "../../data-connector/local-storage-abstractor.js";
+import {loadFromStorage} from "../../data-connector/local-storage-abstractor.js";
 import {MAX_TOKENS_ALLOWED, PRESTIGE_POINTS_NEEDED_TO_WIN, TOKEN_MAPPER} from "../config.js";
 import {
-    formatNumber, getSwitchButtonTemplate,
+    formatNumber,
+    getSwitchButtonTemplate,
     insertImageInto,
     renderCard,
     renderProgressBar,
     safeEmptyContainer
 } from "./helper.js";
-import {
-    isAllowedToSwitchToken,
-    getPlayerWallet,
-    removePaidTokens, updateCurrentPlayerBonuses
-} from "../buy/buy-handler.js";
+import {isAllowedToSwitchToken, removePaidTokens, updateCurrentPlayerBonuses} from "../buy/buy-handler.js";
 import * as gameStatusInterface from "../game-status-interface.js";
 import {GEMS} from "../data.js";
 
@@ -27,8 +24,9 @@ function getCurrentPlayer(players, currentPlayerName) {
     }
 }
 
-function renderCurrentPlayerPoints(currentPlayer) {
-    document.querySelector(".player-points p").textContent = `${formatNumber(currentPlayer["totalPrestigePoints"])}  / ${PRESTIGE_POINTS_NEEDED_TO_WIN}`;
+function renderCurrentPlayerPoints(currentPlayer, extraScore = 0) {
+    document.querySelector(".player-points p").textContent =
+    `${formatNumber(parseInt(currentPlayer["totalPrestigePoints"]) + extraScore)}  / ${PRESTIGE_POINTS_NEEDED_TO_WIN}`;
 
     renderProgressBar(document.querySelector(".player-points .progress-bar"), currentPlayer["totalPrestigePoints"], "score");
 }
@@ -128,7 +126,7 @@ function renderAmountOfTokenSelected($tokenContainer, tokenType, payment) {
     $tokenContainer.querySelector("p").classList.remove("hidden");
 }
 
-function renderUpdatedTokens(bonus) {
+function renderUpdatedPlayerTokens(bonus) {
     const updatedTokens = removePaidTokens();
     const updatedBonuses = updateCurrentPlayerBonuses(bonus);
 
@@ -137,10 +135,7 @@ function renderUpdatedTokens(bonus) {
 }
 
 function renderUpdatedPlayerScore(extraScore) {
-    const $scoreContainer = document.querySelector(".points");
-    const score = parseInt($scoreContainer.innerText.split(" ")[0]) + extraScore;
-
-    $scoreContainer.innerText = `${formatNumber(score)} pts.`;
+    renderCurrentPlayerPoints(gameStatusInterface.getCurrentPlayer(), extraScore)
 }
 
 function hideSwitchPaymentButtons() {
@@ -153,6 +148,7 @@ export {renderHeader,
     renderCurrentPlayer,
     renderSwitchPaymentButtons,
     renderCurrentPlayerTokenCount,renderCurrentPlayerTokens,
-    renderUpdatedTokens,
+    renderUpdatedPlayerTokens,
     renderUpdatedPlayerScore,
-    hideSwitchPaymentButtons};
+    hideSwitchPaymentButtons,
+};

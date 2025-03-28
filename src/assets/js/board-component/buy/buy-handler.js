@@ -1,10 +1,12 @@
 import {getCurrentPlayer, setActionButtonState} from "../game-status-interface.js";
 import {loadFromStorage} from "../../data-connector/local-storage-abstractor.js";
 import {
-    renderSwitchPaymentButtons, renderUpdatedPlayerScore, renderUpdatedTokens
+    renderSwitchPaymentButtons, renderUpdatedPlayerScore, renderUpdatedPlayerTokens
 } from "../renderer/current-player-renderer.js";
 import {fetchFromServer} from "../../data-connector/api-communication-abstractor.js";
 import {DEVELOPMENT_CARDS} from "../data.js";
+import {renderUpdatedBoardTokens} from "../renderer/board-renderer.js";
+import {mergeObjectsWithSum} from "./helper";
 
 function selectCard(e) {
     const $card = getCard(e);
@@ -38,8 +40,9 @@ function processBuyCardClick() {
     const requestBody =
     {development: {name: cardData["name"]}, payment: getCurrentPaymentMethod()};
 
-    renderUpdatedTokens(cardData["bonus"]);
+    renderUpdatedPlayerTokens(cardData["bonus"]);
     renderUpdatedPlayerScore(cardData["prestigePoints"]);
+    renderUpdatedBoardTokens(cardData["cost"]);
 
     fetchFromServer(`/games/${loadFromStorage(
     "gameId")}/players/${loadFromStorage("playerName")}/developments`,
@@ -62,15 +65,7 @@ function getPlayerWallet() {
     const tokens = currentPlayer["tokens"];
     const bonuses = currentPlayer["bonuses"];
 
-    for (const tokenType in bonuses) {
-        if (tokens.hasOwnProperty(tokenType)) {
-            tokens[tokenType] += bonuses[tokenType];
-        } else {
-            tokens[tokenType] = bonuses[tokenType];
-        }
-    }
-
-    return tokens;
+    return mergeObjectsWithSum(tokens, bonuses);
 }
 
 function isWalletHigher(wallet, cost) {
@@ -120,8 +115,6 @@ function calculateDefaultPayment(cost, tokens) {
 }
 
 function isAllowedToSwitchToken(tokenType, currentPayment, cost, tokensInWallet) {
-    console.log(currentPayment["Gold"] || 0);
-    console.log(tokensInWallet["Gold"] || 0);
 
     if (tokenType === "Gold") {
         return ((currentPayment["Gold"] || 0) !== 0);
