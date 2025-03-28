@@ -45,4 +45,10 @@ function reserveCard(requestBody) {
     return fetchFromServer(`/games/${gameId}/players/${playerName}/reserve`, "POST", requestBody);
 }
 
-export { getGames, createGame, getGame, joinGame, takeTokens, buyCard, reserveCard };
+function buyReserveCard(developmentName, requestBody) {
+    const gameId = loadFromStorage("gameId");
+    const playerName = loadFromStorage("playerName");
+    return fetchFromServer(`/games/${gameId}/players/${playerName}/reserv/${developmentName}`, "POST", requestBody);
+}
+
+export { getGames, createGame, getGame, joinGame, takeTokens, buyCard, reserveCard, buyReserveCard };
