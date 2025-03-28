@@ -1032,3 +1032,5 @@ const DEVELOPMENT_CARDS = [
     "prestigePoints": 5
   }
 ];
+
+export { GEMS, NOBLES, DEVELOPMENT_CARDS };

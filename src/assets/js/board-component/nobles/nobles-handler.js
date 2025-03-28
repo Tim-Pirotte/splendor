@@ -1,31 +1,26 @@
 import {setActionButtonState} from "../game-status-interface.js";
 import {fetchFromServer} from "../../data-connector/api-communication-abstractor.js";
 import {loadFromStorage} from "../../data-connector/local-storage-abstractor.js";
+import {NOBLES} from "../data.js";
 
 function selectNoble(e) {
   const $selectedNoble = e.target.closest("li");
-  console.log($selectedNoble);
   setActionButtonState("Take Noble", "processTakeNoble", {name: $selectedNoble.dataset.name});
 }
 
 function processTakeNoble() {
   const actionButton = document.querySelector(".action-button");
-  console.log(actionButton.dataset.name);
+  const nobleToTake = getNobleByName(actionButton.dataset.name);
+  console.log(nobleToTake)
   fetchFromServer(
     `/games/${loadFromStorage("gameId")}/players/${loadFromStorage("playerName")}/nobles`,
   "POST",
-    {
-      name: actionButton.dataset.name,
-      prestigePoints: 0,
-      neededBonuses: {
-        Emerald: 0,
-        Sapphire: 0,
-        Ruby: 0,
-        Diamond: 0,
-        Onyx: 0,
-        Gold: 0
-      }
-    }).then(res => console.log(res));
+    nobleToTake)
+    .then(res => console.log(res));
+}
+
+function getNobleByName(name) {
+  return NOBLES.find(noble => noble.name === name);
 }
 
 export { selectNoble, processTakeNoble };
