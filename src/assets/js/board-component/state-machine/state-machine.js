@@ -8,7 +8,9 @@ function initRoundBegin(gameData){
 
     if(gameState === GameState.WINNER_IS_FOUND) {
         location.href = `./results.html`;
-    }else {
+    } else if(!gameData["started"]) {
+        location.href = "./lobby-page.html";
+    } else {
         setActionButtonState("skip turn", "skipTurn", {});
     }
     
