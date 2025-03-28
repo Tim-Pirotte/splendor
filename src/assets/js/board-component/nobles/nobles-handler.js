@@ -1,6 +1,13 @@
+import {setActionButtonState} from "../game-status-interface.js";
+
 function selectNoble(e) {
   const $selectedNoble = e.target.closest("li");
   console.log($selectedNoble);
+  setActionButtonState("Take Noble", "processTakeNoble", {});
 }
 
-export { selectNoble };
+function processTakeNoble() {
+  console.log("test");
+}
+
+export { selectNoble, processTakeNoble };
