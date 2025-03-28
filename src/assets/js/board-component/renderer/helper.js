@@ -36,13 +36,12 @@ function formatNumber(number) {
   return number.toString().padStart(2, '0');
 }
 
-function renderCard($container, points, bonus, costs, index, level) {
+function renderCard($container, points, bonus, costs, cardName) {
   const $numberedItemTemplate = document.querySelector("#numbered-item-template");
   const $card = document.querySelector("#card-template").content.firstElementChild.cloneNode(true);
 
   $card.querySelector(".points").textContent = points;
-  $card.dataset.index = index;
-  $card.dataset.level = level;
+  $card.dataset.name = cardName;
 
   const $cardCost = $card.querySelector(".cost");
 

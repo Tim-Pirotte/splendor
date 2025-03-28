@@ -13,8 +13,8 @@ function renderCards(market) {
     const $currentDeck = document.querySelector(`.level-${deck["level"]} .cards-in-deck`);
     safeEmptyContainer($currentDeck);
 
-    for (const [index, card] of deck["visibleCards"].entries()) {
-      renderCard($currentDeck, card["prestigePoints"], card["bonus"], card["cost"], index, card["level"]);
+    for (const card of deck["visibleCards"]) {
+      renderCard($currentDeck, card["prestigePoints"], card["bonus"], card["cost"], card["name"]);
     }
   }
 }
