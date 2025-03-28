@@ -135,8 +135,8 @@ function updateTokens(res) {
     const endIndexAmountText = 3;
 
     for (const [token, taken] of Object.entries(res["tokens"])) {
-     const $token = document.querySelector(`[data-type="${token}"]`);
-     $token.dataset.amount = (parseInt($token.dataset.amount) - parseInt(taken)).toString() || "0";
+     const $token = document.querySelector(`.board-tokens [data-type="${token}"]`);
+     $token.dataset.amount = parseInt($token.dataset.amount) - parseInt(taken);
      const $amountText = $token.querySelector("p");
      $amountText.textContent = `${$token.dataset.amount}${$amountText.textContent.substring(beginIndexAmountText, endIndexAmountText)}`;
     }

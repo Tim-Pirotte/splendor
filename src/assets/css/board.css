@@ -6,6 +6,15 @@ body {
     grid-template-columns: 20% 80%;
 }
 
+/* SWITCH TOKEN BUTTONS */
+.switch-token-container .hidden {
+    display: none;
+}
+
+.switch-token-container p {
+    display: inline-block;
+}
+
 /* Main content alignment */
 body > section {
     display: grid;
