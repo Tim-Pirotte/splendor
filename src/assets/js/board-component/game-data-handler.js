@@ -1,6 +1,7 @@
 import * as API from "../api.js";
 import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
 import { renderPage } from "./renderer/renderer.js";
+import { initRoundBegin } from "./state-machine/state-machine.js";
 
 function handleGameDataError(err) {
   const forbidden = 403;
@@ -21,6 +22,7 @@ function updateGameData() {
 
   API.getGame().then(gameData => {
       saveToStorage("gameData", gameData);
+      initRoundBegin(gameData);
       renderPage(gameData);
     }).catch(err => handleGameDataError(err));
 }

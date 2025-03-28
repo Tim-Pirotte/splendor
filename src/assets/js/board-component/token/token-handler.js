@@ -2,6 +2,7 @@ import { takeTwoGemsRequest } from "./request-handler.js";
 import { setActionButtonState } from "../game-status-interface.js";
 import { MIN_TOKENS_FOR_PICKING_TWO } from "./config.js";
 
+
 function canGetToken(tokenType, amount) {
     return tokenType !== "Gold" && amount >= MIN_TOKENS_FOR_PICKING_TWO;
 }

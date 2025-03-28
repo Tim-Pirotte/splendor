@@ -60,6 +60,8 @@ function countTokens(tokens) {
 function insertCardCounter($token, token, currentPlayerBonuses) {
     insertImageInto($token, `UI/cards/${TOKEN_MAPPER[token]}_card_small`, true, `${TOKEN_MAPPER[token]} card`);
     $token.insertAdjacentHTML("afterbegin", `<p>${currentPlayerBonuses[token] || 0}</p>`);
+    $token.dataset.bonuses = currentPlayerBonuses[token] || 0;
+    $token.dataset.type = token;
 }
 
 function renderCurrentPlayerTokens(currentPlayerTokens, currentPlayerBonuses, gems) {
