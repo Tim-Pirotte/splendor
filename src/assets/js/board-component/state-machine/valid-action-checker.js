@@ -1,13 +1,9 @@
 import { isCurrentlyPlaying } from "../game-status-interface.js";
 import { deckHasEnoughCards, hasReservePlace } from "./valid-resource-checker.js";
 import { DEVELOPMENT_CARDS } from "../data.js";
+import { GAME_STATE } from "./data.js";
 
-const GAME_STATE = {
-    TURN_ACTION: "TurnAction",
-    RETURN_GEMS: "ReturnGems",
-    CHOOSE_NOBEL: "ChooseNoble",
-    WINNER_IS_FOUND: "WinnerIsFound"
-};
+
 
 function validTokenTake() {
     return isCurrentlyPlaying() && getGameState() === GAME_STATE.TURN_ACTION;

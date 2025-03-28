@@ -1,6 +1,8 @@
+const MAX_RESERVED_AMOUNT = 3;
+
 function hasReservePlace() {
     const amount = document.querySelectorAll("section .reserved-cards ul li").length;
-    return amount < 4;
+    return amount < MAX_RESERVED_AMOUNT;
 }
 
 function deckHasEnoughCards(level) {
