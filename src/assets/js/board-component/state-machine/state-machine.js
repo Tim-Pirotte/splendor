@@ -9,7 +9,6 @@ function initRoundBegin(gameData){
     if(gameState === GameState.WINNER_IS_FOUND) {
         location.href = `./results.html`;
     }else {
-        // Set the init state of the button -> TODO: @tim write the skipTurn function
         setActionButtonState("skip turn", "skipTurn", {});
     }
     

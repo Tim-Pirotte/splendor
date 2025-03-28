@@ -1,6 +1,12 @@
 import { isCurrentlyPlaying } from "../game-status-interface.js";
-import { GAME_STATE } from "./data.js";
-import { hasReservePlace } from "./valid-resource-checker.js";
+import { deckHasEnoughCards, hasReservePlace } from "./valid-resource-checker.js";
+
+const GAME_STATE = {
+    TURN_ACTION: "TurnAction",
+    RETURN_GEMS: "ReturnGems",
+    CHOOSE_NOBEL: "ChooseNoble",
+    WINNER_IS_FOUND: "WinnerIsFound"
+}
 
 function validTokenTake() {
     return isCurrentlyPlaying() && getGameState() === GAME_STATE.TURN_ACTION;
@@ -18,8 +24,8 @@ function validCardReserve() {
     return isCurrentlyPlaying() && getGameState() === GAME_STATE.TURN_ACTION && hasReservePlace();
 }
 
-function validDeckReserve() { //TODO: check if the deck is empty
-    return isCurrentlyPlaying() && getGameState() === GAME_STATE.TURN_ACTION && hasReservePlace();
+function validDeckReserve(cardName) {
+    return isCurrentlyPlaying() && getGameState() === GAME_STATE.TURN_ACTION && hasReservePlace() && deckHasEnoughCards(getLevelFromCard(cardName));
 }
 
 function validNobelPick() {
@@ -28,6 +34,15 @@ function validNobelPick() {
 
 function getGameState(){
     return sessionStorage.getItem("gameState");
+}
+
+function getLevelFromCard(cardName) {
+    const card = getCardObject(cardName);
+    return card.level;
+}
+
+function getCardObject(cardName) {
+    return DEVELOPMENT_CARDS.find(card => card.name === cardName); //TODO: import the DEVELOPMENT_CARDS
 }
 
 export { validTokenTake, validTokenDiscard, validCardBuy, validCardReserve, validDeckReserve, validNobelPick };
