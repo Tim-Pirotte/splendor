@@ -1,6 +1,7 @@
 import { takeGemsRequest } from "./request-handler.js";
 import { setActionButtonState } from "../game-status-interface.js";
 import { MIN_TOKENS_FOR_PICKING_TWO } from "./config.js";
+import {MAX_TAKE_TOKENS} from "../config.js";
 
 function canGetToken(tokenType, amount , $actionButtonData) {
     if(checkIfTokenIsEmpty($actionButtonData.token1)){
@@ -10,10 +11,7 @@ function canGetToken(tokenType, amount , $actionButtonData) {
 }
 
 // Is there already a stack of tokens available
-// No
-// Is tokenAmount > 0
     // No
-// Yes
     // Create new token stack with pointer
 // Yes
 // Read pointer
@@ -24,7 +22,7 @@ function canGetToken(tokenType, amount , $actionButtonData) {
     // yes
     // Deselect
 // No
-// Is tokenType === Gold
+// Is tokenType !== Gold
     // Push token to stack
     // Increase stack pointer by one
 
@@ -84,7 +82,37 @@ function checkIfTokenIsEmpty(token) {
     return (token === undefined || token === "");
 }
 
+function clickedOnToken(target) {
+    return target.tagName.toLowerCase() === "img";
+}
+
+function getToken(target) {
+    return target.closest("li");
+}
+
+function stackExists($actionButton) {
+    return $actionButton.dataset.token1;
+}
+
+function createStack($actionButton) {
+    for (let i = 0; i < MAX_TAKE_TOKENS; i++) {
+        $actionButton.dataset[`token${i + 1}`] = "";
+    }
+
+    $actionButton.dataset.stackPointer = "0";
+}
+
 function selectToken(e) {
+    if (!clickedOnToken(e.target)) return;
+
+    const $selectedToken = getToken(e.target);
+    if ($selectedToken.dataset.amount < 1) return;
+
+    const $actionButton = document.querySelector(".action-button");
+    if (!stackExists($actionButton)) createStack($actionButton);
+}
+
+function selectTokenPrevious(e) {
     if (e.target.tagName.toLowerCase() === "img") {
         const $selectedToken = e.target.closest("li");
         const tokenType = $selectedToken.dataset.type;
