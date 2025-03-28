@@ -1,6 +1,6 @@
-import {loadFromStorage, saveToStorage} from "../data-connector/local-storage-abstractor.js";
-import {fetchFromServer} from "../data-connector/api-communication-abstractor.js";
-import {renderPage} from "./renderer/renderer.js";
+import * as API from "../api.js";
+import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
+import { renderPage } from "./renderer/renderer.js";
 
 function handleGameDataError(err) {
   const forbidden = 403;
@@ -19,20 +19,18 @@ function updateGameData() {
   const gameId = loadFromStorage("gameId");
   if (gameId === null) location.href = "../index.html";
 
-  fetchFromServer(`/games/${gameId}`)
-    .then(gameData => {
+  API.getGame().then(gameData => {
       saveToStorage("gameData", gameData);
       renderPage(gameData);
-    })
-    .catch(err => handleGameDataError(err));
+    }).catch(err => handleGameDataError(err));
 }
 
 function getGems() {
-  fetchFromServer("/gems").then(gems => saveToStorage("gems", gems["gems"]));
+  API.getGemsList.then(gems => saveToStorage("gems", gems["gems"]));
 }
 
 function waitOnTokenData() {
   return loadFromStorage("gems");
 }
 
-export {updateGameData, getGems, waitOnTokenData};
+export { updateGameData, getGems, waitOnTokenData };

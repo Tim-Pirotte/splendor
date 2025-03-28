@@ -1,4 +1,4 @@
-import {CHIP_SPACING, TOKEN_MAPPER} from "../config.js";
+import { CHIP_SPACING, TOKEN_MAPPER } from "../config.js";
 
 function insertImageInto($container, standardPath, before, alt) {
   const $image = document.querySelector("#image-template").content.firstElementChild.cloneNode(true);
@@ -67,4 +67,4 @@ function safeEmptyContainer($container) {
   });
 }
 
-export {insertImageInto, renderProgressBar, formatNumber, renderCard, safeEmptyContainer};
+export { insertImageInto, renderProgressBar, formatNumber, renderCard, safeEmptyContainer };

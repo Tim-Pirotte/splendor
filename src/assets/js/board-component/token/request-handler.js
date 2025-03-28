@@ -1,16 +1,12 @@
-import {loadFromStorage} from "../../data-connector/local-storage-abstractor.js";
-import {fetchFromServer} from "../../data-connector/api-communication-abstractor.js";
-import {updateTokens} from "./token-handler.js";
+import * as API from "../../api.js";
+import { updateTokens } from "./token-handler.js";
 
 function takeTwoGemsRequest(tokenType) {
-    const gameId = loadFromStorage("gameId");
-    const playerName = loadFromStorage("playerName");
+    const requestBody = {"take": {}};
+    requestBody["take"][tokenType] = 2;
 
-    const body = {"take": {}};
-    body["take"][tokenType] = 2;
-
-    fetchFromServer(`/games/${gameId}/players/${playerName}/tokens`, "PATCH", body)
+    API.takeTokens(requestBody)
         .then(res => updateTokens(res));
 }
 
-export {takeTwoGemsRequest};
+export { takeTwoGemsRequest };

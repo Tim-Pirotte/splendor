@@ -1,6 +1,6 @@
-import {loadFromStorage} from "../../data-connector/local-storage-abstractor.js";
-import {MAX_TOKENS_ALLOWED, PRESTIGE_POINTS_NEEDED_TO_WIN, TOKEN_MAPPER} from "../config.js";
-import {formatNumber, insertImageInto, renderCard, renderProgressBar, safeEmptyContainer} from "./helper.js";
+import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
+import { MAX_TOKENS_ALLOWED, PRESTIGE_POINTS_NEEDED_TO_WIN, TOKEN_MAPPER } from "../config.js";
+import { formatNumber, insertImageInto, renderCard, renderProgressBar, safeEmptyContainer } from "./helper.js";
 
 function renderHeader() {
     document.querySelector(".top-bar h2").textContent = loadFromStorage("playerName");
@@ -87,4 +87,4 @@ function renderCurrentPlayerTokens(currentPlayerTokens, currentPlayerBonuses, ge
     }
 }
 
-export {renderHeader, renderCurrentPlayer};
+export { renderHeader, renderCurrentPlayer };

@@ -1,4 +1,4 @@
-import {insertImageInto, renderCard, safeEmptyContainer} from "./helper.js";
+import { insertImageInto, renderCard, safeEmptyContainer } from "./helper.js";
 import {
   GOLD_TOKEN_LIMIT,
   NOBLES_MAPPER,
@@ -68,4 +68,4 @@ function renderNobles(unclaimedNobles) {
   }
 }
 
-export {renderCards, renderBoardTokens, renderNobles};
+export { renderCards, renderBoardTokens, renderNobles };
