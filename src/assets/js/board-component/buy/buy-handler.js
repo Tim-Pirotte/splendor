@@ -45,7 +45,7 @@ function processBuyCardClick() {
     "POST",
     requestBody,
     );
-    deleteFromStorage("paymentMethod")
+    deleteFromStorage("paymentMethod");
 
 }
 

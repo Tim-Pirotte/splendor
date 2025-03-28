@@ -76,7 +76,7 @@ function getSwitchButtonTemplate(token) {
   if (token === "Gold") {
     $container.querySelector(".switch-token").textContent = "Reset";
   }
-  return $container
+  return $container;
 }
 
 export {insertImageInto, renderProgressBar, formatNumber, renderCard, safeEmptyContainer, getSwitchButtonTemplate};
