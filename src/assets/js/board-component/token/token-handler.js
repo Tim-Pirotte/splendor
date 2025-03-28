@@ -115,7 +115,7 @@ function pushTokenToStack($selectedToken, $actionButton, stackPointer) {
 }
 
 function setActionToTokenAction(stackPointer, $selectedToken) {
-    if (stackPointer === 1 && $selectedToken.dataset.amount >= MIN_TOKENS_FOR_PICKING_TWO) {
+    if (stackPointer === 0 && $selectedToken.dataset.amount >= MIN_TOKENS_FOR_PICKING_TWO) {
         setActionButtonState("Take two", "processTakeTwoTokensClick", {});
     } else {
         setActionButtonState("Take up to three", "processTakeTwoTokensClick", {});
@@ -137,7 +137,8 @@ function selectToken(e) {
     if (tokenInStack($selectedToken, $actionButton, stackPointer)) {
         deselectToken($selectedToken);
         removeTokenFromStack($selectedToken, $actionButton, stackPointer);
-        $actionButton.dataset.stackPointer = stackPointer - 1;
+        stackPointer--;
+        $actionButton.dataset.stackPointer = stackPointer;
 
         setActionToTokenAction(stackPointer, $selectedToken);
         return;
@@ -148,6 +149,7 @@ function selectToken(e) {
     pushTokenToStack($selectedToken, $actionButton, stackPointer);
     stackPointer++;
     $actionButton.dataset.stackPointer = stackPointer;
+    $selectedToken.classList.add("selected");
 
     setActionToTokenAction(stackPointer, $selectedToken);
 }

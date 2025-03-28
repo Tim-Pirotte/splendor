@@ -198,7 +198,7 @@ section header picture {
 }
 
 .selected {
-    border: 0.5rem hotpink;
+    background-color: deepskyblue;
 }
 
 .progress-bar {
