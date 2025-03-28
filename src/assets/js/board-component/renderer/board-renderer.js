@@ -63,6 +63,7 @@ function renderNobles(unclaimedNobles) {
 
   for (const noble of unclaimedNobles) {
     const $noble = $nobleTemplate.content.firstElementChild.cloneNode(true);
+    $noble.dataset.name = noble["name"];
     insertImageInto($noble, `nobles/${NOBLES_MAPPER[noble.name]}`, false, "Noble (+3 pts.)");
     $noblesContainer.appendChild($noble);
   }
