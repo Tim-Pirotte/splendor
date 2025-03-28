@@ -1,6 +1,6 @@
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 
-function redirectFromIndexToPageInPages(page, relativePathIndicators = ".") {
+function redirectToPageInPages(page, relativePathIndicators = ".") {
     location.href = `${relativePathIndicators}/pages/${page}.html`;
 }
 
@@ -14,4 +14,4 @@ function navigateToMainIfNoPlayerName() {
     }
 }
 
-export { redirectFromIndexToPageInPages, navigateToMain, navigateToMainIfNoPlayerName };
+export { redirectToPageInPages, navigateToMain, navigateToMainIfNoPlayerName };
