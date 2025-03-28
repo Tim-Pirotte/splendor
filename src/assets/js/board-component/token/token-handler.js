@@ -1,18 +1,7 @@
-import { takeGemsRequest } from "./request-handler.js";
+import * as API from "../../api.js";
 import { setActionButtonState } from "../game-status-interface.js";
 import { MIN_TOKENS_FOR_PICKING_TWO } from "./config.js";
-import {MAX_TAKE_TOKENS} from "../config.js";
-
-function canGetToken(tokenType, amount , $actionButtonData) {
-    if(checkIfTokenIsEmpty($actionButtonData.token1)){
-        return (tokenType !== "Gold") && amount >= MIN_TOKENS_FOR_PICKING_TWO;
-    }
-   return false;
-}
-
-function checkIfTokenIsEmpty(token) {
-    return (token === undefined || token === "");
-}
+import { MAX_TAKE_TOKENS } from "../config.js";
 
 function clickedOnToken(target) {
     return target.tagName.toLowerCase() === "img";
@@ -72,7 +61,7 @@ function setActionToTokenAction(stackPointer, $selectedToken) {
     if (stackPointer === 1 && $selectedToken.dataset.amount >= MIN_TOKENS_FOR_PICKING_TWO) {
         setActionButtonState("Take two", "processTakeTwoTokensClick", {});
     } else {
-        setActionButtonState("Take up to three", "processTakeTwoTokensClick", {});
+        setActionButtonState("Take up to three", "processTakeTokenClick", {});
     }
 }
 
@@ -113,20 +102,31 @@ function selectToken(e) {
     setActionToTokenAction(stackPointer, $selectedToken);
 }
 
-function processTakeTokenClick(e) {
-    const $actionButton = document.querySelector(".action-button");
-    const actionButtonData = $actionButton.dataset;
-
-    if ($actionButton.textContent !== "Take two") {
-        const body = [actionButtonData.token1, actionButtonData.token2 , actionButtonData.token3];
-        takeGemsRequest(body , "");
-    } else{
-        takeGemsRequest(actionButtonData.token1 , "takeTwo");
+function setTokensTo(stackPointer, $actionButton, amountOfTokens) {
+    const requestBody = {take: {}};
+    for (let i = 0; i < stackPointer; i++) {
+        requestBody.take[$actionButton.dataset[`token${i}`]] = amountOfTokens;
     }
+
+    return requestBody;
+}
+
+function processTakeTokensClick(e) {
+    const $actionButton = document.querySelector(".action-button");
+    const stackPointer = parseInt($actionButton.dataset.stackPointer);
+
+    const requestBody = setTokensTo(stackPointer, $actionButton, 1);
+
+    API.takeTokens(requestBody).then(res => updateTokens(res));
 }
 
 function processTakeTwoTokens(e) {
+    const $actionButton = document.querySelector(".action-button");
+    const stackPointer = parseInt($actionButton.dataset.stackPointer);
 
+    const requestBody = setTokensTo(stackPointer, $actionButton, 2);
+
+    API.takeTokens(requestBody).then(res => updateTokens(res));
 }
 
 function updateTokens(res) {
@@ -141,4 +141,4 @@ function updateTokens(res) {
     }
 }
 
-export { selectToken, processTakeTokenClick, updateTokens, processTakeTwoTokens };
+export { selectToken, processTakeTokensClick, updateTokens, processTakeTwoTokens };
