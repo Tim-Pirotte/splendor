@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="../assets/css/screen.css">
     <link rel="stylesheet" href="../assets/css/board.css">
 
-    <script src="../assets/js/sound-component/sound-component.js" type="module"></script>
+    <script src="../assets/js/sound-component/sound.js" type="module"></script>
     <script type="module" src="../assets/js/board-component/board.js"></script>
 </head>
 <body>
@@ -29,7 +29,7 @@
             <li class="player-card">
                 <header>
                     <h3 class="name">Player name</h3>
-                    <h4 class="points">Player points</h4>
+                    <h4 class="points"><span>Player points</span> pts.</h4>
                 </header>
                 <ul class="tokens"></ul>
                 <ul class="cards"></ul>
@@ -173,7 +173,7 @@
         <section class="player-tokens">
             <header>
                 <h3>Tokens:</h3>
-                <h4>Token count</h4>
+                <h4><span id="current-tokens">Token count</span>/<span id="token-limit">Token limit</span></h4>
             </header>
             <ul></ul>
         </section>

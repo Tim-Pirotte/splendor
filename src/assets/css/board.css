@@ -202,6 +202,10 @@ section header picture {
     grid-area: player-points;
 }
 
+.enough-points-to-win {
+    color: red;
+}
+
 .progress-bar {
     height: 0.5rem;
     background-repeat: no-repeat;
@@ -217,6 +221,10 @@ section header picture {
     margin: 1rem 0;
 }
 
+.highlighted-number {
+    color: red;
+}
+
 /* TIMER */
 progress {
     grid-area: timer;
@@ -224,7 +232,7 @@ progress {
     margin: auto 0;
 }
 
-/* Action button */
+/* ACTION BUTTON */
 .action-button {
     grid-area: action-button;
     height: 2rem;

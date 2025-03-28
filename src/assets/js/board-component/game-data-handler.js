@@ -32,7 +32,6 @@ function getGems() {
 }
 
 function waitOnTokenData() {
-  while(loadFromStorage("gems") === null) console.log("Waiting for token data...");
   return loadFromStorage("gems");
 }
 

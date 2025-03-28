@@ -1,24 +1,7 @@
-import {loadFromStorage, saveToStorage} from "../data-connector/local-storage-abstractor.js";
-import {renderSelectedAvatars} from "./renderer.js";
-
-function loadUsername() {
-    const $username = document.querySelector("#username");
-    const username = loadFromStorage("playerName");
-
-    if (username) {
-        $username.value = username;
-    }
-}
-
-function loadAvatar() {
-    const avatar = loadFromStorage("avatar");
-
-    if (avatar) {
-        renderSelectedAvatars(avatar);
-    } else {
-        renderSelectedAvatars("placeholder");
-    }
-}
+import { redirectFromIndexToPageInPages } from "../utils/navigation.js";
+import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
+import { toggleAvatarListVisibility } from "./helper.js";
+import { renderSelectedAvatars } from "./renderer.js";
 
 function storeUsername(e) {
     e.preventDefault();
@@ -26,31 +9,26 @@ function storeUsername(e) {
     const $form = document.querySelector("form");
     const username = document.querySelector("#username").value.trim();
 
-    if ($form.reportValidity() && username !== "") {
+    if ($form.reportValidity()) {
+        saveToStorage("avatar", loadFromStorage("avatar") || "placeholder");
         saveToStorage("playerName", username);
-        window.location.href = `./pages/${e.target.value}.html`;
+
+        if (["join-game", "create-game"].includes(e.target.value)) {
+            redirectFromIndexToPageInPages(e.target.value);
+        }
     }
 }
 
 function storeAvatar(e) {
     e.preventDefault();
 
-    const avatar = e.target.closest("img").getAttribute("title");
+    const avatar = e.target.closest("img").title;
 
     if (avatar) {
         saveToStorage("avatar", avatar);
         renderSelectedAvatars(avatar);
+        toggleAvatarListVisibility(e);
     }
 }
 
-function toggleVisibility() {
-    const $avatarList = document.querySelector("section");
-
-    if ($avatarList.style.display === "none") {
-        $avatarList.style.display = "block";
-    } else {
-        $avatarList.style.display = "none";
-    }
-}
-
-export {loadUsername, loadAvatar, storeUsername, storeAvatar, toggleVisibility};
+export { storeUsername, storeAvatar };

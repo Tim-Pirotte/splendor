@@ -1,16 +1,42 @@
-import {fetchFromServer} from "../data-connector/api-communication-abstractor.js";
-import {loadFromStorage} from "../data-connector/local-storage-abstractor.js";
-import {processResponse} from "../general-logic/join-create-game.js";
+import { processCreateAndJoinResponse } from "../utils/response-handler.js";
+import { fetchFromServer } from "../data-connector/api-communication-abstractor.js";
+import { renderList } from "./renderer.js";
+import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 
 function playerJoinGame(e) {
     e.preventDefault();
 
-    const gameId = e.target.closest("li").dataset.gameId;
-    const playerName = loadFromStorage("playerName");
-
-    fetchFromServer(`/games/${gameId}/players/${playerName}`, `POST`)
-        .then(res => processResponse(res))
-        .catch(error => console.error(error));
+    if (e.target.type === "button") {
+        const gameId = e.target.closest("li").dataset.gameId;
+        joinGameRequest(gameId);
+    }
 }
 
-export {playerJoinGame};
+function playerJoinGameById(e) {
+    e.preventDefault();
+
+    const gameId = document.querySelector("#game-id").value;
+    joinGameRequest(gameId);
+}
+
+function handleFilterChange(e) {
+    e.preventDefault();
+
+    renderList();
+}
+
+function joinGameRequest(gameId) {
+    fetchFromServer(`/games/${gameId}/players/${loadFromStorage("playerName")}`, "POST")
+        .then(res => processCreateAndJoinResponse(res))
+        .catch(handleDuplicateNameError);
+}
+
+function handleDuplicateNameError(err) {
+    const conflict = 409;
+
+    if (err["failure"] === conflict) {
+        document.querySelector(".error-messages").textContent = "Name is already taken";
+    }
+}
+
+export { playerJoinGame, playerJoinGameById, handleFilterChange };

@@ -1,11 +1,23 @@
-import {getCurrentUsersAmount, getMaxUsersAmount, getGameState} from "./object-handler.js";
+import { getCurrentUsersAmount, getGameState, getMaxUsersAmount } from "../utils/game-object-handler.js";
 
-function getAmountText(game){
+function getAmountText(game) {
     return `${getCurrentUsersAmount(game)}/${getMaxUsersAmount(game)}`;
 }
 
-function getGameButtonText(game){
+function getGameButtonText(game) {
     return getGameState(game) === "join" ? "Join game" : "Spectate game";
 }
 
-export {getAmountText, getGameButtonText};
+function intersection(setA, setB) {
+    const result = new Set();
+
+    for (const item of setA) {
+        if (setB.has(item)) {
+            result.add(item);
+        }
+    }
+
+    return result;
+}
+
+export { getAmountText, getGameButtonText, intersection };
