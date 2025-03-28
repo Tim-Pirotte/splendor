@@ -1,35 +1,30 @@
 import { isCurrentlyPlaying } from "../game-status-interface.js";
-import { GameState } from "./data.js";
+import { GAME_STATE } from "./data.js";
+import { hasReservePlace } from "./valid-resource-checker.js";
 
 function validTokenTake() {
-    return isCurrentlyPlaying() && getGameState() === GameState.TURN_ACTION;
+    return isCurrentlyPlaying() && getGameState() === GAME_STATE.TURN_ACTION;
 }
 
 function validTokenDiscard() {
-    return isCurrentlyPlaying() && getGameState() === GameState.RETURN_GEMS;
+    return isCurrentlyPlaying() && getGameState() === GAME_STATE.RETURN_GEMS;
 }
 
 function validCardBuy() {
-    return isCurrentlyPlaying() && getGameState() === GameState.TURN_ACTION;
+    return isCurrentlyPlaying() && getGameState() === GAME_STATE.TURN_ACTION;
 }
 
 function validCardReserve() {
-    return isCurrentlyPlaying() && getGameState() === GameState.TURN_ACTION && hasReservePlace();
+    return isCurrentlyPlaying() && getGameState() === GAME_STATE.TURN_ACTION && hasReservePlace();
 }
 
 function validDeckReserve() { //TODO: check if the deck is empty
-    return isCurrentlyPlaying() && getGameState() === GameState.TURN_ACTION && hasReservePlace();
+    return isCurrentlyPlaying() && getGameState() === GAME_STATE.TURN_ACTION && hasReservePlace();
 }
 
 function validNobelPick() {
-    return isCurrentlyPlaying() && getGameState() === GameState.CHOOSE_NOBEL;
+    return isCurrentlyPlaying() && getGameState() === GAME_STATE.CHOOSE_NOBEL;
 }
-
-function hasReservePlace() {
-    const amount = document.querySelectorAll("section .reserved-cards ul li").length;
-    return amount < 4;
-}
-
 
 function getGameState(){
     return sessionStorage.getItem("gameState");
