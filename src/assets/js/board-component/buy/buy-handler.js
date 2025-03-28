@@ -34,7 +34,7 @@ function getCard(e) {
 
 function processBuyCardClick() {
     const $actionButton = document.querySelector(".action-button");
-    const cardData = getCardData($actionButton);
+    const cardData = getCardData($actionButton.dataset.name);
     const requestBody =
     {development: {name: cardData["name"]}, payment: getCurrentPaymentMethod()};
 
@@ -119,10 +119,13 @@ function calculateDefaultPayment(cost, tokens) {
     return payment;
 }
 
-function isAllowedToSwitchToken(tokenType, currentPayment, cost, wallet) {
+function isAllowedToSwitchToken(tokenType, currentPayment, cost, tokensInWallet) {
+    console.log(currentPayment["Gold"] || 0);
+    console.log(tokensInWallet["Gold"] || 0);
+
     if (tokenType === "Gold") {
         return ((currentPayment["Gold"] || 0) !== 0);
-    } else if ((currentPayment["Gold"]) === (wallet["Gold"])){
+    } else if ((currentPayment["Gold"] || 0) === (tokensInWallet["Gold"] || 0)){
         return false;
     } else if (!(cost.hasOwnProperty(tokenType))) {
         return false;
@@ -134,7 +137,7 @@ function isAllowedToSwitchToken(tokenType, currentPayment, cost, wallet) {
 function handlePaymentMethodChange(e) {
     if (e.target.classList.contains("switch-token")) {
         const tokenType = e.target.dataset.type;
-        const cost = getCardData(document.querySelector(".action-button"))["cost"];
+        const cost = getCardData(document.querySelector(".action-button").dataset.name)["cost"];
         if (tokenType === "Gold") {
             resetPayment(cost);
         } else {
@@ -175,17 +178,18 @@ function getCurrentPlayerIndexInData(gameData) {
     }
 }
 
-function removePaidTokens(gameData, indexOfPlayerInData) {
+function removePaidTokens() {
+    const wallet = getPlayerWallet()
     const tokensPaid = getCurrentPaymentMethod();
-    const previousTokens = gameData["players"][indexOfPlayerInData]["tokens"];
-    for (const tokenType in previousTokens) {
-        previousTokens[tokenType] -= (tokensPaid[tokenType] || 0);
+    for (const tokenType in wallet) {
+        wallet[tokenType] -= (tokensPaid[tokenType] || 0);
     }
-    return previousTokens;
+    return wallet;
 }
 
-function updateCurrentPlayerBonuses(gameData, indexOfPlayerInData, bonus) {
-    const currentBonus = gameData["players"][indexOfPlayerInData]["bonuses"];
+function updateCurrentPlayerBonuses(bonus) {
+    const currentBonus = getCurrentPlayer()["bonuses"];
+
     if (currentBonus[bonus] === undefined) {
         currentBonus[bonus] = 1;
     } else {

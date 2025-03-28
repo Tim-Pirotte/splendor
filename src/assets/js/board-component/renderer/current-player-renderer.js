@@ -10,10 +10,10 @@ import {
 import {
     isAllowedToSwitchToken,
     getPlayerWallet,
-    getCurrentPlayerIndexInData,
     removePaidTokens, updateCurrentPlayerBonuses
 } from "../buy/buy-handler.js";
 import * as gameStatusInterface from "../game-status-interface.js";
+import {GEMS} from "../data.js";
 
 function renderHeader() {
     document.querySelector(".top-bar h2").textContent = loadFromStorage("playerName");
@@ -42,11 +42,11 @@ function renderCurrentPlayerReserve(currentPlayer) {
     }
 }
 
-function renderCurrentPlayerTokenCount(currentPlayer) {
+function renderCurrentPlayerTokenCount(tokens) {
     const $totalTokenCount = document.querySelector(".player-tokens #current-tokens");
     document.querySelector(".player-tokens #token-limit").textContent = MAX_TOKENS_ALLOWED;
 
-    const amountOfTokens = formatNumber(countTokens(currentPlayer["tokens"]));
+    const amountOfTokens = formatNumber(countTokens(tokens));
     $totalTokenCount.textContent = amountOfTokens;
     setTotalTokensColor($totalTokenCount, amountOfTokens);
 }
@@ -62,7 +62,7 @@ function renderCurrentPlayer(players, gems) {
 
     renderCurrentPlayerPoints(currentPlayer);
     renderCurrentPlayerReserve(currentPlayer);
-    renderCurrentPlayerTokenCount(currentPlayer);
+    renderCurrentPlayerTokenCount(currentPlayer["tokens"]);
     renderCurrentPlayerTokens(currentPlayer["tokens"], currentPlayer["bonuses"], gems);
 }
 
@@ -103,7 +103,7 @@ function renderCurrentPlayerTokens(currentPlayerTokens, currentPlayerBonuses, ge
 }
 
 function renderSwitchPaymentButtons(currentPayment, cost) {
-    const wallet = getPlayerWallet();
+    const tokensInWallet = gameStatusInterface.getCurrentPlayer()["tokens"];
     const $tokensContainers = document.querySelectorAll(".switch-token-container");
 
     $tokensContainers.forEach($tokenContainer => {
@@ -113,11 +113,11 @@ function renderSwitchPaymentButtons(currentPayment, cost) {
 
     for (const $tokenContainer of $tokensContainers) {
         const tokenType = $tokenContainer.querySelector(".switch-token").dataset.type;
-        if (isAllowedToSwitchToken(tokenType, currentPayment, cost, wallet)) {
+        if (isAllowedToSwitchToken(tokenType, currentPayment, cost, tokensInWallet)) {
             $tokenContainer.querySelector(".switch-token").classList.remove("hidden");
         }
 
-        if (Object.keys(cost).includes(tokenType) || (tokenType === "Gold" && wallet["Gold"] > 0)) {
+        if (Object.keys(cost).includes(tokenType) || (tokenType === "Gold" && tokensInWallet["Gold"] > 0)) {
             renderAmountOfTokenSelected($tokenContainer, tokenType, currentPayment);
         }
     }
@@ -129,17 +129,11 @@ function renderAmountOfTokenSelected($tokenContainer, tokenType, payment) {
 }
 
 function renderUpdatedTokens(bonus) {
-    const gameData = loadFromStorage("gameData");
-    const indexOfPlayerInData = getCurrentPlayerIndexInData(gameData);
-    const updatedTokens = removePaidTokens(gameData, indexOfPlayerInData);
-    const updatedBonuses = updateCurrentPlayerBonuses(gameData, indexOfPlayerInData, bonus);
+    const updatedTokens = removePaidTokens();
+    const updatedBonuses = updateCurrentPlayerBonuses(bonus);
 
-    gameData["players"][indexOfPlayerInData]["bonuses"] = updatedBonuses;
-    gameData["players"][indexOfPlayerInData]["tokens"] = updatedTokens;
-    saveToStorage("gameData", gameData);
-
-    renderCurrentPlayerTokenCount(gameStatusInterface.getCurrentPlayer());
-    renderCurrentPlayerTokens(updatedTokens, gameData["players"][indexOfPlayerInData]["bonuses"], loadFromStorage("gems"));
+    renderCurrentPlayerTokenCount(gameStatusInterface.getCurrentPlayer()["tokens"]);
+    renderCurrentPlayerTokens(updatedTokens, updatedBonuses, GEMS);
 }
 
 function renderUpdatedPlayerScore(extraScore) {
