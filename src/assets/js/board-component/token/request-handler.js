@@ -13,7 +13,6 @@ function takeGemsRequest(tokenTypes , action) {
             }
         }
     }
-
     API.takeTokens(requestBody)
         .then(res => updateTokens(res));
 }
