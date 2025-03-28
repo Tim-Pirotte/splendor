@@ -1,4 +1,4 @@
-import {handlePaymentMethodChange, selectCard} from "./buy-handler.js";
+import { handlePaymentMethodChange, selectCard } from "./buy-handler.js";
 
 function buyInit() {
     document.querySelectorAll(".decks")
@@ -6,4 +6,4 @@ function buyInit() {
     document.querySelector(".player-tokens").addEventListener("click", handlePaymentMethodChange);
 }
 
-export {buyInit};
+export { buyInit };

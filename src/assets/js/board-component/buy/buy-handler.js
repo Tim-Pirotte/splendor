@@ -1,17 +1,18 @@
-import {getCurrentPlayer, setActionButtonState} from "../game-status-interface.js";
-import {loadFromStorage} from "../../data-connector/local-storage-abstractor.js";
+import * as API from "../../api.js";
+import { getCurrentPlayer, setActionButtonState } from "../game-status-interface.js";
 import {
     renderSwitchPaymentButtons, renderUpdatedPlayerScore, renderUpdatedPlayerTokens
 } from "../renderer/current-player-renderer.js";
-import {fetchFromServer} from "../../data-connector/api-communication-abstractor.js";
-import {DEVELOPMENT_CARDS} from "../data.js";
-import {renderUpdatedBoardTokens} from "../renderer/board-renderer.js";
-import {mergeObjectsWithSum} from "../helper.js";
+import { DEVELOPMENT_CARDS } from "../data.js";
+import { renderUpdatedBoardTokens } from "../renderer/board-renderer.js";
+import { getActionButton, mergeObjectsWithSum } from "../helper.js";
 
 function selectCard(e) {
     const $card = getCard(e);
+
     if ($card && canBuy($card)) {
-        const defaultPayment = getDefaultPaymentMethod(getCardData($card.dataset.name)["cost"]);
+        const cardData = getCardData($card.dataset.name);
+        const defaultPayment = getDefaultPaymentMethod(cardData["cost"]);
 
         setActionButtonState(
         "buy",
@@ -20,7 +21,7 @@ function selectCard(e) {
         );
 
         setNewPaymentMethod(defaultPayment);
-        renderSwitchPaymentButtons(defaultPayment, getCardData($card.dataset.name)["cost"]);
+        renderSwitchPaymentButtons(defaultPayment, cardData["cost"]);
     }
 }
 
@@ -35,7 +36,7 @@ function getCard(e) {
 }
 
 function processBuyCardClick() {
-    const $actionButton = document.querySelector(".action-button");
+    const $actionButton = getActionButton();
     const cardData = getCardData($actionButton.dataset.name);
     const requestBody =
     {development: {name: cardData["name"]}, payment: getCurrentPaymentMethod()};
@@ -44,12 +45,8 @@ function processBuyCardClick() {
     renderUpdatedPlayerScore(cardData["prestigePoints"]);
     renderUpdatedBoardTokens(JSON.parse(sessionStorage.getItem("paymentMethod")));
 
-    fetchFromServer(`/games/${loadFromStorage(
-    "gameId")}/players/${loadFromStorage("playerName")}/developments`,
-    "POST",
-    requestBody,
-    );
-    sessionStorage.removeItem("paymentMethod");
+    API.buyCard(requestBody).then(res => sessionStorage.removeItem("paymentMethod"));
+
 }
 
 function getCardData(cardName) {
@@ -99,15 +96,15 @@ function removeBonusesFromCost(cost, bonuses) {
 function calculateDefaultPayment(cost, tokens) {
     const payment = {"Gold": 0};
 
-    for (const tokenType in cost) {
-        if (!tokens.hasOwnProperty(tokenType)) {
+    for (const [tokenType, amount] of Object.entries(cost)) {
+        if (!(tokenType in tokens)) {
             payment[tokenType] = 0;
-            payment["Gold"] += cost[tokenType];
-        } else if (cost[tokenType] > (tokens[tokenType])) {
+            payment["Gold"] += amount;
+        } else if (amount > (tokens[tokenType])) {
             payment[tokenType] = tokens[tokenType];
-            payment["Gold"] += (cost[tokenType] - tokens[tokenType]);
+            payment["Gold"] += (amount - tokens[tokenType]);
         } else {
-            payment[tokenType] = cost[tokenType];
+            payment[tokenType] = amount;
         }
     }
 
@@ -115,15 +112,16 @@ function calculateDefaultPayment(cost, tokens) {
 }
 
 function isAllowedToSwitchToken(tokenType, currentPayment, cost, tokensInWallet) {
+    const goldInPayment = currentPayment["Gold"] || 0;
 
     if (tokenType === "Gold") {
-        return ((currentPayment["Gold"] || 0) !== 0);
-    } else if ((currentPayment["Gold"] || 0) === (tokensInWallet["Gold"] || 0)){
+        return (goldInPayment !== 0);
+    } else if (goldInPayment === (tokensInWallet["Gold"] || 0)) {
         return false;
-    } else if (!(cost.hasOwnProperty(tokenType))) {
+    } else if (!(tokenType in cost)) {
         return false;
-    } else{
-        return (currentPayment[tokenType]) >0;
+    } else {
+        return (currentPayment[tokenType]) > 0;
     }
 }
 
@@ -131,6 +129,7 @@ function handlePaymentMethodChange(e) {
     if (e.target.classList.contains("switch-token")) {
         const tokenType = e.target.dataset.type;
         const cost = getCardData(document.querySelector(".action-button").dataset.name)["cost"];
+
         if (tokenType === "Gold") {
             resetPayment(cost);
         } else {
@@ -165,9 +164,11 @@ function getNewPaymentMethod(tokenType) {
 function removePaidTokens() {
     const wallet = getPlayerWallet();
     const tokensPaid = getCurrentPaymentMethod();
+
     for (const tokenType in wallet) {
         wallet[tokenType] -= (tokensPaid[tokenType] || 0);
     }
+
     return wallet;
 }
 
@@ -179,6 +180,7 @@ function updateCurrentPlayerBonuses(bonus) {
     } else {
         currentBonus[bonus]++;
     }
+
     return currentBonus;
 }
 

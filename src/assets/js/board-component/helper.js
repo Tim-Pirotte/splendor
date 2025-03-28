@@ -16,10 +16,10 @@ function mergeObjectsWithSum(obj1, obj2) {
 
 function getUnclaimedTokens() {
     const tokens = {};
-    const $tokenContainers = document.querySelectorAll(".board-tokens li[data-type]");
+    const $tokens = document.querySelectorAll(".board-tokens [data-type]");
 
-    $tokenContainers.forEach($tokenContainer => {
-        tokens[$tokenContainer.dataset.type] = $tokenContainer.querySelector(".amount").innerText.split("/")[0];
+    $tokens.forEach($token => {
+        tokens[$token.dataset.type] = $token.dataset.amount;
     });
 
     return tokens;
