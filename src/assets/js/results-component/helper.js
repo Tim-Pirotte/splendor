@@ -1,9 +1,9 @@
-import { fetchFromServer } from "../data-connector/api-communication-abstractor.js";
+import * as API from "../api.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 
 function getResults() {
     const gameId = loadFromStorage("gameId");
-    return fetchFromServer(`/games/${gameId}`)
+    return API.getGame()
         .then(gameData => filterResults(gameData));
 }
 
