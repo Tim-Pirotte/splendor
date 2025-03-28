@@ -65,18 +65,22 @@ function selectToken(e) {
         }
 
         if (tokenType !== "Gold" && $selectedToken.dataset.amount >= 1 && !checkIfTokenAlreadySelected(tokenType, $actionButton)) {
-            if (checkIfTokenIsEmpty($actionButtonData.token1)) {
-                setActionButtonState("select two more gems", "processTakeTokenClick", {token1: tokenType});
-            }
-
-            if (checkIfTokenIsEmpty($actionButtonData.token2)) {
-                setActionButtonState("select one more gems", "processTakeTokenClick", {token2: tokenType});
-            }
-
-            if (checkIfTokenIsEmpty($actionButtonData.token3)) {
-                setActionButtonState("Take three gems", "processTakeTokenClick", {token3: tokenType});
-            }
+            storeTokenInDOM($actionButtonData , tokenType);
         }
+    }
+}
+
+function storeTokenInDOM($actionButtonData , tokenType) {
+    if (checkIfTokenIsEmpty($actionButtonData.token1)) {
+        setActionButtonState("select two more gems", "processTakeTokenClick", {token1: tokenType});
+    }
+
+    if (checkIfTokenIsEmpty($actionButtonData.token2)) {
+        setActionButtonState("select one more gems", "processTakeTokenClick", {token2: tokenType});
+    }
+
+    if (checkIfTokenIsEmpty($actionButtonData.token3)) {
+        setActionButtonState("Take three gems", "processTakeTokenClick", {token3: tokenType});
     }
 }
 
