@@ -70,7 +70,7 @@ function safeEmptyContainer($container) {
 }
 
 function getSwitchButtonTemplate(token) {
-  const $switchButtonContainerTemplate = document.querySelector("#switch-to-gold-button-template");
+  const $switchButtonContainerTemplate = document.querySelector("#switch-tokens-container-template");
   const $container = $switchButtonContainerTemplate.content.firstElementChild.cloneNode(true);
 
   if (token === "Gold") {
