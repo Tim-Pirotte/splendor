@@ -9,6 +9,8 @@ const GROUPDEPLOYEDSERVER = `https://project-1.ti.howest.be/2024-2025/group-${GR
 
 const MAXPRESTIGEPOINTS = 15;
 
+const POLLING_TIME_OUT = 2000;
+
 function getAPIUrl() {
   return DEPLOYEDSERVER;
 }
