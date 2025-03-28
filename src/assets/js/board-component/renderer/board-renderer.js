@@ -11,6 +11,7 @@ import {
 function renderCards(market) {
   for (const deck of market) {
     const $currentDeck = document.querySelector(`.level-${deck["level"]} .cards-in-deck`);
+    $currentDeck.dataset.amount = deck["cardStackSize"];
     safeEmptyContainer($currentDeck);
 
     for (const card of deck["visibleCards"]) {
@@ -73,6 +74,7 @@ function renderNobles(unclaimedNobles) {
 
   for (const noble of unclaimedNobles) {
     const $noble = $nobleTemplate.content.firstElementChild.cloneNode(true);
+    $noble.dataset.name = noble["name"];
     insertImageInto($noble, `nobles/${NOBLES_MAPPER[noble.name]}`, false, getNobleAlt(noble["neededBonuses"]));
     $noblesContainer.appendChild($noble);
   }
