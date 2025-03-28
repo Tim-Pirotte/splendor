@@ -10,21 +10,6 @@ function canGetToken(tokenType, amount , $actionButtonData) {
    return false;
 }
 
-// Is token already in stack
-    // yes
-    // Deselect
-// No
-// Is tokenType !== Gold
-    // Push token to stack
-    // Increase stack pointer by one
-
-// Set action button
-// If pointer === 1 && CanTakeTwo
-    // SetActionButton => take two tokens
-// Else
-    // SetActionButton => take up to three (1/3)
-
-
 function giveTokenThatAlreadySelected(tokenType , actionButtonData){
     const token1 = 1;
     const token2 = 2;
@@ -83,7 +68,7 @@ function getToken(target) {
 }
 
 function stackExists($actionButton) {
-    return $actionButton.dataset.token1;
+    return $actionButton.dataset.token0;
 }
 
 function createStack($actionButton) {
@@ -124,6 +109,19 @@ function removeTokenFromStack($selectedToken, $actionButton, stackPointer) {
     }
 }
 
+function pushTokenToStack($selectedToken, $actionButton, stackPointer) {
+    console.log(stackPointer)
+    $actionButton.dataset[`token${stackPointer}`] = $selectedToken.dataset.type;
+}
+
+function setActionToTokenAction(stackPointer, $selectedToken) {
+    if (stackPointer === 1 && $selectedToken.dataset.amount >= MIN_TOKENS_FOR_PICKING_TWO) {
+        setActionButtonState("Take two", "processTakeTwoTokensClick", {});
+    } else {
+        setActionButtonState("Take up to three", "processTakeTwoTokensClick", {});
+    }
+}
+
 function selectToken(e) {
     if (!clickedOnToken(e.target)) return;
 
@@ -133,14 +131,25 @@ function selectToken(e) {
     const $actionButton = document.querySelector(".action-button");
     if (!stackExists($actionButton)) createStack($actionButton);
 
-    const stackPointer = parseInt($actionButton.dataset.stackPointer);
+    let stackPointer = parseInt($actionButton.dataset.stackPointer);
     if (stackPointer > MAX_TAKE_TOKENS - 1) return;
 
     if (tokenInStack($selectedToken, $actionButton, stackPointer)) {
         deselectToken($selectedToken);
         removeTokenFromStack($selectedToken, $actionButton, stackPointer);
         $actionButton.dataset.stackPointer = stackPointer - 1;
+
+        setActionToTokenAction(stackPointer, $selectedToken);
+        return;
     }
+
+    if ($selectedToken.dataset.type === "Gold") return;
+
+    pushTokenToStack($selectedToken, $actionButton, stackPointer);
+    stackPointer++;
+    $actionButton.dataset.stackPointer = stackPointer;
+
+    setActionToTokenAction(stackPointer, $selectedToken);
 }
 
 function selectTokenPrevious(e) {
@@ -182,6 +191,10 @@ function processTakeTokenClick(e) {
     }
 }
 
+function processTakeTwoTokens(e) {
+
+}
+
 function updateTokens(res) {
     const beginIndexAmountText = 1;
     const endIndexAmountText = 3;
@@ -194,4 +207,4 @@ function updateTokens(res) {
     }
 }
 
-export { selectToken, processTakeTokenClick, updateTokens };
+export { selectToken, processTakeTokenClick, updateTokens, processTakeTwoTokens };
