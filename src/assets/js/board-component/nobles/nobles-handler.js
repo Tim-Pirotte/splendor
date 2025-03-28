@@ -5,7 +5,16 @@ import {NOBLES} from "../data.js";
 
 function selectNoble(e) {
   const $selectedNoble = e.target.closest("li");
-  setActionButtonState("Take Noble", "processTakeNoble", {name: $selectedNoble.dataset.name});
+  const nobleName = $selectedNoble.dataset.name;
+  if (canSelectNoble(nobleName)) {
+    setActionButtonState("Take Noble", "processTakeNoble", {name: nobleName});
+  }
+}
+
+function canSelectNoble(nobleName) {
+  const noble = getNobleByName(nobleName);
+
+  return false;
 }
 
 function processTakeNoble() {
