@@ -2,6 +2,7 @@ import * as API from "../../api.js";
 import { setActionButtonState } from "../game-status-interface.js";
 import { MIN_TOKENS_FOR_PICKING_TWO } from "./config.js";
 import { MAX_TAKE_TOKENS } from "../config.js";
+import {getActionButton} from "../helper";
 
 function clickedOnToken(target) {
     return target.tagName.toLowerCase() === "img";
@@ -75,7 +76,7 @@ function selectToken(e) {
     const $selectedToken = getToken(e.target);
     if ($selectedToken.dataset.amount < 1) return;
 
-    const $actionButton = document.querySelector(".action-button");
+    const $actionButton = getActionButton();
     if (!stackExists($actionButton)) createStack($actionButton);
 
     let stackPointer = parseInt($actionButton.dataset.stackPointer);
@@ -112,7 +113,7 @@ function setTokensTo(stackPointer, $actionButton, amountOfTokens) {
 }
 
 function processTakeTokensClick(e) {
-    const $actionButton = document.querySelector(".action-button");
+    const $actionButton = getActionButton();
     const stackPointer = parseInt($actionButton.dataset.stackPointer);
 
     const requestBody = setTokensTo(stackPointer, $actionButton, 1);
@@ -121,7 +122,7 @@ function processTakeTokensClick(e) {
 }
 
 function processTakeTwoTokens(e) {
-    const $actionButton = document.querySelector(".action-button");
+    const $actionButton = getActionButton();
     const stackPointer = parseInt($actionButton.dataset.stackPointer);
 
     const requestBody = setTokensTo(stackPointer, $actionButton, 2);
