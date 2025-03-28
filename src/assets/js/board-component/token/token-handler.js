@@ -30,25 +30,34 @@ function checkIfTokenAlreadySelected(tokenType , actionButtonData) {
    return (giveTokenThatAlreadySelected(tokenType , actionButtonData) !== null);
 }
 
-function removeToken(token , actionButtonData) {
+function removeToken(token , $actionButtonData , tokenType) {
     const token1 = 1;
     const token2 = 2;
     const token3 = 3;
 
     if (token === token1){
-        actionButtonData.token1 = "";
+        $actionButtonData.token1 = $actionButtonData.token2;
+        $actionButtonData.token2 = $actionButtonData.token3;
+        $actionButtonData.token3 = "";
+
     }
     if (token === token2){
-        actionButtonData.token2 = "";
+        $actionButtonData.token2 = $actionButtonData.token3;
+        $actionButtonData.token3 = "";
+
     }
     if (token === token3){
-        actionButtonData.token3 = "";
+        $actionButtonData.token3 = "";
+
     }
+
+
 }
 
 function checkIfTokenIsEmpty(token) {
     return (token === undefined || token === "");
 }
+
 function selectToken(e) {
     if (e.target.tagName.toLowerCase() === "img") {
         const $selectedToken = e.target.closest("li");
@@ -58,13 +67,9 @@ function selectToken(e) {
 
         if (canGetToken(tokenType, $selectedToken.dataset.amount, $actionButtonData)) {
             setActionButtonState("Take two", "processTakeTokenClick", {token1: tokenType});
-        }
-
-        if (checkIfTokenAlreadySelected(tokenType, $actionButtonData)) {
-            removeToken(giveTokenThatAlreadySelected(tokenType, $actionButtonData), $actionButtonData);
-        }
-
-        if (tokenType !== "Gold" && $selectedToken.dataset.amount >= 1 && !checkIfTokenAlreadySelected(tokenType, $actionButton)) {
+        }  else if (checkIfTokenAlreadySelected(tokenType, $actionButtonData)) {
+            removeToken(giveTokenThatAlreadySelected(tokenType, $actionButtonData), $actionButtonData , tokenType);
+        }  else if (tokenType !== "Gold" && $selectedToken.dataset.amount >= 1 && !checkIfTokenAlreadySelected(tokenType, $actionButton)) {
             storeTokenInDOM($actionButtonData , tokenType);
         }
     }
@@ -72,15 +77,11 @@ function selectToken(e) {
 
 function storeTokenInDOM($actionButtonData , tokenType) {
     if (checkIfTokenIsEmpty($actionButtonData.token1)) {
-        setActionButtonState("select two more gems", "processTakeTokenClick", {token1: tokenType});
-    }
-
-    if (checkIfTokenIsEmpty($actionButtonData.token2)) {
-        setActionButtonState("select one more gems", "processTakeTokenClick", {token2: tokenType});
-    }
-
-    if (checkIfTokenIsEmpty($actionButtonData.token3)) {
-        setActionButtonState("Take three gems", "processTakeTokenClick", {token3: tokenType});
+        setActionButtonState("Selected 1 gem", "processTakeTokenClick", {token1: tokenType});
+    } else if (checkIfTokenIsEmpty($actionButtonData.token2)) {
+        setActionButtonState("Selected 2 gems", "processTakeTokenClick", {token2: tokenType});
+    } else if (checkIfTokenIsEmpty($actionButtonData.token3)) {
+        setActionButtonState("Selected three gems", "processTakeTokenClick", {token3: tokenType});
     }
 }
 
@@ -102,9 +103,8 @@ function updateTokens(res) {
 
     for (const [token, taken] of Object.entries(res["tokens"])) {
      const $token = document.querySelector(`[data-type="${token}"]`);
-     $token.dataset.amount = (parseInt($token.dataset.amount) - parseInt(taken)).toString();
+     $token.dataset.amount = (parseInt($token.dataset.amount) - parseInt(taken)).toString() || "0";
      const $amountText = $token.querySelector("p");
-
      $amountText.textContent = `${$token.dataset.amount}${$amountText.textContent.substring(beginIndexAmountText, endIndexAmountText)}`;
     }
 }
