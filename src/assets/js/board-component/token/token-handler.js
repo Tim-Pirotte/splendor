@@ -83,7 +83,7 @@ function selectToken(e) {
 
     if (tokenInStack($selectedToken, $actionButton, stackPointer)) {
         deselectToken($selectedToken);
-        removeTokenFromStack($selectedToken, $actionButton, stackPointer);
+        removeTokenFromStack($selectedToken, $actionButton);
         stackPointer--;
         $actionButton.dataset.stackPointer = stackPointer;
 
