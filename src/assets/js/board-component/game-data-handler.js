@@ -3,6 +3,7 @@ import {fetchFromServer} from "../data-connector/api-communication-abstractor.js
 import {renderPage} from "./renderer/renderer.js";
 import {POLLING_TIME_OUT} from "../config.js";
 import { initRoundBegin } from "./state-machine/state-machine.js";
+import {isCurrentlyPlaying} from "./game-status-interface.js";
 
 function handleGameDataError(err) {
   const forbidden = 403;
@@ -26,9 +27,16 @@ function updateGameData() {
       saveToStorage("gameData", gameData);
       initRoundBegin(gameData);
       renderPage(gameData);
-      setTimeout(updateGameData, POLLING_TIME_OUT);
+
+      if (!isCurrentlyPlaying()) {
+        startPolling();
+      }
     })
     .catch(err => handleGameDataError(err));
+}
+
+function startPolling() {
+  setTimeout(updateGameData, POLLING_TIME_OUT);
 }
 
 function getGems() {
@@ -39,4 +47,4 @@ function waitOnTokenData() {
   return loadFromStorage("gems");
 }
 
-export {updateGameData, getGems, waitOnTokenData};
+export {updateGameData, getGems, waitOnTokenData, startPolling};

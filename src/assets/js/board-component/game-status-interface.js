@@ -1,5 +1,6 @@
 import {loadFromStorage} from "../data-connector/local-storage-abstractor.js";
 import {ACTION_REGISTRY} from "./action-registry.js";
+import {startPolling} from "./game-data-handler.js";
 
 function isCurrentlyPlaying() {
   const playerName = loadFromStorage("playerName");
@@ -43,6 +44,7 @@ function setActionButtonState(message, functionToRunOnClick, datasetParameters) 
 function actionRegistryRouter() {
   const $actionButton = document.querySelector(".action-button");
   ACTION_REGISTRY[$actionButton.dataset.functionToRun]();
+  startPolling();
 }
 
 function initGameStatusInterface() {
