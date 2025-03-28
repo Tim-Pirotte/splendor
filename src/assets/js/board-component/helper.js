@@ -1,8 +1,5 @@
-function setActionButton(message, tokenType, action) {
-    const $actionButton = document.querySelector(".action-button");
-    $actionButton.textContent = message;
-    $actionButton.dataset.type = tokenType;
-    $actionButton.dataset.action = action;
+function getActionButton() {
+    return document.querySelector(".action-button");
 }
 
-export { setActionButton };
+export { getActionButton };
