@@ -112,6 +112,7 @@ function updateTokens(res) {
      const $amountText = $token.querySelector("p");
 
      $amountText.textContent = `${$token.dataset.amount}${$amountText.textContent.substring(beginIndexAmountText, endIndexAmountText)}`;
+
     }
 }
 
