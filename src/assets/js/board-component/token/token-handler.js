@@ -10,14 +10,6 @@ function canGetToken(tokenType, amount , $actionButtonData) {
    return false;
 }
 
-// Is there already a stack of tokens available
-    // No
-    // Create new token stack with pointer
-// Yes
-// Read pointer
-// Is pointer === token limit
-    // yes
-// no
 // Is token already in stack
     // yes
     // Deselect
@@ -96,10 +88,40 @@ function stackExists($actionButton) {
 
 function createStack($actionButton) {
     for (let i = 0; i < MAX_TAKE_TOKENS; i++) {
-        $actionButton.dataset[`token${i + 1}`] = "";
+        $actionButton.dataset[`token${i}`] = "";
     }
 
     $actionButton.dataset.stackPointer = "0";
+}
+
+function tokenInStack($selectedToken, $actionButton, stackPointer) {
+    for (let i = 0; i < stackPointer; i++) {
+        const token = $actionButton.dataset[`token${i}`];
+        if ($selectedToken.dataset.type === token) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+function deselectToken($selectedToken) {
+    $selectedToken.classList.remove("selected");
+}
+
+function removeTokenFromStack($selectedToken, $actionButton, stackPointer) {
+    let shiftStackDown = false;
+    for (let i = 0; i < stackPointer; i++) {
+        const token = $actionButton.dataset[`token${i}`];
+
+        if ($selectedToken.dataset.type === token) {
+            shiftStackDown = true;
+        }
+
+        if (shiftStackDown) {
+            $actionButton.dataset[`token${i - 1}`] = token;
+        }
+    }
 }
 
 function selectToken(e) {
@@ -110,6 +132,15 @@ function selectToken(e) {
 
     const $actionButton = document.querySelector(".action-button");
     if (!stackExists($actionButton)) createStack($actionButton);
+
+    const stackPointer = parseInt($actionButton.dataset.stackPointer);
+    if (stackPointer > MAX_TAKE_TOKENS - 1) return;
+
+    if (tokenInStack($selectedToken, $actionButton, stackPointer)) {
+        deselectToken($selectedToken);
+        removeTokenFromStack($selectedToken, $actionButton, stackPointer);
+        $actionButton.dataset.stackPointer = stackPointer - 1;
+    }
 }
 
 function selectTokenPrevious(e) {
