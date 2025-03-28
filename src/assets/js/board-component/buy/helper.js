@@ -2,7 +2,7 @@
 function mergeObjectsWithSum(obj1, obj2) {
     for (const tokenType in obj2) {
         if (obj1.hasOwnProperty(tokenType)) {
-            obj1[tokenType] += ob2[tokenType];
+            obj1[tokenType] += obj2[tokenType];
         } else {
             obj1[tokenType] = obj2[tokenType];
         }
@@ -10,4 +10,14 @@ function mergeObjectsWithSum(obj1, obj2) {
     return obj1;
 }
 
-export {mergeObjectsWithSum}
+function getUnclaimedTokens() {
+    const tokens = {};
+    const $tokenContainers = document.querySelectorAll(".board-tokens li[data-type]");
+    $tokenContainers.forEach($tokenContainer => {
+        tokens[$tokenContainer.dataset.type] = $tokenContainer.querySelector(".amount").innerText;
+    })
+
+    return tokens;
+}
+
+export {mergeObjectsWithSum, getUnclaimedTokens};
