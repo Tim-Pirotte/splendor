@@ -88,7 +88,6 @@ function renderCurrentPlayerTokens(currentPlayerTokens, currentPlayerBonuses, ge
         const $progressBar = $progressBarTemplate.content.firstElementChild.cloneNode(true);
         const $switchPaymentButtonContainer = getSwitchButtonTemplate(token);
 
-        $token.dataset.tokenType = token;
         if (token !== "Gold") {
             insertCardCounter($token, token, currentPlayerBonuses);
         }

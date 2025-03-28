@@ -4,25 +4,26 @@ import {
     renderSwitchPaymentButtons, renderUpdatedPlayerScore, renderUpdatedTokens
 } from "../renderer/current-player-renderer.js";
 import {fetchFromServer} from "../../data-connector/api-communication-abstractor.js";
+import {DEVELOPMENT_CARDS} from "../data.js";
 
 function selectCard(e) {
     const $card = getCard(e);
     if ($card && canBuy($card)) {
-        const defaultPayment = getDefaultPaymentMethod(getCardData($card)["cost"]);
+        const defaultPayment = getDefaultPaymentMethod(getCardData($card.dataset.name)["cost"]);
 
         setActionButtonState(
         "buy",
         "processBuyCardClick",
-        {level: $card.dataset.level, index: $card.dataset.index},
+        {name: $card.dataset.name},
         );
 
         setNewPaymentMethod(defaultPayment);
-        renderSwitchPaymentButtons(defaultPayment, getCardData($card)["cost"]);
+        renderSwitchPaymentButtons(defaultPayment, getCardData($card.dataset.name)["cost"]);
     }
 }
 
-function canBuy(card) {
-    const cost = getCardData(card)["cost"];
+function canBuy($card) {
+    const cost = getCardData($card.dataset.name)["cost"];
     const wallet = getPlayerWallet();
     return isWalletHigher(wallet, cost);
 }
@@ -48,10 +49,12 @@ function processBuyCardClick() {
     sessionStorage.removeItem("paymentMethod");
 }
 
-function getCardData($target) {
-    const index = $target.dataset.index;
-    const level = $target.dataset.level;
-    return loadFromStorage("gameData")["market"][parseInt(level) - 1]["visibleCards"][index];
+function getCardData(cardName) {
+    for (const card of DEVELOPMENT_CARDS) {
+        if (card["name"] === cardName) {
+            return card;
+        }
+    }
 }
 
 function getPlayerWallet() {
