@@ -147,9 +147,12 @@ function renderUpdatedPlayerTokens(bonus) {
 }
 
 function renderUpdatedPlayerScore(extraScore) {
-    const players = API.getGame().then(gameObject => getPlayersObjects(gameObject));
-    const highestScore = getHighestScore(players);
-    renderCurrentPlayerPoints(gameStatusInterface.getCurrentPlayer(), highestScore, extraScore);
+    API.getGame().then(gameObject => {
+        const players = getPlayersObjects(gameObject);
+        const highestScore = getHighestScore(players);
+
+        renderCurrentPlayerPoints(gameStatusInterface.getCurrentPlayer(), highestScore, extraScore);
+    });
 }
 
 function hideSwitchPaymentButtons() {
