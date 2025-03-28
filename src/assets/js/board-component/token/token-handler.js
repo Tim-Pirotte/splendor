@@ -10,51 +10,6 @@ function canGetToken(tokenType, amount , $actionButtonData) {
    return false;
 }
 
-function giveTokenThatAlreadySelected(tokenType , actionButtonData){
-    const token1 = 1;
-    const token2 = 2;
-    const token3 = 3;
-
-    if (tokenType === actionButtonData.token1) {
-        return token1;
-    }
-    if (tokenType === actionButtonData.token2) {
-       return token2;
-    }
-    if (tokenType === actionButtonData.token3) {
-        return token3;
-    }
-    return null;
-}
-
-function checkIfTokenAlreadySelected(tokenType , actionButtonData) {
-   return (giveTokenThatAlreadySelected(tokenType , actionButtonData) !== null);
-}
-
-function removeToken(token , $actionButtonData , tokenType) {
-    const token1 = 1;
-    const token2 = 2;
-    const token3 = 3;
-
-    if (token === token1){
-        $actionButtonData.token1 = $actionButtonData.token2;
-        $actionButtonData.token2 = $actionButtonData.token3;
-        $actionButtonData.token3 = "";
-
-    }
-    if (token === token2){
-        $actionButtonData.token2 = $actionButtonData.token3;
-        $actionButtonData.token3 = "";
-
-    }
-    if (token === token3){
-        $actionButtonData.token3 = "";
-
-    }
-
-
-}
-
 function checkIfTokenIsEmpty(token) {
     return (token === undefined || token === "");
 }
@@ -121,6 +76,10 @@ function setActionToTokenAction(stackPointer, $selectedToken) {
     }
 }
 
+function highlightToken($selectedToken) {
+    $selectedToken.classList.add("selected");
+}
+
 function selectToken(e) {
     if (!clickedOnToken(e.target)) return;
 
@@ -149,36 +108,9 @@ function selectToken(e) {
     pushTokenToStack($selectedToken, $actionButton, stackPointer);
     stackPointer++;
     $actionButton.dataset.stackPointer = stackPointer;
-    $selectedToken.classList.add("selected");
+    highlightToken($selectedToken);
 
     setActionToTokenAction(stackPointer, $selectedToken);
-}
-
-function selectTokenPrevious(e) {
-    if (e.target.tagName.toLowerCase() === "img") {
-        const $selectedToken = e.target.closest("li");
-        const tokenType = $selectedToken.dataset.type;
-        const $actionButton = document.querySelector(".action-button");
-        const $actionButtonData = $actionButton.dataset;
-
-        if (canGetToken(tokenType, $selectedToken.dataset.amount, $actionButtonData)) {
-            setActionButtonState("Take two", "processTakeTokenClick", {token1: tokenType});
-        }  else if (checkIfTokenAlreadySelected(tokenType, $actionButtonData)) {
-            removeToken(giveTokenThatAlreadySelected(tokenType, $actionButtonData), $actionButtonData , tokenType);
-        }  else if (tokenType !== "Gold" && $selectedToken.dataset.amount >= 1 && !checkIfTokenAlreadySelected(tokenType, $actionButton)) {
-            storeTokenInDOM($actionButtonData , tokenType);
-        }
-    }
-}
-
-function storeTokenInDOM($actionButtonData , tokenType) {
-    if (checkIfTokenIsEmpty($actionButtonData.token1)) {
-        setActionButtonState("Selected 1 gem", "processTakeTokenClick", {token1: tokenType});
-    } else if (checkIfTokenIsEmpty($actionButtonData.token2)) {
-        setActionButtonState("Selected 2 gems", "processTakeTokenClick", {token2: tokenType});
-    } else if (checkIfTokenIsEmpty($actionButtonData.token3)) {
-        setActionButtonState("Selected three gems", "processTakeTokenClick", {token3: tokenType});
-    }
 }
 
 function processTakeTokenClick(e) {
