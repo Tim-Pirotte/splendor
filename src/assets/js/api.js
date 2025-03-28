@@ -57,4 +57,9 @@ function takeNobels(requestBody) {
     return fetchFromServer(`/games/${gameId}/players/${playerName}/nobels`, "POST", requestBody);
 }
 
-export { getGames, createGame, getGame, joinGame, takeTokens, buyCard, reserveCard, buyReserveCard, takeNobels };
+/* General */
+function getGemsList() {
+    return fetchFromServer(`/gams`);
+}
+
+export { getGames, createGame, getGame, joinGame, takeTokens, buyCard, reserveCard, buyReserveCard, takeNobels, getGemsList };
