@@ -2,7 +2,7 @@ import * as API from "../../api.js";
 import { setActionButtonState } from "../game-status-interface.js";
 import { MIN_TOKENS_FOR_PICKING_TWO } from "./config.js";
 import { MAX_TAKE_TOKENS } from "../config.js";
-import {getActionButton} from "../helper";
+import {getActionButton} from "../helper.js";
 
 function clickedOnToken(target) {
     return target.tagName.toLowerCase() === "img";

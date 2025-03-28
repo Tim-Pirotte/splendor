@@ -1,6 +1,6 @@
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { ACTION_REGISTRY } from "./action-registry.js";
-import {getActionButton} from "./helper";
+import {getActionButton} from "./helper.js";
 
 function isCurrentlyPlaying() {
   const playerName = loadFromStorage("playerName");
