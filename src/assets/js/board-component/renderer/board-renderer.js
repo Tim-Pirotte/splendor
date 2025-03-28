@@ -87,6 +87,11 @@ function renderUpdatedBoardTokens(tokensToAdd) {
   const previousTokens = getUnclaimedTokens()
   const newAmountOfTokens = mergeObjectsWithSum(previousTokens, tokensToAdd);
 
+  console.log(previousTokens);
+  console.log(tokensToAdd);
+  console.log('new', newAmountOfTokens);
+  console.log('players', amountOfPlayers);
+
   renderBoardTokens(newAmountOfTokens, amountOfPlayers, GEMS);
 
 }

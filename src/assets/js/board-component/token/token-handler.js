@@ -1,6 +1,7 @@
 import {takeGemsRequest} from "./request-handler.js";
 import { setActionButtonState } from "../game-status-interface.js";
 import { MIN_TOKENS_FOR_PICKING_TWO } from "./config.js";
+import {hideSwitchPaymentButtons} from "../renderer/current-player-renderer.js";
 
 function canGetToken(tokenType, amount , $actionButtonData) {
     if(checkIfTokenIsEmpty($actionButtonData.token1)){

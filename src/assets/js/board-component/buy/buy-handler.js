@@ -11,6 +11,7 @@ import {mergeObjectsWithSum} from "./helper.js";
 function selectCard(e) {
     const $card = getCard(e);
     if ($card && canBuy($card)) {
+        console.log('test')
         const defaultPayment = getDefaultPaymentMethod(getCardData($card.dataset.name)["cost"]);
 
         setActionButtonState(
@@ -42,7 +43,7 @@ function processBuyCardClick() {
 
     renderUpdatedPlayerTokens(cardData["bonus"]);
     renderUpdatedPlayerScore(cardData["prestigePoints"]);
-    renderUpdatedBoardTokens(cardData["cost"]);
+    renderUpdatedBoardTokens(JSON.parse(sessionStorage.getItem("paymentMethod")));
 
     fetchFromServer(`/games/${loadFromStorage(
     "gameId")}/players/${loadFromStorage("playerName")}/developments`,
