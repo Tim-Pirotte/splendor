@@ -6,7 +6,7 @@ function hasReservePlace() {
 }
 
 function deckHasEnoughCards(level) {
-    const amount = parseInt(document.querySelector(`.level-deck["${level}"] .cards-in-deck`).dataset.amount);
+    const amount = parseInt(document.querySelector(`.level-deck-${level} .cards-in-deck`)?.dataset.amount || "0");
     return amount > 0;
 }
 
