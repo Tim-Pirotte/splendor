@@ -172,7 +172,7 @@ function getCurrentPlayerIndexInData(gameData) {
     }
 }
 
-function updateCurrentPlayerTokensInData(gameData, indexOfPlayerInData) {
+function removePaidTokens(gameData, indexOfPlayerInData) {
     const tokensPaid = getCurrentPaymentMethod();
     const previousTokens = gameData["players"][indexOfPlayerInData]["tokens"];
     for (const tokenType in previousTokens) {
@@ -205,6 +205,6 @@ export {selectCard,
     getPlayerWallet,
     handlePaymentMethodChange,
     getCurrentPlayerIndexInData,
-    updateCurrentPlayerTokensInData,
+    removePaidTokens,
     updateCurrentPlayerBonuses,
     getDefaultPaymentMethod};

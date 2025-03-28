@@ -11,7 +11,7 @@ import {
     isAllowedToSwitchToken,
     getPlayerWallet,
     getCurrentPlayerIndexInData,
-    updateCurrentPlayerTokensInData, updateCurrentPlayerBonuses
+    removePaidTokens, updateCurrentPlayerBonuses
 } from "../buy/buy-handler.js";
 import * as gameStatusInterface from "../game-status-interface.js";
 
@@ -132,7 +132,7 @@ function renderAmountOfTokenSelected($tokenContainer, tokenType, payment) {
 function renderUpdatedTokens(bonus) {
     const gameData = loadFromStorage("gameData");
     const indexOfPlayerInData = getCurrentPlayerIndexInData(gameData);
-    const updatedTokens = updateCurrentPlayerTokensInData(gameData, indexOfPlayerInData);
+    const updatedTokens = removePaidTokens(gameData, indexOfPlayerInData);
     const updatedBonuses = updateCurrentPlayerBonuses(gameData, indexOfPlayerInData, bonus);
 
     gameData["players"][indexOfPlayerInData]["bonuses"] = updatedBonuses;
