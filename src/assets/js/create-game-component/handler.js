@@ -1,6 +1,6 @@
+import * as API from "../api.js";
 import { processCreateAndJoinResponse } from "../utils/response-handler.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
-import { fetchFromServer } from "../data-connector/api-communication-abstractor.js";
 
 function handleCreateGameSubmit(e){
     e.preventDefault();
@@ -14,9 +14,9 @@ function handleCreateGameSubmit(e){
 }
 
 function createGame(playerName, gameName, visibility, numberOfPlayers){
-    const body = formGameBody(playerName, gameName, visibility, numberOfPlayers);
+    const requestBody = getGameBody(playerName, gameName, visibility, numberOfPlayers);
 
-    fetchFromServer("/games", "POST", body)
+    API.createGame(requestBody)
         .then(data => processCreateAndJoinResponse(data))
         .catch(error => console.error(error));
 }
@@ -28,9 +28,9 @@ function getCheckedRadioValue(radioButtonList){
     return null;
 }
 
-function formGameBody(playerName, gameName, visibility, numberOfPlayers){
+function getGameBody(playerName, gameName, visibility, numberOfPlayers){
     return gameName ? { gameName, numberOfPlayers, playerName }
                     : { numberOfPlayers, playerName };
 }
 
-export { handleCreateGameSubmit, getCheckedRadioValue, formGameBody };
+export { handleCreateGameSubmit, getCheckedRadioValue, getGameBody };

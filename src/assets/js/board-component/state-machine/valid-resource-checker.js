@@ -10,5 +10,4 @@ function deckHasEnoughCards(level) {
     return amount > 0;
 }
 
-
 export { hasReservePlace, deckHasEnoughCards };
