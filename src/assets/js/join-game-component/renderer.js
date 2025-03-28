@@ -2,22 +2,32 @@ import * as API from "../api.js";
 import { getGameId, getGameName, getGameState } from "../utils/game-object-handler.js";
 import { getAmountText, getGameButtonText } from "./helper.js";
 import { filterGameList } from "./filter.js";
+import {POLLING_TIME_OUT} from "../config.js";
+import {safeEmptyContainer} from "../board-component/renderer/helper.js";
 
-function renderList() {
+function renderGameList() {
     const $template = document.querySelector("#game-template");
     const $container = document.querySelector("ul");
-
-    $container.querySelectorAll("li").forEach(li => li.remove());
+    const $gameListContainerCopy = $container.cloneNode(true);
+    safeEmptyContainer($gameListContainerCopy);
 
     API.getGames().then(gameObject => {
             const filteredGames = filterGameList(gameObject["games"]);
 
             if (filteredGames.size === 0) {
-                renderNoGamesFoundMessage($container);
+                renderNoGamesFoundMessage($gameListContainerCopy);
             } else {
-                filteredGames.forEach(game => populateGame($template, $container, game));
+                filteredGames.forEach(game => populateGame($template, $gameListContainerCopy, game));
             }
-    });
+
+            $container.innerHTML = $gameListContainerCopy.innerHTML;
+
+            startGameListPolling();
+        });
+}
+
+function startGameListPolling() {
+    setTimeout(renderGameList, POLLING_TIME_OUT);
 }
 
 function populateGame($template, $container, game) {
@@ -42,4 +52,4 @@ function renderNoGamesFoundMessage($container) {
     $container.insertAdjacentHTML("beforeend", $message.outerHTML);
 }
 
-export { renderList };
+export { renderGameList };

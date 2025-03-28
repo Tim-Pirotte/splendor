@@ -1,5 +1,7 @@
-import {loadFromStorage} from "../data-connector/local-storage-abstractor.js";
-import {ACTION_REGISTRY} from "./action-registry.js";
+import { startGameStatePolling } from "./game-data-handler.js";
+import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
+import { ACTION_REGISTRY } from "./action-registry.js";
+import { getActionButton } from "./helper.js";
 
 function isCurrentlyPlaying() {
   const playerName = loadFromStorage("playerName");
@@ -31,7 +33,7 @@ function getGameState() {
 }
 
 function setActionButtonState(message, functionToRunOnClick, datasetParameters) {
-  const $actionButton = document.querySelector(".action-button");
+  const $actionButton = getActionButton();
   $actionButton.textContent = message;
   $actionButton.dataset.functionToRun = functionToRunOnClick;
 
@@ -41,13 +43,14 @@ function setActionButtonState(message, functionToRunOnClick, datasetParameters) 
 }
 
 function actionRegistryRouter() {
-  const $actionButton = document.querySelector(".action-button");
+  const $actionButton = getActionButton();
   ACTION_REGISTRY[$actionButton.dataset.functionToRun]();
+  startGameStatePolling();
 }
 
 function initGameStatusInterface() {
-  const $actionButton = document.querySelector(".action-button");
+  const $actionButton = getActionButton();
   $actionButton.addEventListener("click", actionRegistryRouter);
 }
 
-export {isCurrentlyPlaying, initGameStatusInterface, setActionButtonState, getGameCreator, getCurrentPlayer};
+export { isCurrentlyPlaying, initGameStatusInterface, setActionButtonState, getGameCreator, getCurrentPlayer };

@@ -1,12 +1,13 @@
 import {processBuyCardClick} from "./buy/buy-handler.js";
-import { processTakeTokenClick } from "./token/token-handler.js";
+import {processTakeTokensClick, processTakeTwoTokens} from "./token/token-handler.js";
 import { processTakeNoble } from "./nobles/nobles-handler.js";
 
 const ACTION_REGISTRY = {
-  processTakeTokenClick: () => processTakeTokenClick(),
+  processTakeTokenClick: () => processTakeTokensClick(),
+  processTakeTwoTokensClick: () => processTakeTwoTokens(),
   processBuyCardClick: () => processBuyCardClick(),
   skipTurn: () => {},
   processTakeNoble: () => processTakeNoble(),
 };
 
-export {ACTION_REGISTRY};
+export { ACTION_REGISTRY };

@@ -1,10 +1,6 @@
-function setActionButton(message, tokenType, action) {
-    const $actionButton = document.querySelector(".action-button");
-    $actionButton.textContent = message;
-    $actionButton.dataset.type = tokenType;
-    $actionButton.dataset.action = action;
+function getActionButton() {
+    return document.querySelector(".action-button");
 }
-
 
 function mergeObjectsWithSum(obj1, obj2) {
     for (const tokenType in obj2) {
@@ -14,12 +10,14 @@ function mergeObjectsWithSum(obj1, obj2) {
             obj1[tokenType] = parseInt(obj2[tokenType]);
         }
     }
+
     return obj1;
 }
 
 function getUnclaimedTokens() {
     const tokens = {};
     const $tokenContainers = document.querySelectorAll(".board-tokens li[data-type]");
+
     $tokenContainers.forEach($tokenContainer => {
         tokens[$tokenContainer.dataset.type] = $tokenContainer.querySelector(".amount").innerText.split("/")[0];
     });
@@ -27,4 +25,4 @@ function getUnclaimedTokens() {
     return tokens;
 }
 
-export {setActionButton, mergeObjectsWithSum, getUnclaimedTokens};
+export { getActionButton, mergeObjectsWithSum, getUnclaimedTokens };

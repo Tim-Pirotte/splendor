@@ -2,6 +2,7 @@ import {setActionButtonState} from "../game-status-interface.js";
 import {fetchFromServer} from "../../data-connector/api-communication-abstractor.js";
 import {loadFromStorage} from "../../data-connector/local-storage-abstractor.js";
 import {NOBLES} from "../data.js";
+import {getActionButton} from "../helper.js";
 
 function selectNoble(e) {
   const $selectedNoble = e.target.closest("li");
@@ -36,7 +37,7 @@ function getPlayerBonuses() {
 }
 
 function processTakeNoble() {
-  const actionButton = document.querySelector(".action-button");
+  const actionButton = getActionButton();
   const nobleToTake = getNobleByName(actionButton.dataset.name);
   fetchFromServer(
     `/games/${loadFromStorage("gameId")}/players/${loadFromStorage("playerName")}/nobles`,
