@@ -11,6 +11,7 @@ import {
 function renderCards(market) {
   for (const deck of market) {
     const $currentDeck = document.querySelector(`.level-${deck["level"]} .cards-in-deck`);
+    $currentDeck.dataset.amount = deck["cardStackSize"];
     safeEmptyContainer($currentDeck);
 
     for (const card of deck["visibleCards"]) {

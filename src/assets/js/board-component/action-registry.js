@@ -3,6 +3,7 @@ import {processTakeNoble} from "./nobles/nobles-handler.js";
 
 const ACTION_REGISTRY = {
   processTakeTokenClick: () => processTakeTokenClick(),
+  skipTurn: () => {},
   processTakeNoble: () => processTakeNoble(),
 };
 
