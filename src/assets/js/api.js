@@ -1,5 +1,5 @@
-import {fetchFromServer} from "./data-connector/api-communication-abstractor.js";
-import {loadFromStorage} from "./data-connector/local-storage-abstractor.js";
+import { fetchFromServer } from "./data-connector/api-communication-abstractor.js";
+import { loadFromStorage } from "./data-connector/local-storage-abstractor.js";
 
 /* Game Management */
 function getGames(hasStarted = "") {
@@ -12,7 +12,12 @@ function getGames(hasStarted = "") {
 
 function createGame(gameName, numberOfPlayers, playerName) {
     const requestBody = {gameName, numberOfPlayers, playerName}
-    return fetchFromServer("/games", "POST", requestBody);
+    return fetchFromServer(`/games`, "POST", requestBody);
 }
 
-export { getGames };
+function getGame() {
+    const gameId = loadFromStorage("gameId");
+    return fetchFromServer(`/games/${gameId}`);
+}
+
+export { getGames, createGame, getGame };
