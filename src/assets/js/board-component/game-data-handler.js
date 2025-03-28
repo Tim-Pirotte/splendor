@@ -1,6 +1,7 @@
 import {loadFromStorage, saveToStorage} from "../data-connector/local-storage-abstractor.js";
 import {fetchFromServer} from "../data-connector/api-communication-abstractor.js";
 import {renderPage} from "./renderer/renderer.js";
+import {POLLING_TIME_OUT} from "../config.js";
 
 function handleGameDataError(err) {
   const forbidden = 403;
@@ -23,6 +24,7 @@ function updateGameData() {
     .then(gameData => {
       saveToStorage("gameData", gameData);
       renderPage(gameData);
+      setTimeout(updateGameData, POLLING_TIME_OUT);
     })
     .catch(err => handleGameDataError(err));
 }
