@@ -6,7 +6,7 @@ import {
 import {fetchFromServer} from "../../data-connector/api-communication-abstractor.js";
 import {DEVELOPMENT_CARDS} from "../data.js";
 import {renderUpdatedBoardTokens} from "../renderer/board-renderer.js";
-import {mergeObjectsWithSum} from "./helper.js";
+import {mergeObjectsWithSum} from "../helper.js";
 
 function selectCard(e) {
     const $card = getCard(e);
