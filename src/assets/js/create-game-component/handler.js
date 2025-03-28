@@ -1,23 +1,23 @@
-import {loadFromStorage} from "../data-connector/local-storage-abstractor.js";
-import {fetchFromServer} from "../data-connector/api-communication-abstractor.js";
-import {processResponse} from "../general-logic/join-create-game.js";
+import { processCreateAndJoinResponse } from "../utils/response-handler.js";
+import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
+import { fetchFromServer } from "../data-connector/api-communication-abstractor.js";
 
 function handleCreateGameSubmit(e){
     e.preventDefault();
 
-    const gameName = document.querySelector("#game-name").value.trim();
+    const playerName = loadFromStorage("playerName");
+    const gameName = (document.querySelector("#game-name").value || `${playerName}'s game`).trim();
     const visibility = getCheckedRadioValue(document.querySelectorAll("input[name=visibility]"));
     const numberOfPlayers = parseInt(getCheckedRadioValue(document.querySelectorAll("input[name=players]")));
 
-    createGame(gameName, visibility, numberOfPlayers);
+    createGame(playerName, gameName, visibility, numberOfPlayers);
 }
 
-function createGame(gameName, visibility, numberOfPlayers){
-    const playerName = loadFromStorage("playerName");
+function createGame(playerName, gameName, visibility, numberOfPlayers){
     const body = formGameBody(playerName, gameName, visibility, numberOfPlayers);
 
     fetchFromServer("/games", "POST", body)
-        .then(data => processResponse(data))
+        .then(data => processCreateAndJoinResponse(data))
         .catch(error => console.error(error));
 }
 
@@ -33,4 +33,4 @@ function formGameBody(playerName, gameName, visibility, numberOfPlayers){
                     : { numberOfPlayers, playerName };
 }
 
-export {handleCreateGameSubmit, getCheckedRadioValue, formGameBody};
+export { handleCreateGameSubmit, getCheckedRadioValue, formGameBody };

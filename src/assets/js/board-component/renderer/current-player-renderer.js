@@ -30,7 +30,18 @@ function renderCurrentPlayerReserve(currentPlayer) {
 }
 
 function renderCurrentPlayerTokenCount(currentPlayer) {
-    document.querySelector(".player-tokens h4").textContent = `${formatNumber(countTokens(currentPlayer["tokens"]))} / ${MAX_TOKENS_ALLOWED}`;
+    const $totalTokenCount = document.querySelector(".player-tokens #current-tokens");
+    document.querySelector(".player-tokens #token-limit").textContent = MAX_TOKENS_ALLOWED;
+
+    const amountOfTokens = formatNumber(countTokens(currentPlayer["tokens"]));
+    $totalTokenCount.textContent = amountOfTokens;
+    setTotalTokensColor($totalTokenCount, amountOfTokens);
+}
+
+function setTotalTokensColor($totalTokenCount, totalTokens) {
+    if (totalTokens > MAX_TOKENS_ALLOWED) {
+        $totalTokenCount.classList.add("highlighted-number");
+    }
 }
 
 function renderCurrentPlayer(players, gems) {
@@ -49,6 +60,8 @@ function countTokens(tokens) {
 function insertCardCounter($token, token, currentPlayerBonuses) {
     insertImageInto($token, `UI/cards/${TOKEN_MAPPER[token]}_card_small`, true, `${TOKEN_MAPPER[token]} card`);
     $token.insertAdjacentHTML("afterbegin", `<p>${currentPlayerBonuses[token] || 0}</p>`);
+    $token.dataset.bonuses = currentPlayerBonuses[token] || 0;
+    $token.dataset.type = token;
 }
 
 function renderCurrentPlayerTokens(currentPlayerTokens, currentPlayerBonuses, gems) {
