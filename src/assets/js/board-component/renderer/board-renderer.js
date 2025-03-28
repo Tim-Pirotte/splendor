@@ -55,6 +55,16 @@ function renderBoardTokens(unclaimedTokens, playerLength, gems) {
   }
 }
 
+function getNobleAlt(costs) {
+  let alt = "Noble (+3 pts.) | Cost: ";
+
+  for (const [tokenType, amount] of Object.entries(costs)) {
+    alt += `${tokenType}: ${amount} `;
+  }
+
+  return alt;
+}
+
 function renderNobles(unclaimedNobles) {
   const $noblesContainer = document.querySelector(".nobles");
   safeEmptyContainer($noblesContainer);
@@ -63,7 +73,8 @@ function renderNobles(unclaimedNobles) {
 
   for (const noble of unclaimedNobles) {
     const $noble = $nobleTemplate.content.firstElementChild.cloneNode(true);
-    insertImageInto($noble, `nobles/${NOBLES_MAPPER[noble.name]}`, false, "Noble (+3 pts.)");
+    $noble.dataset.name = noble["name"];
+    insertImageInto($noble, `nobles/${NOBLES_MAPPER[noble.name]}`, false, getNobleAlt(noble["neededBonuses"]));
     $noblesContainer.appendChild($noble);
   }
 }
