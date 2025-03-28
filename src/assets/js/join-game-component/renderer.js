@@ -1,4 +1,4 @@
-import {getGameId, getGameName, getGameState} from "../general-logic/object-handler.js";
+import { getGameId, getGameName, getGameState } from "../utils/game-object-handler.js";
 import { getAmountText, getGameButtonText } from "./helper.js";
 import { fetchFromServer } from "../data-connector/api-communication-abstractor.js";
 import { filterGameList } from "./filter.js";
@@ -11,12 +11,12 @@ function renderList() {
 
     fetchFromServer("/games")
         .then(gameObject => {
-            const filterestList = filterGameList(gameObject['games']);
-            if (filterestList.size === 0) {
-                //Render a message
-                renderNoGames($container);
+            const filteredGames = filterGameList(gameObject["games"]);
+
+            if (filteredGames.size === 0) {
+                renderNoGamesFoundMessage($container);
             } else {
-                filterestList.forEach(game => populateGame($template, $container, game));
+                filteredGames.forEach(game => populateGame($template, $container, game));
             }
         });
 }
@@ -35,12 +35,12 @@ function populateGame($template, $container, game) {
     $container.insertAdjacentHTML("beforeend", $game.outerHTML);
 }
 
-function renderNoGames($container) {
-    const $messageLi = document.querySelector("#no-games").content.firstElementChild.cloneNode(true);
+function renderNoGamesFoundMessage($container) {
+    const $message = document.querySelector("#no-games").content.firstElementChild.cloneNode(true);
 
-    $messageLi.querySelector("p").innerText = "There are no games based on your selections";
+    $message.querySelector("p").textContent = "There are no games based on your selections";
 
-    $container.insertAdjacentHTML("beforeend", $messageLi.outerHTML);
+    $container.insertAdjacentHTML("beforeend", $message.outerHTML);
 }
 
 export { renderList };

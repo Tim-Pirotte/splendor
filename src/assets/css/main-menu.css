@@ -36,7 +36,6 @@ label {
 .avatar-selector section {
     background-color: whitesmoke;
     position: absolute;
-    display: none;
 }
 
 .avatar-selector section ul {

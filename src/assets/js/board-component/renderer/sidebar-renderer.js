@@ -1,6 +1,7 @@
 import {loadFromStorage} from "../../data-connector/local-storage-abstractor.js";
 import {formatNumber, insertImageInto, safeEmptyContainer} from "./helper.js";
 import {TOKEN_MAPPER} from "../config.js";
+import {MAXPRESTIGEPOINTS} from "../../config.js";
 
 function renderOtherPlayers(otherPlayers, gems) {
   const currentPlayerName = loadFromStorage("playerName");
@@ -8,13 +9,15 @@ function renderOtherPlayers(otherPlayers, gems) {
   const $otherPlayerContainer = document.querySelector(".other-players");
   safeEmptyContainer($otherPlayerContainer);
 
-  const $template = document.querySelector("#other-player-card-template");
+  const $playerTemplate = document.querySelector("#other-player-card-template");
+
+  const highestScore = getHighestScore(otherPlayers);
 
   for (const otherPlayer of otherPlayers) {
     if (otherPlayer.name !== currentPlayerName) {
-      const $playerCard = $template.content.firstElementChild.cloneNode(true);
-      $playerCard.querySelector(".name").textContent = otherPlayer.name;
-      $playerCard.querySelector(".points").textContent = `${formatNumber(otherPlayer["totalPrestigePoints"])} pts.`;
+      const $playerCard = $playerTemplate.content.firstElementChild.cloneNode(true);
+      setPlayerName($playerCard, otherPlayer);
+      setPlayerPoints($playerCard, otherPlayer["totalPrestigePoints"], highestScore);
 
       renderTokenList($playerCard.querySelector(".tokens"), otherPlayer["tokens"], gems);
       renderCardList($playerCard.querySelector(".cards"), otherPlayer["bonuses"], gems);
@@ -22,6 +25,27 @@ function renderOtherPlayers(otherPlayers, gems) {
 
       $otherPlayerContainer.appendChild($playerCard);
     }
+  }
+}
+
+function getHighestScore(otherPlayers) {
+  return Math.max(...otherPlayers.map(player => player["totalPrestigePoints"]));
+}
+
+function setPlayerName($playerCard, otherPlayer) {
+  $playerCard.querySelector(".name").textContent = otherPlayer.name;
+}
+
+function setPlayerPoints($playerCard, prestigePoints, highestScore) {
+  const $playerPoints = $playerCard.querySelector(".points span");
+  $playerPoints.textContent = formatNumber(prestigePoints);
+
+  if (prestigePoints >= MAXPRESTIGEPOINTS) {
+    $playerPoints.classList.add("enough-points-to-win");
+  }
+
+  if (prestigePoints >= highestScore) {
+    insertImageInto($playerCard, "UI/tokens/white_chip", false, "Score amongst the highest");
   }
 }
 

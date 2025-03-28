@@ -1,4 +1,4 @@
-import {loadLobbyInformation} from "./handler.js";
+import { loadLobbyInformation } from "./handler.js";
 
 function lobbyInit () {
     loadLobbyInformation();
