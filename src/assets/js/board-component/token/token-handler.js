@@ -112,6 +112,18 @@ function setTokensTo(stackPointer, $actionButton, amountOfTokens) {
     return requestBody;
 }
 
+function updateTokens(res) {
+    const beginIndexAmountText = 1;
+    const endIndexAmountText = 3;
+
+    for (const [token, taken] of Object.entries(res["tokens"])) {
+        const $token = document.querySelector(`.board-tokens [data-type="${token}"]`);
+        $token.dataset.amount = parseInt($token.dataset.amount) - parseInt(taken);
+        const $amountText = $token.querySelector("p");
+        $amountText.textContent = `${$token.dataset.amount}${$amountText.textContent.substring(beginIndexAmountText, endIndexAmountText)}`;
+    }
+}
+
 function processTakeTokensClick(e) {
     const $actionButton = getActionButton();
     const stackPointer = parseInt($actionButton.dataset.stackPointer);
@@ -130,16 +142,8 @@ function processTakeTwoTokens(e) {
     API.takeTokens(requestBody).then(res => updateTokens(res));
 }
 
-function updateTokens(res) {
-    const beginIndexAmountText = 1;
-    const endIndexAmountText = 3;
-
-    for (const [token, taken] of Object.entries(res["tokens"])) {
-     const $token = document.querySelector(`.board-tokens [data-type="${token}"]`);
-     $token.dataset.amount = parseInt($token.dataset.amount) - parseInt(taken);
-     const $amountText = $token.querySelector("p");
-     $amountText.textContent = `${$token.dataset.amount}${$amountText.textContent.substring(beginIndexAmountText, endIndexAmountText)}`;
-    }
+function processSkipTurn() {
+    API.takeTokens({take: {Ruby: 0}}).then(res => updateTokens(res));
 }
 
-export { selectToken, processTakeTokensClick, updateTokens, processTakeTwoTokens };
+export { selectToken, processTakeTokensClick, updateTokens, processTakeTwoTokens, processSkipTurn };
