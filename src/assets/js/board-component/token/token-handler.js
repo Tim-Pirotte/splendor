@@ -1,6 +1,6 @@
-import {takeTwoGemsRequest} from "./request-handler.js";
-import {setActionButtonState} from "../game-status-interface.js";
-import {MIN_TOKENS_FOR_PICKING_TWO} from "./config.js";
+import { takeTwoGemsRequest } from "./request-handler.js";
+import { setActionButtonState } from "../game-status-interface.js";
+import { MIN_TOKENS_FOR_PICKING_TWO } from "./config.js";
 
 
 function canGetToken(tokenType, amount) {
@@ -26,11 +26,11 @@ function updateTokens(res) {
     const endIndexAmountText = 3;
 
     for (const [token, taken] of Object.entries(res["tokens"])) {
-     const $token = document.querySelector(` [data-type="${token}"]`);
-     $token.dataset.amount = parseInt($token.dataset.amount) - parseInt(taken);
+     const $token = document.querySelector(`[data-type="${token}"]`);
+     $token.dataset.amount = (parseInt($token.dataset.amount) - parseInt(taken)).toString();
      const $amountText = $token.querySelector("p");
      $amountText.textContent = `${$token.dataset.amount}${$amountText.textContent.substring(beginIndexAmountText, endIndexAmountText)}`;
     }
 }
 
-export {selectToken, processTakeTokenClick, updateTokens};
+export { selectToken, processTakeTokenClick, updateTokens };

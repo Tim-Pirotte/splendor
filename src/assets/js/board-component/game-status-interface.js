@@ -1,5 +1,5 @@
-import {loadFromStorage} from "../data-connector/local-storage-abstractor.js";
-import {ACTION_REGISTRY} from "./action-registry.js";
+import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
+import { ACTION_REGISTRY } from "./action-registry.js";
 
 function isCurrentlyPlaying() {
   const playerName = loadFromStorage("playerName");
@@ -50,4 +50,4 @@ function initGameStatusInterface() {
   $actionButton.addEventListener("click", actionRegistryRouter);
 }
 
-export {isCurrentlyPlaying, initGameStatusInterface, setActionButtonState, getGameCreator};
+export { isCurrentlyPlaying, initGameStatusInterface, setActionButtonState, getGameCreator };

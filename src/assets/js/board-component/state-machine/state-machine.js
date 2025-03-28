@@ -1,7 +1,6 @@
 import { setActionButtonState } from "../game-status-interface.js";
 import { GAME_STATE } from "./data.js";
 
-
 function initRoundBegin(gameData){
 
     const gameState = gameData["gameState"];

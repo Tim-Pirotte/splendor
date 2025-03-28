@@ -3,8 +3,6 @@ import { deckHasEnoughCards, hasReservePlace } from "./valid-resource-checker.js
 import { DEVELOPMENT_CARDS } from "../data.js";
 import { GAME_STATE } from "./data.js";
 
-
-
 function validTokenTake() {
     return isCurrentlyPlaying() && getGameState() === GAME_STATE.TURN_ACTION;
 }

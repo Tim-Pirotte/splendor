@@ -1,5 +1,5 @@
-import {processTakeTokenClick} from "./token/token-handler.js";
-import {processTakeNoble} from "./nobles/nobles-handler.js";
+import { processTakeTokenClick } from "./token/token-handler.js";
+import { processTakeNoble } from "./nobles/nobles-handler.js";
 
 const ACTION_REGISTRY = {
   processTakeTokenClick: () => processTakeTokenClick(),
@@ -7,4 +7,4 @@ const ACTION_REGISTRY = {
   processTakeNoble: () => processTakeNoble(),
 };
 
-export {ACTION_REGISTRY};
+export { ACTION_REGISTRY };
