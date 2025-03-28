@@ -7,7 +7,6 @@ import {
   TOKEN_LIMIT_TWO_PLAYERS,
   TOKEN_MAPPER
 } from "../config.js";
-import {loadFromStorage} from "../../data-connector/local-storage-abstractor.js";
 
 function renderCards(market) {
   for (const deck of market) {

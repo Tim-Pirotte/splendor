@@ -6,13 +6,13 @@ import {
 import {fetchFromServer} from "../../data-connector/api-communication-abstractor.js";
 
 function selectCard(e) {
-    const card = getCard(e)
+    const card = getCard(e);
     if (card && canBuy(card)) {
         setActionButtonState(
         "buy",
         "processBuyCardClick",
         {level: card.dataset.level, index: card.dataset.index},
-        )
+        );
         const defaultPayment = getDefaultPaymentMethod(getCardData(card)["cost"]);
         renderSwitchPaymentButtons(defaultPayment, getCardData(card)["cost"]);
         saveToStorage("paymentMethod", defaultPayment);
@@ -51,7 +51,7 @@ function processBuyCardClick() {
 function getCardData($target) {
     const index = $target.dataset.index;
     const level = $target.dataset.level;
-    return loadFromStorage("gameData")["market"][parseInt(level) - 1]["visibleCards"][index]
+    return loadFromStorage("gameData")["market"][parseInt(level) - 1]["visibleCards"][index];
 }
 
 function getPlayerWallet() {
@@ -67,7 +67,7 @@ function getPlayerWallet() {
         }
     }
 
-    return tokens
+    return tokens;
 }
 
 function isWalletHigher(wallet, cost) {
@@ -87,7 +87,7 @@ function getDefaultPaymentMethod(cost) {
     const tokens = currentPlayer["tokens"];
     const bonuses = currentPlayer["bonuses"];
     removeBonusesFromCost(cost, bonuses);
-    return calculateDefaultPayment(cost, tokens)
+    return calculateDefaultPayment(cost, tokens);
 }
 
 function removeBonusesFromCost(cost, bonuses) {
@@ -113,21 +113,13 @@ function calculateDefaultPayment(cost, tokens) {
 }
 
 function isAllowedToSwitchToken(tokenType, currentPayment, cost, wallet) {
-    console.log('curr', currentPayment["Gold"])
-    console.log('wall',wallet["Gold"])
-    console.log(currentPayment["Gold"] === wallet["Gold"]);
     if (tokenType === "Gold") {
-        console.log(tokenType,'1')
-        return !((currentPayment["Gold"] || 0) === 0);
+        return ((currentPayment["Gold"] || 0) !== 0);
     } else if ((currentPayment["Gold"]) === (wallet["Gold"])){
-        console.log(tokenType,2)
         return false;
     } else if (!(cost.hasOwnProperty(tokenType))) {
-        console.log(tokenType,3)
         return false;
     } else{
-        console.log(tokenType,'4')
-        console.log(currentPayment[tokenType])
         return (currentPayment[tokenType]) >0;
     }
 }
@@ -160,7 +152,7 @@ function getNewPaymentMethod(tokenType) {
     const paymentMethod = loadFromStorage("paymentMethod");
     paymentMethod["Gold"]++;
     paymentMethod[tokenType]--;
-    return paymentMethod
+    return paymentMethod;
 }
 
 function getCurrentPlayerIndexInData(gameData) {

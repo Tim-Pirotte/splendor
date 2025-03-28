@@ -69,4 +69,14 @@ function safeEmptyContainer($container) {
   });
 }
 
-export {insertImageInto, renderProgressBar, formatNumber, renderCard, safeEmptyContainer};
+function getSwitchButtonTemplate(token) {
+  if (token === "Gold") {
+    return document.querySelector("#reset-payment-template")
+    .content.firstElementChild.cloneNode(true);
+  } else {
+    return document.querySelector("#switch-to-gold-button-template")
+    .content.firstElementChild.cloneNode(true);
+  }
+}
+
+export {insertImageInto, renderProgressBar, formatNumber, renderCard, safeEmptyContainer, getSwitchButtonTemplate};
