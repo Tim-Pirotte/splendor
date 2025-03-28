@@ -58,7 +58,7 @@ function takeNobels(requestBody) {
 
 /* General */
 function getGemsList() {
-    return fetchFromServer(`/games`);
+    return fetchFromServer(`/gems`);
 }
 
 function getNoblesList() {
