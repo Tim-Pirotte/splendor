@@ -23,7 +23,6 @@ function updateGameData() {
     .then(gameData => {
       saveToStorage("gameData", gameData);
       renderPage(gameData);
-      setTimeout(updateGameData, 2000);
     })
     .catch(err => handleGameDataError(err));
 }

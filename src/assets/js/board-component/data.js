@@ -1,4 +1,4 @@
-// BEGIN-NOSCAN
+//NOSONAR_BEGIN
 const GEMS = [
   "Diamond",
   "Sapphire",
@@ -1033,6 +1033,6 @@ const DEVELOPMENT_CARDS = [
     "prestigePoints": 5
   }
 ];
-// END-NOSCAN
+//NOSONAR_END
 
 export { GEMS, NOBLES, DEVELOPMENT_CARDS };
