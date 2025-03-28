@@ -20,4 +20,10 @@ function getGame() {
     return fetchFromServer(`/games/${gameId}`);
 }
 
+function joinGame() {
+    const gameId = loadFromStorage("gameId");
+    const playerName = loadFromStorage("playerName");
+    return fetchFromServer(`/games/${gameId}/players/${playerName}`, "POST");
+}
+
 export { getGames, createGame, getGame };
