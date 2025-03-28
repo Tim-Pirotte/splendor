@@ -10,8 +10,7 @@ function getGames(hasStarted = "") {
     }
 }
 
-function createGame(gameName, numberOfPlayers, playerName) {
-    const requestBody = {gameName, numberOfPlayers, playerName};
+function createGame(requestBody) {
     return fetchFromServer(`/games`, "POST", requestBody);
 }
 
