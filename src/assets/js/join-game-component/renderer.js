@@ -2,23 +2,34 @@ import { getGameId, getGameName, getGameState } from "../utils/game-object-handl
 import { getAmountText, getGameButtonText } from "./helper.js";
 import { fetchFromServer } from "../data-connector/api-communication-abstractor.js";
 import { filterGameList } from "./filter.js";
+import {POLLING_TIME_OUT} from "../config.js";
+import {safeEmptyContainer} from "../board-component/renderer/helper.js";
 
-function renderList() {
+function renderGameList() {
     const $template = document.querySelector("#game-template");
     const $container = document.querySelector("ul");
-
-    $container.querySelectorAll("li").forEach(li => li.remove());
+    const $gameListContainerCopy = $container.cloneNode(true);
+    safeEmptyContainer($gameListContainerCopy);
 
     fetchFromServer("/games")
         .then(gameObject => {
             const filteredGames = filterGameList(gameObject["games"]);
 
             if (filteredGames.size === 0) {
-                renderNoGamesFoundMessage($container);
+                renderNoGamesFoundMessage($gameListContainerCopy);
             } else {
-                filteredGames.forEach(game => populateGame($template, $container, game));
+                filteredGames.forEach(game => populateGame($template, $gameListContainerCopy, game));
             }
+
+            $container.querySelectorAll(":scope > li").forEach(li => li.remove());
+            $container.innerHTML = $gameListContainerCopy.innerHTML;
+
+            startGameListPolling();
         });
+}
+
+function startGameListPolling() {
+    setTimeout(renderGameList, POLLING_TIME_OUT);
 }
 
 function populateGame($template, $container, game) {
@@ -43,4 +54,4 @@ function renderNoGamesFoundMessage($container) {
     $container.insertAdjacentHTML("beforeend", $message.outerHTML);
 }
 
-export { renderList };
+export { renderGameList };

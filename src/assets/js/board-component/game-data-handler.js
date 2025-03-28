@@ -29,13 +29,13 @@ function updateGameData() {
       renderPage(gameData);
 
       if (!isCurrentlyPlaying()) {
-        startPolling();
+        startGameStatePolling();
       }
     })
     .catch(err => handleGameDataError(err));
 }
 
-function startPolling() {
+function startGameStatePolling() {
   setTimeout(updateGameData, POLLING_TIME_OUT);
 }
 
@@ -47,4 +47,4 @@ function waitOnTokenData() {
   return loadFromStorage("gems");
 }
 
-export {updateGameData, getGems, waitOnTokenData, startPolling};
+export {updateGameData, getGems, waitOnTokenData, startGameStatePolling};

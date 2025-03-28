@@ -1,6 +1,6 @@
 import { processCreateAndJoinResponse } from "../utils/response-handler.js";
 import { fetchFromServer } from "../data-connector/api-communication-abstractor.js";
-import { renderList } from "./renderer.js";
+import { renderGameList } from "./renderer.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 
 function playerJoinGame(e) {
@@ -22,7 +22,7 @@ function playerJoinGameById(e) {
 function handleFilterChange(e) {
     e.preventDefault();
 
-    renderList();
+    renderGameList();
 }
 
 function joinGameRequest(gameId) {
