@@ -6,18 +6,18 @@ import {
 import {fetchFromServer} from "../../data-connector/api-communication-abstractor.js";
 
 function selectCard(e) {
-    const card = getCard(e);
-    if (card && canBuy(card)) {
-        const defaultPayment = getDefaultPaymentMethod(getCardData(card)["cost"]);
+    const $card = getCard(e);
+    if ($card && canBuy($card)) {
+        const defaultPayment = getDefaultPaymentMethod(getCardData($card)["cost"]);
 
         setActionButtonState(
         "buy",
         "processBuyCardClick",
-        {level: card.dataset.level, index: card.dataset.index},
+        {level: $card.dataset.level, index: $card.dataset.index},
         );
 
         setNewPaymentMethod(defaultPayment);
-        renderSwitchPaymentButtons(defaultPayment, getCardData(card)["cost"]);
+        renderSwitchPaymentButtons(defaultPayment, getCardData($card)["cost"]);
     }
 }
 

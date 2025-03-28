@@ -14,8 +14,8 @@ function renderCards(market) {
     $currentDeck.dataset.amount = deck["cardStackSize"];
     safeEmptyContainer($currentDeck);
 
-    for (const [index, card] of deck["visibleCards"].entries()) {
-      renderCard($currentDeck, card["prestigePoints"], card["bonus"], card["cost"], index, card["level"]);
+    for (const card of deck["visibleCards"]) {
+      renderCard($currentDeck, card["prestigePoints"], card["bonus"], card["cost"], card["name"]);
     }
   }
 }
@@ -49,7 +49,7 @@ function renderBoardTokens(unclaimedTokens, playerLength, gems) {
 
     const maxTokens = getMaxTokens(playerLength, token);
 
-    $boardToken.querySelector(".amount").textContent = `${unclaimedTokens[token]}/${maxTokens}`;
+    $boardToken.querySelector(".amount").textContent = `${(unclaimedTokens[token] || 0)}/${maxTokens}`;
     insertImageInto($boardToken, `UI/tokens/${TOKEN_MAPPER[token]}_chip`, false, `${TOKEN_MAPPER[token]} chip`);
 
     $boardTokensContainer.appendChild($boardToken);
