@@ -1,4 +1,5 @@
 import { getCurrentUsersAmount, getGameCreator, getGameId, getGameName, getMaxUsersAmount, getPlayersObjects } from "../utils/game-object-handler.js";
+import {safeEmptyContainer} from "../board-component/renderer/helper.js";
 
 function renderHeader(g) {
     document.querySelector("#game-name-id").innerHTML = `${getGameName(g)} / <span>${getGameId(g)}</span>`;
@@ -7,12 +8,11 @@ function renderHeader(g) {
 
 function renderPlayers(g) {
     const $template = document.querySelector("#joined-player-template");
-    const $container = document.querySelector("#joined-players");
+    const $joinedPlayers = document.querySelector("#joined-players");
 
-    document.querySelectorAll("#players li")
-        .forEach(li => li.remove());
+    safeEmptyContainer($joinedPlayers);
 
-    getPlayersObjects(g).forEach(player => renderPlayer($template, $container, player));
+    getPlayersObjects(g).forEach(player => renderPlayer($template, $joinedPlayers, player));
 }
 
 function renderPlayer($template, $container, playerName) {

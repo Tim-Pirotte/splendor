@@ -1,6 +1,6 @@
 import * as API from "../api.js";
 import { processCreateAndJoinResponse } from "../utils/response-handler.js";
-import { renderList } from "./renderer.js";
+import { renderGameList } from "./renderer.js";
 
 function playerJoinGame(e) {
     e.preventDefault();
@@ -21,7 +21,7 @@ function playerJoinGameById(e) {
 function handleFilterChange(e) {
     e.preventDefault();
 
-    renderList();
+    renderGameList();
 }
 
 function joinGameRequest(gameId) {

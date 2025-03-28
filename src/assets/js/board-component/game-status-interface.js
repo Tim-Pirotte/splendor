@@ -1,3 +1,4 @@
+import {startGameStatePolling} from "./game-data-handler.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { ACTION_REGISTRY } from "./action-registry.js";
 import {getActionButton} from "./helper.js";
@@ -44,6 +45,7 @@ function setActionButtonState(message, functionToRunOnClick, datasetParameters) 
 function actionRegistryRouter() {
   const $actionButton = getActionButton();
   ACTION_REGISTRY[$actionButton.dataset.functionToRun]();
+  startGameStatePolling();
 }
 
 function initGameStatusInterface() {
