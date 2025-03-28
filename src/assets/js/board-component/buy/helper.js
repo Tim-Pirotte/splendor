@@ -7,6 +7,7 @@ function mergeObjectsWithSum(obj1, obj2) {
             obj1[tokenType] = obj2[tokenType];
         }
     }
+    return obj1;
 }
 
 export {mergeObjectsWithSum}

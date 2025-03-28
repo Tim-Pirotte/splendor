@@ -1,3 +1,4 @@
+import * as API from "../../api.js";
 import * as gameStatusInterface from "../game-status-interface.js";
 import {loadFromStorage} from "../../data-connector/local-storage-abstractor.js";
 import {MAX_TOKENS_ALLOWED, PRESTIGE_POINTS_NEEDED_TO_WIN, TOKEN_MAPPER} from "../config.js";
@@ -12,6 +13,7 @@ import {
 import { getHighestScore } from "./sidebar-renderer.js";
 import {isAllowedToSwitchToken, removePaidTokens, updateCurrentPlayerBonuses} from "../buy/buy-handler.js";
 import {GEMS} from "../data.js";
+import {getPlayersObjects} from "../../utils/game-object-handler.js";
 
 function renderHeader() {
     document.querySelector(".top-bar h2").textContent = loadFromStorage("playerName");
@@ -25,7 +27,7 @@ function getCurrentPlayer(players, currentPlayerName) {
     }
 }
 
-function renderCurrentPlayerPoints(currentPlayer, extraScore = 0) {
+function renderCurrentPlayerPoints(currentPlayer, highestScore, extraScore = 0) {
     document.querySelector(".player-points p").textContent =
     `${formatNumber(parseInt(currentPlayer["totalPrestigePoints"]) + extraScore)}  / ${PRESTIGE_POINTS_NEEDED_TO_WIN}`;
 
@@ -145,7 +147,9 @@ function renderUpdatedPlayerTokens(bonus) {
 }
 
 function renderUpdatedPlayerScore(extraScore) {
-    renderCurrentPlayerPoints(gameStatusInterface.getCurrentPlayer(), extraScore)
+    const players = API.getGame().then(gameObject => getPlayersObjects(gameObject));
+    const highestScore = getHighestScore(players);
+    renderCurrentPlayerPoints(gameStatusInterface.getCurrentPlayer(), highestScore, extraScore);
 }
 
 function hideSwitchPaymentButtons() {

@@ -1,4 +1,4 @@
-import {takeGemsRequest, takeTwoGemsRequest} from "./request-handler.js";
+import {takeGemsRequest} from "./request-handler.js";
 import { setActionButtonState } from "../game-status-interface.js";
 import { MIN_TOKENS_FOR_PICKING_TWO } from "./config.js";
 
