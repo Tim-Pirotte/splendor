@@ -14,14 +14,22 @@ function selectNoble(e) {
 function canSelectNoble(nobleName) {
   const noble = getNobleByName(nobleName);
   const playerBonuses = getPlayerBonuses();
-  console.log(playerBonuses);
-  return false;
+
+  for (const [nobleBonus, amount] of Object.entries(noble["neededBonuses"])) {
+    if (playerBonuses[nobleBonus] < amount) {
+      return false;
+    }
+  }
+
+  return true;
 }
 
 function getPlayerBonuses() {
   const bonuses = {};
-  document.querySelectorAll(".player-tokens ul").forEach(token => {
-    bonuses[token.dataset.type] = token.dataset.amount;
+  document.querySelectorAll(".player-tokens ul > *").forEach(token => {
+    if (token.dataset.type) {
+      bonuses[token.dataset.type] = parseInt(token.dataset.bonuses);
+    }
   })
 
   return bonuses;
