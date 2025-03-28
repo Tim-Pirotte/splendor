@@ -26,4 +26,11 @@ function joinGame() {
     return fetchFromServer(`/games/${gameId}/players/${playerName}`, "POST");
 }
 
-export { getGames, createGame, getGame };
+/* Game Actions */
+function takeTokens(requestBody) {
+    const gameId = loadFromStorage("gameId");
+    const playerName = loadFromStorage("playerName");
+    return fetchFromServer(`/games/${gameId}/players/${playerName}/tokens`, "PATCH", requestBody);
+}
+
+export { getGames, createGame, getGame, joinGame, takeTokens };
