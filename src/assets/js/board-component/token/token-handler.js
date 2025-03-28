@@ -114,7 +114,7 @@ function pushTokenToStack($selectedToken, $actionButton, stackPointer) {
 }
 
 function setActionToTokenAction(stackPointer, $selectedToken) {
-    if (stackPointer === 0 && $selectedToken.dataset.amount >= MIN_TOKENS_FOR_PICKING_TWO) {
+    if (stackPointer === 1 && $selectedToken.dataset.amount >= MIN_TOKENS_FOR_PICKING_TWO) {
         setActionButtonState("Take two", "processTakeTwoTokensClick", {});
     } else {
         setActionButtonState("Take up to three", "processTakeTwoTokensClick", {});
