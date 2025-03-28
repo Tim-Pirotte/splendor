@@ -8,12 +8,13 @@ import {fetchFromServer} from "../../data-connector/api-communication-abstractor
 function selectCard(e) {
     const card = getCard(e);
     if (card && canBuy(card)) {
+        const defaultPayment = getDefaultPaymentMethod(getCardData(card)["cost"]);
+
         setActionButtonState(
         "buy",
         "processBuyCardClick",
         {level: card.dataset.level, index: card.dataset.index},
         );
-        const defaultPayment = getDefaultPaymentMethod(getCardData(card)["cost"]);
         renderSwitchPaymentButtons(defaultPayment, getCardData(card)["cost"]);
         saveToStorage("paymentMethod", defaultPayment);
     }
@@ -35,8 +36,6 @@ function processBuyCardClick() {
     const requestBody =
     {development: {name: cardData["name"]}, payment: loadFromStorage("paymentMethod")};
 
-
-
     renderUpdatedTokens(cardData["bonus"]);
     renderUpdatedPlayerScore(cardData["prestigePoints"]);
 
@@ -46,7 +45,6 @@ function processBuyCardClick() {
     requestBody,
     );
     deleteFromStorage("paymentMethod");
-
 }
 
 function getCardData($target) {
@@ -87,7 +85,9 @@ function getDefaultPaymentMethod(cost) {
     const currentPlayer = getCurrentPlayer();
     const tokens = currentPlayer["tokens"];
     const bonuses = currentPlayer["bonuses"];
+
     removeBonusesFromCost(cost, bonuses);
+
     return calculateDefaultPayment(cost, tokens);
 }
 
@@ -99,6 +99,7 @@ function removeBonusesFromCost(cost, bonuses) {
 
 function calculateDefaultPayment(cost, tokens) {
     const payment = {"Gold": 0};
+
     for (const tokenType in cost) {
         if (!tokens.hasOwnProperty(tokenType)) {
             payment[tokenType] = 0;
@@ -110,6 +111,7 @@ function calculateDefaultPayment(cost, tokens) {
             payment[tokenType] = cost[tokenType];
         }
     }
+
     return payment;
 }
 
@@ -139,20 +141,24 @@ function handlePaymentMethodChange(e) {
 
 function resetPayment(cost){
     const paymentMethod = getDefaultPaymentMethod(cost);
+
     renderSwitchPaymentButtons(paymentMethod, cost);
     saveToStorage("paymentMethod", paymentMethod);
 }
 
 function updatePaymentMethod(tokenType, cost) {
     const paymentMethod = getNewPaymentMethod(tokenType);
+
     saveToStorage("paymentMethod", paymentMethod);
     renderSwitchPaymentButtons(paymentMethod, cost);
 }
 
 function getNewPaymentMethod(tokenType) {
     const paymentMethod = loadFromStorage("paymentMethod");
+
     paymentMethod["Gold"]++;
     paymentMethod[tokenType]--;
+
     return paymentMethod;
 }
 
