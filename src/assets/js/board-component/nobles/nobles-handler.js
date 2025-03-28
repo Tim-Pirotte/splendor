@@ -30,7 +30,7 @@ function getPlayerBonuses() {
     if (token.dataset.type) {
       bonuses[token.dataset.type] = parseInt(token.dataset.bonuses);
     }
-  })
+  });
 
   return bonuses;
 }
