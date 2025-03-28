@@ -1,5 +1,6 @@
-function selectNoble() {
-  console.log("test");
+function selectNoble(e) {
+  const $selectedNoble = e.target.closest("li");
+  console.log($selectedNoble);
 }
 
 export { selectNoble };
