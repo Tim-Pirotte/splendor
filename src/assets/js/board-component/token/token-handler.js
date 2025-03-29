@@ -73,7 +73,7 @@ function highlightToken($selectedToken) {
 }
 
 function selectToken(e) {
-    deselectCard()
+    deselectCard();
 
     if (!clickedOnToken(e.target)) return;
 
