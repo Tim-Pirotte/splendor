@@ -1,5 +1,5 @@
 import { getResults } from "./helper.js";
-import { MAXPRESTIGEPOINTS } from "../config.js";
+import { MAX_PRESTIGE_POINTS } from "../config.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 
 function renderResultMessage(isWinner) {
@@ -18,7 +18,7 @@ function renderResultTable(data) {
         const $td = $clone.querySelectorAll("td");
 
         $td[1].textContent = player.name;
-        $td[2].textContent = `${player.points}/${MAXPRESTIGEPOINTS}`;
+        $td[2].textContent = `${player.points}/${MAX_PRESTIGE_POINTS}`;
 
         $tbody.appendChild($clone);
     });

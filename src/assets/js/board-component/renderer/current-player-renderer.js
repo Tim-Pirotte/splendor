@@ -1,5 +1,4 @@
 import * as API from "../../api.js";
-import * as gameStatusInterface from "../game-status-interface.js";
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
 import { MAX_TOKENS_ALLOWED, PRESTIGE_POINTS_NEEDED_TO_WIN, TOKEN_MAPPER } from "../config.js";
 import {
