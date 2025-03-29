@@ -25,11 +25,20 @@ function getActionButton() {
 
 function setActionButtonState(message, functionToRunOnClick, datasetParameters) {
   const $actionButton = getActionButton();
+
+  clearDatasetAttributes($actionButton);
+
   $actionButton.textContent = message;
   $actionButton.dataset.functionToRun = functionToRunOnClick;
 
   for (const [name, value] of Object.entries(datasetParameters)) {
     $actionButton.dataset[name] = value.toString();
+  }
+}
+
+function clearDatasetAttributes($actionButton) {
+  for (const datasetAttribute of Object.keys($actionButton.dataset)) {
+    $actionButton.removeAttribute(`data-${datasetAttribute}`);
   }
 }
 
