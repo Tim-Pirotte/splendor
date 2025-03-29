@@ -7,6 +7,7 @@ import { DEVELOPMENT_CARDS } from "../data.js";
 import { renderUpdatedBoardTokens } from "../renderer/board-renderer.js";
 import { sumObjectValues } from "../helper.js";
 import {getClientBonuses, getClientTokens} from "../game-data-handler.js";
+import {binarySearchObjects} from "../../utils/data-handler.js";
 
 function selectCard(e) {
     const $card = getCard(e);
