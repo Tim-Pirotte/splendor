@@ -6,6 +6,7 @@ import {
 import { DEVELOPMENT_CARDS } from "../data.js";
 import { renderUpdatedBoardTokens } from "../renderer/board-renderer.js";
 import { sumObjectValues } from "../helper.js";
+import {getClientTokens} from "../game-data-handler.js";
 
 function selectCard(e) {
     const $card = getCard(e);
@@ -54,7 +55,7 @@ function getCardData(cardName) {
 
 function getPlayerWallet() {
     const currentPlayer = getClientPlayer();
-    const tokens = currentPlayer["tokens"];
+    const tokens = getClientTokens();
     const bonuses = currentPlayer["bonuses"];
 
     return sumObjectValues(tokens, bonuses);
@@ -74,7 +75,7 @@ function isWalletHigher(wallet, cost) {
 
 function getDefaultPaymentMethod(cost) {
     const currentPlayer = getClientPlayer();
-    const tokens = currentPlayer["tokens"];
+    const tokens = getClientTokens();
     const bonuses = currentPlayer["bonuses"];
 
     removeBonusesFromCost(cost, bonuses);

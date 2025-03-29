@@ -14,6 +14,7 @@ import { getHighestScore } from "./sidebar-renderer.js";
 import { isAllowedToSwitchToken, removePaidTokens, updateCurrentPlayerBonuses } from "../buy/buy-handler.js";
 import { GEMS } from "../data.js";
 import { getPlayersObjects } from "../../utils/game-object-handler.js";
+import {getClientTokens} from "../game-data-handler.js";
 
 function renderHeader(currentPlayer) {
     const $playerName = document.querySelector(".top-bar h2");
@@ -83,7 +84,6 @@ function insertCardCounter($token, token, currentPlayerBonuses) {
     insertImageInto($token, `UI/cards/${TOKEN_MAPPER[token]}_card_small`, true, `${TOKEN_MAPPER[token]} card`);
     $token.insertAdjacentHTML("afterbegin", `<p>${currentPlayerBonuses[token] || 0}</p>`);
     $token.dataset.bonuses = currentPlayerBonuses[token] || 0;
-    $token.dataset.type = token;
 }
 
 function renderClientPlayerTokens(currentPlayerTokens, currentPlayerBonuses, gems) {
@@ -95,6 +95,7 @@ function renderClientPlayerTokens(currentPlayerTokens, currentPlayerBonuses, gem
 
     for (const token of gems.toReversed()) {
         const $token = $numberedItemTemplate.content.firstElementChild.cloneNode(true);
+        $token.dataset.type = token;
 
         const $progressBar = $progressBarTemplate.content.firstElementChild.cloneNode(true);
         const $switchPaymentButtonContainer = getSwitchButtonTemplate(token);
@@ -116,7 +117,7 @@ function renderClientPlayerTokens(currentPlayerTokens, currentPlayerBonuses, gem
 }
 
 function renderSwitchPaymentButtons(currentPayment, cost) {
-    const tokensInWallet = gameStatusInterface.getClientPlayer()["tokens"];
+    const tokensInWallet = getClientTokens();
     const $tokensContainers = document.querySelectorAll(".switch-token-container");
 
     $tokensContainers.forEach($tokenContainer => {
@@ -145,7 +146,7 @@ function renderUpdatedPlayerTokens(bonus) {
     const updatedTokens = removePaidTokens();
     const updatedBonuses = updateCurrentPlayerBonuses(bonus);
 
-    renderClientPlayerTokenCount(gameStatusInterface.getClientPlayer()["tokens"]);
+    renderClientPlayerTokenCount(getClientTokens());
     renderClientPlayerTokens(updatedTokens, updatedBonuses, GEMS);
 }
 

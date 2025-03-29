@@ -43,7 +43,16 @@ function getGems() {
 }
 
 function getClientTokens() {
+  const tokens = {};
+  for (const $token of document.querySelector(".player-tokens > li")) {
+    tokens[$token.dataset.type] = $token.dataset.amount;
+  }
 
+  return tokens;
 }
 
-export {updateGameData, getGems, startGameStatePolling};
+function getClientBonuses() {
+  const bonuses = {};
+}
+
+export {updateGameData, getGems, getClientTokens, startGameStatePolling};
