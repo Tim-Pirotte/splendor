@@ -6,7 +6,7 @@ import {
 import { DEVELOPMENT_CARDS } from "../data.js";
 import { renderUpdatedBoardTokens } from "../renderer/board-renderer.js";
 import { sumObjectValues } from "../helper.js";
-import {getClientTokens} from "../game-data-handler.js";
+import {getClientBonuses, getClientTokens} from "../game-data-handler.js";
 
 function selectCard(e) {
     const $card = getCard(e);
@@ -54,9 +54,8 @@ function getCardData(cardName) {
 }
 
 function getPlayerWallet() {
-    const currentPlayer = getClientPlayer();
     const tokens = getClientTokens();
-    const bonuses = currentPlayer["bonuses"];
+    const bonuses = getClientBonuses();
 
     return sumObjectValues(tokens, bonuses);
 }
@@ -74,9 +73,8 @@ function isWalletHigher(wallet, cost) {
 }
 
 function getDefaultPaymentMethod(cost) {
-    const currentPlayer = getClientPlayer();
     const tokens = getClientTokens();
-    const bonuses = currentPlayer["bonuses"];
+    const bonuses = getClientBonuses();
 
     removeBonusesFromCost(cost, bonuses);
 
@@ -169,7 +167,7 @@ function removePaidTokens() {
 }
 
 function updateCurrentPlayerBonuses(bonus) {
-    const currentBonus = getClientPlayer()["bonuses"];
+    const currentBonus = getClientBonuses();
 
     if (currentBonus[bonus] === undefined) {
         currentBonus[bonus] = 1;

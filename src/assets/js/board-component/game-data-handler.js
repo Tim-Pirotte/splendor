@@ -53,6 +53,15 @@ function getClientTokens() {
 
 function getClientBonuses() {
   const bonuses = {};
+  for (const $bonus of document.querySelector(".player-tokens > li")) {
+    bonuses[$bonus.dataset.type] = $bonus.dataset.bonuses;
+  }
+
+  return bonuses;
 }
 
-export {updateGameData, getGems, getClientTokens, startGameStatePolling};
+function getClientTotalPrestigePoints() {
+  return parseInt(document.querySelector(".player-points p").dataset.totalPrestigePoints);
+}
+
+export {updateGameData, getGems, getClientTokens, getClientBonuses, getClientTotalPrestigePoints, startGameStatePolling};

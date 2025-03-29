@@ -14,7 +14,7 @@ import { getHighestScore } from "./sidebar-renderer.js";
 import { isAllowedToSwitchToken, removePaidTokens, updateCurrentPlayerBonuses } from "../buy/buy-handler.js";
 import { GEMS } from "../data.js";
 import { getPlayersObjects } from "../../utils/game-object-handler.js";
-import {getClientTokens} from "../game-data-handler.js";
+import {getClientTokens, getClientTotalPrestigePoints} from "../game-data-handler.js";
 
 function renderHeader(currentPlayer) {
     const $playerName = document.querySelector(".top-bar h2");
@@ -31,7 +31,9 @@ function getCurrentPlayer(players, currentPlayerName) {
 }
 
 function renderClientPlayerPoints(totalPrestigePoints, highestScore) {
-    document.querySelector(".player-points p").textContent =
+    const $totalPrestigePoints = document.querySelector(".player-points p");
+    $totalPrestigePoints.dataset.totalPrestigePoints = totalPrestigePoints;
+    $totalPrestigePoints.textContent =
     `${formatNumber(totalPrestigePoints)} / ${PRESTIGE_POINTS_NEEDED_TO_WIN}`;
 
     renderProgressBar(document.querySelector(".player-points .progress-bar"), totalPrestigePoints, "score");
@@ -155,7 +157,7 @@ function renderUpdatedPlayerScore(extraScore) {
         const players = getPlayersObjects(gameObject);
         const highestScore = getHighestScore(players);
 
-        renderClientPlayerPoints(gameStatusInterface.getClientPlayer()["totalPrestigePoints"] + extraScore, highestScore);
+        renderClientPlayerPoints(getClientTotalPrestigePoints() + extraScore, highestScore);
     });
 }
 
