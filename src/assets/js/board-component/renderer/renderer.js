@@ -1,4 +1,4 @@
-import { renderCurrentPlayer, renderHeader } from "./current-player-renderer.js";
+import { renderClientPlayer, renderHeader } from "./current-player-renderer.js";
 import { renderOtherPlayers } from "./sidebar-renderer.js";
 import { renderBoardTokens, renderCards, renderNobles } from "./board-renderer.js";
 import { GEMS } from "../data.js";
@@ -11,7 +11,7 @@ function renderPage(gameData) {
     const gems = GEMS;
     renderOtherPlayers(gameData["players"], gems);
     renderBoardTokens(gameData["unclaimedTokens"], gameData["players"].length, gems);
-    renderCurrentPlayer(gameData["players"], gems);
+    renderClientPlayer(gameData["players"], gems);
 }
 
 export { renderPage };

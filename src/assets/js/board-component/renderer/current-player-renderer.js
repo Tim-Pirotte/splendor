@@ -29,7 +29,7 @@ function getCurrentPlayer(players, currentPlayerName) {
     }
 }
 
-function renderCurrentPlayerPoints(totalPrestigePoints, highestScore) {
+function renderClientPlayerPoints(totalPrestigePoints, highestScore) {
     document.querySelector(".player-points p").textContent =
     `${formatNumber(totalPrestigePoints)} / ${PRESTIGE_POINTS_NEEDED_TO_WIN}`;
 
@@ -41,7 +41,7 @@ function renderCurrentPlayerPoints(totalPrestigePoints, highestScore) {
     }
 }
 
-function renderCurrentPlayerReserve(currentPlayer) {
+function renderClientPlayerReserve(currentPlayer) {
     const $reserved = document.querySelector(".reserved-cards ul");
     safeEmptyContainer($reserved);
 
@@ -50,7 +50,7 @@ function renderCurrentPlayerReserve(currentPlayer) {
     }
 }
 
-function renderCurrentPlayerTokenCount(tokens) {
+function renderClientPlayerTokenCount(tokens) {
     const $totalTokenCount = document.querySelector(".player-tokens #current-tokens");
     document.querySelector(".player-tokens #token-limit").textContent = MAX_TOKENS_ALLOWED;
 
@@ -65,14 +65,14 @@ function setTotalTokensColor($totalTokenCount, totalTokens) {
     }
 }
 
-function renderCurrentPlayer(players, gems) {
+function renderClientPlayer(players, gems) {
     const currentPlayer = getCurrentPlayer(players, loadFromStorage("playerName"));
     const highestScore = getHighestScore(players);
 
-    renderCurrentPlayerPoints(currentPlayer["totalPrestigePoints"] , highestScore);
-    renderCurrentPlayerReserve(currentPlayer);
-    renderCurrentPlayerTokenCount(currentPlayer["tokens"]);
-    renderCurrentPlayerTokens(currentPlayer["tokens"], currentPlayer["bonuses"], gems);
+    renderClientPlayerPoints(currentPlayer["totalPrestigePoints"] , highestScore);
+    renderClientPlayerReserve(currentPlayer);
+    renderClientPlayerTokenCount(currentPlayer["tokens"]);
+    renderClientPlayerTokens(currentPlayer["tokens"], currentPlayer["bonuses"], gems);
 }
 
 function countTokens(tokens) {
@@ -86,7 +86,7 @@ function insertCardCounter($token, token, currentPlayerBonuses) {
     $token.dataset.type = token;
 }
 
-function renderCurrentPlayerTokens(currentPlayerTokens, currentPlayerBonuses, gems) {
+function renderClientPlayerTokens(currentPlayerTokens, currentPlayerBonuses, gems) {
     const $currentPlayerTokensContainer = document.querySelector(".player-tokens ul");
     safeEmptyContainer($currentPlayerTokensContainer);
 
@@ -144,8 +144,8 @@ function renderUpdatedPlayerTokens(bonus) {
     const updatedTokens = removePaidTokens();
     const updatedBonuses = updateCurrentPlayerBonuses(bonus);
 
-    renderCurrentPlayerTokenCount(gameStatusInterface.getClientPlayer()["tokens"]);
-    renderCurrentPlayerTokens(updatedTokens, updatedBonuses, GEMS);
+    renderClientPlayerTokenCount(gameStatusInterface.getClientPlayer()["tokens"]);
+    renderClientPlayerTokens(updatedTokens, updatedBonuses, GEMS);
 }
 
 function renderUpdatedPlayerScore(extraScore) {
@@ -153,7 +153,7 @@ function renderUpdatedPlayerScore(extraScore) {
         const players = getPlayersObjects(gameObject);
         const highestScore = getHighestScore(players);
 
-        renderCurrentPlayerPoints(gameStatusInterface.getClientPlayer()["totalPrestigePoints"] + extraScore, highestScore);
+        renderClientPlayerPoints(gameStatusInterface.getClientPlayer()["totalPrestigePoints"] + extraScore, highestScore);
     });
 }
 
@@ -165,9 +165,9 @@ function hideSwitchPaymentButtons() {
 }
 
 export {renderHeader,
-    renderCurrentPlayer,
+    renderClientPlayer,
     renderSwitchPaymentButtons,
-    renderCurrentPlayerTokenCount,renderCurrentPlayerTokens,
+    renderClientPlayerTokenCount,renderClientPlayerTokens,
     renderUpdatedPlayerTokens,
     renderUpdatedPlayerScore,
     hideSwitchPaymentButtons,
