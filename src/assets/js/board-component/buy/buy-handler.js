@@ -199,11 +199,5 @@ function setNewPaymentMethod(paymentMethod) {
     sessionStorage.setItem("paymentMethod", JSON.stringify(paymentMethod));
 }
 
-export {selectCard,
-    processBuyCardClick,
-    isAllowedToSwitchToken,
-    getPlayerWallet,
-    handlePaymentMethodChange,
-    removePaidTokens,
-    updateCurrentPlayerBonuses,
-    getDefaultPaymentMethod};
+export { selectCard, processBuyCardClick, isAllowedToSwitchToken, getPlayerWallet, handlePaymentMethodChange,
+         removePaidTokens, updateCurrentPlayerBonuses, getDefaultPaymentMethod };

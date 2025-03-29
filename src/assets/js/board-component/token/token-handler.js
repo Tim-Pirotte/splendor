@@ -41,6 +41,7 @@ function deselectToken($selectedToken) {
 
 function removeTokenFromStack($selectedToken, $actionButton) {
     let shiftStackDown = false;
+
     for (let i = 0; i < MAX_TAKE_TOKENS; i++) {
         const token = $actionButton.dataset[`token${i}`];
 
@@ -107,6 +108,7 @@ function selectToken(e) {
 
 function setTokensTo(stackPointer, $actionButton, amountOfTokens) {
     const requestBody = {take: {}};
+
     for (let i = 0; i < stackPointer; i++) {
         requestBody.take[$actionButton.dataset[`token${i}`]] = amountOfTokens;
     }
