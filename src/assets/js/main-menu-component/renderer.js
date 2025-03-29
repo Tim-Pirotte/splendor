@@ -13,7 +13,7 @@ function renderSelectedAvatars(avatar) {
     const $template = document.querySelector("#avatar-template");
     const $button = document.querySelector(".avatar-selector button");
 
-    $button.innerHTML= "";
+    $button.innerHTML = "";
     renderAvatar($template, $button, avatar);
 }
 

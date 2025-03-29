@@ -2,7 +2,7 @@ import * as API from "../../api.js";
 import { updateTokens } from "./token-handler.js";
 
 function takeGemsRequest(tokenTypes , action) {
-    const requestBody = {"take": {}};
+    const requestBody = { "take": {} };
 
     if (action === "takeTwo") {
         requestBody["take"][tokenTypes] = 2;

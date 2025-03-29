@@ -3,8 +3,8 @@ const GROUPTOKEN = "Group4-9486-769";
 
 const ERRORHANDLERSELECTOR = ".errormessages p";
 
-const LOCALSERVER = `http://localhost:8001`;
-const DEPLOYEDSERVER = `https://project-1.ti.howest.be/2024-2025/splendor/api`;
+const LOCALSERVER = "http://localhost:8001";
+const DEPLOYEDSERVER = "https://project-1.ti.howest.be/2024-2025/splendor/api";
 const GROUPDEPLOYEDSERVER = `https://project-1.ti.howest.be/2024-2025/group-${GROUPNUMBER}/api`;
 
 const MAXPRESTIGEPOINTS = 15;
@@ -12,7 +12,7 @@ const MAXPRESTIGEPOINTS = 15;
 const POLLING_TIME_OUT = 2000;
 
 function getAPIUrl() {
-  return DEPLOYEDSERVER;
+    return DEPLOYEDSERVER;
 }
 
 export { getAPIUrl, GROUPTOKEN, ERRORHANDLERSELECTOR, MAXPRESTIGEPOINTS, POLLING_TIME_OUT };

@@ -2,7 +2,7 @@ import * as API from "../../api.js";
 import { setActionButtonState } from "../game-status-interface.js";
 import { MIN_TOKENS_FOR_PICKING_TWO } from "./config.js";
 import { MAX_TAKE_TOKENS } from "../config.js";
-import {getActionButton} from "../helper.js";
+import { getActionButton } from "../helper.js";
 
 function clickedOnToken(target) {
     return target.tagName.toLowerCase() === "img";
@@ -88,6 +88,7 @@ function selectToken(e) {
         $actionButton.dataset.stackPointer = stackPointer;
 
         setActionToTokenAction(stackPointer, $selectedToken);
+
         return;
     }
 
@@ -104,7 +105,7 @@ function selectToken(e) {
 }
 
 function setTokensTo(stackPointer, $actionButton, amountOfTokens) {
-    const requestBody = {take: {}};
+    const requestBody = { take: {} };
     for (let i = 0; i < stackPointer; i++) {
         requestBody.take[$actionButton.dataset[`token${i}`]] = amountOfTokens;
     }
@@ -143,7 +144,7 @@ function processTakeTwoTokens(e) {
 }
 
 function processSkipTurn() {
-    API.takeTokens({take: {Ruby: 0}}).then(res => updateTokens(res));
+    API.takeTokens({ take: { Ruby: 0 } }).then(res => updateTokens(res));
 }
 
 export { selectToken, processTakeTokensClick, updateTokens, processTakeTwoTokens, processSkipTurn };

@@ -6,8 +6,8 @@ function renderPlayerInformation() {
     document.querySelector("#playerName").textContent = loadFromStorage("playerName");
 
     renderAvatar(document.querySelector("#avatar-template"),
-                 document.querySelector("#playerInformation"),
-                 avatar, "..");
+        document.querySelector("#playerInformation"),
+        avatar, "..");
 }
 
 function renderAvatar($template, $container, avatar, relativePath = ".") {

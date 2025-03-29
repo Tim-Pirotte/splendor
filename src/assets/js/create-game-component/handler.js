@@ -25,12 +25,13 @@ function getCheckedRadioValue(radioButtonList){
     for (const radioButton of radioButtonList) {
         if (radioButton.checked) { return radioButton.value; }
     }
+
     return null;
 }
 
 function getGameBody(playerName, gameName, visibility, numberOfPlayers){
     return gameName ? { gameName, numberOfPlayers, playerName }
-                    : { numberOfPlayers, playerName };
+        : { numberOfPlayers, playerName };
 }
 
 export { handleCreateGameSubmit, getCheckedRadioValue, getGameBody };

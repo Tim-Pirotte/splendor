@@ -8,7 +8,7 @@ import {
     insertImageInto,
     renderCard,
     renderProgressBar,
-    safeEmptyContainer
+    safeEmptyContainer,
 } from "./helper.js";
 import { getHighestScore } from "./sidebar-renderer.js";
 import { isAllowedToSwitchToken, removePaidTokens, updateCurrentPlayerBonuses } from "../buy/buy-handler.js";
@@ -161,7 +161,7 @@ function hideSwitchPaymentButtons() {
         $container.querySelector("p").classList.add("hidden");
     });
 }
-export {renderHeader,
+export { renderHeader,
     renderCurrentPlayer,
     renderSwitchPaymentButtons,
     renderCurrentPlayerTokenCount,renderCurrentPlayerTokens,
