@@ -1,8 +1,4 @@
-function getActionButton() {
-    return document.querySelector(".action-button");
-}
-
-function mergeObjectsWithSum(obj1, obj2) {
+function sumObjectValues(obj1, obj2) {
     for (const tokenType in obj2) {
         if (obj1.hasOwnProperty(tokenType)) {
             obj1[tokenType] = parseInt(obj1[tokenType]) + parseInt(obj2[tokenType]);
@@ -25,4 +21,4 @@ function getUnclaimedTokens() {
     return tokens;
 }
 
-export { getActionButton, mergeObjectsWithSum, getUnclaimedTokens };
+export { sumObjectValues, getUnclaimedTokens };

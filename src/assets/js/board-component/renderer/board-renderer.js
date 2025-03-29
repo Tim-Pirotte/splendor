@@ -7,7 +7,7 @@ import {
     TOKEN_LIMIT_TWO_PLAYERS,
     TOKEN_MAPPER
 } from "../config.js";
-import { getUnclaimedTokens, mergeObjectsWithSum } from "../helper.js";
+import { getUnclaimedTokens, sumObjectValues } from "../helper.js";
 import { GEMS } from "../data.js";
 
 function renderCards(market) {
@@ -85,7 +85,7 @@ function renderNobles(unclaimedNobles) {
 function renderUpdatedBoardTokens(tokensToAdd) {
     const amountOfPlayers = document.querySelectorAll(".player-card").length + 1;
     const previousTokens = getUnclaimedTokens();
-    const newAmountOfTokens = mergeObjectsWithSum(previousTokens, tokensToAdd);
+    const newAmountOfTokens = sumObjectValues(previousTokens, tokensToAdd);
 
     renderBoardTokens(newAmountOfTokens, amountOfPlayers, GEMS);
 }

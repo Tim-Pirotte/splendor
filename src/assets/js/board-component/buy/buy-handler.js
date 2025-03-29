@@ -1,11 +1,11 @@
 import * as API from "../../api.js";
-import { getClientPlayer, setActionButtonState } from "../game-status-interface.js";
+import {getActionButton, getClientPlayer, setActionButtonState} from "../game-status-interface.js";
 import {
     renderSwitchPaymentButtons, renderUpdatedPlayerScore, renderUpdatedPlayerTokens
 } from "../renderer/current-player-renderer.js";
 import { DEVELOPMENT_CARDS } from "../data.js";
 import { renderUpdatedBoardTokens } from "../renderer/board-renderer.js";
-import { getActionButton, mergeObjectsWithSum } from "../helper.js";
+import { sumObjectValues } from "../helper.js";
 
 function selectCard(e) {
     const $card = getCard(e);
@@ -46,7 +46,6 @@ function processBuyCardClick() {
     renderUpdatedBoardTokens(JSON.parse(sessionStorage.getItem("paymentMethod")));
 
     API.buyCard(requestBody).then(res => sessionStorage.removeItem("paymentMethod"));
-
 }
 
 function getCardData(cardName) {
@@ -62,7 +61,7 @@ function getPlayerWallet() {
     const tokens = currentPlayer["tokens"];
     const bonuses = currentPlayer["bonuses"];
 
-    return mergeObjectsWithSum(tokens, bonuses);
+    return sumObjectValues(tokens, bonuses);
 }
 
 function isWalletHigher(wallet, cost) {

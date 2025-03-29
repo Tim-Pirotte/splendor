@@ -1,8 +1,7 @@
-import {setActionButtonState} from "../game-status-interface.js";
+import {getActionButton, setActionButtonState} from "../game-status-interface.js";
 import {fetchFromServer} from "../../data-connector/api-communication-abstractor.js";
 import {loadFromStorage} from "../../data-connector/local-storage-abstractor.js";
 import {NOBLES} from "../data.js";
-import {getActionButton} from "../helper.js";
 
 function selectNoble(e) {
   const $selectedNoble = e.target.closest("li");
