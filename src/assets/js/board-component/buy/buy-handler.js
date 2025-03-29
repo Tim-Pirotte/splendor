@@ -1,6 +1,7 @@
 import * as API from "../../api.js";
 import { getCurrentPlayer, setActionButtonState } from "../game-status-interface.js";
 import {
+    hideSwitchPaymentButtons,
     renderSwitchPaymentButtons, renderUpdatedPlayerScore, renderUpdatedPlayerTokens
 } from "../renderer/current-player-renderer.js";
 import { DEVELOPMENT_CARDS } from "../data.js";
@@ -41,6 +42,7 @@ function deselectCard() {
     sessionStorage.removeItem("paymentMethod");
     setActionButtonState("skip turn", "skipTurn", {name: ""});
     getActionButton().disabled = false;
+    hideSwitchPaymentButtons();
 }
 
 function canBuy($card) {
