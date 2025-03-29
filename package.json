@@ -15,6 +15,10 @@
     "dependencies": {
         "sonar-scanner": "^3.1.0",
         "vnu-jar": "^23.4.11"
+    },
+    "devDependencies": {
+        "@eslint/js": "^9.23.0",
+        "eslint": "^9.23.0",
+        "globals": "^16.0.0"
     }
 }
-  
