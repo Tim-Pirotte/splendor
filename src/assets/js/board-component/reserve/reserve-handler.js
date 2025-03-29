@@ -1,5 +1,5 @@
 import { validCardReserve } from "../state-machine/valid-action-checker.js";
-import { renderCard } from "../renderer/helper.js";
+import { renderCard, safeEmptyContainer } from "../renderer/helper.js";
 import * as API from "./../../api.js"
 
 function selectCardForReserve(e) {
@@ -14,23 +14,23 @@ function selectCardForReserve(e) {
 function procesReserve(e){
     const selectedCardName = document.querySelector(".reserve-button").dataset.name;
     console.log(selectedCardName)
-    // if( selectedCardName ) {
-    //   const requestBody = {
-    //         "development": {
-    //           "name": selectedCardName
-    //         }
-    //       };
-    //   API.reserveCard(requestBody).then(res => {
-    //     //Render the card in the reserved space
-    //     for (const card of res["reserve"]) {
-    //       console.log(res);
-    //       const $reservedCards = document.querySelector(".reserved-cards ul");
-    //       renderCard($reservedCards, card["prestigePoints"], card["bonus"], card["cost"], card["name"]);
-    //     }
+    if( selectedCardName ) {
+      const requestBody = {
+            "development": {
+              "name": selectedCardName
+            }
+          };
+      API.reserveCard(requestBody).then(res => {
+        //Render the card in the reserved space
+        const $reservedCards = document.querySelector(".reserved-cards ul");
+        safeEmptyContainer($reservedCards);
+        for (const card of res["reserve"]) {
+          renderCard($reservedCards, card["prestigePoints"], card["bonus"], card["cost"], card["name"]);
+        }
 
-    //     //TODO: delete the card from the deck
-    //   }); 
-    // }
+        //TODO: delete the card from the deck
+      }); 
+    }
 
 }
 
