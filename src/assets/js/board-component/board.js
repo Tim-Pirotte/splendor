@@ -16,6 +16,7 @@ function initializeActions() {
     tokenInit();
     noblesInit();
     buyInit();
+    reserveInit();
 }
 
 init();

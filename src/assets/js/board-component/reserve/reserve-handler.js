@@ -1,29 +1,35 @@
 import { validCardReserve } from "../state-machine/valid-action-checker.js";
+import { renderCard } from "../renderer/helper.js";
 import * as API from "./../../api.js"
 
 function selectCardForReserve(e) {
     const $selectedCard = e.target.closest("li");
     const cardName = $selectedCard.dataset.name;
     if(validCardReserve()) {
-      // Add the name data to the button
-      console.log($selectedCard.dataset)
-
-      //console.log(cardName)
       document.querySelector(".reserve-button").dataset.name = cardName;
     }
 }
 
 
 function procesReserve(e){
-  console.log(document.querySelector(".reserve-button").dataset.name)
-    // const requestBody = {
-    //     "development": {
-    //       "name": cardName
-    //     }
-    //   };
-    
-    // console.log(cardName);
-    //API.reserveCard(requestBody);
+    const selectedCardName = document.querySelector(".reserve-button").dataset.name;
+    if( selectedCardName ) {
+      const requestBody = {
+            "development": {
+              "name": selectedCardName
+            }
+          };
+      API.reserveCard(requestBody).then(res => {
+        //Render the card in the reserved space
+        for (const card of res["reserve"]) {
+          const $reservedCards = document.querySelector(".reserved-cards ul");
+          renderCard($reservedCards, card["prestigePoints"], card["bonus"], card["cost"], card["name"]);
+        }
+
+        //TODO: delete the card from the deck
+      }); 
+    }
+
 }
 
 function isDeckReserve(){}
