@@ -1,5 +1,5 @@
 import * as API from "../../api.js";
-import { getCurrentPlayer, setActionButtonState } from "../game-status-interface.js";
+import { getClientPlayer, setActionButtonState } from "../game-status-interface.js";
 import {
     renderSwitchPaymentButtons, renderUpdatedPlayerScore, renderUpdatedPlayerTokens
 } from "../renderer/current-player-renderer.js";
@@ -58,7 +58,7 @@ function getCardData(cardName) {
 }
 
 function getPlayerWallet() {
-    const currentPlayer = getCurrentPlayer();
+    const currentPlayer = getClientPlayer();
     const tokens = currentPlayer["tokens"];
     const bonuses = currentPlayer["bonuses"];
 
@@ -78,7 +78,7 @@ function isWalletHigher(wallet, cost) {
 }
 
 function getDefaultPaymentMethod(cost) {
-    const currentPlayer = getCurrentPlayer();
+    const currentPlayer = getClientPlayer();
     const tokens = currentPlayer["tokens"];
     const bonuses = currentPlayer["bonuses"];
 
@@ -173,7 +173,7 @@ function removePaidTokens() {
 }
 
 function updateCurrentPlayerBonuses(bonus) {
-    const currentBonus = getCurrentPlayer()["bonuses"];
+    const currentBonus = getClientPlayer()["bonuses"];
 
     if (currentBonus[bonus] === undefined) {
         currentBonus[bonus] = 1;

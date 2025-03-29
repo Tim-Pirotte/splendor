@@ -115,7 +115,7 @@ function renderCurrentPlayerTokens(currentPlayerTokens, currentPlayerBonuses, ge
 }
 
 function renderSwitchPaymentButtons(currentPayment, cost) {
-    const tokensInWallet = gameStatusInterface.getCurrentPlayer()["tokens"];
+    const tokensInWallet = gameStatusInterface.getClientPlayer()["tokens"];
     const $tokensContainers = document.querySelectorAll(".switch-token-container");
 
     $tokensContainers.forEach($tokenContainer => {
@@ -144,7 +144,7 @@ function renderUpdatedPlayerTokens(bonus) {
     const updatedTokens = removePaidTokens();
     const updatedBonuses = updateCurrentPlayerBonuses(bonus);
 
-    renderCurrentPlayerTokenCount(gameStatusInterface.getCurrentPlayer()["tokens"]);
+    renderCurrentPlayerTokenCount(gameStatusInterface.getClientPlayer()["tokens"]);
     renderCurrentPlayerTokens(updatedTokens, updatedBonuses, GEMS);
 }
 
@@ -153,7 +153,7 @@ function renderUpdatedPlayerScore(extraScore) {
         const players = getPlayersObjects(gameObject);
         const highestScore = getHighestScore(players);
 
-        renderCurrentPlayerPoints(gameStatusInterface.getCurrentPlayer(), highestScore, extraScore);
+        renderCurrentPlayerPoints(gameStatusInterface.getClientPlayer(), highestScore, extraScore);
     });
 }
 

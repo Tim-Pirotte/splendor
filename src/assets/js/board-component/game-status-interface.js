@@ -9,7 +9,7 @@ function isCurrentlyPlaying() {
   return playerName === currentlyPlaying;
 }
 
-function getCurrentPlayer() {
+function getClientPlayer() {
   const players = loadFromStorage("gameData")["players"];
   const playerName = loadFromStorage("playerName");
 
@@ -18,18 +18,6 @@ function getCurrentPlayer() {
       return player;
     }
   }
-}
-
-function getGameCreator() {
-  return loadFromStorage("gameData")["players"][0];
-}
-
-function hasGameStarted() {
-  return !("started" in loadFromStorage("gameData"));
-}
-
-function getGameState() {
-  return loadFromStorage("gameData")["gameState"];
 }
 
 function setActionButtonState(message, functionToRunOnClick, datasetParameters) {
@@ -53,4 +41,4 @@ function initGameStatusInterface() {
   $actionButton.addEventListener("click", actionRegistryRouter);
 }
 
-export { isCurrentlyPlaying, initGameStatusInterface, setActionButtonState, getGameCreator, getCurrentPlayer };
+export { isCurrentlyPlaying, initGameStatusInterface, setActionButtonState, getGameCreator, getClientPlayer };
