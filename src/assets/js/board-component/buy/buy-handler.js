@@ -49,11 +49,7 @@ function processBuyCardClick() {
 }
 
 function getCardData(cardName) {
-    for (const card of DEVELOPMENT_CARDS) {
-        if (card["name"] === cardName) {
-            return card;
-        }
-    }
+    return binarySearchObjects(DEVELOPMENT_CARDS, cardName, "name");
 }
 
 function getPlayerWallet() {

@@ -42,4 +42,8 @@ function getGems() {
   API.getGemsList().then(gems => saveToStorage("gems", gems["gems"]));
 }
 
+function getClientTokens() {
+
+}
+
 export {updateGameData, getGems, startGameStatePolling};

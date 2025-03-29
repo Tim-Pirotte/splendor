@@ -46,7 +46,7 @@ function processTakeNoble() {
 }
 
 function getNobleByName(name) {
-  return NOBLES.find(noble => noble.name === name);
+  return binarySearchObjects(NOBLES, name, "name");
 }
 
 export { selectNoble, processTakeNoble };
