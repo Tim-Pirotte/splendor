@@ -3,25 +3,29 @@ import * as API from "./../../api.js"
 
 function selectCardForReserve(e) {
     const $selectedCard = e.target.closest("li");
+    const cardName = $selectedCard.dataset.name;
     if(validCardReserve()) {
-        const cardName = $selectedCard.dataset.name;
-        procesReserve(cardName);
+      // Add the name data to the button
+      console.log($selectedCard.dataset)
+
+      //console.log(cardName)
+      document.querySelector(".reserve-button").dataset.name = cardName;
     }
-    console.log($selectedCard);
 }
 
 
-function procesReserve(cardName){
-    const requestBody = {
-        "development": {
-          "name": cardName
-        }
-      };
+function procesReserve(e){
+  console.log(document.querySelector(".reserve-button").dataset.name)
+    // const requestBody = {
+    //     "development": {
+    //       "name": cardName
+    //     }
+    //   };
     
-    console.log(cardName);
+    // console.log(cardName);
     //API.reserveCard(requestBody);
 }
 
 function isDeckReserve(){}
 
-export { selectCardForReserve };
+export { selectCardForReserve, procesReserve };
