@@ -3,6 +3,7 @@ import { setActionButtonState } from "../game-status-interface.js";
 import { MIN_TOKENS_FOR_PICKING_TWO } from "./config.js";
 import { MAX_TAKE_TOKENS } from "../config.js";
 import {getActionButton} from "../helper.js";
+import {deselectCard} from "../buy/buy-handler.js";
 
 function clickedOnToken(target) {
     return target.tagName.toLowerCase() === "img";
@@ -72,6 +73,8 @@ function highlightToken($selectedToken) {
 }
 
 function selectToken(e) {
+    deselectCard()
+
     if (!clickedOnToken(e.target)) return;
 
     getActionButton().disabled = false;
