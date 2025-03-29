@@ -1,7 +1,7 @@
 const MAX_RESERVED_AMOUNT = 3;
 
 function hasReservePlace() {
-    const amount = document.querySelectorAll("section .reserved-cards ul li").length;
+    const amount = document.querySelectorAll(".reserved-cards .card").length;
     return amount < MAX_RESERVED_AMOUNT;
 }
 

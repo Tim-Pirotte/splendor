@@ -3,7 +3,7 @@ import { renderCard } from "../renderer/helper.js";
 import * as API from "./../../api.js"
 
 function selectCardForReserve(e) {
-    const $selectedCard = e.target.closest("li");
+    const $selectedCard = e.target.closest("li.card");
     const cardName = $selectedCard.dataset.name;
     if(validCardReserve()) {
       document.querySelector(".reserve-button").dataset.name = cardName;
@@ -13,22 +13,24 @@ function selectCardForReserve(e) {
 
 function procesReserve(e){
     const selectedCardName = document.querySelector(".reserve-button").dataset.name;
-    if( selectedCardName ) {
-      const requestBody = {
-            "development": {
-              "name": selectedCardName
-            }
-          };
-      API.reserveCard(requestBody).then(res => {
-        //Render the card in the reserved space
-        for (const card of res["reserve"]) {
-          const $reservedCards = document.querySelector(".reserved-cards ul");
-          renderCard($reservedCards, card["prestigePoints"], card["bonus"], card["cost"], card["name"]);
-        }
+    console.log(selectedCardName)
+    // if( selectedCardName ) {
+    //   const requestBody = {
+    //         "development": {
+    //           "name": selectedCardName
+    //         }
+    //       };
+    //   API.reserveCard(requestBody).then(res => {
+    //     //Render the card in the reserved space
+    //     for (const card of res["reserve"]) {
+    //       console.log(res);
+    //       const $reservedCards = document.querySelector(".reserved-cards ul");
+    //       renderCard($reservedCards, card["prestigePoints"], card["bonus"], card["cost"], card["name"]);
+    //     }
 
-        //TODO: delete the card from the deck
-      }); 
-    }
+    //     //TODO: delete the card from the deck
+    //   }); 
+    // }
 
 }
 
