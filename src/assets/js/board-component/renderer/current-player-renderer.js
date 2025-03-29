@@ -29,14 +29,14 @@ function getCurrentPlayer(players, currentPlayerName) {
     }
 }
 
-function renderCurrentPlayerPoints(currentPlayer, highestScore, extraScore = 0) {
+function renderCurrentPlayerPoints(totalPrestigePoints, highestScore) {
     document.querySelector(".player-points p").textContent =
-    `${formatNumber(parseInt(currentPlayer["totalPrestigePoints"]) + extraScore)}  / ${PRESTIGE_POINTS_NEEDED_TO_WIN}`;
+    `${formatNumber(totalPrestigePoints)} / ${PRESTIGE_POINTS_NEEDED_TO_WIN}`;
 
-    renderProgressBar(document.querySelector(".player-points .progress-bar"), currentPlayer["totalPrestigePoints"], "score");
+    renderProgressBar(document.querySelector(".player-points .progress-bar"), totalPrestigePoints, "score");
     const $playerDiamondLocation = document.querySelector(".player-points p");
 
-    if (currentPlayer["totalPrestigePoints"] >= highestScore) {
+    if (totalPrestigePoints >= highestScore) {
         insertImageInto($playerDiamondLocation, "UI/tokens/white_chip", false, "Score amongst the highest");
     }
 }
@@ -69,7 +69,7 @@ function renderCurrentPlayer(players, gems) {
     const currentPlayer = getCurrentPlayer(players, loadFromStorage("playerName"));
     const highestScore = getHighestScore(players);
 
-    renderCurrentPlayerPoints(currentPlayer , highestScore);
+    renderCurrentPlayerPoints(currentPlayer["totalPrestigePoints"] , highestScore);
     renderCurrentPlayerReserve(currentPlayer);
     renderCurrentPlayerTokenCount(currentPlayer["tokens"]);
     renderCurrentPlayerTokens(currentPlayer["tokens"], currentPlayer["bonuses"], gems);
@@ -153,7 +153,7 @@ function renderUpdatedPlayerScore(extraScore) {
         const players = getPlayersObjects(gameObject);
         const highestScore = getHighestScore(players);
 
-        renderCurrentPlayerPoints(gameStatusInterface.getClientPlayer(), highestScore, extraScore);
+        renderCurrentPlayerPoints(gameStatusInterface.getClientPlayer()["totalPrestigePoints"] + extraScore, highestScore);
     });
 }
 
@@ -163,6 +163,7 @@ function hideSwitchPaymentButtons() {
         $container.querySelector("p").classList.add("hidden");
     });
 }
+
 export {renderHeader,
     renderCurrentPlayer,
     renderSwitchPaymentButtons,
