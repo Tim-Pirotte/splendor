@@ -10,13 +10,18 @@ import { getActionButton, mergeObjectsWithSum } from "../helper.js";
 function selectCard(e) {
     const $card = getCard(e);
 
+    if (cardAlreadySelected($card.dataset.name)) {
+        deselectCard();
+        return;
+    }
+
     setActionButtonState(
     "buy",
     "processBuyCardClick",
     {name: $card.dataset.name},
     );
 
-    if ($card && canBuy($card)) {
+     if ($card && canBuy($card)) {
         const cardData = getCardData($card.dataset.name);
         const defaultPayment = getDefaultPaymentMethod(cardData["cost"]);
 
@@ -26,6 +31,16 @@ function selectCard(e) {
     } else {
         getActionButton().disabled = true;
     }
+}
+
+function cardAlreadySelected(cardName) {
+    return getActionButton().dataset.name === cardName;
+}
+
+function deselectCard() {
+    sessionStorage.removeItem("paymentMethod");
+    setActionButtonState("skip turn", "skipTurn", {name: ""});
+    getActionButton().disabled = false;
 }
 
 function canBuy($card) {
