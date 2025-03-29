@@ -15,8 +15,10 @@ import { isAllowedToSwitchToken, removePaidTokens, updateCurrentPlayerBonuses } 
 import { GEMS } from "../data.js";
 import { getPlayersObjects } from "../../utils/game-object-handler.js";
 
-function renderHeader() {
-    document.querySelector(".top-bar h2").textContent = loadFromStorage("playerName");
+function renderHeader(currentPlayer) {
+    const $playerName = document.querySelector(".top-bar h2");
+    $playerName.textContent = loadFromStorage("playerName");
+    $playerName.dataset.currentlyPlaying = currentPlayer;
 }
 
 function getCurrentPlayer(players, currentPlayerName) {

@@ -5,7 +5,7 @@ import { getActionButton } from "./helper.js";
 
 function isCurrentlyPlaying() {
   const playerName = loadFromStorage("playerName");
-  const currentlyPlaying = loadFromStorage("gameData")["currentPlayer"];
+  const currentlyPlaying = document.querySelector(".top-bar h2").dataset.currentlyPlaying;
   return playerName === currentlyPlaying;
 }
 

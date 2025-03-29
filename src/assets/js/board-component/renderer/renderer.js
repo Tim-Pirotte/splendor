@@ -4,7 +4,7 @@ import { renderBoardTokens, renderCards, renderNobles } from "./board-renderer.j
 import { GEMS } from "../data.js";
 
 function renderPage(gameData) {
-    renderHeader();
+    renderHeader(gameData["currentPlayer"]);
     renderCards(gameData["market"]);
     renderNobles(gameData["unclaimedNobles"]);
     // Functions relying on the response of gems are last in order to minimize disruptions
