@@ -2,6 +2,8 @@ import * as API from "../api.js";
 import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
 import { renderPage } from "./renderer/renderer.js";
 import { initRoundBegin } from "./state-machine/state-machine.js";
+import {isCurrentlyPlaying} from "./game-status-interface.js";
+import {POLLING_TIME_OUT} from "../config.js";
 
 function handleGameDataError(err) {
   const forbidden = 403;
@@ -24,7 +26,16 @@ function updateGameData() {
       saveToStorage("gameData", gameData);
       initRoundBegin(gameData);
       renderPage(gameData);
-    }).catch(err => handleGameDataError(err));
+
+      if (!isCurrentlyPlaying()) {
+        startGameStatePolling();
+      }
+    })
+    .catch(err => handleGameDataError(err));
+}
+
+function startGameStatePolling() {
+  setTimeout(updateGameData, POLLING_TIME_OUT);
 }
 
 function getGems() {
@@ -35,4 +46,4 @@ function waitOnTokenData() {
   return loadFromStorage("gems");
 }
 
-export { updateGameData, getGems, waitOnTokenData };
+export {updateGameData, getGems, waitOnTokenData, startGameStatePolling};

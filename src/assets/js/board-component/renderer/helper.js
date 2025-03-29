@@ -36,11 +36,12 @@ function formatNumber(number) {
   return number.toString().padStart(2, '0');
 }
 
-function renderCard($container, points, bonus, costs) {
+function renderCard($container, points, bonus, costs, name) {
   const $numberedItemTemplate = document.querySelector("#numbered-item-template");
   const $card = document.querySelector("#card-template").content.firstElementChild.cloneNode(true);
 
   $card.querySelector(".points").textContent = points;
+  $card.dataset.name = name;
 
   const $cardCost = $card.querySelector(".cost");
 
@@ -67,4 +68,14 @@ function safeEmptyContainer($container) {
   });
 }
 
-export { insertImageInto, renderProgressBar, formatNumber, renderCard, safeEmptyContainer };
+function getSwitchButtonTemplate(token) {
+  const $switchButtonContainerTemplate = document.querySelector("#switch-tokens-container-template");
+  const $container = $switchButtonContainerTemplate.content.firstElementChild.cloneNode(true);
+
+  if (token === "Gold") {
+    $container.querySelector(".switch-token").textContent = "Reset";
+  }
+  return $container;
+}
+
+export {insertImageInto, renderProgressBar, formatNumber, renderCard, safeEmptyContainer, getSwitchButtonTemplate};

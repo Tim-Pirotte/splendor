@@ -1,99 +1,115 @@
-import { takeGemsRequest } from "./request-handler.js";
+import * as API from "../../api.js";
 import { setActionButtonState } from "../game-status-interface.js";
 import { MIN_TOKENS_FOR_PICKING_TWO } from "./config.js";
+import { MAX_TAKE_TOKENS } from "../config.js";
+import {getActionButton} from "../helper.js";
 
-function canGetToken(tokenType, amount , $actionButtonData) {
-    if(checkIfTokenIsEmpty($actionButtonData.token1)){
-        return (tokenType !== "Gold") && amount >= MIN_TOKENS_FOR_PICKING_TWO;
-    }
-   return false;
+function clickedOnToken(target) {
+    return target.tagName.toLowerCase() === "img";
 }
 
-function giveTokenThatAlreadySelected(tokenType , actionButtonData){
-    const token1 = 1;
-    const token2 = 2;
-    const token3 = 3;
-
-    if (tokenType === actionButtonData.token1) {
-        return token1;
-    }
-    if (tokenType === actionButtonData.token2) {
-       return token2;
-    }
-    if (tokenType === actionButtonData.token3) {
-        return token3;
-    }
-    return null;
+function getToken(target) {
+    return target.closest("li");
 }
 
-function checkIfTokenAlreadySelected(tokenType , actionButtonData) {
-   return (giveTokenThatAlreadySelected(tokenType , actionButtonData) !== null);
+function stackExists($actionButton) {
+    return $actionButton.dataset.token0;
 }
 
-function removeToken(token , actionButtonData) {
-    const token1 = 1;
-    const token2 = 2;
-    const token3 = 3;
+function createStack($actionButton) {
+    for (let i = 0; i < MAX_TAKE_TOKENS; i++) {
+        $actionButton.dataset[`token${i}`] = "";
+    }
 
-    if (token === token1){
-        actionButtonData.token1 = "";
+    $actionButton.dataset.stackPointer = "0";
+}
+
+function tokenInStack($selectedToken, $actionButton, stackPointer) {
+    for (let i = 0; i < stackPointer; i++) {
+        const token = $actionButton.dataset[`token${i}`];
+        if ($selectedToken.dataset.type === token) {
+            return true;
+        }
     }
-    if (token === token2){
-        actionButtonData.token2 = "";
-    }
-    if (token === token3){
-        actionButtonData.token3 = "";
+
+    return false;
+}
+
+function deselectToken($selectedToken) {
+    $selectedToken.classList.remove("selected");
+}
+
+function removeTokenFromStack($selectedToken, $actionButton) {
+    let shiftStackDown = false;
+    for (let i = 0; i < MAX_TAKE_TOKENS; i++) {
+        const token = $actionButton.dataset[`token${i}`];
+
+        if (shiftStackDown) {
+            $actionButton.dataset[`token${i - 1}`] = token;
+        }
+
+        if ($selectedToken.dataset.type === token) {
+            shiftStackDown = true;
+        }
     }
 }
 
-function checkIfTokenIsEmpty(token) {
-    return (token === undefined || token === "");
+function pushTokenToStack($selectedToken, $actionButton, stackPointer) {
+    $actionButton.dataset[`token${stackPointer}`] = $selectedToken.dataset.type;
 }
+
+function setActionToTokenAction(stackPointer, $selectedToken) {
+    if (stackPointer === 1 && $selectedToken.dataset.amount >= MIN_TOKENS_FOR_PICKING_TWO) {
+        setActionButtonState("Take two", "processTakeTwoTokensClick", {});
+    } else {
+        setActionButtonState("Take up to three", "processTakeTokenClick", {});
+    }
+}
+
+function highlightToken($selectedToken) {
+    $selectedToken.classList.add("selected");
+}
+
 function selectToken(e) {
-    if (e.target.tagName.toLowerCase() === "img") {
-        const $selectedToken = e.target.closest("li");
-        const tokenType = $selectedToken.dataset.type;
-        const $actionButton = document.querySelector(".action-button");
-        const $actionButtonData = $actionButton.dataset;
+    if (!clickedOnToken(e.target)) return;
 
-        if (canGetToken(tokenType, $selectedToken.dataset.amount, $actionButtonData)) {
-            setActionButtonState("Take two", "processTakeTokenClick", {token1: tokenType});
-        }
+    const $selectedToken = getToken(e.target);
+    if ($selectedToken.dataset.amount < 1) return;
 
-        if (checkIfTokenAlreadySelected(tokenType, $actionButtonData)) {
-            removeToken(giveTokenThatAlreadySelected(tokenType, $actionButtonData), $actionButtonData);
-        }
+    const $actionButton = getActionButton();
+    if (!stackExists($actionButton)) createStack($actionButton);
 
-        if (tokenType !== "Gold" && $selectedToken.dataset.amount >= 1 && !checkIfTokenAlreadySelected(tokenType, $actionButton)) {
-            storeTokenInDOM($actionButtonData , tokenType);
-        }
+    let stackPointer = parseInt($actionButton.dataset.stackPointer);
+
+    if (tokenInStack($selectedToken, $actionButton, stackPointer)) {
+        deselectToken($selectedToken);
+        removeTokenFromStack($selectedToken, $actionButton);
+        stackPointer--;
+        $actionButton.dataset.stackPointer = stackPointer;
+
+        setActionToTokenAction(stackPointer, $selectedToken);
+        return;
     }
+
+    if (stackPointer > MAX_TAKE_TOKENS - 1) return;
+
+    if ($selectedToken.dataset.type === "Gold") return;
+
+    pushTokenToStack($selectedToken, $actionButton, stackPointer);
+    stackPointer++;
+    $actionButton.dataset.stackPointer = stackPointer;
+    highlightToken($selectedToken);
+
+    setActionToTokenAction(stackPointer, $selectedToken);
 }
 
-function storeTokenInDOM($actionButtonData , tokenType) {
-    if (checkIfTokenIsEmpty($actionButtonData.token1)) {
-        setActionButtonState("select two more gems", "processTakeTokenClick", {token1: tokenType});
+function setTokensTo(stackPointer, $actionButton, amountOfTokens) {
+    const requestBody = {take: {}};
+    for (let i = 0; i < stackPointer; i++) {
+        requestBody.take[$actionButton.dataset[`token${i}`]] = amountOfTokens;
     }
 
-    if (checkIfTokenIsEmpty($actionButtonData.token2)) {
-        setActionButtonState("select one more gems", "processTakeTokenClick", {token2: tokenType});
-    }
-
-    if (checkIfTokenIsEmpty($actionButtonData.token3)) {
-        setActionButtonState("Take three gems", "processTakeTokenClick", {token3: tokenType});
-    }
-}
-
-function processTakeTokenClick(e) {
-    const $actionButton = document.querySelector(".action-button");
-    const actionButtonData = $actionButton.dataset;
-
-    if ($actionButton.textContent !== "Take two") {
-        const body = [actionButtonData.token1, actionButtonData.token2 , actionButtonData.token3];
-        takeGemsRequest(body , "");
-    } else{
-        takeGemsRequest(actionButtonData.token1 , "takeTwo");
-    }
+    return requestBody;
 }
 
 function updateTokens(res) {
@@ -101,12 +117,33 @@ function updateTokens(res) {
     const endIndexAmountText = 3;
 
     for (const [token, taken] of Object.entries(res["tokens"])) {
-     const $token = document.querySelector(`[data-type="${token}"]`);
-     $token.dataset.amount = (parseInt($token.dataset.amount) - parseInt(taken)).toString();
-     const $amountText = $token.querySelector("p");
-
-     $amountText.textContent = `${$token.dataset.amount}${$amountText.textContent.substring(beginIndexAmountText, endIndexAmountText)}`;
+        const $token = document.querySelector(`.board-tokens [data-type="${token}"]`);
+        $token.dataset.amount = parseInt($token.dataset.amount) - parseInt(taken);
+        const $amountText = $token.querySelector("p");
+        $amountText.textContent = `${$token.dataset.amount}${$amountText.textContent.substring(beginIndexAmountText, endIndexAmountText)}`;
     }
 }
 
-export { selectToken, processTakeTokenClick, updateTokens };
+function processTakeTokensClick(e) {
+    const $actionButton = getActionButton();
+    const stackPointer = parseInt($actionButton.dataset.stackPointer);
+
+    const requestBody = setTokensTo(stackPointer, $actionButton, 1);
+
+    API.takeTokens(requestBody).then(res => updateTokens(res));
+}
+
+function processTakeTwoTokens(e) {
+    const $actionButton = getActionButton();
+    const stackPointer = parseInt($actionButton.dataset.stackPointer);
+
+    const requestBody = setTokensTo(stackPointer, $actionButton, 2);
+
+    API.takeTokens(requestBody).then(res => updateTokens(res));
+}
+
+function processSkipTurn() {
+    API.takeTokens({take: {Ruby: 0}}).then(res => updateTokens(res));
+}
+
+export { selectToken, processTakeTokensClick, updateTokens, processTakeTwoTokens, processSkipTurn };
