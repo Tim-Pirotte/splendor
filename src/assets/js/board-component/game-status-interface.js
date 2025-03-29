@@ -31,6 +31,10 @@ function setActionButtonState(message, functionToRunOnClick, datasetParameters) 
   $actionButton.textContent = message;
   $actionButton.dataset.functionToRun = functionToRunOnClick;
 
+  setActionButtonDataset(datasetParameters, $actionButton);
+}
+
+function setActionButtonDataset(datasetParameters, $actionButton) {
   for (const [name, value] of Object.entries(datasetParameters)) {
     $actionButton.dataset[name] = value.toString();
   }

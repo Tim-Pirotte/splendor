@@ -22,7 +22,7 @@ function renderPlayer($template, $container, playerName) {
     // picture tag needs to be filled,
     // at the moment its hardcoded in the template!
 
-    $container.insertAdjacentHTML("beforeend", $li.outerHTML);
+    $container.appendChild($li);
 }
 
 function renderPlayerCount(g) {
