@@ -15,7 +15,7 @@ export default defineConfig({
         "indent": ["error", 4],
         "quotes": ["error", "double"],
         "semi": ["error", "always"],
-        "no-console": "warn",
+        "no-console": ["warn", { "allow": ["error"] }],
         "eqeqeq": "error",
         "comma-dangle": ["error", "always-multiline"],
         "object-curly-spacing": ["error", "always"],

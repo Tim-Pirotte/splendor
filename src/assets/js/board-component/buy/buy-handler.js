@@ -46,7 +46,7 @@ function processBuyCardClick() {
     renderUpdatedPlayerScore(cardData["prestigePoints"]);
     renderUpdatedBoardTokens(JSON.parse(sessionStorage.getItem("paymentMethod")));
 
-    API.buyCard(requestBody).then(res => sessionStorage.removeItem("paymentMethod"));
+    API.buyCard(requestBody).then(() => sessionStorage.removeItem("paymentMethod"));
 
 }
 
