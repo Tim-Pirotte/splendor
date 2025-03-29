@@ -4,6 +4,7 @@ import { getAmountText, getGameButtonText } from "./helper.js";
 import { filterGameList } from "./filter.js";
 import {POLLING_TIME_OUT} from "../config.js";
 import {safeEmptyContainer} from "../board-component/renderer/helper.js";
+import {copyNode} from "../utils/data-handler.js";
 
 function renderGameList() {
     const $template = document.querySelector("#game-template");
@@ -31,7 +32,7 @@ function startGameListPolling() {
 }
 
 function populateGame($template, $container, game) {
-    const $game = $template.content.firstElementChild.cloneNode(true);
+    const $game = copyNode($template);
 
     $game.dataset.gameState = getGameState(game);
     $game.dataset.gameId = getGameId(game);
@@ -45,7 +46,7 @@ function populateGame($template, $container, game) {
 }
 
 function renderNoGamesFoundMessage($container) {
-    const $message = document.querySelector("#no-games").content.firstElementChild.cloneNode(true);
+    const $message = copyNode(document.querySelector("#no-games"));
 
     $message.querySelector("p").textContent = "There are no games based on your selections";
 

@@ -1,4 +1,5 @@
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
+import {copyNode} from "./data-handler.js";
 
 function renderPlayerInformation() {
     const avatar = loadFromStorage("avatar");
@@ -11,7 +12,7 @@ function renderPlayerInformation() {
 }
 
 function renderAvatar($template, $container, avatar, relativePath = ".") {
-    const $picture = $template.content.firstElementChild.cloneNode(true);
+    const $picture = copyNode($template);
     const $img = $picture.querySelector("img");
 
     $picture.querySelector("source").srcset = `${relativePath}/assets/images/avatars/${avatar}.webp`;

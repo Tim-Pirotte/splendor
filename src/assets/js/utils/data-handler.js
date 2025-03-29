@@ -7,3 +7,9 @@ function binarySearchObjects(list, target, stringAttribute, start=0, end=list.le
   if (list[mid][stringAttribute].localeCompare(target)) binarySearchObjects(list, target, stringAttribute, start, mid - 1);
   return binarySearchObjects(list, target, stringAttribute, mid + 1, end);
 }
+
+function copyNode($node) {
+  return $node.content.firstElementChild.cloneNode(true);
+}
+
+export { copyNode, binarySearchObjects };

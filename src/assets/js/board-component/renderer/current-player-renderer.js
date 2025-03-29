@@ -2,7 +2,7 @@ import * as API from "../../api.js";
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
 import { MAX_TOKENS_ALLOWED, PRESTIGE_POINTS_NEEDED_TO_WIN, TOKEN_MAPPER } from "../config.js";
 import {
-    formatNumber,
+    formatNumber, getNumberedItemTemplate,
     getSwitchButtonTemplate,
     insertImageInto,
     renderCard,
@@ -14,6 +14,7 @@ import { isAllowedToSwitchToken, removePaidTokens, updateCurrentPlayerBonuses } 
 import { GEMS } from "../data.js";
 import { getPlayersObjects } from "../../utils/game-object-handler.js";
 import {getClientTokens, getClientTotalPrestigePoints} from "../game-data-handler.js";
+import {copyNode} from "../../utils/data-handler.js";
 
 function renderHeader(currentPlayer) {
     const $playerName = document.querySelector(".top-bar h2");
@@ -91,14 +92,14 @@ function renderClientPlayerTokens(currentPlayerTokens, currentPlayerBonuses, gem
     const $currentPlayerTokensContainer = document.querySelector(".player-tokens ul");
     safeEmptyContainer($currentPlayerTokensContainer);
 
-    const $numberedItemTemplate = document.querySelector("#numbered-item-template");
+    const $numberedItemTemplate = getNumberedItemTemplate();
     const $progressBarTemplate = document.querySelector("#progress-bar-template");
 
     for (const token of gems.toReversed()) {
-        const $token = $numberedItemTemplate.content.firstElementChild.cloneNode(true);
+        const $token = copyNode($numberedItemTemplate);
         $token.dataset.type = token;
 
-        const $progressBar = $progressBarTemplate.content.firstElementChild.cloneNode(true);
+        const $progressBar = copyNode($progressBarTemplate);
         const $switchPaymentButtonContainer = getSwitchButtonTemplate(token);
 
         if (token !== "Gold") {

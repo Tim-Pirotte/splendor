@@ -10,7 +10,7 @@ function renderPage(gameData) {
     // Functions relying on the response of gems are last in order to minimize disruptions
     const gems = GEMS;
     renderOtherPlayers(gameData["players"], gems);
-    renderBoardTokens(gameData["unclaimedTokens"], gameData["players"].length, gems);
+    renderBoardTokens(gameData["unclaimedTokens"], gameData["players"].length);
     renderClientPlayer(gameData["players"], gems);
 }
 
