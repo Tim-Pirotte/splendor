@@ -73,6 +73,8 @@ function highlightToken($selectedToken) {
 function selectToken(e) {
     if (!clickedOnToken(e.target)) return;
 
+    getActionButton().disabled = false;
+
     const $selectedToken = getToken(e.target);
     if ($selectedToken.dataset.amount < 1) return;
 

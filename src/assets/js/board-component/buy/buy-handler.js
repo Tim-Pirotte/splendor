@@ -10,18 +10,21 @@ import { getActionButton, mergeObjectsWithSum } from "../helper.js";
 function selectCard(e) {
     const $card = getCard(e);
 
+    setActionButtonState(
+    "buy",
+    "processBuyCardClick",
+    {name: $card.dataset.name},
+    );
+
     if ($card && canBuy($card)) {
         const cardData = getCardData($card.dataset.name);
         const defaultPayment = getDefaultPaymentMethod(cardData["cost"]);
 
-        setActionButtonState(
-        "buy",
-        "processBuyCardClick",
-        {name: $card.dataset.name},
-        );
-
+        getActionButton().disabled = false;
         setNewPaymentMethod(defaultPayment);
         renderSwitchPaymentButtons(defaultPayment, cardData["cost"]);
+    } else {
+        getActionButton().disabled = true;
     }
 }
 
@@ -89,7 +92,11 @@ function getDefaultPaymentMethod(cost) {
 
 function removeBonusesFromCost(cost, bonuses) {
     for (const tokenType in cost) {
-        cost[tokenType] -= bonuses[tokenType] || 0;
+        if (cost[tokenType] >= (bonuses[tokenType] || 0)) {
+            cost[tokenType] -= bonuses[tokenType] || 0;
+        } else {
+            cost[tokenType] = 0;
+        }
     }
 }
 
