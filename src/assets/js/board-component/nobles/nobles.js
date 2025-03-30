@@ -1,7 +1,7 @@
-import {selectNoble} from "./nobles-handler.js";
+import { selectNoble } from "./nobles-handler.js";
 
 function noblesInit() {
-  document.querySelector(".nobles").addEventListener("click", selectNoble);
+    document.querySelector(".nobles").addEventListener("click", selectNoble);
 }
 
 export { noblesInit };

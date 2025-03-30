@@ -2,8 +2,8 @@ import * as API from "../../api.js";
 import { setActionButtonState } from "../game-status-interface.js";
 import { MIN_TOKENS_FOR_PICKING_TWO } from "./config.js";
 import { MAX_TAKE_TOKENS } from "../config.js";
-import {getActionButton} from "../helper.js";
-import {deselectCard} from "../buy/buy-handler.js";
+import { getActionButton } from "../helper.js";
+import { deselectCard } from "../buy/buy-handler.js";
 
 function clickedOnToken(target) {
     return target.tagName.toLowerCase() === "img";
@@ -28,6 +28,7 @@ function createStack($actionButton) {
 function tokenInStack($selectedToken, $actionButton, stackPointer) {
     for (let i = 0; i < stackPointer; i++) {
         const token = $actionButton.dataset[`token${i}`];
+
         if ($selectedToken.dataset.type === token) {
             return true;
         }
@@ -80,9 +81,11 @@ function selectToken(e) {
     getActionButton().disabled = false;
 
     const $selectedToken = getToken(e.target);
+
     if ($selectedToken.dataset.amount < 1) return;
 
     const $actionButton = getActionButton();
+
     if (!stackExists($actionButton)) createStack($actionButton);
 
     let stackPointer = parseInt($actionButton.dataset.stackPointer);
@@ -94,6 +97,7 @@ function selectToken(e) {
         $actionButton.dataset.stackPointer = stackPointer;
 
         setActionToTokenAction(stackPointer, $selectedToken);
+
         return;
     }
 
@@ -110,7 +114,7 @@ function selectToken(e) {
 }
 
 function setTokensTo(stackPointer, $actionButton, amountOfTokens) {
-    const requestBody = {take: {}};
+    const requestBody = { take: {} };
 
     for (let i = 0; i < stackPointer; i++) {
         requestBody.take[$actionButton.dataset[`token${i}`]] = amountOfTokens;
@@ -131,7 +135,7 @@ function updateTokens(res) {
     }
 }
 
-function processTakeTokensClick(e) {
+function processTakeTokensClick() {
     const $actionButton = getActionButton();
     const stackPointer = parseInt($actionButton.dataset.stackPointer);
 
@@ -140,7 +144,7 @@ function processTakeTokensClick(e) {
     API.takeTokens(requestBody).then(res => updateTokens(res));
 }
 
-function processTakeTwoTokens(e) {
+function processTakeTwoTokens() {
     const $actionButton = getActionButton();
     const stackPointer = parseInt($actionButton.dataset.stackPointer);
 
@@ -150,7 +154,7 @@ function processTakeTwoTokens(e) {
 }
 
 function processSkipTurn() {
-    API.takeTokens({take: {Ruby: 0}}).then(res => updateTokens(res));
+    API.takeTokens({ take: { Ruby: 0 } }).then(res => updateTokens(res));
 }
 
 export { selectToken, processTakeTokensClick, updateTokens, processTakeTwoTokens, processSkipTurn };

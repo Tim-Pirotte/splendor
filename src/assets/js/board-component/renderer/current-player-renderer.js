@@ -8,7 +8,7 @@ import {
     insertImageInto,
     renderCard,
     renderProgressBar,
-    safeEmptyContainer
+    safeEmptyContainer,
 } from "./helper.js";
 import { getHighestScore } from "./sidebar-renderer.js";
 import { isAllowedToSwitchToken, removePaidTokens, updateCurrentPlayerBonuses } from "../buy/buy-handler.js";
@@ -123,6 +123,7 @@ function renderSwitchPaymentButtons(currentPayment, cost) {
 
     for (const $tokenContainer of $tokensContainers) {
         const tokenType = $tokenContainer.querySelector(".switch-token").dataset.type;
+
         if (isAllowedToSwitchToken(tokenType, currentPayment, cost, tokensInWallet)) {
             $tokenContainer.querySelector(".switch-token").classList.remove("hidden");
         }
@@ -161,7 +162,7 @@ function hideSwitchPaymentButtons() {
         $container.querySelector("p").classList.add("hidden");
     });
 }
-export {renderHeader,
+export { renderHeader,
     renderCurrentPlayer,
     renderSwitchPaymentButtons,
     renderCurrentPlayerTokenCount,renderCurrentPlayerTokens,

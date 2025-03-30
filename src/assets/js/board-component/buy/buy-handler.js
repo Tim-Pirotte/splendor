@@ -2,7 +2,9 @@ import * as API from "../../api.js";
 import { getCurrentPlayer, setActionButtonState } from "../game-status-interface.js";
 import {
     hideSwitchPaymentButtons,
-    renderSwitchPaymentButtons, renderUpdatedPlayerScore, renderUpdatedPlayerTokens
+    renderSwitchPaymentButtons,
+    renderUpdatedPlayerScore,
+    renderUpdatedPlayerTokens,
 } from "../renderer/current-player-renderer.js";
 import { DEVELOPMENT_CARDS } from "../data.js";
 import { renderUpdatedBoardTokens } from "../renderer/board-renderer.js";
@@ -13,16 +15,17 @@ function selectCard(e) {
 
     if (cardAlreadySelected($card.dataset.name)) {
         deselectCard();
+
         return;
     }
 
     setActionButtonState(
-    "buy",
-    "processBuyCardClick",
-    {name: $card.dataset.name},
+        "buy",
+        "processBuyCardClick",
+        { name: $card.dataset.name },
     );
 
-     if ($card && canBuy($card)) {
+    if ($card && canBuy($card)) {
         const cardData = getCardData($card.dataset.name);
         const defaultPayment = getDefaultPaymentMethod(cardData["cost"]);
 
@@ -40,7 +43,7 @@ function cardAlreadySelected(cardName) {
 
 function deselectCard() {
     sessionStorage.removeItem("paymentMethod");
-    setActionButtonState("skip turn", "skipTurn", {name: ""});
+    setActionButtonState("skip turn", "skipTurn", { name: "" });
     getActionButton().disabled = false;
     hideSwitchPaymentButtons();
 }
@@ -48,6 +51,7 @@ function deselectCard() {
 function canBuy($card) {
     const cost = getCardData($card.dataset.name)["cost"];
     const wallet = getPlayerWallet();
+
     return isWalletHigher(wallet, cost);
 }
 
@@ -59,13 +63,13 @@ function processBuyCardClick() {
     const $actionButton = getActionButton();
     const cardData = getCardData($actionButton.dataset.name);
     const requestBody =
-    {development: {name: cardData["name"]}, payment: getCurrentPaymentMethod()};
+        { development: { name: cardData["name"] }, payment: getCurrentPaymentMethod() };
 
     renderUpdatedPlayerTokens(cardData["bonus"]);
     renderUpdatedPlayerScore(cardData["prestigePoints"]);
     renderUpdatedBoardTokens(JSON.parse(sessionStorage.getItem("paymentMethod")));
 
-    API.buyCard(requestBody).then(res => sessionStorage.removeItem("paymentMethod"));
+    API.buyCard(requestBody).then(() => sessionStorage.removeItem("paymentMethod"));
 
 }
 
@@ -87,8 +91,10 @@ function getPlayerWallet() {
 
 function isWalletHigher(wallet, cost) {
     let minimumJokersNeeded = 0;
+
     for (const tokenType in cost) {
         const difference = cost[tokenType] - (wallet[tokenType] || 0);
+
         if (difference > 0) {
             minimumJokersNeeded += difference;
         }
@@ -118,7 +124,7 @@ function removeBonusesFromCost(cost, bonuses) {
 }
 
 function calculateDefaultPayment(cost, tokens) {
-    const payment = {"Gold": 0};
+    const payment = { "Gold": 0 };
 
     for (const [tokenType, amount] of Object.entries(cost)) {
         if (!(tokenType in tokens)) {
@@ -162,7 +168,7 @@ function handlePaymentMethodChange(e) {
     }
 }
 
-function resetPayment(cost){
+function resetPayment(cost) {
     const paymentMethod = getDefaultPaymentMethod(cost);
 
     setNewPaymentMethod(paymentMethod);
@@ -216,5 +222,14 @@ function setNewPaymentMethod(paymentMethod) {
     sessionStorage.setItem("paymentMethod", JSON.stringify(paymentMethod));
 }
 
-export { selectCard, processBuyCardClick, isAllowedToSwitchToken, getPlayerWallet, handlePaymentMethodChange,
-         removePaidTokens, updateCurrentPlayerBonuses, getDefaultPaymentMethod, deselectCard };
+export {
+    selectCard,
+    processBuyCardClick,
+    isAllowedToSwitchToken,
+    getPlayerWallet,
+    handlePaymentMethodChange,
+    removePaidTokens,
+    updateCurrentPlayerBonuses,
+    getDefaultPaymentMethod,
+    deselectCard,
+};

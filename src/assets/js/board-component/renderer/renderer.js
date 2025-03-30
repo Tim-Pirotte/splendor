@@ -7,11 +7,9 @@ function renderPage(gameData) {
     renderHeader();
     renderCards(gameData["market"]);
     renderNobles(gameData["unclaimedNobles"]);
-    // Functions relying on the response of gems are last in order to minimize disruptions
-    const gems = GEMS;
-    renderOtherPlayers(gameData["players"], gems);
-    renderBoardTokens(gameData["unclaimedTokens"], gameData["players"].length, gems);
-    renderCurrentPlayer(gameData["players"], gems);
+    renderOtherPlayers(gameData["players"], GEMS);
+    renderBoardTokens(gameData["unclaimedTokens"], gameData["players"].length, GEMS);
+    renderCurrentPlayer(gameData["players"], GEMS);
 }
 
 export { renderPage };
