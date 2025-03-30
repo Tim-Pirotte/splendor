@@ -2,7 +2,7 @@ import { defineConfig } from "eslint/config";
 import globals from "globals";
 import js from "@eslint/js";
 
-export default defineConfig({
+export default defineConfig([{
     files: ["**/*.{js,mjs,cjs}"],
     languageOptions: {
         globals: globals.browser,
@@ -30,4 +30,11 @@ export default defineConfig({
         "camelcase": ["error", { "properties": "never" }],
         "no-trailing-spaces": "error",
     },
-});
+},
+{
+    files: ["src/assets/js/config.js"],
+    rules: {
+        "no-unused-vars": "off",
+    },
+},
+]);

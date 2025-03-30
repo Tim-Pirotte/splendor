@@ -125,7 +125,7 @@ function updateTokens(res) {
     }
 }
 
-function processTakeTokensClick(e) {
+function processTakeTokensClick() {
     const $actionButton = getActionButton();
     const stackPointer = parseInt($actionButton.dataset.stackPointer);
 
@@ -134,7 +134,7 @@ function processTakeTokensClick(e) {
     API.takeTokens(requestBody).then(res => updateTokens(res));
 }
 
-function processTakeTwoTokens(e) {
+function processTakeTwoTokens() {
     const $actionButton = getActionButton();
     const stackPointer = parseInt($actionButton.dataset.stackPointer);
 

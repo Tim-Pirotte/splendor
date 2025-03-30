@@ -43,7 +43,7 @@ function processTakeNoble() {
         `/games/${loadFromStorage("gameId")}/players/${loadFromStorage("playerName")}/nobles`,
         "POST",
         nobleToTake)
-        .then(res => console.log(res));
+        .then(res => console.error(res));
 }
 
 function getNobleByName(name) {
