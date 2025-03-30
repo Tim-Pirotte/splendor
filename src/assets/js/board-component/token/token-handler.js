@@ -3,6 +3,7 @@ import { setActionButtonState } from "../game-status-interface.js";
 import { MIN_TOKENS_FOR_PICKING_TWO } from "./config.js";
 import { MAX_TAKE_TOKENS } from "../config.js";
 import {getActionButton} from "../helper.js";
+import {deselectCard} from "../buy/buy-handler.js";
 
 function clickedOnToken(target) {
     return target.tagName.toLowerCase() === "img";
@@ -41,6 +42,7 @@ function deselectToken($selectedToken) {
 
 function removeTokenFromStack($selectedToken, $actionButton) {
     let shiftStackDown = false;
+
     for (let i = 0; i < MAX_TAKE_TOKENS; i++) {
         const token = $actionButton.dataset[`token${i}`];
 
@@ -71,7 +73,11 @@ function highlightToken($selectedToken) {
 }
 
 function selectToken(e) {
+    deselectCard();
+
     if (!clickedOnToken(e.target)) return;
+
+    getActionButton().disabled = false;
 
     const $selectedToken = getToken(e.target);
     if ($selectedToken.dataset.amount < 1) return;
@@ -105,6 +111,7 @@ function selectToken(e) {
 
 function setTokensTo(stackPointer, $actionButton, amountOfTokens) {
     const requestBody = {take: {}};
+
     for (let i = 0; i < stackPointer; i++) {
         requestBody.take[$actionButton.dataset[`token${i}`]] = amountOfTokens;
     }
