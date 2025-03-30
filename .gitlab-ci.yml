@@ -4,6 +4,9 @@ stages:
   - QA
   - deployment
 
+before_script:
+  - ln -s /ci/node_modules .
+
 validate-html:
   stage: QA
   rules:
