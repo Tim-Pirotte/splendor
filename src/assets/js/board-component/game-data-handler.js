@@ -39,12 +39,4 @@ function startGameStatePolling() {
     setTimeout(updateGameData, POLLING_TIME_OUT);
 }
 
-function getGems() {
-    API.getGemsList().then(gems => saveToStorage("gems", gems["gems"]));
-}
-
-function waitOnTokenData() {
-    return loadFromStorage("gems");
-}
-
-export { updateGameData, getGems, waitOnTokenData, startGameStatePolling };
+export { updateGameData, startGameStatePolling };
