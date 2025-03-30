@@ -1,7 +1,7 @@
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
 import { formatNumber, insertImageInto, safeEmptyContainer } from "./helper.js";
 import { TOKEN_MAPPER } from "../config.js";
-import { MAXPRESTIGEPOINTS } from "../../config.js";
+import { MAX_PRESTIGE_POINTS } from "../../config.js";
 
 function renderOtherPlayers(otherPlayers, gems) {
     const currentPlayerName = loadFromStorage("playerName");
@@ -40,7 +40,7 @@ function setPlayerPoints($playerCard, prestigePoints, highestScore) {
     const $playerPoints = $playerCard.querySelector(".points span");
     $playerPoints.textContent = formatNumber(prestigePoints);
 
-    if (prestigePoints >= MAXPRESTIGEPOINTS) {
+    if (prestigePoints >= MAX_PRESTIGE_POINTS) {
         $playerPoints.classList.add("enough-points-to-win");
     }
 

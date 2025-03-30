@@ -1,11 +1,11 @@
 import { loadFromStorage } from "./local-storage-abstractor.js";
-import { getAPIUrl, GROUPTOKEN } from "../config.js";
+import { getAPIUrl, GROUP_TOKEN } from "../config.js";
 
 function constructOptions(httpVerb, requestBody) {
     const options = {
         method: httpVerb,
         headers: {
-            "X-Group-Secret": GROUPTOKEN,
+            "X-Group-Secret": GROUP_TOKEN,
         },
     };
 
