@@ -10,7 +10,9 @@
         "validate-ci": "npm run validate-html && npm run validate-sonar-ci",
         "validate-local-mac": "npm run validate-html && npm run validate-sonar-local-mac",
         "validate-local-win": "npm run validate-html && npm run validate-sonar-local-win",
-        "test": "jest --coverage --watchAll --env=jsdom"
+        "test": "jest --coverage --watchAll --env=jsdom",
+        "lint": "npx eslint .",
+        "fix-linting-issues": "npx eslint . --fix"
     },
     "dependencies": {
         "sonar-scanner": "^3.1.0",
