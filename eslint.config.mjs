@@ -35,6 +35,9 @@ export default defineConfig([{
             { "blankLine": "always", "prev": "*", "next": "return" },
             { "blankLine": "any", "prev": "if", "next": "return" },
             { "blankLine": "any", "prev": "block", "next": "return" },
+
+            { "blankLine": "always", "prev": ["const", "let"], "next": "for" },
+            { "blankLine": "always", "prev": ["const", "let"], "next": "if" },
         ],
         "max-depth": ["error", { "max": 2 }],
         "no-lonely-if": "error",

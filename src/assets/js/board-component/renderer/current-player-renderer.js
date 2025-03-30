@@ -123,6 +123,7 @@ function renderSwitchPaymentButtons(currentPayment, cost) {
 
     for (const $tokenContainer of $tokensContainers) {
         const tokenType = $tokenContainer.querySelector(".switch-token").dataset.type;
+
         if (isAllowedToSwitchToken(tokenType, currentPayment, cost, tokensInWallet)) {
             $tokenContainer.querySelector(".switch-token").classList.remove("hidden");
         }

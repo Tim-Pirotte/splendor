@@ -20,6 +20,7 @@ function handleGameDataError(err) {
 
 function updateGameData() {
     const gameId = loadFromStorage("gameId");
+
     if (gameId === null) location.href = "../index.html";
 
     API.getGame().then(gameData => {

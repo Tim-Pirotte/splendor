@@ -1,10 +1,10 @@
 import * as API from "../../api.js";
 import { getCurrentPlayer, setActionButtonState } from "../game-status-interface.js";
 import {
+    hideSwitchPaymentButtons,
     renderSwitchPaymentButtons,
     renderUpdatedPlayerScore,
     renderUpdatedPlayerTokens,
-    hideSwitchPaymentButtons
 } from "../renderer/current-player-renderer.js";
 import { DEVELOPMENT_CARDS } from "../data.js";
 import { renderUpdatedBoardTokens } from "../renderer/board-renderer.js";
@@ -15,6 +15,7 @@ function selectCard(e) {
 
     if (cardAlreadySelected($card.dataset.name)) {
         deselectCard();
+
         return;
     }
 
@@ -24,7 +25,7 @@ function selectCard(e) {
         { name: $card.dataset.name },
     );
 
-     if ($card && canBuy($card)) {
+    if ($card && canBuy($card)) {
         const cardData = getCardData($card.dataset.name);
         const defaultPayment = getDefaultPaymentMethod(cardData["cost"]);
 
@@ -42,7 +43,7 @@ function cardAlreadySelected(cardName) {
 
 function deselectCard() {
     sessionStorage.removeItem("paymentMethod");
-    setActionButtonState("skip turn", "skipTurn", {name: ""});
+    setActionButtonState("skip turn", "skipTurn", { name: "" });
     getActionButton().disabled = false;
     hideSwitchPaymentButtons();
 }
@@ -62,7 +63,7 @@ function processBuyCardClick() {
     const $actionButton = getActionButton();
     const cardData = getCardData($actionButton.dataset.name);
     const requestBody =
-    { development: { name: cardData["name"] }, payment: getCurrentPaymentMethod() };
+        { development: { name: cardData["name"] }, payment: getCurrentPaymentMethod() };
 
     renderUpdatedPlayerTokens(cardData["bonus"]);
     renderUpdatedPlayerScore(cardData["prestigePoints"]);
@@ -90,8 +91,10 @@ function getPlayerWallet() {
 
 function isWalletHigher(wallet, cost) {
     let minimumJokersNeeded = 0;
+
     for (const tokenType in cost) {
         const difference = cost[tokenType] - (wallet[tokenType] || 0);
+
         if (difference > 0) {
             minimumJokersNeeded += difference;
         }
@@ -165,7 +168,7 @@ function handlePaymentMethodChange(e) {
     }
 }
 
-function resetPayment(cost){
+function resetPayment(cost) {
     const paymentMethod = getDefaultPaymentMethod(cost);
 
     setNewPaymentMethod(paymentMethod);
@@ -219,7 +222,8 @@ function setNewPaymentMethod(paymentMethod) {
     sessionStorage.setItem("paymentMethod", JSON.stringify(paymentMethod));
 }
 
-export { selectCard,
+export {
+    selectCard,
     processBuyCardClick,
     isAllowedToSwitchToken,
     getPlayerWallet,
@@ -227,5 +231,5 @@ export { selectCard,
     removePaidTokens,
     updateCurrentPlayerBonuses,
     getDefaultPaymentMethod,
-    deselectCard
+    deselectCard,
 };

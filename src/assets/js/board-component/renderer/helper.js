@@ -9,6 +9,7 @@ function insertImageInto($container, standardPath, before, alt) {
     $img.alt = $img.title = alt;
 
     let position = "beforeend";
+
     if (before) {
         position = "afterbegin";
     }

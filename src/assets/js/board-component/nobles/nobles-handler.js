@@ -7,6 +7,7 @@ import { getActionButton } from "../helper.js";
 function selectNoble(e) {
     const $selectedNoble = e.target.closest("li");
     const nobleName = $selectedNoble.dataset.name;
+
     if (canSelectNoble(nobleName)) {
         setActionButtonState("Take Noble", "processTakeNoble", { name: nobleName });
     }
