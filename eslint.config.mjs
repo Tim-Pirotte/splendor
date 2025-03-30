@@ -24,7 +24,6 @@ export default defineConfig([{
         "space-infix-ops": "error",
         "arrow-spacing": ["error", { "before": true, "after": true }],
         "no-multiple-empty-lines": ["error", { "max": 1 }],
-        "newline-before-return": "error",
         "prefer-const": "error",
         "no-var": "error",
         "camelcase": ["error", { "properties": "never" }],
@@ -32,10 +31,6 @@ export default defineConfig([{
         "curly": ["error", "multi-line", "consistent"],
         "padding-line-between-statements": [
             "error",
-            { "blankLine": "always", "prev": "*", "next": "return" },
-            { "blankLine": "any", "prev": "if", "next": "return" },
-            { "blankLine": "any", "prev": "block", "next": "return" },
-
             { "blankLine": "always", "prev": ["const", "let"], "next": "for" },
             { "blankLine": "always", "prev": ["const", "let"], "next": "if" },
         ],
