@@ -1,7 +1,10 @@
 import * as API from "../../api.js";
 import { getCurrentPlayer, setActionButtonState } from "../game-status-interface.js";
 import {
-    renderSwitchPaymentButtons, renderUpdatedPlayerScore, renderUpdatedPlayerTokens,
+    renderSwitchPaymentButtons,
+    renderUpdatedPlayerScore,
+    renderUpdatedPlayerTokens,
+    hideSwitchPaymentButtons
 } from "../renderer/current-player-renderer.js";
 import { DEVELOPMENT_CARDS } from "../data.js";
 import { renderUpdatedBoardTokens } from "../renderer/board-renderer.js";
@@ -10,19 +13,38 @@ import { getActionButton, mergeObjectsWithSum } from "../helper.js";
 function selectCard(e) {
     const $card = getCard(e);
 
-    if ($card && canBuy($card)) {
+    if (cardAlreadySelected($card.dataset.name)) {
+        deselectCard();
+        return;
+    }
+
+    setActionButtonState(
+        "buy",
+        "processBuyCardClick",
+        { name: $card.dataset.name },
+    );
+
+     if ($card && canBuy($card)) {
         const cardData = getCardData($card.dataset.name);
         const defaultPayment = getDefaultPaymentMethod(cardData["cost"]);
 
-        setActionButtonState(
-            "buy",
-            "processBuyCardClick",
-            { name: $card.dataset.name },
-        );
-
+        getActionButton().disabled = false;
         setNewPaymentMethod(defaultPayment);
         renderSwitchPaymentButtons(defaultPayment, cardData["cost"]);
+    } else {
+        getActionButton().disabled = true;
     }
+}
+
+function cardAlreadySelected(cardName) {
+    return getActionButton().dataset.name === cardName;
+}
+
+function deselectCard() {
+    sessionStorage.removeItem("paymentMethod");
+    setActionButtonState("skip turn", "skipTurn", {name: ""});
+    getActionButton().disabled = false;
+    hideSwitchPaymentButtons();
 }
 
 function canBuy($card) {
@@ -90,7 +112,11 @@ function getDefaultPaymentMethod(cost) {
 
 function removeBonusesFromCost(cost, bonuses) {
     for (const tokenType in cost) {
-        cost[tokenType] -= bonuses[tokenType] || 0;
+        if (cost[tokenType] >= (bonuses[tokenType] || 0)) {
+            cost[tokenType] -= bonuses[tokenType] || 0;
+        } else {
+            cost[tokenType] = 0;
+        }
     }
 }
 
@@ -200,4 +226,6 @@ export { selectCard,
     handlePaymentMethodChange,
     removePaidTokens,
     updateCurrentPlayerBonuses,
-    getDefaultPaymentMethod };
+    getDefaultPaymentMethod,
+    deselectCard
+};
