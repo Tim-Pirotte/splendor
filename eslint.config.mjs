@@ -29,6 +29,15 @@ export default defineConfig([{
         "no-var": "error",
         "camelcase": ["error", { "properties": "never" }],
         "no-trailing-spaces": "error",
+        "curly": ["error", "multi-line", "consistent"],
+        "padding-line-between-statements": [
+            "error",
+            { "blankLine": "always", "prev": "*", "next": "return" },
+            { "blankLine": "any", "prev": "if", "next": "return" },
+            { "blankLine": "any", "prev": "block", "next": "return" },
+        ],
+        "max-depth": ["error", { "max": 2 }],
+        "no-lonely-if": "error",
     },
 },
 {
