@@ -4,14 +4,7 @@ stages:
   - QA
   - deployment
 
-cache:
-  key: npm-cache
-  paths:
-    - node_modules/
-  policy: pull-push
-
 before_script:
-  - if [ ! -d "node_modules" ]; then npm ci; fi
   - ln -s /ci/node_modules .
 
 validate-html:
@@ -41,6 +34,7 @@ eslint:
     - if:
         $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
   script:
+    - npm i eslint
     - npx eslint . --ext .js,.mjs,.cjs
 
 deployment:
