@@ -203,11 +203,17 @@ section header picture {
 }
 
 .enough-points-to-win {
-    color: red;
+    color: hotpink;
 }
 
-.selected {
-    background-color: deepskyblue;
+.selected-token img {
+    outline: 0.275rem solid hotpink;
+    border-radius: 0.75rem;
+}
+
+.selected-card picture:first-of-type img {
+    outline: 0.275rem solid hotpink;
+    border-radius: 0.25rem;
 }
 
 .progress-bar {
@@ -226,7 +232,7 @@ section header picture {
 }
 
 .highlighted-number {
-    color: red;
+    color: hotpink;
 }
 
 /* TIMER */

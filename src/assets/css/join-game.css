@@ -1,15 +1,15 @@
-/* This will be the style of the join-game.html file */
-
-body {
-    background-color: white;
-}
-
+/* General styling for the body and main container */
 #page-layout {
     display: flex;
     flex-flow: column nowrap;
     min-height: 100vh;
 }
 
+main {
+    flex: 1 0 auto;
+}
+
+/* Header styling */
 header {
     display: flex;
     flex-flow: row nowrap;
@@ -17,18 +17,14 @@ header {
     margin: 2rem 2rem;
 }
 
-main {
-    flex: 1 0 auto;
-}
-
-
+/* Form styling (inc. related features) */
 form {
     margin: 0 auto;
     text-align: center;
 }
 
 section{
-    background-color: lightgray;
+    background-color: whitesmoke;
     width: 60%;
     text-align: center;
     margin: 3rem auto 0 auto;
@@ -44,7 +40,10 @@ section form {
 }
 
 button {
-    width: 8rem; /* Added a fixed with because otherwise the flex would handle the spectate different than the join so the numbers of players are not aligned wel*/
+    /* Added a fixed with because otherwise
+       the flex would handle the spectate different than the
+       join so the numbers of players are not aligned wel */
+    width: 8rem;
 }
 
 label[for="game-id"]{

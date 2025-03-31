@@ -37,7 +37,7 @@ function tokenInStack($selectedToken, $actionButton, stackPointer) {
 }
 
 function deselectToken($selectedToken) {
-    $selectedToken.classList.remove("selected");
+    $selectedToken.classList.remove("selected-token");
 }
 
 function removeTokenFromStack($selectedToken, $actionButton) {
@@ -69,7 +69,7 @@ function setActionToTokenAction(stackPointer, $selectedToken) {
 }
 
 function highlightToken($selectedToken) {
-    $selectedToken.classList.add("selected");
+    $selectedToken.classList.add("selected-token");
 }
 
 function selectToken(e) {
