@@ -47,7 +47,6 @@ function cardAlreadySelected(cardName) {
 
 function deselectCard() {
     sessionStorage.removeItem("paymentMethod");
-    setActionButtonState("skip turn", "skipTurn", { name: "" });
     getActionButton().disabled = false;
     hideSwitchPaymentButtons();
 }

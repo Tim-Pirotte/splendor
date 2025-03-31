@@ -23,10 +23,16 @@ function getActionButton() {
     return document.querySelector(".action-button");
 }
 
-function setActionButtonState(message, functionToRunOnClick, datasetParameters) {
+function setActionButtonState(message, functionToRunOnClick, datasetParameters, reset=true) {
     const $actionButton = getActionButton();
 
-    clearDatasetAttributes($actionButton);
+    console.log(functionToRunOnClick)
+    console.log($actionButton.dataset.functionToRun)
+
+    if (reset) {
+        console.log("Fuck")
+        clearDatasetAttributes(getActionButton());
+    }
 
     $actionButton.textContent = message;
     $actionButton.dataset.functionToRun = functionToRunOnClick;
@@ -57,4 +63,4 @@ function initGameStatusInterface() {
     $actionButton.addEventListener("click", actionRegistryRouter);
 }
 
-export { isCurrentlyPlaying, initGameStatusInterface, setActionButtonState, getActionButton, getClientPlayer };
+export { isCurrentlyPlaying, initGameStatusInterface, setActionButtonState, getActionButton, getClientPlayer, clearDatasetAttributes };

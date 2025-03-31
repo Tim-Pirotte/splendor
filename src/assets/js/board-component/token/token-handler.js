@@ -1,5 +1,5 @@
 import * as API from "../../api.js";
-import { getActionButton, setActionButtonState } from "../game-status-interface.js";
+import {clearDatasetAttributes, getActionButton, setActionButtonState} from "../game-status-interface.js";
 import { MIN_TOKENS_FOR_PICKING_TWO } from "./config.js";
 import { MAX_TAKE_TOKENS } from "../config.js";
 import { deselectCard } from "../buy/buy-handler.js";
@@ -43,7 +43,7 @@ function deselectToken($selectedToken) {
 function removeTokenFromStack($selectedToken, $actionButton) {
     let shiftStackDown = false;
 
-    for (let i = 0; i < MAX_TAKE_TOKENS; i++) {
+    for (let i = 0; i < MAX_TAKE_TOKENS + 1; i++) {
         const token = $actionButton.dataset[`token${i}`];
 
         if (shiftStackDown) {
@@ -62,9 +62,9 @@ function pushTokenToStack($selectedToken, $actionButton, stackPointer) {
 
 function setActionToTokenAction(stackPointer, $selectedToken) {
     if (stackPointer === 1 && $selectedToken.dataset.amount >= MIN_TOKENS_FOR_PICKING_TWO) {
-        setActionButtonState("Take two", "processTakeTwoTokensClick", {});
+        setActionButtonState("Take two", "processTakeTwoTokensClick", {}, false);
     } else {
-        setActionButtonState("Take up to three", "processTakeTokenClick", {});
+        setActionButtonState("Take up to three", "processTakeTokenClick", {}, false);
     }
 }
 
