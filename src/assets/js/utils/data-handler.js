@@ -2,10 +2,14 @@ function binarySearchObjects(list, target, stringAttribute, start=0, end=list.le
   if (start > end) return;
 
   const mid = Math.floor((start + end) / 2);
+
   if (list[mid][stringAttribute] === target) return list[mid];
 
-  if (list[mid][stringAttribute].localeCompare(target)) binarySearchObjects(list, target, stringAttribute, start, mid - 1);
-  return binarySearchObjects(list, target, stringAttribute, mid + 1, end);
+  if (list[mid][stringAttribute].localeCompare(target) > 0) {
+    return binarySearchObjects(list, target, stringAttribute, start, mid - 1);
+  } else {
+    return binarySearchObjects(list, target, stringAttribute, mid + 1, end);
+  }
 }
 
 function copyNode($node) {

@@ -76,6 +76,7 @@ function processBuyCardClick() {
 }
 
 function getCardData(cardName) {
+    console.log(cardName)
     return binarySearchObjects(DEVELOPMENT_CARDS, cardName, "name");
 }
 
