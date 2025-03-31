@@ -43,7 +43,7 @@ function getClientTokens() {
     const tokens = {};
 
     for (const $token of document.querySelectorAll(".player-tokens ul > li")) {
-        tokens[$token.dataset.type] = $token.dataset.amount;
+        tokens[$token.dataset.type] = parseInt($token.dataset.amount);
     }
 
     return tokens;
