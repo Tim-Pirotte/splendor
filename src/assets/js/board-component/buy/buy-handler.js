@@ -34,8 +34,9 @@ function allowToReserve() {
 
 function selectCard(e) {
     const $card = getCard(e);
-    const cardName = $card.dataset.name;
     if (!$card) return;
+
+    const cardName = $card.dataset.name;
 
     if (cardAlreadySelected(cardName)) {
         $card.classList.remove("selected-card");
