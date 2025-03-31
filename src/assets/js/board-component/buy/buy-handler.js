@@ -60,6 +60,7 @@ function selectCard(e) {
 }
 
 function highlightCard($card) {
+    document.querySelectorAll(".selected-card").forEach($card => $card.classList.remove("selected-card"));
     $card.classList.add("selected-card");
 }
 

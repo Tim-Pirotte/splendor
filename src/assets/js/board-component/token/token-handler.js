@@ -63,7 +63,10 @@ function pushTokenToStack($selectedToken, $actionButton, stackPointer) {
 
 function setActionToTokenAction(stackPointer) {
     let tokenAmount = -1;
-    const firstTokenInStack = getActionButton().dataset.token0;
+    let firstTokenInStack = null;
+    if ("token0" in getActionButton().dataset) {
+        firstTokenInStack = getActionButton().dataset.token0;
+    }
     if (firstTokenInStack) {
         tokenAmount = document.querySelector(`.board-tokens [data-type="${firstTokenInStack}"]`).dataset.amount;
     }
