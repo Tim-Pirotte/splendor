@@ -138,9 +138,10 @@ function updateTokens(res) {
     const beginIndexAmountText = 1;
     const endIndexAmountText = 3;
 
-    for (const [token, taken] of Object.entries(res["tokens"])) {
+    for (const [token, taken] of Object.entries(res["take"])) {
         const $token = document.querySelector(`.board-tokens [data-type="${token}"]`);
         $token.dataset.amount = parseInt($token.dataset.amount) - parseInt(taken);
+
         const $amountText = $token.querySelector("p");
         $amountText.textContent = `${$token.dataset.amount}${$amountText.textContent.substring(beginIndexAmountText, endIndexAmountText)}`;
     }
@@ -152,7 +153,7 @@ function processTakeTokensClick() {
 
     const requestBody = setTokensTo(stackPointer, $actionButton, 1);
 
-    API.takeTokens(requestBody).then(res => updateTokens(res));
+    API.takeTokens(requestBody).then(() => updateTokens(requestBody));
 }
 
 function processTakeTwoTokens() {
@@ -161,7 +162,7 @@ function processTakeTwoTokens() {
 
     const requestBody = setTokensTo(stackPointer, $actionButton, 2);
 
-    API.takeTokens(requestBody).then(res => updateTokens(res));
+    API.takeTokens(requestBody).then(() => updateTokens(requestBody));
 }
 
 function processSkipTurn() {

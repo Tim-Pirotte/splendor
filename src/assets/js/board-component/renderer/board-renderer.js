@@ -56,7 +56,7 @@ function renderBoardTokens(unclaimedTokens, playerLength) {
         const $boardToken = copyNode($numberedItemTemplate);
 
         $boardToken.dataset.type = token;
-        $boardToken.dataset.amount = unclaimedTokens[token];
+        $boardToken.dataset.amount = unclaimedTokens[token] || 0;
 
         const maxTokens = getMaxTokens(playerLength, token);
 
