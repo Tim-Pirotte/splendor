@@ -1,6 +1,6 @@
 function sumObjectValues(obj1, obj2) {
     for (const tokenType in obj2) {
-        if (obj1.hasOwnProperty(tokenType)) {
+        if (tokenType in obj1) {
             obj1[tokenType] = parseInt(obj1[tokenType]) + parseInt(obj2[tokenType]);
         } else {
             obj1[tokenType] = parseInt(obj2[tokenType]);

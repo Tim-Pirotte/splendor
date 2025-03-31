@@ -4,7 +4,7 @@ const avatars = [
     "goldie",
     "greenie",
     "reddy",
-    "snowy"
+    "snowy",
 ];
 
 export { avatars };

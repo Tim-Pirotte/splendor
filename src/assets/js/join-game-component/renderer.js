@@ -13,18 +13,18 @@ function renderGameList() {
     safeEmptyContainer($gameListContainerCopy);
 
     API.getGames().then(gameObject => {
-            const filteredGames = filterGameList(gameObject["games"]);
+        const filteredGames = filterGameList(gameObject["games"]);
 
-            if (filteredGames.size === 0) {
-                renderNoGamesFoundMessage($gameListContainerCopy);
-            } else {
-                filteredGames.forEach(game => populateGame($template, $gameListContainerCopy, game));
-            }
+        if (filteredGames.size === 0) {
+            renderNoGamesFoundMessage($gameListContainerCopy);
+        } else {
+            filteredGames.forEach(game => populateGame($template, $gameListContainerCopy, game));
+        }
 
-            $container.innerHTML = $gameListContainerCopy.innerHTML;
+        $container.innerHTML = $gameListContainerCopy.innerHTML;
 
-            startGameListPolling();
-        });
+        startGameListPolling();
+    });
 }
 
 function startGameListPolling() {

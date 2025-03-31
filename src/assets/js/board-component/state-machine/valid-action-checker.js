@@ -33,6 +33,7 @@ function getGameState(){
 
 function getLevelFromCard(cardName) {
     const card = getCardObject(cardName);
+
     return card.level;
 }
 

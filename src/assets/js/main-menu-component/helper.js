@@ -3,6 +3,7 @@ import { renderSelectedAvatars } from "./renderer.js";
 
 function loadPlayerName() {
     const $username = document.querySelector("#username");
+
     if (loadFromStorage("playerName")) $username.value = loadFromStorage("playerName");
 }
 

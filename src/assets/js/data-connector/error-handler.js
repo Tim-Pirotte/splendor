@@ -1,4 +1,4 @@
-import { ERRORHANDLERSELECTOR } from "../config.js";
+import { ERROR_HANDLER_SELECTOR } from "../config.js";
 
 function generateVisualAPIErrorInConsole(error){
     console.error("%c%s","background-color: red;color: white","! An error occurred while calling the API");
@@ -7,7 +7,7 @@ function generateVisualAPIErrorInConsole(error){
 
 function handleError(error){
     generateVisualAPIErrorInConsole(error);
-    document.querySelector(ERRORHANDLERSELECTOR).textContent = "Something went wrong :(";
+    document.querySelector(ERROR_HANDLER_SELECTOR).textContent = "Something went wrong :(";
 }
 
 export { handleError };

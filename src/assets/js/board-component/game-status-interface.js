@@ -12,11 +12,11 @@ function getClientPlayer() {
   const players = loadFromStorage("gameData")["players"];
   const playerName = loadFromStorage("playerName");
 
-  for (const player of players) {
-    if (player["name"] === playerName) {
-      return player;
+    for (const player of players) {
+        if (player["name"] === playerName) {
+            return player;
+        }
     }
-  }
 }
 
 function getActionButton() {
@@ -47,14 +47,14 @@ function clearDatasetAttributes($actionButton) {
 }
 
 function actionRegistryRouter() {
-  const $actionButton = getActionButton();
-  ACTION_REGISTRY[$actionButton.dataset.functionToRun]();
-  startGameStatePolling();
+    const $actionButton = getActionButton();
+    ACTION_REGISTRY[$actionButton.dataset.functionToRun]();
+    startGameStatePolling();
 }
 
 function initGameStatusInterface() {
-  const $actionButton = getActionButton();
-  $actionButton.addEventListener("click", actionRegistryRouter);
+    const $actionButton = getActionButton();
+    $actionButton.addEventListener("click", actionRegistryRouter);
 }
 
 export { isCurrentlyPlaying, initGameStatusInterface, setActionButtonState, getActionButton, getClientPlayer };

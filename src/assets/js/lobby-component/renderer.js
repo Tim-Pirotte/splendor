@@ -27,7 +27,7 @@ function renderPlayer($template, $container, playerName) {
 }
 
 function renderPlayerCount(g) {
-        document.querySelector("#player-count").textContent =
+    document.querySelector("#player-count").textContent =
         `${getCurrentUsersAmount(g)} / ${getMaxUsersAmount(g)}`;
 }
 
