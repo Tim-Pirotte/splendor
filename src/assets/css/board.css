@@ -236,8 +236,7 @@ progress {
     margin: auto 0;
 }
 
-/* ACTION BUTTON */
-.action-button {
+.button-container { 
     grid-area: action-button;
     height: 2rem;
     width: fit-content;

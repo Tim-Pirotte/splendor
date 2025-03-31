@@ -13,7 +13,6 @@ function selectCardForReserve(e) {
 
 function procesReserve(e){
     const selectedCardName = document.querySelector(".reserve-button").dataset.name;
-    console.log(selectedCardName)
     if( selectedCardName ) {
       const requestBody = {
             "development": {
