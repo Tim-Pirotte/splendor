@@ -3,6 +3,7 @@ import {clearDatasetAttributes, getActionButton, setActionButtonState} from "../
 import { MIN_TOKENS_FOR_PICKING_TWO } from "./config.js";
 import { MAX_TAKE_TOKENS } from "../config.js";
 import { deselectCard } from "../buy/buy-handler.js";
+import {validTokenTake} from "../state-machine/valid-action-checker.js";
 
 function clickedOnToken(target) {
     return target.tagName.toLowerCase() === "img";
@@ -62,8 +63,8 @@ function pushTokenToStack($selectedToken, $actionButton, stackPointer) {
 
 function setActionToTokenAction(stackPointer) {
     let tokenAmount = -1;
-    if ("token0" in getActionButton().dataset) {
-        const firstTokenInStack = getActionButton().dataset.token0;
+    const firstTokenInStack = getActionButton().dataset.token0;
+    if (firstTokenInStack) {
         tokenAmount = document.querySelector(`.board-tokens [data-type="${firstTokenInStack}"]`).dataset.amount;
     }
 
@@ -79,6 +80,8 @@ function highlightToken($selectedToken) {
 }
 
 function selectToken(e) {
+    if (!validTokenTake()) return;
+
     deselectCard();
 
     if (!clickedOnToken(e.target)) return;

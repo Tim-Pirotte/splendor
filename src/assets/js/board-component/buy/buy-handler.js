@@ -11,36 +11,52 @@ import { renderUpdatedBoardTokens } from "../renderer/board-renderer.js";
 import { sumObjectValues } from "../helper.js";
 import { getClientBonuses, getClientTokens } from "../game-data-handler.js";
 import { binarySearchObjects } from "../../utils/data-handler.js";
+import {validCardBuy, validCardReserve, validDeckReserve} from "../state-machine/valid-action-checker.js";
 
-function selectCard(e) {
-    const $card = getCard(e);
-
-    if (!$card) return;
-
-    if (cardAlreadySelected($card.dataset.name)) {
-        $card.classList.remove("selected-card");
-        deselectCard();
-
-        return;
-    }
-
+function allowToBuy($card) {
     setActionButtonState(
         "buy",
         "processBuyCardClick",
         { name: $card.dataset.name },
     );
 
-    if (canBuy($card)) {
-        highlightCard($card);
-        const cardData = getCardData($card.dataset.name);
-        const defaultPayment = getDefaultPaymentMethod(cardData["cost"]);
+    const cardData = getCardData($card.dataset.name);
+    const defaultPayment = getDefaultPaymentMethod(cardData["cost"]);
 
+    getActionButton().disabled = false;
+    setNewPaymentMethod(defaultPayment);
+    renderSwitchPaymentButtons(defaultPayment, cardData["cost"]);
+}
+
+function allowToReserve() {
+    // TODO
+}
+
+function selectCard(e) {
+    const $card = getCard(e);
+    const cardName = $card.dataset.name;
+    if (!$card) return;
+
+    if (cardAlreadySelected(cardName)) {
+        $card.classList.remove("selected-card");
+        deselectCard();
+
+        return;
+    }
+
+    const isValidCardBuy = validCardBuy(cardName);
+    const isValidCardReserve = validCardReserve();
+
+    if (isValidCardBuy || isValidCardReserve) highlightCard($card);
+
+    if (isValidCardBuy) {
+        allowToBuy($card);
         getActionButton().disabled = false;
-        setNewPaymentMethod(defaultPayment);
-        renderSwitchPaymentButtons(defaultPayment, cardData["cost"]);
     } else {
         getActionButton().disabled = true;
     }
+
+    if (isValidCardReserve) allowToReserve();
 }
 
 function highlightCard($card) {
@@ -57,8 +73,8 @@ function deselectCard() {
     hideSwitchPaymentButtons();
 }
 
-function canBuy($card) {
-    const cost = getCardData($card.dataset.name)["cost"];
+function canBuy(name) {
+    const cost = getCardData(name)["cost"];
     const wallet = getPlayerWallet();
 
     return isWalletHigher(wallet, cost);
@@ -83,7 +99,6 @@ function processBuyCardClick() {
 }
 
 function getCardData(cardName) {
-    console.log(cardName);
     return binarySearchObjects(DEVELOPMENT_CARDS, cardName, "name");
 }
 
@@ -236,4 +251,5 @@ export {
     updateCurrentPlayerBonuses,
     getDefaultPaymentMethod,
     deselectCard,
+    canBuy,
 };

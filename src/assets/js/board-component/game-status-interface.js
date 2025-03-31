@@ -26,11 +26,7 @@ function getActionButton() {
 function setActionButtonState(message, functionToRunOnClick, datasetParameters, reset=true) {
     const $actionButton = getActionButton();
 
-    console.log(functionToRunOnClick)
-    console.log($actionButton.dataset.functionToRun)
-
     if (reset) {
-        console.log("Fuck")
         clearDatasetAttributes(getActionButton());
     }
 

@@ -1,4 +1,4 @@
-import { setActionButtonState } from "../game-status-interface.js";
+import {getActionButton, setActionButtonState} from "../game-status-interface.js";
 import { GAME_STATE } from "./data.js";
 
 function initRoundBegin(gameData){
@@ -11,6 +11,7 @@ function initRoundBegin(gameData){
     } else if(!gameData["started"]) {
         location.href = "./lobby-page.html";
     } else {
+        // TODO enable action button
         setActionButtonState("skip turn", "skipTurn", {});
     }
 
