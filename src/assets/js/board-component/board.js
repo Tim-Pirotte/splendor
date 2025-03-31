@@ -9,33 +9,12 @@ function init() {
     updateGameData();
     initGameStatusInterface();
     initializeActions();
-    sortAndPrint(DEVELOPMENT_CARDS, "name")
 }
 
 function initializeActions() {
     tokenInit();
     noblesInit();
     buyInit();
-}
-
-function sortAndPrint(objects, attribute) {
-    if (!Array.isArray(objects) || objects.length === 0) {
-        console.log("Invalid input: Provide a non-empty array of objects.");
-        return;
-    }
-
-    if (!(attribute in objects[0])) {
-        console.log(`Invalid attribute: '${attribute}' not found in objects.`);
-        return;
-    }
-
-    const sortedObjects = [...objects].sort((a, b) => {
-        if (a[attribute] < b[attribute]) return -1;
-        if (a[attribute] > b[attribute]) return 1;
-        return 0;
-    });
-
-    console.log(JSON.stringify(sortedObjects, null, 4));
 }
 
 init();
