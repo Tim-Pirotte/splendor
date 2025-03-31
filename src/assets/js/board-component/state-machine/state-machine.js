@@ -13,7 +13,7 @@ function initRoundBegin(gameData){
     } else {
         setActionButtonState("skip turn", "skipTurn", {});
     }
-    
+
 }
 
 export { initRoundBegin };

@@ -6,12 +6,12 @@ function getGames(hasStarted = "") {
     if (hasStarted !== "") {
         return fetchFromServer(`/games?started=${hasStarted}`);
     } else {
-        return fetchFromServer(`/games`);
+        return fetchFromServer("/games");
     }
 }
 
 function createGame(requestBody) {
-    return fetchFromServer(`/games`, "POST", requestBody);
+    return fetchFromServer("/games", "POST", requestBody);
 }
 
 function getGame() {
@@ -55,17 +55,4 @@ function takeNobels(requestBody) {
     return fetchFromServer(`/games/${gameId}/players/${playerName}/nobels`, "POST", requestBody);
 }
 
-/* General */
-function getGemsList() {
-    return fetchFromServer(`/gems`);
-}
-
-function getNoblesList() {
-    return fetchFromServer(`/nobles`);
-}
-
-function getDevelopmentsList() {
-    return fetchFromServer(`/developments`);
-}
-
-export { getGames, createGame, getGame, joinGame, takeTokens, buyCard, reserveCard, buyReserveCard, takeNobels, getGemsList, getNoblesList, getDevelopmentsList };
+export { getGames, createGame, getGame, joinGame, takeTokens, buyCard, reserveCard, buyReserveCard, takeNobels };

@@ -1,5 +1,5 @@
 import { getCurrentUsersAmount, getGameCreator, getGameId, getGameName, getMaxUsersAmount, getPlayersObjects } from "../utils/game-object-handler.js";
-import {safeEmptyContainer} from "../board-component/renderer/helper.js";
+import { safeEmptyContainer } from "../board-component/renderer/helper.js";
 
 function renderHeader(g) {
     document.querySelector("#game-name-id").innerHTML = `${getGameName(g)} / <span>${getGameId(g)}</span>`;
@@ -26,7 +26,7 @@ function renderPlayer($template, $container, playerName) {
 }
 
 function renderPlayerCount(g) {
-        document.querySelector("#player-count").textContent =
+    document.querySelector("#player-count").textContent =
         `${getCurrentUsersAmount(g)} / ${getMaxUsersAmount(g)}`;
 }
 

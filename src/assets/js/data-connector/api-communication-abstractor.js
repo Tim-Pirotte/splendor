@@ -1,36 +1,38 @@
 import { loadFromStorage } from "./local-storage-abstractor.js";
-import { getAPIUrl, GROUPTOKEN } from "../config.js";
+import { getAPIUrl, GROUP_TOKEN } from "../config.js";
 
 function constructOptions(httpVerb, requestBody) {
-  const options = {
-    method : httpVerb,
-    headers : {
-      "X-Group-Secret": GROUPTOKEN
+    const options = {
+        method: httpVerb,
+        headers: {
+            "X-Group-Secret": GROUP_TOKEN,
+        },
+    };
+
+    options.headers["Content-Type"] = "application/json";
+
+    const playerToken = loadFromStorage("playerToken");
+
+    if (playerToken !== null) {
+        options.headers.Authorization = `Bearer ${playerToken}`;
     }
-  };
 
-  options.headers["Content-Type"] = "application/json";
+    // Don't forget to add data to the body when needed
+    options.body = JSON.stringify(requestBody);
 
-  const playerToken = loadFromStorage("playerToken");
-
-  if (playerToken !== null) {
-    options.headers.Authorization = `Bearer ${playerToken}`;
-  }
-
-  // Don't forget to add data to the body when needed
-  options.body = JSON.stringify(requestBody);
-  return options;
+    return options;
 }
 
 function fetchFromServer(path, httpVerb, requestBody) {
-  const options = constructOptions(httpVerb, requestBody);
+    const options = constructOptions(httpVerb, requestBody);
 
-  return fetch(`${getAPIUrl()}${path}`, options)
-    .then(response => response.json())
-    .then(jsonresponsetoparse => {
-      if (jsonresponsetoparse.failure) {throw jsonresponsetoparse;}
-      return jsonresponsetoparse;
-    });
+    return fetch(`${getAPIUrl()}${path}`, options)
+        .then(response => response.json())
+        .then(jsonresponsetoparse => {
+            if (jsonresponsetoparse.failure) {throw jsonresponsetoparse;}
+
+            return jsonresponsetoparse;
+        });
 }
 
 export { fetchFromServer };

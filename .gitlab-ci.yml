@@ -25,12 +25,25 @@ sonarqube:
   script:
     - npm run validate-sonar-ci
 
+eslint:
+  stage: QA
+  needs:
+    - validate-html
+    - sonarqube
+  rules:
+    - if:
+        $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  script:
+    - npm i eslint
+    - npx eslint . --ext .js,.mjs,.cjs
+
 deployment:
   stage: deployment
   image: registry.ci.infra.lan:5000/project-1:client-deploy
   needs:
     - validate-html
     - sonarqube
+    - eslint
   rules:
     - if:
         $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH

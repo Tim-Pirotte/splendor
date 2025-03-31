@@ -5,7 +5,7 @@ import {
     TOKEN_LIMIT,
     TOKEN_LIMIT_THREE_PLAYERS,
     TOKEN_LIMIT_TWO_PLAYERS,
-    TOKEN_MAPPER
+    TOKEN_MAPPER,
 } from "../config.js";
 import { getUnclaimedTokens, mergeObjectsWithSum } from "../helper.js";
 import { GEMS } from "../data.js";

@@ -25,7 +25,6 @@ function filterOnName(gamelist, namePart) {
     return new Set(filteredList);
 }
 
-
 function checkIfPartIsInGameName(game, namePart) {
     const gameName = game["gameName"];
 
