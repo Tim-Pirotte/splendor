@@ -3,8 +3,9 @@ function binarySearchObjects(list, target, stringAttribute, start = 0, end = lis
 
     const mid = Math.floor((start + end) / 2);
 
-    // Copy is needed, E.g: wallet changes would affect the original data
-    if (list[mid][stringAttribute] === target) return { ...list[mid] };
+    // DEEP copy is needed, E.g: wallet changes would affect the original data. Shallow only clones direct values
+    // https://developer.mozilla.org/en-US/docs/Glossary/Deep_copy
+    if (list[mid][stringAttribute] === target) return JSON.parse(JSON.stringify(list[mid]));
 
     if (list[mid][stringAttribute].localeCompare(target) > 0) {
         return binarySearchObjects(list, target, stringAttribute, start, mid - 1);

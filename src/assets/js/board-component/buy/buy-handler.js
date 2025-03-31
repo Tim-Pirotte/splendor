@@ -32,6 +32,9 @@ function selectCard(e) {
 
     const cardName = $card.dataset.name;
 
+    hideSwitchPaymentButtons();
+    sessionStorage.removeItem("paymentMethod");
+
     if (cardAlreadySelected(cardName)) {
         $card.classList.remove("selected-card");
         deselectCard();
@@ -71,10 +74,8 @@ function cardAlreadySelected(cardName) {
 }
 
 function deselectCard() {
-    sessionStorage.removeItem("paymentMethod");
     getActionButton().dataset.name = "";
     getActionButton().disabled = false;
-    hideSwitchPaymentButtons();
 }
 
 function canBuy(name) {
