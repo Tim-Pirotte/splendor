@@ -1,11 +1,10 @@
-//NOSONAR_BEGIN
 const GEMS = [
     "Diamond",
-    "Emerald",
-    "Gold",
-    "Onyx",
-    "Ruby",
     "Sapphire",
+    "Emerald",
+    "Ruby",
+    "Onyx",
+    "Gold",
 ];
 
 const NOBLES = [
@@ -1033,6 +1032,5 @@ const DEVELOPMENT_CARDS = [
         "prestigePoints": 0
     }
 ]
-//NOSONAR_END
 
 export { GEMS, NOBLES, DEVELOPMENT_CARDS };
