@@ -65,6 +65,8 @@ function renderClientPlayerTokenCount(tokens) {
 function setTotalTokensColor($totalTokenCount, totalTokens) {
     if (totalTokens > MAX_TOKENS_ALLOWED) {
         $totalTokenCount.classList.add("highlighted-number");
+    } else {
+        $totalTokenCount.classList.remove("highlighted-number");
     }
 }
 

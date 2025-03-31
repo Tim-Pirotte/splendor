@@ -14,12 +14,6 @@ import { binarySearchObjects } from "../../utils/data-handler.js";
 import {validCardBuy, validCardReserve, validDeckReserve} from "../state-machine/valid-action-checker.js";
 
 function allowToBuy($card) {
-    setActionButtonState(
-        "buy",
-        "processBuyCardClick",
-        { name: $card.dataset.name },
-    );
-
     const cardData = getCardData($card.dataset.name);
     const defaultPayment = getDefaultPaymentMethod(cardData["cost"]);
 
@@ -48,7 +42,14 @@ function selectCard(e) {
     const isValidCardBuy = validCardBuy(cardName);
     const isValidCardReserve = validCardReserve();
 
-    if (isValidCardBuy || isValidCardReserve) highlightCard($card);
+    if (isValidCardBuy || isValidCardReserve) {
+        highlightCard($card);
+        setActionButtonState(
+            "buy",
+            "processBuyCardClick",
+            { name: $card.dataset.name },
+        );
+    }
 
     if (isValidCardBuy) {
         allowToBuy($card);
@@ -71,6 +72,7 @@ function cardAlreadySelected(cardName) {
 
 function deselectCard() {
     sessionStorage.removeItem("paymentMethod");
+    getActionButton().dataset.name = "";
     getActionButton().disabled = false;
     hideSwitchPaymentButtons();
 }

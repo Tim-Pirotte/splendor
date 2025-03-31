@@ -3,7 +3,8 @@ function binarySearchObjects(list, target, stringAttribute, start = 0, end = lis
 
     const mid = Math.floor((start + end) / 2);
 
-    if (list[mid][stringAttribute] === target) return list[mid];
+    // Copy is needed, E.g: wallet changes would affect the original data
+    if (list[mid][stringAttribute] === target) return { ...list[mid] };
 
     if (list[mid][stringAttribute].localeCompare(target) > 0) {
         return binarySearchObjects(list, target, stringAttribute, start, mid - 1);

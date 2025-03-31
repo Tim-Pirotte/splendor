@@ -53,7 +53,7 @@ function getClientBonuses() {
     const bonuses = {};
 
     for (const $bonus of document.querySelectorAll(".player-tokens ul > li")) {
-        bonuses[$bonus.dataset.type] = $bonus.dataset.bonuses;
+        bonuses[$bonus.dataset.type] = parseInt($bonus.dataset.bonuses);
     }
 
     return bonuses;
