@@ -1,5 +1,4 @@
 /* general */
-
 button {
     vertical-align: middle;
     background-color: black;
@@ -18,7 +17,16 @@ body {
 
 main {
     flex: 1 0 auto;
+    display: flex;
+    justify-content: center;
+    align-content: center;
 }
+
+main > div {
+    justify-content: center;
+    align-content: center;
+}
+
 /* header */
 header {
     text-align: center;
@@ -45,10 +53,9 @@ h3 {
     width: fit-content;
 }
 
-/* footer */
+/* Place the audio toggle at the right side of the footer */
 footer {
-    display: flex;
-    justify-content: space-between;
+    align-self: flex-end;
     flex-flow: row nowrap;
     padding: 2rem;
 }
@@ -62,8 +69,4 @@ footer .sound-button {
     height: 3rem;
     background-color: transparent;
     border: none;
-}
-
-.hidden {
-    visibility: hidden;
 }
