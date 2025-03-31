@@ -3,14 +3,14 @@ import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { ACTION_REGISTRY } from "./action-registry.js";
 
 function isCurrentlyPlaying() {
-  const playerName = loadFromStorage("playerName");
-  const currentlyPlaying = document.querySelector(".top-bar h2").dataset.currentlyPlaying;
-  return playerName === currentlyPlaying;
+    const playerName = loadFromStorage("playerName");
+    const currentlyPlaying = document.querySelector(".top-bar h2").dataset.currentlyPlaying;
+    return playerName === currentlyPlaying;
 }
 
 function getClientPlayer() {
-  const players = loadFromStorage("gameData")["players"];
-  const playerName = loadFromStorage("playerName");
+    const players = loadFromStorage("gameData")["players"];
+    const playerName = loadFromStorage("playerName");
 
     for (const player of players) {
         if (player["name"] === playerName) {
@@ -20,30 +20,30 @@ function getClientPlayer() {
 }
 
 function getActionButton() {
-  return document.querySelector(".action-button");
+    return document.querySelector(".action-button");
 }
 
 function setActionButtonState(message, functionToRunOnClick, datasetParameters) {
-  const $actionButton = getActionButton();
+    const $actionButton = getActionButton();
 
-  clearDatasetAttributes($actionButton);
+    clearDatasetAttributes($actionButton);
 
-  $actionButton.textContent = message;
-  $actionButton.dataset.functionToRun = functionToRunOnClick;
+    $actionButton.textContent = message;
+    $actionButton.dataset.functionToRun = functionToRunOnClick;
 
-  setActionButtonDataset(datasetParameters, $actionButton);
+    setActionButtonDataset(datasetParameters, $actionButton);
 }
 
 function setActionButtonDataset(datasetParameters, $actionButton) {
-  for (const [name, value] of Object.entries(datasetParameters)) {
-    $actionButton.dataset[name] = value.toString();
-  }
+    for (const [name, value] of Object.entries(datasetParameters)) {
+        $actionButton.dataset[name] = value.toString();
+    }
 }
 
 function clearDatasetAttributes($actionButton) {
-  for (const datasetAttribute of Object.keys($actionButton.dataset)) {
-    $actionButton.removeAttribute(`data-${datasetAttribute}`);
-  }
+    for (const datasetAttribute of Object.keys($actionButton.dataset)) {
+        $actionButton.removeAttribute(`data-${datasetAttribute}`);
+    }
 }
 
 function actionRegistryRouter() {

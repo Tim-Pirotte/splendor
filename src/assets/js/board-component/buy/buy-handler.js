@@ -1,5 +1,5 @@
 import * as API from "../../api.js";
-import {getActionButton, setActionButtonState} from "../game-status-interface.js";
+import { getActionButton, setActionButtonState } from "../game-status-interface.js";
 import {
     hideSwitchPaymentButtons,
     renderSwitchPaymentButtons,
@@ -9,8 +9,8 @@ import {
 import { DEVELOPMENT_CARDS } from "../data.js";
 import { renderUpdatedBoardTokens } from "../renderer/board-renderer.js";
 import { sumObjectValues } from "../helper.js";
-import {getClientBonuses, getClientTokens} from "../game-data-handler.js";
-import {binarySearchObjects} from "../../utils/data-handler.js";
+import { getClientBonuses, getClientTokens } from "../game-data-handler.js";
+import { binarySearchObjects } from "../../utils/data-handler.js";
 
 function selectCard(e) {
     const $card = getCard(e);
@@ -78,7 +78,7 @@ function processBuyCardClick() {
 }
 
 function getCardData(cardName) {
-    console.log(cardName)
+    console.log(cardName);
     return binarySearchObjects(DEVELOPMENT_CARDS, cardName, "name");
 }
 

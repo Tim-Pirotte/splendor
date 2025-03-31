@@ -2,9 +2,9 @@ import * as API from "../api.js";
 import { getGameId, getGameName, getGameState } from "../utils/game-object-handler.js";
 import { getAmountText, getGameButtonText } from "./helper.js";
 import { filterGameList } from "./filter.js";
-import {POLLING_TIME_OUT} from "../config.js";
-import {safeEmptyContainer} from "../board-component/renderer/helper.js";
-import {copyNode} from "../utils/data-handler.js";
+import { POLLING_TIME_OUT } from "../config.js";
+import { safeEmptyContainer } from "../board-component/renderer/helper.js";
+import { copyNode } from "../utils/data-handler.js";
 
 function renderGameList() {
     const $template = document.querySelector("#game-template");

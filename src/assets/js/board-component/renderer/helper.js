@@ -1,8 +1,8 @@
 import { CHIP_SPACING, TOKEN_MAPPER } from "../config.js";
-import {copyNode} from "../../utils/data-handler.js";
+import { copyNode } from "../../utils/data-handler.js";
 
 function insertImageInto($container, standardPath, before, alt) {
-  const $image = copyNode(document.querySelector("#image-template"));
+    const $image = copyNode(document.querySelector("#image-template"));
 
     $image.querySelector("source").srcset = `../assets/images/${standardPath}.webp`;
     const $img = $image.querySelector("img");
@@ -39,17 +39,17 @@ function formatNumber(number) {
 }
 
 function renderCard($container, points, bonus, costs, name) {
-  const $numberedItemTemplate = getNumberedItemTemplate();
-  const $card = copyNode(document.querySelector("#card-template"));
+    const $numberedItemTemplate = getNumberedItemTemplate();
+    const $card = copyNode(document.querySelector("#card-template"));
 
     $card.querySelector(".points").textContent = points;
     $card.dataset.name = name;
 
     const $cardCost = $card.querySelector(".cost");
 
-  for (const [type, cost] of Object.entries(costs)) {
-    const $costItem = copyNode($numberedItemTemplate)
-    $costItem.querySelector(".amount").textContent = cost;
+    for (const [type, cost] of Object.entries(costs)) {
+        const $costItem = copyNode($numberedItemTemplate);
+        $costItem.querySelector(".amount").textContent = cost;
 
         insertImageInto($costItem, `UI/tokens/${TOKEN_MAPPER[type]}_chip`, true, `${TOKEN_MAPPER[type]} chip`);
 
@@ -71,8 +71,8 @@ function safeEmptyContainer($container) {
 }
 
 function getSwitchButtonTemplate(token) {
-  const $switchButtonContainerTemplate = document.querySelector("#switch-tokens-container-template");
-  const $container = copyNode($switchButtonContainerTemplate);
+    const $switchButtonContainerTemplate = document.querySelector("#switch-tokens-container-template");
+    const $container = copyNode($switchButtonContainerTemplate);
 
     if (token === "Gold") {
         $container.querySelector(".switch-token").textContent = "Reset";
@@ -82,15 +82,15 @@ function getSwitchButtonTemplate(token) {
 }
 
 function getNumberedItemTemplate() {
-  return document.querySelector("#numbered-item-template");
+    return document.querySelector("#numbered-item-template");
 }
 
 export {
-  insertImageInto,
-  renderProgressBar,
-  formatNumber,
-  renderCard,
-  safeEmptyContainer,
-  getSwitchButtonTemplate,
-  getNumberedItemTemplate
+    insertImageInto,
+    renderProgressBar,
+    formatNumber,
+    renderCard,
+    safeEmptyContainer,
+    getSwitchButtonTemplate,
+    getNumberedItemTemplate,
 };

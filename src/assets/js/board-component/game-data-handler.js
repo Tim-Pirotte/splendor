@@ -39,30 +39,28 @@ function startGameStatePolling() {
     setTimeout(updateGameData, POLLING_TIME_OUT);
 }
 
-function getGems() {
-  API.getGemsList().then(gems => saveToStorage("gems", gems["gems"]));
-}
-
 function getClientTokens() {
-  const tokens = {};
-  for (const $token of document.querySelector(".player-tokens > li")) {
-    tokens[$token.dataset.type] = $token.dataset.amount;
-  }
+    const tokens = {};
 
-  return tokens;
+    for (const $token of document.querySelectorAll(".player-tokens ul > li")) {
+        tokens[$token.dataset.type] = $token.dataset.amount;
+    }
+
+    return tokens;
 }
 
 function getClientBonuses() {
-  const bonuses = {};
-  for (const $bonus of document.querySelector(".player-tokens > li")) {
-    bonuses[$bonus.dataset.type] = $bonus.dataset.bonuses;
-  }
+    const bonuses = {};
 
-  return bonuses;
+    for (const $bonus of document.querySelectorAll(".player-tokens ul > li")) {
+        bonuses[$bonus.dataset.type] = $bonus.dataset.bonuses;
+    }
+
+    return bonuses;
 }
 
 function getClientTotalPrestigePoints() {
-  return parseInt(document.querySelector(".player-points p").dataset.totalPrestigePoints);
+    return parseInt(document.querySelector(".player-points p").dataset.totalPrestigePoints);
 }
 
-export {updateGameData, getGems, getClientTokens, getClientBonuses, getClientTotalPrestigePoints, startGameStatePolling};
+export { updateGameData, getClientTokens, getClientBonuses, getClientTotalPrestigePoints, startGameStatePolling };

@@ -1,5 +1,5 @@
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
-import {copyNode} from "./data-handler.js";
+import { copyNode } from "./data-handler.js";
 
 function renderPlayerInformation() {
     const avatar = loadFromStorage("avatar");

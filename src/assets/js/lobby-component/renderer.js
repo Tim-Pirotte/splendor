@@ -1,6 +1,6 @@
 import { getCurrentUsersAmount, getGameCreator, getGameId, getGameName, getMaxUsersAmount, getPlayersObjects } from "../utils/game-object-handler.js";
-import {safeEmptyContainer} from "../board-component/renderer/helper.js";
-import {copyNode} from "../utils/data-handler.js";
+import { safeEmptyContainer } from "../board-component/renderer/helper.js";
+import { copyNode } from "../utils/data-handler.js";
 
 function renderHeader(g) {
     document.querySelector("#game-name-id").innerHTML = `${getGameName(g)} / <span>${getGameId(g)}</span>`;

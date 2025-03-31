@@ -13,8 +13,8 @@ import { getHighestScore } from "./sidebar-renderer.js";
 import { isAllowedToSwitchToken, removePaidTokens, updateCurrentPlayerBonuses } from "../buy/buy-handler.js";
 import { GEMS } from "../data.js";
 import { getPlayersObjects } from "../../utils/game-object-handler.js";
-import {getClientTokens, getClientTotalPrestigePoints} from "../game-data-handler.js";
-import {copyNode} from "../../utils/data-handler.js";
+import { getClientTokens, getClientTotalPrestigePoints } from "../game-data-handler.js";
+import { copyNode } from "../../utils/data-handler.js";
 
 function renderHeader(currentPlayer) {
     const $playerName = document.querySelector(".top-bar h2");
@@ -169,7 +169,7 @@ function hideSwitchPaymentButtons() {
     });
 }
 
-export {renderHeader,
+export { renderHeader,
     renderClientPlayer,
     renderSwitchPaymentButtons,
     renderClientPlayerTokenCount,renderClientPlayerTokens,

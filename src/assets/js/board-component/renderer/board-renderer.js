@@ -1,4 +1,4 @@
-import {getNumberedItemTemplate, insertImageInto, renderCard, safeEmptyContainer} from "./helper.js";
+import { getNumberedItemTemplate, insertImageInto, renderCard, safeEmptyContainer } from "./helper.js";
 import {
     GOLD_TOKEN_LIMIT,
     NOBLES_MAPPER,
@@ -9,7 +9,7 @@ import {
 } from "../config.js";
 import { getUnclaimedTokens, sumObjectValues } from "../helper.js";
 import { GEMS } from "../data.js";
-import {copyNode} from "../../utils/data-handler.js";
+import { copyNode } from "../../utils/data-handler.js";
 
 function renderCards(market) {
     for (const deck of market) {
