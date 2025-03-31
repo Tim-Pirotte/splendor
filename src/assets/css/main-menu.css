@@ -1,8 +1,4 @@
 /* General styling for the body and main container */
-body {
-    background-color: white;
-}
-
 main {
     flex: 1 0 auto;
 }
@@ -30,7 +26,8 @@ label {
 .avatar-selector {
     position: relative;
     display: inline-block;
-    margin-left: 3rem;
+    margin-left: 2rem;
+    list-style-type: none;
 }
 
 .avatar-selector section {
@@ -41,6 +38,12 @@ label {
 .avatar-selector section ul {
     display: flex;
     gap: 0.5rem;
+}
+
+.avatar-selector button {
+    background-color: transparent;
+    padding: 0;
+    border: none;
 }
 
 /* Join and create buttons */
