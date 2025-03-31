@@ -60,8 +60,14 @@ function pushTokenToStack($selectedToken, $actionButton, stackPointer) {
     $actionButton.dataset[`token${stackPointer}`] = $selectedToken.dataset.type;
 }
 
-function setActionToTokenAction(stackPointer, $selectedToken) {
-    if (stackPointer === 1 && $selectedToken.dataset.amount >= MIN_TOKENS_FOR_PICKING_TWO) {
+function setActionToTokenAction(stackPointer) {
+    let tokenAmount = -1;
+    if ("token0" in getActionButton().dataset) {
+        const firstTokenInStack = getActionButton().dataset.token0;
+        tokenAmount = document.querySelector(`.board-tokens [data-type="${firstTokenInStack}"]`).dataset.amount;
+    }
+
+    if (stackPointer === 1 && tokenAmount >= MIN_TOKENS_FOR_PICKING_TWO) {
         setActionButtonState("Take two", "processTakeTwoTokensClick", {}, false);
     } else {
         setActionButtonState("Take up to three", "processTakeTokenClick", {}, false);
@@ -95,7 +101,7 @@ function selectToken(e) {
         stackPointer--;
         $actionButton.dataset.stackPointer = stackPointer;
 
-        setActionToTokenAction(stackPointer, $selectedToken);
+        setActionToTokenAction(stackPointer);
 
         return;
     }
@@ -109,7 +115,7 @@ function selectToken(e) {
     $actionButton.dataset.stackPointer = stackPointer;
     highlightToken($selectedToken);
 
-    setActionToTokenAction(stackPointer, $selectedToken);
+    setActionToTokenAction(stackPointer);
 }
 
 function setTokensTo(stackPointer, $actionButton, amountOfTokens) {

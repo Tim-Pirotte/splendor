@@ -14,7 +14,8 @@ import { binarySearchObjects } from "../../utils/data-handler.js";
 
 function selectCard(e) {
     const $card = getCard(e);
-    $card.classList.add("selected-card");
+
+    if (!$card) return;
 
     if (cardAlreadySelected($card.dataset.name)) {
         $card.classList.remove("selected-card");
@@ -29,7 +30,8 @@ function selectCard(e) {
         { name: $card.dataset.name },
     );
 
-    if ($card && canBuy($card)) {
+    if (canBuy($card)) {
+        highlightCard($card);
         const cardData = getCardData($card.dataset.name);
         const defaultPayment = getDefaultPaymentMethod(cardData["cost"]);
 
@@ -39,6 +41,10 @@ function selectCard(e) {
     } else {
         getActionButton().disabled = true;
     }
+}
+
+function highlightCard($card) {
+    $card.classList.add("selected-card");
 }
 
 function cardAlreadySelected(cardName) {
