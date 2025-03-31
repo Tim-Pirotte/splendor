@@ -12,8 +12,10 @@ import { getActionButton, mergeObjectsWithSum } from "../helper.js";
 
 function selectCard(e) {
     const $card = getCard(e);
+    $card.classList.add("selected-card");
 
     if (cardAlreadySelected($card.dataset.name)) {
+        $card.classList.remove("selected-card");
         deselectCard();
 
         return;

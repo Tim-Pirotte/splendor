@@ -1,40 +1,55 @@
-body {
-    background-color: white;
-    min-height: 100vh;
-    margin: 0;
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: column;
-}
-
-header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 2rem 0 2rem 0;
-}
-
+/* General styling for the body and main container */
 main {
-    flex: 1;
+    flex: 1 0 auto;
+}
+
+body > div {
+    padding-top: 5rem;
+    box-sizing: border-box;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
+    flex-flow: column nowrap;
+    height: 100vh;
 }
 
-tbody {
-    counter-reset: position-counter;
+/* Splendor logo */
+header {
+    margin: 2rem 0;
 }
 
-tbody tr {
-    counter-increment: position-counter;
+/* Score table */
+table {
+    width: 100%;
 }
 
-tbody tr td:first-child::before {
-    content: counter(position-counter)
+thead {
+    background: whitesmoke;
+    font-weight: bold;
 }
 
+thead th, tbody td {
+    padding: 1rem 1rem;
+    text-align: left;
+}
+
+tbody tr:nth-child(even) {
+    background: whitesmoke;
+}
+
+/* Place the audio toggle at the right side of the footer */
 footer {
     align-self: flex-end;
-    margin: 0 1rem 1rem 1rem;
+    flex-flow: row nowrap;
+    padding: 2rem;
+}
+
+footer picture source, footer picture img{
+    height: 3rem;
+}
+
+footer .sound-button {
+    width: 3rem;
+    height: 3rem;
+    background-color: transparent;
+    border: none;
 }
