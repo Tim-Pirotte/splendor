@@ -1,5 +1,21 @@
+/* General body styling */
 body {
-  background-color: white;
-  color: black;
-  font-family: "Arial", "sans-serif";
+    background-color: white;
+    color: black;
+    font-family: "Arial", "sans-serif";
+}
+
+/* General button styling */
+button {
+    background-color: white;
+    border: black solid 0.025rem;
+    border-radius: 0.25rem;
+    padding: 0.5rem;
+}
+
+/* General input field styling */
+input {
+    background-color: white;
+    border: black solid 0.025rem;
+    padding: 0.25rem;
 }
