@@ -34,7 +34,7 @@ eslint:
     - if:
         $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
   script:
-    - nmp i eslint
+    - npm i eslint
     - npx eslint . --ext .js,.mjs,.cjs
 
 deployment:
