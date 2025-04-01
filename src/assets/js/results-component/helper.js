@@ -12,16 +12,17 @@ function filterResults(gameData) {
             const results = players.map(player => ({
                 name: player.name,
                 points: player["totalPrestigePoints"],
-                amountOfBonuses: sumObjectValues(player["bonuses"])
-            })).sort((a, b) => b.points - a.points || b.amountOfBonuses - a.amountOfBonuses);
+                amountOfBonuses: getAmountOfBonuses(player)
+            }))
+            .sort((a, b) => b.points - a.points || b.amountOfBonuses - a.amountOfBonuses);
 
             const topScore = results[0]?.points;
             const topBonuses = results[0]?.amountOfBonuses;
 
-            /* ...player was a suggestion of chat-gpt */
+            /* Each player spreads their existing properties and adds 'winner: true' if they have
+               the highest points and bonuses. This allows multiple winners in case of ties. (ChatGPT) */
             return results.map(player => ({
-                ...player,
-                isWinner: player.points === topScore && player.amountOfBonuses === topBonuses
+                ...player, isWinner: player.points === topScore && player.amountOfBonuses === topBonuses
             }));
         });
 }
