@@ -20,8 +20,8 @@ function validCardReserve($card) {
     return isCurrentlyPlaying() && getGameState() === GAME_STATE.TURN_ACTION && hasReservePlace() && !$card.classList.contains("reserved");
 }
 
-function validDeckReserve(cardName) {
-    return isCurrentlyPlaying() && getGameState() === GAME_STATE.TURN_ACTION && hasReservePlace() && deckHasEnoughCards(getLevelFromCard(cardName));
+function validDeckReserve(deckLevel) {
+    return isCurrentlyPlaying() && getGameState() === GAME_STATE.TURN_ACTION && hasReservePlace() && deckHasEnoughCards(deckLevel);
 }
 
 function validNobelPick() {
