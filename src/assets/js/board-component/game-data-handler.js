@@ -43,7 +43,7 @@ function startGameStatePolling() {
 /* https://www.freecodecamp.org/news/javascript-timer-how-to-set-a-timer-function-in-js/ */
 function startRoundTimer() {
     const progressBar = document.querySelector("#roundTimer");
-    let timeLeftInSeconds = 5;
+    let timeLeftInSeconds = 45;
 
     let timer = setInterval(function () {
         timeLeftInSeconds--;
