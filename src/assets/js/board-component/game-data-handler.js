@@ -18,6 +18,7 @@ function handleGameDataError(err) {
 }
 
 function updateGameData() {
+    console.log('kaas')
     const gameId = loadFromStorage("gameId");
 
     if (gameId === null) location.href = "../index.html";

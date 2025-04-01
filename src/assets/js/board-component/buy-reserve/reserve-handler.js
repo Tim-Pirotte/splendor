@@ -1,6 +1,7 @@
 import { renderCard, safeEmptyContainer } from "../renderer/helper.js";
 import * as API from "../../api.js"
 import {getReserveCardButton} from "./helper.js";
+import {startGameStatePolling} from "../game-data-handler.js";
 
 function processReserve(e){
     const selectedCardName = getReserveCardButton().dataset.name;
@@ -23,6 +24,7 @@ function processReserve(e){
       });
 
       getReserveCardButton().classList.add("hidden");
+      startGameStatePolling();
     }
 
 }
