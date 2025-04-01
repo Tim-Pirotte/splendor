@@ -12,7 +12,7 @@ import { sumObjectValues } from "../helper.js";
 import { getClientBonuses, getClientTokens } from "../game-data-handler.js";
 import { binarySearchObjects } from "../../utils/data-handler.js";
 import { validCardBuy, validCardReserve } from "../state-machine/valid-action-checker.js";
-import {unHighlightTokens} from "../token/token-handler.js";
+import { unHighlightTokens } from "../token/token-handler.js";
 
 function allowToBuy($card) {
     const cardData = getCardData($card.dataset.name);
@@ -31,12 +31,13 @@ function setActionToBuy($card) {
     setActionButtonState(
         "buy",
         "processBuyCardClick",
-        {name: $card.dataset.name},
+        { name: $card.dataset.name },
     );
 }
 
 function selectCard(e) {
     const $card = getCard(e);
+
     if (!$card) return;
 
     const cardName = $card.dataset.name;

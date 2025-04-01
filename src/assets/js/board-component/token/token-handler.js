@@ -2,8 +2,8 @@ import * as API from "../../api.js";
 import { getActionButton, setActionButtonState } from "../game-status-interface.js";
 import { MIN_TOKENS_FOR_PICKING_TWO } from "./config.js";
 import { MAX_TAKE_TOKENS } from "../config.js";
-import {deselectCard, unHighlightCards} from "../buy/buy-handler.js";
-import {validTokenTake} from "../state-machine/valid-action-checker.js";
+import { deselectCard } from "../buy/buy-handler.js";
+import { validTokenTake } from "../state-machine/valid-action-checker.js";
 
 function clickedOnToken(target) {
     return target.tagName.toLowerCase() === "img";
@@ -70,6 +70,7 @@ function pushTokenToStack($selectedToken, $actionButton, stackPointer) {
 function setActionToTokenAction(stackPointer) {
     let tokenAmount = -1;
     let firstTokenInStack = null;
+
     if ("token0" in getActionButton().dataset) {
         firstTokenInStack = getActionButton().dataset.token0;
     }
@@ -88,6 +89,23 @@ function highlightToken($selectedToken) {
     $selectedToken.classList.add("selected-token");
 }
 
+function removeTokenFromList($selectedToken, $actionButton, stackPointer) {
+    deselectToken($selectedToken);
+    removeTokenFromStack($selectedToken, $actionButton);
+    stackPointer--;
+    $actionButton.dataset.stackPointer = stackPointer;
+
+    return stackPointer;
+}
+
+function addTokenToList($selectedToken, $actionButton, stackPointer) {
+    pushTokenToStack($selectedToken, $actionButton, stackPointer);
+    stackPointer++;
+    $actionButton.dataset.stackPointer = stackPointer;
+    highlightToken($selectedToken);
+    return stackPointer;
+}
+
 function selectToken(e) {
     if (!validTokenTake() || !clickedOnToken(e.target)) return;
 
@@ -96,21 +114,18 @@ function selectToken(e) {
     getActionButton().disabled = false;
 
     const $selectedToken = getToken(e.target);
+
     if ($selectedToken.dataset.amount < 1) return;
 
     const $actionButton = getActionButton();
+
     if (!stackExists($actionButton)) createStack($actionButton);
 
     let stackPointer = parseInt($actionButton.dataset.stackPointer);
 
     if (tokenInStack($selectedToken, $actionButton, stackPointer)) {
-        deselectToken($selectedToken);
-        removeTokenFromStack($selectedToken, $actionButton);
-        stackPointer--;
-        $actionButton.dataset.stackPointer = stackPointer;
-
+        stackPointer = removeTokenFromList($selectedToken, $actionButton, stackPointer);
         setActionToTokenAction(stackPointer);
-
         return;
     }
 
@@ -118,11 +133,7 @@ function selectToken(e) {
 
     if ($selectedToken.dataset.type === "Gold") return;
 
-    pushTokenToStack($selectedToken, $actionButton, stackPointer);
-    stackPointer++;
-    $actionButton.dataset.stackPointer = stackPointer;
-    highlightToken($selectedToken);
-
+    stackPointer = addTokenToList($selectedToken, $actionButton, stackPointer);
     setActionToTokenAction(stackPointer);
 }
 

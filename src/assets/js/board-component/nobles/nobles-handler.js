@@ -2,7 +2,7 @@ import { getActionButton, setActionButtonState } from "../game-status-interface.
 import { fetchFromServer } from "../../data-connector/api-communication-abstractor.js";
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
 import { NOBLES } from "../data.js";
-import {binarySearchObjects} from "../../utils/data-handler.js";
+import { binarySearchObjects } from "../../utils/data-handler.js";
 
 function selectNoble(e) {
     const $selectedNoble = e.target.closest("li");

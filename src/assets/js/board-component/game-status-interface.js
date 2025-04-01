@@ -23,7 +23,7 @@ function getActionButton() {
     return document.querySelector(".action-button");
 }
 
-function setActionButtonState(message, functionToRunOnClick, datasetParameters, reset=true) {
+function setActionButtonState(message, functionToRunOnClick, datasetParameters, reset = true) {
     const $actionButton = getActionButton();
 
     if (reset) {
