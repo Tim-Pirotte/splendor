@@ -96,6 +96,7 @@ function renderClientPlayerTokens(currentPlayerTokens, currentPlayerBonuses, gem
 
     const $numberedItemTemplate = getNumberedItemTemplate();
     const $progressBarTemplate = document.querySelector("#progress-bar-template");
+    const $discardNavTemplate = document.querySelector("#token-discard-template");
 
     for (const token of gems.toReversed()) {
         const $token = copyNode($numberedItemTemplate);
@@ -108,14 +109,19 @@ function renderClientPlayerTokens(currentPlayerTokens, currentPlayerBonuses, gem
             insertCardCounter($token, token, currentPlayerBonuses);
         }
 
+        const $discardNav = copyNode($discardNavTemplate);
+
         $switchPaymentButtonContainer.querySelector(".switch-token").dataset.type = token;
+
         $token.querySelector(".amount").textContent = (currentPlayerTokens[token] || 0);
         $token.dataset.amount = (currentPlayerTokens[token] || 0);
+
         insertImageInto($token, `UI/tokens/${TOKEN_MAPPER[token]}_chip`, false, `${TOKEN_MAPPER[token]} chip`);
         renderProgressBar($progressBar, currentPlayerTokens[token], TOKEN_MAPPER[token]);
 
         $token.appendChild($progressBar);
         $token.appendChild($switchPaymentButtonContainer);
+        $token.appendChild($discardNav);
         $currentPlayerTokensContainer.appendChild($token);
     }
 }

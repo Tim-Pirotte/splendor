@@ -240,6 +240,10 @@ section header picture {
     color: hotpink;
 }
 
+.discard-container > * {
+    display: inline-block;
+}
+
 /* TIMER */
 progress {
     grid-area: timer;
