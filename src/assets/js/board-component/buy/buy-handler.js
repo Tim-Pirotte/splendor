@@ -12,6 +12,7 @@ import { sumObjectValues } from "../helper.js";
 import { getClientBonuses, getClientTokens } from "../game-data-handler.js";
 import { binarySearchObjects } from "../../utils/data-handler.js";
 import { validCardBuy, validCardReserve } from "../state-machine/valid-action-checker.js";
+import {unHighlightTokens} from "../token/token-handler.js";
 
 function allowToBuy($card) {
     const cardData = getCardData($card.dataset.name);
@@ -44,9 +45,7 @@ function selectCard(e) {
     sessionStorage.removeItem("paymentMethod");
 
     if (cardAlreadySelected(cardName)) {
-        $card.classList.remove("selected-card");
         deselectCard();
-
         return;
     }
 
@@ -54,6 +53,7 @@ function selectCard(e) {
     const isValidCardReserve = validCardReserve();
 
     if (isValidCardBuy || isValidCardReserve) {
+        unHighlightTokens();
         highlightCard($card);
         setActionToBuy($card);
     }
@@ -65,14 +65,14 @@ function selectCard(e) {
     if (isValidCardReserve) allowToReserve();
 }
 
-function unHighlightOtherCards() {
+function unHighlightCards() {
     for (const $cardToDeselect of document.querySelectorAll(".selected-card")) {
         $cardToDeselect.classList.remove("selected-card");
     }
 }
 
 function highlightCard($card) {
-    unHighlightOtherCards();
+    unHighlightCards();
     $card.classList.add("selected-card");
 }
 
@@ -81,6 +81,7 @@ function cardAlreadySelected(cardName) {
 }
 
 function deselectCard() {
+    unHighlightCards();
     getActionButton().dataset.name = "";
     getActionButton().disabled = false;
 }
@@ -264,5 +265,5 @@ export {
     getDefaultPaymentMethod,
     deselectCard,
     canBuy,
-    unHighlightOtherCards,
+    unHighlightCards,
 };

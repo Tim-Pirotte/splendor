@@ -2,7 +2,7 @@ import * as API from "../../api.js";
 import { getActionButton, setActionButtonState } from "../game-status-interface.js";
 import { MIN_TOKENS_FOR_PICKING_TWO } from "./config.js";
 import { MAX_TAKE_TOKENS } from "../config.js";
-import {deselectCard, unHighlightOtherCards} from "../buy/buy-handler.js";
+import {deselectCard, unHighlightCards} from "../buy/buy-handler.js";
 import {validTokenTake} from "../state-machine/valid-action-checker.js";
 
 function clickedOnToken(target) {
@@ -39,6 +39,12 @@ function tokenInStack($selectedToken, $actionButton, stackPointer) {
 
 function deselectToken($selectedToken) {
     $selectedToken.classList.remove("selected-token");
+}
+
+function unHighlightTokens() {
+    for (const $cardToDeselect of document.querySelectorAll(".board-tokens > li")) {
+        $cardToDeselect.classList.remove("selected-token");
+    }
 }
 
 function removeTokenFromStack($selectedToken, $actionButton) {
@@ -86,7 +92,6 @@ function selectToken(e) {
     if (!validTokenTake() || !clickedOnToken(e.target)) return;
 
     deselectCard();
-    unHighlightOtherCards();
 
     getActionButton().disabled = false;
 
@@ -166,4 +171,4 @@ function processSkipTurn() {
     API.takeTokens({ take: { Ruby: 0 } }).then(res => updateTokens(res));
 }
 
-export { selectToken, processTakeTokensClick, updateTokens, processTakeTwoTokens, processSkipTurn };
+export { selectToken, processTakeTokensClick, updateTokens, processTakeTwoTokens, processSkipTurn, unHighlightTokens };
