@@ -1,4 +1,6 @@
-import {MAX_TOKENS_ALLOWED} from "../config.js";
+import {setButtonStatuses} from "../renderer/current-player-renderer.js";
+import {setActionButtonState} from "../game-status-interface.js";
+import {takeTokens} from "../../api.js";
 
 function selectPlayerToken(e) {
     if (!clickedOnButton(e.target)) return;
@@ -16,6 +18,7 @@ function selectPlayerToken(e) {
     }
 
     setButtonStatuses();
+    setActionButtonState("Discard tokens", "processDiscardTokens", {}, true);
 }
 
 function clickedOnButton(target) {
@@ -38,10 +41,6 @@ function getAmountCounter($tokenContainer) {
     return $tokenContainer.querySelector(".discard-container .amount");
 }
 
-function getAmountToDiscard($amountCounter) {
-    return $amountCounter.dataset.amount;
-}
-
 function getTotalTokenAmount() {
     return document.querySelector(".player-tokens #current-tokens").dataset.amount;
 }
@@ -50,19 +49,13 @@ function getTotalAmountDiscarded() {
     return parseInt(document.querySelector(".player-tokens #current-tokens").dataset.amountToDiscard);
 }
 
-function isValidAction(action, amountAvailable, amountToDiscard) {
-    const totalTokens = getTotalTokenAmount();
-    const totalDiscarded = getTotalAmountDiscarded();
-
-    if (action === "add") {
-        return amountAvailable - amountToDiscard > 0 && totalTokens - totalDiscarded > MAX_TOKENS_ALLOWED;
-    } else {
-        return amountToDiscard > 0;
-    }
-}
-
 function addOneToDiscard($amountCounter) {
     $amountCounter.dataset.amount = parseInt($amountCounter.dataset.amount || 0) + 1;
+    $amountCounter.textContent = parseInt($amountCounter.dataset.amount);
+}
+
+function removeOneToDiscard($amountCounter) {
+    $amountCounter.dataset.amount = parseInt($amountCounter.dataset.amount || 0) - 1;
     $amountCounter.textContent = parseInt($amountCounter.dataset.amount);
 }
 
@@ -74,29 +67,25 @@ function decreaseTotalDiscardCount() {
     document.querySelector(".player-tokens #current-tokens").dataset.amountToDiscard = getTotalAmountDiscarded() - 1
 }
 
-function removeOneToDiscard($amountCounter) {
-    $amountCounter.dataset.amount = parseInt($amountCounter.dataset.amount || 0) - 1;
-    $amountCounter.textContent = parseInt($amountCounter.dataset.amount);
+function processDiscardTokens() {
+    const tokensToDiscard = getTokensToDiscard();
+    const requestBody = {"return": tokensToDiscard};
+    console.log(requestBody)
+    takeTokens(requestBody).then(res => console.log(res));
 }
 
-function setButtonStatuses() {
-    const totalAmountOfTokens = getTotalTokenAmount();
-    const totalAmountDiscarded = getTotalAmountDiscarded();
+function getTokensToDiscard() {
+    const tokens = {};
 
     for (const $token of document.querySelectorAll(".player-tokens li")) {
-        const amountAvailable = parseInt($token.dataset.amount);
-        const amountInDiscard = parseInt($token.querySelector(".discard-container .amount").dataset.amount);
-
-        const addButton = $token.querySelector("[data-action='add']");
-        const removeButton = $token.querySelector("[data-action='remove']");
-
-        addButton.disabled = amountInDiscard === amountAvailable || totalAmountOfTokens - MAX_TOKENS_ALLOWED === totalAmountDiscarded;
-        removeButton.disabled = amountInDiscard === 0;
+        const tokenType = $token.dataset.type;
+        const amountToDiscard = parseInt(getAmountCounter($token).dataset.amount);
+        if (amountToDiscard !== 0) {
+            tokens[tokenType] = amountToDiscard;
+        }
     }
+
+    return tokens;
 }
 
-function processDiscardTokens() {
-
-}
-
-export { selectPlayerToken, processDiscardTokens, setButtonStatuses };
+export { selectPlayerToken, processDiscardTokens, getTotalTokenAmount, getTotalAmountDiscarded, getTokenAmount };

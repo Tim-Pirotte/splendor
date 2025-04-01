@@ -29,7 +29,7 @@ function initRoundBegin(gameData){
         setActionButtonState("Choose a nobel", "doNothing", {});
         break;
     case GAME_STATE.RETURN_GEMS:
-        setActionButtonState("Chose tokens to discard", "doNothing", {});
+        setActionButtonState("Choose tokens to discard", "doNothing", {});
         break;
     default:
         setActionButtonState("skip turn", "skipTurn", {});

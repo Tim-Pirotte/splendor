@@ -15,7 +15,7 @@ import { GEMS } from "../data.js";
 import { getHighestScore, sumObjectValues, getPlayersObjects } from "../../utils/game-object-handler.js";
 import { getClientTokens, getClientTotalPrestigePoints } from "../game-data-handler.js";
 import { copyNode } from "../../utils/data-handler.js";
-import {setButtonStatuses} from "../token/discard.js";
+import {getTokenAmount, getTotalAmountDiscarded, getTotalTokenAmount} from "../token/discard.js";
 
 function renderHeader(currentPlayer) {
     const $playerName = document.querySelector(".top-bar h2");
@@ -131,6 +131,22 @@ function renderClientPlayerTokens(currentPlayerTokens, currentPlayerBonuses, gem
     setButtonStatuses();
 }
 
+function setButtonStatuses() {
+    const totalAmountOfTokens = getTotalTokenAmount();
+    const totalAmountDiscarded = getTotalAmountDiscarded();
+
+    for (const $token of document.querySelectorAll(".player-tokens li")) {
+        const amountAvailable = getTokenAmount($token);
+        const amountInDiscard = parseInt($token.querySelector(".discard-container .amount").dataset.amount);
+
+        const addButton = $token.querySelector("[data-action='add']");
+        const removeButton = $token.querySelector("[data-action='remove']");
+
+        addButton.disabled = amountInDiscard === amountAvailable || totalAmountOfTokens - MAX_TOKENS_ALLOWED === totalAmountDiscarded;
+        removeButton.disabled = amountInDiscard === 0;
+    }
+}
+
 function renderSwitchPaymentButtons(currentPayment, cost) {
     const tokensInWallet = getClientTokens();
     const $tokensContainers = document.querySelectorAll(".switch-token-container");
@@ -190,4 +206,5 @@ export {
     renderUpdatedPlayerTokens,
     renderUpdatedPlayerScore,
     hideSwitchPaymentButtons,
+    setButtonStatuses,
 };
