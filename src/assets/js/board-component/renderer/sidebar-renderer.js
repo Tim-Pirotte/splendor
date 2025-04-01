@@ -18,6 +18,12 @@ function renderOtherPlayers(otherPlayers, gems) {
     for (const otherPlayer of otherPlayers) {
         if (otherPlayer.name !== currentPlayerName) {
             const $playerCard = copyNode($playerTemplate);
+            const playerName = otherPlayer.name;
+
+            if (playerName === loadFromStorage("gameData")["currentPlayer"]) {
+                $playerCard.classList.add("current-player");
+            }
+
             setPlayerName($playerCard, otherPlayer);
             setPlayerPoints($playerCard, otherPlayer["totalPrestigePoints"], highestScore);
 

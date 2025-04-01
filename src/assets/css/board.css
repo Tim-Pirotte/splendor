@@ -240,6 +240,12 @@ section header picture {
     color: hotpink;
 }
 
+.player-card.current-player {
+    background-color: hotpink;
+    position: relative;
+    margin-left: 1.25rem;
+}
+
 /* TIMER */
 progress {
     grid-area: timer;

@@ -15,11 +15,16 @@ import { GEMS } from "../data.js";
 import { getHighestScore, sumObjectValues, getPlayersObjects } from "../../utils/game-object-handler.js";
 import { getClientTokens, getClientTotalPrestigePoints } from "../game-data-handler.js";
 import { copyNode } from "../../utils/data-handler.js";
+import { isCurrentlyPlaying } from "../game-status-interface.js";
 
 function renderHeader(currentPlayer) {
     const $playerName = document.querySelector(".top-bar h2");
+
     $playerName.textContent = loadFromStorage("playerName");
     $playerName.dataset.currentlyPlaying = currentPlayer;
+
+    document.querySelector("h1").textContent = isCurrentlyPlaying() ?
+        "It's your turn" : `${loadFromStorage("gameData")["currentPlayer"]}'s turn`;
 }
 
 function getCurrentPlayer(players, currentPlayerName) {
