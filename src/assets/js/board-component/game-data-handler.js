@@ -1,10 +1,12 @@
 import * as API from "../api.js";
-import { deleteFromStorage, loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
 import { renderPage } from "./renderer/renderer.js";
 import { initRoundBegin } from "./state-machine/state-machine.js";
 import { isCurrentlyPlaying } from "./game-status-interface.js";
 import { POLLING_TIME_OUT } from "../config.js";
 import { processSkipTurn } from "./token/token-handler.js";
+import { SECONDS_PER_ROUND, SECONDS_WHEN_TURN_ALMOST_ENDS } from "./config.js";
+import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
+import { deleteFromSessionStorage, loadFromSessionStorage, saveToSessionStorage } from "../data-connector/session-storage-abstractor.js";
 
 function handleGameDataError(err) {
     const forbidden = 403;
@@ -29,12 +31,17 @@ function updateGameData() {
         initRoundBegin(gameData);
 
         if (!isCurrentlyPlaying()) {
-            deleteFromStorage("roundTime");
+            removeTimer();
             startGameStatePolling();
         } else {
             startRoundTimer();
         }
     }).catch(err => handleGameDataError(err));
+}
+
+function removeTimer() {
+    deleteFromSessionStorage("roundTime");
+    document.querySelector(".progress-bar").setAttribute('aria-valuenow', "0");
 }
 
 function startGameStatePolling() {
@@ -43,16 +50,22 @@ function startGameStatePolling() {
 
 /* https://www.freecodecamp.org/news/javascript-timer-how-to-set-a-timer-function-in-js/ */
 function startRoundTimer() {
-    const progressBar = document.querySelector("#roundTimer");
-    let roundTime = loadFromStorage("roundTime") || 45;
+    const $progressBarFill = document.querySelector(".progress-bar-fill");
+    const $progressBar = document.querySelector(".progress-bar");
+    let roundTime = loadFromSessionStorage("roundTime") || SECONDS_PER_ROUND;
 
     const timer = setInterval(() => {
         roundTime--;
-        progressBar.value = roundTime;
+        $progressBarFill.style.height = `${roundTime / (SECONDS_PER_ROUND - 1) * 100}%`;
+        $progressBar.setAttribute('aria-valuenow', roundTime);
 
-        saveToStorage("roundTime", roundTime);
+        saveToSessionStorage("roundTime", roundTime);
 
-        if (roundTime <= 0) {
+        if (roundTime < SECONDS_WHEN_TURN_ALMOST_ENDS) {
+            $progressBarFill.classList.add("time-almost-ends");
+        }
+
+        if (roundTime <= -1) {
             clearInterval(timer);
 
             processSkipTurn();

@@ -252,10 +252,22 @@ section header picture {
 }
 
 /* TIMER */
-progress {
-    grid-area: timer;
-    transform: rotate(270deg);
-    margin: auto 0;
+.progress-bar {
+    height: 100%;
+    width: 2rem;
+    background: whitesmoke;
+    transform: rotate(180deg);
+}
+
+.progress-bar-fill {
+    height: 0;
+    width: 100%;
+    background: lightpink;
+    transition: height 1s linear, background-color 1s ease-in-out;
+}
+
+.progress-bar-fill.time-almost-ends {
+    background: hotpink;
 }
 
 /* ACTION BUTTON */
