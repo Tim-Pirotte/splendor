@@ -1,5 +1,6 @@
 import { CHIP_SPACING, TOKEN_MAPPER } from "../config.js";
 import { copyNode } from "../../utils/data-handler.js";
+import {validCardBuy} from "../state-machine/valid-action-checker.js";
 
 function insertImageInto($container, standardPath, before, alt) {
     const $image = copyNode(document.querySelector("#image-template"));
@@ -41,11 +42,12 @@ function formatNumber(number) {
 function renderCard($container, points, bonus, costs, name) {
     const $numberedItemTemplate = getNumberedItemTemplate();
     const $card = copyNode(document.querySelector("#card-template"));
+    const $cardCost = $card.querySelector(".cost");
 
     $card.querySelector(".points").textContent = points;
     $card.dataset.name = name;
 
-    const $cardCost = $card.querySelector(".cost");
+    if (validCardBuy(name)) $card.classList.add("buyable-card");
 
     for (const [type, cost] of Object.entries(costs)) {
         const $costItem = copyNode($numberedItemTemplate);
