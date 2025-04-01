@@ -16,13 +16,13 @@ function filterResults(gameData) {
             }))
             .sort((a, b) => b.points - a.points || b.amountOfBonuses - a.amountOfBonuses);
 
-            const topScore = results[0]?.points;
-            const topBonuses = results[0]?.amountOfBonuses;
+            const topPlayerScore = results[0].points;
+            const topPlayerBonuses = results[0].amountOfBonuses;
 
             /* Each player spreads their existing properties and adds 'winner: true' if they have
                the highest points and bonuses. This allows multiple winners in case of ties. (ChatGPT) */
             return results.map(player => ({
-                ...player, isWinner: player.points === topScore && player.amountOfBonuses === topBonuses
+                ...player, isWinner: player.points === topPlayerScore && player.amountOfBonuses === topPlayerBonuses
             }));
         });
 }
