@@ -225,7 +225,7 @@ function getNewPaymentMethod(tokenType) {
 }
 
 function removePaidTokens() {
-    const wallet = getPlayerWallet();
+    const wallet = getClientTokens();
     const tokensPaid = getCurrentPaymentMethod();
 
     for (const tokenType in wallet) {
