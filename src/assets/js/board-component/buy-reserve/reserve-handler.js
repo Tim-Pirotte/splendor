@@ -1,15 +1,7 @@
 import { validCardReserve } from "../state-machine/valid-action-checker.js";
 import { renderCard, safeEmptyContainer } from "../renderer/helper.js";
 import * as API from "../../api.js"
-
-function selectCardForReserve(e) {
-    const $selectedCard = e.target.closest("li.card");
-    const cardName = $selectedCard.dataset.name;
-    if(validCardReserve()) {
-      document.querySelector(".reserve-button").dataset.name = cardName;
-    }
-}
-
+import {getReserveCardButton} from "./helper.js";
 
 function procesReserve(e){
     const selectedCardName = document.querySelector(".reserve-button").dataset.name;
@@ -36,7 +28,7 @@ function procesReserve(e){
 function isDeckReserve(){}
 
 function allowToReserve() {
-
+    getReserveCardButton().disabled = false;
 }
 
-export { selectCardForReserve, procesReserve, allowToReserve };
+export { procesReserve, allowToReserve };

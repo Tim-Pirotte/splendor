@@ -7,10 +7,11 @@ import {
     cardAlreadySelected,
     getCard,
     highlightCard,
-    setActionToBuy,
+    setActionToBuyReserve,
     unHighlightCards
 } from "./buy-handler.js";
 import {allowToReserve} from "./reserve-handler.js";
+import {getReserveCardButton} from "./helper.js";
 
 function selectCard(e) {
     const $card = getCard(e);
@@ -33,7 +34,7 @@ function selectCard(e) {
     if (isValidCardBuy || isValidCardReserve) {
         unHighlightTokens();
         highlightCard($card);
-        setActionToBuy($card);
+        setActionToBuyReserve($card);
     }
 
     if (isValidCardBuy) allowToBuy($card);
@@ -45,8 +46,13 @@ function selectCard(e) {
 
 function deselectCard() {
     unHighlightCards();
+
     getActionButton().dataset.name = "";
     getActionButton().disabled = false;
+
+    getReserveCardButton().dataset.name = "";
+    getReserveCardButton().classList.add("hidden");
+    getReserveCardButton().disabled = true;
 }
 
 export { selectCard, deselectCard };

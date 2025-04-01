@@ -1,6 +1,6 @@
 import { handlePaymentMethodChange } from "./buy-handler.js";
-import {procesReserve, selectCardForReserve} from "./reserve-handler";
-import {selectCard} from "./select";
+import {procesReserve} from "./reserve-handler.js";
+import {selectCard} from "./select.js";
 
 function buyReserveInit() {
     document.querySelectorAll(".decks")

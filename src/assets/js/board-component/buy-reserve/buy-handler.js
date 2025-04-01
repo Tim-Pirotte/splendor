@@ -10,6 +10,7 @@ import {renderUpdatedBoardTokens} from "../renderer/board-renderer.js";
 import {sumObjectValues} from "../helper.js";
 import {getClientBonuses, getClientTokens} from "../game-data-handler.js";
 import {binarySearchObjects} from "../../utils/data-handler.js";
+import {getReserveCardButton} from "./helper.js";
 
 function allowToBuy($card) {
     const cardData = getCardData($card.dataset.name);
@@ -20,16 +21,18 @@ function allowToBuy($card) {
     renderSwitchPaymentButtons(defaultPayment, cardData["cost"]);
 }
 
-function allowToReserve() {
-    // TODO
-}
-
-function setActionToBuy($card) {
+function setActionToBuyReserve($card) {
     setActionButtonState(
-        "buy-reserve",
+        "buy",
         "processBuyCardClick",
         { name: $card.dataset.name },
     );
+
+    const $reserveCardButton = getReserveCardButton();
+
+    $reserveCardButton.dataset.name = $card.dataset.name;
+    $reserveCardButton.classList.remove("hidden");
+
 }
 
 function unHighlightCards() {
@@ -228,6 +231,6 @@ export {
     getCard,
     cardAlreadySelected,
     highlightCard,
-    setActionToBuy,
+    setActionToBuyReserve,
     allowToBuy,
 };
