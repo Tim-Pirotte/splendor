@@ -149,8 +149,10 @@
                     <li></li>
                 </template>
             </ul>
-            <!-- Timer -->
-            <progress></progress>
+            <!-- Timer https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles -->
+            <div class="timer" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="45">
+                <div class="timer-fill"></div>
+            </div>
             <!-- Player points -->
             <section class="player-points">
                 <h3>Points</h3>
