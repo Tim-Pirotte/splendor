@@ -45,7 +45,7 @@ function startRoundTimer() {
     const progressBar = document.querySelector("#roundTimer");
     let roundTime = loadFromStorage("roundTime") || 45;
 
-    let timer = setInterval(function () {
+    let timer = setInterval(() => {
         roundTime--;
         progressBar.value = roundTime;
 
