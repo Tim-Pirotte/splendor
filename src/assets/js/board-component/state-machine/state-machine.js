@@ -11,6 +11,7 @@ function initRoundBegin(gameData){
     } else if(!gameData["started"]) {
         location.href = "./lobby-page.html";
     } else {
+        // TODO enable action button
         setActionButtonState("skip turn", "skipTurn", {});
     }
 

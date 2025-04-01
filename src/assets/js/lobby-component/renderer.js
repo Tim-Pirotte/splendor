@@ -1,5 +1,6 @@
 import { getCurrentUsersAmount, getGameCreator, getGameId, getGameName, getMaxUsersAmount, getPlayersObjects } from "../utils/game-object-handler.js";
 import { safeEmptyContainer } from "../board-component/renderer/helper.js";
+import { copyNode } from "../utils/data-handler.js";
 
 function renderHeader(g) {
     document.querySelector("#game-name-id").innerHTML = `${getGameName(g)} / <span>${getGameId(g)}</span>`;
@@ -16,13 +17,13 @@ function renderPlayers(g) {
 }
 
 function renderPlayer($template, $container, playerName) {
-    const $li = $template.content.firstElementChild.cloneNode(true);
+    const $li = copyNode($template);
 
     $li.querySelector(".player-name").textContent = playerName;
     // picture tag needs to be filled,
     // at the moment its hardcoded in the template!
 
-    $container.insertAdjacentHTML("beforeend", $li.outerHTML);
+    $container.appendChild($li);
 }
 
 function renderPlayerCount(g) {

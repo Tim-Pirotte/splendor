@@ -1,4 +1,4 @@
-import { insertImageInto, renderCard, safeEmptyContainer } from "./helper.js";
+import { getNumberedItemTemplate, insertImageInto, renderCard, safeEmptyContainer } from "./helper.js";
 import {
     GOLD_TOKEN_LIMIT,
     NOBLES_MAPPER,
@@ -7,19 +7,28 @@ import {
     TOKEN_LIMIT_TWO_PLAYERS,
     TOKEN_MAPPER,
 } from "../config.js";
-import { getUnclaimedTokens, mergeObjectsWithSum } from "../helper.js";
+import { getUnclaimedTokens, sumObjectValues } from "../helper.js";
 import { GEMS } from "../data.js";
+import { copyNode } from "../../utils/data-handler.js";
 
 function renderCards(market) {
     for (const deck of market) {
-        const $currentDeck = document.querySelector(`.level-${deck["level"]} .cards-in-deck`);
-        $currentDeck.dataset.amount = deck["cardStackSize"];
+        const $currentDeck = getDeck(deck);
+        setAmountOfCardsInDeck($currentDeck, deck);
         safeEmptyContainer($currentDeck);
 
         for (const card of deck["visibleCards"]) {
             renderCard($currentDeck, card["prestigePoints"], card["bonus"], card["cost"], card["name"]);
         }
     }
+}
+
+function getDeck(deck) {
+    return document.querySelector(`.level-${deck["level"]} .cards-in-deck`);
+}
+
+function setAmountOfCardsInDeck($currentDeck, deck) {
+    $currentDeck.dataset.amount = deck["cardStackSize"];
 }
 
 function getMaxTokens(playerLength, tokenType) {
@@ -37,17 +46,17 @@ function getMaxTokens(playerLength, tokenType) {
     }
 }
 
-function renderBoardTokens(unclaimedTokens, playerLength, gems) {
+function renderBoardTokens(unclaimedTokens, playerLength) {
     const $boardTokensContainer = document.querySelector(".board-tokens");
     safeEmptyContainer($boardTokensContainer);
 
-    const $numberedItemTemplate = document.querySelector("#numbered-item-template");
+    const $numberedItemTemplate = getNumberedItemTemplate();
 
-    for (const token of gems.toReversed()) {
-        const $boardToken = $numberedItemTemplate.content.firstElementChild.cloneNode(true);
+    for (const token of GEMS.toReversed()) {
+        const $boardToken = copyNode($numberedItemTemplate);
 
         $boardToken.dataset.type = token;
-        $boardToken.dataset.amount = unclaimedTokens[token];
+        $boardToken.dataset.amount = unclaimedTokens[token] || 0;
 
         const maxTokens = getMaxTokens(playerLength, token);
 
@@ -75,7 +84,7 @@ function renderNobles(unclaimedNobles) {
     const $nobleTemplate = document.querySelector("#noble-template");
 
     for (const noble of unclaimedNobles) {
-        const $noble = $nobleTemplate.content.firstElementChild.cloneNode(true);
+        const $noble = copyNode($nobleTemplate);
         $noble.dataset.name = noble["name"];
         insertImageInto($noble, `nobles/${NOBLES_MAPPER[noble.name]}`, false, getNobleAlt(noble["neededBonuses"]));
         $noblesContainer.appendChild($noble);
@@ -83,11 +92,12 @@ function renderNobles(unclaimedNobles) {
 }
 
 function renderUpdatedBoardTokens(tokensToAdd) {
-    const amountOfPlayers = document.querySelectorAll(".player-card").length + 1;
+    const clientPlayer = 1;
+    const amountOfPlayers = document.querySelectorAll(".player-card").length + clientPlayer;
     const previousTokens = getUnclaimedTokens();
-    const newAmountOfTokens = mergeObjectsWithSum(previousTokens, tokensToAdd);
+    const newAmountOfTokens = sumObjectValues(previousTokens, tokensToAdd);
 
-    renderBoardTokens(newAmountOfTokens, amountOfPlayers, GEMS);
+    renderBoardTokens(newAmountOfTokens, amountOfPlayers);
 }
 
 export { renderCards, renderBoardTokens, renderNobles, renderUpdatedBoardTokens };

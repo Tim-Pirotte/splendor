@@ -1,8 +1,8 @@
-import { setActionButtonState } from "../game-status-interface.js";
+import { getActionButton, setActionButtonState } from "../game-status-interface.js";
 import { fetchFromServer } from "../../data-connector/api-communication-abstractor.js";
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
 import { NOBLES } from "../data.js";
-import { getActionButton } from "../helper.js";
+import { binarySearchObjects } from "../../utils/data-handler.js";
 
 function selectNoble(e) {
     const $selectedNoble = e.target.closest("li");
@@ -48,7 +48,7 @@ function processTakeNoble() {
 }
 
 function getNobleByName(name) {
-    return NOBLES.find(noble => noble.name === name);
+    return binarySearchObjects(NOBLES, name, "name");
 }
 
 export { selectNoble, processTakeNoble };
