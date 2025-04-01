@@ -25,8 +25,8 @@ function updateGameData() {
 
     API.getGame().then(gameData => {
         saveToStorage("gameData", gameData);
-        initRoundBegin(gameData);
         renderPage(gameData);
+        initRoundBegin(gameData);
 
         if (!isCurrentlyPlaying()) {
             startGameStatePolling();

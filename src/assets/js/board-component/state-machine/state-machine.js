@@ -13,12 +13,12 @@ function initRoundBegin(gameData){
         location.href = "./lobby-page.html";
     }
 
+    getActionButton().disabled = false;
+    console.log("hello")
     if(!isCurrentlyPlaying()) {
         setActionButtonState("Wait until your turn", "doNothing", {})
         getActionButton().disabled = true;
         return;
-    } else {
-        getActionButton().disabled = false;
     }
 
     // Using the do nothing function because you cant skip this turn
