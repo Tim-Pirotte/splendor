@@ -4,7 +4,7 @@ import { renderPage } from "./renderer/renderer.js";
 import { initRoundBegin } from "./state-machine/state-machine.js";
 import { isCurrentlyPlaying } from "./game-status-interface.js";
 import { POLLING_TIME_OUT } from "../config.js";
-import {processSkipTurn} from "./token/token-handler.js";
+import { processSkipTurn } from "./token/token-handler.js";
 
 function handleGameDataError(err) {
     const forbidden = 403;
@@ -45,7 +45,7 @@ function startRoundTimer() {
     const progressBar = document.querySelector("#roundTimer");
     let roundTime = loadFromStorage("roundTime") || 45;
 
-    let timer = setInterval(() => {
+    const timer = setInterval(() => {
         roundTime--;
         progressBar.value = roundTime;
 
