@@ -79,10 +79,10 @@ function setActionToTokenAction(stackPointer) {
         tokenAmount = document.querySelector(`.board-tokens [data-type="${firstTokenInStack}"]`).dataset.amount;
     }
 
-    if(stackPointer === 0) {
-        setActionButtonState("skip turn", "skipTurn", {});
-        return;
-    }
+    // if(stackPointer === 0) {
+    //     setActionButtonState("skip turn", "skipTurn", {});
+    //     return;
+    // }
 
     if (stackPointer === 1 && tokenAmount >= MIN_TOKENS_FOR_PICKING_TWO) {
         setActionButtonState("Take two", "processTakeTwoTokensClick", {}, false);
@@ -113,6 +113,7 @@ function addTokenToList($selectedToken, $actionButton, stackPointer) {
 }
 
 function selectToken(e) {
+    console.log("isdlkfskdjfoaisdjfoisajdofijsaoidfjozsidjf;osahd;fhas;oifd")
     if (!validTokenTake() || !clickedOnToken(e.target)) return;
 
     deselectCard();
