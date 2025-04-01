@@ -5,11 +5,7 @@ function selectPlayerToken(e) {
 
     const action = getButtonAction(e.target);
     const $tokenContainer = getTokenContainer(e.target);
-    const tokensOfTypeAvailable = getTokenAmount($tokenContainer);
     const $amountCounter = getAmountCounter($tokenContainer);
-    const amountToDiscard = getAmountToDiscard($amountCounter);
-
-    if (!isValidAction(action, tokensOfTypeAvailable, amountToDiscard)) return;
 
     if (action === "add") {
         addOneToDiscard($amountCounter);
@@ -103,4 +99,4 @@ function processDiscardTokens() {
 
 }
 
-export { selectPlayerToken, processDiscardTokens };
+export { selectPlayerToken, processDiscardTokens, setButtonStatuses };

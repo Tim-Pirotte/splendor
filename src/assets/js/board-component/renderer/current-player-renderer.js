@@ -15,6 +15,7 @@ import { GEMS } from "../data.js";
 import { getHighestScore, sumObjectValues, getPlayersObjects } from "../../utils/game-object-handler.js";
 import { getClientTokens, getClientTotalPrestigePoints } from "../game-data-handler.js";
 import { copyNode } from "../../utils/data-handler.js";
+import {setButtonStatuses} from "../token/discard.js";
 
 function renderHeader(currentPlayer) {
     const $playerName = document.querySelector(".top-bar h2");
@@ -126,6 +127,8 @@ function renderClientPlayerTokens(currentPlayerTokens, currentPlayerBonuses, gem
         $token.appendChild($discardNav);
         $currentPlayerTokensContainer.appendChild($token);
     }
+
+    setButtonStatuses();
 }
 
 function renderSwitchPaymentButtons(currentPayment, cost) {
