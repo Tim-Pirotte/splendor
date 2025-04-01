@@ -1,6 +1,7 @@
 import { CHIP_SPACING, TOKEN_MAPPER } from "../config.js";
 import { copyNode } from "../../utils/data-handler.js";
 import { validCardBuy } from "../state-machine/valid-action-checker.js";
+import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
 
 function insertImageInto($container, standardPath, before, alt) {
     const $image = copyNode(document.querySelector("#image-template"));
@@ -87,6 +88,12 @@ function getNumberedItemTemplate() {
     return document.querySelector("#numbered-item-template");
 }
 
+function selectCurrentlyPlayingPlayersCard(playerName, $playerCard) {
+    if (playerName === loadFromStorage("gameData")["currentPlayer"]) {
+        $playerCard.classList.add("current-player");
+    }
+}
+
 export {
     insertImageInto,
     renderProgressBar,
@@ -95,4 +102,5 @@ export {
     safeEmptyContainer,
     getSwitchButtonTemplate,
     getNumberedItemTemplate,
+    selectCurrentlyPlayingPlayersCard,
 };

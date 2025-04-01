@@ -1,5 +1,11 @@
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
-import { formatNumber, getNumberedItemTemplate, insertImageInto, safeEmptyContainer } from "./helper.js";
+import {
+    formatNumber,
+    getNumberedItemTemplate,
+    insertImageInto,
+    safeEmptyContainer,
+    selectCurrentlyPlayingPlayersCard,
+} from "./helper.js";
 import { TOKEN_MAPPER } from "../config.js";
 import { MAX_PRESTIGE_POINTS } from "../../config.js";
 import { getHighestScore } from "../../utils/game-object-handler.js";
@@ -20,10 +26,7 @@ function renderOtherPlayers(otherPlayers, gems) {
             const $playerCard = copyNode($playerTemplate);
             const playerName = otherPlayer.name;
 
-            if (playerName === loadFromStorage("gameData")["currentPlayer"]) {
-                $playerCard.classList.add("current-player");
-            }
-
+            selectCurrentlyPlayingPlayersCard(playerName,$playerCard);
             setPlayerName($playerCard, otherPlayer);
             setPlayerPoints($playerCard, otherPlayer["totalPrestigePoints"], highestScore);
 
