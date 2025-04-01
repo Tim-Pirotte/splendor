@@ -71,11 +71,10 @@ function setActionToTokenAction(stackPointer) {
     let tokenAmount = -1;
     let firstTokenInStack = null;
 
-
     if ("token0" in getActionButton().dataset) {
         firstTokenInStack = getActionButton().dataset.token0;
     }
-    
+
     if (firstTokenInStack !== "") {
         tokenAmount = document.querySelector(`.board-tokens [data-type="${firstTokenInStack}"]`).dataset.amount;
     }
@@ -133,7 +132,7 @@ function selectToken(e) {
     if (tokenInStack($selectedToken, $actionButton, stackPointer)) {
         stackPointer = removeTokenFromList($selectedToken, $actionButton, stackPointer);
         setActionToTokenAction(stackPointer);
-        
+
         if(stackPointer === undefined){
             setActionButtonState("skip turn", "skipTurn", {}, false);
         }
