@@ -1,18 +1,15 @@
 import * as API from "../../api.js";
-import { getActionButton, setActionButtonState } from "../game-status-interface.js";
+import {getActionButton, setActionButtonState} from "../game-status-interface.js";
 import {
-    hideSwitchPaymentButtons,
     renderSwitchPaymentButtons,
     renderUpdatedPlayerScore,
     renderUpdatedPlayerTokens,
 } from "../renderer/current-player-renderer.js";
-import { DEVELOPMENT_CARDS } from "../data.js";
-import { renderUpdatedBoardTokens } from "../renderer/board-renderer.js";
-import { sumObjectValues } from "../helper.js";
-import { getClientBonuses, getClientTokens } from "../game-data-handler.js";
-import { binarySearchObjects } from "../../utils/data-handler.js";
-import { validCardBuy, validCardReserve } from "../state-machine/valid-action-checker.js";
-import { unHighlightTokens } from "../token/token-handler.js";
+import {DEVELOPMENT_CARDS} from "../data.js";
+import {renderUpdatedBoardTokens} from "../renderer/board-renderer.js";
+import {sumObjectValues} from "../helper.js";
+import {getClientBonuses, getClientTokens} from "../game-data-handler.js";
+import {binarySearchObjects} from "../../utils/data-handler.js";
 
 function allowToBuy($card) {
     const cardData = getCardData($card.dataset.name);
@@ -29,41 +26,10 @@ function allowToReserve() {
 
 function setActionToBuy($card) {
     setActionButtonState(
-        "buy",
+        "buy-reserve",
         "processBuyCardClick",
         { name: $card.dataset.name },
     );
-}
-
-function selectCard(e) {
-    const $card = getCard(e);
-
-    if (!$card) return;
-
-    const cardName = $card.dataset.name;
-
-    hideSwitchPaymentButtons();
-    sessionStorage.removeItem("paymentMethod");
-
-    if (cardAlreadySelected(cardName)) {
-        deselectCard();
-        return;
-    }
-
-    const isValidCardBuy = validCardBuy(cardName);
-    const isValidCardReserve = validCardReserve();
-
-    if (isValidCardBuy || isValidCardReserve) {
-        unHighlightTokens();
-        highlightCard($card);
-        setActionToBuy($card);
-    }
-
-    if (isValidCardBuy) allowToBuy($card);
-
-    getActionButton().disabled = !isValidCardBuy;
-
-    if (isValidCardReserve) allowToReserve();
 }
 
 function unHighlightCards() {
@@ -79,12 +45,6 @@ function highlightCard($card) {
 
 function cardAlreadySelected(cardName) {
     return getActionButton().dataset.name === cardName;
-}
-
-function deselectCard() {
-    unHighlightCards();
-    getActionButton().dataset.name = "";
-    getActionButton().disabled = false;
 }
 
 function canBuy(name) {
@@ -256,7 +216,6 @@ function setNewPaymentMethod(paymentMethod) {
 }
 
 export {
-    selectCard,
     processBuyCardClick,
     isAllowedToSwitchToken,
     getPlayerWallet,
@@ -264,7 +223,11 @@ export {
     removePaidTokens,
     updateCurrentPlayerBonuses,
     getDefaultPaymentMethod,
-    deselectCard,
     canBuy,
     unHighlightCards,
+    getCard,
+    cardAlreadySelected,
+    highlightCard,
+    setActionToBuy,
+    allowToBuy,
 };

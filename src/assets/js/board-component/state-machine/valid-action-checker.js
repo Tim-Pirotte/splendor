@@ -2,7 +2,7 @@ import { isCurrentlyPlaying } from "../game-status-interface.js";
 import { deckHasEnoughCards, hasReservePlace } from "./valid-resource-checker.js";
 import { DEVELOPMENT_CARDS } from "../data.js";
 import { GAME_STATE } from "./data.js";
-import { canBuy } from "../buy/buy-handler.js";
+import { canBuy } from "../buy-reserve/buy-handler.js";
 
 function validTokenTake() {
     return isCurrentlyPlaying() && getGameState() === GAME_STATE.TURN_ACTION;

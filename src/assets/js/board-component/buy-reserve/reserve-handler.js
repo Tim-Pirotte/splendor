@@ -1,6 +1,6 @@
 import { validCardReserve } from "../state-machine/valid-action-checker.js";
 import { renderCard, safeEmptyContainer } from "../renderer/helper.js";
-import * as API from "./../../api.js"
+import * as API from "../../api.js"
 
 function selectCardForReserve(e) {
     const $selectedCard = e.target.closest("li.card");
@@ -35,4 +35,8 @@ function procesReserve(e){
 
 function isDeckReserve(){}
 
-export { selectCardForReserve, procesReserve };
+function allowToReserve() {
+
+}
+
+export { selectCardForReserve, procesReserve, allowToReserve };
