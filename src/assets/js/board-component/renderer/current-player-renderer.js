@@ -29,7 +29,7 @@ function getCurrentPlayer(players, currentPlayerName) {
 
 function renderCurrentPlayerPoints(currentPlayer, highestScore, extraScore = 0) {
     document.querySelector(".player-points p").textContent =
-    `${formatNumber(parseInt(currentPlayer["totalPrestigePoints"]) + extraScore)}  / ${PRESTIGE_POINTS_NEEDED_TO_WIN}`;
+    `${formatNumber(parseInt(currentPlayer["totalPrestigePoints"]) + extraScore)} / ${PRESTIGE_POINTS_NEEDED_TO_WIN}`;
 
     renderProgressBar(document.querySelector(".player-points .progress-bar"), currentPlayer["totalPrestigePoints"], "score");
     const $playerDiamondLocation = document.querySelector(".player-points p");
