@@ -3,10 +3,12 @@ import * as API from "../../api.js"
 import {finishRoundAfterBuyReserve, getReserveCardButton} from "./helper.js";
 import {startGameStatePolling} from "../game-data-handler.js";
 import {HIGHEST_CARD_LEVEL} from "../config.js";
+import {setActionToBuyReserve, unHighlightCards} from "./buy-handler.js";
+import {getActionButton, setActionButtonState} from "../game-status-interface.js";
+import {deselectCard} from "./select.js";
 
 function processReserve(e){
     const selectedCardName = getReserveCardButton().dataset.name;
-    //TODO: check if this if statement is needed, reserve button should be disabled if you can't reserve
     if( selectedCardName ) {
       const requestBody = {
             "development": {
@@ -30,14 +32,34 @@ function renderReservedCards(reservedCards) {
     }
 }
 
-function reserveCardByLevel(e) {
-    const closestPictureTag = e.target.closest("picture");
-    if (!(closestPictureTag && closestPictureTag.classList.contains("hidden-deck"))) return;
-    const level = getDeckLevel(e.target)
+function selectDeckForReserving(e) {
+    const $closestPictureTag = e.target.closest("picture");
+    if (!($closestPictureTag && $closestPictureTag.classList.contains("hidden-deck"))) return;
+
+    const deckLevel = getDeckLevel(e.target);
+    const previousSelectedLevel = parseInt(getReserveCardButton().dataset.level);
+    deselectCard();
+
+    if (previousSelectedLevel === deckLevel) {
+        setActionButtonState("skip turn", "skipTurn", {}, true);
+        return;
+    }
+
+    deselectCard();
+    unHighlightCards();
+    if (getReserveCardButton().dataset.name) getReserveCardButton().removeAttribute("data-name");
+    setActionButtonState(
+    "buy",
+    "processBuyCardClick",
+    {},
+    );
+    getActionButton().disabled = true;
+    getReserveCardButton().dataset.level = deckLevel;
+    getReserveCardButton().classList.remove("hidden");
+    $closestPictureTag.classList.add("selected-card");
 }
 
 function getDeckLevel(target) {
-    const deck = target.closest(".deck");
     for (let i = 1; i <= HIGHEST_CARD_LEVEL; i++) {
         if (target.closest("li").classList.contains(`level-${i}`)) {
             return i;
@@ -49,4 +71,4 @@ function allowToReserve() {
     getReserveCardButton().disabled = false;
 }
 
-export { processReserve, allowToReserve, reserveCardByLevel };
+export { processReserve, allowToReserve, selectDeckForReserving };

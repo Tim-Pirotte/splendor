@@ -216,7 +216,7 @@ section header picture {
     border-radius: 0.25rem;
 }
 
-.selected-card picture:first-of-type img {
+.selected-card {
     outline: 0.275rem solid hotpink;
     border-radius: 0.25rem;
 }

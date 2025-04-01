@@ -6,7 +6,6 @@ function getReserveCardButton() {
 
 function finishRoundAfterBuyReserve() {
     getReserveCardButton().classList.add("hidden");
-    setActionButtonState("Wait until your turn", "doNothing", {});
 
 }
 

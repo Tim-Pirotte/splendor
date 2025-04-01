@@ -23,15 +23,15 @@ function selectCard(e) {
     hideSwitchPaymentButtons();
     sessionStorage.removeItem("paymentMethod");
     getReserveCardButton().classList.remove("hidden");
+    deselectCard();
 
     if (cardAlreadySelected(cardName)) {
         //This can not be inside the deselectCard to prevent issues with taking tokens
         setActionButtonState("skip turn", "skipTurn", {}, true);
-        deselectCard();
         return;
     }
 
-    unHighlightTokens();
+    deselectCard();
     highlightCard($card);
     setActionToBuyReserve($card);
 
@@ -49,7 +49,7 @@ function deselectCard() {
     unHighlightCards();
 
     getActionButton().disabled = false;
-
+    getReserveCardButton().removeAttribute("data-level")
     getReserveCardButton().removeAttribute("data-name");
     getReserveCardButton().classList.add("hidden");
 }
