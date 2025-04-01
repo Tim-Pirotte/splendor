@@ -54,7 +54,7 @@ function removeTokenFromStack($selectedToken, $actionButton) {
         const token = $actionButton.dataset[`token${i}`];
 
         if (shiftStackDown) {
-            $actionButton.dataset[`token${i - 1}`] = token;
+            $actionButton.dataset[`token${i - 1}`] = token || "";
         }
 
         if ($selectedToken.dataset.type === token) {
@@ -74,8 +74,14 @@ function setActionToTokenAction(stackPointer) {
     if ("token0" in getActionButton().dataset) {
         firstTokenInStack = getActionButton().dataset.token0;
     }
-    if (firstTokenInStack) {
+
+    if (firstTokenInStack !== "") {
         tokenAmount = document.querySelector(`.board-tokens [data-type="${firstTokenInStack}"]`).dataset.amount;
+    }
+
+    if(stackPointer === 0) {
+        setActionButtonState("skip turn", "skipTurn", {});
+        return;
     }
 
     if (stackPointer === 1 && tokenAmount >= MIN_TOKENS_FOR_PICKING_TWO) {
@@ -126,6 +132,11 @@ function selectToken(e) {
     if (tokenInStack($selectedToken, $actionButton, stackPointer)) {
         stackPointer = removeTokenFromList($selectedToken, $actionButton, stackPointer);
         setActionToTokenAction(stackPointer);
+
+        if(stackPointer === undefined){
+            setActionButtonState("skip turn", "skipTurn", {}, false);
+        }
+
         return;
     }
 
@@ -135,6 +146,7 @@ function selectToken(e) {
 
     stackPointer = addTokenToList($selectedToken, $actionButton, stackPointer);
     setActionToTokenAction(stackPointer);
+
 }
 
 function setTokensTo(stackPointer, $actionButton, amountOfTokens) {

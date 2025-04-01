@@ -8,6 +8,7 @@ const ACTION_REGISTRY = {
     processBuyCardClick: () => processBuyCardClick(),
     skipTurn: () => processSkipTurn(),
     processTakeNoble: () => processTakeNoble(),
+    doNothing: () => {},
 };
 
 export { ACTION_REGISTRY };
