@@ -12,9 +12,8 @@ import {
 } from "./helper.js";
 import { isAllowedToSwitchToken, removePaidTokens, updateCurrentPlayerBonuses } from "../buy/buy-handler.js";
 import { GEMS } from "../data.js";
-import { getHighestScore, sumObjectValues } from "../../utils/game-object-handler.js";
-import { getPlayersObjects } from "../../utils/game-object-handler.js";
-import { getClientTotalPrestigePoints } from "../game-data-handler.js";
+import { getHighestScore, sumObjectValues, getPlayersObjects } from "../../utils/game-object-handler.js";
+import { getClientTokens, getClientTotalPrestigePoints } from "../game-data-handler.js";
 import { copyNode } from "../../utils/data-handler.js";
 
 function renderHeader(currentPlayer) {
