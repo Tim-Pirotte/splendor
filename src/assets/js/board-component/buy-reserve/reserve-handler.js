@@ -37,7 +37,7 @@ function renderReservedCards(reservedCards) {
     const $reservedCards = document.querySelector(".reserved-cards ul");
     safeEmptyContainer($reservedCards);
 
-    for (const card of reservedCards["reserve"]) {
+    for (const card of reservedCards) {
         renderCard($reservedCards, card["prestigePoints"], card["bonus"], card["cost"], card["name"], true);
     }
 }
@@ -59,7 +59,6 @@ function selectDeckForReserving(e) {
     }
 
     deselectCard();
-    unHighlightCards();
     getReserveCardButton().disabled = false;
     if (getReserveCardButton().dataset.name) getReserveCardButton().removeAttribute("data-name");
     setActionButtonState(
