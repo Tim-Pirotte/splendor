@@ -1,16 +1,14 @@
 import { startGameStatePolling } from "./game-data-handler.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { ACTION_REGISTRY } from "./action-registry.js";
-import { getActionButton } from "./helper.js";
 
 function isCurrentlyPlaying() {
     const playerName = loadFromStorage("playerName");
-    const currentlyPlaying = loadFromStorage("gameData")["currentPlayer"];
-
+    const currentlyPlaying = document.querySelector(".top-bar h2").dataset.currentlyPlaying;
     return playerName === currentlyPlaying;
 }
 
-function getCurrentPlayer() {
+function getClientPlayer() {
     const players = loadFromStorage("gameData")["players"];
     const playerName = loadFromStorage("playerName");
 
@@ -21,13 +19,32 @@ function getCurrentPlayer() {
     }
 }
 
-function setActionButtonState(message, functionToRunOnClick, datasetParameters) {
+function getActionButton() {
+    return document.querySelector(".action-button");
+}
+
+function setActionButtonState(message, functionToRunOnClick, datasetParameters, reset = true) {
     const $actionButton = getActionButton();
+
+    if (reset) {
+        clearDatasetAttributes(getActionButton());
+    }
+
     $actionButton.textContent = message;
     $actionButton.dataset.functionToRun = functionToRunOnClick;
 
+    setActionButtonDataset(datasetParameters, $actionButton);
+}
+
+function setActionButtonDataset(datasetParameters, $actionButton) {
     for (const [name, value] of Object.entries(datasetParameters)) {
         $actionButton.dataset[name] = value.toString();
+    }
+}
+
+function clearDatasetAttributes($actionButton) {
+    for (const datasetAttribute of Object.keys($actionButton.dataset)) {
+        $actionButton.removeAttribute(`data-${datasetAttribute}`);
     }
 }
 
@@ -42,4 +59,4 @@ function initGameStatusInterface() {
     $actionButton.addEventListener("click", actionRegistryRouter);
 }
 
-export { isCurrentlyPlaying, initGameStatusInterface, setActionButtonState, getCurrentPlayer };
+export { isCurrentlyPlaying, initGameStatusInterface, setActionButtonState, getActionButton, getClientPlayer, clearDatasetAttributes };

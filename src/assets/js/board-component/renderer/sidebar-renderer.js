@@ -1,7 +1,8 @@
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
-import { formatNumber, insertImageInto, safeEmptyContainer } from "./helper.js";
+import { formatNumber, getNumberedItemTemplate, insertImageInto, safeEmptyContainer } from "./helper.js";
 import { TOKEN_MAPPER } from "../config.js";
 import { MAX_PRESTIGE_POINTS } from "../../config.js";
+import { copyNode } from "../../utils/data-handler.js";
 
 function renderOtherPlayers(otherPlayers, gems) {
     const currentPlayerName = loadFromStorage("playerName");
@@ -15,7 +16,7 @@ function renderOtherPlayers(otherPlayers, gems) {
 
     for (const otherPlayer of otherPlayers) {
         if (otherPlayer.name !== currentPlayerName) {
-            const $playerCard = $playerTemplate.content.firstElementChild.cloneNode(true);
+            const $playerCard = copyNode($playerTemplate);
             setPlayerName($playerCard, otherPlayer);
             setPlayerPoints($playerCard, otherPlayer["totalPrestigePoints"], highestScore);
 
@@ -50,10 +51,10 @@ function setPlayerPoints($playerCard, prestigePoints, highestScore) {
 }
 
 function renderTokenList(containerToInsertInto, tokenAmounts, gems) {
-    const $numberedItemTemplate = document.querySelector("#numbered-item-template");
+    const $numberedItemTemplate = getNumberedItemTemplate();
 
     for (const gem of gems) {
-        const $token = $numberedItemTemplate.content.firstElementChild.cloneNode(true);
+        const $token = copyNode($numberedItemTemplate);
         $token.querySelector(".amount").textContent = tokenAmounts[gem] || 0;
         insertImageInto($token, `UI/tokens/${TOKEN_MAPPER[gem]}_chip`, false, `${TOKEN_MAPPER[gem]} chip`);
         containerToInsertInto.appendChild($token);
@@ -61,11 +62,11 @@ function renderTokenList(containerToInsertInto, tokenAmounts, gems) {
 }
 
 function renderCardList(containerToInsertInto, cardAmounts, gems) {
-    const $numberedItemTemplate = document.querySelector("#numbered-item-template");
+    const $numberedItemTemplate = getNumberedItemTemplate();
 
     for (const cardType of gems) {
         if (cardType !== "Gold") {
-            const $card = $numberedItemTemplate.content.firstElementChild.cloneNode(true);
+            const $card = copyNode($numberedItemTemplate);
             $card.querySelector(".amount").textContent = cardAmounts[cardType] || 0;
             insertImageInto($card, `UI/cards/${TOKEN_MAPPER[cardType]}_card_small`, false, `${TOKEN_MAPPER[cardType]} card`);
             containerToInsertInto.appendChild($card);
@@ -74,10 +75,10 @@ function renderCardList(containerToInsertInto, cardAmounts, gems) {
 }
 
 function renderReservedList(containerToInsertInto, reservedCards) {
-    const $numberedItemTemplate = document.querySelector("#numbered-item-template");
+    const $numberedItemTemplate = getNumberedItemTemplate();
 
     for (const reservedCard of reservedCards) {
-        const $reservedCard = $numberedItemTemplate.content.firstElementChild.cloneNode(true);
+        const $reservedCard = copyNode($numberedItemTemplate);
         $reservedCard.querySelector(".amount").textContent = reservedCard["prestigePoints"];
         insertImageInto($reservedCard, `cards/empty/${TOKEN_MAPPER[reservedCard["bonus"]]}_empty_card`, false, `${TOKEN_MAPPER[reservedCard["bonus"]]} chip`);
         containerToInsertInto.appendChild($reservedCard);

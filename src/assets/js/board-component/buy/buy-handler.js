@@ -1,5 +1,5 @@
 import * as API from "../../api.js";
-import { getCurrentPlayer, setActionButtonState } from "../game-status-interface.js";
+import { getActionButton, setActionButtonState } from "../game-status-interface.js";
 import {
     hideSwitchPaymentButtons,
     renderSwitchPaymentButtons,
@@ -8,35 +8,73 @@ import {
 } from "../renderer/current-player-renderer.js";
 import { DEVELOPMENT_CARDS } from "../data.js";
 import { renderUpdatedBoardTokens } from "../renderer/board-renderer.js";
-import { getActionButton, mergeObjectsWithSum } from "../helper.js";
+import { sumObjectValues } from "../helper.js";
+import { getClientBonuses, getClientTokens } from "../game-data-handler.js";
+import { binarySearchObjects } from "../../utils/data-handler.js";
+import { validCardBuy, validCardReserve } from "../state-machine/valid-action-checker.js";
+import { unHighlightTokens } from "../token/token-handler.js";
 
-function selectCard(e) {
-    const $card = getCard(e);
-    $card.classList.add("selected-card");
+function allowToBuy($card) {
+    const cardData = getCardData($card.dataset.name);
+    const defaultPayment = getDefaultPaymentMethod(cardData["cost"]);
 
-    if (cardAlreadySelected($card.dataset.name)) {
-        $card.classList.remove("selected-card");
-        deselectCard();
+    getActionButton().disabled = false;
+    setNewPaymentMethod(defaultPayment);
+    renderSwitchPaymentButtons(defaultPayment, cardData["cost"]);
+}
 
-        return;
-    }
+function allowToReserve() {
+    // TODO
+}
 
+function setActionToBuy($card) {
     setActionButtonState(
         "buy",
         "processBuyCardClick",
         { name: $card.dataset.name },
     );
+}
 
-    if ($card && canBuy($card)) {
-        const cardData = getCardData($card.dataset.name);
-        const defaultPayment = getDefaultPaymentMethod(cardData["cost"]);
+function selectCard(e) {
+    const $card = getCard(e);
 
-        getActionButton().disabled = false;
-        setNewPaymentMethod(defaultPayment);
-        renderSwitchPaymentButtons(defaultPayment, cardData["cost"]);
-    } else {
-        getActionButton().disabled = true;
+    if (!$card) return;
+
+    const cardName = $card.dataset.name;
+
+    hideSwitchPaymentButtons();
+    sessionStorage.removeItem("paymentMethod");
+
+    if (cardAlreadySelected(cardName)) {
+        deselectCard();
+        return;
     }
+
+    const isValidCardBuy = validCardBuy(cardName);
+    const isValidCardReserve = validCardReserve();
+
+    if (isValidCardBuy || isValidCardReserve) {
+        unHighlightTokens();
+        highlightCard($card);
+        setActionToBuy($card);
+    }
+
+    if (isValidCardBuy) allowToBuy($card);
+
+    getActionButton().disabled = !isValidCardBuy;
+
+    if (isValidCardReserve) allowToReserve();
+}
+
+function unHighlightCards() {
+    for (const $cardToDeselect of document.querySelectorAll(".selected-card")) {
+        $cardToDeselect.classList.remove("selected-card");
+    }
+}
+
+function highlightCard($card) {
+    unHighlightCards();
+    $card.classList.add("selected-card");
 }
 
 function cardAlreadySelected(cardName) {
@@ -44,14 +82,13 @@ function cardAlreadySelected(cardName) {
 }
 
 function deselectCard() {
-    sessionStorage.removeItem("paymentMethod");
-    setActionButtonState("skip turn", "skipTurn", { name: "" });
+    unHighlightCards();
+    getActionButton().dataset.name = "";
     getActionButton().disabled = false;
-    hideSwitchPaymentButtons();
 }
 
-function canBuy($card) {
-    const cost = getCardData($card.dataset.name)["cost"];
+function canBuy(name) {
+    const cost = getCardData(name)["cost"];
     const wallet = getPlayerWallet();
 
     return isWalletHigher(wallet, cost);
@@ -76,19 +113,14 @@ function processBuyCardClick() {
 }
 
 function getCardData(cardName) {
-    for (const card of DEVELOPMENT_CARDS) {
-        if (card["name"] === cardName) {
-            return card;
-        }
-    }
+    return binarySearchObjects(DEVELOPMENT_CARDS, cardName, "name");
 }
 
 function getPlayerWallet() {
-    const currentPlayer = getCurrentPlayer();
-    const tokens = currentPlayer["tokens"];
-    const bonuses = currentPlayer["bonuses"];
+    const tokens = getClientTokens();
+    const bonuses = getClientBonuses();
 
-    return mergeObjectsWithSum(tokens, bonuses);
+    return sumObjectValues(tokens, bonuses);
 }
 
 function isWalletHigher(wallet, cost) {
@@ -106,9 +138,8 @@ function isWalletHigher(wallet, cost) {
 }
 
 function getDefaultPaymentMethod(cost) {
-    const currentPlayer = getCurrentPlayer();
-    const tokens = currentPlayer["tokens"];
-    const bonuses = currentPlayer["bonuses"];
+    const tokens = getClientTokens();
+    const bonuses = getClientBonuses();
 
     removeBonusesFromCost(cost, bonuses);
 
@@ -205,7 +236,7 @@ function removePaidTokens() {
 }
 
 function updateCurrentPlayerBonuses(bonus) {
-    const currentBonus = getCurrentPlayer()["bonuses"];
+    const currentBonus = getClientBonuses();
 
     if (currentBonus[bonus] === undefined) {
         currentBonus[bonus] = 1;
@@ -234,4 +265,6 @@ export {
     updateCurrentPlayerBonuses,
     getDefaultPaymentMethod,
     deselectCard,
+    canBuy,
+    unHighlightCards,
 };

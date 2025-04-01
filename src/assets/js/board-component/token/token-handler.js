@@ -1,9 +1,9 @@
 import * as API from "../../api.js";
-import { setActionButtonState } from "../game-status-interface.js";
+import { getActionButton, setActionButtonState } from "../game-status-interface.js";
 import { MIN_TOKENS_FOR_PICKING_TWO } from "./config.js";
 import { MAX_TAKE_TOKENS } from "../config.js";
-import { getActionButton } from "../helper.js";
 import { deselectCard } from "../buy/buy-handler.js";
+import { validTokenTake } from "../state-machine/valid-action-checker.js";
 
 function clickedOnToken(target) {
     return target.tagName.toLowerCase() === "img";
@@ -41,10 +41,16 @@ function deselectToken($selectedToken) {
     $selectedToken.classList.remove("selected-token");
 }
 
+function unHighlightTokens() {
+    for (const $cardToDeselect of document.querySelectorAll(".board-tokens > li")) {
+        $cardToDeselect.classList.remove("selected-token");
+    }
+}
+
 function removeTokenFromStack($selectedToken, $actionButton) {
     let shiftStackDown = false;
 
-    for (let i = 0; i < MAX_TAKE_TOKENS; i++) {
+    for (let i = 0; i < MAX_TAKE_TOKENS + 1; i++) {
         const token = $actionButton.dataset[`token${i}`];
 
         if (shiftStackDown) {
@@ -61,11 +67,21 @@ function pushTokenToStack($selectedToken, $actionButton, stackPointer) {
     $actionButton.dataset[`token${stackPointer}`] = $selectedToken.dataset.type;
 }
 
-function setActionToTokenAction(stackPointer, $selectedToken) {
-    if (stackPointer === 1 && $selectedToken.dataset.amount >= MIN_TOKENS_FOR_PICKING_TWO) {
-        setActionButtonState("Take two", "processTakeTwoTokensClick", {});
+function setActionToTokenAction(stackPointer) {
+    let tokenAmount = -1;
+    let firstTokenInStack = null;
+
+    if ("token0" in getActionButton().dataset) {
+        firstTokenInStack = getActionButton().dataset.token0;
+    }
+    if (firstTokenInStack) {
+        tokenAmount = document.querySelector(`.board-tokens [data-type="${firstTokenInStack}"]`).dataset.amount;
+    }
+
+    if (stackPointer === 1 && tokenAmount >= MIN_TOKENS_FOR_PICKING_TWO) {
+        setActionButtonState("Take two", "processTakeTwoTokensClick", {}, false);
     } else {
-        setActionButtonState("Take up to three", "processTakeTokenClick", {});
+        setActionButtonState("Take up to three", "processTakeTokenClick", {}, false);
     }
 }
 
@@ -73,10 +89,27 @@ function highlightToken($selectedToken) {
     $selectedToken.classList.add("selected-token");
 }
 
-function selectToken(e) {
-    deselectCard();
+function removeTokenFromList($selectedToken, $actionButton, stackPointer) {
+    deselectToken($selectedToken);
+    removeTokenFromStack($selectedToken, $actionButton);
+    stackPointer--;
+    $actionButton.dataset.stackPointer = stackPointer;
 
-    if (!clickedOnToken(e.target)) return;
+    return stackPointer;
+}
+
+function addTokenToList($selectedToken, $actionButton, stackPointer) {
+    pushTokenToStack($selectedToken, $actionButton, stackPointer);
+    stackPointer++;
+    $actionButton.dataset.stackPointer = stackPointer;
+    highlightToken($selectedToken);
+    return stackPointer;
+}
+
+function selectToken(e) {
+    if (!validTokenTake() || !clickedOnToken(e.target)) return;
+
+    deselectCard();
 
     getActionButton().disabled = false;
 
@@ -91,13 +124,8 @@ function selectToken(e) {
     let stackPointer = parseInt($actionButton.dataset.stackPointer);
 
     if (tokenInStack($selectedToken, $actionButton, stackPointer)) {
-        deselectToken($selectedToken);
-        removeTokenFromStack($selectedToken, $actionButton);
-        stackPointer--;
-        $actionButton.dataset.stackPointer = stackPointer;
-
-        setActionToTokenAction(stackPointer, $selectedToken);
-
+        stackPointer = removeTokenFromList($selectedToken, $actionButton, stackPointer);
+        setActionToTokenAction(stackPointer);
         return;
     }
 
@@ -105,12 +133,8 @@ function selectToken(e) {
 
     if ($selectedToken.dataset.type === "Gold") return;
 
-    pushTokenToStack($selectedToken, $actionButton, stackPointer);
-    stackPointer++;
-    $actionButton.dataset.stackPointer = stackPointer;
-    highlightToken($selectedToken);
-
-    setActionToTokenAction(stackPointer, $selectedToken);
+    stackPointer = addTokenToList($selectedToken, $actionButton, stackPointer);
+    setActionToTokenAction(stackPointer);
 }
 
 function setTokensTo(stackPointer, $actionButton, amountOfTokens) {
@@ -127,9 +151,10 @@ function updateTokens(res) {
     const beginIndexAmountText = 1;
     const endIndexAmountText = 3;
 
-    for (const [token, taken] of Object.entries(res["tokens"])) {
+    for (const [token, taken] of Object.entries(res["take"])) {
         const $token = document.querySelector(`.board-tokens [data-type="${token}"]`);
         $token.dataset.amount = parseInt($token.dataset.amount) - parseInt(taken);
+
         const $amountText = $token.querySelector("p");
         $amountText.textContent = `${$token.dataset.amount}${$amountText.textContent.substring(beginIndexAmountText, endIndexAmountText)}`;
     }
@@ -141,7 +166,7 @@ function processTakeTokensClick() {
 
     const requestBody = setTokensTo(stackPointer, $actionButton, 1);
 
-    API.takeTokens(requestBody).then(res => updateTokens(res));
+    API.takeTokens(requestBody).then(() => updateTokens(requestBody));
 }
 
 function processTakeTwoTokens() {
@@ -150,11 +175,11 @@ function processTakeTwoTokens() {
 
     const requestBody = setTokensTo(stackPointer, $actionButton, 2);
 
-    API.takeTokens(requestBody).then(res => updateTokens(res));
+    API.takeTokens(requestBody).then(() => updateTokens(requestBody));
 }
 
 function processSkipTurn() {
     API.takeTokens({ take: { Ruby: 0 } }).then(res => updateTokens(res));
 }
 
-export { selectToken, processTakeTokensClick, updateTokens, processTakeTwoTokens, processSkipTurn };
+export { selectToken, processTakeTokensClick, updateTokens, processTakeTwoTokens, processSkipTurn, unHighlightTokens };

@@ -21,7 +21,7 @@ All files should be placed in the `src` directory.
 ## Default files
 
 ### CSS
-The `reset.css` has aleady been supplied, but it's up to you and your team to add the rest of the styles. Please feel free to split those up in multiple files. We'll handle efficient delivery for products in production in later semesters.
+The `reset.css` has already been supplied, but it's up to you and your team to add the rest of the styles. Please feel free to split those up in multiple files. We'll handle efficient delivery for products in production in later semesters.
 
 ### JavaScript
 A demonstration for connecting with the API has already been set up. We urge you to separate your JS files as **atomically as possible**. Add folders as you please. Make use of javascript modules (as seen in the Web Development Essentials classes).
