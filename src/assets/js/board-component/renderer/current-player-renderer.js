@@ -67,7 +67,7 @@ function renderCurrentPlayer(players, gems) {
     const currentPlayer = getCurrentPlayer(players, loadFromStorage("playerName"));
     const highestScore = getHighestScore(players);
 
-    renderCurrentPlayerPoints(currentPlayer , highestScore);
+    renderCurrentPlayerPoints(currentPlayer, highestScore);
     renderCurrentPlayerReserve(currentPlayer);
     renderCurrentPlayerTokenCount(currentPlayer["tokens"]);
     renderCurrentPlayerTokens(currentPlayer["tokens"], currentPlayer["bonuses"], gems);
