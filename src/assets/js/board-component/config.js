@@ -1,6 +1,7 @@
 const PRESTIGE_POINTS_NEEDED_TO_WIN = 15;
 const MAX_TOKENS_ALLOWED = 10;
 const CHIP_SPACING = 0.15;
+const HIGHEST_CARD_LEVEL = 3;
 
 const NOBLES_MAPPER = {
     "Elizabeth of Austria": "noble_border",
@@ -44,4 +45,5 @@ export {
     GOLD_TOKEN_LIMIT,
     MAX_TAKE_TOKENS,
     MAX_RESERVED_AMOUNT,
+    HIGHEST_CARD_LEVEL,
 };
