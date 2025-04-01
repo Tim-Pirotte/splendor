@@ -106,6 +106,11 @@ aside {
     gap: 0.5rem;
 }
 
+.top-bar h1 {
+    background-color: hotpink;
+    margin-right: 25rem;
+}
+
 section header picture {
     padding-right: 1rem;
 }
@@ -238,6 +243,12 @@ section header picture {
 
 .highlighted-number {
     color: hotpink;
+}
+
+.player-card.current-player {
+    background-color: hotpink;
+    position: relative;
+    margin-left: 1.25rem;
 }
 
 /* TIMER */

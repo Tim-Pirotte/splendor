@@ -1,7 +1,5 @@
-import { setActionButtonState } from "../game-status-interface.js";
+import { setActionButtonState, isCurrentlyPlaying, getActionButton } from "../game-status-interface.js";
 import { GAME_STATE } from "./data.js";
-import { isCurrentlyPlaying } from "../game-status-interface.js";
-import { getActionButton } from "../game-status-interface.js";
 
 function initRoundBegin(gameData){
 
