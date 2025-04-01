@@ -74,7 +74,7 @@ function renderCurrentPlayer(players, gems) {
 }
 
 function countTokens(tokens) {
-    sumObjectValues(tokens);
+    return sumObjectValues(tokens);
 }
 
 function insertCardCounter($token, token, currentPlayerBonuses) {
