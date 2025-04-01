@@ -7,22 +7,13 @@ function getResults() {
 }
 
 function filterResults(gameData) {
-    const players = gameData.players
+    return gameData.players
         .map(player => ({
            name: player.name,
            points: player["totalPrestigePoints"],
            amountOfBonuses: getAmountOfBonuses(player)
-        }));
-
-    players.sort((a, b) => b.points - a.points);
-    players.sort((a, b) => b.amountOfBonuses - a.amountOfBonuses);
-
-    const topPlayer = players[0];
-    players.forEach(player => {
-        player.isWinner = player.points === topPlayer.points && player.amountOfBonuses === topPlayer.amountOfBonuses;
-    });
-
-    return players;
+        }))
+        .sort((a, b) => b.points - a.points || b.amountOfBonuses - a.amountOfBonuses);
 }
 
 function getAmountOfBonuses(player) {
