@@ -53,13 +53,13 @@ function startRoundTimer() {
     const $progressBar = document.querySelector(".timer");
 
     // TODO : fill with server data!
-    const timeRoundStarted = new Date("2025-04-01T19:34:00.000Z").getTime();
+    const timeRoundStarted = new Date("2025-04-01T19:45:00.000Z").getTime();
 
     const timer = setInterval(() => {
         const currentTime = Date.now();
         const deltaTime = Math.floor((currentTime - timeRoundStarted) / 1000);
 
-        $progressBarFill.style.height = `${(SECONDS_PER_ROUND - deltaTime) * 100}%`;
+        $progressBarFill.style.height = `${100 - (deltaTime / SECONDS_PER_ROUND * 100)}%`;
         $progressBar.setAttribute("aria-valuenow", deltaTime);
 
         if (deltaTime >= SECONDS_PER_ROUND - SECONDS_WHEN_TURN_ALMOST_ENDS) {
