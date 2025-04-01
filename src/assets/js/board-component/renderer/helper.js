@@ -1,6 +1,6 @@
 import { CHIP_SPACING, TOKEN_MAPPER } from "../config.js";
 import { copyNode } from "../../utils/data-handler.js";
-import {validCardBuy} from "../state-machine/valid-action-checker.js";
+import { validCardBuy } from "../state-machine/valid-action-checker.js";
 
 function insertImageInto($container, standardPath, before, alt) {
     const $image = copyNode(document.querySelector("#image-template"));
