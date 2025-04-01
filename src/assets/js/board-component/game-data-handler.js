@@ -4,6 +4,7 @@ import { renderPage } from "./renderer/renderer.js";
 import { initRoundBegin } from "./state-machine/state-machine.js";
 import { isCurrentlyPlaying } from "./game-status-interface.js";
 import { POLLING_TIME_OUT } from "../config.js";
+import {processSkipTurn} from "./token/token-handler.js";
 
 function handleGameDataError(err) {
     const forbidden = 403;
@@ -29,12 +30,31 @@ function updateGameData() {
 
         if (!isCurrentlyPlaying()) {
             startGameStatePolling();
+        } else {
+            startRoundTimer();
         } })
         .catch(err => handleGameDataError(err));
 }
 
 function startGameStatePolling() {
     setTimeout(updateGameData, POLLING_TIME_OUT);
+}
+
+/* https://www.freecodecamp.org/news/javascript-timer-how-to-set-a-timer-function-in-js/ */
+function startRoundTimer() {
+    const progressBar = document.querySelector("#roundTimer");
+    let timeLeftInSeconds = 45;
+
+    let timer = setInterval(function () {
+        timeLeftInSeconds--;
+        progressBar.value = timeLeftInSeconds;
+
+        if (timeLeftInSeconds <= 0) {
+            clearInterval(timer);
+            processSkipTurn();
+            startGameStatePolling()
+        }
+    }, 1000);
 }
 
 function getClientTokens() {
