@@ -1,4 +1,3 @@
-import { validCardReserve } from "../state-machine/valid-action-checker.js";
 import { renderCard, safeEmptyContainer } from "../renderer/helper.js";
 import * as API from "../../api.js"
 import {getReserveCardButton} from "./helper.js";
