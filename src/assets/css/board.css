@@ -256,17 +256,16 @@ section header picture {
     height: 100%;
     width: 2rem;
     background: whitesmoke;
-    transform: rotate(180deg);
 }
 
 .timer-fill {
     height: 0;
     width: 100%;
-    background: lightpink;
+    background: lightgrey;
     transition: height 1s linear, background-color 1s ease-in-out;
 }
 
-.progress-bar-fill.time-almost-ends {
+.time-almost-ends {
     background: hotpink;
 }
 

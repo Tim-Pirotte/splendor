@@ -6,7 +6,6 @@ import { POLLING_TIME_OUT } from "../config.js";
 import { processSkipTurn } from "./token/token-handler.js";
 import { SECONDS_PER_ROUND, SECONDS_WHEN_TURN_ALMOST_ENDS } from "./config.js";
 import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
-import { deleteFromSessionStorage, loadFromSessionStorage, saveToSessionStorage } from "../data-connector/session-storage-abstractor.js";
 
 function handleGameDataError(err) {
     const forbidden = 403;
@@ -40,7 +39,6 @@ function updateGameData() {
 }
 
 function removeTimer() {
-    deleteFromSessionStorage("roundTime");
     document.querySelector(".timer-fill").classList.remove("time-almost-ends");
     document.querySelector(".timer").setAttribute("aria-valuenow", "0");
 }
@@ -53,20 +51,22 @@ function startGameStatePolling() {
 function startRoundTimer() {
     const $progressBarFill = document.querySelector(".timer-fill");
     const $progressBar = document.querySelector(".timer");
-    let roundTime = loadFromSessionStorage("roundTime") || SECONDS_PER_ROUND;
+
+    // TODO : fill with server data!
+    const timeRoundStarted = new Date("2025-04-01T19:34:00.000Z").getTime();
 
     const timer = setInterval(() => {
-        roundTime--;
-        $progressBarFill.style.height = `${roundTime / (SECONDS_PER_ROUND - 1) * 100}%`;
-        $progressBar.setAttribute("aria-valuenow", roundTime);
+        const currentTime = Date.now();
+        const deltaTime = Math.floor((currentTime - timeRoundStarted) / 1000);
 
-        saveToSessionStorage("roundTime", roundTime);
+        $progressBarFill.style.height = `${(SECONDS_PER_ROUND - deltaTime) * 100}%`;
+        $progressBar.setAttribute("aria-valuenow", deltaTime);
 
-        if (roundTime < SECONDS_WHEN_TURN_ALMOST_ENDS) {
+        if (deltaTime >= SECONDS_PER_ROUND - SECONDS_WHEN_TURN_ALMOST_ENDS) {
             $progressBarFill.classList.add("time-almost-ends");
         }
 
-        if (roundTime <= -1) {
+        if (deltaTime >= SECONDS_PER_ROUND) {
             clearInterval(timer);
 
             processSkipTurn();
