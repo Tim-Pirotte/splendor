@@ -7,13 +7,23 @@ function getResults() {
 }
 
 function filterResults(gameData) {
-    return gameData.players
-        .map(player => ({
-           name: player.name,
-           points: player["totalPrestigePoints"],
-           amountOfBonuses: getAmountOfBonuses(player)
-        }))
-        .sort((a, b) => b.points - a.points || b.amountOfBonuses - a.amountOfBonuses);
+    return API.getGame()
+        .then(({ players }) => {
+            const results = players.map(player => ({
+                name: player.name,
+                points: player["totalPrestigePoints"],
+                amountOfBonuses: sumObjectValues(player["bonuses"])
+            })).sort((a, b) => b.points - a.points || b.amountOfBonuses - a.amountOfBonuses);
+
+            const topScore = results[0]?.points;
+            const topBonuses = results[0]?.amountOfBonuses;
+
+            /* ...player was a suggestion of chat-gpt */
+            return results.map(player => ({
+                ...player,
+                isWinner: player.points === topScore && player.amountOfBonuses === topBonuses
+            }));
+        });
 }
 
 function getAmountOfBonuses(player) {

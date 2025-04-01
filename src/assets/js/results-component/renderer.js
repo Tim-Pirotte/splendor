@@ -27,7 +27,8 @@ function renderResultTable(data) {
 function renderResults() {
     getResults().then(gameResults => {
         for (const player of gameResults) {
-            renderResultMessage((player.name === loadFromStorage("playerName")) && player.isWinner);
+            const isPlayer = player.name === loadFromStorage("playerName");
+            if (isPlayer) renderResultMessage(isPlayer && player.isWinner);
         }
         renderResultTable(gameResults);
     });
