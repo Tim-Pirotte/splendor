@@ -1,3 +1,5 @@
+import {MAX_TOKENS_ALLOWED} from "../config.js";
+
 function selectPlayerToken(e) {
     if (!clickedOnButton(e.target)) return;
 
@@ -11,8 +13,10 @@ function selectPlayerToken(e) {
 
     if (action === "add") {
         addOneToDiscard($amountCounter);
+        increaseTotalDiscardCount();
     } else {
         removeOneToDiscard($amountCounter);
+        decreaseTotalDiscardCount();
     }
 }
 
@@ -40,9 +44,20 @@ function getAmountToDiscard($amountCounter) {
     return $amountCounter.dataset.amount;
 }
 
+function getTotalTokenAmount() {
+    return document.querySelector(".player-tokens #current-tokens").dataset.amount;
+}
+
+function getTotalAmountDiscarded() {
+    return parseInt(document.querySelector(".player-tokens #current-tokens").dataset.amountToDiscard);
+}
+
 function isValidAction(action, amountAvailable, amountToDiscard) {
+    const totalTokens = getTotalTokenAmount();
+    const totalDiscarded = getTotalAmountDiscarded();
+
     if (action === "add") {
-        return amountAvailable - amountToDiscard > 0;
+        return amountAvailable - amountToDiscard > 0 && totalTokens - totalDiscarded > MAX_TOKENS_ALLOWED;
     } else {
         return amountToDiscard > 0;
     }
@@ -51,6 +66,14 @@ function isValidAction(action, amountAvailable, amountToDiscard) {
 function addOneToDiscard($amountCounter) {
     $amountCounter.dataset.amount = parseInt($amountCounter.dataset.amount || 0) + 1;
     $amountCounter.textContent = parseInt($amountCounter.dataset.amount);
+}
+
+function increaseTotalDiscardCount() {
+    document.querySelector(".player-tokens #current-tokens").dataset.amountToDiscard = getTotalAmountDiscarded() + 1
+}
+
+function decreaseTotalDiscardCount() {
+    document.querySelector(".player-tokens #current-tokens").dataset.amountToDiscard = getTotalAmountDiscarded() - 1
 }
 
 function removeOneToDiscard($amountCounter) {

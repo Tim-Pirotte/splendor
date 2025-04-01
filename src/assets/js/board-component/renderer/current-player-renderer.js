@@ -59,6 +59,8 @@ function renderClientPlayerTokenCount(tokens) {
 
     const amountOfTokens = formatNumber(countTokens(tokens));
     $totalTokenCount.textContent = amountOfTokens;
+    $totalTokenCount.dataset.amount = amountOfTokens;
+    $totalTokenCount.dataset.amountToDiscard = 0;
     setTotalTokensColor($totalTokenCount, amountOfTokens);
 }
 
