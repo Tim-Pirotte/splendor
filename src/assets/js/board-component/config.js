@@ -30,6 +30,7 @@ const TOKEN_LIMIT = 7;
 const GOLD_TOKEN_LIMIT = 5;
 
 const MAX_TAKE_TOKENS = 3;
+const MAX_RESERVED_AMOUNT = 3;
 
 export {
     PRESTIGE_POINTS_NEEDED_TO_WIN,
@@ -42,4 +43,5 @@ export {
     TOKEN_LIMIT,
     GOLD_TOKEN_LIMIT,
     MAX_TAKE_TOKENS,
+    MAX_RESERVED_AMOUNT,
 };

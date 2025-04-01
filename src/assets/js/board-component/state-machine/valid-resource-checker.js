@@ -1,4 +1,4 @@
-const MAX_RESERVED_AMOUNT = 3;
+import {MAX_RESERVED_AMOUNT} from "../config.js";
 
 function hasReservePlace() {
     const amount = document.querySelectorAll(".reserved-cards .card").length;

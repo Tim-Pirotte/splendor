@@ -32,7 +32,6 @@ function setActionToBuyReserve($card) {
 
     $reserveCardButton.dataset.name = $card.dataset.name;
     $reserveCardButton.classList.remove("hidden");
-
 }
 
 function unHighlightCards() {
