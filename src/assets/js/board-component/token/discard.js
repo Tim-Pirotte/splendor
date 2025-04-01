@@ -18,6 +18,8 @@ function selectPlayerToken(e) {
         removeOneToDiscard($amountCounter);
         decreaseTotalDiscardCount();
     }
+
+    setButtonStatuses();
 }
 
 function clickedOnButton(target) {
@@ -33,7 +35,7 @@ function getTokenContainer(target) {
 }
 
 function getTokenAmount(tokenContainer) {
-    return tokenContainer.dataset.amount;
+    return parseInt(tokenContainer.dataset.amount);
 }
 
 function getAmountCounter($tokenContainer) {
@@ -79,6 +81,22 @@ function decreaseTotalDiscardCount() {
 function removeOneToDiscard($amountCounter) {
     $amountCounter.dataset.amount = parseInt($amountCounter.dataset.amount || 0) - 1;
     $amountCounter.textContent = parseInt($amountCounter.dataset.amount);
+}
+
+function setButtonStatuses() {
+    const totalAmountOfTokens = getTotalTokenAmount();
+    const totalAmountDiscarded = getTotalAmountDiscarded();
+
+    for (const $token of document.querySelectorAll(".player-tokens li")) {
+        const amountAvailable = parseInt($token.dataset.amount);
+        const amountInDiscard = parseInt($token.querySelector(".discard-container .amount").dataset.amount);
+
+        const addButton = $token.querySelector("[data-action='add']");
+        const removeButton = $token.querySelector("[data-action='remove']");
+
+        addButton.disabled = amountInDiscard === amountAvailable || totalAmountOfTokens - MAX_TOKENS_ALLOWED === totalAmountDiscarded;
+        removeButton.disabled = amountInDiscard === 0;
+    }
 }
 
 function processDiscardTokens() {
