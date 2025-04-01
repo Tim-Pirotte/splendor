@@ -41,7 +41,7 @@ function updateGameData() {
 
 function removeTimer() {
     deleteFromSessionStorage("roundTime");
-    document.querySelector(".progress-bar").setAttribute('aria-valuenow', "0");
+    document.querySelector(".progress-bar").setAttribute("aria-valuenow", "0");
 }
 
 function startGameStatePolling() {
@@ -57,7 +57,7 @@ function startRoundTimer() {
     const timer = setInterval(() => {
         roundTime--;
         $progressBarFill.style.height = `${roundTime / (SECONDS_PER_ROUND - 1) * 100}%`;
-        $progressBar.setAttribute('aria-valuenow', roundTime);
+        $progressBar.setAttribute("aria-valuenow", roundTime);
 
         saveToSessionStorage("roundTime", roundTime);
 
