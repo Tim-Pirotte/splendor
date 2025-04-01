@@ -8,7 +8,6 @@ import { POLLING_TIME_OUT } from "../config.js";
 function handleGameDataError(err) {
     const forbidden = 403;
     const unauthorized = 401;
-
     const statusCode = err["failure"];
 
     if (statusCode === forbidden || statusCode === unauthorized) {
@@ -30,8 +29,7 @@ function updateGameData() {
 
         if (!isCurrentlyPlaying()) {
             startGameStatePolling();
-        }
-    })
+        } })
         .catch(err => handleGameDataError(err));
 }
 
