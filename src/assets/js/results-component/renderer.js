@@ -26,7 +26,10 @@ function renderResultTable(data) {
 
 function renderResults() {
     getResults().then(gameResults => {
-        renderResultMessage(gameResults[0].name === loadFromStorage("playerName"));
+        for (const player of gameResults) {
+            const isPlayer = player.name === loadFromStorage("playerName");
+            if (isPlayer) renderResultMessage(isPlayer && player.isWinner);
+        }
         renderResultTable(gameResults);
     });
 }

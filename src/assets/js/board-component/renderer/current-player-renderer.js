@@ -2,17 +2,17 @@ import * as API from "../../api.js";
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
 import { MAX_TOKENS_ALLOWED, PRESTIGE_POINTS_NEEDED_TO_WIN, TOKEN_MAPPER } from "../config.js";
 import {
-    formatNumber, getNumberedItemTemplate,
+    formatNumber,
+    getNumberedItemTemplate,
     getSwitchButtonTemplate,
     insertImageInto,
     renderCard,
     renderProgressBar,
     safeEmptyContainer,
 } from "./helper.js";
-import { getHighestScore } from "./sidebar-renderer.js";
 import { isAllowedToSwitchToken, removePaidTokens, updateCurrentPlayerBonuses } from "../buy/buy-handler.js";
 import { GEMS } from "../data.js";
-import { getPlayersObjects } from "../../utils/game-object-handler.js";
+import { getHighestScore, sumObjectValues, getPlayersObjects } from "../../utils/game-object-handler.js";
 import { getClientTokens, getClientTotalPrestigePoints } from "../game-data-handler.js";
 import { copyNode } from "../../utils/data-handler.js";
 
@@ -81,7 +81,7 @@ function renderClientPlayer(players, gems) {
 }
 
 function countTokens(tokens) {
-    return Object.values(tokens).reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+    return sumObjectValues(tokens);
 }
 
 function insertCardCounter($token, token, currentPlayerBonuses) {
@@ -171,7 +171,8 @@ function hideSwitchPaymentButtons() {
     });
 }
 
-export { renderHeader,
+export {
+    renderHeader,
     renderClientPlayer,
     renderSwitchPaymentButtons,
     renderClientPlayerTokenCount,renderClientPlayerTokens,

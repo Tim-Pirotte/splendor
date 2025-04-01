@@ -2,6 +2,7 @@ import { loadFromStorage } from "../../data-connector/local-storage-abstractor.j
 import { formatNumber, getNumberedItemTemplate, insertImageInto, safeEmptyContainer } from "./helper.js";
 import { TOKEN_MAPPER } from "../config.js";
 import { MAX_PRESTIGE_POINTS } from "../../config.js";
+import { getHighestScore } from "../../utils/game-object-handler.js";
 import { copyNode } from "../../utils/data-handler.js";
 
 function renderOtherPlayers(otherPlayers, gems) {
@@ -27,10 +28,6 @@ function renderOtherPlayers(otherPlayers, gems) {
             $otherPlayerContainer.appendChild($playerCard);
         }
     }
-}
-
-function getHighestScore(otherPlayers) {
-    return Math.max(...otherPlayers.map(player => player["totalPrestigePoints"]));
 }
 
 function setPlayerName($playerCard, otherPlayer) {
@@ -85,4 +82,4 @@ function renderReservedList(containerToInsertInto, reservedCards) {
     }
 }
 
-export { renderOtherPlayers, getHighestScore };
+export { renderOtherPlayers };

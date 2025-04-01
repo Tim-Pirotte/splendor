@@ -30,4 +30,12 @@ function hasGameStarted(gameData) {
     return gameData["started"];
 }
 
-export { getGameState, getGameName, getGameId, getCurrentUsersAmount, getMaxUsersAmount, getGameCreator, getPlayersObjects, hasGameStarted };
+function sumObjectValues(object) {
+    return Object.values(object).reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+}
+
+function getHighestScore(players) {
+    return Math.max(...players.map(player => player["totalPrestigePoints"]));
+}
+
+export { getGameState, getGameName, getGameId, getCurrentUsersAmount, getMaxUsersAmount, getGameCreator, getPlayersObjects, hasGameStarted, sumObjectValues, getHighestScore };
