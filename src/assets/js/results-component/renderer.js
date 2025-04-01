@@ -1,4 +1,4 @@
-import { getResults } from "./helper.js";
+import { getSortedResults } from "./helper.js";
 import { MAX_PRESTIGE_POINTS } from "../config.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 
@@ -25,8 +25,12 @@ function renderResultTable(data) {
 }
 
 function renderResults() {
-    getResults().then(gameResults => {
-        renderResultMessage(gameResults[0].name === loadFromStorage("playerName"));
+    getSortedResults().then(gameResults => {
+        for (const player of gameResults) {
+            const isPlayer = player.name === loadFromStorage("playerName");
+
+            if (isPlayer) renderResultMessage(isPlayer && player.isWinner);
+        }
         renderResultTable(gameResults);
     });
 }

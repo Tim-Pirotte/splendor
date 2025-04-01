@@ -8,7 +8,6 @@ import { POLLING_TIME_OUT } from "../config.js";
 function handleGameDataError(err) {
     const forbidden = 403;
     const unauthorized = 401;
-
     const statusCode = err["failure"];
 
     if (statusCode === forbidden || statusCode === unauthorized) {
@@ -25,13 +24,12 @@ function updateGameData() {
 
     API.getGame().then(gameData => {
         saveToStorage("gameData", gameData);
-        initRoundBegin(gameData);
         renderPage(gameData);
+        initRoundBegin(gameData);
 
         if (!isCurrentlyPlaying()) {
             startGameStatePolling();
-        }
-    })
+        } })
         .catch(err => handleGameDataError(err));
 }
 
@@ -39,4 +37,28 @@ function startGameStatePolling() {
     setTimeout(updateGameData, POLLING_TIME_OUT);
 }
 
-export { updateGameData, startGameStatePolling };
+function getClientTokens() {
+    const tokens = {};
+
+    for (const $token of document.querySelectorAll(".player-tokens ul > li")) {
+        tokens[$token.dataset.type] = parseInt($token.dataset.amount);
+    }
+
+    return tokens;
+}
+
+function getClientBonuses() {
+    const bonuses = {};
+
+    for (const $bonus of document.querySelectorAll(".player-tokens ul > li")) {
+        bonuses[$bonus.dataset.type] = parseInt($bonus.dataset.bonuses);
+    }
+
+    return bonuses;
+}
+
+function getClientTotalPrestigePoints() {
+    return parseInt(document.querySelector(".player-points p").dataset.totalPrestigePoints);
+}
+
+export { updateGameData, getClientTokens, getClientBonuses, getClientTotalPrestigePoints, startGameStatePolling };

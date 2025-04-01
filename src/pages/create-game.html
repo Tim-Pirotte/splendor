@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="author"
-          content="Niels Clarysse, Alexander Engelrelst, Tristan Joos, Arne Persyn, Tim Pirotte, Niels Ryserhove">
+    <meta name="author" content="Niels Clarysse, Alexander Engelrelst, Tristan Joos, Arne Persyn, Tim Pirotte, Niels Ryserhove">
     <title>Splendor - Create game</title>
 
     <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -17,59 +16,58 @@
     <script src="../assets/js/sound-component/sound.js" type="module"></script>
 </head>
 <body>
-<noscript>Javascript is required for this experience to work properly. Please enable it or use a modern browser with
-    support.
-</noscript>
-<div id="page-layout">
-
-    <header>
-        <button type="button" id="back-button">
-            <picture>
-                <source srcset="./../assets/images/no-image-demo.jpg" type="image/webp">
-                <img src="./../assets/images/no-image-demo.jpg" alt="back arrow">
-            </picture>
-        </button>
-        <div id="playerInformation">
-            <h2 id="playerName">playerName</h2>
-            <template id="avatar-template">
+    <noscript>
+        Javascript is required for this experience to work properly. Please enable it or use a modern browser with support.
+    </noscript>
+    <div id="page-layout">
+        <header>
+            <button type="button" id="back-button">
                 <picture>
-                    <source srcset="#" type="image/webp">
-                    <img src="#" alt="" title="">
+                    <source srcset="./../assets/images/no-image-demo.jpg" type="image/webp">
+                    <img src="./../assets/images/no-image-demo.jpg" alt="back arrow" title="back arrow">
                 </picture>
-            </template>
-        </div>
-    </header>
-    <main>
-        <h1>Create game</h1>
-        <form method="post" action="#">
-            <label for="game-name">Game name:</label>
-            <input type="text" id="game-name" placeholder="Alice's game">
+            </button>
+            <div id="playerInformation">
+                <h2 id="playerName">playerName</h2>
+                <template id="avatar-template">
+                    <picture>
+                        <source srcset="#" type="image/webp">
+                        <img src="#" alt="" title="">
+                    </picture>
+                </template>
+            </div>
+        </header>
+        <main>
+            <h1>Create game</h1>
+            <form method="post" action="#">
+                <label for="game-name">Game name:</label>
+                <input type="text" id="game-name" placeholder="Alice's game">
 
-            <label for="private">Visibility:</label>
-            <input type="radio" id="private" name="visibility" value="private" checked>
-            <label for="private">private</label>
-            <input type="radio" id="public" name="visibility" value="public">
-            <label for="public">public</label>
+                <label for="private">Visibility:</label>
+                <input type="radio" id="private" name="visibility" value="private" checked>
+                <label for="private">private</label>
+                <input type="radio" id="public" name="visibility" value="public">
+                <label for="public">public</label>
 
-            <label for="two-players">Number of players:</label>
-            <input type="radio" id="two-players" name="players" value="2" checked>
-            <label for="two-players">2</label>
-            <input type="radio" id="three-players" name="players" value="3">
-            <label for="three-players">3</label>
-            <input type="radio" id="four-players" name="players" value="4">
-            <label for="four-players">4</label>
+                <label for="two-players">Number of players:</label>
+                <input type="radio" id="two-players" name="players" value="2" checked>
+                <label for="two-players">2</label>
+                <input type="radio" id="three-players" name="players" value="3">
+                <label for="three-players">3</label>
+                <input type="radio" id="four-players" name="players" value="4">
+                <label for="four-players">4</label>
 
-            <button type="submit">Create game</button>
-        </form>
-    </main>
-    <footer>
-        <button type="button" class="sound-button">
-            <picture>
-                <source srcset="../assets/images/UI/sound_off.webp" type="image/webp">
-                <img src="../assets/images/fallback/UI/sound_off.png" title="sound button" alt="sound button">
-            </picture>
-        </button>
-    </footer>
-</div>
+                <button type="submit">Create game</button>
+            </form>
+        </main>
+        <footer>
+            <button type="button" class="sound-button">
+                <picture>
+                    <source srcset="../assets/images/UI/sound_off.webp" type="image/webp">
+                    <img src="../assets/images/fallback/UI/sound_off.png" title="sound button" alt="sound button">
+                </picture>
+            </button>
+        </footer>
+    </div>
 </body>
 </html>

@@ -6,7 +6,7 @@ function filterGameList(gameList) {
     const peopleFilteredSet = filterOnPeopleAmount(gameList, amountValue);
     const nameFilteredSet = filterOnName(gameList, gameName);
 
-    return intersection(peopleFilteredSet,nameFilteredSet);
+    return intersection(peopleFilteredSet, nameFilteredSet);
 }
 
 function filterOnPeopleAmount(gameList, amount) {
