@@ -1,4 +1,4 @@
-import {getActionButton} from "../game-status-interface.js";
+import {getActionButton, setActionButtonState} from "../game-status-interface.js";
 import {hideSwitchPaymentButtons} from "../renderer/current-player-renderer.js";
 import {validCardBuy, validCardReserve} from "../state-machine/valid-action-checker.js";
 import {unHighlightTokens} from "../token/token-handler.js";
@@ -29,14 +29,12 @@ function selectCard(e) {
         return;
     }
 
+    unHighlightTokens();
+    highlightCard($card);
+    setActionToBuyReserve($card);
+
     const isValidCardBuy = validCardBuy(cardName);
     const isValidCardReserve = validCardReserve($card);
-
-    if (isValidCardBuy || isValidCardReserve) {
-        unHighlightTokens();
-        highlightCard($card);
-        setActionToBuyReserve($card);
-    }
 
     if (isValidCardBuy) allowToBuy($card);
     if (isValidCardReserve) allowToReserve();
@@ -48,10 +46,10 @@ function selectCard(e) {
 function deselectCard() {
     unHighlightCards();
 
-    getActionButton().dataset.name = "";
     getActionButton().disabled = false;
+    setActionButtonState("skip turn", "skipTurn", {}, true);
 
-    getReserveCardButton().dataset.name = "";
+    getReserveCardButton().removeAttribute("data-name");
     getReserveCardButton().classList.add("hidden");
 }
 
