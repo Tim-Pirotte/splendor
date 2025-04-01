@@ -41,6 +41,7 @@ function updateGameData() {
 
 function removeTimer() {
     deleteFromSessionStorage("roundTime");
+    document.querySelector(".progress-bar-fill").classList.remove("time-almost-ends");
     document.querySelector(".progress-bar").setAttribute("aria-valuenow", "0");
 }
 
