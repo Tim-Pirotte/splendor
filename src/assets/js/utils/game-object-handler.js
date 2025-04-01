@@ -30,4 +30,8 @@ function hasGameStarted(gameData) {
     return gameData["started"];
 }
 
-export { getGameState, getGameName, getGameId, getCurrentUsersAmount, getMaxUsersAmount, getGameCreator, getPlayersObjects, hasGameStarted };
+function sumObjectValues(object) {
+    return Object.values(object).reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+}
+
+export { getGameState, getGameName, getGameId, getCurrentUsersAmount, getMaxUsersAmount, getGameCreator, getPlayersObjects, hasGameStarted, sumObjectValues };

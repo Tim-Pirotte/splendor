@@ -13,7 +13,7 @@ import {
 import { getHighestScore } from "./sidebar-renderer.js";
 import { isAllowedToSwitchToken, removePaidTokens, updateCurrentPlayerBonuses } from "../buy/buy-handler.js";
 import { GEMS } from "../data.js";
-import { getPlayersObjects } from "../../utils/game-object-handler.js";
+import { getPlayersObjects, sumObjectValues } from "../../utils/game-object-handler.js";
 
 function renderHeader() {
     document.querySelector(".top-bar h2").textContent = loadFromStorage("playerName");
@@ -74,7 +74,7 @@ function renderCurrentPlayer(players, gems) {
 }
 
 function countTokens(tokens) {
-    return Object.values(tokens).reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+    sumObjectValues(tokens);
 }
 
 function insertCardCounter($token, token, currentPlayerBonuses) {
