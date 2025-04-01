@@ -22,6 +22,7 @@ function selectCard(e) {
 
     hideSwitchPaymentButtons();
     sessionStorage.removeItem("paymentMethod");
+    getReserveCardButton().classList.remove("hidden");
 
     if (cardAlreadySelected(cardName)) {
         deselectCard();
@@ -29,7 +30,7 @@ function selectCard(e) {
     }
 
     const isValidCardBuy = validCardBuy(cardName);
-    const isValidCardReserve = validCardReserve();
+    const isValidCardReserve = validCardReserve($card);
 
     if (isValidCardBuy || isValidCardReserve) {
         unHighlightTokens();
@@ -38,10 +39,10 @@ function selectCard(e) {
     }
 
     if (isValidCardBuy) allowToBuy($card);
+    if (isValidCardReserve) allowToReserve();
 
     getActionButton().disabled = !isValidCardBuy;
-
-    if (isValidCardReserve) allowToReserve();
+    getReserveCardButton().disabled = !isValidCardReserve;
 }
 
 function deselectCard() {
@@ -52,7 +53,6 @@ function deselectCard() {
 
     getReserveCardButton().dataset.name = "";
     getReserveCardButton().classList.add("hidden");
-    getReserveCardButton().disabled = true;
 }
 
 export { selectCard, deselectCard };

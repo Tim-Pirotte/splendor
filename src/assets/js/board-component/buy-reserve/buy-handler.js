@@ -16,7 +16,6 @@ function allowToBuy($card) {
     const cardData = getCardData($card.dataset.name);
     const defaultPayment = getDefaultPaymentMethod(cardData["cost"]);
 
-    getActionButton().disabled = false;
     setNewPaymentMethod(defaultPayment);
     renderSwitchPaymentButtons(defaultPayment, cardData["cost"]);
 }

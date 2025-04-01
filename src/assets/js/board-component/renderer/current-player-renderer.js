@@ -49,7 +49,7 @@ function renderClientPlayerReserve(currentPlayer) {
     safeEmptyContainer($reserved);
 
     for (const card of currentPlayer["reserve"]) {
-        renderCard($reserved, card["prestigePoints"], card["bonus"], card["cost"], card["name"]);
+        renderCard($reserved, card["prestigePoints"], card["bonus"], card["cost"], card["name"], true);
     }
 }
 

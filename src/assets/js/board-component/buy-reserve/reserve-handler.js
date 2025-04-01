@@ -16,11 +16,13 @@ function processReserve(e){
         const $reservedCards = document.querySelector(".reserved-cards ul");
         safeEmptyContainer($reservedCards);
         for (const card of res["reserve"]) {
-          renderCard($reservedCards, card["prestigePoints"], card["bonus"], card["cost"], card["name"]);
+          renderCard($reservedCards, card["prestigePoints"], card["bonus"], card["cost"], card["name"], true);
         }
 
         //TODO: delete the card from the deck
-      }); 
+      });
+
+      getReserveCardButton().classList.add("hidden");
     }
 
 }
