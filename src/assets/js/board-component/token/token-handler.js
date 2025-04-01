@@ -1,8 +1,8 @@
 import * as API from "../../api.js";
-import {clearDatasetAttributes, getActionButton, setActionButtonState} from "../game-status-interface.js";
+import { getActionButton, setActionButtonState } from "../game-status-interface.js";
 import { MIN_TOKENS_FOR_PICKING_TWO } from "./config.js";
 import { MAX_TAKE_TOKENS } from "../config.js";
-import { deselectCard } from "../buy/buy-handler.js";
+import {deselectCard, unHighlightOtherCards} from "../buy/buy-handler.js";
 import {validTokenTake} from "../state-machine/valid-action-checker.js";
 
 function clickedOnToken(target) {
@@ -83,20 +83,17 @@ function highlightToken($selectedToken) {
 }
 
 function selectToken(e) {
-    if (!validTokenTake()) return;
+    if (!validTokenTake() || !clickedOnToken(e.target)) return;
 
     deselectCard();
-
-    if (!clickedOnToken(e.target)) return;
+    unHighlightOtherCards();
 
     getActionButton().disabled = false;
 
     const $selectedToken = getToken(e.target);
-
     if ($selectedToken.dataset.amount < 1) return;
 
     const $actionButton = getActionButton();
-
     if (!stackExists($actionButton)) createStack($actionButton);
 
     let stackPointer = parseInt($actionButton.dataset.stackPointer);

@@ -11,7 +11,7 @@ import { renderUpdatedBoardTokens } from "../renderer/board-renderer.js";
 import { sumObjectValues } from "../helper.js";
 import { getClientBonuses, getClientTokens } from "../game-data-handler.js";
 import { binarySearchObjects } from "../../utils/data-handler.js";
-import {validCardBuy, validCardReserve, validDeckReserve} from "../state-machine/valid-action-checker.js";
+import { validCardBuy, validCardReserve } from "../state-machine/valid-action-checker.js";
 
 function allowToBuy($card) {
     const cardData = getCardData($card.dataset.name);
@@ -24,6 +24,14 @@ function allowToBuy($card) {
 
 function allowToReserve() {
     // TODO
+}
+
+function setActionToBuy($card) {
+    setActionButtonState(
+        "buy",
+        "processBuyCardClick",
+        {name: $card.dataset.name},
+    );
 }
 
 function selectCard(e) {
@@ -47,25 +55,24 @@ function selectCard(e) {
 
     if (isValidCardBuy || isValidCardReserve) {
         highlightCard($card);
-        setActionButtonState(
-            "buy",
-            "processBuyCardClick",
-            { name: $card.dataset.name },
-        );
+        setActionToBuy($card);
     }
 
-    if (isValidCardBuy) {
-        allowToBuy($card);
-        getActionButton().disabled = false;
-    } else {
-        getActionButton().disabled = true;
-    }
+    if (isValidCardBuy) allowToBuy($card);
+
+    getActionButton().disabled = !isValidCardBuy;
 
     if (isValidCardReserve) allowToReserve();
 }
 
+function unHighlightOtherCards() {
+    for (const $cardToDeselect of document.querySelectorAll(".selected-card")) {
+        $cardToDeselect.classList.remove("selected-card");
+    }
+}
+
 function highlightCard($card) {
-    document.querySelectorAll(".selected-card").forEach($card => $card.classList.remove("selected-card"));
+    unHighlightOtherCards();
     $card.classList.add("selected-card");
 }
 
@@ -257,4 +264,5 @@ export {
     getDefaultPaymentMethod,
     deselectCard,
     canBuy,
+    unHighlightOtherCards,
 };
