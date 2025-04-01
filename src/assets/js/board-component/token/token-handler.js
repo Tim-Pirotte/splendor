@@ -71,11 +71,17 @@ function setActionToTokenAction(stackPointer) {
     let tokenAmount = -1;
     let firstTokenInStack = null;
 
+
     if ("token0" in getActionButton().dataset) {
         firstTokenInStack = getActionButton().dataset.token0;
     }
     if (firstTokenInStack) {
         tokenAmount = document.querySelector(`.board-tokens [data-type="${firstTokenInStack}"]`).dataset.amount;
+    }
+
+    if(stackPointer === 0) {
+        setActionButtonState("skip turn", "skipTurn", {});
+        return;
     }
 
     if (stackPointer === 1 && tokenAmount >= MIN_TOKENS_FOR_PICKING_TWO) {

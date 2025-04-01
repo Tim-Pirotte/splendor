@@ -85,6 +85,7 @@ function deselectCard() {
     unHighlightCards();
     getActionButton().dataset.name = "";
     getActionButton().disabled = false;
+    setActionButtonState("skip turn", "skipTurn", {});
 }
 
 function canBuy(name) {
