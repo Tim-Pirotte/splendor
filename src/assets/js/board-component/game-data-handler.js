@@ -1,5 +1,5 @@
 import * as API from "../api.js";
-import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
+import { deleteFromStorage, loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
 import { renderPage } from "./renderer/renderer.js";
 import { initRoundBegin } from "./state-machine/state-machine.js";
 import { isCurrentlyPlaying } from "./game-status-interface.js";
@@ -43,13 +43,16 @@ function startGameStatePolling() {
 /* https://www.freecodecamp.org/news/javascript-timer-how-to-set-a-timer-function-in-js/ */
 function startRoundTimer() {
     const progressBar = document.querySelector("#roundTimer");
-    let timeLeftInSeconds = 45;
+    let roundTime = loadFromStorage("roundTime") || 45;
 
     let timer = setInterval(function () {
-        timeLeftInSeconds--;
-        progressBar.value = timeLeftInSeconds;
+        roundTime--;
+        progressBar.value = roundTime;
 
-        if (timeLeftInSeconds <= 0) {
+        saveToStorage("roundTime", roundTime);
+
+        if (roundTime <= 0) {
+            deleteFromStorage("roundTime");
             clearInterval(timer);
             processSkipTurn();
             updateGameData();
