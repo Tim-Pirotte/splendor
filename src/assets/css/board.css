@@ -254,7 +254,7 @@ section header picture {
 /* TIMER */
 progress {
     grid-area: timer;
-    transform: rotate(90deg);
+    transform: rotate(270deg);
     margin: auto 0;
 }
 
