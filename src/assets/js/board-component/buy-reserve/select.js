@@ -1,4 +1,4 @@
-import {getActionButton, setActionButtonState} from "../game-status-interface.js";
+import {getActionButton, isCurrentlyPlaying, setActionButtonState} from "../game-status-interface.js";
 import {hideSwitchPaymentButtons} from "../renderer/current-player-renderer.js";
 import {validCardBuy, validCardReserve} from "../state-machine/valid-action-checker.js";
 import {unHighlightTokens} from "../token/token-handler.js";
@@ -16,7 +16,7 @@ import {getReserveCardButton} from "./helper.js";
 function selectCard(e) {
     const $card = getCard(e);
 
-    if (!$card) return;
+    if (!($card && isCurrentlyPlaying())) return;
 
     const cardName = $card.dataset.name;
 
@@ -25,6 +25,8 @@ function selectCard(e) {
     getReserveCardButton().classList.remove("hidden");
 
     if (cardAlreadySelected(cardName)) {
+        //This can not be inside the deselectCard to prevent issues with taking tokens
+        setActionButtonState("skip turn", "skipTurn", {}, true);
         deselectCard();
         return;
     }
@@ -47,7 +49,6 @@ function deselectCard() {
     unHighlightCards();
 
     getActionButton().disabled = false;
-    setActionButtonState("skip turn", "skipTurn", {}, true);
 
     getReserveCardButton().removeAttribute("data-name");
     getReserveCardButton().classList.add("hidden");

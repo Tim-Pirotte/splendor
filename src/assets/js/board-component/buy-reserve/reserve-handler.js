@@ -1,6 +1,6 @@
 import { renderCard, safeEmptyContainer } from "../renderer/helper.js";
 import * as API from "../../api.js"
-import {getReserveCardButton} from "./helper.js";
+import {finishRoundAfterBuyReserve, getReserveCardButton} from "./helper.js";
 import {startGameStatePolling} from "../game-data-handler.js";
 
 function processReserve(e){
@@ -23,7 +23,7 @@ function processReserve(e){
         //TODO: delete the card from the deck
       });
 
-      getReserveCardButton().classList.add("hidden");
+      finishRoundAfterBuyReserve();
       startGameStatePolling();
     }
 

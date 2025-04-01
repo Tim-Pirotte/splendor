@@ -10,7 +10,7 @@ import {renderUpdatedBoardTokens} from "../renderer/board-renderer.js";
 import {sumObjectValues} from "../helper.js";
 import {getClientBonuses, getClientTokens} from "../game-data-handler.js";
 import {binarySearchObjects} from "../../utils/data-handler.js";
-import {getReserveCardButton} from "./helper.js";
+import {finishRoundAfterBuyReserve, getReserveCardButton} from "./helper.js";
 
 function allowToBuy($card) {
     const cardData = getCardData($card.dataset.name);
@@ -68,7 +68,7 @@ function processBuyCardClick() {
     renderUpdatedPlayerTokens(cardData["bonus"]);
     renderUpdatedPlayerScore(cardData["prestigePoints"]);
     renderUpdatedBoardTokens(JSON.parse(sessionStorage.getItem("paymentMethod")));
-
+    finishRoundAfterBuyReserve();
     API.buyCard(requestBody).then(() => sessionStorage.removeItem("paymentMethod"));
 
 }
