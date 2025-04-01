@@ -252,14 +252,14 @@ section header picture {
 }
 
 /* TIMER */
-.progress-bar {
+.timer {
     height: 100%;
     width: 2rem;
     background: whitesmoke;
     transform: rotate(180deg);
 }
 
-.progress-bar-fill {
+.timer-fill {
     height: 0;
     width: 100%;
     background: lightpink;

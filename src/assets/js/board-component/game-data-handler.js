@@ -41,8 +41,8 @@ function updateGameData() {
 
 function removeTimer() {
     deleteFromSessionStorage("roundTime");
-    document.querySelector(".progress-bar-fill").classList.remove("time-almost-ends");
-    document.querySelector(".progress-bar").setAttribute("aria-valuenow", "0");
+    document.querySelector(".timer-fill").classList.remove("time-almost-ends");
+    document.querySelector(".timer").setAttribute("aria-valuenow", "0");
 }
 
 function startGameStatePolling() {
@@ -51,8 +51,8 @@ function startGameStatePolling() {
 
 /* https://www.freecodecamp.org/news/javascript-timer-how-to-set-a-timer-function-in-js/ */
 function startRoundTimer() {
-    const $progressBarFill = document.querySelector(".progress-bar-fill");
-    const $progressBar = document.querySelector(".progress-bar");
+    const $progressBarFill = document.querySelector(".timer-fill");
+    const $progressBar = document.querySelector(".timer");
     let roundTime = loadFromSessionStorage("roundTime") || SECONDS_PER_ROUND;
 
     const timer = setInterval(() => {
