@@ -3,8 +3,9 @@ import { renderCard, safeEmptyContainer } from "../renderer/helper.js";
 import * as API from "../../api.js"
 import {getReserveCardButton} from "./helper.js";
 
-function procesReserve(e){
-    const selectedCardName = document.querySelector(".reserve-button").dataset.name;
+function processReserve(e){
+    const selectedCardName = getReserveCardButton().dataset.name;
+    //TODO: check if this if statement is needed, reserve button should be disabled if you can't reserve
     if( selectedCardName ) {
       const requestBody = {
             "development": {
@@ -31,4 +32,4 @@ function allowToReserve() {
     getReserveCardButton().disabled = false;
 }
 
-export { procesReserve, allowToReserve };
+export { processReserve, allowToReserve };
