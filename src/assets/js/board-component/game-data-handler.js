@@ -29,11 +29,12 @@ function updateGameData() {
         initRoundBegin(gameData);
 
         if (!isCurrentlyPlaying()) {
+            deleteFromStorage("roundTime");
             startGameStatePolling();
         } else {
             startRoundTimer();
-        } })
-        .catch(err => handleGameDataError(err));
+        }
+    }).catch(err => handleGameDataError(err));
 }
 
 function startGameStatePolling() {
@@ -52,8 +53,8 @@ function startRoundTimer() {
         saveToStorage("roundTime", roundTime);
 
         if (roundTime <= 0) {
-            deleteFromStorage("roundTime");
             clearInterval(timer);
+
             processSkipTurn();
             updateGameData();
         }
