@@ -6,7 +6,7 @@ function buyReserveInit() {
     document.querySelectorAll(".decks")
         .forEach(deck => {
             deck.addEventListener("click", selectCard);
-            deck.addEventListener("click", selectDeckForReserving)
+            deck.addEventListener("click", selectDeckForReserving);
         });
     document.querySelector(".player-tokens").addEventListener("click", handlePaymentMethodChange);
     document.querySelector(".reserve-button").addEventListener("click", processReserve);

@@ -7,7 +7,7 @@ body {
 }
 
 /* SWITCH TOKEN BUTTONS */
-.switch-token-container .hidden, .hidden {
+.hidden, .switch-token-container .hidden {
     display: none;
 }
 

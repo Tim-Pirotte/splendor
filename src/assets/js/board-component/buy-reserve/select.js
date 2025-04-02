@@ -1,7 +1,6 @@
 import {getActionButton, isCurrentlyPlaying, setActionButtonState} from "../game-status-interface.js";
 import {hideSwitchPaymentButtons} from "../renderer/current-player-renderer.js";
 import {validCardBuy, validCardReserve} from "../state-machine/valid-action-checker.js";
-import {unHighlightTokens} from "../token/token-handler.js";
 import {
     allowToBuy,
     cardAlreadySelected,
@@ -49,7 +48,7 @@ function deselectCard() {
     unHighlightCards();
 
     getActionButton().disabled = false;
-    getReserveCardButton().removeAttribute("data-level")
+    getReserveCardButton().removeAttribute("data-level");
     getReserveCardButton().removeAttribute("data-name");
     getReserveCardButton().classList.add("hidden");
 }
