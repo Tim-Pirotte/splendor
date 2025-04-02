@@ -169,7 +169,15 @@
                     <h3>Tokens:</h3>
                     <h4><span id="current-tokens">Token count</span>/<span id="token-limit">Token limit</span></h4>
                 </header>
-                <ul></ul>
+                <ul>
+                    <template id="token-discard-template">
+                        <div class="discard-container">
+                            <button type="button" data-action="remove">-</button>
+                            <p data-amount="0" class="amount">0</p>
+                            <button type="button" data-action="add">+</button>
+                        </div>
+                    </template>
+                </ul>
             </section>
             <button type="button" class="action-button">Action</button>
         </div>
