@@ -7,6 +7,7 @@ import { deselectCard } from "./select.js";
 import { validDeckReserve } from "../state-machine/valid-action-checker.js";
 import { setActionToBuyReserve, unHighlightCards } from "./buy-handler.js";
 import { unHighlightTokens } from "../token/token-handler.js";
+import {renderOneExtraGoldToken} from "../renderer/current-player-renderer.js";
 
 function processReserve(){
     const selectedCardName = getReserveCardButton().dataset.name;
@@ -29,6 +30,7 @@ function processReserve(){
     }
     API.reserveCard(requestBody).then(res => renderReservedCards(res["reserve"]));
 
+    renderOneExtraGoldToken();
     finishRoundAfterBuyReserve();
     startGameStatePolling();
 }
