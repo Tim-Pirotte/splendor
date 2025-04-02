@@ -42,4 +42,13 @@ function getCardObject(cardName) {
     return DEVELOPMENT_CARDS.find(card => card.name === cardName);
 }
 
-export { validTokenTake, validTokenDiscard, validCardBuy, validCardReserve, validDeckReserve, validNobelPick };
+export {
+    validTokenTake,
+    validTokenDiscard,
+    validCardBuy,
+    validCardReserve,
+    validDeckReserve,
+    validNobelPick,
+    getCardObject,
+    getLevelFromCard,
+};

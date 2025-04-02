@@ -1,28 +1,29 @@
 import { renderCard, safeEmptyContainer } from "../renderer/helper.js";
 import * as API from "../../api.js";
-import {finishRoundAfterBuyReserve, getReserveCardButton} from "./helper.js";
-import {startGameStatePolling} from "../game-data-handler.js";
-import {HIGHEST_CARD_LEVEL} from "../config.js";
-import {getActionButton, setActionButtonState} from "../game-status-interface.js";
-import {deselectCard} from "./select.js";
-import {validDeckReserve} from "../state-machine/valid-action-checker.js";
+import { finishRoundAfterBuyReserve, getReserveCardButton } from "./helper.js";
+import { startGameStatePolling } from "../game-data-handler.js";
+import { HIGHEST_CARD_LEVEL } from "../config.js";
+import { getActionButton, setActionButtonState } from "../game-status-interface.js";
+import { deselectCard } from "./select.js";
+import { validDeckReserve } from "../state-machine/valid-action-checker.js";
 
 function processReserve(){
     const selectedCardName = getReserveCardButton().dataset.name;
     const cardDeckLevel = getReserveCardButton().dataset.level;
     let requestBody;
+
     if( selectedCardName ) {
-      requestBody = {
+        requestBody = {
             "development": {
-              "name": selectedCardName
-            }
-          };
+                "name": selectedCardName,
+            },
+        };
 
     } else {
         requestBody = {
             "development": {
-                "level": parseInt(cardDeckLevel)
-            }
+                "level": parseInt(cardDeckLevel),
+            },
         };
     }
     API.reserveCard(requestBody).then(res => renderReservedCards(res["reserve"]));
@@ -44,10 +45,12 @@ function renderReservedCards(reservedCards) {
 function selectDeckForReserving(e) {
 
     const $closestPictureTag = e.target.closest("picture");
+
     if (!$closestPictureTag) return;
     if (!$closestPictureTag.classList.contains("hidden-deck")) return;
 
     const deckLevel = getDeckLevel(e.target);
+
     if (!validDeckReserve(deckLevel)) return;
 
     const previousSelectedLevel = parseInt(getReserveCardButton().dataset.level);
@@ -62,9 +65,9 @@ function selectDeckForReserving(e) {
     getReserveCardButton().disabled = false;
     if (getReserveCardButton().dataset.name) getReserveCardButton().removeAttribute("data-name");
     setActionButtonState(
-    "buy",
-    "processBuyCardClick",
-    {},
+        "buy",
+        "processBuyCardClick",
+        {},
     );
     getActionButton().disabled = true;
     getReserveCardButton().dataset.level = deckLevel;

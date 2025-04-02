@@ -1,16 +1,16 @@
 import * as API from "../../api.js";
-import {getActionButton, setActionButtonState} from "../game-status-interface.js";
+import { getActionButton, setActionButtonState } from "../game-status-interface.js";
 import {
     renderSwitchPaymentButtons,
     renderUpdatedPlayerScore,
     renderUpdatedPlayerTokens,
 } from "../renderer/current-player-renderer.js";
-import {DEVELOPMENT_CARDS} from "../data.js";
-import {renderUpdatedBoardTokens} from "../renderer/board-renderer.js";
-import {sumObjectValues} from "../helper.js";
-import {getClientBonuses, getClientTokens} from "../game-data-handler.js";
-import {binarySearchObjects} from "../../utils/data-handler.js";
-import {finishRoundAfterBuyReserve, getReserveCardButton} from "./helper.js";
+import { DEVELOPMENT_CARDS } from "../data.js";
+import { renderUpdatedBoardTokens } from "../renderer/board-renderer.js";
+import { sumObjectValues } from "../helper.js";
+import { getClientBonuses, getClientTokens } from "../game-data-handler.js";
+import { binarySearchObjects } from "../../utils/data-handler.js";
+import { finishRoundAfterBuyReserve, getReserveCardButton } from "./helper.js";
 
 function allowToBuy($card) {
     const cardData = getCardData($card.dataset.name);

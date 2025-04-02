@@ -1,4 +1,4 @@
-import {setActionButtonState} from "../game-status-interface.js";
+import { setActionButtonState } from "../game-status-interface.js";
 
 function getReserveCardButton() {
     return document.querySelector(".reserve-button");

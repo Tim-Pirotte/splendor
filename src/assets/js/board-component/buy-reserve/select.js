@@ -1,16 +1,16 @@
-import {getActionButton, isCurrentlyPlaying, setActionButtonState} from "../game-status-interface.js";
-import {hideSwitchPaymentButtons} from "../renderer/current-player-renderer.js";
-import {validCardBuy, validCardReserve} from "../state-machine/valid-action-checker.js";
+import { getActionButton, isCurrentlyPlaying, setActionButtonState } from "../game-status-interface.js";
+import { hideSwitchPaymentButtons } from "../renderer/current-player-renderer.js";
+import { validCardBuy, validCardReserve } from "../state-machine/valid-action-checker.js";
 import {
     allowToBuy,
     cardAlreadySelected,
     getCard,
     highlightCard,
     setActionToBuyReserve,
-    unHighlightCards
+    unHighlightCards,
 } from "./buy-handler.js";
-import {allowToReserve} from "./reserve-handler.js";
-import {getReserveCardButton} from "./helper.js";
+import { allowToReserve } from "./reserve-handler.js";
+import { getReserveCardButton } from "./helper.js";
 
 function selectCard(e) {
     const $card = getCard(e);
