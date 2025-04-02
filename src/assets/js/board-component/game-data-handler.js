@@ -54,7 +54,8 @@ function startRoundTimer() {
     const $progressBar = document.querySelector(".timer");
 
     // TODO : fill with server data!
-    const timeRoundStarted = new Date("2025-04-01T19:45:00.000Z").getTime();
+    // "2025-04-01T19:45:00.000Z"
+    const timeRoundStarted = new Date(Date.now()).getTime();
 
     const timer = setInterval(() => {
         const currentTime = Date.now();
