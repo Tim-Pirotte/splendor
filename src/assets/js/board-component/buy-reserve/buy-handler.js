@@ -21,8 +21,8 @@ function allowToBuy($card) {
     renderSwitchPaymentButtons(defaultPayment, cardData["cost"]);
 }
 
-function setActionToBuyReserve($card, deckLevel = -1) {
-    const datasetParameters = deckLevel > 0 ? {} : { name: $card.dataset.name };
+function setActionToBuyReserve($card, deckLevel = 0) {
+    const datasetParameters = deckLevel ? {} : { name: $card.dataset.name };
     setActionButtonState(
         "buy",
         "processBuyCardClick",
@@ -34,7 +34,12 @@ function setActionToBuyReserve($card, deckLevel = -1) {
 
     clearDatasetAttributes($reserveCardButton);
 
-    deckLevel > 0 ? $reserveCardButton.dataset.level = deckLevel : $reserveCardButton.dataset.name = $card.dataset.name;
+    if (deckLevel) {
+        $reserveCardButton.dataset.level = deckLevel;
+    } else {
+        $reserveCardButton.dataset.name = $card.dataset.name;
+    }
+
     $reserveCardButton.classList.remove("hidden");
     getActionButton().disabled = true;
     $reserveCardButton.disabled = true;

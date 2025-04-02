@@ -31,7 +31,6 @@ function processReserve(){
 
     finishRoundAfterBuyReserve();
     startGameStatePolling();
-
 }
 
 function renderReservedCards(reservedCards) {
