@@ -1,4 +1,10 @@
-import { getNumberedItemTemplate, insertImageInto, renderCard, safeEmptyContainer } from "./helper.js";
+import {
+    addNodesToEmptiedContainer,
+    getNumberedItemTemplate,
+    insertImageInto,
+    renderCard,
+    safeEmptyContainer
+} from "./helper.js";
 import {
     GOLD_TOKEN_LIMIT,
     NOBLES_MAPPER,
@@ -15,11 +21,8 @@ function renderCards(market) {
     for (const deck of market) {
         const $currentDeck = getDeck(deck);
         setAmountOfCardsInDeck($currentDeck, deck);
-        safeEmptyContainer($currentDeck);
 
-        for (const card of deck["visibleCards"]) {
-            renderCard($currentDeck, card["prestigePoints"], card["bonus"], card["cost"], card["name"]);
-        }
+        addNodesToEmptiedContainer($currentDeck, deck["visibleCards"], renderCard);
     }
 }
 
