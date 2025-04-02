@@ -62,7 +62,7 @@ function startRoundTimer() {
         const deltaTime = Math.floor((currentTime - timeRoundStarted) / 1000);
 
         $progressBarFill.style.height = `${(SECONDS_PER_ROUND - 2 - deltaTime) / (SECONDS_PER_ROUND - 2) * 100}%`;
-        $progressBar.setAttribute("aria-valuenow", deltaTime);
+        $progressBar.setAttribute("aria-valuenow", SECONDS_PER_ROUND - deltaTime);
 
         if (deltaTime >= SECONDS_PER_ROUND - SECONDS_WHEN_TURN_ALMOST_ENDS) {
             $progressBarFill.classList.add("time-almost-ends");
