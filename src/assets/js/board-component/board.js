@@ -6,7 +6,6 @@ import { selectCard } from "./buy-reserve/select.js";
 import { processReserve, selectDeckForReserving } from "./buy-reserve/reserve-handler.js";
 import { handlePaymentMethodChange } from "./buy-reserve/buy-handler.js";
 import { selectPlayerToken } from "./token/discard.js";
-import {buyCard} from "../api.js";
 
 function init() {
     updateGameData();
@@ -31,9 +30,9 @@ function noblesInit() {
 
 function buyReserveInit() {
     document.querySelectorAll(".cards-in-deck")
-            .forEach((cards) => cards.addEventListener("click", selectCard));
+        .forEach((cards) => cards.addEventListener("click", selectCard));
     document.querySelectorAll(".hidden-cards")
-            .forEach((cards) => cards.addEventListener("click", selectDeckForReserving));
+        .forEach((cards) => cards.addEventListener("click", selectDeckForReserving));
     document.querySelector(".player-tokens").addEventListener("click", handlePaymentMethodChange);
     document.querySelector(".reserve-button").addEventListener("click", processReserve);
     document.querySelector(".reserved-cards ul").addEventListener("click", selectCard);

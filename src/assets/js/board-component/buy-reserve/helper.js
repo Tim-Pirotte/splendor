@@ -1,5 +1,5 @@
-import {getActionButton, setActionButtonState} from "../game-status-interface.js";
-import {unHighlightCards} from "./buy-handler.js";
+import { getActionButton, setActionButtonState } from "../game-status-interface.js";
+import { unHighlightCards } from "./buy-handler.js";
 
 function getReserveCardButton() {
     return document.querySelector(".reserve-button");

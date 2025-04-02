@@ -15,7 +15,6 @@ import {
     unHighlightCards,
 } from "./buy-handler.js";
 import { getReserveCardButton } from "./helper.js";
-import { unHighlightTokens } from "../token/token-handler.js";
 
 function selectCard(e) {
     const $card = getCard(e);
@@ -37,7 +36,8 @@ function selectCard(e) {
     highlightCard($card);
     setActionToBuyReserve($card);
 
-    const isValidCardBuy = validCardBuy(cardName)
+    const isValidCardBuy = validCardBuy(cardName);
+
     if (isValidCardBuy) allowToBuy($card);
 
     getActionButton().disabled = !isValidCardBuy;

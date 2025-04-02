@@ -2,13 +2,11 @@ import { renderCard, safeEmptyContainer } from "../renderer/helper.js";
 import * as API from "../../api.js";
 import { endBuyReserveAction, getReserveCardButton } from "./helper.js";
 import { startGameStatePolling } from "../game-data-handler.js";
-import { HIGHEST_CARD_LEVEL } from "../config.js";
 import { deselectCard } from "./select.js";
 import { validDeckReserve } from "../state-machine/valid-action-checker.js";
-import {highlightCard, setActionToBuyReserve, unHighlightCards} from "./buy-handler.js";
-import { unHighlightTokens } from "../token/token-handler.js";
+import { highlightCard, setActionToBuyReserve } from "./buy-handler.js";
 import { addGoldToken } from "../renderer/current-player-renderer.js";
-import {getActionButton, isCurrentlyPlaying} from "../game-status-interface.js";
+import { getActionButton, isCurrentlyPlaying } from "../game-status-interface.js";
 
 function processReserve(){
     const selectedCardName = getReserveCardButton().dataset.name;
@@ -59,7 +57,7 @@ function selectDeckForReserving(e) {
 
     getReserveCardButton().classList.remove("hidden");
 
-    highlightCard($clickedPictureTag)
+    highlightCard($clickedPictureTag);
     setActionToBuyReserve($clickedPictureTag.closest("li"), deckLevel);
 
     getActionButton().disabled = true;
