@@ -10,6 +10,7 @@ import { TOKEN_MAPPER } from "../config.js";
 import { MAX_PRESTIGE_POINTS } from "../../config.js";
 import { getHighestScore } from "../../utils/game-object-handler.js";
 import { copyNode } from "../../utils/data-handler.js";
+import { avatars } from "../../main-menu-component/data.js";
 
 function renderOtherPlayers(otherPlayers, gems) {
     const currentPlayerName = loadFromStorage("playerName");
@@ -25,9 +26,11 @@ function renderOtherPlayers(otherPlayers, gems) {
         if (otherPlayer.name !== currentPlayerName) {
             const $playerCard = copyNode($playerTemplate);
             const playerName = otherPlayer.name;
+            const avatar = avatars[playerName.toLowerCase().charCodeAt(0) % avatars.length];
 
             selectCurrentlyPlayingPlayersCard(playerName,$playerCard);
             setPlayerName($playerCard, otherPlayer);
+            insertImageInto($playerCard, `avatars/${avatar}`, true, avatar);
             setPlayerPoints($playerCard, otherPlayer["totalPrestigePoints"], highestScore);
 
             renderTokenList($playerCard.querySelector(".tokens"), otherPlayer["tokens"], gems);
