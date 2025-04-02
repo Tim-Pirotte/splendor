@@ -5,6 +5,7 @@ import { selectNoble } from "./nobles/nobles-handler.js";
 import { selectCard } from "./buy-reserve/select.js";
 import { processReserve, selectDeckForReserving } from "./buy-reserve/reserve-handler.js";
 import { handlePaymentMethodChange } from "./buy-reserve/buy-handler.js";
+import { selectPlayerToken } from "./token/discard.js";
 
 function init() {
     updateGameData();
@@ -20,6 +21,7 @@ function initializeActions() {
 
 function tokenInit(){
     document.querySelector(".board-tokens").addEventListener("click", selectToken);
+    document.querySelector(".player-tokens ul").addEventListener("click", selectPlayerToken);
 }
 
 function noblesInit() {

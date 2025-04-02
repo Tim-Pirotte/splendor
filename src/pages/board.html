@@ -97,18 +97,21 @@
 
     <section>
         <header class="top-bar">
-            <button type="button" class="sound-button">
+            <h1>It's your turn</h1>
+            <div>
+                <button type="button" class="sound-button">
+                    <picture>
+                        <source srcset="../assets/images/UI/sound_off.webp" type="image/webp">
+                        <img src="../assets/images/fallback/UI/sound_off.png" alt="Toggle sound" title="Toggle sound">
+                    </picture>
+                </button>
+                <button type="button">Forfeit button</button>
+                <h2>Username</h2>
                 <picture>
-                    <source srcset="../assets/images/UI/sound_off.webp" type="image/webp">
-                    <img src="../assets/images/fallback/UI/sound_off.png" alt="Toggle sound" title="Toggle sound">
+                    <source srcset="../assets/images/UI/empty_icon.webp" type="image/webp">
+                    <img src="../assets/images/fallback/UI/empty_icon.png" alt="Avatar selector" title="Avatar selector">
                 </picture>
-            </button>
-            <button type="button">Forfeit button</button>
-            <h2>Username</h2>
-            <picture>
-                <source srcset="../assets/images/UI/empty_icon.webp" type="image/webp">
-                <img src="../assets/images/fallback/UI/empty_icon.png" alt="Avatar selector" title="Avatar selector">
-            </picture>
+            </div>
         </header>
         <div class="main">
             <!-- Decks -->
@@ -146,8 +149,10 @@
                     <li></li>
                 </template>
             </ul>
-            <!-- Timer -->
-            <progress></progress>
+            <!-- Timer https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles -->
+            <div class="timer" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="45">
+                <div class="timer-fill"></div>
+            </div>
             <!-- Player points -->
             <section class="player-points">
                 <h3>Points</h3>
@@ -167,7 +172,15 @@
                     <h3>Tokens:</h3>
                     <h4><span id="current-tokens">Token count</span>/<span id="token-limit">Token limit</span></h4>
                 </header>
-                <ul></ul>
+                <ul>
+                    <template id="token-discard-template">
+                        <div class="discard-container">
+                            <button type="button" data-action="remove">-</button>
+                            <p data-amount="0" class="amount">0</p>
+                            <button type="button" data-action="add">+</button>
+                        </div>
+                    </template>
+                </ul>
             </section>
             <div class="button-container">
                 <button type="button" class="reserve-button hidden">Reserve card</button>

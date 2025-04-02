@@ -2,18 +2,14 @@ import { setActionButtonState, getActionButton, isCurrentlyPlaying } from "../ga
 import { GAME_STATE } from "./data.js";
 
 function initRoundBegin(gameData){
-
     const gameState = gameData["gameState"];
-    sessionStorage.setItem("gameState", gameState);
 
     if(!gameData["started"]) location.href = "./lobby-page.html";
 
-    if(!isCurrentlyPlaying()) {
+    getActionButton().disabled = !isCurrentlyPlaying();
+    if(getActionButton().disabled) {
         setActionButtonState("Wait until your turn", "doNothing", {});
-        getActionButton().disabled = true;
         return;
-    } else {
-        getActionButton().disabled = false;
     }
 
     switch(gameState) {
@@ -22,13 +18,19 @@ function initRoundBegin(gameData){
         break;
     case GAME_STATE.CHOOSE_NOBEL:
         setActionButtonState("Choose a nobel", "doNothing", {});
+        getActionButton().disabled = true;
         break;
     case GAME_STATE.RETURN_GEMS:
-        setActionButtonState("Chose tokens to discard", "doNothing", {});
+        setActionButtonState("Choose tokens to discard", "doNothing", {});
+        getActionButton().disabled = true;
         break;
     default:
         setActionButtonState("skip turn", "skipTurn", {});
     }
 }
 
-export { initRoundBegin };
+function saveGameState(gameState) {
+    sessionStorage.setItem("gameState", gameState);
+}
+
+export { initRoundBegin, saveGameState };

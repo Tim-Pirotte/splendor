@@ -88,6 +88,10 @@ aside {
     align-items: center;
 }
 
+.discard-container > * {
+    display: inline-block;
+}
+
 /* Player cards */
 .player-card header *, .player-card li * {
     display: inline-block;
@@ -101,7 +105,17 @@ aside {
 /* HEADER */
 .top-bar {
     display: flex;
-    justify-content: flex-end;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: space-between
+}
+
+.top-bar h1 {
+    background-color: hotpink;
+}
+
+.top-bar div {
+    display: flex;
     align-items: center;
     gap: 0.5rem;
 }
@@ -240,11 +254,33 @@ section header picture {
     color: hotpink;
 }
 
+.discard-container button {
+    padding: 0.2rem;
+}
+
+.player-card.current-player {
+    background-color: hotpink;
+    position: relative;
+    margin-left: 1.25rem;
+}
+
 /* TIMER */
-progress {
-    grid-area: timer;
-    transform: rotate(90deg);
-    margin: auto 0;
+.timer {
+    height: 100%;
+    width: 2rem;
+    background: whitesmoke;
+    transform: rotate(180deg);
+}
+
+.timer-fill {
+    height: 0;
+    width: 100%;
+    background: lightpink;
+    transition: height 1s linear, background-color 1s ease-in-out;
+}
+
+.time-almost-ends {
+    background: hotpink;
 }
 
 .button-container { 
