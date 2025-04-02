@@ -68,17 +68,16 @@ function removeOneToDiscard($amountCounter) {
 }
 
 function increaseTotalDiscardCount() {
-    document.querySelector(".player-tokens #current-tokens").dataset.amountToDiscard = getTotalAmountDiscarded() + 1
+    document.querySelector(".player-tokens #current-tokens").dataset.amountToDiscard = getTotalAmountDiscarded() + 1;
 }
 
 function decreaseTotalDiscardCount() {
-    document.querySelector(".player-tokens #current-tokens").dataset.amountToDiscard = getTotalAmountDiscarded() - 1
+    document.querySelector(".player-tokens #current-tokens").dataset.amountToDiscard = getTotalAmountDiscarded() - 1;
 }
 
 function processDiscardTokens() {
     const tokensToDiscard = getTokensToDiscard();
     const requestBody = {"return": tokensToDiscard};
-    console.log(requestBody)
     takeTokens(requestBody).then(res => console.log(res));
 }
 

@@ -2,19 +2,14 @@ import { setActionButtonState, isCurrentlyPlaying, getActionButton } from "../ga
 import { GAME_STATE } from "./data.js";
 
 function initRoundBegin(gameData){
-
     const gameState = gameData["gameState"];
 
-    if(!gameData["started"]) {
-        location.href = "./lobby-page.html";
-    }
+    if(!gameData["started"]) location.href = "./lobby-page.html";
 
-    if(!isCurrentlyPlaying()) {
+    getActionButton().disabled = !isCurrentlyPlaying();
+    if(getActionButton().disabled) {
         setActionButtonState("Wait until your turn", "doNothing", {});
-        getActionButton().disabled = true;
         return;
-    } else {
-        getActionButton().disabled = false;
     }
 
     // Using the do nothing function because you cant skip this turn
@@ -32,9 +27,7 @@ function initRoundBegin(gameData){
         break;
     default:
         setActionButtonState("skip turn", "skipTurn", {});
-
     }
-
 }
 
 function saveGameState(gameState) {

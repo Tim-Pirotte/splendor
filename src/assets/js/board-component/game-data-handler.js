@@ -49,7 +49,9 @@ function startRoundTimer() {
     $progressBarFill.classList.remove("time-almost-ends");
     $progressBarFill.style.height = "100%";
     // This forces the browser to register the height
+    // NOSONAR_BEGIN
     $progressBarFill.offsetHeight;
+    // NOSONAR_END
 
     const $progressBar = document.querySelector(".timer");
 

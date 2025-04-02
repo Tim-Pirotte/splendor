@@ -100,6 +100,37 @@ function insertCardCounter($token, token, currentPlayerBonuses) {
     $token.dataset.bonuses = currentPlayerBonuses[token] || 0;
 }
 
+function renderClientToken($numberedItemTemplate, token, $progressBarTemplate, currentPlayerBonuses, currentPlayerTokens, $discardNavTemplate, $currentPlayerTokensContainer) {
+    const $token = copyNode($numberedItemTemplate);
+    $token.dataset.type = token;
+
+    const $progressBar = copyNode($progressBarTemplate);
+    const $switchPaymentButtonContainer = getSwitchButtonTemplate(token);
+
+    if (token !== "Gold") {
+        insertCardCounter($token, token, currentPlayerBonuses);
+    }
+
+    $switchPaymentButtonContainer.querySelector(".switch-token").dataset.type = token;
+
+    $token.querySelector(".amount").textContent = (currentPlayerTokens[token] || 0);
+    $token.dataset.amount = (currentPlayerTokens[token] || 0);
+
+    insertImageInto($token, `UI/tokens/${TOKEN_MAPPER[token]}_chip`, false, `${TOKEN_MAPPER[token]} chip`);
+    renderProgressBar($progressBar, currentPlayerTokens[token], TOKEN_MAPPER[token]);
+
+    $token.appendChild($progressBar);
+    $token.appendChild($switchPaymentButtonContainer);
+
+    if (validTokenDiscard()) {
+        const $discardNav = copyNode($discardNavTemplate);
+        $token.appendChild($discardNav);
+        setButtonStatuses();
+    }
+
+    $currentPlayerTokensContainer.appendChild($token);
+}
+
 function renderClientPlayerTokens(currentPlayerTokens, currentPlayerBonuses, gems) {
     const $currentPlayerTokensContainer = document.querySelector(".player-tokens ul");
     safeEmptyContainer($currentPlayerTokensContainer);
@@ -109,34 +140,7 @@ function renderClientPlayerTokens(currentPlayerTokens, currentPlayerBonuses, gem
     const $discardNavTemplate = document.querySelector("#token-discard-template");
 
     for (const token of gems.toReversed()) {
-        const $token = copyNode($numberedItemTemplate);
-        $token.dataset.type = token;
-
-        const $progressBar = copyNode($progressBarTemplate);
-        const $switchPaymentButtonContainer = getSwitchButtonTemplate(token);
-
-        if (token !== "Gold") {
-            insertCardCounter($token, token, currentPlayerBonuses);
-        }
-
-        $switchPaymentButtonContainer.querySelector(".switch-token").dataset.type = token;
-
-        $token.querySelector(".amount").textContent = (currentPlayerTokens[token] || 0);
-        $token.dataset.amount = (currentPlayerTokens[token] || 0);
-
-        insertImageInto($token, `UI/tokens/${TOKEN_MAPPER[token]}_chip`, false, `${TOKEN_MAPPER[token]} chip`);
-        renderProgressBar($progressBar, currentPlayerTokens[token], TOKEN_MAPPER[token]);
-
-        $token.appendChild($progressBar);
-        $token.appendChild($switchPaymentButtonContainer);
-
-        if (validTokenDiscard()) {
-            const $discardNav = copyNode($discardNavTemplate);
-            $token.appendChild($discardNav);
-            setButtonStatuses();
-        }
-
-        $currentPlayerTokensContainer.appendChild($token);
+        renderClientToken($numberedItemTemplate, token, $progressBarTemplate, currentPlayerBonuses, currentPlayerTokens, $discardNavTemplate, $currentPlayerTokensContainer);
     }
 }
 
