@@ -3,6 +3,32 @@ import { copyNode } from "../../utils/data-handler.js";
 import { validCardBuy } from "../state-machine/valid-action-checker.js";
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
 
+function populateNodeText($node, mappedTextContent) {
+    for (const [className, content] of mappedTextContent) {
+        $node.querySelector(`.${className}`).textContent = content;
+    }
+}
+
+function populateNodeData($node, mappedData) {
+    for (const [name, value] of mappedData) {
+        $node.dataset[name] = value;
+    }
+}
+
+function addNodesToContainer($container, list, mapFunction) {
+    for (const listItem of list) {
+        $container.appendChild(mapFunction(listItem));
+    }
+}
+
+function toggleClass($node, className, condition) {
+    if (condition) {
+        $node.classList.add(className);
+    } else {
+        $node.classList.remove(className);
+    }
+}
+
 function insertImageInto($container, standardPath, before, alt) {
     const $image = copyNode(document.querySelector("#image-template"));
 
@@ -88,7 +114,7 @@ function getNumberedItemTemplate() {
     return document.querySelector("#numbered-item-template");
 }
 
-function selectCurrentlyPlayingPlayersCard(playerName, $playerCard) {
+function selectCurrentPlayerCard(playerName, $playerCard) {
     if (playerName === loadFromStorage("gameData")["currentPlayer"]) {
         $playerCard.classList.add("current-player");
     }
@@ -102,5 +128,5 @@ export {
     safeEmptyContainer,
     getSwitchButtonTemplate,
     getNumberedItemTemplate,
-    selectCurrentlyPlayingPlayersCard,
+    selectCurrentPlayerCard,
 };

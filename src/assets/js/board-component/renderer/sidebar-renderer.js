@@ -4,7 +4,7 @@ import {
     getNumberedItemTemplate,
     insertImageInto,
     safeEmptyContainer,
-    selectCurrentlyPlayingPlayersCard,
+    selectCurrentPlayerCard,
 } from "./helper.js";
 import { TOKEN_MAPPER } from "../config.js";
 import { MAX_PRESTIGE_POINTS } from "../../config.js";
@@ -26,7 +26,7 @@ function renderOtherPlayers(otherPlayers, gems) {
             const $playerCard = copyNode($playerTemplate);
             const playerName = otherPlayer.name;
 
-            selectCurrentlyPlayingPlayersCard(playerName,$playerCard);
+            selectCurrentPlayerCard(playerName,$playerCard);
             setPlayerName($playerCard, otherPlayer);
             setPlayerPoints($playerCard, otherPlayer["totalPrestigePoints"], highestScore);
 

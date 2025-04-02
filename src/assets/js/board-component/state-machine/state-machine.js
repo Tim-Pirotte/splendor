@@ -31,9 +31,7 @@ function initRoundBegin(gameData){
         break;
     default:
         setActionButtonState("skip turn", "skipTurn", {});
-
     }
-
 }
 
 export { initRoundBegin };
