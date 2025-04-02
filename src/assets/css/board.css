@@ -106,6 +106,11 @@ aside {
     gap: 0.5rem;
 }
 
+.top-bar h1 {
+    background-color: hotpink;
+    margin-right: 25rem;
+}
+
 section header picture {
     padding-right: 1rem;
 }
@@ -248,11 +253,29 @@ section header picture {
     padding: 0.2rem;
 }
 
+.player-card.current-player {
+    background-color: hotpink;
+    position: relative;
+    margin-left: 1.25rem;
+}
+
 /* TIMER */
-progress {
-    grid-area: timer;
-    transform: rotate(90deg);
-    margin: auto 0;
+.timer {
+    height: 100%;
+    width: 2rem;
+    background: whitesmoke;
+    transform: rotate(180deg);
+}
+
+.timer-fill {
+    height: 0;
+    width: 100%;
+    background: lightpink;
+    transition: height 1s linear, background-color 1s ease-in-out;
+}
+
+.time-almost-ends {
+    background: hotpink;
 }
 
 /* ACTION BUTTON */

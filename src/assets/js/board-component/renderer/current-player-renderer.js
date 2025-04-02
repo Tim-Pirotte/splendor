@@ -17,11 +17,16 @@ import { getClientTokens, getClientTotalPrestigePoints } from "../game-data-hand
 import { copyNode } from "../../utils/data-handler.js";
 import {getTokenAmount, getTotalAmountDiscarded, getTotalTokenAmount} from "../token/discard.js";
 import {validTokenDiscard} from "../state-machine/valid-action-checker.js";
+import { isCurrentlyPlaying } from "../game-status-interface.js";
 
 function renderHeader(currentPlayer) {
     const $playerName = document.querySelector(".top-bar h2");
+
     $playerName.textContent = loadFromStorage("playerName");
     $playerName.dataset.currentlyPlaying = currentPlayer;
+
+    document.querySelector("h1").textContent = isCurrentlyPlaying() ?
+        "It's your turn" : `${loadFromStorage("gameData")["currentPlayer"]}'s turn`;
 }
 
 function getCurrentPlayer(players, currentPlayerName) {
