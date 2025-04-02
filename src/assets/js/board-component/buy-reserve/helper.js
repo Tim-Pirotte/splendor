@@ -1,12 +1,15 @@
-import { setActionButtonState } from "../game-status-interface.js";
+import {getActionButton, setActionButtonState} from "../game-status-interface.js";
+import {unHighlightCards} from "./buy-handler.js";
 
 function getReserveCardButton() {
     return document.querySelector(".reserve-button");
 }
 
-function finishRoundAfterBuyReserve() {
+function endBuyReserveAction() {
+    unHighlightCards();
     getReserveCardButton().classList.add("hidden");
-    setActionButtonState("Wait until your turn", "doNothing", {});
+    setActionButtonState("Waiting on server", "doNothing", {});
+    getActionButton().disabled = true;
 }
 
-export { getReserveCardButton, finishRoundAfterBuyReserve };
+export { getReserveCardButton, endBuyReserveAction };

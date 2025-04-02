@@ -5,8 +5,8 @@ function hasReservePlace() {
     return amount < MAX_RESERVED_AMOUNT;
 }
 
-function deckHasEnoughCards(level) {
-    const amount = parseInt(document.querySelector(`.level-${level} .cards-in-deck`).dataset.amount);
+function deckHasEnoughCards(deckLevel) {
+    const amount = parseInt(document.querySelector(`.decks .level-${deckLevel} ul.cards-in-deck`).dataset.amount);
     return amount > 0;
 }
 

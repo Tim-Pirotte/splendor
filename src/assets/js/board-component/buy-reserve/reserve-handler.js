@@ -1,13 +1,14 @@
 import { renderCard, safeEmptyContainer } from "../renderer/helper.js";
 import * as API from "../../api.js";
-import { finishRoundAfterBuyReserve, getReserveCardButton } from "./helper.js";
+import { endBuyReserveAction, getReserveCardButton } from "./helper.js";
 import { startGameStatePolling } from "../game-data-handler.js";
 import { HIGHEST_CARD_LEVEL } from "../config.js";
 import { deselectCard } from "./select.js";
 import { validDeckReserve } from "../state-machine/valid-action-checker.js";
-import { setActionToBuyReserve, unHighlightCards } from "./buy-handler.js";
+import {highlightCard, setActionToBuyReserve, unHighlightCards} from "./buy-handler.js";
 import { unHighlightTokens } from "../token/token-handler.js";
-import { renderOneExtraGoldToken } from "../renderer/current-player-renderer.js";
+import { addGoldToken } from "../renderer/current-player-renderer.js";
+import {getActionButton, isCurrentlyPlaying} from "../game-status-interface.js";
 
 function processReserve(){
     const selectedCardName = getReserveCardButton().dataset.name;
@@ -20,7 +21,6 @@ function processReserve(){
                 "name": selectedCardName,
             },
         };
-
     } else {
         requestBody = {
             "development": {
@@ -28,10 +28,11 @@ function processReserve(){
             },
         };
     }
+
     API.reserveCard(requestBody).then(res => renderReservedCards(res["reserve"]));
 
-    renderOneExtraGoldToken();
-    finishRoundAfterBuyReserve();
+    addGoldToken();
+    endBuyReserveAction();
     startGameStatePolling();
 }
 
@@ -45,38 +46,24 @@ function renderReservedCards(reservedCards) {
 }
 
 function selectDeckForReserving(e) {
+    if (!isCurrentlyPlaying()) return;
 
-    const $closestPictureTag = e.target.closest("picture");
-
-    if (!$closestPictureTag) return;
-    if (!$closestPictureTag.classList.contains("hidden-deck")) return;
-
-    const deckLevel = getDeckLevel(e.target);
-
-    if (!validDeckReserve(deckLevel)) return;
-
-    const previousSelectedLevel = parseInt(getReserveCardButton().dataset.level);
+    const $clickedPictureTag = e.currentTarget;
+    const deckLevel = $clickedPictureTag.closest("li").dataset.deckLevel;
+    const previousSelectedLevel = getReserveCardButton().dataset.level;
 
     if (previousSelectedLevel === deckLevel) {
         deselectCard(true);
         return;
     }
 
-    unHighlightCards();
-    unHighlightTokens();
-    setActionToBuyReserve($closestPictureTag.closest("li"), deckLevel);
-    getReserveCardButton().disabled = false;
-
     getReserveCardButton().classList.remove("hidden");
-    $closestPictureTag.classList.add("selected-card");
-}
 
-function getDeckLevel(target) {
-    for (let i = 1; i <= HIGHEST_CARD_LEVEL; i++) {
-        if (target.closest("li").classList.contains(`level-${i}`)) {
-            return i;
-        }
-    }
+    highlightCard($clickedPictureTag)
+    setActionToBuyReserve($clickedPictureTag.closest("li"), deckLevel);
+
+    getActionButton().disabled = true;
+    getReserveCardButton.disabled = !validDeckReserve(deckLevel);
 }
 
 function allowToReserve() {

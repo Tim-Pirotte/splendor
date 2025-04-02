@@ -226,7 +226,7 @@ function renderTimer() {
     }
 }
 
-function renderOneExtraGoldToken() {
+function addGoldToken() {
     const $goldTokenCountContainer = document.querySelector(".player-tokens li[data-type='Gold'] .amount");
     $goldTokenCountContainer.textContent = parseInt($goldTokenCountContainer.textContent) + 1;
 }
@@ -240,5 +240,5 @@ export {
     renderUpdatedPlayerScore,
     hideSwitchPaymentButtons,
     setButtonStatuses,
-    renderOneExtraGoldToken,
+    addGoldToken,
 };

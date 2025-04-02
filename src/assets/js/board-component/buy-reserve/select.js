@@ -1,4 +1,5 @@
 import {
+    clearDatasetAttributes,
     getActionButton,
     isCurrentlyPlaying,
     setActionButtonState,
@@ -13,7 +14,6 @@ import {
     setActionToBuyReserve,
     unHighlightCards,
 } from "./buy-handler.js";
-import { allowToReserve } from "./reserve-handler.js";
 import { getReserveCardButton } from "./helper.js";
 import { unHighlightTokens } from "../token/token-handler.js";
 
@@ -26,36 +26,32 @@ function selectCard(e) {
 
     sessionStorage.removeItem("paymentMethod");
     hideSwitchPaymentButtons();
-    getReserveCardButton().classList.remove("hidden");
 
     if (cardAlreadySelected(cardName)) {
         deselectCard(true);
         return;
     }
 
-    unHighlightTokens();
+    getReserveCardButton().classList.remove("hidden");
+
     highlightCard($card);
     setActionToBuyReserve($card);
 
-    const isValidCardBuy = validCardBuy(cardName);
-    const isValidCardReserve = validCardReserve($card);
-
+    const isValidCardBuy = validCardBuy(cardName)
     if (isValidCardBuy) allowToBuy($card);
-    if (isValidCardReserve) allowToReserve();
 
     getActionButton().disabled = !isValidCardBuy;
-    getReserveCardButton().disabled = !isValidCardReserve;
+    getReserveCardButton().disabled = !validCardReserve($card);
 }
 
-function deselectCard(previousSelectedWasCard = false) {
+function deselectCard(currentlyClickedIsCard = false) {
     unHighlightCards();
     getActionButton().disabled = false;
     getReserveCardButton().classList.add("hidden");
 
-    getReserveCardButton().removeAttribute("data-level");
-    if (previousSelectedWasCard) {
+    clearDatasetAttributes(getReserveCardButton());
+    if (currentlyClickedIsCard) {
         setActionButtonState("skip turn", "skipTurn", {}, true);
-
     }
 
 }

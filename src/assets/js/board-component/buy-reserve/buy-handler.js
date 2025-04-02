@@ -10,7 +10,7 @@ import { renderUpdatedBoardTokens } from "../renderer/board-renderer.js";
 import { sumObjectValues } from "../helper.js";
 import { getClientBonuses, getClientTokens } from "../game-data-handler.js";
 import { binarySearchObjects } from "../../utils/data-handler.js";
-import { finishRoundAfterBuyReserve, getReserveCardButton } from "./helper.js";
+import { endBuyReserveAction, getReserveCardButton } from "./helper.js";
 import { unHighlightTokens } from "../token/token-handler.js";
 
 function allowToBuy($card) {
@@ -21,7 +21,7 @@ function allowToBuy($card) {
     renderSwitchPaymentButtons(defaultPayment, cardData["cost"]);
 }
 
-function setActionToBuyReserve($card, deckLevel = 0) {
+function setActionToBuyReserve($card, deckLevel = "") {
     const datasetParameters = deckLevel ? {} : { name: $card.dataset.name };
     setActionButtonState(
         "buy",
@@ -41,8 +41,6 @@ function setActionToBuyReserve($card, deckLevel = 0) {
     }
 
     $reserveCardButton.classList.remove("hidden");
-    getActionButton().disabled = true;
-    $reserveCardButton.disabled = true;
 }
 
 function unHighlightCards() {
@@ -81,7 +79,7 @@ function processBuyCardClick() {
     renderUpdatedPlayerTokens(cardData["bonus"]);
     renderUpdatedPlayerScore(cardData["prestigePoints"]);
     renderUpdatedBoardTokens(JSON.parse(sessionStorage.getItem("paymentMethod")));
-    finishRoundAfterBuyReserve();
+    endBuyReserveAction();
     API.buyCard(requestBody).then(() => sessionStorage.removeItem("paymentMethod"));
 
 }
