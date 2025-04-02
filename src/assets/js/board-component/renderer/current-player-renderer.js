@@ -19,8 +19,15 @@ import { isCurrentlyPlaying } from "../game-status-interface.js";
 
 function renderHeader(currentPlayer) {
     const $playerName = document.querySelector(".top-bar h2");
+    const $avatar = document.querySelector("header div.avatar");
 
-    $playerName.textContent = loadFromStorage("playerName");
+    const playerName = loadFromStorage("playerName");
+    const avatar = loadFromStorage("avatar");
+
+    $playerName.textContent = playerName;
+    $avatar.innerHTML = "";
+    insertImageInto($avatar, `avatars/${avatar}`, avatar);
+
     $playerName.dataset.currentlyPlaying = currentPlayer;
 
     document.querySelector("h1").textContent = isCurrentlyPlaying() ?
