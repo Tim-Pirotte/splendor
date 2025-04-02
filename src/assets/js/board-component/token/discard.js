@@ -1,6 +1,7 @@
 import {setButtonStatuses} from "../renderer/current-player-renderer.js";
-import {setActionButtonState} from "../game-status-interface.js";
+import {getActionButton, setActionButtonState} from "../game-status-interface.js";
 import {takeTokens} from "../../api.js";
+import {MAX_TOKENS_ALLOWED} from "../config.js";
 
 function selectPlayerToken(e) {
     if (!clickedOnButton(e.target)) return;
@@ -18,7 +19,14 @@ function selectPlayerToken(e) {
     }
 
     setButtonStatuses();
-    setActionButtonState("Discard tokens", "processDiscardTokens", {}, true);
+
+    if (getTotalTokenAmount() - MAX_TOKENS_ALLOWED === getTotalAmountDiscarded()) {
+        setActionButtonState("Discard tokens", "processDiscardTokens", {}, true);
+        getActionButton().disabled = false;
+    } else {
+        setActionButtonState("Choose tokens to discard", "doNothing", {});
+        getActionButton().disabled = true;
+    }
 }
 
 function clickedOnButton(target) {
