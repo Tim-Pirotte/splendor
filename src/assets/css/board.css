@@ -244,6 +244,10 @@ section header picture {
     display: inline-block;
 }
 
+.discard-container button {
+    padding: 0.2rem;
+}
+
 /* TIMER */
 progress {
     grid-area: timer;
