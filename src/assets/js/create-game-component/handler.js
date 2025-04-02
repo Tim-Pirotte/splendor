@@ -31,6 +31,7 @@ function getCheckedRadioValue(radioButtonList){
 
 function getGameBody(playerName, gameName, visibility, numberOfPlayers){
     const gameBody = { numberOfPlayers, playerName, returnExcessTokensRequired: true };
+
     if (gameName) gameBody["gameName"] = gameName;
 
     return gameBody;

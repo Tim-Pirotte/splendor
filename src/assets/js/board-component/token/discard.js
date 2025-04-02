@@ -1,7 +1,7 @@
-import {setButtonStatuses} from "../renderer/current-player-renderer.js";
-import {getActionButton, setActionButtonState} from "../game-status-interface.js";
-import {takeTokens} from "../../api.js";
-import {MAX_TOKENS_ALLOWED} from "../config.js";
+import { setButtonStatuses } from "../renderer/current-player-renderer.js";
+import { getActionButton, setActionButtonState } from "../game-status-interface.js";
+import { takeTokens } from "../../api.js";
+import { MAX_TOKENS_ALLOWED } from "../config.js";
 
 function selectPlayerToken(e) {
     if (!clickedOnButton(e.target)) return;
@@ -77,7 +77,7 @@ function decreaseTotalDiscardCount() {
 
 function processDiscardTokens() {
     const tokensToDiscard = getTokensToDiscard();
-    const requestBody = {"return": tokensToDiscard};
+    const requestBody = { "return": tokensToDiscard };
     takeTokens(requestBody).then(res => console.log(res));
 }
 
@@ -87,6 +87,7 @@ function getTokensToDiscard() {
     for (const $token of document.querySelectorAll(".player-tokens li")) {
         const tokenType = $token.dataset.type;
         const amountToDiscard = parseInt(getAmountCounter($token).dataset.amount);
+
         if (amountToDiscard !== 0) {
             tokens[tokenType] = amountToDiscard;
         }

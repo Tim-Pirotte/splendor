@@ -15,8 +15,8 @@ import { GEMS } from "../data.js";
 import { getHighestScore, sumObjectValues, getPlayersObjects } from "../../utils/game-object-handler.js";
 import { getClientTokens, getClientTotalPrestigePoints } from "../game-data-handler.js";
 import { copyNode } from "../../utils/data-handler.js";
-import {getTokenAmount, getTotalAmountDiscarded, getTotalTokenAmount} from "../token/discard.js";
-import {validTokenDiscard} from "../state-machine/valid-action-checker.js";
+import { getTokenAmount, getTotalAmountDiscarded, getTotalTokenAmount } from "../token/discard.js";
+import { validTokenDiscard } from "../state-machine/valid-action-checker.js";
 import { isCurrentlyPlaying } from "../game-status-interface.js";
 
 function renderHeader(currentPlayer) {
