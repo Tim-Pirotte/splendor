@@ -51,6 +51,7 @@ function startGameStatePolling() {
 /* https://www.freecodecamp.org/news/javascript-timer-how-to-set-a-timer-function-in-js/ */
 function startRoundTimer() {
     const $progressBarFill = document.querySelector(".timer-fill");
+    $progressBarFill.style.height = "100%";
     const $progressBar = document.querySelector(".timer");
 
     // TODO : fill with server data!
@@ -58,10 +59,11 @@ function startRoundTimer() {
     const timeRoundStarted = new Date(Date.now()).getTime();
 
     const timer = setInterval(() => {
+        console.log("test")
         const currentTime = Date.now();
         const deltaTime = Math.floor((currentTime - timeRoundStarted) / 1000);
 
-        $progressBarFill.style.height = `${100 - (deltaTime / SECONDS_PER_ROUND * 100)}%`;
+        $progressBarFill.style.height = `${(SECONDS_PER_ROUND - 2 - deltaTime) / (SECONDS_PER_ROUND - 2) * 100}%`;
         $progressBar.setAttribute("aria-valuenow", deltaTime);
 
         if (deltaTime >= SECONDS_PER_ROUND - SECONDS_WHEN_TURN_ALMOST_ENDS) {

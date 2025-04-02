@@ -130,7 +130,6 @@ function renderClientPlayerTokens(currentPlayerTokens, currentPlayerBonuses, gem
         $token.appendChild($switchPaymentButtonContainer);
 
         if (validTokenDiscard()) {
-            console.log("test")
             const $discardNav = copyNode($discardNavTemplate);
             $token.appendChild($discardNav);
             setButtonStatuses();

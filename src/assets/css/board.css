@@ -88,6 +88,10 @@ aside {
     align-items: center;
 }
 
+.discard-container > * {
+    display: inline-block;
+}
+
 /* Player cards */
 .player-card header *, .player-card li * {
     display: inline-block;
@@ -243,10 +247,6 @@ section header picture {
 
 .highlighted-number {
     color: hotpink;
-}
-
-.discard-container > * {
-    display: inline-block;
 }
 
 .discard-container button {
