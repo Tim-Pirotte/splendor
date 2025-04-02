@@ -31,17 +31,11 @@ function updateGameData() {
         initRoundBegin(gameData);
 
         if (!isCurrentlyPlaying()) {
-            removeTimer();
             startGameStatePolling();
         } else {
             startRoundTimer();
         }
     }).catch(err => handleGameDataError(err));
-}
-
-function removeTimer() {
-    document.querySelector(".timer-fill").classList.remove("time-almost-ends");
-    document.querySelector(".timer").setAttribute("aria-valuenow", "0");
 }
 
 function startGameStatePolling() {
@@ -51,7 +45,12 @@ function startGameStatePolling() {
 /* https://www.freecodecamp.org/news/javascript-timer-how-to-set-a-timer-function-in-js/ */
 function startRoundTimer() {
     const $progressBarFill = document.querySelector(".timer-fill");
+
+    $progressBarFill.classList.remove("time-almost-ends");
     $progressBarFill.style.height = "100%";
+    // This forces the browser to register the height
+    $progressBarFill.offsetHeight;
+
     const $progressBar = document.querySelector(".timer");
 
     // TODO : fill with server data!
@@ -59,7 +58,6 @@ function startRoundTimer() {
     const timeRoundStarted = new Date(Date.now()).getTime();
 
     const timer = setInterval(() => {
-        console.log("test")
         const currentTime = Date.now();
         const deltaTime = Math.floor((currentTime - timeRoundStarted) / 1000);
 
@@ -74,6 +72,7 @@ function startRoundTimer() {
             clearInterval(timer);
 
             processSkipTurn();
+            startGameStatePolling();
             updateGameData();
         }
     }, 1000);
