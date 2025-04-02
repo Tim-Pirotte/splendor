@@ -1,5 +1,5 @@
 import * as API from "../../api.js";
-import {clearDatasetAttributes, getActionButton, setActionButtonState} from "../game-status-interface.js";
+import { clearDatasetAttributes, getActionButton, setActionButtonState } from "../game-status-interface.js";
 import {
     renderSwitchPaymentButtons,
     renderUpdatedPlayerScore,
@@ -22,7 +22,7 @@ function allowToBuy($card) {
 }
 
 function setActionToBuyReserve($card, deckLevel = -1) {
-    const datasetParameters = deckLevel > 0 ? {} : { name: $card.dataset.name }
+    const datasetParameters = deckLevel > 0 ? {} : { name: $card.dataset.name };
     setActionButtonState(
         "buy",
         "processBuyCardClick",
@@ -47,7 +47,7 @@ function unHighlightCards() {
 }
 
 function highlightCard($card) {
-    unHighlightTokens()
+    unHighlightTokens();
     unHighlightCards();
     $card.classList.add("selected-card");
 }

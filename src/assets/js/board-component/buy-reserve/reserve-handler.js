@@ -3,11 +3,10 @@ import * as API from "../../api.js";
 import { finishRoundAfterBuyReserve, getReserveCardButton } from "./helper.js";
 import { startGameStatePolling } from "../game-data-handler.js";
 import { HIGHEST_CARD_LEVEL } from "../config.js";
-import { getActionButton, setActionButtonState } from "../game-status-interface.js";
 import { deselectCard } from "./select.js";
 import { validDeckReserve } from "../state-machine/valid-action-checker.js";
-import {setActionToBuyReserve, unHighlightCards} from "./buy-handler.js";
-import {unHighlightTokens} from "../token/token-handler.js";
+import { setActionToBuyReserve, unHighlightCards } from "./buy-handler.js";
+import { unHighlightTokens } from "../token/token-handler.js";
 
 function processReserve(){
     const selectedCardName = getReserveCardButton().dataset.name;

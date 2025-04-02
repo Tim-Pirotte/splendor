@@ -1,8 +1,7 @@
 import {
-    clearDatasetAttributes,
     getActionButton,
     isCurrentlyPlaying,
-    setActionButtonState
+    setActionButtonState,
 } from "../game-status-interface.js";
 import { hideSwitchPaymentButtons } from "../renderer/current-player-renderer.js";
 import { validCardBuy, validCardReserve } from "../state-machine/valid-action-checker.js";
@@ -16,7 +15,7 @@ import {
 } from "./buy-handler.js";
 import { allowToReserve } from "./reserve-handler.js";
 import { getReserveCardButton } from "./helper.js";
-import {unHighlightTokens} from "../token/token-handler.js";
+import { unHighlightTokens } from "../token/token-handler.js";
 
 function selectCard(e) {
     const $card = getCard(e);
@@ -34,7 +33,7 @@ function selectCard(e) {
         return;
     }
 
-    unHighlightTokens()
+    unHighlightTokens();
     highlightCard($card);
     setActionToBuyReserve($card);
 
@@ -50,10 +49,10 @@ function selectCard(e) {
 
 function deselectCard(previousSelectedWasCard = false) {
     unHighlightCards();
-    getActionButton().disabled = false
+    getActionButton().disabled = false;
     getReserveCardButton().classList.add("hidden");
 
-    getReserveCardButton().removeAttribute("data-level")
+    getReserveCardButton().removeAttribute("data-level");
     if (previousSelectedWasCard) {
         setActionButtonState("skip turn", "skipTurn", {}, true);
 
