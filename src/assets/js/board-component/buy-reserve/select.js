@@ -1,4 +1,9 @@
-import { getActionButton, isCurrentlyPlaying, setActionButtonState } from "../game-status-interface.js";
+import {
+    clearDatasetAttributes,
+    getActionButton,
+    isCurrentlyPlaying,
+    setActionButtonState
+} from "../game-status-interface.js";
 import { hideSwitchPaymentButtons } from "../renderer/current-player-renderer.js";
 import { validCardBuy, validCardReserve } from "../state-machine/valid-action-checker.js";
 import {
@@ -11,6 +16,7 @@ import {
 } from "./buy-handler.js";
 import { allowToReserve } from "./reserve-handler.js";
 import { getReserveCardButton } from "./helper.js";
+import {unHighlightTokens} from "../token/token-handler.js";
 
 function selectCard(e) {
     const $card = getCard(e);
@@ -19,18 +25,16 @@ function selectCard(e) {
 
     const cardName = $card.dataset.name;
 
-    hideSwitchPaymentButtons();
     sessionStorage.removeItem("paymentMethod");
+    hideSwitchPaymentButtons();
     getReserveCardButton().classList.remove("hidden");
-    deselectCard();
 
     if (cardAlreadySelected(cardName)) {
-        //This can not be inside the deselectCard to prevent issues with taking tokens
-        setActionButtonState("skip turn", "skipTurn", {}, true);
+        deselectCard(true);
         return;
     }
 
-    deselectCard();
+    unHighlightTokens()
     highlightCard($card);
     setActionToBuyReserve($card);
 
@@ -44,13 +48,17 @@ function selectCard(e) {
     getReserveCardButton().disabled = !isValidCardReserve;
 }
 
-function deselectCard() {
+function deselectCard(previousSelectedWasCard = false) {
     unHighlightCards();
-
-    getActionButton().disabled = false;
-    getReserveCardButton().removeAttribute("data-level");
-    getReserveCardButton().removeAttribute("data-name");
+    getActionButton().disabled = false
     getReserveCardButton().classList.add("hidden");
+
+    getReserveCardButton().removeAttribute("data-level")
+    if (previousSelectedWasCard) {
+        setActionButtonState("skip turn", "skipTurn", {}, true);
+
+    }
+
 }
 
 export { selectCard, deselectCard };

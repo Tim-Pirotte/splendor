@@ -1,5 +1,5 @@
 import * as API from "../../api.js";
-import { getActionButton, setActionButtonState } from "../game-status-interface.js";
+import {clearDatasetAttributes, getActionButton, setActionButtonState} from "../game-status-interface.js";
 import {
     renderSwitchPaymentButtons,
     renderUpdatedPlayerScore,
@@ -11,6 +11,7 @@ import { sumObjectValues } from "../helper.js";
 import { getClientBonuses, getClientTokens } from "../game-data-handler.js";
 import { binarySearchObjects } from "../../utils/data-handler.js";
 import { finishRoundAfterBuyReserve, getReserveCardButton } from "./helper.js";
+import { unHighlightTokens } from "../token/token-handler.js";
 
 function allowToBuy($card) {
     const cardData = getCardData($card.dataset.name);
@@ -20,17 +21,23 @@ function allowToBuy($card) {
     renderSwitchPaymentButtons(defaultPayment, cardData["cost"]);
 }
 
-function setActionToBuyReserve($card) {
+function setActionToBuyReserve($card, deckLevel = -1) {
+    const datasetParameters = deckLevel > 0 ? {} : { name: $card.dataset.name }
     setActionButtonState(
         "buy",
         "processBuyCardClick",
-        { name: $card.dataset.name },
+        datasetParameters,
+        true,
     );
 
     const $reserveCardButton = getReserveCardButton();
 
-    $reserveCardButton.dataset.name = $card.dataset.name;
+    clearDatasetAttributes($reserveCardButton);
+
+    deckLevel > 0 ? $reserveCardButton.dataset.level = deckLevel : $reserveCardButton.dataset.name = $card.dataset.name;
     $reserveCardButton.classList.remove("hidden");
+    getActionButton().disabled = true;
+    $reserveCardButton.disabled = true;
 }
 
 function unHighlightCards() {
@@ -40,6 +47,7 @@ function unHighlightCards() {
 }
 
 function highlightCard($card) {
+    unHighlightTokens()
     unHighlightCards();
     $card.classList.add("selected-card");
 }

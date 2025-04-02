@@ -6,6 +6,8 @@ import { HIGHEST_CARD_LEVEL } from "../config.js";
 import { getActionButton, setActionButtonState } from "../game-status-interface.js";
 import { deselectCard } from "./select.js";
 import { validDeckReserve } from "../state-machine/valid-action-checker.js";
+import {setActionToBuyReserve, unHighlightCards} from "./buy-handler.js";
+import {unHighlightTokens} from "../token/token-handler.js";
 
 function processReserve(){
     const selectedCardName = getReserveCardButton().dataset.name;
@@ -54,23 +56,17 @@ function selectDeckForReserving(e) {
     if (!validDeckReserve(deckLevel)) return;
 
     const previousSelectedLevel = parseInt(getReserveCardButton().dataset.level);
-    deselectCard();
 
     if (previousSelectedLevel === deckLevel) {
-        setActionButtonState("skip turn", "skipTurn", {}, true);
+        deselectCard(true);
         return;
     }
 
-    deselectCard();
+    unHighlightCards();
+    unHighlightTokens();
+    setActionToBuyReserve($closestPictureTag.closest("li"), deckLevel);
     getReserveCardButton().disabled = false;
-    if (getReserveCardButton().dataset.name) getReserveCardButton().removeAttribute("data-name");
-    setActionButtonState(
-        "buy",
-        "processBuyCardClick",
-        {},
-    );
-    getActionButton().disabled = true;
-    getReserveCardButton().dataset.level = deckLevel;
+
     getReserveCardButton().classList.remove("hidden");
     $closestPictureTag.classList.add("selected-card");
 }
