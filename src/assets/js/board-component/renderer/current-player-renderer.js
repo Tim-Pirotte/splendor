@@ -15,6 +15,8 @@ import { GEMS } from "../data.js";
 import { getHighestScore, sumObjectValues, getPlayersObjects } from "../../utils/game-object-handler.js";
 import { getClientTokens, getClientTotalPrestigePoints } from "../game-data-handler.js";
 import { copyNode } from "../../utils/data-handler.js";
+import { getTokenAmount, getTotalAmountDiscarded, getTotalTokenAmount } from "../token/discard.js";
+import { validTokenDiscard } from "../state-machine/valid-action-checker.js";
 import { isCurrentlyPlaying } from "../game-status-interface.js";
 
 function renderHeader(currentPlayer) {
@@ -64,6 +66,8 @@ function renderClientPlayerTokenCount(tokens) {
 
     const amountOfTokens = formatNumber(countTokens(tokens));
     $totalTokenCount.textContent = amountOfTokens;
+    $totalTokenCount.dataset.amount = amountOfTokens;
+    $totalTokenCount.dataset.amountToDiscard = 0;
     setTotalTokensColor($totalTokenCount, amountOfTokens);
 }
 
@@ -83,6 +87,7 @@ function renderClientPlayer(players, gems) {
     renderClientPlayerReserve(currentPlayer);
     renderClientPlayerTokenCount(currentPlayer["tokens"]);
     renderClientPlayerTokens(currentPlayer["tokens"], currentPlayer["bonuses"], gems);
+    renderTimer();
 }
 
 function countTokens(tokens) {
@@ -95,33 +100,63 @@ function insertCardCounter($token, token, currentPlayerBonuses) {
     $token.dataset.bonuses = currentPlayerBonuses[token] || 0;
 }
 
+function renderClientToken($numberedItemTemplate, token, $progressBarTemplate, currentPlayerBonuses, currentPlayerTokens, $discardNavTemplate, $currentPlayerTokensContainer) {
+    const $token = copyNode($numberedItemTemplate);
+    $token.dataset.type = token;
+
+    const $progressBar = copyNode($progressBarTemplate);
+    const $switchPaymentButtonContainer = getSwitchButtonTemplate(token);
+
+    if (token !== "Gold") {
+        insertCardCounter($token, token, currentPlayerBonuses);
+    }
+
+    $switchPaymentButtonContainer.querySelector(".switch-token").dataset.type = token;
+
+    $token.querySelector(".amount").textContent = (currentPlayerTokens[token] || 0);
+    $token.dataset.amount = (currentPlayerTokens[token] || 0);
+
+    insertImageInto($token, `UI/tokens/${TOKEN_MAPPER[token]}_chip`, false, `${TOKEN_MAPPER[token]} chip`);
+    renderProgressBar($progressBar, currentPlayerTokens[token], TOKEN_MAPPER[token]);
+
+    $token.appendChild($progressBar);
+    $token.appendChild($switchPaymentButtonContainer);
+
+    if (validTokenDiscard()) {
+        const $discardNav = copyNode($discardNavTemplate);
+        $token.appendChild($discardNav);
+        setButtonStatuses();
+    }
+
+    $currentPlayerTokensContainer.appendChild($token);
+}
+
 function renderClientPlayerTokens(currentPlayerTokens, currentPlayerBonuses, gems) {
     const $currentPlayerTokensContainer = document.querySelector(".player-tokens ul");
     safeEmptyContainer($currentPlayerTokensContainer);
 
     const $numberedItemTemplate = getNumberedItemTemplate();
     const $progressBarTemplate = document.querySelector("#progress-bar-template");
+    const $discardNavTemplate = document.querySelector("#token-discard-template");
 
     for (const token of gems.toReversed()) {
-        const $token = copyNode($numberedItemTemplate);
-        $token.dataset.type = token;
+        renderClientToken($numberedItemTemplate, token, $progressBarTemplate, currentPlayerBonuses, currentPlayerTokens, $discardNavTemplate, $currentPlayerTokensContainer);
+    }
+}
 
-        const $progressBar = copyNode($progressBarTemplate);
-        const $switchPaymentButtonContainer = getSwitchButtonTemplate(token);
+function setButtonStatuses() {
+    const totalAmountOfTokens = getTotalTokenAmount();
+    const totalAmountDiscarded = getTotalAmountDiscarded();
 
-        if (token !== "Gold") {
-            insertCardCounter($token, token, currentPlayerBonuses);
-        }
+    for (const $token of document.querySelectorAll(".player-tokens li")) {
+        const amountAvailable = getTokenAmount($token);
+        const amountInDiscard = parseInt($token.querySelector(".discard-container .amount").dataset.amount);
 
-        $switchPaymentButtonContainer.querySelector(".switch-token").dataset.type = token;
-        $token.querySelector(".amount").textContent = (currentPlayerTokens[token] || 0);
-        $token.dataset.amount = (currentPlayerTokens[token] || 0);
-        insertImageInto($token, `UI/tokens/${TOKEN_MAPPER[token]}_chip`, false, `${TOKEN_MAPPER[token]} chip`);
-        renderProgressBar($progressBar, currentPlayerTokens[token], TOKEN_MAPPER[token]);
+        const addButton = $token.querySelector("[data-action='add']");
+        const removeButton = $token.querySelector("[data-action='remove']");
 
-        $token.appendChild($progressBar);
-        $token.appendChild($switchPaymentButtonContainer);
-        $currentPlayerTokensContainer.appendChild($token);
+        addButton.disabled = amountInDiscard === amountAvailable || totalAmountOfTokens - MAX_TOKENS_ALLOWED === totalAmountDiscarded;
+        removeButton.disabled = amountInDiscard === 0;
     }
 }
 
@@ -176,6 +211,14 @@ function hideSwitchPaymentButtons() {
     });
 }
 
+function renderTimer() {
+    if (isCurrentlyPlaying()) {
+        document.querySelector(".timer").style.display = "block";
+    } else {
+        document.querySelector(".timer").style.display = "none";
+    }
+}
+
 export {
     renderHeader,
     renderClientPlayer,
@@ -184,4 +227,5 @@ export {
     renderUpdatedPlayerTokens,
     renderUpdatedPlayerScore,
     hideSwitchPaymentButtons,
+    setButtonStatuses,
 };

@@ -30,8 +30,11 @@ function getCheckedRadioValue(radioButtonList){
 }
 
 function getGameBody(playerName, gameName, visibility, numberOfPlayers){
-    return gameName ? { gameName, numberOfPlayers, playerName }
-        : { numberOfPlayers, playerName };
+    const gameBody = { numberOfPlayers, playerName, returnExcessTokensRequired: true };
+
+    if (gameName) gameBody["gameName"] = gameName;
+
+    return gameBody;
 }
 
 export { handleCreateGameSubmit, getCheckedRadioValue, getGameBody };
