@@ -87,6 +87,7 @@ function renderClientPlayer(players, gems) {
     renderClientPlayerReserve(currentPlayer);
     renderClientPlayerTokenCount(currentPlayer["tokens"]);
     renderClientPlayerTokens(currentPlayer["tokens"], currentPlayer["bonuses"], gems);
+    renderTimer();
 }
 
 function countTokens(tokens) {
@@ -204,6 +205,14 @@ function hideSwitchPaymentButtons() {
         $container.querySelector(".switch-token").classList.add("hidden");
         $container.querySelector("p").classList.add("hidden");
     });
+}
+
+function renderTimer() {
+    if (isCurrentlyPlaying()) {
+        document.querySelector(".timer").style.display = "block";
+    } else {
+        document.querySelector(".timer").style.display = "none";
+    }
 }
 
 export {

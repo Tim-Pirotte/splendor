@@ -105,14 +105,19 @@ aside {
 /* HEADER */
 .top-bar {
     display: flex;
-    justify-content: flex-end;
     align-items: center;
     gap: 0.5rem;
+    justify-content: space-between
 }
 
 .top-bar h1 {
     background-color: hotpink;
-    margin-right: 25rem;
+}
+
+.top-bar div {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 section header picture {
