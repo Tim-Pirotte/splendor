@@ -6,12 +6,6 @@ function initRoundBegin(gameData){
 
     if(!gameData["started"]) location.href = "./lobby-page.html";
 
-    getActionButton().disabled = !isCurrentlyPlaying();
-    if(getActionButton().disabled) {
-        setActionButtonState("Wait until your turn", "doNothing", {});
-        return;
-    }
-
     switch(gameState) {
     case GAME_STATE.WINNER_IS_FOUND:
         location.href = "./results.html";
@@ -26,6 +20,11 @@ function initRoundBegin(gameData){
         break;
     default:
         setActionButtonState("skip turn", "skipTurn", {});
+    }
+
+    getActionButton().disabled = !isCurrentlyPlaying();
+    if(getActionButton().disabled) {
+        setActionButtonState("Wait until your turn", "doNothing", {});
     }
 }
 
