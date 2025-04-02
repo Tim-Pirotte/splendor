@@ -16,6 +16,7 @@ import { getHighestScore, sumObjectValues, getPlayersObjects } from "../../utils
 import { getClientTokens, getClientTotalPrestigePoints } from "../game-data-handler.js";
 import { copyNode } from "../../utils/data-handler.js";
 import {getTokenAmount, getTotalAmountDiscarded, getTotalTokenAmount} from "../token/discard.js";
+import {validTokenDiscard} from "../state-machine/valid-action-checker.js";
 
 function renderHeader(currentPlayer) {
     const $playerName = document.querySelector(".top-bar h2");
@@ -112,8 +113,6 @@ function renderClientPlayerTokens(currentPlayerTokens, currentPlayerBonuses, gem
             insertCardCounter($token, token, currentPlayerBonuses);
         }
 
-        const $discardNav = copyNode($discardNavTemplate);
-
         $switchPaymentButtonContainer.querySelector(".switch-token").dataset.type = token;
 
         $token.querySelector(".amount").textContent = (currentPlayerTokens[token] || 0);
@@ -124,11 +123,16 @@ function renderClientPlayerTokens(currentPlayerTokens, currentPlayerBonuses, gem
 
         $token.appendChild($progressBar);
         $token.appendChild($switchPaymentButtonContainer);
-        $token.appendChild($discardNav);
+
+        if (validTokenDiscard()) {
+            console.log("test")
+            const $discardNav = copyNode($discardNavTemplate);
+            $token.appendChild($discardNav);
+            setButtonStatuses();
+        }
+
         $currentPlayerTokensContainer.appendChild($token);
     }
-
-    setButtonStatuses();
 }
 
 function setButtonStatuses() {

@@ -6,7 +6,6 @@ import { getActionButton } from "../game-status-interface.js";
 function initRoundBegin(gameData){
 
     const gameState = gameData["gameState"];
-    sessionStorage.setItem("gameState", gameState);
 
     if(!gameData["started"]) {
         location.href = "./lobby-page.html";
@@ -38,4 +37,8 @@ function initRoundBegin(gameData){
 
 }
 
-export { initRoundBegin };
+function saveGameState(gameState) {
+    sessionStorage.setItem("gameState", gameState);
+}
+
+export { initRoundBegin, saveGameState };
