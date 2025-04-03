@@ -82,10 +82,10 @@ function processBuyCardClick() {
     endBuyReserveAction();
 
     if (getActionButton().dataset.reservedCard) {
-        API.buyReserveCard({payment: getCurrentPaymentMethod()})
+        API.buyReserveCard({ payment: getCurrentPaymentMethod() })
             .then(() => sessionStorage.removeItem("paymentMethod"));
     } else {
-        API.buyCard({ development: { name: cardData["name"] }, payment: getCurrentPaymentMethod()})
+        API.buyCard({ development: { name: cardData["name"] }, payment: getCurrentPaymentMethod() })
             .then(() => sessionStorage.removeItem("paymentMethod"));
     }
 }
