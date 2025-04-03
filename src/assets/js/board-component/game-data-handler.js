@@ -12,10 +12,7 @@ function handleGameDataError(err) {
     const unauthorized = 401;
     const statusCode = err["failure"];
 
-    if (statusCode === forbidden || statusCode === unauthorized) {
-        location.href = "../index.html";
-    }
-
+    if (statusCode === forbidden || statusCode === unauthorized) location.href = "../index.html";
     console.error(err);
 }
 

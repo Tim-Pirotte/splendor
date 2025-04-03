@@ -7,7 +7,7 @@ function renderPage(gameData) {
     renderHeader(gameData["currentPlayer"]);
     renderCards(gameData["market"]);
     renderNobles(gameData["unclaimedNobles"]);
-    renderOtherPlayers(gameData["players"], GEMS);
+    renderOtherPlayers(gameData["players"], gameData["currentPlayer"]);
     renderBoardTokens(gameData["unclaimedTokens"], gameData["players"].length);
     renderClientPlayer(gameData["players"], GEMS);
 }

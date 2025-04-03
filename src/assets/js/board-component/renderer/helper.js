@@ -78,12 +78,6 @@ function getNumberedItemTemplate() {
     return document.querySelector("#numbered-item-template");
 }
 
-function selectCurrentPlayerCard(playerName, $playerCard) {
-    if (playerName === loadFromStorage("gameData")["currentPlayer"]) {
-        $playerCard.classList.add("current-player");
-    }
-}
-
 function renderCard(card) {
     const $costAmountTemplate = getNumberedItemTemplate();
 
@@ -117,7 +111,6 @@ export {
     safeEmptyContainer,
     addSwitchButton,
     getNumberedItemTemplate,
-    selectCurrentPlayerCard,
     addNodesToEmptiedContainer,
     renderCard,
 };
