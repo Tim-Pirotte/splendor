@@ -7,3 +7,5 @@ function processCreateAndJoinResponse(res) {
 }
 
 export { processCreateAndJoinResponse };
+
+// TODO : remove this form the codebase ! You can place this inside the files of join and create !
