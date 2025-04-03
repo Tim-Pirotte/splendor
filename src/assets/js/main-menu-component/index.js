@@ -1,4 +1,4 @@
-import { renderAvatarSelectionList } from "./renderer.js";
+import { renderAvatarSelectionList, renderPlayerInfo } from "./renderer.js";
 
 function init() {
     console.log("ok");
@@ -7,7 +7,7 @@ function init() {
 
 function setupUI() {
     renderAvatarSelectionList();
-    //renderPlayerInfo();
+    renderPlayerInfo();
 }
 
 init();
