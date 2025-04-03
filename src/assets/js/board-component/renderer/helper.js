@@ -1,7 +1,6 @@
 import { CHIP_SPACING, TOKEN_MAPPER } from "../config.js";
 import { copyNode } from "../../utils/data-handler.js";
 import { validCardBuy } from "../state-machine/valid-action-checker.js";
-import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
 
 function addNodesToEmptiedContainer($container, list, mapFunction) {
     safeEmptyContainer($container);
@@ -21,33 +20,32 @@ function toggleClass($node, className, condition) {
 
 function insertImageInto($container, standardPath, before, alt) {
     const $image = copyNode(document.querySelector("#image-template"));
+    setImageData($image, standardPath, alt);
 
+    $container.insertAdjacentHTML(before ? "afterbegin" : "beforeend", $image.outerHTML);
+}
+
+function setImageData($image, standardPath, alt) {
     $image.querySelector("source").srcset = `../assets/images/${standardPath}.webp`;
+
     const $img = $image.querySelector("img");
+
     $img.src = `../assets/images/fallback/${standardPath}.png`;
     $img.alt = $img.title = alt;
+}
 
-    let position = "beforeend";
+function constructBackground(value, color) {
+    let background = "";
 
-    if (before) {
-        position = "afterbegin";
-    }
+    for (let i = 0; i < value - 1; i++) background += `url("../assets/images/UI/tokens/${color}_topdown_chip.webp") ${i * CHIP_SPACING}rem 100%,\n`;
 
-    $container.insertAdjacentHTML(position, $image.outerHTML);
+    if (value > 0) background += `url("../assets/images/UI/tokens/${color}_topdown_chip_end.webp") ${(value - 1) * CHIP_SPACING}rem 100%`;
+
+    return background;
 }
 
 function renderProgressBar($progressBar, value, color) {
-    let background = "";
-
-    for (let i = 0; i < value - 1; i++) {
-        background += `url("../assets/images/UI/tokens/${color}_topdown_chip.webp") ${i * CHIP_SPACING}rem 100%,\n`;
-    }
-
-    if (value > 0) {
-        background += `url("../assets/images/UI/tokens/${color}_topdown_chip_end.webp") ${(value - 1) * CHIP_SPACING}rem 100%`;
-    }
-
-    $progressBar.style.background = background;
+    $progressBar.style.background = constructBackground(value, color);;
     $progressBar.style.backgroundRepeat = "no-repeat";
     $progressBar.style.width = `${(value + 1) * CHIP_SPACING}rem`;
 }
@@ -59,9 +57,7 @@ function formatNumber(number) {
 function safeEmptyContainer($container) {
     // https://developer.mozilla.org/en-US/docs/Web/CSS/:scope
     $container.querySelectorAll(":scope> *").forEach($childElement => {
-        if ($childElement.tagName.toLowerCase() !== "template") {
-            $childElement.outerHTML = "";
-        }
+        if ($childElement.tagName.toLowerCase() !== "template") $childElement.outerHTML = "";
     });
 }
 
@@ -79,15 +75,22 @@ function getNumberedItemTemplate() {
 }
 
 function renderCard(card) {
-    const $costAmountTemplate = getNumberedItemTemplate();
-
     const $card = copyNode(document.querySelector("#card-template"));
     $card.dataset.name = card["name"];
     $card.querySelector(".points").textContent = card["points"];
 
-    const $cardCost = $card.querySelector(".cost");
-
     if (validCardBuy(card["name"])) $card.classList.add("buyable-card");
+
+    const $cardCost = $card.querySelector(".cost");
+    renderCardCost(card, $cardCost);
+
+    renderCardGraphics($card, card);
+
+    return $card;
+}
+
+function renderCardCost(card, $cardCost) {
+    const $costAmountTemplate = getNumberedItemTemplate();
 
     for (const [type, cost] of Object.entries(card["cost"])) {
         const $costItem = copyNode($costAmountTemplate);
@@ -97,11 +100,11 @@ function renderCard(card) {
 
         $cardCost.appendChild($costItem);
     }
+}
 
+function renderCardGraphics($card, card) {
     insertImageInto($card, `cards/empty/${TOKEN_MAPPER[card["bonus"]]}_empty_card`, false, `${TOKEN_MAPPER[card["bonus"]]} card`);
     insertImageInto($card, "cards/illustrations/camel", false, "camel");
-
-    return $card;
 }
 
 export {
