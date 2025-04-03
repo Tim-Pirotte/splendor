@@ -1,4 +1,4 @@
-import { processBuyCardClick } from "./buy/buy-handler.js";
+import { processBuyCardClick } from "./buy-reserve/buy-handler.js";
 import { processSkipTurn, processTakeTokensClick, processTakeTwoTokens } from "./token/token-handler.js";
 import { processTakeNoble } from "./nobles/nobles-handler.js";
 import { processDiscardTokens } from "./token/discard.js";

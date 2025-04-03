@@ -1,6 +1,14 @@
 import * as API from "../../api.js";
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
 import { MAX_TOKENS_ALLOWED, PRESTIGE_POINTS_NEEDED_TO_WIN, TOKEN_MAPPER } from "../config.js";
+import { isAllowedToSwitchToken, removePaidTokens, updateCurrentPlayerBonuses } from "../buy-reserve/buy-handler.js";
+import { GEMS } from "../data.js";
+import { getHighestScore, sumObjectValues, getPlayersObjects } from "../../utils/game-object-handler.js";
+import { getClientTokens, getClientTotalPrestigePoints } from "../game-data-handler.js";
+import { copyNode } from "../../utils/data-handler.js";
+import { getTokenAmount, getTotalAmountDiscarded, getTotalTokenAmount } from "../token/discard.js";
+import { validTokenDiscard } from "../state-machine/valid-action-checker.js";
+import { isCurrentlyPlaying } from "../game-status-interface.js";
 import {
     formatNumber,
     getNumberedItemTemplate,
@@ -10,14 +18,6 @@ import {
     renderProgressBar,
     safeEmptyContainer,
 } from "./helper.js";
-import { isAllowedToSwitchToken, removePaidTokens, updateCurrentPlayerBonuses } from "../buy/buy-handler.js";
-import { GEMS } from "../data.js";
-import { getHighestScore, sumObjectValues, getPlayersObjects } from "../../utils/game-object-handler.js";
-import { getClientTokens, getClientTotalPrestigePoints } from "../game-data-handler.js";
-import { copyNode } from "../../utils/data-handler.js";
-import { getTokenAmount, getTotalAmountDiscarded, getTotalTokenAmount } from "../token/discard.js";
-import { validTokenDiscard } from "../state-machine/valid-action-checker.js";
-import { isCurrentlyPlaying } from "../game-status-interface.js";
 
 function renderHeader(currentPlayer) {
     const $playerName = document.querySelector(".top-bar h2");
@@ -63,7 +63,7 @@ function renderClientPlayerReserve(currentPlayer) {
     safeEmptyContainer($reserved);
 
     for (const card of currentPlayer["reserve"]) {
-        renderCard($reserved, card["prestigePoints"], card["bonus"], card["cost"]);
+        renderCard($reserved, card["prestigePoints"], card["bonus"], card["cost"], card["name"], true);
     }
 }
 
@@ -118,8 +118,6 @@ function renderClientToken($numberedItemTemplate, token, $progressBarTemplate, c
         insertCardCounter($token, token, currentPlayerBonuses);
     }
 
-    $switchPaymentButtonContainer.querySelector(".switch-token").dataset.type = token;
-
     $token.querySelector(".amount").textContent = (currentPlayerTokens[token] || 0);
     $token.dataset.amount = (currentPlayerTokens[token] || 0);
 
@@ -171,13 +169,10 @@ function renderSwitchPaymentButtons(currentPayment, cost) {
     const tokensInWallet = getClientTokens();
     const $tokensContainers = document.querySelectorAll(".switch-token-container");
 
-    $tokensContainers.forEach($tokenContainer => {
-        $tokenContainer.querySelector(".switch-token").classList.add("hidden");
-        $tokenContainer.querySelector("p").classList.add("hidden");
-    });
+    hideSwitchPaymentButtons();
 
     for (const $tokenContainer of $tokensContainers) {
-        const tokenType = $tokenContainer.querySelector(".switch-token").dataset.type;
+        const tokenType = $tokenContainer.closest("li").dataset.type;
 
         if (isAllowedToSwitchToken(tokenType, currentPayment, cost, tokensInWallet)) {
             $tokenContainer.querySelector(".switch-token").classList.remove("hidden");
@@ -226,6 +221,11 @@ function renderTimer() {
     }
 }
 
+function addGoldToken() {
+    const $goldTokenCountContainer = document.querySelector(".player-tokens li[data-type='Gold'] .amount");
+    $goldTokenCountContainer.textContent = parseInt($goldTokenCountContainer.textContent) + 1;
+}
+
 export {
     renderHeader,
     renderClientPlayer,
@@ -235,4 +235,5 @@ export {
     renderUpdatedPlayerScore,
     hideSwitchPaymentButtons,
     setButtonStatuses,
+    addGoldToken,
 };

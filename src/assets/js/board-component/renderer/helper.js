@@ -40,7 +40,7 @@ function formatNumber(number) {
     return number.toString().padStart(2, "0");
 }
 
-function renderCard($container, points, bonus, costs, name) {
+function renderCard($container, points, bonus, costs, name, reservedCard = false) {
     const $numberedItemTemplate = getNumberedItemTemplate();
     const $card = copyNode(document.querySelector("#card-template"));
     const $cardCost = $card.querySelector(".cost");
@@ -48,6 +48,7 @@ function renderCard($container, points, bonus, costs, name) {
     $card.querySelector(".points").textContent = points;
     $card.dataset.name = name;
 
+    if (reservedCard) $card.classList.add("reserved");
     if (validCardBuy(name)) $card.classList.add("buyable-card");
 
     for (const [type, cost] of Object.entries(costs)) {

@@ -1,4 +1,4 @@
-import { setActionButtonState, isCurrentlyPlaying, getActionButton } from "../game-status-interface.js";
+import { setActionButtonState, getActionButton, isCurrentlyPlaying } from "../game-status-interface.js";
 import { GAME_STATE } from "./data.js";
 
 function initRoundBegin(gameData){
@@ -6,13 +6,6 @@ function initRoundBegin(gameData){
 
     if(!gameData["started"]) location.href = "./lobby-page.html";
 
-    getActionButton().disabled = !isCurrentlyPlaying();
-    if(getActionButton().disabled) {
-        setActionButtonState("Wait until your turn", "doNothing", {});
-        return;
-    }
-
-    // Using the do nothing function because you cant skip this turn
     switch(gameState) {
     case GAME_STATE.WINNER_IS_FOUND:
         location.href = "./results.html";
@@ -27,6 +20,11 @@ function initRoundBegin(gameData){
         break;
     default:
         setActionButtonState("skip turn", "skipTurn", {});
+    }
+
+    getActionButton().disabled = !isCurrentlyPlaying();
+    if(getActionButton().disabled) {
+        setActionButtonState("Wait until your turn", "doNothing", {});
     }
 }
 
