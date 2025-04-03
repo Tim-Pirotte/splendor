@@ -174,7 +174,7 @@ function calculateDefaultPayment(cost, tokens) {
     return payment;
 }
 
-function isAllowedToSwitchToken(tokenType, currentPayment, cost, tokensInWallet) {
+function allowedToSwitchToken(tokenType, currentPayment, cost, tokensInWallet) {
     const goldInPayment = currentPayment["Gold"] || 0;
 
     if (tokenType === "Gold") {
@@ -258,7 +258,7 @@ function setNewPaymentMethod(paymentMethod) {
 export {
     selectCard,
     processBuyCardClick,
-    isAllowedToSwitchToken,
+    allowedToSwitchToken,
     getPlayerWallet,
     handlePaymentMethodChange,
     removePaidTokens,

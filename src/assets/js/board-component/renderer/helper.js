@@ -65,7 +65,7 @@ function safeEmptyContainer($container) {
     });
 }
 
-function getSwitchButton(token) {
+function addSwitchButton($token, token) {
     const $switchButtonContainerTemplate = document.querySelector("#switch-tokens-container-template");
     const $container = copyNode($switchButtonContainerTemplate);
 
@@ -73,7 +73,7 @@ function getSwitchButton(token) {
         $container.querySelector(".switch-token").textContent = "Reset";
     }
 
-    return $container;
+    $token.appendChild($container);
 }
 
 function getNumberedItemTemplate() {
@@ -117,7 +117,7 @@ export {
     renderProgressBar,
     formatNumber,
     safeEmptyContainer,
-    getSwitchButton,
+    addSwitchButton,
     getNumberedItemTemplate,
     selectCurrentPlayerCard,
     addNodesToEmptiedContainer,

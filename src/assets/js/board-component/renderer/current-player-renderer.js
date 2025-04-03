@@ -5,12 +5,12 @@ import {
     addNodesToEmptiedContainer,
     formatNumber,
     getNumberedItemTemplate,
-    getSwitchButton,
+    addSwitchButton,
     insertImageInto, renderCard,
     renderProgressBar,
     safeEmptyContainer,
 } from "./helper.js";
-import { isAllowedToSwitchToken, removePaidTokens, updateCurrentPlayerBonuses } from "../buy/buy-handler.js";
+import { allowedToSwitchToken, removePaidTokens, updateCurrentPlayerBonuses } from "../buy/buy-handler.js";
 import { GEMS } from "../data.js";
 import { getHighestScore, sumObjectValues, getPlayersObjects } from "../../utils/game-object-handler.js";
 import { getClientTokens, getClientTotalPrestigePoints } from "../game-data-handler.js";
@@ -117,20 +117,24 @@ function renderClientPlayerTokens(currentPlayerTokens, currentPlayerBonuses, gem
     }
 }
 
-function renderClientToken($numberedItemTemplate, token, $progressBarTemplate, currentPlayerBonuses, currentPlayerTokens, $currentPlayerTokensContainer) {
+function renderClientToken($numberedItemTemplate, token, $progressBarTemplate, currentPlayerBonuses, currentPlayerTokens, $clientPlayerTokensContainer) {
     const $token = copyNode($numberedItemTemplate);
-    $token.dataset.type = token;
-    $token.dataset.amount = (currentPlayerTokens[token] || 0);
-    $token.querySelector(".amount").textContent = (currentPlayerTokens[token] || 0);
+    addTokenTypeAmount($token, token, currentPlayerTokens);
 
     if (token !== "Gold") insertCardCounter($token, token, currentPlayerBonuses);
 
     insertImageInto($token, `UI/tokens/${TOKEN_MAPPER[token]}_chip`, false, `${TOKEN_MAPPER[token]} chip`);
 
     addProgressBar($progressBarTemplate, currentPlayerTokens, token, $token);
-    $token.appendChild(getSwitchButton(token));
+    addSwitchButton($token, token);
 
-    $currentPlayerTokensContainer.appendChild($token);
+    $clientPlayerTokensContainer.appendChild($token);
+}
+
+function addTokenTypeAmount($token, token, currentPlayerTokens) {
+    $token.dataset.type = token;
+    $token.dataset.amount = (currentPlayerTokens[token] || 0);
+    $token.querySelector(".amount").textContent = (currentPlayerTokens[token] || 0);
 }
 
 function addProgressBar($progressBarTemplate, currentPlayerTokens, token, $token) {
@@ -146,27 +150,31 @@ function renderSwitchPaymentButtons(currentPayment, cost) {
     hideSwitchPayment($tokensContainers);
 
     for (const $tokenContainer of $tokensContainers) {
-        const tokenType = $tokenContainer.querySelector(".switch-token").dataset.type;
-
-        if (isAllowedToSwitchToken(tokenType, currentPayment, cost, tokensInWallet)) {
-            $tokenContainer.querySelector(".switch-token").classList.remove("hidden");
-        }
-
-        if (Object.keys(cost).includes(tokenType) || (tokenType === "Gold" && tokensInWallet["Gold"] > 0)) {
-            renderAmountOfTokenSelected($tokenContainer, tokenType, currentPayment);
-        }
+        renderSwitchPayment($tokenContainer, currentPayment, cost, tokensInWallet);
     }
 }
 
-function hideSwitchPayment($tokensContainers) {
-    $tokensContainers.forEach($tokenContainer => {
-        $tokenContainer.querySelector(".switch-token").classList.add("hidden");
-        $tokenContainer.querySelector("p").classList.add("hidden");
+function renderSwitchPayment($tokenContainer, currentPayment, cost, tokensInWallet) {
+    const tokenType = $tokenContainer.querySelector(".switch-token").dataset.type;
+
+    if (allowedToSwitchToken(tokenType, currentPayment, cost, tokensInWallet)) {
+        $tokenContainer.querySelector(".switch-token").classList.remove("hidden");
+    }
+
+    if (Object.keys(cost).includes(tokenType) || (tokenType === "Gold" && tokensInWallet["Gold"] > 0)) {
+        renderAmountOfTokenSelected($tokenContainer, currentPayment[tokenType]);
+    }
+}
+
+function hideSwitchPayment($tokenSwitchContainers) {
+    $tokenSwitchContainers.forEach($tokenSwitchContainer => {
+        $tokenSwitchContainer.querySelector(".switch-token").classList.add("hidden");
+        $tokenSwitchContainer.querySelector("p").classList.add("hidden");
     });
 }
 
-function renderAmountOfTokenSelected($tokenContainer, tokenType, payment) {
-    $tokenContainer.querySelector("span").innerText = (payment[tokenType]);
+function renderAmountOfTokenSelected($tokenContainer, paymentOfType) {
+    $tokenContainer.querySelector("span").textContent = paymentOfType;
     $tokenContainer.querySelector("p").classList.remove("hidden");
 }
 
@@ -179,6 +187,7 @@ function renderUpdatedPlayerTokens(bonus) {
 }
 
 function renderUpdatedPlayerScore(extraScore) {
+    // TODO shouldn't the score already be added
     API.getGame().then(gameObject => {
         const players = getPlayersObjects(gameObject);
         const highestScore = getHighestScore(players);
