@@ -2,7 +2,7 @@ import { getCurrentUsersAmount, getGameCreator, getGameId, getGameName, getMaxUs
 import { safeEmptyContainer } from "../board-component/renderer/helper.js";
 import { copyNode } from "../utils/data-handler.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
-import { avatars } from "../main-menu-component/data.js";
+import { avatars } from "../old-main-menu-component/data.js";
 
 function renderHeader(g) {
     document.querySelector("#game-name-id").innerHTML = `${getGameName(g)} / <span>${getGameId(g)}</span>`;
