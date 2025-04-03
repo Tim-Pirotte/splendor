@@ -1,4 +1,4 @@
-import { avatars } from "../old-main-menu-component/data.js";
+import { avatars } from "./data.js";
 import { addImageToContainer } from "../utils/renderer.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 
