@@ -21,7 +21,7 @@ function allowToBuy($card) {
     renderSwitchPaymentButtons(defaultPayment, cardData["cost"]);
 }
 
-function setActionToBuyReserve($card, deckLevel = "") {
+function setActionToBuyReserve($card, deckLevel = "", selectedAReservedCard = false) {
     const datasetParameters = deckLevel ? {} : { name: $card.dataset.name };
     setActionButtonState(
         "buy",
@@ -33,6 +33,8 @@ function setActionToBuyReserve($card, deckLevel = "") {
     const $reserveCardButton = getReserveCardButton();
 
     clearDatasetAttributes($reserveCardButton);
+
+    if (selectedAReservedCard) getActionButton().dataset.reservedCard = "true";
 
     if (deckLevel) {
         $reserveCardButton.dataset.level = deckLevel;
@@ -73,15 +75,19 @@ function getCard(e) {
 function processBuyCardClick() {
     const $actionButton = getActionButton();
     const cardData = getCardData($actionButton.dataset.name);
-    const requestBody =
-        { development: { name: cardData["name"] }, payment: getCurrentPaymentMethod() };
 
     renderUpdatedPlayerTokens(cardData["bonus"]);
     renderUpdatedPlayerScore(cardData["prestigePoints"]);
     renderUpdatedBoardTokens(JSON.parse(sessionStorage.getItem("paymentMethod")));
     endBuyReserveAction();
-    API.buyCard(requestBody).then(() => sessionStorage.removeItem("paymentMethod"));
 
+    if (getActionButton().dataset.reservedCard) {
+        API.buyReserveCard({payment: getCurrentPaymentMethod()})
+            .then(() => sessionStorage.removeItem("paymentMethod"));
+    } else {
+        API.buyCard({ development: { name: cardData["name"] }, payment: getCurrentPaymentMethod()})
+            .then(() => sessionStorage.removeItem("paymentMethod"));
+    }
 }
 
 function getCardData(cardName) {
@@ -162,7 +168,7 @@ function isAllowedToSwitchToken(tokenType, currentPayment, cost, tokensInWallet)
 
 function handlePaymentMethodChange(e) {
     if (e.target.classList.contains("switch-token")) {
-        const tokenType = e.target.dataset.type;
+        const tokenType = e.target.closest("li").dataset.type;
         const cost = getCardData(document.querySelector(".action-button").dataset.name)["cost"];
 
         if (tokenType === "Gold") {

@@ -169,13 +169,10 @@ function renderSwitchPaymentButtons(currentPayment, cost) {
     const tokensInWallet = getClientTokens();
     const $tokensContainers = document.querySelectorAll(".switch-token-container");
 
-    $tokensContainers.forEach($tokenContainer => {
-        $tokenContainer.querySelector(".switch-token").classList.add("hidden");
-        $tokenContainer.querySelector("p").classList.add("hidden");
-    });
+    hideSwitchPaymentButtons();
 
     for (const $tokenContainer of $tokensContainers) {
-        const tokenType = $tokenContainer.querySelector(".switch-token").dataset.type;
+        const tokenType = $tokenContainer.closest("li").dataset.type;
 
         if (isAllowedToSwitchToken(tokenType, currentPayment, cost, tokensInWallet)) {
             $tokenContainer.querySelector(".switch-token").classList.remove("hidden");

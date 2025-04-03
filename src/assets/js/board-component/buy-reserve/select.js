@@ -34,7 +34,7 @@ function selectCard(e) {
     getReserveCardButton().classList.remove("hidden");
 
     highlightCard($card);
-    setActionToBuyReserve($card);
+    setActionToBuyReserve($card, "", $card.classList.contains("reserved"));
 
     const isValidCardBuy = validCardBuy(cardName);
 
