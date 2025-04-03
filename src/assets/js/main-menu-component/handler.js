@@ -1,4 +1,4 @@
-import { saveToStorage} from "../data-connector/local-storage-abstractor.js";
+import { saveToStorage } from "../data-connector/local-storage-abstractor.js";
 import { renderPlayerInfo } from "./renderer.js";
 import { toggleAvatarListVisibility } from "./helper.js";
 

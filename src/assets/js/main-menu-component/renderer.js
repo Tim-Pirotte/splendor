@@ -6,7 +6,7 @@ function renderAvatarSelectionList() {
     const $avatarsSection = document.querySelector("section ul");
 
     document.querySelectorAll("li").forEach(li => li.remove());
-    avatars.forEach(avatar => addImageToContainer($avatarsSection, `avatars/${avatar}`, ".", false, avatar));
+    avatars.forEach(avatar => addImageToContainer($avatarsSection, `avatars/${avatar}`, false, avatar, "."));
 }
 
 function renderPlayerInfo() {
@@ -14,7 +14,7 @@ function renderPlayerInfo() {
     const avatar = loadFromStorage("avatar") || "placeholder";
 
     $button.innerHTML = "";
-    addImageToContainer($button, `avatars/${avatar}`, ".", false, avatar);
+    addImageToContainer($button, `avatars/${avatar}`, false, avatar, ".");
 
     if (loadFromStorage("playerName")) {
         document.querySelector("#username").value = loadFromStorage("playerName");
