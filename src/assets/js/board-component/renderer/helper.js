@@ -69,9 +69,7 @@ function addSwitchButton($token, token) {
     const $switchButtonContainerTemplate = document.querySelector("#switch-tokens-container-template");
     const $container = copyNode($switchButtonContainerTemplate);
 
-    if (token === "Gold") {
-        $container.querySelector(".switch-token").textContent = "Reset";
-    }
+    if (token === "Gold") $container.querySelector(".switch-token").textContent = "Reset";
 
     $token.appendChild($container);
 }
