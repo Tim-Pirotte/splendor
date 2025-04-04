@@ -17,7 +17,7 @@ function validCardBuy(name) {
 }
 
 function validCardReserve($card) {
-    return isCurrentlyPlaying() && getGameState() === GAME_STATE.TURN_ACTION && hasReservePlace() && !$card.classList.contains("reserved");
+    return isCurrentlyPlaying() && getGameState() === GAME_STATE.TURN_ACTION && hasReservePlace() && !$card.closest(".reserved-cards");
 }
 
 function validDeckReserve(deckLevel) {

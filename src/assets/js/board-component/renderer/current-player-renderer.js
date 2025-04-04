@@ -1,14 +1,8 @@
 import * as API from "../../api.js";
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
 import { MAX_TOKENS_ALLOWED, PRESTIGE_POINTS_NEEDED_TO_WIN, TOKEN_MAPPER } from "../config.js";
-import { isAllowedToSwitchToken, removePaidTokens, updateCurrentPlayerBonuses } from "../buy-reserve/buy-handler.js";
-import { GEMS } from "../data.js";
-import { getHighestScore, sumObjectValues, getPlayersObjects } from "../../utils/game-object-handler.js";
-import { getClientTokens, getClientTotalPrestigePoints } from "../game-data-handler.js";
-import { copyNode } from "../../utils/data-handler.js";
 import { getTokenAmount, getTotalAmountDiscarded, getTotalTokenAmount } from "../token/discard.js";
 import { validTokenDiscard } from "../state-machine/valid-action-checker.js";
-import { isCurrentlyPlaying } from "../game-status-interface.js";
 import {
     addNodesToEmptiedContainer,
     formatNumber,
@@ -18,7 +12,7 @@ import {
     renderProgressBar,
     safeEmptyContainer, toggleClass,
 } from "./helper.js";
-import { allowedToSwitchToken, removePaidTokens, updateCurrentPlayerBonuses } from "../buy/buy-handler.js";
+import { allowedToSwitchToken, removePaidTokens, updateCurrentPlayerBonuses } from "../buy-reserve/buy-handler.js";
 import { GEMS } from "../data.js";
 import { getHighestScore, sumObjectValues, getPlayersObjects } from "../../utils/game-object-handler.js";
 import { getClientTokens, getClientTotalPrestigePoints } from "../game-data-handler.js";

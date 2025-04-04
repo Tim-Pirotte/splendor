@@ -49,46 +49,18 @@ function setTimer(currentSeconds, maxSeconds, $timerFill) {
 
         toggleClass($timerFill, "time-almost-ends", currentSeconds < SECONDS_WHEN_TURN_ALMOST_ENDS);
 
-        if (getActionButton().disabled) {
+        if (currentSeconds > 0) {
+            setTimeout(() => setTimer(currentSeconds - 1, maxSeconds, $timerFill), 1000);
+        } else if (getActionButton().disabled) {
             getActionButton().click();
         } else {
             processSkipTurn();
         }
-
-        if (currentSeconds > 0) setTimeout(() => setTimer(currentSeconds - 1, maxSeconds, $timerFill), 1000);
     }
 }
 
 function startRoundTimer() {
-    setTimer(45 - 1, 45 - 1, document.querySelector(".timer-fill"))
-
-    return;
-    const $progressBarFill = document.querySelector(".timer-fill");
-    const $progressBar = document.querySelector(".timer");
-
-    // TODO : fill with server data!
-    // "2025-04-01T19:45:00.000Z"
-    const timeRoundStarted = new Date(Date.now()).getTime();
-
-    const timer = setInterval(() => {
-        const currentTime = Date.now();
-        const deltaTime = Math.floor((currentTime - timeRoundStarted) / 1000);
-
-        $progressBarFill.style.height = `${(SECONDS_PER_ROUND - 2 - deltaTime) / (SECONDS_PER_ROUND - 2) * 100}%`;
-        $progressBar.setAttribute("aria-valuenow", SECONDS_PER_ROUND - deltaTime);
-
-        if (deltaTime >= SECONDS_PER_ROUND - SECONDS_WHEN_TURN_ALMOST_ENDS) {
-            $progressBarFill.classList.add("time-almost-ends");
-        }
-
-        if (deltaTime >= SECONDS_PER_ROUND) {
-            clearInterval(timer);
-
-            processSkipTurn();
-            startGameStatePolling();
-            updateGameData();
-        }
-    }, 1000);
+    setTimer(SECONDS_PER_ROUND - 1, SECONDS_PER_ROUND - 1, document.querySelector(".timer-fill"));
 }
 
 function getClientTokens() {
