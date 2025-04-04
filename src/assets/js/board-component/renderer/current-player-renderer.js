@@ -223,7 +223,6 @@ function renderUpdatedPlayerTokens(bonus) {
 }
 
 function renderUpdatedPlayerScore(extraScore) {
-    // TODO shouldn't the score already be added
     API.getGame().then(gameObject => {
         const players = getPlayersObjects(gameObject);
         const highestScore = getHighestScore(players);
