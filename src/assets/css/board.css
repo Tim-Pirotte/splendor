@@ -225,7 +225,7 @@ section header picture {
     color: hotpink;
 }
 
-.buyable-card picture:first-of-type img {
+.buyable-card {
     outline: 0.275rem solid yellow;
     border-radius: 0.25rem;
 }

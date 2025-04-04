@@ -12,9 +12,10 @@ import {toggleClass} from "./renderer/helper.js";
 function handleGameDataError(err) {
     const forbidden = 403;
     const unauthorized = 401;
+    const gameNotExists = 404;
     const statusCode = err["failure"];
 
-    if (statusCode === forbidden || statusCode === unauthorized) location.href = "../index.html";
+    if (statusCode === forbidden || statusCode === unauthorized || statusCode === gameNotExists) location.href = "../index.html";
     console.error(err);
 }
 
