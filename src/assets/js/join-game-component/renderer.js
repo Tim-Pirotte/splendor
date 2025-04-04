@@ -1,37 +1,41 @@
 import * as API from "../api.js";
-import { getGameId, getGameName, getGameState } from "../utils/game-object-handler.js";
-import { getAmountText, getGameButtonText } from "./helper.js";
-import { filterGameList } from "./filter.js";
 import { POLLING_TIME_OUT } from "../config.js";
-import { safeEmptyContainer } from "../board-component/renderer/helper.js";
 import { copyNode } from "../utils/data-handler.js";
+import { getCurrentUsersAmount, getGameId, getGameName, getGameState, getMaxUsersAmount } from "../utils/game-object-handler.js";
+import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
+import { addImageToContainer, emptyContainerPreserveTemplates } from "../utils/renderer.js";
+import { filterGames } from "./gamefilter.js";
 
-function renderGameList() {
+function renderPlayerInfo() {
+    const playerName = loadFromStorage("playerName");
+    const avatar = loadFromStorage("avatar");
+
+    document.querySelector("#playerName").textContent = playerName;
+    addImageToContainer(document.querySelector("#playerInformation"), `avatars/${avatar}`, false, avatar);
+}
+
+function renderPublicGames() {
     const $template = document.querySelector("#game-template");
-    const $container = document.querySelector("ul");
-    const $gameListContainerCopy = $container.cloneNode(true);
-    safeEmptyContainer($gameListContainerCopy);
+    const $gameList = document.querySelector("ul");
+    const $gameListCopy = $gameList.cloneNode(true);
+
+    emptyContainerPreserveTemplates($gameListCopy);
 
     API.getGames().then(gameObject => {
-        const filteredGames = filterGameList(gameObject["games"]);
+        const gamesToRender = filterGames(gameObject["games"]);
 
-        if (filteredGames.size === 0) {
-            renderNoGamesFoundMessage($gameListContainerCopy);
+        if (gamesToRender.size !== 0) {
+            gamesToRender.forEach(game => $gameListCopy.appendChild(populateGame($template, game)));
         } else {
-            filteredGames.forEach(game => populateGame($template, $gameListContainerCopy, game));
+            $gameListCopy.insertAdjacentHTML("beforeend", "<p>There are no games based on your selections</p>");
         }
 
-        $container.innerHTML = $gameListContainerCopy.innerHTML;
-
-        startGameListPolling();
+        $gameList.innerHTML = $gameListCopy.innerHTML;
+        setTimeout(renderPublicGames, POLLING_TIME_OUT);
     });
 }
 
-function startGameListPolling() {
-    setTimeout(renderGameList, POLLING_TIME_OUT);
-}
-
-function populateGame($template, $container, game) {
+function populateGame($template, game) {
     const $game = copyNode($template);
 
     $game.dataset.gameState = getGameState(game);
@@ -39,18 +43,10 @@ function populateGame($template, $container, game) {
 
     $game.querySelector("h3").textContent = getGameName(game);
     $game.querySelector(".game-id").textContent = getGameId(game);
-    $game.querySelector(".amount-of-players").textContent = getAmountText(game);
-    $game.querySelector("button").textContent = getGameButtonText(game);
+    $game.querySelector(".amount-of-players").textContent = `${getCurrentUsersAmount(game)}/${getMaxUsersAmount(game)}`;
+    $game.querySelector("button").textContent = `${getGameState(game)} game`;
 
-    $container.insertAdjacentHTML("beforeend", $game.outerHTML);
+    return $game;
 }
 
-function renderNoGamesFoundMessage($container) {
-    const $message = copyNode(document.querySelector("#no-games"));
-
-    $message.querySelector("p").textContent = "There are no games based on your selections";
-
-    $container.insertAdjacentHTML("beforeend", $message.outerHTML);
-}
-
-export { renderGameList };
+export { renderPlayerInfo, renderPublicGames };
