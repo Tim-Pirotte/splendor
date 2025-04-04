@@ -43,9 +43,14 @@ function renderAvatar() {
 }
 
 function renderClientPlayerPoints(totalPrestigePoints, highestScore) {
+    saveHighestScore(highestScore);
     renderPrestigePointsScore(totalPrestigePoints);
     renderPrestigePointsProgressBar(totalPrestigePoints);
     addHighestScoreIndicator(totalPrestigePoints, highestScore);
+}
+
+function saveHighestScore(highestScore) {
+    document.querySelector(".player-points").dataset.highestScore = highestScore;
 }
 
 function renderPrestigePointsScore(totalPrestigePoints) {
@@ -223,12 +228,12 @@ function renderUpdatedPlayerTokens(bonus) {
 }
 
 function renderUpdatedPlayerScore(extraScore) {
-    API.getGame().then(gameObject => {
-        const players = getPlayersObjects(gameObject);
-        const highestScore = getHighestScore(players);
+    let highestScore = parseInt(document.querySelector(".player-points").dataset.highestScore);
+    const newPlayerPoints = getClientTotalPrestigePoints() + extraScore;
 
-        renderClientPlayerPoints(getClientTotalPrestigePoints() + extraScore, highestScore);
-    });
+    if (highestScore < newPlayerPoints) highestScore = newPlayerPoints;
+
+    renderClientPlayerPoints(getClientTotalPrestigePoints() + extraScore, highestScore);
 }
 
 function hideSwitchPaymentButtons() {
