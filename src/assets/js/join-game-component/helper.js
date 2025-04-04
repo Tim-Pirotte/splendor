@@ -11,7 +11,15 @@ function joinGameById(gameId) {
            saveToStorage("gameId", response["gameId"]);
            saveToStorage("playerToken", response["playerToken"]);
            location.href = "./lobby-page.html";
-       });
+       }).catch(handleDuplicateNameError);
+}
+
+function handleDuplicateNameError(err) {
+    const conflict = 409;
+
+    if (err["failure"] === conflict) {
+        document.querySelector(".error-messages").textContent = "Name is already taken";
+    }
 }
 
 export { locateToMainMenu, joinGameById };
