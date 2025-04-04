@@ -13,4 +13,11 @@ function addImageToContainer($targetContainer, imageName, insertAtStart, alt, re
     $targetContainer.insertAdjacentHTML(position, $template.outerHTML);
 }
 
-export { addImageToContainer };
+function emptyContainerPreserveTemplates($targetContainer) {
+    // https://developer.mozilla.org/en-US/docs/Web/CSS/:scope
+    $targetContainer.querySelectorAll(":scope> *").forEach($childElement => {
+        if ($childElement.tagName.toLowerCase() !== "template") $childElement.outerHTML = "";
+    });
+}
+
+export { addImageToContainer, emptyContainerPreserveTemplates };
