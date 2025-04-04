@@ -1,7 +1,7 @@
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
 import {
     formatNumber,
-    getNumberedItemTemplate,
+    getNumberedItemTemplate, highlightPointsWinner,
     insertImageInto,
     safeEmptyContainer,
 } from "./helper.js";
@@ -58,7 +58,7 @@ function setPlayerPoints($playerCard, prestigePoints, highestScore) {
     const $playerPoints = $playerCard.querySelector(".points span");
     $playerPoints.textContent = formatNumber(prestigePoints);
 
-    if (prestigePoints >= MAX_PRESTIGE_POINTS) $playerPoints.classList.add("enough-points-to-win");
+    highlightPointsWinner(prestigePoints, $playerPoints);
 
     if (prestigePoints >= highestScore) insertImageInto($playerCard, "UI/tokens/white_chip", false, "Score amongst the highest");
 }

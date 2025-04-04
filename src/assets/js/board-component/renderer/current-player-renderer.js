@@ -10,7 +10,7 @@ import {
     addSwitchButton,
     insertImageInto, renderCard,
     renderProgressBar,
-    safeEmptyContainer, toggleClass,
+    safeEmptyContainer, toggleClass, highlightPointsWinner,
 } from "./helper.js";
 import { allowedToSwitchToken, removePaidTokens, updateCurrentPlayerBonuses } from "../buy-reserve/buy-handler.js";
 import { GEMS } from "../data.js";
@@ -52,6 +52,7 @@ function renderPrestigePointsScore(totalPrestigePoints) {
     const $totalPrestigePoints = document.querySelector(".player-points p");
     $totalPrestigePoints.dataset.totalPrestigePoints = totalPrestigePoints;
     $totalPrestigePoints.textContent = `${formatNumber(totalPrestigePoints)} / ${PRESTIGE_POINTS_NEEDED_TO_WIN}`;
+    highlightPointsWinner(totalPrestigePoints, $totalPrestigePoints);
 }
 
 function renderPrestigePointsProgressBar(totalPrestigePoints) {

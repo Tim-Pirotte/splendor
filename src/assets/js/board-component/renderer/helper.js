@@ -1,6 +1,7 @@
 import { CHIP_SPACING, TOKEN_MAPPER } from "../config.js";
 import { copyNode } from "../../utils/data-handler.js";
 import { validCardBuy } from "../state-machine/valid-action-checker.js";
+import {MAX_PRESTIGE_POINTS} from "../../config.js";
 
 function addNodesToEmptiedContainer($container, list, mapFunction) {
     safeEmptyContainer($container);
@@ -107,6 +108,10 @@ function renderCardGraphics($card, card) {
     insertImageInto($card, "cards/illustrations/camel", false, "camel");
 }
 
+function highlightPointsWinner(prestigePoints, $playerPoints) {
+    if (prestigePoints >= MAX_PRESTIGE_POINTS) $playerPoints.classList.add("enough-points-to-win");
+}
+
 export {
     insertImageInto,
     renderProgressBar,
@@ -117,4 +122,5 @@ export {
     addNodesToEmptiedContainer,
     renderCard,
     toggleClass,
+    highlightPointsWinner,
 };
