@@ -14,10 +14,10 @@ function renderPlayersList(g) {
     const $joinedPlayers = document.querySelector("#joined-players");
 
     safeEmptyContainer($joinedPlayers);
-    getPlayersObjects(g).forEach(player => $joinedPlayers.appendChild(createPlayerElement($template, player)));
+    getPlayersObjects(g).forEach(player => $joinedPlayers.appendChild(renderPlayer($template, player)));
 }
 
-function createPlayerElement($template, playerName) {
+function renderPlayer($template, playerName) {
     const $li = copyNode($template);
     const avatar = determinePlayerAvatar(playerName);
 
