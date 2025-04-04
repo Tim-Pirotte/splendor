@@ -116,4 +116,5 @@ export {
     getNumberedItemTemplate,
     addNodesToEmptiedContainer,
     renderCard,
+    toggleClass,
 };

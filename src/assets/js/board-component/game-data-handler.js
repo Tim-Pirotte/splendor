@@ -1,11 +1,12 @@
 import * as API from "../api.js";
 import { renderPage } from "./renderer/renderer.js";
 import { initRoundBegin } from "./state-machine/state-machine.js";
-import { isCurrentlyPlaying } from "./game-status-interface.js";
+import {getActionButton, isCurrentlyPlaying} from "./game-status-interface.js";
 import { POLLING_TIME_OUT } from "../config.js";
 import { processSkipTurn } from "./token/token-handler.js";
 import { SECONDS_PER_ROUND, SECONDS_WHEN_TURN_ALMOST_ENDS } from "./config.js";
 import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
+import {toggleClass} from "./renderer/helper.js";
 
 function handleGameDataError(err) {
     const forbidden = 403;
@@ -44,8 +45,28 @@ function startGameStatePolling() {
     setTimeout(updateGameData, POLLING_TIME_OUT);
 }
 
-/* https://www.freecodecamp.org/news/javascript-timer-how-to-set-a-timer-function-in-js/ */
+function setTimer(currentSeconds, maxSeconds, $timerFill) {
+    if (isCurrentlyPlaying()) {
+        const timerHeight = currentSeconds / maxSeconds * 100;
+        $timerFill.style.height = `${timerHeight}%`;
+        $timerFill.closest(".timer").setAttribute("aria-valuenow", currentSeconds);
+
+        toggleClass($timerFill, "time-almost-ends", currentSeconds < SECONDS_WHEN_TURN_ALMOST_ENDS);
+
+        if (getActionButton().disabled) {
+            getActionButton().click();
+        } else {
+            processSkipTurn();
+        }
+
+        if (currentSeconds > 0) setTimeout(() => setTimer(currentSeconds - 1, maxSeconds, $timerFill), 1000);
+    }
+}
+
 function startRoundTimer() {
+    setTimer(45 - 1, 45 - 1, document.querySelector(".timer-fill"))
+
+    return;
     const $progressBarFill = document.querySelector(".timer-fill");
     const $progressBar = document.querySelector(".timer");
 

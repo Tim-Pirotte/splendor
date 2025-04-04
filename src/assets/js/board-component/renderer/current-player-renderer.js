@@ -8,7 +8,7 @@ import {
     addSwitchButton,
     insertImageInto, renderCard,
     renderProgressBar,
-    safeEmptyContainer,
+    safeEmptyContainer, toggleClass,
 } from "./helper.js";
 import { allowedToSwitchToken, removePaidTokens, updateCurrentPlayerBonuses } from "../buy/buy-handler.js";
 import { GEMS } from "../data.js";
@@ -69,11 +69,7 @@ function renderClientPlayerTokenCount(tokens) {
 }
 
 function setTotalTokensColor($totalTokenCount, totalTokens) {
-    if (totalTokens > MAX_TOKENS_ALLOWED) {
-        $totalTokenCount.classList.add("highlighted-number");
-    } else {
-        $totalTokenCount.classList.remove("highlighted-number");
-    }
+    toggleClass($totalTokenCount, "highlighted-number", totalTokens > MAX_TOKENS_ALLOWED);
 }
 
 function renderClientPlayer(players, gems) {
