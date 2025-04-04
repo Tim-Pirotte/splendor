@@ -6,7 +6,7 @@ function joinGameById(gameId) {
         .then(response => {
             saveToStorage("gameId", response["gameId"]);
             saveToStorage("playerToken", response["playerToken"]);
-            location.href = "./lobby-page.html";
+            location.href = "./lobby.html";
         });
 }
 
