@@ -12,6 +12,7 @@ function createGameUsingGui(e) {
         gameName: document.querySelector("#game-name").value.trim() || `${loadFromStorage("playerName")}'s game`,
         visibility: getCheckedValue(document.querySelectorAll("input[name=visibility]")),
         numberOfPlayers: parseInt(getCheckedValue(document.querySelectorAll("input[name=players]"))),
+        returnExcessTokensRequired: true,
     });
 }
 
