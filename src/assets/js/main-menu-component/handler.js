@@ -17,6 +17,7 @@ function savePlayerInfo(e) {
 
     if (document.querySelector("form").reportValidity()) {
         saveToStorage("playerName", document.querySelector("#username").value.trim());
+        saveToStorage("avatar", document.querySelector("#avatar li img").alt);
 
         if (["join-game", "create-game"].includes(e.target.value)) {
             location.href = `./pages/${e.target.value}.html`;
