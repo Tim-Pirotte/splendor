@@ -2,7 +2,7 @@ import { isCurrentlyPlaying } from "../game-status-interface.js";
 import { deckHasEnoughCards, hasReservePlace } from "./valid-resource-checker.js";
 import { DEVELOPMENT_CARDS } from "../data.js";
 import { GAME_STATE } from "./data.js";
-import { canBuy } from "../buy/buy-handler.js";
+import { canBuy } from "../buy-reserve/buy-handler.js";
 
 function validTokenTake() {
     return isCurrentlyPlaying() && getGameState() === GAME_STATE.TURN_ACTION;
@@ -16,12 +16,12 @@ function validCardBuy(name) {
     return isCurrentlyPlaying() && getGameState() === GAME_STATE.TURN_ACTION && canBuy(name);
 }
 
-function validCardReserve() {
-    return isCurrentlyPlaying() && getGameState() === GAME_STATE.TURN_ACTION && hasReservePlace();
+function validCardReserve($card) {
+    return isCurrentlyPlaying() && getGameState() === GAME_STATE.TURN_ACTION && hasReservePlace() && !$card.classList.contains("reserved");
 }
 
-function validDeckReserve(cardName) {
-    return isCurrentlyPlaying() && getGameState() === GAME_STATE.TURN_ACTION && hasReservePlace() && deckHasEnoughCards(getLevelFromCard(cardName));
+function validDeckReserve(deckLevel) {
+    return isCurrentlyPlaying() && getGameState() === GAME_STATE.TURN_ACTION && hasReservePlace() && deckHasEnoughCards(deckLevel);
 }
 
 function validNobelPick() {
@@ -42,4 +42,13 @@ function getCardObject(cardName) {
     return DEVELOPMENT_CARDS.find(card => card.name === cardName);
 }
 
-export { validTokenTake, validTokenDiscard, validCardBuy, validCardReserve, validDeckReserve, validNobelPick };
+export {
+    validTokenTake,
+    validTokenDiscard,
+    validCardBuy,
+    validCardReserve,
+    validDeckReserve,
+    validNobelPick,
+    getCardObject,
+    getLevelFromCard,
+};

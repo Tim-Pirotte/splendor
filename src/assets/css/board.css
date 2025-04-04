@@ -7,7 +7,7 @@ body {
 }
 
 /* SWITCH TOKEN BUTTONS */
-.switch-token-container .hidden {
+.hidden, .switch-token-container .hidden {
     display: none;
 }
 
@@ -230,7 +230,7 @@ section header picture {
     border-radius: 0.25rem;
 }
 
-.selected-card picture:first-of-type img {
+.selected-card {
     outline: 0.275rem solid hotpink;
     border-radius: 0.25rem;
 }
@@ -283,8 +283,7 @@ section header picture {
     background: hotpink;
 }
 
-/* ACTION BUTTON */
-.action-button {
+.button-container { 
     grid-area: action-button;
     height: 2rem;
     width: fit-content;
