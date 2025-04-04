@@ -1,6 +1,14 @@
 import * as API from "../../api.js";
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
 import { MAX_TOKENS_ALLOWED, PRESTIGE_POINTS_NEEDED_TO_WIN, TOKEN_MAPPER } from "../config.js";
+import { isAllowedToSwitchToken, removePaidTokens, updateCurrentPlayerBonuses } from "../buy-reserve/buy-handler.js";
+import { GEMS } from "../data.js";
+import { getHighestScore, sumObjectValues, getPlayersObjects } from "../../utils/game-object-handler.js";
+import { getClientTokens, getClientTotalPrestigePoints } from "../game-data-handler.js";
+import { copyNode } from "../../utils/data-handler.js";
+import { getTokenAmount, getTotalAmountDiscarded, getTotalTokenAmount } from "../token/discard.js";
+import { validTokenDiscard } from "../state-machine/valid-action-checker.js";
+import { isCurrentlyPlaying } from "../game-status-interface.js";
 import {
     addNodesToEmptiedContainer,
     formatNumber,
@@ -19,7 +27,7 @@ import { isCurrentlyPlaying } from "../game-status-interface.js";
 
 function renderHeader(currentPlayer) {
     renderGameStatusMessage(currentPlayer);
-    renderPlayerName();
+    renderPlayerProfile();
 }
 
 function renderGameStatusMessage(currentPlayer) {
@@ -28,8 +36,16 @@ function renderGameStatusMessage(currentPlayer) {
     $statusMessage.dataset.currentlyPlaying = currentPlayer;
 }
 
-function renderPlayerName() {
+function renderPlayerProfile() {
     document.querySelector(".top-bar h2").textContent = loadFromStorage("playerName");
+    renderAvatar();
+}
+
+function renderAvatar() {
+    const avatar = loadFromStorage("avatar");
+    const $avatar = document.querySelector("header div.avatar");
+    safeEmptyContainer($avatar);
+    insertImageInto($avatar, `avatars/${avatar}`, avatar);
 }
 
 function renderClientPlayerPoints(totalPrestigePoints, highestScore) {
@@ -65,6 +81,8 @@ function renderClientPlayerTokenCount(tokens) {
 
     const amountOfTokens = formatNumber(countTokens(tokens));
     $totalTokenCount.textContent = amountOfTokens;
+    $totalTokenCount.dataset.amount = amountOfTokens;
+    $totalTokenCount.dataset.amountToDiscard = 0;
     setTotalTokensColor($totalTokenCount, amountOfTokens);
 }
 
@@ -81,6 +99,7 @@ function renderClientPlayer(players, gems) {
     renderClientPlayerReserve(clientPlayer);
     renderClientPlayerTokenCount(clientPlayer["tokens"]);
     renderClientPlayerTokens(clientPlayer["tokens"], clientPlayer["bonuses"], gems);
+    renderTimer();
 }
 
 function getPlayer(players, currentPlayerName) {
@@ -107,13 +126,14 @@ function renderClientPlayerTokens(currentPlayerTokens, currentPlayerBonuses, gem
 
     const $numberedItemTemplate = getNumberedItemTemplate();
     const $progressBarTemplate = document.querySelector("#progress-bar-template");
+    const $discardNavTemplate = document.querySelector("#token-discard-template");
 
     for (const token of gems.toReversed()) {
-        renderClientToken($numberedItemTemplate, token, $progressBarTemplate, currentPlayerBonuses, currentPlayerTokens, $currentPlayerTokensContainer);
+        renderClientToken($numberedItemTemplate, token, $progressBarTemplate, currentPlayerBonuses, currentPlayerTokens, $currentPlayerTokensContainer, $discardNavTemplate);
     }
 }
 
-function renderClientToken($numberedItemTemplate, token, $progressBarTemplate, currentPlayerBonuses, currentPlayerTokens, $clientPlayerTokensContainer) {
+function renderClientToken($numberedItemTemplate, token, $progressBarTemplate, currentPlayerBonuses, currentPlayerTokens, $clientPlayerTokensContainer, $discardNavTemplate) {
     const $token = copyNode($numberedItemTemplate);
     addTokenTypeAmount($token, token, currentPlayerTokens);
 
@@ -123,6 +143,8 @@ function renderClientToken($numberedItemTemplate, token, $progressBarTemplate, c
 
     addProgressBar($progressBarTemplate, currentPlayerTokens, token, $token);
     addSwitchButton($token, token);
+
+    if (validTokenDiscard()) addDiscardNav($discardNavTemplate, $token);
 
     $clientPlayerTokensContainer.appendChild($token);
 }
@@ -137,6 +159,28 @@ function addProgressBar($progressBarTemplate, currentPlayerTokens, token, $token
     const $progressBar = copyNode($progressBarTemplate);
     renderProgressBar($progressBar, currentPlayerTokens[token], TOKEN_MAPPER[token]);
     $token.appendChild($progressBar);
+}
+
+function addDiscardNav($discardNavTemplate, $token) {
+    const $discardNav = copyNode($discardNavTemplate);
+    $token.appendChild($discardNav);
+    setButtonStatuses();
+}
+
+function setButtonStatuses() {
+    const totalAmountOfTokens = getTotalTokenAmount();
+    const totalAmountDiscarded = getTotalAmountDiscarded();
+
+    for (const $token of document.querySelectorAll(".player-tokens li")) {
+        const amountAvailable = getTokenAmount($token);
+        const amountInDiscard = parseInt($token.querySelector(".discard-container .amount").dataset.amount);
+
+        const addButton = $token.querySelector("[data-action='add']");
+        const removeButton = $token.querySelector("[data-action='remove']");
+
+        addButton.disabled = amountInDiscard === amountAvailable || totalAmountOfTokens - MAX_TOKENS_ALLOWED === totalAmountDiscarded;
+        removeButton.disabled = amountInDiscard === 0;
+    }
 }
 
 function renderSwitchPaymentButtons(currentPayment, cost) {
@@ -199,6 +243,19 @@ function hideSwitchPaymentButtons() {
     });
 }
 
+function renderTimer() {
+    if (isCurrentlyPlaying()) {
+        document.querySelector(".timer").style.display = "block";
+    } else {
+        document.querySelector(".timer").style.display = "none";
+    }
+}
+
+function addGoldToken() {
+    const $goldTokenCountContainer = document.querySelector(".player-tokens li[data-type='Gold'] .amount");
+    $goldTokenCountContainer.textContent = parseInt($goldTokenCountContainer.textContent) + 1;
+}
+
 export {
     renderHeader,
     renderClientPlayer,
@@ -207,4 +264,6 @@ export {
     renderUpdatedPlayerTokens,
     renderUpdatedPlayerScore,
     hideSwitchPaymentButtons,
+    setButtonStatuses,
+    addGoldToken,
 };

@@ -1,14 +1,12 @@
-const MAX_RESERVED_AMOUNT = 3;
+import { MAX_RESERVED_AMOUNT } from "../config.js";
 
 function hasReservePlace() {
-    const amount = document.querySelectorAll("section .reserved-cards ul li").length;
-
+    const amount = document.querySelectorAll(".reserved-cards .card").length;
     return amount < MAX_RESERVED_AMOUNT;
 }
 
-function deckHasEnoughCards(level) {
-    const amount = parseInt(document.querySelector(`.level-deck[data-amount="${level}"] .cards-in-deck`).dataset.amount);
-
+function deckHasEnoughCards(deckLevel) {
+    const amount = parseInt(document.querySelector(`.decks .level-${deckLevel} ul.cards-in-deck`).dataset.amount);
     return amount > 0;
 }
 

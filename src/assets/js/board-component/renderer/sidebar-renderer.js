@@ -10,6 +10,7 @@ import { MAX_PRESTIGE_POINTS } from "../../config.js";
 import { getHighestScore } from "../../utils/game-object-handler.js";
 import { copyNode } from "../../utils/data-handler.js";
 import {GEMS} from "../data.js";
+import { avatars } from "../../main-menu-component/data.js";
 
 function renderOtherPlayers(otherPlayers, currentPlayer) {
     const currentPlayerName = loadFromStorage("playerName");
@@ -30,9 +31,11 @@ function renderOtherPlayers(otherPlayers, currentPlayer) {
 function renderOtherPlayer($playerTemplate, otherPlayer, highestScore, currentPlayer) {
     const $playerCard = copyNode($playerTemplate);
     const playerName = otherPlayer.name;
+    const avatar = avatars[playerName.toLowerCase().charCodeAt(0) % avatars.length];
 
     showOtherPlayerTurn(playerName, currentPlayer, $playerCard);
 
+    insertImageInto($playerCard, `avatars/${avatar}`, true, avatar);
     setPlayerName($playerCard, otherPlayer);
     setPlayerPoints($playerCard, otherPlayer["totalPrestigePoints"], highestScore);
 

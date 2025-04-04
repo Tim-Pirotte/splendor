@@ -79,6 +79,7 @@ function renderCard(card) {
     $card.dataset.name = card["name"];
     $card.querySelector(".points").textContent = card["points"];
 
+    if (reservedCard) $card.classList.add("reserved");
     if (validCardBuy(card["name"])) $card.classList.add("buyable-card");
 
     const $cardCost = $card.querySelector(".cost");

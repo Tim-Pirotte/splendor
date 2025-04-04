@@ -1,7 +1,8 @@
 import * as API from "../api.js";
 import { renderPage } from "./renderer/renderer.js";
-import { initRoundBegin } from "./state-machine/state-machine.js";
-import {getActionButton, isCurrentlyPlaying} from "./game-status-interface.js";
+import { getActionButton } from "./game-status-interface.js";
+import { initRoundBegin, saveGameState } from "./state-machine/state-machine.js";
+import { isCurrentlyPlaying } from "./game-status-interface.js";
 import { POLLING_TIME_OUT } from "../config.js";
 import { processSkipTurn } from "./token/token-handler.js";
 import { SECONDS_PER_ROUND, SECONDS_WHEN_TURN_ALMOST_ENDS } from "./config.js";
@@ -24,21 +25,16 @@ function updateGameData() {
 
     API.getGame().then(gameData => {
         saveToStorage("gameData", gameData);
+        saveGameState(gameData["gameState"]);
         renderPage(gameData);
         initRoundBegin(gameData);
 
         if (!isCurrentlyPlaying()) {
-            removeTimer();
             startGameStatePolling();
         } else {
             startRoundTimer();
         }
     }).catch(err => handleGameDataError(err));
-}
-
-function removeTimer() {
-    document.querySelector(".timer-fill").classList.remove("time-almost-ends");
-    document.querySelector(".timer").setAttribute("aria-valuenow", "0");
 }
 
 function startGameStatePolling() {
@@ -71,14 +67,15 @@ function startRoundTimer() {
     const $progressBar = document.querySelector(".timer");
 
     // TODO : fill with server data!
-    const timeRoundStarted = new Date("2025-04-01T19:45:00.000Z").getTime();
+    // "2025-04-01T19:45:00.000Z"
+    const timeRoundStarted = new Date(Date.now()).getTime();
 
     const timer = setInterval(() => {
         const currentTime = Date.now();
         const deltaTime = Math.floor((currentTime - timeRoundStarted) / 1000);
 
-        $progressBarFill.style.height = `${100 - (deltaTime / SECONDS_PER_ROUND * 100)}%`;
-        $progressBar.setAttribute("aria-valuenow", deltaTime);
+        $progressBarFill.style.height = `${(SECONDS_PER_ROUND - 2 - deltaTime) / (SECONDS_PER_ROUND - 2) * 100}%`;
+        $progressBar.setAttribute("aria-valuenow", SECONDS_PER_ROUND - deltaTime);
 
         if (deltaTime >= SECONDS_PER_ROUND - SECONDS_WHEN_TURN_ALMOST_ENDS) {
             $progressBarFill.classList.add("time-almost-ends");
@@ -88,6 +85,7 @@ function startRoundTimer() {
             clearInterval(timer);
 
             processSkipTurn();
+            startGameStatePolling();
             updateGameData();
         }
     }, 1000);
@@ -107,7 +105,7 @@ function getClientBonuses() {
     const bonuses = {};
 
     for (const $bonus of document.querySelectorAll(".player-tokens ul > li")) {
-        bonuses[$bonus.dataset.type] = parseInt($bonus.dataset.bonuses);
+        bonuses[$bonus.dataset.type] = parseInt($bonus.dataset.bonuses) || 0;
     }
 
     return bonuses;
