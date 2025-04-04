@@ -2,7 +2,6 @@ import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { createGameUsingGui, locateToMainMenu } from "./handler.js";
 import { renderPlayerInfo } from "./renderer.js";
 
-
 function createInit() {
     setupUI();
     setupEventListeners();
