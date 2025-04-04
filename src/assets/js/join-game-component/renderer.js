@@ -1,8 +1,10 @@
 import * as API from "../api.js";
+import { POLLING_TIME_OUT } from "../config.js";
 import { copyNode } from "../utils/data-handler.js";
 import { getCurrentUsersAmount, getGameId, getGameName, getGameState, getMaxUsersAmount } from "../utils/game-object-handler.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { addImageToContainer, emptyContainerPreserveTemplates } from "../utils/renderer.js";
+import { filterGames } from "./gamefilter.js";
 
 function renderPlayerInfo() {
     const playerName = loadFromStorage("playerName");
@@ -19,13 +21,15 @@ function renderPublicGames() {
     emptyContainerPreserveTemplates($gameList);
 
     API.getGames().then(gameObject => {
-        const gamesToRender = gameObject["games"];
+        const gamesToRender = filterGames(gameObject["games"]);
 
-        if (gamesToRender !== 0) {
+        if (gamesToRender.size !== 0) {
             gamesToRender.forEach(game => $gameList.appendChild(populateGame($template, game)));
         } else {
             $gameList.insertAdjacentHTML("beforeend", `<p>There are no games based on your selections</p>`);
         }
+
+        startGameListPolling();
     });
 }
 
@@ -41,6 +45,10 @@ function populateGame($template, game) {
     $game.querySelector("button").textContent = `${getGameState(game)} game`;
 
     return $game;
+}
+
+function startGameListPolling() {
+    setTimeout(renderPublicGames, POLLING_TIME_OUT);
 }
 
 export { renderPlayerInfo, renderPublicGames };

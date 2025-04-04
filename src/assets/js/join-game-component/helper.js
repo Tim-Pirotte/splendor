@@ -11,15 +11,19 @@ function joinGameById(gameId) {
            saveToStorage("gameId", response["gameId"]);
            saveToStorage("playerToken", response["playerToken"]);
            location.href = "./lobby-page.html";
-       }).catch(handleDuplicateNameError);
+       });
 }
 
-function handleDuplicateNameError(err) {
-    const conflict = 409;
+function intersection(setA, setB) {
+    const result = new Set();
 
-    if (err["failure"] === conflict) {
-        document.querySelector(".error-messages").textContent = "Name is already taken";
+    for (const item of setA) {
+        if (setB.has(item)) {
+            result.add(item);
+        }
     }
+
+    return result;
 }
 
-export { locateToMainMenu, joinGameById };
+export { locateToMainMenu, joinGameById, intersection };
