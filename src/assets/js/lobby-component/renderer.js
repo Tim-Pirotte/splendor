@@ -19,7 +19,7 @@ function renderPlayersList(g) {
 
 function createPlayerElement($template, playerName) {
     const $li = copyNode($template);
-    let avatar = determinePlayerAvatar(playerName);
+    const avatar = determinePlayerAvatar(playerName);
 
     $li.querySelector(".player-name").textContent = playerName;
     $li.querySelector("source").srcset = `../assets/images/avatars/${avatar}.webp`;
