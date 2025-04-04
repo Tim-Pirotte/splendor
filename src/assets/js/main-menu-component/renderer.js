@@ -1,20 +1,25 @@
-import { renderAvatar } from "../utils/player-renderer.js";
 import { avatars } from "./data.js";
+import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
+import { addImageToContainer } from "../utils/renderer.js";
 
-function renderSelectableAvatars() {
-    const $template = document.querySelector("#avatar-template");
-    const $container = document.querySelector("section");
+function renderAvatarSelectionList() {
+    const $avatarsSection = document.querySelector("section ul");
 
     document.querySelectorAll("li").forEach(li => li.remove());
-    avatars.forEach(avatar => renderAvatar($template, $container, avatar));
+    avatars.forEach(avatar => addImageToContainer($avatarsSection, `avatars/${avatar}`, false, avatar, "."));
 }
 
-function renderSelectedAvatars(avatar) {
-    const $template = document.querySelector("#avatar-template");
+function renderPlayerInfo() {
     const $button = document.querySelector(".avatar-selector button");
+    const avatar = loadFromStorage("avatar") || "placeholder";
+    const playerName = loadFromStorage("playerName");
 
     $button.innerHTML = "";
-    renderAvatar($template, $button, avatar);
+    addImageToContainer($button, `avatars/${avatar}`, false, avatar, ".");
+
+    if (playerName) {
+        document.querySelector("#username").value = playerName;
+    }
 }
 
-export { renderSelectableAvatars, renderSelectedAvatars };
+export { renderAvatarSelectionList, renderPlayerInfo };

@@ -1,34 +1,28 @@
-import { redirectToPageInPages } from "../utils/navigation.js";
-import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
-import { toggleAvatarListVisibility } from "./helper.js";
-import { renderSelectedAvatars } from "./renderer.js";
+import { saveToStorage } from "../data-connector/local-storage-abstractor.js";
+import { renderPlayerInfo } from "./renderer.js";
 
-function storeUsername(e) {
+function toggleAvatarListVisibility(e) {
+    const avatarListStyle = document.querySelector(".avatar-selector section").style;
+    avatarListStyle.display = (avatarListStyle.display === "none") ? "block" : "none";
+}
+
+function updateSelectedAvatar(e) {
+    saveToStorage("avatar", e.target.closest("img").title);
+    renderPlayerInfo();
+    toggleAvatarListVisibility();
+}
+
+function savePlayerInfo(e) {
     e.preventDefault();
 
-    const $form = document.querySelector("form");
-    const username = document.querySelector("#username").value.trim();
-
-    if ($form.reportValidity()) {
-        saveToStorage("avatar", loadFromStorage("avatar") || "placeholder");
-        saveToStorage("playerName", username);
+    if (document.querySelector("form").reportValidity()) {
+        saveToStorage("playerName", document.querySelector("#username").value.trim());
+        saveToStorage("avatar", document.querySelector("#avatar li img").alt);
 
         if (["join-game", "create-game"].includes(e.target.value)) {
-            redirectToPageInPages(e.target.value);
+            location.href = `./pages/${e.target.value}.html`;
         }
     }
 }
 
-function storeAvatar(e) {
-    e.preventDefault();
-
-    const avatar = e.target.closest("img").title;
-
-    if (avatar) {
-        saveToStorage("avatar", avatar);
-        renderSelectedAvatars(avatar);
-        toggleAvatarListVisibility(e);
-    }
-}
-
-export { storeUsername, storeAvatar };
+export { updateSelectedAvatar, toggleAvatarListVisibility, savePlayerInfo };

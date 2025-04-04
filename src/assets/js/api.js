@@ -40,7 +40,7 @@ function buyCard(requestBody) {
 function reserveCard(requestBody) {
     const gameId = loadFromStorage("gameId");
     const playerName = loadFromStorage("playerName");
-    return fetchFromServer(`/games/${gameId}/players/${playerName}/reserve`, "POST", requestBody);
+    return fetchFromServer(`/games/${gameId}/players/${playerName}/reserve`, "DELETE", requestBody);
 }
 
 function buyReserveCard(developmentName, requestBody) {
