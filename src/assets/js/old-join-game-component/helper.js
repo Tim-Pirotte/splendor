@@ -1,14 +1,4 @@
-import { getCurrentUsersAmount, getGameState, getMaxUsersAmount } from "../utils/game-object-handler.js";
-
-function getAmountText(game) {
-    return `${getCurrentUsersAmount(game)}/${getMaxUsersAmount(game)}`;
-}
-
-function getGameButtonText(game) {
-    return getGameState(game) === "join" ? "Join game" : "Spectate game";
-}
-
-function intersection(setA, setB) {
+/*function intersection(setA, setB) {
     const result = new Set();
 
     for (const item of setA) {
@@ -19,5 +9,14 @@ function intersection(setA, setB) {
 
     return result;
 }
+    API.getGames().then(gameObject => {
+        startGameListPolling();
+    });
 
-export { getAmountText, getGameButtonText, intersection };
+function startGameListPolling() {
+    setTimeout(renderGameList, POLLING_TIME_OUT);
+}
+
+    document.querySelector("#amount-filter").addEventListener("change", handleFilterChange);
+    document.querySelector("#filter-form").addEventListener("submit", handleFilterChange);
+}*/
