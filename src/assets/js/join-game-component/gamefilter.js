@@ -3,7 +3,7 @@ import { intersection } from "./helper.js";
 function filterGames(gameList) {
     return intersection(
         filterByPlayerCount(gameList, document.querySelector("#amount-filter").value),
-        filterByName(gameList, document.querySelector("#game-name").value)
+        filterByName(gameList, document.querySelector("#game-name").value),
     );
 }
 

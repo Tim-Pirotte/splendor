@@ -27,7 +27,7 @@ function renderPublicGames() {
         if (gamesToRender.size !== 0) {
             gamesToRender.forEach(game => $gameListCopy.appendChild(populateGame($template, game)));
         } else {
-            $gameListCopy.insertAdjacentHTML("beforeend", `<p>There are no games based on your selections</p>`);
+            $gameListCopy.insertAdjacentHTML("beforeend", "<p>There are no games based on your selections</p>");
         }
 
         $gameList.innerHTML = $gameListCopy.innerHTML;
