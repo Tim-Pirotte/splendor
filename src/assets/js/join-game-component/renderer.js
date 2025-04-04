@@ -31,7 +31,7 @@ function renderPublicGames() {
         }
 
         $gameList.innerHTML = $gameListCopy.innerHTML;
-        startGameListPolling();
+        setTimeout(renderPublicGames, POLLING_TIME_OUT);
     });
 }
 
@@ -47,10 +47,6 @@ function populateGame($template, game) {
     $game.querySelector("button").textContent = `${getGameState(game)} game`;
 
     return $game;
-}
-
-function startGameListPolling() {
-    setTimeout(renderPublicGames, POLLING_TIME_OUT);
 }
 
 export { renderPlayerInfo, renderPublicGames };

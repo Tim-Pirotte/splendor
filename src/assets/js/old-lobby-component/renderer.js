@@ -1,4 +1,4 @@
-import { getCurrentUsersAmount, getGameCreator, getGameId, getGameName, getMaxUsersAmount, getPlayersObjects } from "../utils/game-object-handler.js";
+/*import { getCurrentUsersAmount, getGameCreator, getGameId, getGameName, getMaxUsersAmount, getPlayersObjects } from "../utils/game-object-handler.js";
 import { safeEmptyContainer } from "../board-component/renderer/helper.js";
 import { copyNode } from "../utils/data-handler.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
@@ -40,3 +40,4 @@ function renderPlayerCount(g) {
 }
 
 export { renderHeader, renderPlayers, renderPlayerCount };
+*/
