@@ -51,7 +51,7 @@ function renderBoardTokens(unclaimedTokens, playerLength) {
     const $numberedItemTemplate = getNumberedItemTemplate();
 
     for (const token of GEMS.toReversed()) {
-        $boardTokensContainer.appendChild(renderBoardToken($numberedItemTemplate, token, unclaimedTokens, playerLength, $boardTokensContainer));
+        $boardTokensContainer.appendChild(renderBoardToken($numberedItemTemplate, token, unclaimedTokens, playerLength));
     }
 }
 

@@ -1,8 +1,7 @@
 import * as API from "../api.js";
 import { renderPage } from "./renderer/renderer.js";
-import { getActionButton } from "./game-status-interface.js";
+import { getActionButton, isCurrentlyPlaying } from "./game-status-interface.js";
 import { initRoundBegin, saveGameState } from "./state-machine/state-machine.js";
-import { isCurrentlyPlaying } from "./game-status-interface.js";
 import { POLLING_TIME_OUT } from "../config.js";
 import { processSkipTurn } from "./token/token-handler.js";
 import { SECONDS_PER_ROUND, SECONDS_WHEN_TURN_ALMOST_ENDS } from "./config.js";
