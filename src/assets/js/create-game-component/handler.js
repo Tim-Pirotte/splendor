@@ -5,7 +5,7 @@ function locateMainMenu(e) {
     location.href = "./../index.html";
 }
 
-function createGameUsingGui(e) {
+function createGame(e) {
     e.preventDefault();
     createGameWithBody({
         playerName: loadFromStorage("playerName"),
@@ -16,4 +16,4 @@ function createGameUsingGui(e) {
     });
 }
 
-export { locateMainMenu, createGameUsingGui };
+export { locateMainMenu, createGame };

@@ -1,5 +1,5 @@
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
-import { createGameUsingGui, locateMainMenu } from "./handler.js";
+import { createGame, locateMainMenu } from "./handler.js";
 import { renderPlayerInfo } from "./renderer.js";
 
 function createInit() {
@@ -15,7 +15,7 @@ function setupUI() {
 
 function setupEventListeners() {
     document.querySelector("#back-button").addEventListener("click", locateMainMenu);
-    document.querySelector("form").addEventListener("submit", createGameUsingGui);
+    document.querySelector("form").addEventListener("submit", createGame);
 }
 
 createInit();
