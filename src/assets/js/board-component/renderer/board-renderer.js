@@ -3,7 +3,7 @@ import {
     getNumberedItemTemplate,
     insertImageInto,
     renderCard,
-    safeEmptyContainer
+    safeEmptyContainer,
 } from "./helper.js";
 import {
     GOLD_TOKEN_LIMIT,

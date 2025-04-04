@@ -1,5 +1,5 @@
 import * as API from "../../api.js";
-import {addNodesToEmptiedContainer, renderCard, safeEmptyContainer} from "../renderer/helper.js";
+import { addNodesToEmptiedContainer, renderCard } from "../renderer/helper.js";
 import { endBuyReserveAction, getReserveCardButton } from "./helper.js";
 import { startGameStatePolling } from "../game-data-handler.js";
 import { deselectCard } from "./select.js";
@@ -57,11 +57,7 @@ function selectDeckForReserving(e) {
     setActionToBuyReserve($clickedPictureTag.closest("li"), deckLevel);
 
     getActionButton().disabled = true;
-    getReserveCardButton.disabled = !validDeckReserve(deckLevel);
+    getReserveCardButton().disabled = !validDeckReserve(deckLevel);
 }
 
-function allowToReserve() {
-    getReserveCardButton().disabled = false;
-}
-
-export { processReserve, allowToReserve, selectDeckForReserving };
+export { processReserve, selectDeckForReserving };

@@ -7,7 +7,7 @@ import { POLLING_TIME_OUT } from "../config.js";
 import { processSkipTurn } from "./token/token-handler.js";
 import { SECONDS_PER_ROUND, SECONDS_WHEN_TURN_ALMOST_ENDS } from "./config.js";
 import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
-import {toggleClass} from "./renderer/helper.js";
+import { toggleClass } from "./renderer/helper.js";
 
 function handleGameDataError(err) {
     const forbidden = 403;

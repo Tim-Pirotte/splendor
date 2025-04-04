@@ -9,7 +9,7 @@ import { TOKEN_MAPPER } from "../config.js";
 import { MAX_PRESTIGE_POINTS } from "../../config.js";
 import { getHighestScore } from "../../utils/game-object-handler.js";
 import { copyNode } from "../../utils/data-handler.js";
-import {GEMS} from "../data.js";
+import { GEMS } from "../data.js";
 import { avatars } from "../../main-menu-component/data.js";
 
 function renderOtherPlayers(otherPlayers, currentPlayer) {

@@ -4,7 +4,7 @@ import { takeTokens } from "../../api.js";
 import { MAX_TOKENS_ALLOWED } from "../config.js";
 
 function selectPlayerToken(e) {
-    if (!clickedOnButton(e.target)) return;
+    if (!clickedOnDiscardButton(e.target)) return;
 
     const action = getButtonAction(e.target);
     const $tokenContainer = getTokenContainer(e.target);
@@ -29,8 +29,8 @@ function selectPlayerToken(e) {
     }
 }
 
-function clickedOnButton(target) {
-    return target.tagName.toLowerCase() === "button";
+function clickedOnDiscardButton(target) {
+    return target.tagName.toLowerCase() === "button" && target.closest("div").classList.contains("discard-container");
 }
 
 function getButtonAction(target) {
@@ -63,8 +63,9 @@ function addOneToDiscard($amountCounter) {
 }
 
 function removeOneToDiscard($amountCounter) {
-    $amountCounter.dataset.amount = parseInt($amountCounter.dataset.amount || 0) - 1;
-    $amountCounter.textContent = parseInt($amountCounter.dataset.amount);
+    const amount = parseInt($amountCounter.dataset.amount || 0) - 1;
+    $amountCounter.dataset.amount = amount;
+    $amountCounter.textContent = amount;
 }
 
 function increaseTotalDiscardCount() {
