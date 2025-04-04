@@ -4,7 +4,7 @@ function locateMainMenu(e) {
     location.href = "./../index.html";
 }
 
-function joinGameUsingId(e) {
+function joinGameUsingUsersInputId(e) {
     e.preventDefault();
     joinGameById(document.querySelector("#game-id").value);
 }
@@ -16,4 +16,4 @@ function joinGame(e) {
     }
 }
 
-export { locateMainMenu, joinGameUsingId, joinGame };
+export { locateMainMenu, joinGameUsingUsersInputId, joinGame };
