@@ -77,7 +77,7 @@ function getNumberedItemTemplate() {
 function renderCard(card) {
     const $card = copyNode(document.querySelector("#card-template"));
     $card.dataset.name = card["name"];
-    $card.querySelector(".points").textContent = card["points"];
+    $card.querySelector(".points").textContent = card["prestigePoints"];
 
     if (validCardBuy(card["name"])) $card.classList.add("buyable-card");
 

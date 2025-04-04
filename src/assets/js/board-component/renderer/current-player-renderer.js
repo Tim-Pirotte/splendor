@@ -26,7 +26,7 @@ function renderHeader(currentPlayer) {
 
 function renderGameStatusMessage(currentPlayer) {
     const $statusMessage = document.querySelector("h1");
-    $statusMessage.textContent = isCurrentlyPlaying() ? "It's your turn" : `${currentPlayer}'s turn`;
+    $statusMessage.textContent = isCurrentlyPlaying() ? "It's your turn" : `It's ${currentPlayer}'s turn`;
     $statusMessage.dataset.currentlyPlaying = currentPlayer;
 }
 
@@ -189,7 +189,7 @@ function renderSwitchPaymentButtons(currentPayment, cost) {
 }
 
 function renderSwitchPayment($tokenContainer, currentPayment, cost, tokensInWallet) {
-    const tokenType = $tokenContainer.querySelector(".switch-token").dataset.type;
+    const tokenType = $tokenContainer.closest("li").dataset.type;
 
     if (allowedToSwitchToken(tokenType, currentPayment, cost, tokensInWallet)) {
         $tokenContainer.querySelector(".switch-token").classList.remove("hidden");
