@@ -12,7 +12,7 @@ import { copyNode } from "../../utils/data-handler.js";
 import { GEMS } from "../data.js";
 import { avatars } from "../../main-menu-component/data.js";
 
-function renderOtherPlayers(otherPlayers, currentPlayer) {
+function renderOtherPlayers(otherPlayers, clientPlayer) {
     const currentPlayerName = loadFromStorage("playerName");
     const highestScore = getHighestScore(otherPlayers);
 
@@ -23,7 +23,7 @@ function renderOtherPlayers(otherPlayers, currentPlayer) {
 
     for (const otherPlayer of otherPlayers) {
         if (otherPlayer.name !== currentPlayerName) {
-            $otherPlayerContainer.appendChild(renderOtherPlayer($playerTemplate, otherPlayer, highestScore, currentPlayer));
+            $otherPlayerContainer.appendChild(renderOtherPlayer($playerTemplate, otherPlayer, highestScore, clientPlayer));
         }
     }
 }
