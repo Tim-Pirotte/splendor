@@ -1,6 +1,6 @@
 import { avatars } from "./data.js";
-import { addImageToContainer } from "../utils/renderer.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
+import { addImageToContainer } from "../utils/renderer.js";
 
 function renderAvatarSelectionList() {
     const $avatarsSection = document.querySelector("section ul");
@@ -12,12 +12,13 @@ function renderAvatarSelectionList() {
 function renderPlayerInfo() {
     const $button = document.querySelector(".avatar-selector button");
     const avatar = loadFromStorage("avatar") || "placeholder";
+    const playerName = loadFromStorage("playerName");
 
     $button.innerHTML = "";
     addImageToContainer($button, `avatars/${avatar}`, false, avatar, ".");
 
-    if (loadFromStorage("playerName")) {
-        document.querySelector("#username").value = loadFromStorage("playerName");
+    if (playerName) {
+        document.querySelector("#username").value = playerName;
     }
 }
 

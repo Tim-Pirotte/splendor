@@ -1,6 +1,5 @@
+import { savePlayerInfo, toggleAvatarListVisibility, updateSelectedAvatar } from "./handler.js";
 import { renderAvatarSelectionList, renderPlayerInfo } from "./renderer.js";
-import { savePlayerInfo, updateSelectedAvatar } from "./handler.js";
-import { toggleAvatarListVisibility } from "./helper.js";
 
 function init() {
     setupUI();

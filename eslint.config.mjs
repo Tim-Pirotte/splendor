@@ -36,6 +36,7 @@ export default defineConfig([{
         ],
         "max-depth": ["error", { "max": 2 }],
         "no-lonely-if": "error",
+        "no-unused-vars": ["error", { "argsIgnorePattern": "^e$" }],
     },
 },
 {

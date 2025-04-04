@@ -1,6 +1,10 @@
 import { saveToStorage } from "../data-connector/local-storage-abstractor.js";
 import { renderPlayerInfo } from "./renderer.js";
-import { toggleAvatarListVisibility } from "./helper.js";
+
+function toggleAvatarListVisibility(e) {
+    const avatarListStyle = document.querySelector(".avatar-selector section").style;
+    avatarListStyle.display = (avatarListStyle.display === "none") ? "block" : "none";
+}
 
 function updateSelectedAvatar(e) {
     saveToStorage("avatar", e.target.closest("img").title);
@@ -20,4 +24,4 @@ function savePlayerInfo(e) {
     }
 }
 
-export { updateSelectedAvatar, savePlayerInfo };
+export { updateSelectedAvatar, toggleAvatarListVisibility, savePlayerInfo };
