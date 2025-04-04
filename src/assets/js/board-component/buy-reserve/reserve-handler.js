@@ -61,7 +61,7 @@ function selectDeckForReserving(e) {
     setActionToBuyReserve($clickedPictureTag.closest("li"), deckLevel);
 
     getActionButton().disabled = true;
-    getReserveCardButton.disabled = !validDeckReserve(deckLevel);
+    getReserveCardButton().disabled = !validDeckReserve(deckLevel);
 }
 
 function allowToReserve() {
