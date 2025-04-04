@@ -1,6 +1,6 @@
 import { joinGameById } from "./helper.js";
 
-function locateToMainMenu(e) {
+function locateMainMenu(e) {
     location.href = "./../index.html";
 }
 
@@ -16,4 +16,4 @@ function joinGameUsingGui(e) {
     }
 }
 
-export { locateToMainMenu, joinGameUsingId, joinGameUsingGui };
+export { locateMainMenu, joinGameUsingId, joinGameUsingGui };

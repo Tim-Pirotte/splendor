@@ -1,7 +1,7 @@
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { createGameWithBody, getCheckedValue } from "./helper.js";
 
-function locateToMainMenu(e) {
+function locateMainMenu(e) {
     location.href = "./../index.html";
 }
 
@@ -16,4 +16,4 @@ function createGameUsingGui(e) {
     });
 }
 
-export { locateToMainMenu, createGameUsingGui };
+export { locateMainMenu, createGameUsingGui };
