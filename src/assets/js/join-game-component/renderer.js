@@ -17,18 +17,20 @@ function renderPlayerInfo() {
 function renderPublicGames() {
     const $template = document.querySelector("#game-template");
     const $gameList = document.querySelector("ul");
+    const $gameListCopy = $gameList.cloneNode(true);
 
-    emptyContainerPreserveTemplates($gameList);
+    emptyContainerPreserveTemplates($gameListCopy);
 
     API.getGames().then(gameObject => {
         const gamesToRender = filterGames(gameObject["games"]);
 
         if (gamesToRender.size !== 0) {
-            gamesToRender.forEach(game => $gameList.appendChild(populateGame($template, game)));
+            gamesToRender.forEach(game => $gameListCopy.appendChild(populateGame($template, game)));
         } else {
-            $gameList.insertAdjacentHTML("beforeend", `<p>There are no games based on your selections</p>`);
+            $gameListCopy.insertAdjacentHTML("beforeend", `<p>There are no games based on your selections</p>`);
         }
 
+        $gameList.innerHTML = $gameListCopy.innerHTML;
         startGameListPolling();
     });
 }
