@@ -56,7 +56,7 @@ function takeNobels(requestBody) {
 }
 
 function getApiInfo() {
-    return fetchFromServer("/info")
+    return fetchFromServer("/info");
 }
 
 export { getGames, createGame, getGame, joinGame, takeTokens, buyCard, reserveCard, buyReserveCard, takeNobels, getApiInfo };

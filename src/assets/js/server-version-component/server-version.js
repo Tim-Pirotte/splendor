@@ -1,26 +1,20 @@
 import {getApiInfo} from "../api.js";
 
-function initServerVersion() {
-    if (sessionStorage.getItem("serverVersion") !== null) return;
+function isCompatible(minimumServerVersion) {
+    const serverVersion = sessionStorage.getItem("serverVersion");
 
-    getApiInfo()
-        .then(res => setServerVersion(res))
-        .catch();
+    if (serverVersion !== null) return Promise.resolve(parseInt(serverVersion) >= minimumServerVersion);
+
+    return getApiInfo()
+        .then(res => {
+            const serverVersion = res["version"] || "1";
+            setServerVersion(serverVersion);
+            return parseInt(serverVersion) >= minimumServerVersion;
+        });
 }
 
-function setServerVersion(res) {
-    if ("version" in res) {
-        sessionStorage.setItem("serverVersion", res["version"]);
-    } else {
-        sessionStorage.setItem("serverVersion", "V1");
-    }
+function setServerVersion(serverVersion) {
+    sessionStorage.setItem("serverVersion", serverVersion);
 }
 
-function isV2Server() {
-    return sessionStorage.getItem("serverVersion") === "V2";
-}
-
-initServerVersion();
-
-
-export { isV2Server };
+export { isCompatible };
