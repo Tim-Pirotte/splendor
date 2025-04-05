@@ -81,8 +81,7 @@ function processBuyCardClick() {
     renderUpdatedBoardTokens(JSON.parse(sessionStorage.getItem("paymentMethod")));
     endBuyReserveAction();
 
-    API.buyCard({ development: { name: cardData["name"] }, payment: getCurrentPaymentMethod() })
-
+    API.buyCard({ development: { name: cardData["name"] }, payment: getCurrentPaymentMethod() });
 
 }
 
