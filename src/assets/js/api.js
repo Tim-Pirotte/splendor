@@ -12,7 +12,10 @@ function getGames(hasStarted = "") {
 }
 
 function createGame(requestBody) {
-    return fetchFromServer("/games", "POST", requestBody);
+    return isCompatible(2).then(isOk => {
+        if (isOk) requestBody.avatar = loadFromStorage("avatar");
+        return fetchFromServer("/games", "POST", requestBody);
+    });
 }
 
 function getGame() {
