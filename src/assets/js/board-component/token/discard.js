@@ -1,7 +1,7 @@
 import { MAX_TOKENS_ALLOWED } from "../config.js";
+import * as API from "../../api.js";
 import { setButtonStatuses } from "../renderer/current-player-renderer.js";
 import { getActionButton, setActionButtonState } from "../game-status-interface.js";
-import { takeTokens } from "../../api.js";
 
 function selectPlayerToken(e) {
     if (!clickedOnDiscardButton(e.target)) return;
@@ -79,7 +79,7 @@ function decreaseTotalDiscardCount() {
 function processDiscardTokens() {
     const tokensToDiscard = getTokensToDiscard();
     const requestBody = { "return": tokensToDiscard };
-    takeTokens(requestBody).then(res => console.log(res));
+    API.takeTokens(requestBody).then(res => console.log(res));
 }
 
 function getTokensToDiscard() {
