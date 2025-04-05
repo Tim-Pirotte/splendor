@@ -49,10 +49,10 @@ function buyReserveCard(developmentName, requestBody) {
     return fetchFromServer(`/games/${gameId}/players/${playerName}/reserve/${developmentName}`, "POST", requestBody);
 }
 
-function takeNobels(requestBody) {
+function takeNobles(requestBody) {
     const gameId = loadFromStorage("gameId");
     const playerName = loadFromStorage("playerName");
-    return fetchFromServer(`/games/${gameId}/players/${playerName}/nobels`, "POST", requestBody);
+    return fetchFromServer(`/games/${gameId}/players/${playerName}/nobles`, "POST", requestBody);
 }
 
-export { getGames, createGame, getGame, joinGame, takeTokens, buyCard, reserveCard, buyReserveCard, takeNobels };
+export { getGames, createGame, getGame, joinGame, takeTokens, buyCard, reserveCard, buyReserveCard, takeNobles };

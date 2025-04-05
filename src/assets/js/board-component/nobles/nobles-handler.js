@@ -1,8 +1,10 @@
+import { NOBLES } from "../data.js";
+import * as API from "../../api.js";
 import { getActionButton, setActionButtonState } from "../game-status-interface.js";
 import { fetchFromServer } from "../../data-connector/api-communication-abstractor.js";
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
-import { NOBLES } from "../data.js";
 import { binarySearchObjects } from "../../utils/data-handler.js";
+import {takeNobles} from "../../api.js";
 
 function selectNoble(e) {
     const $selectedNoble = e.target.closest("li");
@@ -18,9 +20,7 @@ function canSelectNoble(nobleName) {
     const playerBonuses = getPlayerBonuses();
 
     for (const [nobleBonus, amount] of Object.entries(noble["neededBonuses"])) {
-        if (playerBonuses[nobleBonus] < amount) {
-            return false;
-        }
+        if (playerBonuses[nobleBonus] < amount) return false;
     }
 
     return true;
@@ -40,11 +40,9 @@ function getPlayerBonuses() {
 function processTakeNoble() {
     const actionButton = getActionButton();
     const nobleToTake = getNobleByName(actionButton.dataset.name);
-    fetchFromServer(
-        `/games/${loadFromStorage("gameId")}/players/${loadFromStorage("playerName")}/nobles`,
-        "POST",
-        nobleToTake)
-        .then(res => console.error(res));
+
+    API.takeNobles(nobleToTake)
+        .then();
 }
 
 function getNobleByName(name) {
