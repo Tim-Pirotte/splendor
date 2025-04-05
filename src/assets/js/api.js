@@ -40,13 +40,13 @@ function buyCard(requestBody) {
 function reserveCard(requestBody) {
     const gameId = loadFromStorage("gameId");
     const playerName = loadFromStorage("playerName");
-    return fetchFromServer(`/games/${gameId}/players/${playerName}/reserve`, "DELETE", requestBody);
+    return fetchFromServer(`/games/${gameId}/players/${playerName}/reserve`, "POST", requestBody);
 }
 
 function buyReserveCard(developmentName, requestBody) {
     const gameId = loadFromStorage("gameId");
     const playerName = loadFromStorage("playerName");
-    return fetchFromServer(`/games/${gameId}/players/${playerName}/reserve/${developmentName}`, "POST", requestBody);
+    return fetchFromServer(`/games/${gameId}/players/${playerName}/reserve/${developmentName}`, "DELETE", requestBody);
 }
 
 function takeNobels(requestBody) {

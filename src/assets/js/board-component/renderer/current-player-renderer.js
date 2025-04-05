@@ -1,70 +1,79 @@
-import * as API from "../../api.js";
-import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
-import { MAX_TOKENS_ALLOWED, PRESTIGE_POINTS_NEEDED_TO_WIN, TOKEN_MAPPER } from "../config.js";
-import { isAllowedToSwitchToken, removePaidTokens, updateCurrentPlayerBonuses } from "../buy-reserve/buy-handler.js";
 import { GEMS } from "../data.js";
-import { getHighestScore, sumObjectValues, getPlayersObjects } from "../../utils/game-object-handler.js";
-import { getClientTokens, getClientTotalPrestigePoints } from "../game-data-handler.js";
-import { copyNode } from "../../utils/data-handler.js";
+import { MAX_TOKENS_ALLOWED, PRESTIGE_POINTS_NEEDED_TO_WIN, TOKEN_MAPPER } from "../config.js";
+import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
 import { getTokenAmount, getTotalAmountDiscarded, getTotalTokenAmount } from "../token/discard.js";
 import { validTokenDiscard } from "../state-machine/valid-action-checker.js";
-import { isCurrentlyPlaying } from "../game-status-interface.js";
 import {
+    addNodesToEmptiedContainer,
     formatNumber,
     getNumberedItemTemplate,
-    getSwitchButtonTemplate,
-    insertImageInto,
-    renderCard,
+    addSwitchButton,
+    insertImageInto, renderCard,
     renderProgressBar,
     safeEmptyContainer,
+    highlightPointsWinner,
 } from "./helper.js";
+import { allowedToSwitchToken, removePaidTokens, updateCurrentPlayerBonuses } from "../buy-reserve/buy-handler.js";
+import { getHighestScore, sumObjectValues } from "../../utils/game-object-handler.js";
+import { getClientTokens, getClientTotalPrestigePoints } from "../game-data-handler.js";
+import { copyNode } from "../../utils/data-handler.js";
+import { isCurrentlyPlaying } from "../game-status-interface.js";
 
 function renderHeader(currentPlayer) {
-    const $playerName = document.querySelector(".top-bar h2");
-    const $avatar = document.querySelector("header div.avatar");
-
-    const playerName = loadFromStorage("playerName");
-    const avatar = loadFromStorage("avatar");
-
-    $playerName.textContent = playerName;
-    $avatar.innerHTML = "";
-    insertImageInto($avatar, `avatars/${avatar}`, avatar);
-
-    $playerName.dataset.currentlyPlaying = currentPlayer;
-
-    document.querySelector("h1").textContent = isCurrentlyPlaying() ?
-        "It's your turn" : `${loadFromStorage("gameData")["currentPlayer"]}'s turn`;
+    renderGameStatusMessage(currentPlayer);
+    renderPlayerProfile();
 }
 
-function getCurrentPlayer(players, currentPlayerName) {
-    for (const player of players) {
-        if (player.name === currentPlayerName) {
-            return player;
-        }
-    }
+function renderGameStatusMessage(currentPlayer) {
+    const $statusMessage = document.querySelector("h1");
+    $statusMessage.textContent = isCurrentlyPlaying() ? "It's your turn" : `It's ${currentPlayer}'s turn`;
+    $statusMessage.dataset.currentlyPlaying = currentPlayer;
+}
+
+function renderPlayerProfile() {
+    document.querySelector(".top-bar h2").textContent = loadFromStorage("playerName");
+    renderAvatar();
+}
+
+function renderAvatar() {
+    const avatar = loadFromStorage("avatar");
+    const $avatar = document.querySelector("header div.avatar");
+    safeEmptyContainer($avatar);
+    insertImageInto($avatar, `avatars/${avatar}`, avatar);
 }
 
 function renderClientPlayerPoints(totalPrestigePoints, highestScore) {
+    saveHighestScore(highestScore);
+    renderPrestigePointsScore(totalPrestigePoints);
+    renderPrestigePointsProgressBar(totalPrestigePoints);
+    addHighestScoreIndicator(totalPrestigePoints, highestScore);
+}
+
+function saveHighestScore(highestScore) {
+    document.querySelector(".player-points").dataset.highestScore = highestScore;
+}
+
+function renderPrestigePointsScore(totalPrestigePoints) {
     const $totalPrestigePoints = document.querySelector(".player-points p");
     $totalPrestigePoints.dataset.totalPrestigePoints = totalPrestigePoints;
-    $totalPrestigePoints.textContent =
-    `${formatNumber(totalPrestigePoints)} / ${PRESTIGE_POINTS_NEEDED_TO_WIN}`;
+    $totalPrestigePoints.textContent = `${formatNumber(totalPrestigePoints)} / ${PRESTIGE_POINTS_NEEDED_TO_WIN}`;
+    highlightPointsWinner(totalPrestigePoints, $totalPrestigePoints);
+}
 
-    renderProgressBar(document.querySelector(".player-points .progress-bar"), totalPrestigePoints, "score");
+function renderPrestigePointsProgressBar(totalPrestigePoints) {
+    const $progressBar = document.querySelector(".player-points .progress-bar");
+    renderProgressBar($progressBar, totalPrestigePoints, "score");
+}
+
+function addHighestScoreIndicator(totalPrestigePoints, highestScore) {
     const $playerDiamondLocation = document.querySelector(".player-points p");
 
-    if (totalPrestigePoints >= highestScore) {
-        insertImageInto($playerDiamondLocation, "UI/tokens/white_chip", false, "Score amongst the highest");
-    }
+    if (totalPrestigePoints >= highestScore) insertImageInto($playerDiamondLocation, "UI/tokens/white_chip", false, "Score amongst the highest");
 }
 
 function renderClientPlayerReserve(currentPlayer) {
     const $reserved = document.querySelector(".reserved-cards ul");
-    safeEmptyContainer($reserved);
-
-    for (const card of currentPlayer["reserve"]) {
-        renderCard($reserved, card["prestigePoints"], card["bonus"], card["cost"], card["name"], true);
-    }
+    addNodesToEmptiedContainer($reserved, currentPlayer["reserve"], renderCard);
 }
 
 function renderClientPlayerTokenCount(tokens) {
@@ -79,22 +88,27 @@ function renderClientPlayerTokenCount(tokens) {
 }
 
 function setTotalTokensColor($totalTokenCount, totalTokens) {
-    if (totalTokens > MAX_TOKENS_ALLOWED) {
-        $totalTokenCount.classList.add("highlighted-number");
-    } else {
-        $totalTokenCount.classList.remove("highlighted-number");
-    }
+    $totalTokenCount.classList.toggle("highlighted-number", totalTokens > MAX_TOKENS_ALLOWED);
 }
 
 function renderClientPlayer(players, gems) {
-    const currentPlayer = getCurrentPlayer(players, loadFromStorage("playerName"));
-    const highestScore = getHighestScore(players);
+    const clientPlayer = getPlayerByName(players, loadFromStorage("playerName"));
 
-    renderClientPlayerPoints(currentPlayer["totalPrestigePoints"] , highestScore);
-    renderClientPlayerReserve(currentPlayer);
-    renderClientPlayerTokenCount(currentPlayer["tokens"]);
-    renderClientPlayerTokens(currentPlayer["tokens"], currentPlayer["bonuses"], gems);
+    const highestScore = getHighestScore(players);
+    renderClientPlayerPoints(clientPlayer["totalPrestigePoints"] , highestScore);
+
+    renderClientPlayerReserve(clientPlayer);
+    renderClientPlayerTokenCount(clientPlayer["tokens"]);
+    renderClientPlayerTokens(clientPlayer["tokens"], clientPlayer["bonuses"], gems);
     renderTimer();
+}
+
+function getPlayerByName(players, currentPlayerName) {
+    for (const player of players) {
+        if (player.name === currentPlayerName) {
+            return player;
+        }
+    }
 }
 
 function countTokens(tokens) {
@@ -107,35 +121,6 @@ function insertCardCounter($token, token, currentPlayerBonuses) {
     $token.dataset.bonuses = currentPlayerBonuses[token] || 0;
 }
 
-function renderClientToken($numberedItemTemplate, token, $progressBarTemplate, currentPlayerBonuses, currentPlayerTokens, $discardNavTemplate, $currentPlayerTokensContainer) {
-    const $token = copyNode($numberedItemTemplate);
-    $token.dataset.type = token;
-
-    const $progressBar = copyNode($progressBarTemplate);
-    const $switchPaymentButtonContainer = getSwitchButtonTemplate(token);
-
-    if (token !== "Gold") {
-        insertCardCounter($token, token, currentPlayerBonuses);
-    }
-
-    $token.querySelector(".amount").textContent = (currentPlayerTokens[token] || 0);
-    $token.dataset.amount = (currentPlayerTokens[token] || 0);
-
-    insertImageInto($token, `UI/tokens/${TOKEN_MAPPER[token]}_chip`, false, `${TOKEN_MAPPER[token]} chip`);
-    renderProgressBar($progressBar, currentPlayerTokens[token], TOKEN_MAPPER[token]);
-
-    $token.appendChild($progressBar);
-    $token.appendChild($switchPaymentButtonContainer);
-
-    if (validTokenDiscard()) {
-        const $discardNav = copyNode($discardNavTemplate);
-        $token.appendChild($discardNav);
-        setButtonStatuses();
-    }
-
-    $currentPlayerTokensContainer.appendChild($token);
-}
-
 function renderClientPlayerTokens(currentPlayerTokens, currentPlayerBonuses, gems) {
     const $currentPlayerTokensContainer = document.querySelector(".player-tokens ul");
     safeEmptyContainer($currentPlayerTokensContainer);
@@ -145,8 +130,42 @@ function renderClientPlayerTokens(currentPlayerTokens, currentPlayerBonuses, gem
     const $discardNavTemplate = document.querySelector("#token-discard-template");
 
     for (const token of gems.toReversed()) {
-        renderClientToken($numberedItemTemplate, token, $progressBarTemplate, currentPlayerBonuses, currentPlayerTokens, $discardNavTemplate, $currentPlayerTokensContainer);
+        renderClientToken($numberedItemTemplate, token, $progressBarTemplate, currentPlayerBonuses, currentPlayerTokens, $currentPlayerTokensContainer, $discardNavTemplate);
     }
+}
+
+function renderClientToken($numberedItemTemplate, token, $progressBarTemplate, currentPlayerBonuses, currentPlayerTokens, $clientPlayerTokensContainer, $discardNavTemplate) {
+    const $token = copyNode($numberedItemTemplate);
+    addTokenTypeAmount($token, token, currentPlayerTokens);
+
+    if (token !== "Gold") insertCardCounter($token, token, currentPlayerBonuses);
+
+    insertImageInto($token, `UI/tokens/${TOKEN_MAPPER[token]}_chip`, false, `${TOKEN_MAPPER[token]} chip`);
+
+    addProgressBar($progressBarTemplate, currentPlayerTokens, token, $token);
+    addSwitchButton($token, token);
+
+    if (validTokenDiscard()) addDiscardNav($discardNavTemplate, $token);
+
+    $clientPlayerTokensContainer.appendChild($token);
+}
+
+function addTokenTypeAmount($token, token, currentPlayerTokens) {
+    $token.dataset.type = token;
+    $token.dataset.amount = (currentPlayerTokens[token] || 0);
+    $token.querySelector(".amount").textContent = (currentPlayerTokens[token] || 0);
+}
+
+function addProgressBar($progressBarTemplate, currentPlayerTokens, token, $token) {
+    const $progressBar = copyNode($progressBarTemplate);
+    renderProgressBar($progressBar, currentPlayerTokens[token], TOKEN_MAPPER[token]);
+    $token.appendChild($progressBar);
+}
+
+function addDiscardNav($discardNavTemplate, $token) {
+    const $discardNav = copyNode($discardNavTemplate);
+    $token.appendChild($discardNav);
+    setButtonStatuses();
 }
 
 function setButtonStatuses() {
@@ -169,23 +188,34 @@ function renderSwitchPaymentButtons(currentPayment, cost) {
     const tokensInWallet = getClientTokens();
     const $tokensContainers = document.querySelectorAll(".switch-token-container");
 
-    hideSwitchPaymentButtons();
+    hideSwitchPayment($tokensContainers);
 
     for (const $tokenContainer of $tokensContainers) {
-        const tokenType = $tokenContainer.closest("li").dataset.type;
-
-        if (isAllowedToSwitchToken(tokenType, currentPayment, cost, tokensInWallet)) {
-            $tokenContainer.querySelector(".switch-token").classList.remove("hidden");
-        }
-
-        if (Object.keys(cost).includes(tokenType) || (tokenType === "Gold" && tokensInWallet["Gold"] > 0)) {
-            renderAmountOfTokenSelected($tokenContainer, tokenType, currentPayment);
-        }
+        renderSwitchPayment($tokenContainer, currentPayment, cost, tokensInWallet);
     }
 }
 
-function renderAmountOfTokenSelected($tokenContainer, tokenType, payment) {
-    $tokenContainer.querySelector("span").innerText = (payment[tokenType]);
+function renderSwitchPayment($tokenContainer, currentPayment, cost, tokensInWallet) {
+    const tokenType = $tokenContainer.closest("li").dataset.type;
+
+    if (allowedToSwitchToken(tokenType, currentPayment, cost, tokensInWallet)) {
+        $tokenContainer.querySelector(".switch-token").classList.remove("hidden");
+    }
+
+    if (Object.keys(cost).includes(tokenType) || (tokenType === "Gold" && tokensInWallet["Gold"] > 0)) {
+        renderAmountOfTokenSelected($tokenContainer, currentPayment[tokenType]);
+    }
+}
+
+function hideSwitchPayment($tokenSwitchContainers) {
+    $tokenSwitchContainers.forEach($tokenSwitchContainer => {
+        $tokenSwitchContainer.querySelector(".switch-token").classList.add("hidden");
+        $tokenSwitchContainer.querySelector("p").classList.add("hidden");
+    });
+}
+
+function renderAmountOfTokenSelected($tokenContainer, paymentOfType) {
+    $tokenContainer.querySelector("span").textContent = paymentOfType;
     $tokenContainer.querySelector("p").classList.remove("hidden");
 }
 
@@ -198,12 +228,12 @@ function renderUpdatedPlayerTokens(bonus) {
 }
 
 function renderUpdatedPlayerScore(extraScore) {
-    API.getGame().then(gameObject => {
-        const players = getPlayersObjects(gameObject);
-        const highestScore = getHighestScore(players);
+    let highestScore = parseInt(document.querySelector(".player-points").dataset.highestScore);
+    const newPlayerPoints = getClientTotalPrestigePoints() + extraScore;
 
-        renderClientPlayerPoints(getClientTotalPrestigePoints() + extraScore, highestScore);
-    });
+    if (highestScore < newPlayerPoints) highestScore = newPlayerPoints;
+
+    renderClientPlayerPoints(getClientTotalPrestigePoints() + extraScore, highestScore);
 }
 
 function hideSwitchPaymentButtons() {
