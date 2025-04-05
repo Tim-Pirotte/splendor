@@ -1,8 +1,14 @@
 import * as API from "../api.js";
 import { saveToStorage } from "../data-connector/local-storage-abstractor.js";
 
-function joinGameById(gameId) {
-    API.joinGame(gameId)
+function getCheckedRadioButtonValue(buttonList){
+    for (const button of buttonList) {
+        if (button.checked) return button.value;
+    }
+}
+
+function createGameWithBody(requestBody) {
+    API.createGame(requestBody)
         .then(response => {
             saveToStorage("gameId", response["gameId"]);
             saveToStorage("playerToken", response["playerToken"]);
@@ -10,16 +16,4 @@ function joinGameById(gameId) {
         });
 }
 
-function intersection(setA, setB) {
-    const result = new Set();
-
-    for (const item of setA) {
-        if (setB.has(item)) {
-            result.add(item);
-        }
-    }
-
-    return result;
-}
-
-export { joinGameById, intersection };
+export { getCheckedRadioButtonValue, createGameWithBody };

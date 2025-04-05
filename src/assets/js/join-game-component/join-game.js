@@ -1,19 +1,23 @@
-import { navigateToMain, navigateToMainIfNoPlayerName } from "../utils/navigation.js";
-import { renderGameList } from "./renderer.js";
-import { playerJoinGame, handleFilterChange, playerJoinGameById } from "./handler.js";
-import { renderPlayerInformation } from "../utils/player-renderer.js";
+import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
+import { joinGame, joinGameUsingUsersInputId, locateMainMenu } from "./handler.js";
+import { renderPlayerInfo, renderPublicGames } from "./renderer.js";
 
-function joinInit(){
-    navigateToMainIfNoPlayerName();
-    renderPlayerInformation();
-    renderGameList();
+function joinInit() {
+    setupUI();
+    setupEventListeners();
+}
 
-    document.querySelector("#back-button").addEventListener("click", navigateToMain);
-    document.querySelector("#join-form").addEventListener("submit", playerJoinGameById);
-    document.querySelector("ul").addEventListener("click", playerJoinGame);
+function setupUI() {
+    if (!loadFromStorage("playerName")) locateMainMenu();
+    if (!loadFromStorage("avatar")) locateMainMenu();
+    renderPlayerInfo();
+    renderPublicGames();
+}
 
-    document.querySelector("#amount-filter").addEventListener("change", handleFilterChange);
-    document.querySelector("#filter-form").addEventListener("submit", handleFilterChange);
+function setupEventListeners() {
+    document.querySelector("#back-button").addEventListener("click", locateMainMenu);
+    document.querySelector("#join-form").addEventListener("submit", joinGameUsingUsersInputId);
+    document.querySelector("ul").addEventListener("click", joinGame);
 }
 
 joinInit();

@@ -1,9 +1,10 @@
-import * as API from "../../api.js";
-import { getActionButton, setActionButtonState } from "../game-status-interface.js";
 import { MIN_TOKENS_FOR_PICKING_TWO } from "./config.js";
 import { MAX_TAKE_TOKENS } from "../config.js";
+import * as API from "../../api.js";
+import { getActionButton, setActionButtonState } from "../game-status-interface.js";
 import { validTokenTake } from "../state-machine/valid-action-checker.js";
 import { deselectCard } from "../buy-reserve/select.js";
+import { startGameStatePolling } from "../game-data-handler.js";
 
 function clickedOnToken(target) {
     return target.tagName.toLowerCase() === "img";
@@ -191,7 +192,7 @@ function processTakeTwoTokens() {
 }
 
 function processSkipTurn() {
-    API.takeTokens({ take: { Ruby: 0 } }).then(res => updateTokens(res));
+    API.takeTokens({ take: {} }).then(startGameStatePolling);
 }
 
 export { selectToken, processTakeTokensClick, updateTokens, processTakeTwoTokens, processSkipTurn, unHighlightTokens };

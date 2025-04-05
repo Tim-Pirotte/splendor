@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="./../assets/css/screen.css">
     <link rel="stylesheet" href="./../assets/css/join-game.css">
 
-    <script type="module" src="./../assets/js/join-game-component/join-game.js"></script>
+    <script type="module" src="../assets/js/join-game-component/join-game.js"></script>
     <script src="../assets/js/sound-component/sound.js" type="module"></script>
 </head>
 <body>
@@ -32,7 +32,7 @@
             <h1>Join game</h1>
             <div id="playerInformation">
                 <h2 id="playerName">playerName</h2>
-                <template id="avatar-template">
+                <template id="image-template">
                     <picture>
                         <source srcset="#" type="image/webp">
                         <img src="#" alt="" title="">
@@ -68,11 +68,6 @@
                             </div>
                             <p class="amount-of-players"></p>
                             <button type="button"></button>
-                        </li>
-                    </template>
-                    <template id="no-games">
-                        <li>
-                            <p>There are no games based on your selections</p>
                         </li>
                     </template>
                 </ul>
