@@ -8,7 +8,9 @@ function selectNoble(e) {
     const nobleName = $selectedNoble.dataset.name;
 
     if (canSelectNoble(nobleName)) {
+        setNobleHighlight($selectedNoble);
         setActionButtonState("Take Noble", "processTakeNoble", { name: nobleName });
+        getActionButton().disabled = false;
     }
 }
 
@@ -32,6 +34,12 @@ function getPlayerBonuses() {
     });
 
     return bonuses;
+}
+
+function setNobleHighlight($nobleToSelect) {
+    for (const $noble of document.querySelectorAll(".nobles > li")) {
+        $noble.classList.toggle("selected-noble", $noble === $nobleToSelect);
+    }
 }
 
 function processTakeNoble() {
