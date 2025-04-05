@@ -20,6 +20,7 @@ function initRoundBegin(gameData){
         break;
     default:
         setActionButtonState("skip turn", "skipTurn", {});
+        getActionButton().disabled = false;
     }
 
     if (!isCurrentlyPlaying()) {
