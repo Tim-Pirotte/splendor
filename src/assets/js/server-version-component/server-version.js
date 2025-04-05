@@ -21,3 +21,6 @@ function isV2Server() {
 }
 
 initServerVersion();
+
+
+export { isV2Server };

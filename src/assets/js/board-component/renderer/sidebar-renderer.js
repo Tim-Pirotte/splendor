@@ -11,6 +11,7 @@ import { MAX_PRESTIGE_POINTS } from "../../config.js";
 import { getHighestScore } from "../../utils/game-object-handler.js";
 import { copyNode } from "../../utils/data-handler.js";
 import { avatars } from "../../main-menu-component/data.js";
+import {isV2Server} from "../../server-version-component/server-version.js";
 
 function renderOtherPlayers(otherPlayers, gems) {
     const currentPlayerName = loadFromStorage("playerName");
@@ -94,4 +95,13 @@ function renderReservedList(containerToInsertInto, reservedCards) {
     }
 }
 
-export { renderOtherPlayers };
+function renderHistory() {
+    if (!isV2Server()) incompatibleServerMessage();
+}
+
+function incompatibleServerMessage() {
+    const $history = document.querySelector(".history");
+    $history.outerHTML = "<p>History is not supported on this server. Sorry for the Inconvenience.</p>"
+}
+
+export { renderOtherPlayers, renderHistory };
