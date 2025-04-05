@@ -1,12 +1,11 @@
+import { SECONDS_PER_ROUND, SECONDS_WHEN_TURN_ALMOST_ENDS } from "./config.js";
+import { POLLING_TIME_OUT } from "../config.js";
 import * as API from "../api.js";
 import { renderPage } from "./renderer/renderer.js";
 import { getActionButton, isCurrentlyPlaying } from "./game-status-interface.js";
 import { initRoundBegin, saveGameState } from "./state-machine/state-machine.js";
-import { POLLING_TIME_OUT } from "../config.js";
 import { processSkipTurn } from "./token/token-handler.js";
-import { SECONDS_PER_ROUND, SECONDS_WHEN_TURN_ALMOST_ENDS } from "./config.js";
 import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
-import { toggleClass } from "./renderer/helper.js";
 
 function handleGameDataError(err) {
     const forbidden = 403;
@@ -47,7 +46,7 @@ function setTimer(currentSeconds, maxSeconds, $timerFill) {
         $timerFill.style.height = `${timerHeight}%`;
         $timerFill.closest(".timer").setAttribute("aria-valuenow", currentSeconds);
 
-        toggleClass($timerFill, "time-almost-ends", currentSeconds < SECONDS_WHEN_TURN_ALMOST_ENDS);
+        $timerFill.classList.toggle("time-almost-ends", currentSeconds < SECONDS_WHEN_TURN_ALMOST_ENDS);
 
         if (currentSeconds > 0) {
             setTimeout(() => setTimer(currentSeconds - 1, maxSeconds, $timerFill), 1000);

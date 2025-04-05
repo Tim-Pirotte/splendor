@@ -1,10 +1,4 @@
-import {
-    addNodesToEmptiedContainer,
-    getNumberedItemTemplate,
-    insertImageInto,
-    renderCard,
-    safeEmptyContainer,
-} from "./helper.js";
+import { GEMS } from "../data.js";
 import {
     GOLD_TOKEN_LIMIT,
     NOBLES_MAPPER,
@@ -13,8 +7,14 @@ import {
     TOKEN_LIMIT_TWO_PLAYERS,
     TOKEN_MAPPER,
 } from "../config.js";
+import {
+    addNodesToEmptiedContainer,
+    getNumberedItemTemplate,
+    insertImageInto,
+    renderCard,
+    safeEmptyContainer,
+} from "./helper.js";
 import { getUnclaimedTokens, sumObjectValues } from "../helper.js";
-import { GEMS } from "../data.js";
 import { copyNode } from "../../utils/data-handler.js";
 
 function renderCards(market) {

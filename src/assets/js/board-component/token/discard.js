@@ -1,7 +1,7 @@
+import { MAX_TOKENS_ALLOWED } from "../config.js";
 import { setButtonStatuses } from "../renderer/current-player-renderer.js";
 import { getActionButton, setActionButtonState } from "../game-status-interface.js";
 import { takeTokens } from "../../api.js";
-import { MAX_TOKENS_ALLOWED } from "../config.js";
 
 function selectPlayerToken(e) {
     if (!clickedOnDiscardButton(e.target)) return;

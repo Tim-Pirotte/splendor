@@ -1,5 +1,6 @@
-import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
+import { GEMS } from "../data.js";
 import { MAX_TOKENS_ALLOWED, PRESTIGE_POINTS_NEEDED_TO_WIN, TOKEN_MAPPER } from "../config.js";
+import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
 import { getTokenAmount, getTotalAmountDiscarded, getTotalTokenAmount } from "../token/discard.js";
 import { validTokenDiscard } from "../state-machine/valid-action-checker.js";
 import {
@@ -9,10 +10,10 @@ import {
     addSwitchButton,
     insertImageInto, renderCard,
     renderProgressBar,
-    safeEmptyContainer, toggleClass, highlightPointsWinner,
+    safeEmptyContainer,
+    highlightPointsWinner,
 } from "./helper.js";
 import { allowedToSwitchToken, removePaidTokens, updateCurrentPlayerBonuses } from "../buy-reserve/buy-handler.js";
-import { GEMS } from "../data.js";
 import { getHighestScore, sumObjectValues } from "../../utils/game-object-handler.js";
 import { getClientTokens, getClientTotalPrestigePoints } from "../game-data-handler.js";
 import { copyNode } from "../../utils/data-handler.js";
@@ -87,11 +88,11 @@ function renderClientPlayerTokenCount(tokens) {
 }
 
 function setTotalTokensColor($totalTokenCount, totalTokens) {
-    toggleClass($totalTokenCount, "highlighted-number", totalTokens > MAX_TOKENS_ALLOWED);
+    $totalTokenCount.classList.toggle("highlighted-number", totalTokens > MAX_TOKENS_ALLOWED);
 }
 
 function renderClientPlayer(players, gems) {
-    const clientPlayer = getPlayer(players, loadFromStorage("playerName"));
+    const clientPlayer = getPlayerByName(players, loadFromStorage("playerName"));
 
     const highestScore = getHighestScore(players);
     renderClientPlayerPoints(clientPlayer["totalPrestigePoints"] , highestScore);
@@ -102,7 +103,7 @@ function renderClientPlayer(players, gems) {
     renderTimer();
 }
 
-function getPlayer(players, currentPlayerName) {
+function getPlayerByName(players, currentPlayerName) {
     for (const player of players) {
         if (player.name === currentPlayerName) {
             return player;

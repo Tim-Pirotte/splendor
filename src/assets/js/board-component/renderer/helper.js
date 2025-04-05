@@ -1,21 +1,13 @@
 import { CHIP_SPACING, TOKEN_MAPPER } from "../config.js";
+import { MAX_PRESTIGE_POINTS } from "../../config.js";
 import { copyNode } from "../../utils/data-handler.js";
 import { validCardBuy } from "../state-machine/valid-action-checker.js";
-import { MAX_PRESTIGE_POINTS } from "../../config.js";
 
 function addNodesToEmptiedContainer($container, list, mapFunction) {
     safeEmptyContainer($container);
 
     for (const listItem of list) {
         $container.appendChild(mapFunction(listItem));
-    }
-}
-
-function toggleClass($node, className, condition) {
-    if (condition) {
-        $node.classList.add(className);
-    } else {
-        $node.classList.remove(className);
     }
 }
 
@@ -38,9 +30,13 @@ function setImageData($image, standardPath, alt) {
 function constructBackground(value, color) {
     let background = "";
 
-    for (let i = 0; i < value - 1; i++) background += `url("../assets/images/UI/tokens/${color}_topdown_chip.webp") ${i * CHIP_SPACING}rem 100%,\n`;
+    for (let i = 0; i < value - 1; i++) {
+        background += `url("../assets/images/UI/tokens/${color}_topdown_chip.webp") ${i * CHIP_SPACING}rem 100%,\n`;
+    }
 
-    if (value > 0) background += `url("../assets/images/UI/tokens/${color}_topdown_chip_end.webp") ${(value - 1) * CHIP_SPACING}rem 100%`;
+    if (value > 0) {
+        background += `url("../assets/images/UI/tokens/${color}_topdown_chip_end.webp") ${(value - 1) * CHIP_SPACING}rem 100%`;
+    }
 
     return background;
 }
@@ -121,6 +117,5 @@ export {
     getNumberedItemTemplate,
     addNodesToEmptiedContainer,
     renderCard,
-    toggleClass,
     highlightPointsWinner,
 };
