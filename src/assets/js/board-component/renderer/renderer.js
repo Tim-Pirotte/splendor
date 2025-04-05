@@ -6,12 +6,12 @@ import { GEMS } from "../data.js";
 function renderPage(gameData) {
     renderHeader(gameData["currentPlayer"]);
     renderCards(gameData["market"]);
-    renderNobles(gameData["unclaimedNobles"]);
     // Functions relying on the response of gems are last in order to minimize disruptions
     const gems = GEMS;
     renderOtherPlayers(gameData["players"], gems);
     renderBoardTokens(gameData["unclaimedTokens"], gameData["players"].length);
     renderClientPlayer(gameData["players"], gems);
+    renderNobles(gameData["unclaimedNobles"]);
 }
 
 export { renderPage };

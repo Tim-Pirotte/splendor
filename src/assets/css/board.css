@@ -235,6 +235,11 @@ section header picture {
     border-radius: 0.25rem;
 }
 
+.selectable-noble {
+    outline: 0.275rem solid yellow;
+    border-radius: 0.25rem;
+}
+
 .selected-noble {
     outline: 0.275rem solid hotpink;
     border-radius: 0.25rem;

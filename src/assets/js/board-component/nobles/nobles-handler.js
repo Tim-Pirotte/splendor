@@ -54,4 +54,4 @@ function getNobleByName(name) {
     return binarySearchObjects(NOBLES, name, "name");
 }
 
-export { selectNoble, processTakeNoble };
+export { selectNoble, processTakeNoble, canSelectNoble };
