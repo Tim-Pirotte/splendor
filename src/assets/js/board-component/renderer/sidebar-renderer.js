@@ -1,7 +1,7 @@
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
 import {
     formatNumber,
-    getNumberedItemTemplate, highlightPointsWinner,
+    getNumberedItemTemplate, getOrderedPlayersWithoutClientPlayer, highlightPointsWinner,
     insertImageInto,
     safeEmptyContainer,
 } from "./helper.js";
@@ -11,9 +11,13 @@ import { copyNode } from "../../utils/data-handler.js";
 import { GEMS } from "../data.js";
 import { avatars } from "../../main-menu-component/data.js";
 
-function renderOtherPlayers(otherPlayers, clientPlayer) {
+function renderOtherPlayers(players, currentPlayer) {
     const currentPlayerName = loadFromStorage("playerName");
-    const highestScore = getHighestScore(otherPlayers);
+    const highestScore = getHighestScore(players);
+
+    //slice needed here to work with a copy of the array because we don't want to change the order of the original array for further use.
+    //https://developer.mozilla.org/en-US/docs/Glossary/Shallow_copy
+    const otherPlayers = getOrderedPlayersWithoutClientPlayer(players.slice(), currentPlayerName);
 
     const $otherPlayerContainer = document.querySelector(".other-players");
     safeEmptyContainer($otherPlayerContainer);
@@ -21,9 +25,7 @@ function renderOtherPlayers(otherPlayers, clientPlayer) {
     const $playerTemplate = document.querySelector("#other-player-card-template");
 
     for (const otherPlayer of otherPlayers) {
-        if (otherPlayer.name !== currentPlayerName) {
-            $otherPlayerContainer.appendChild(renderOtherPlayer($playerTemplate, otherPlayer, highestScore, clientPlayer));
-        }
+            $otherPlayerContainer.appendChild(renderOtherPlayer($playerTemplate, otherPlayer, highestScore, currentPlayer));
     }
 }
 
