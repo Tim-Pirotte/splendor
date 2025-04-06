@@ -16,6 +16,9 @@ import {
 } from "./helper.js";
 import { getUnclaimedTokens, sumObjectValues } from "../helper.js";
 import { copyNode } from "../../utils/data-handler.js";
+import { validNobelPick } from "../state-machine/valid-action-checker.js";
+import {canSelectNoble} from "../nobles/nobles-handler.js";
+
 
 function renderCards(market) {
     for (const deck of market) {
@@ -91,6 +94,8 @@ function renderNoble(noble) {
     $noble.dataset.name = noble["name"];
 
     insertImageInto($noble, `nobles/${NOBLES_MAPPER[noble.name]}`, false, getNobleAlt(noble["neededBonuses"]));
+
+    if (validNobelPick() && canSelectNoble(noble["name"])) $noble.classList.add("selectable-noble");
 
     return $noble;
 }
