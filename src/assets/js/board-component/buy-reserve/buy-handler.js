@@ -147,12 +147,12 @@ function calculateDefaultPayment(cost, tokens) {
     return payment;
 }
 
-function allowedToSwitchToken(tokenType, currentPayment, cost, tokensInWallet) {
+function allowedToSwitchToken(tokenType, currentPayment, defaultPaymentMethod, cost, tokensInWallet) {
     const goldInPayment = currentPayment["Gold"] || 0;
-    const defaultPayment = getDefaultPaymentMethod(cost);
+    const goldInDefaultPayment = defaultPaymentMethod["Gold"] || 0;
 
     if (tokenType === "Gold") {
-        return (goldInPayment !== 0) && (goldInPayment !== defaultPayment["Gold"] || 0);
+        return goldInPayment !== goldInDefaultPayment;
     } else if (goldInPayment === (tokensInWallet["Gold"] || 0)) {
         return false;
     } else if (!(tokenType in cost)) {
