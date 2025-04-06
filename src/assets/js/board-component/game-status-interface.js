@@ -4,19 +4,8 @@ import { ACTION_REGISTRY } from "./action-registry.js";
 
 function isCurrentlyPlaying() {
     const playerName = loadFromStorage("playerName");
-    const currentlyPlaying = document.querySelector(".top-bar h2").dataset.currentlyPlaying;
+    const currentlyPlaying = document.querySelector(".top-bar h1").dataset.currentlyPlaying;
     return playerName === currentlyPlaying;
-}
-
-function getClientPlayer() {
-    const players = loadFromStorage("gameData")["players"];
-    const playerName = loadFromStorage("playerName");
-
-    for (const player of players) {
-        if (player["name"] === playerName) {
-            return player;
-        }
-    }
 }
 
 function getActionButton() {
@@ -61,4 +50,4 @@ function initGameStatusInterface() {
     $actionButton.addEventListener("click", actionRegistryRouter);
 }
 
-export { isCurrentlyPlaying, initGameStatusInterface, setActionButtonState, getActionButton, getClientPlayer, clearDatasetAttributes };
+export { isCurrentlyPlaying, initGameStatusInterface, setActionButtonState, getActionButton, clearDatasetAttributes };

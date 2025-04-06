@@ -1,4 +1,4 @@
-import { getNumberedItemTemplate, insertImageInto, renderCard, safeEmptyContainer } from "./helper.js";
+import { GEMS } from "../data.js";
 import {
     GOLD_TOKEN_LIMIT,
     NOBLES_MAPPER,
@@ -7,21 +7,22 @@ import {
     TOKEN_LIMIT_TWO_PLAYERS,
     TOKEN_MAPPER,
 } from "../config.js";
+import {
+    addNodesToEmptiedContainer,
+    getNumberedItemTemplate,
+    insertImageInto,
+    renderCard,
+    safeEmptyContainer,
+} from "./helper.js";
 import { getUnclaimedTokens, sumObjectValues } from "../helper.js";
-import { GEMS } from "../data.js";
 import { copyNode } from "../../utils/data-handler.js";
-import {validCardBuy, validNobelPick} from "../state-machine/valid-action-checker.js";
-import {canSelectNoble} from "../nobles/nobles-handler.js";
 
 function renderCards(market) {
     for (const deck of market) {
         const $currentDeck = getDeck(deck);
-        setAmountOfCardsInDeck($currentDeck, deck);
-        safeEmptyContainer($currentDeck);
 
-        for (const card of deck["visibleCards"]) {
-            renderCard($currentDeck, card["prestigePoints"], card["bonus"], card["cost"], card["name"]);
-        }
+        setAmountOfCardsInDeck($currentDeck, deck);
+        addNodesToEmptiedContainer($currentDeck, deck["visibleCards"], renderCard);
     }
 }
 
@@ -38,14 +39,9 @@ function getMaxTokens(playerLength, tokenType) {
     const threePlayers = 3;
 
     if (tokenType === "Gold") return GOLD_TOKEN_LIMIT;
-
-    if (playerLength === twoPlayers) {
-        return TOKEN_LIMIT_TWO_PLAYERS;
-    } else if (playerLength === threePlayers) {
-        return TOKEN_LIMIT_THREE_PLAYERS;
-    } else {
-        return TOKEN_LIMIT;
-    }
+    if (playerLength === twoPlayers) { return TOKEN_LIMIT_TWO_PLAYERS; }
+    else if (playerLength === threePlayers) { return TOKEN_LIMIT_THREE_PLAYERS; }
+    else { return TOKEN_LIMIT; }
 }
 
 function renderBoardTokens(unclaimedTokens, playerLength) {
@@ -55,52 +51,57 @@ function renderBoardTokens(unclaimedTokens, playerLength) {
     const $numberedItemTemplate = getNumberedItemTemplate();
 
     for (const token of GEMS.toReversed()) {
-        const $boardToken = copyNode($numberedItemTemplate);
-
-        $boardToken.dataset.type = token;
-        $boardToken.dataset.amount = unclaimedTokens[token] || 0;
-
-        const maxTokens = getMaxTokens(playerLength, token);
-
-        $boardToken.querySelector(".amount").textContent = `${(unclaimedTokens[token] || 0)}/${maxTokens}`;
-        insertImageInto($boardToken, `UI/tokens/${TOKEN_MAPPER[token]}_chip`, false, `${TOKEN_MAPPER[token]} chip`);
-
-        $boardTokensContainer.appendChild($boardToken);
+        $boardTokensContainer.appendChild(renderBoardToken($numberedItemTemplate, token, unclaimedTokens, playerLength));
     }
+}
+
+function renderBoardToken($numberedItemTemplate, token, unclaimedTokens, playerLength) {
+    const $boardToken = copyNode($numberedItemTemplate);
+
+    $boardToken.dataset.type = token;
+    $boardToken.dataset.amount = unclaimedTokens[token] || 0;
+
+    const maxTokens = getMaxTokens(playerLength, token);
+
+    $boardToken.querySelector(".amount").textContent = `${(unclaimedTokens[token] || 0)}/${maxTokens}`;
+    insertTokenImage($boardToken, token);
+
+    return $boardToken;
+}
+
+function insertTokenImage($boardToken, token) {
+    insertImageInto($boardToken, `UI/tokens/${TOKEN_MAPPER[token]}_chip`, false, `${TOKEN_MAPPER[token]} chip`);
 }
 
 function getNobleAlt(costs) {
     let alt = "Noble (+3 pts.) | Cost: ";
 
-    for (const [tokenType, amount] of Object.entries(costs)) {
-        alt += `${tokenType}: ${amount} `;
-    }
+    for (const [tokenType, amount] of Object.entries(costs)) alt += `${TOKEN_MAPPER[tokenType]}: ${amount} `;
 
     return alt;
 }
 
 function renderNobles(unclaimedNobles) {
     const $noblesContainer = document.querySelector(".nobles");
-    safeEmptyContainer($noblesContainer);
+    addNodesToEmptiedContainer($noblesContainer, unclaimedNobles, renderNoble);
+}
 
-    const $nobleTemplate = document.querySelector("#noble-template");
+function renderNoble(noble) {
+    const $noble = copyNode(document.querySelector("#noble-template"));
+    $noble.dataset.name = noble["name"];
 
-    for (const noble of unclaimedNobles) {
-        const $noble = copyNode($nobleTemplate);
-        $noble.dataset.name = noble["name"];
-        insertImageInto($noble, `nobles/${NOBLES_MAPPER[noble.name]}`, false, getNobleAlt(noble["neededBonuses"]));
-        if (validNobelPick() && canSelectNoble(noble["name"])) $noble.classList.add("selectable-noble");
-        $noblesContainer.appendChild($noble);
-    }
+    insertImageInto($noble, `nobles/${NOBLES_MAPPER[noble.name]}`, false, getNobleAlt(noble["neededBonuses"]));
+
+    return $noble;
 }
 
 function renderUpdatedBoardTokens(tokensToAdd) {
     const clientPlayer = 1;
     const amountOfPlayers = document.querySelectorAll(".player-card").length + clientPlayer;
     const previousTokens = getUnclaimedTokens();
-    const newAmountOfTokens = sumObjectValues(previousTokens, tokensToAdd);
+    const newAmountsOfTokens = sumObjectValues(previousTokens, tokensToAdd);
 
-    renderBoardTokens(newAmountOfTokens, amountOfPlayers);
+    renderBoardTokens(newAmountsOfTokens, amountOfPlayers);
 }
 
 export { renderCards, renderBoardTokens, renderNobles, renderUpdatedBoardTokens };

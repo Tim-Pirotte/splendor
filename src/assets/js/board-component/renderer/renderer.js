@@ -5,12 +5,11 @@ import { GEMS } from "../data.js";
 
 function renderPage(gameData) {
     renderHeader(gameData["currentPlayer"]);
-    renderCards(gameData["market"]);
-    // Functions relying on the response of gems are last in order to minimize disruptions
-    const gems = GEMS;
-    renderOtherPlayers(gameData["players"], gems);
+    renderOtherPlayers(gameData["players"], gameData["currentPlayer"]);
     renderBoardTokens(gameData["unclaimedTokens"], gameData["players"].length);
-    renderClientPlayer(gameData["players"], gems);
+    renderClientPlayer(gameData["players"], GEMS);
+    // Has to be rendered after the client player so that the player wallet exists
+    renderCards(gameData["market"]);
     renderNobles(gameData["unclaimedNobles"]);
 }
 
