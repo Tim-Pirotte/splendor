@@ -111,8 +111,7 @@ function highlightPointsWinner(prestigePoints, $playerPoints) {
 
 function getOrderedPlayersWithoutClientPlayer(players, clientPlayerName) {
     const clientPlayerIndex = getClientPlayerIndex(players, clientPlayerName);
-    const orderedOtherPlayers = orderPlayers(players, clientPlayerIndex);
-    return orderedOtherPlayers.slice(1);
+    return orderPlayers(players, clientPlayerIndex);
 }
 
 function getClientPlayerIndex(players, clientPlayerName) {
@@ -124,9 +123,7 @@ function getClientPlayerIndex(players, clientPlayerName) {
 }
 
 function orderPlayers(players, clientPlayerIndex) {
-    const playersToMoveToBack = players.splice(0, clientPlayerIndex);
-    players.push(...playersToMoveToBack);
-    return players;
+    return players.slice(clientPlayerIndex + 1).concat(players.slice(0, clientPlayerIndex));
 }
 
 export {

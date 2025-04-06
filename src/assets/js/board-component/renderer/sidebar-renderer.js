@@ -15,9 +15,7 @@ function renderOtherPlayers(players, currentPlayer) {
     const currentPlayerName = loadFromStorage("playerName");
     const highestScore = getHighestScore(players);
 
-    //slice needed here to work with a copy of the array because we don't want to change the order of the original array for further use.
-    //https://developer.mozilla.org/en-US/docs/Glossary/Shallow_copy
-    const otherPlayers = getOrderedPlayersWithoutClientPlayer(players.slice(), currentPlayerName);
+    const otherPlayers = getOrderedPlayersWithoutClientPlayer(players, currentPlayerName);
 
     const $otherPlayerContainer = document.querySelector(".other-players");
     safeEmptyContainer($otherPlayerContainer);
