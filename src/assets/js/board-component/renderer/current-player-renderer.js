@@ -18,7 +18,7 @@ import {
     allowedToSwitchToken,
     getDefaultPaymentMethod,
     removePaidTokens,
-    updateCurrentPlayerBonuses
+    updateCurrentPlayerBonuses,
 } from "../buy-reserve/buy-handler.js";
 import { getHighestScore, sumObjectValues } from "../../utils/game-object-handler.js";
 import { getClientTokens, getClientTotalPrestigePoints } from "../game-data-handler.js";
