@@ -4,7 +4,7 @@ import { renderBoardTokens, renderCards, renderNobles } from "./board-renderer.j
 import { GEMS } from "../data.js";
 
 function renderPage(gameData) {
-    renderHeader(gameData["currentPlayer"]);
+    renderHeader(gameData["currentPlayer"], gameData["players"][0]["name"]);
     renderNobles(gameData["unclaimedNobles"]);
     renderOtherPlayers(gameData["players"], gameData["currentPlayer"]);
     renderBoardTokens(gameData["unclaimedTokens"], gameData["players"].length);

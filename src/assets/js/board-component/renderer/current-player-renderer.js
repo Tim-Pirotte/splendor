@@ -19,9 +19,9 @@ import { getClientTokens, getClientTotalPrestigePoints } from "../game-data-hand
 import { copyNode } from "../../utils/data-handler.js";
 import { isCurrentlyPlaying } from "../game-status-interface.js";
 
-function renderHeader(currentPlayer) {
+function renderHeader(currentPlayer, gameCreatorName) {
     renderGameStatusMessage(currentPlayer);
-    renderPlayerProfile();
+    renderPlayerProfile(gameCreatorName);
 }
 
 function renderGameStatusMessage(currentPlayer) {
@@ -30,14 +30,16 @@ function renderGameStatusMessage(currentPlayer) {
     $statusMessage.dataset.currentlyPlaying = currentPlayer;
 }
 
-function renderPlayerProfile() {
+function renderPlayerProfile(gameCreatorName) {
     document.querySelector(".top-bar h2").textContent = loadFromStorage("playerName");
-    renderAvatar();
+    renderAvatar(gameCreatorName);
 }
 
-function renderAvatar() {
+function renderAvatar(gameCreatorName) {
     const avatar = loadFromStorage("avatar");
     const $avatar = document.querySelector("header div.avatar");
+
+    if (loadFromStorage("playerName") === gameCreatorName) $avatar.classList.add("game-creator");
     safeEmptyContainer($avatar);
     insertImageInto($avatar, `avatars/${avatar}`, avatar);
 }
