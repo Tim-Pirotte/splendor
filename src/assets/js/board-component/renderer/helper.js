@@ -111,7 +111,7 @@ function highlightPointsWinner(prestigePoints, $playerPoints) {
 
 function getOrderedPlayersWithoutClientPlayer(players, clientPlayerName) {
     const clientPlayerIndex = getClientPlayerIndex(players, clientPlayerName);
-    const orderedOtherPlayers = orderPlayers(players, clientPlayerIndex)
+    const orderedOtherPlayers = orderPlayers(players, clientPlayerIndex);
     return orderedOtherPlayers.slice(1);
 }
 
