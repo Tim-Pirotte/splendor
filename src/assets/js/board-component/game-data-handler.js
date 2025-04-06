@@ -50,8 +50,6 @@ The reason for the timer being implemented this way and not with setTimeOut and 
 function setTimer(duration, $timerFill) {
     const startTime = Date.now();
 
-    console.log("Breek")
-
     function update() {
         const now = Date.now();
         const elapsed = (now - startTime) / 1000;
