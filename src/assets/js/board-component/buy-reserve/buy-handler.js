@@ -149,9 +149,10 @@ function calculateDefaultPayment(cost, tokens) {
 
 function allowedToSwitchToken(tokenType, currentPayment, cost, tokensInWallet) {
     const goldInPayment = currentPayment["Gold"] || 0;
-
+    const defaultPayment = getDefaultPaymentMethod(cost);
+    console.log(goldInPayment === defaultPayment["Gold"] || 0);
     if (tokenType === "Gold") {
-        return (goldInPayment !== 0);
+        return (goldInPayment !== 0) && (goldInPayment !== defaultPayment["Gold"] || 0);
     } else if (goldInPayment === (tokensInWallet["Gold"] || 0)) {
         return false;
     } else if (!(tokenType in cost)) {
