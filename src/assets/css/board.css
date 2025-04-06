@@ -97,6 +97,11 @@ aside {
     display: inline-block;
 }
 
+.game-creator img {
+    border: solid gold;
+    border-radius: 50%;
+}
+
 /* History */
 .history li * {
     display: inline-block;

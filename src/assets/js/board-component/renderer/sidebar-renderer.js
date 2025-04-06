@@ -25,18 +25,19 @@ function renderOtherPlayers(players, currentPlayer) {
     const $playerTemplate = document.querySelector("#other-player-card-template");
 
     for (const otherPlayer of otherPlayers) {
-            $otherPlayerContainer.appendChild(renderOtherPlayer($playerTemplate, otherPlayer, highestScore, currentPlayer));
+        const isCreator = players[0]["name"] === otherPlayer["name"];
+        $otherPlayerContainer.appendChild(renderOtherPlayer($playerTemplate, otherPlayer, highestScore, currentPlayer, isCreator));
     }
 }
 
-function renderOtherPlayer($playerTemplate, otherPlayer, highestScore, currentPlayer) {
+function renderOtherPlayer($playerTemplate, otherPlayer, highestScore, currentPlayer, isGameCreator) {
     const $playerCard = copyNode($playerTemplate);
     const playerName = otherPlayer.name;
     const avatar = avatars[playerName.toLowerCase().charCodeAt(0) % avatars.length];
 
     showOtherPlayerTurn(playerName, currentPlayer, $playerCard);
 
-    insertImageInto($playerCard, `avatars/${avatar}`, true, avatar);
+    insertImageInto($playerCard, `avatars/${avatar}`, true, avatar, isGameCreator);
     setPlayerName($playerCard, otherPlayer);
     setPlayerPoints($playerCard, otherPlayer["totalPrestigePoints"], highestScore);
 

@@ -11,10 +11,11 @@ function addNodesToEmptiedContainer($container, list, mapFunction) {
     }
 }
 
-function insertImageInto($container, standardPath, before, alt) {
+function insertImageInto($container, standardPath, before, alt, isGameCreator) {
     const $image = copyNode(document.querySelector("#image-template"));
     setImageData($image, standardPath, alt);
 
+    if (isGameCreator) $image.classList.add("game-creator");
     $container.insertAdjacentHTML(before ? "afterbegin" : "beforeend", $image.outerHTML);
 }
 
