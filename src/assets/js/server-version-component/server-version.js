@@ -8,13 +8,9 @@ function isCompatible(minimumServerVersion) {
     return getApiInfo()
         .then(res => {
             const serverVersion = res["version"] || "1";
-            setServerVersion(serverVersion);
+            sessionStorage.setItem("serverVersion", serverVersion);
             return parseInt(serverVersion) >= minimumServerVersion;
         });
-}
-
-function setServerVersion(serverVersion) {
-    sessionStorage.setItem("serverVersion", serverVersion);
 }
 
 export { isCompatible };
