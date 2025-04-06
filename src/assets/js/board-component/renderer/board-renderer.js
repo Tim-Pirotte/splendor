@@ -17,8 +17,7 @@ import {
 import { getUnclaimedTokens, sumObjectValues } from "../helper.js";
 import { copyNode } from "../../utils/data-handler.js";
 import { validNobelPick } from "../state-machine/valid-action-checker.js";
-import {canSelectNoble} from "../nobles/nobles-handler.js";
-
+import { canSelectNoble } from "../nobles/nobles-handler.js";
 
 function renderCards(market) {
     for (const deck of market) {

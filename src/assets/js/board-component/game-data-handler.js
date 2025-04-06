@@ -5,7 +5,7 @@ import { renderPage } from "./renderer/renderer.js";
 import { getActionButton, isCurrentlyPlaying } from "./game-status-interface.js";
 import { initRoundBegin, saveGameState } from "./state-machine/state-machine.js";
 import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
-import {processSkipTurn} from "./tokens/token-handler.js";
+import { processSkipTurn } from "./tokens/token-handler.js";
 
 function handleGameDataError(err) {
     const forbidden = 403;
