@@ -28,10 +28,18 @@ function renderOtherPlayers(otherPlayers, clientPlayer) {
     }
 }
 
+function getAvatar(otherPlayer) {
+    if ("avatar" in otherPlayer) {
+        return otherPlayer.avatar;
+    } else {
+        return avatars[otherPlayer.name.toLowerCase().charCodeAt(0) % avatars.length]
+    }
+}
+
 function renderOtherPlayer($playerTemplate, otherPlayer, highestScore, currentPlayer) {
     const $playerCard = copyNode($playerTemplate);
     const playerName = otherPlayer.name;
-    const avatar = avatars[playerName.toLowerCase().charCodeAt(0) % avatars.length];
+    const avatar = getAvatar(otherPlayer);
 
     showOtherPlayerTurn(playerName, currentPlayer, $playerCard);
 
