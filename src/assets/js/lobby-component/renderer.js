@@ -33,6 +33,7 @@ function determinePlayerAvatar(playerName) {
     if (playerName === loadFromStorage("playerName")) {
         return loadFromStorage("avatar");
     }
+
     return avatars[playerName.toLowerCase().charCodeAt(0) % avatars.length];
 }
 

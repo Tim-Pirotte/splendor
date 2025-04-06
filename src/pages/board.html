@@ -148,7 +148,7 @@
                 </template>
             </ul>
             <!-- Timer https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles -->
-            <div class="timer" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="45">
+            <div class="timer" style="height: 100%;" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="45">
                 <div class="timer-fill"></div>
             </div>
             <!-- Player points -->
@@ -217,7 +217,7 @@
     <template id="image-template">
         <picture>
             <source srcset="#" type="image/webp">
-            <img src="#" alt="" title="">
+            <img src="#" alt="" title="" loading="lazy">
         </picture>
     </template>
 
