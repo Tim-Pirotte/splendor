@@ -5,6 +5,9 @@ import { binarySearchObjects } from "../../utils/data-handler.js";
 
 function selectNoble(e) {
     const $selectedNoble = e.target.closest("li");
+
+    if (!$selectedNoble) return;
+
     const nobleName = $selectedNoble.dataset.name;
 
     if (canSelectNoble(nobleName)) {
