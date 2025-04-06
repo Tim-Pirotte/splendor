@@ -10,7 +10,7 @@ import {
 import { getHighestScore } from "../../utils/game-object-handler.js";
 import { copyNode } from "../../utils/data-handler.js";
 import { avatars } from "../../main-menu-component/data.js";
-import { isCompatible } from "../../server-version-component/server-version.js";
+import { checkCompatibility } from "../../server-version-component/server-version.js";
 
 function renderOtherPlayers(otherPlayers, clientPlayer) {
     const currentPlayerName = loadFromStorage("playerName");
@@ -117,7 +117,7 @@ function renderOtherPlayerReservedCard($numberedItemTemplate, reservedCard, cont
 }
 
 function renderHistory() {
-    isCompatible(2)
+    checkCompatibility(2)
         .then(isOk => {
             if (!isOk) incompatibleServerMessage();
         });

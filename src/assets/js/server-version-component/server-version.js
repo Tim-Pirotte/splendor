@@ -1,6 +1,6 @@
 import {getApiInfo} from "../api.js";
 
-function isCompatible(minimumServerVersion) {
+function checkCompatibility(minimumServerVersion) {
     const serverVersion = sessionStorage.getItem("serverVersion");
 
     if (serverVersion !== null) return Promise.resolve(parseInt(serverVersion) >= minimumServerVersion);
@@ -13,4 +13,4 @@ function isCompatible(minimumServerVersion) {
         });
 }
 
-export { isCompatible };
+export { checkCompatibility };

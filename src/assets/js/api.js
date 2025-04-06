@@ -1,6 +1,6 @@
 import { fetchFromServer } from "./data-connector/api-communication-abstractor.js";
 import { loadFromStorage } from "./data-connector/local-storage-abstractor.js";
-import {isCompatible} from "./server-version-component/server-version.js";
+import {checkCompatibility} from "./server-version-component/server-version.js";
 
 /* Game Management */
 function getGames(hasStarted = "") {
@@ -12,7 +12,7 @@ function getGames(hasStarted = "") {
 }
 
 function createGame(requestBody) {
-    return isCompatible(2).then(isOk => {
+    return checkCompatibility(2).then(isOk => {
         if (isOk) requestBody.avatar = loadFromStorage("avatar");
         return fetchFromServer("/games", "POST", requestBody);
     });
@@ -24,7 +24,7 @@ function getGame() {
 }
 
 function joinGame(gameId) {
-    return isCompatible(2).then(isOk => {
+    return checkCompatibility(2).then(isOk => {
         let body = {};
         if (isOk) body = { avatar: loadFromStorage("avatar") };
 
