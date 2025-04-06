@@ -97,7 +97,7 @@ aside {
     display: inline-block;
 }
 
-.game-creator img {
+.game-creator {
     border: solid gold;
     border-radius: 50%;
 }

@@ -2,7 +2,7 @@ import { loadFromStorage } from "../../data-connector/local-storage-abstractor.j
 import {
     formatNumber,
     getNumberedItemTemplate, getOrderedPlayersWithoutClientPlayer, highlightPointsWinner,
-    insertImageInto,
+    insertImageInto, isCreator,
     safeEmptyContainer,
 } from "./helper.js";
 import { TOKEN_MAPPER } from "../config.js";
@@ -23,8 +23,13 @@ function renderOtherPlayers(players, currentPlayer) {
     const $playerTemplate = document.querySelector("#other-player-card-template");
 
     for (const otherPlayer of otherPlayers) {
-        const isCreator = players[0]["name"] === otherPlayer["name"];
-        $otherPlayerContainer.appendChild(renderOtherPlayer($playerTemplate, otherPlayer, highestScore, currentPlayer, isCreator));
+        $otherPlayerContainer.appendChild(renderOtherPlayer(
+            $playerTemplate,
+            otherPlayer,
+            highestScore,
+            currentPlayer,
+            isCreator(players, otherPlayer),
+        ));
     }
 }
 
@@ -35,7 +40,9 @@ function renderOtherPlayer($playerTemplate, otherPlayer, highestScore, currentPl
 
     showOtherPlayerTurn(playerName, currentPlayer, $playerCard);
 
-    insertImageInto($playerCard, `avatars/${avatar}`, true, avatar, isGameCreator);
+    insertImageInto($playerCard, `avatars/${avatar}`, true, avatar);
+    if (isGameCreator) $playerCard.querySelector("img").classList.add("game-creator");
+
     setPlayerName($playerCard, otherPlayer);
     setPlayerPoints($playerCard, otherPlayer["totalPrestigePoints"], highestScore);
 

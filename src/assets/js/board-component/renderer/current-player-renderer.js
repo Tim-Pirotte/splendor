@@ -8,7 +8,8 @@ import {
     formatNumber,
     getNumberedItemTemplate,
     addSwitchButton,
-    insertImageInto, renderCard,
+    insertImageInto,
+    renderCard,
     renderProgressBar,
     safeEmptyContainer,
     highlightPointsWinner,
@@ -39,9 +40,9 @@ function renderAvatar(gameCreatorName) {
     const avatar = loadFromStorage("avatar");
     const $avatar = document.querySelector("header div.avatar");
 
-    if (loadFromStorage("playerName") === gameCreatorName) $avatar.classList.add("game-creator");
     safeEmptyContainer($avatar);
     insertImageInto($avatar, `avatars/${avatar}`, avatar);
+    if (loadFromStorage("playerName") === gameCreatorName) $avatar.querySelector("img").classList.add("game-creator");
 }
 
 function renderClientPlayerPoints(totalPrestigePoints, highestScore) {

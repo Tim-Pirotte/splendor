@@ -11,11 +11,10 @@ function addNodesToEmptiedContainer($container, list, mapFunction) {
     }
 }
 
-function insertImageInto($container, standardPath, before, alt, isGameCreator) {
+function insertImageInto($container, standardPath, before, alt) {
     const $image = copyNode(document.querySelector("#image-template"));
     setImageData($image, standardPath, alt);
 
-    if (isGameCreator) $image.classList.add("game-creator");
     $container.insertAdjacentHTML(before ? "afterbegin" : "beforeend", $image.outerHTML);
 }
 
@@ -126,6 +125,10 @@ function orderPlayers(players, clientPlayerIndex) {
     return players.slice(clientPlayerIndex + 1).concat(players.slice(0, clientPlayerIndex));
 }
 
+function isCreator(players, otherPlayer) {
+    return players[0]["name"] === otherPlayer["name"];
+}
+
 export {
     insertImageInto,
     renderProgressBar,
@@ -137,4 +140,5 @@ export {
     renderCard,
     highlightPointsWinner,
     getOrderedPlayersWithoutClientPlayer,
+    isCreator,
 };
