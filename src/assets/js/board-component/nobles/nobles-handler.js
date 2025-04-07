@@ -1,15 +1,19 @@
-import { getActionButton, setActionButtonState } from "../game-status-interface.js";
-import { fetchFromServer } from "../../data-connector/api-communication-abstractor.js";
-import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
 import { NOBLES } from "../data.js";
+import * as API from "../../api.js";
+import { getActionButton, setActionButtonState } from "../game-status-interface.js";
 import { binarySearchObjects } from "../../utils/data-handler.js";
 
 function selectNoble(e) {
     const $selectedNoble = e.target.closest("li");
+
+    if (!$selectedNoble) return;
+
     const nobleName = $selectedNoble.dataset.name;
 
     if (canSelectNoble(nobleName)) {
+        setNobleHighlight($selectedNoble);
         setActionButtonState("Take Noble", "processTakeNoble", { name: nobleName });
+        getActionButton().disabled = false;
     }
 }
 
@@ -18,9 +22,7 @@ function canSelectNoble(nobleName) {
     const playerBonuses = getPlayerBonuses();
 
     for (const [nobleBonus, amount] of Object.entries(noble["neededBonuses"])) {
-        if (playerBonuses[nobleBonus] < amount) {
-            return false;
-        }
+        if (playerBonuses[nobleBonus] < amount) return false;
     }
 
     return true;
@@ -37,18 +39,22 @@ function getPlayerBonuses() {
     return bonuses;
 }
 
+function setNobleHighlight($nobleToSelect) {
+    for (const $noble of document.querySelectorAll(".nobles > li")) {
+        $noble.classList.toggle("selected-noble", $noble === $nobleToSelect);
+    }
+}
+
 function processTakeNoble() {
     const actionButton = getActionButton();
     const nobleToTake = getNobleByName(actionButton.dataset.name);
-    fetchFromServer(
-        `/games/${loadFromStorage("gameId")}/players/${loadFromStorage("playerName")}/nobles`,
-        "POST",
-        nobleToTake)
-        .then(res => console.error(res));
+
+    API.takeNobles(nobleToTake)
+        .then();
 }
 
 function getNobleByName(name) {
     return binarySearchObjects(NOBLES, name, "name");
 }
 
-export { selectNoble, processTakeNoble };
+export { selectNoble, processTakeNoble, canSelectNoble };
