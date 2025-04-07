@@ -235,6 +235,16 @@ section header picture {
     border-radius: 0.25rem;
 }
 
+.selectable-noble {
+    outline: 0.275rem solid yellow;
+    border-radius: 0.25rem;
+}
+
+.selected-noble {
+    outline: 0.275rem solid hotpink;
+    border-radius: 0.25rem;
+}
+
 .progress-bar {
     height: 0.5rem;
     background-repeat: no-repeat;
@@ -276,7 +286,7 @@ section header picture {
     height: 0;
     width: 100%;
     background: lightpink;
-    transition: height 1s linear, background-color 1s ease-in-out;
+    transition: background-color 1s ease-in-out;
 }
 
 .time-almost-ends {

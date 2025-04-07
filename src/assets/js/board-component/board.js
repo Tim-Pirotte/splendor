@@ -1,11 +1,11 @@
 import { updateGameData } from "./game-data-handler.js";
 import { initGameStatusInterface } from "./game-status-interface.js";
-import { selectToken } from "./token/token-handler.js";
+import { selectToken } from "./tokens/token-handler.js";
 import { selectNoble } from "./nobles/nobles-handler.js";
 import { selectCard } from "./buy-reserve/select.js";
 import { processReserve, selectDeckForReserving } from "./buy-reserve/reserve-handler.js";
 import { handlePaymentMethodChange } from "./buy-reserve/buy-handler.js";
-import { selectPlayerToken } from "./token/discard.js";
+import { selectPlayerToken } from "./tokens/discard.js";
 import { renderPlayerProfile } from "./renderer/current-player-renderer.js";
 
 function init() {

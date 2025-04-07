@@ -1,7 +1,7 @@
 import { GEMS } from "../data.js";
 import { MAX_TOKENS_ALLOWED, PRESTIGE_POINTS_NEEDED_TO_WIN, TOKEN_MAPPER } from "../config.js";
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
-import { getTokenAmount, getTotalAmountDiscarded, getTotalTokenAmount } from "../token/discard.js";
+import { getTokenAmount, getTotalAmountDiscarded, getTotalTokenAmount } from "../tokens/discard.js";
 import { validTokenDiscard } from "../state-machine/valid-action-checker.js";
 import {
     addNodesToEmptiedContainer,
