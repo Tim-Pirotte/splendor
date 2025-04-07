@@ -18,10 +18,12 @@ import { getHighestScore, sumObjectValues } from "../../utils/game-object-handle
 import { getClientTokens, getClientTotalPrestigePoints } from "../game-data-handler.js";
 import { copyNode } from "../../utils/data-handler.js";
 import { isCurrentlyPlaying } from "../game-status-interface.js";
+import {checkCompatibility} from "../../server-version-component/server-version.js";
 
 function renderHeader(currentPlayer) {
     renderGameStatusMessage(currentPlayer);
     renderPlayerProfile();
+    renderForfeitButton();
 }
 
 function renderGameStatusMessage(currentPlayer) {
@@ -40,6 +42,13 @@ function renderAvatar() {
     const $avatar = document.querySelector("header div.avatar");
     safeEmptyContainer($avatar);
     insertImageInto($avatar, `avatars/${avatar}`, avatar);
+}
+
+function renderForfeitButton() {
+    checkCompatibility(2)
+        .then(isCompatible => {
+            document.querySelector(".forfeit").classList.toggle("hidden", !isCompatible);
+        });
 }
 
 function renderClientPlayerPoints(totalPrestigePoints, highestScore) {
