@@ -5,7 +5,7 @@ import { safeEmptyContainer } from "../board-component/renderer/helper.js";
 import { copyNode } from "../utils/data-handler.js";
 
 function renderGameInfo(g) {
-    document.querySelector("#game-name-id").innerHTML = `${getGameName(g)} / <span>${getGameId(g)}</span> `;
+    document.querySelector("#game-name-id").innerHTML = `${getGameName(g)} / <span>${getGameId(g)}</span>`;
     document.querySelector("h3").textContent = `Created by ${getGameCreator(g)}`;
 }
 
