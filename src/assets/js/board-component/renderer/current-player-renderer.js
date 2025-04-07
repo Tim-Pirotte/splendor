@@ -67,9 +67,9 @@ function renderPrestigePointsProgressBar(totalPrestigePoints) {
 }
 
 function addHighestScoreIndicator(totalPrestigePoints, highestScore) {
-    const $playerDiamondLocation = document.querySelector(".player-points p");
+    const $highestScoreIndicator = document.querySelector(".player-points picture");
 
-    if (totalPrestigePoints >= highestScore) insertImageInto($playerDiamondLocation, "UI/tokens/white_chip", false, "Score amongst the highest");
+    if (totalPrestigePoints >= highestScore) $highestScoreIndicator.classList.remove("hidden");
 }
 
 function renderClientPlayerReserve(currentPlayer) {
