@@ -126,8 +126,8 @@ function renderOtherPlayerReservedCard($numberedItemTemplate, reservedCard, cont
 
 function renderHistory() {
     checkCompatibility(2)
-        .then(isOk => {
-            if (!isOk) incompatibleServerMessage();
+        .then(isCompatible => {
+            if (!isCompatible) incompatibleServerMessage();
         });
 }
 
