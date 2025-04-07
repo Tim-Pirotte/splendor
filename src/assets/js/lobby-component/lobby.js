@@ -4,4 +4,5 @@ function lobbyInit () {
     loadLobbyInformation();
     document.querySelector("#copy-game-id-button").addEventListener("click", copyGameId);
 }
+
 lobbyInit ();
