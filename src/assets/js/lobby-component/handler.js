@@ -15,5 +15,8 @@ function loadLobbyInformation() {
         }
     });
 }
-
-export { loadLobbyInformation };
+function copyGameId(){
+    const text = document.querySelector("#game-name-id span").innerText;
+    navigator.clipboard.writeText(text);
+}
+export { loadLobbyInformation , copyGameId };
