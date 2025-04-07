@@ -1,4 +1,4 @@
-import { loadLobbyInformation , copyGameId } from "./handler.js";
+import { loadLobbyInformation, copyGameId } from "./handler.js";
 
 function lobbyInit () {
     loadLobbyInformation();
