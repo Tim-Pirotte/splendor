@@ -6,10 +6,7 @@ import { safeEmptyContainer } from "../board-component/renderer/helper.js";
 import { copyNode } from "../utils/data-handler.js";
 
 function renderGameInfo(g) {
-    document.querySelector("#game-name-id").innerHTML = `${getGameName(g)} / <span>${getGameId(g)}</span> <picture id="copy-to-clipboard">
-                            <source srcset="../assets/images/avatars/placeholder.webp">
-                            <img src="../assets/images/fallback/avatars/placeholder.png" alt="placeholder" title="placeholder">
-                        </picture>`;
+    document.querySelector("#game-name-id").innerHTML = `${getGameName(g)} / <span>${getGameId(g)}</span> `;
     document.querySelector("#copy-to-clipboard").addEventListener("click", copyGameId);
     document.querySelector("h3").textContent = `Created by ${getGameCreator(g)}`;
 }
