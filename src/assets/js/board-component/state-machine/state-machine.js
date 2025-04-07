@@ -20,11 +20,12 @@ function initRoundBegin(gameData){
         break;
     default:
         setActionButtonState("skip turn", "skipTurn", {});
+        getActionButton().disabled = false;
     }
 
-    getActionButton().disabled = !isCurrentlyPlaying();
-    if(getActionButton().disabled) {
+    if (!isCurrentlyPlaying()) {
         setActionButtonState("Wait until your turn", "doNothing", {});
+        getActionButton().disabled = true;
     }
 }
 

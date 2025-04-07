@@ -1,11 +1,11 @@
-import { SECONDS_PER_ROUND, SECONDS_WHEN_TURN_ALMOST_ENDS } from "./config.js";
 import { POLLING_TIME_OUT } from "../config.js";
+import { SECONDS_PER_ROUND, SECONDS_WHEN_TURN_ALMOST_ENDS } from "./config.js";
 import * as API from "../api.js";
 import { renderPage } from "./renderer/renderer.js";
 import { getActionButton, isCurrentlyPlaying } from "./game-status-interface.js";
 import { initRoundBegin, saveGameState } from "./state-machine/state-machine.js";
-import { processSkipTurn } from "./token/token-handler.js";
 import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
+import { processSkipTurn } from "./tokens/token-handler.js";
 
 function handleGameDataError(err) {
     const forbidden = 403;
@@ -40,26 +40,45 @@ function startGameStatePolling() {
     setTimeout(updateGameData, POLLING_TIME_OUT);
 }
 
-function setTimer(currentSeconds, maxSeconds, $timerFill) {
-    if (isCurrentlyPlaying()) {
-        const timerHeight = currentSeconds / maxSeconds * 100;
-        $timerFill.style.height = `${timerHeight}%`;
-        $timerFill.closest(".timer").setAttribute("aria-valuenow", currentSeconds);
+/* https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame
+The reason for the timer being implemented this way and not with setTimeOut and a css transition goes as follows:
+ - setTimeOut doesn't ensure that it runs exactly at the specified time
+ - The execution time of the update function would have to also be subtracted from the delay
+ - The execution order between js and css can differ which can make the timer bar go back and forth
+ - Page inactivity can halt the execution of a timed out function in certain browsers
+*/
+function setTimer(duration, $timerFill) {
+    const startTime = Date.now();
 
-        $timerFill.classList.toggle("time-almost-ends", currentSeconds < SECONDS_WHEN_TURN_ALMOST_ENDS);
+    function update() {
+        const now = Date.now();
+        const elapsed = (now - startTime) / 1000;
+        const remaining = Math.max(0, duration - elapsed);
 
-        if (currentSeconds > 0) {
-            setTimeout(() => setTimer(currentSeconds - 1, maxSeconds, $timerFill), 1000);
-        } else if (getActionButton().disabled) {
+        const percent = (remaining / duration) * 100;
+        $timerFill.style.height = `${percent}%`;
+        $timerFill.closest(".timer").setAttribute("aria-valuenow", Math.floor(remaining));
+
+        $timerFill.classList.toggle("time-almost-ends", remaining < SECONDS_WHEN_TURN_ALMOST_ENDS);
+
+        if (!isCurrentlyPlaying()) return;
+
+        if (remaining > 0) {
+            requestAnimationFrame(update);
+        } else if (!getActionButton().disabled) {
             getActionButton().click();
         } else {
             processSkipTurn();
         }
     }
+
+    requestAnimationFrame(update);
 }
 
 function startRoundTimer() {
-    setTimer(SECONDS_PER_ROUND - 1, SECONDS_PER_ROUND - 1, document.querySelector(".timer-fill"));
+    const $timerFill = document.querySelector(".timer-fill");
+    $timerFill.classList.remove("time-almost-ends");
+    setTimer(SECONDS_PER_ROUND, $timerFill);
 }
 
 function getClientTokens() {

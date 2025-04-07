@@ -16,6 +16,7 @@ function createGame(e) {
                 visibility: getCheckedRadioButtonValue(document.querySelectorAll("input[name=visibility]")),
                 numberOfPlayers: parseInt(getCheckedRadioButtonValue(document.querySelectorAll("input[name=players]"))),
                 returnExcessTokensRequired: true,
+                pickNobleRequired: true,
             };
 
             if (isCompatible) requestBody.avatar = loadFromStorage("avatar");
