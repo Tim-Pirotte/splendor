@@ -16,6 +16,7 @@ function loadLobbyInformation() {
         }
     });
 }
+
 function copyGameId(){
     const gameId = loadFromStorage("gameId");
     navigator.clipboard.writeText(gameId);
