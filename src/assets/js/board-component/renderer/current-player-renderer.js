@@ -20,11 +20,6 @@ import { copyNode } from "../../utils/data-handler.js";
 import { isCurrentlyPlaying } from "../game-status-interface.js";
 import { insertImageInto } from "../../utils/renderer.js";
 
-function renderHeader(currentPlayer) {
-    renderGameStatusMessage(currentPlayer);
-    renderPlayerProfile();
-}
-
 function renderGameStatusMessage(currentPlayer) {
     const $statusMessage = document.querySelector("h1");
     $statusMessage.textContent = isCurrentlyPlaying() ? "It's your turn" : `It's ${currentPlayer}'s turn`;
@@ -258,7 +253,6 @@ function addGoldToken() {
 }
 
 export {
-    renderHeader,
     renderClientPlayer,
     renderSwitchPaymentButtons,
     renderClientPlayerTokenCount,renderClientPlayerTokens,
@@ -267,4 +261,6 @@ export {
     hideSwitchPaymentButtons,
     setButtonStatuses,
     addGoldToken,
+    renderGameStatusMessage,
+    renderPlayerProfile,
 };
