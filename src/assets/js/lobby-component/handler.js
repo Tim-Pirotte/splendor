@@ -2,6 +2,7 @@ import * as API from "../api.js";
 import { POLLING_TIME_OUT } from "../config.js";
 import { hasGameStarted } from "../utils/game-object-handler.js";
 import { renderGameInfo, renderPlayerCount, renderPlayersList } from "./renderer.js";
+import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 
 function loadLobbyInformation() {
     API.getGame().then(gameObject => {
@@ -16,7 +17,7 @@ function loadLobbyInformation() {
     });
 }
 function copyGameId(){
-    const text = document.querySelector("#game-name-id span").innerText;
-    navigator.clipboard.writeText(text);
+    const gameId = loadFromStorage("gameId");
+    navigator.clipboard.writeText(gameId);
 }
 export { loadLobbyInformation , copyGameId };
