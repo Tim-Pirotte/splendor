@@ -82,7 +82,6 @@ function processBuyCardClick() {
     endBuyReserveAction();
 
     API.buyCard({ development: { name: cardData["name"] }, payment: getCurrentPaymentMethod() });
-
 }
 
 function getCardData(cardName) {
