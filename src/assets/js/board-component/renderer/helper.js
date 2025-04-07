@@ -116,7 +116,7 @@ function getOrderedPlayersWithoutClientPlayer(players, clientPlayerName) {
 function getClientPlayerIndex(players, clientPlayerName) {
     for (const playerIndex in players) {
         if (players[playerIndex]["name"] === clientPlayerName) {
-            return playerIndex;
+            return parseInt(playerIndex);
         }
     }
 }
