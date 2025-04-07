@@ -1,6 +1,6 @@
 import * as API from "../api.js";
 import { saveToStorage } from "../data-connector/local-storage-abstractor.js";
-import {checkCompatibility} from "../server-version-component/server-version.js";
+import { checkCompatibility } from "../server-version-component/server-version.js";
 
 function getCheckedRadioButtonValue(buttonList){
     for (const button of buttonList) {

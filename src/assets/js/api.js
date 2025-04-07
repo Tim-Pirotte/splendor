@@ -1,6 +1,6 @@
 import { fetchFromServer } from "./data-connector/api-communication-abstractor.js";
 import { loadFromStorage } from "./data-connector/local-storage-abstractor.js";
-import {checkCompatibility} from "./server-version-component/server-version.js";
+import { checkCompatibility } from "./server-version-component/server-version.js";
 
 /* Game Management */
 function getGames(hasStarted = "") {
@@ -26,6 +26,7 @@ function getGame() {
 function joinGame(gameId) {
     return checkCompatibility(2).then(isCompatible => {
         let body = {};
+
         if (isCompatible) body = { avatar: loadFromStorage("avatar") };
 
         const playerName = loadFromStorage("playerName");

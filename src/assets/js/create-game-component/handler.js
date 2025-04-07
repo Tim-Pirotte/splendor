@@ -1,6 +1,6 @@
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { createGameWithBody, getCheckedRadioButtonValue } from "./helper.js";
-import {checkCompatibility} from "../server-version-component/server-version.js";
+import { checkCompatibility } from "../server-version-component/server-version.js";
 
 function locateMainMenu(e) {
     location.href = "./../index.html";

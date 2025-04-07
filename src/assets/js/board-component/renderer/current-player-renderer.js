@@ -18,7 +18,7 @@ import { getHighestScore, sumObjectValues } from "../../utils/game-object-handle
 import { getClientTokens, getClientTotalPrestigePoints } from "../game-data-handler.js";
 import { copyNode } from "../../utils/data-handler.js";
 import { isCurrentlyPlaying } from "../game-status-interface.js";
-import {checkCompatibility} from "../../server-version-component/server-version.js";
+import { checkCompatibility } from "../../server-version-component/server-version.js";
 
 function renderHeader(currentPlayer) {
     renderGameStatusMessage(currentPlayer);
