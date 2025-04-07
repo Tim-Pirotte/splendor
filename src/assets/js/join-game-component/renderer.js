@@ -3,8 +3,9 @@ import { POLLING_TIME_OUT } from "../config.js";
 import { copyNode } from "../utils/data-handler.js";
 import { getCurrentUsersAmount, getGameId, getGameName, getGameState, getMaxUsersAmount } from "../utils/game-object-handler.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
-import { addImageToContainer, emptyContainerPreserveTemplates } from "../utils/renderer.js";
+import { addImageToContainer } from "../utils/renderer.js";
 import { filterGames } from "./gamefilter.js";
+import {safeEmptyContainer} from "../board-component/renderer/helper.js";
 
 function renderPlayerInfo() {
     const playerName = loadFromStorage("playerName");
@@ -19,7 +20,7 @@ function renderPublicGames() {
     const $gameList = document.querySelector("ul");
     const $gameListCopy = $gameList.cloneNode(true);
 
-    emptyContainerPreserveTemplates($gameListCopy);
+    safeEmptyContainer($gameListCopy);
 
     API.getGames().then(gameObject => {
         const gamesToRender = filterGames(gameObject["games"]);
