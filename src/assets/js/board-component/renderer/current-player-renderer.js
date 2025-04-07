@@ -8,7 +8,7 @@ import {
     formatNumber,
     getNumberedItemTemplate,
     addSwitchButton,
-    insertImageInto, renderCard,
+    renderCard,
     renderProgressBar,
     safeEmptyContainer,
     highlightPointsWinner,
@@ -18,6 +18,7 @@ import { getHighestScore, sumObjectValues } from "../../utils/game-object-handle
 import { getClientTokens, getClientTotalPrestigePoints } from "../game-data-handler.js";
 import { copyNode } from "../../utils/data-handler.js";
 import { isCurrentlyPlaying } from "../game-status-interface.js";
+import { insertImageInto } from "../../utils/renderer.js";
 
 function renderHeader(currentPlayer) {
     renderGameStatusMessage(currentPlayer);
@@ -39,7 +40,7 @@ function renderAvatar() {
     const avatar = loadFromStorage("avatar");
     const $avatar = document.querySelector("header div.avatar");
     safeEmptyContainer($avatar);
-    insertImageInto($avatar, `avatars/${avatar}`, avatar);
+    insertImageInto($avatar, `avatars/${avatar}`, avatar, avatar);
 }
 
 function renderClientPlayerPoints(totalPrestigePoints, highestScore) {

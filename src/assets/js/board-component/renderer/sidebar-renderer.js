@@ -2,7 +2,6 @@ import { loadFromStorage } from "../../data-connector/local-storage-abstractor.j
 import {
     formatNumber,
     getNumberedItemTemplate, highlightPointsWinner,
-    insertImageInto,
     safeEmptyContainer,
 } from "./helper.js";
 import { TOKEN_MAPPER } from "../config.js";
@@ -10,6 +9,7 @@ import { getHighestScore } from "../../utils/game-object-handler.js";
 import { copyNode } from "../../utils/data-handler.js";
 import { GEMS } from "../data.js";
 import { avatars } from "../../main-menu-component/data.js";
+import { insertImageInto } from "../../utils/renderer.js";
 
 function renderOtherPlayers(otherPlayers, clientPlayer) {
     const currentPlayerName = loadFromStorage("playerName");
