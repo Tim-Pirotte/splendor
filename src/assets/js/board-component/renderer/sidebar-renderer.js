@@ -147,41 +147,54 @@ const HISTORY_ACTIONS = {
     buy: renderBuyCardEntry,
     reserve: renderReserveCardEntry,
     noble: renderChooseNobleEntry,
-    forfeit: renderForfeitEntry(),
+    forfeit: renderForfeitEntry,
 }
 
 function renderHistoryEntry(entry) {
-    const renderedEntry = HISTORY_ACTIONS[entry["action"]]();
+    const renderedEntry = HISTORY_ACTIONS[entry["action"]](entry);
     insertPlayerName(renderedEntry, entry["player"]);
     return renderedEntry;
 }
 
-function renderTakeTokensEntry() {
+function renderTakeTokensEntry(entry) {
     const $takeTokensEntry = copyNode(document.querySelector("#take-tokens-history-template"));
+
+    renderHistoryTokenList(entry, $takeTokensEntry);
+
     return $takeTokensEntry;
 }
 
-function renderDiscardTokensEntry() {
+function renderDiscardTokensEntry(entry) {
     const $discardTokensEntry = copyNode(document.querySelector("#discard-tokens-history-template"));
+
+    renderHistoryTokenList(entry, $discardTokensEntry);
+
     return $discardTokensEntry;
 }
 
-function renderBuyCardEntry() {
+function renderHistoryTokenList(entry, $tokensEntry) {
+    for (const [tokenType, amount] of Object.entries(entry["tokens"])) {
+        $tokensEntry.insertAdjacentHTML("beforeend", amount);
+        insertImageInto($tokensEntry, `UI/tokens/${TOKEN_MAPPER[tokenType]}_chip`);
+    }
+}
+
+function renderBuyCardEntry(entry) {
     const $buyCardEntry = copyNode(document.querySelector("#buy-card-history-template"));
     return $buyCardEntry;
 }
 
-function renderReserveCardEntry() {
+function renderReserveCardEntry(entry) {
     const $reserveCardEntry = copyNode(document.querySelector("#reserve-card-history-template"));
     return $reserveCardEntry;
 }
 
-function renderChooseNobleEntry() {
+function renderChooseNobleEntry(entry) {
     const $chooseNobleEntry = copyNode(document.querySelector("#receive-noble-history-template"));
     return $chooseNobleEntry;
 }
 
-function renderForfeitEntry() {
+function renderForfeitEntry(entry) {
     const $forfeitEntry = copyNode(document.querySelector("#forfeit-history-template"));
     return $forfeitEntry;
 }
