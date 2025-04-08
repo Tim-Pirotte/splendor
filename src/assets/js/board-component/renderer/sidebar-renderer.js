@@ -151,7 +151,9 @@ const HISTORY_ACTIONS = {
 }
 
 function renderHistoryEntry(entry) {
-    return HISTORY_ACTIONS[entry["action"]]();
+    const renderedEntry = HISTORY_ACTIONS[entry["action"]]();
+    insertPlayerName(renderedEntry, entry["player"]);
+    return renderedEntry;
 }
 
 function renderTakeTokensEntry() {
@@ -187,6 +189,10 @@ function renderForfeitEntry() {
 function incompatibleServerMessage() {
     const $history = document.querySelector(".history");
     $history.innerHTML = "<p>History is not supported on this server. Sorry for the Inconvenience.</p>"
+}
+
+function insertPlayerName(renderedEntry, playerName) {
+    renderedEntry.querySelector("strong").textContent = playerName;
 }
 
 export { renderOtherPlayers, renderHistory };
