@@ -158,45 +158,46 @@ function renderHistoryEntry(entry) {
 
 function renderTakeTokensEntry(entry) {
     const $takeTokensEntry = copyNode(document.querySelector("#take-tokens-history-template"));
-
-    renderHistoryTokenList(entry, $takeTokensEntry);
-
+    renderHistoryTokenList(entry["tokens"], $takeTokensEntry);
     return $takeTokensEntry;
 }
 
 function renderDiscardTokensEntry(entry) {
     const $discardTokensEntry = copyNode(document.querySelector("#discard-tokens-history-template"));
-
-    renderHistoryTokenList(entry, $discardTokensEntry);
-
+    renderHistoryTokenList(entry["tokens"], $discardTokensEntry);
     return $discardTokensEntry;
 }
 
-function renderHistoryTokenList(entry, $tokensEntry) {
-    for (const [tokenType, amount] of Object.entries(entry["tokens"])) {
+function renderHistoryTokenList(tokens, $tokensEntry) {
+    for (const [tokenType, amount] of Object.entries(tokens)) {
         $tokensEntry.insertAdjacentHTML("beforeend", amount);
-        insertImageInto($tokensEntry, `UI/tokens/${TOKEN_MAPPER[tokenType]}_chip`);
+        insertImageInto($tokensEntry, `UI/tokens/${TOKEN_MAPPER[tokenType]}_chip`, false, `${TOKEN_MAPPER[tokenType]} chip`);
     }
 }
 
 function renderBuyCardEntry(entry) {
     const $buyCardEntry = copyNode(document.querySelector("#buy-card-history-template"));
+    renderHistoryCard($buyCardEntry, entry["bonus"]);
     return $buyCardEntry;
 }
 
 function renderReserveCardEntry(entry) {
     const $reserveCardEntry = copyNode(document.querySelector("#reserve-card-history-template"));
+    renderHistoryCard($reserveCardEntry, entry["bonus"]);
     return $reserveCardEntry;
 }
 
+function renderHistoryCard($cardEntry, cardType) {
+    insertImageInto($cardEntry, `UI/cards/${TOKEN_MAPPER[cardType]}_card_small`, false, `${TOKEN_MAPPER[cardType]} card`);
+    $cardEntry.insertAdjacentHTML("beforeend", `<p>card</p>`);
+}
+
 function renderChooseNobleEntry(entry) {
-    const $chooseNobleEntry = copyNode(document.querySelector("#receive-noble-history-template"));
-    return $chooseNobleEntry;
+    return copyNode(document.querySelector("#receive-noble-history-template"));
 }
 
 function renderForfeitEntry(entry) {
-    const $forfeitEntry = copyNode(document.querySelector("#forfeit-history-template"));
-    return $forfeitEntry;
+    return copyNode(document.querySelector("#forfeit-history-template"));
 }
 
 function incompatibleServerMessage() {
