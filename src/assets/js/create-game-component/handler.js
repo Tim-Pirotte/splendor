@@ -2,7 +2,7 @@ import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { createGameWithBody, getCheckedRadioButtonValue } from "./helper.js";
 
 function locateMainMenu(e) {
-    location.href = "./../index.html";
+    location.href = "../index.html";
 }
 
 function createGame(e) {
