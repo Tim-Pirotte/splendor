@@ -13,7 +13,12 @@ import {
     safeEmptyContainer,
     highlightPointsWinner,
 } from "./helper.js";
-import { allowedToSwitchToken, removePaidTokens, updateCurrentPlayerBonuses } from "../buy-reserve/buy-handler.js";
+import {
+    allowedToSwitchToken,
+    getDefaultPaymentMethod,
+    removePaidTokens,
+    updateCurrentPlayerBonuses,
+} from "../buy-reserve/buy-handler.js";
 import { getHighestScore, sumObjectValues } from "../../utils/game-object-handler.js";
 import { getClientTokens, getClientTotalPrestigePoints } from "../game-data-handler.js";
 import { copyNode } from "../../utils/data-handler.js";
@@ -26,16 +31,18 @@ function renderGameStatusMessage(currentPlayer) {
     $statusMessage.dataset.currentlyPlaying = currentPlayer;
 }
 
-function renderPlayerProfile() {
+function renderPlayerProfile(gameCreatorName) {
     document.querySelector(".top-bar h2").textContent = loadFromStorage("playerName");
-    renderAvatar();
+    renderAvatar(gameCreatorName);
 }
 
-function renderAvatar() {
+function renderAvatar(gameCreatorName) {
     const avatar = loadFromStorage("avatar");
     const $avatar = document.querySelector("header div.avatar");
+
     safeEmptyContainer($avatar);
     insertImageInto($avatar, `avatars/${avatar}`, avatar, avatar);
+    if (loadFromStorage("playerName") === gameCreatorName) $avatar.querySelector("img").classList.add("game-creator");
 }
 
 function renderClientPlayerPoints(totalPrestigePoints, highestScore) {
@@ -183,18 +190,18 @@ function setButtonStatuses() {
 function renderSwitchPaymentButtons(currentPayment, cost) {
     const tokensInWallet = getClientTokens();
     const $tokensContainers = document.querySelectorAll(".switch-token-container");
-
+    const defaultPaymentMethod = getDefaultPaymentMethod(cost);
     hideSwitchPayment($tokensContainers);
 
     for (const $tokenContainer of $tokensContainers) {
-        renderSwitchPayment($tokenContainer, currentPayment, cost, tokensInWallet);
+        renderSwitchPayment($tokenContainer, currentPayment, defaultPaymentMethod, cost, tokensInWallet);
     }
 }
 
-function renderSwitchPayment($tokenContainer, currentPayment, cost, tokensInWallet) {
+function renderSwitchPayment($tokenContainer, currentPayment, defaultPaymentMethod, cost, tokensInWallet) {
     const tokenType = $tokenContainer.closest("li").dataset.type;
 
-    if (allowedToSwitchToken(tokenType, currentPayment, cost, tokensInWallet)) {
+    if (allowedToSwitchToken(tokenType, currentPayment, defaultPaymentMethod, cost, tokensInWallet)) {
         $tokenContainer.querySelector(".switch-token").classList.remove("hidden");
     }
 

@@ -93,6 +93,27 @@ function highlightPointsWinner(prestigePoints, $playerPoints) {
     if (prestigePoints >= MAX_PRESTIGE_POINTS) $playerPoints.classList.add("enough-points-to-win");
 }
 
+function getOrderedPlayersWithoutClientPlayer(players, clientPlayerName) {
+    const clientPlayerIndex = getClientPlayerIndex(players, clientPlayerName);
+    return orderPlayers(players, clientPlayerIndex);
+}
+
+function getClientPlayerIndex(players, clientPlayerName) {
+    for (const playerIndex in players) {
+        if (players[playerIndex]["name"] === clientPlayerName) {
+            return parseInt(playerIndex);
+        }
+    }
+}
+
+function orderPlayers(players, clientPlayerIndex) {
+    return players.slice(clientPlayerIndex + 1).concat(players.slice(0, clientPlayerIndex));
+}
+
+function isCreator(players, otherPlayer) {
+    return players[0]["name"] === otherPlayer["name"];
+}
+
 export {
     renderProgressBar,
     formatNumber,
@@ -102,4 +123,6 @@ export {
     addNodesToEmptiedContainer,
     renderCard,
     highlightPointsWinner,
+    getOrderedPlayersWithoutClientPlayer,
+    isCreator,
 };
