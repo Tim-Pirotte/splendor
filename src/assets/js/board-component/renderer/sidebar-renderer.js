@@ -124,11 +124,64 @@ function renderOtherPlayerReservedCard($numberedItemTemplate, reservedCard, cont
     containerToInsertInto.appendChild($reservedCard);
 }
 
-function renderHistory() {
+function renderHistory(history) {
     checkCompatibility(2)
         .then(isOk => {
-            if (!isOk) incompatibleServerMessage();
+            if (!isOk) {
+                incompatibleServerMessage();
+                return;
+            }
+
+            const $history = document.querySelector(".history");
+            safeEmptyContainer($history);
+
+            for (const entry of history) {
+                $history.appendChild(renderHistoryEntry(entry));
+            }
         });
+}
+
+const HISTORY_ACTIONS = {
+    take: renderTakeTokensEntry,
+    return: renderDiscardTokensEntry,
+    buy: renderBuyCardEntry,
+    reserve: renderReserveCardEntry,
+    noble: renderChooseNobleEntry,
+    forfeit: renderForfeitEntry(),
+}
+
+function renderHistoryEntry(entry) {
+    return HISTORY_ACTIONS[entry["action"]]();
+}
+
+function renderTakeTokensEntry() {
+    const $takeTokensEntry = copyNode(document.querySelector("#take-tokens-history-template"));
+    return $takeTokensEntry;
+}
+
+function renderDiscardTokensEntry() {
+    const $discardTokensEntry = copyNode(document.querySelector("#discard-tokens-history-template"));
+    return $discardTokensEntry;
+}
+
+function renderBuyCardEntry() {
+    const $buyCardEntry = copyNode(document.querySelector("#buy-card-history-template"));
+    return $buyCardEntry;
+}
+
+function renderReserveCardEntry() {
+    const $reserveCardEntry = copyNode(document.querySelector("#reserve-card-history-template"));
+    return $reserveCardEntry;
+}
+
+function renderChooseNobleEntry() {
+    const $chooseNobleEntry = copyNode(document.querySelector("#receive-noble-history-template"));
+    return $chooseNobleEntry;
+}
+
+function renderForfeitEntry() {
+    const $forfeitEntry = copyNode(document.querySelector("#forfeit-history-template"));
+    return $forfeitEntry;
 }
 
 function incompatibleServerMessage() {

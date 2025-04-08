@@ -6,7 +6,7 @@ import { GEMS } from "../data.js";
 function renderPage(gameData) {
     renderHeader(gameData["currentPlayer"]);
     renderOtherPlayers(gameData["players"], gameData["currentPlayer"]);
-    renderHistory();
+    renderHistory(gameData["history"]);
     renderBoardTokens(gameData["unclaimedTokens"], gameData["players"].length);
     renderClientPlayer(gameData["players"], GEMS);
     // Has to be rendered after the client player so that the player wallet exists
