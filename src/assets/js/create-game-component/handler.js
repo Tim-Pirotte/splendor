@@ -1,9 +1,5 @@
-import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
-import { createGameWithBody, getCheckedRadioButtonValue } from "./helper.js";
-
-function locateMainMenu(e) {
-    location.href = "../index.html";
-}
+import {loadFromStorage} from "../data-connector/local-storage-abstractor.js";
+import {createGameWithBody, getCheckedRadioButtonValue} from "./helper.js";
 
 function createGame(e) {
     e.preventDefault();
@@ -17,4 +13,4 @@ function createGame(e) {
     });
 }
 
-export { locateMainMenu, createGame };
+export { createGame };
