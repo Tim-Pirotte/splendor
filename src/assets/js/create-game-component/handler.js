@@ -1,5 +1,5 @@
-import {loadFromStorage} from "../data-connector/local-storage-abstractor.js";
-import {createGameWithBody, getCheckedRadioButtonValue} from "./helper.js";
+import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
+import { createGameWithBody, getCheckedRadioButtonValue } from "./helper.js";
 
 function createGame(e) {
     e.preventDefault();
