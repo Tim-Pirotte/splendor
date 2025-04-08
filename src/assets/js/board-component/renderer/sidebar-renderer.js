@@ -3,8 +3,8 @@ import { TOKEN_MAPPER } from "../config.js";
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
 import {
     formatNumber,
-    getNumberedItemTemplate, highlightPointsWinner,
-    insertImageInto,
+    getNumberedItemTemplate, getOrderedPlayersWithoutClientPlayer, highlightPointsWinner,
+    insertImageInto, isCreator,
     safeEmptyContainer,
 } from "./helper.js";
 import { getHighestScore } from "../../utils/game-object-handler.js";
@@ -12,9 +12,11 @@ import { copyNode } from "../../utils/data-handler.js";
 import { avatars } from "../../main-menu-component/data.js";
 import { checkCompatibility } from "../../server-version-component/server-version.js";
 
-function renderOtherPlayers(otherPlayers, clientPlayer) {
+function renderOtherPlayers(players, currentPlayer) {
     const currentPlayerName = loadFromStorage("playerName");
-    const highestScore = getHighestScore(otherPlayers);
+    const highestScore = getHighestScore(players);
+
+    const otherPlayers = getOrderedPlayersWithoutClientPlayer(players, currentPlayerName);
 
     const $otherPlayerContainer = document.querySelector(".other-players");
     safeEmptyContainer($otherPlayerContainer);
@@ -22,9 +24,13 @@ function renderOtherPlayers(otherPlayers, clientPlayer) {
     const $playerTemplate = document.querySelector("#other-player-card-template");
 
     for (const otherPlayer of otherPlayers) {
-        if (otherPlayer.name !== currentPlayerName) {
-            $otherPlayerContainer.appendChild(renderOtherPlayer($playerTemplate, otherPlayer, highestScore, clientPlayer));
-        }
+        $otherPlayerContainer.appendChild(renderOtherPlayer(
+            $playerTemplate,
+            otherPlayer,
+            highestScore,
+            currentPlayer,
+            isCreator(players, otherPlayer),
+        ));
     }
 }
 
@@ -36,7 +42,7 @@ function getAvatar(otherPlayer) {
     }
 }
 
-function renderOtherPlayer($playerTemplate, otherPlayer, highestScore, currentPlayer) {
+function renderOtherPlayer($playerTemplate, otherPlayer, highestScore, currentPlayer, isGameCreator) {
     const $playerCard = copyNode($playerTemplate);
     const playerName = otherPlayer.name;
     const avatar = getAvatar(otherPlayer);
@@ -44,6 +50,8 @@ function renderOtherPlayer($playerTemplate, otherPlayer, highestScore, currentPl
     showOtherPlayerTurn(playerName, currentPlayer, $playerCard);
 
     insertImageInto($playerCard, `avatars/${avatar}`, true, avatar);
+    if (isGameCreator) $playerCard.querySelector("img").classList.add("game-creator");
+
     setPlayerName($playerCard, otherPlayer);
     setPlayerPoints($playerCard, otherPlayer["totalPrestigePoints"], highestScore);
 
