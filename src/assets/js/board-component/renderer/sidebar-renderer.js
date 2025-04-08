@@ -133,9 +133,12 @@ function renderHistory(history) {
             }
 
             const $history = document.querySelector(".history");
-            safeEmptyContainer($history);
 
-            for (const entry of history) {
+            const historyPreviousLength = $history.querySelectorAll(":scope> *").length;
+            const historyCurrentLength = history.length;
+            const amountOfNewItems = historyCurrentLength - historyPreviousLength;
+
+            for (const entry of history.splice(-amountOfNewItems, historyCurrentLength)) {
                 $history.appendChild(renderHistoryEntry(entry));
             }
         });
@@ -192,11 +195,11 @@ function renderHistoryCard($cardEntry, cardType) {
     $cardEntry.insertAdjacentHTML("beforeend", `<p>card</p>`);
 }
 
-function renderChooseNobleEntry(entry) {
+function renderChooseNobleEntry() {
     return copyNode(document.querySelector("#receive-noble-history-template"));
 }
 
-function renderForfeitEntry(entry) {
+function renderForfeitEntry() {
     return copyNode(document.querySelector("#forfeit-history-template"));
 }
 
