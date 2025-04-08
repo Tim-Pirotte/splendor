@@ -200,7 +200,7 @@ function renderReserveCardEntry(entry) {
 
 function renderHistoryCard($cardEntry, cardType) {
     insertImageInto($cardEntry, `UI/cards/${TOKEN_MAPPER[cardType]}_card_small`, false, `${TOKEN_MAPPER[cardType]} card`);
-    $cardEntry.insertAdjacentHTML("beforeend", `<p>card</p>`);
+    $cardEntry.insertAdjacentHTML("beforeend", "<p>card</p>");
 }
 
 function renderChooseNobleEntry() {
