@@ -6,8 +6,10 @@ import { selectCard } from "./buy-reserve/select.js";
 import { processReserve, selectDeckForReserving } from "./buy-reserve/reserve-handler.js";
 import { handlePaymentMethodChange } from "./buy-reserve/buy-handler.js";
 import { selectPlayerToken } from "./tokens/discard.js";
+import { renderPlayerProfile } from "./renderer/current-player-renderer.js";
 
 function init() {
+    renderPlayerProfile();
     updateGameData();
     initGameStatusInterface();
     initializeActions();
