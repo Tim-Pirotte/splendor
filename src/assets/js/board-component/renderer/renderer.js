@@ -1,5 +1,5 @@
 import { renderClientPlayer, renderGameStatusMessage } from "./current-player-renderer.js";
-import {renderHistory, renderOtherPlayers} from "./sidebar-renderer.js";
+import { renderHistory, renderOtherPlayers } from "./sidebar-renderer.js";
 import { renderBoardTokens, renderCards, renderNobles } from "./board-renderer.js";
 import { GEMS } from "../data.js";
 

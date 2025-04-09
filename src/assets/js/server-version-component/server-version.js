@@ -1,4 +1,4 @@
-import {getApiInfo} from "../api.js";
+import { getApiInfo } from "../api.js";
 
 function checkCompatibility(minimumServerVersion) {
     const serverVersion = sessionStorage.getItem("serverVersion");
@@ -7,9 +7,9 @@ function checkCompatibility(minimumServerVersion) {
 
     return getApiInfo()
         .then(res => {
-            const serverVersion = res["version"] || "1";
-            sessionStorage.setItem("serverVersion", serverVersion);
-            return parseInt(serverVersion) >= minimumServerVersion;
+            const version = res["version"] || "1";
+            sessionStorage.setItem("serverVersion", version);
+            return parseInt(version) >= minimumServerVersion;
         });
 }
 

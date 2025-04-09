@@ -41,7 +41,7 @@ function getAvatar(otherPlayer) {
     if ("avatar" in otherPlayer) {
         return otherPlayer.avatar;
     } else {
-        return avatars[otherPlayer.name.toLowerCase().charCodeAt(0) % avatars.length]
+        return avatars[otherPlayer.name.toLowerCase().charCodeAt(0) % avatars.length];
     }
 }
 
@@ -144,7 +144,7 @@ function renderHistory() {
 
 function incompatibleServerMessage() {
     const $history = document.querySelector(".history");
-    $history.innerHTML = "<p>History is not supported on this server. Sorry for the Inconvenience.</p>"
+    $history.innerHTML = "<p>History is not supported on this server. Sorry for the Inconvenience.</p>";
 }
 
 export { renderOtherPlayers, renderHistory };
