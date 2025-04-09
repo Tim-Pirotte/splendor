@@ -2,10 +2,6 @@ import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { createGameWithBody, getCheckedRadioButtonValue } from "./helper.js";
 import {checkCompatibility} from "../server-version-component/server-version.js";
 
-function locateMainMenu(e) {
-    location.href = "./../index.html";
-}
-
 function createGame(e) {
     e.preventDefault();
     checkCompatibility(2)
@@ -25,4 +21,4 @@ function createGame(e) {
         });
 }
 
-export { locateMainMenu, createGame };
+export { createGame };
