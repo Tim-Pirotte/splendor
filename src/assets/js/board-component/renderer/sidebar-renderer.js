@@ -1,3 +1,5 @@
+import { GEMS } from "../data.js";
+import { TOKEN_MAPPER } from "../config.js";
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
 import {
     formatNumber,
@@ -7,11 +9,10 @@ import {
     isCreator,
     safeEmptyContainer,
 } from "./helper.js";
-import { TOKEN_MAPPER } from "../config.js";
 import { getHighestScore } from "../../utils/game-object-handler.js";
 import { copyNode } from "../../utils/data-handler.js";
-import { GEMS } from "../data.js";
 import { avatars } from "../../main-menu-component/data.js";
+import { checkCompatibility } from "../../server-version-component/server-version.js";
 import { insertImageInto } from "../../utils/renderer.js";
 
 function renderOtherPlayers(players, currentPlayer) {
@@ -36,10 +37,18 @@ function renderOtherPlayers(players, currentPlayer) {
     }
 }
 
+function getAvatar(otherPlayer) {
+    if ("avatar" in otherPlayer) {
+        return otherPlayer.avatar;
+    } else {
+        return avatars[otherPlayer.name.toLowerCase().charCodeAt(0) % avatars.length];
+    }
+}
+
 function renderOtherPlayer($playerTemplate, otherPlayer, highestScore, currentPlayer, isGameCreator) {
     const $playerCard = copyNode($playerTemplate);
     const playerName = otherPlayer.name;
-    const avatar = avatars[playerName.toLowerCase().charCodeAt(0) % avatars.length];
+    const avatar = getAvatar(otherPlayer);
 
     showOtherPlayerTurn(playerName, currentPlayer, $playerCard);
 
@@ -126,4 +135,16 @@ function renderOtherPlayerReservedCard($numberedItemTemplate, reservedCard, cont
     containerToInsertInto.appendChild($reservedCard);
 }
 
-export { renderOtherPlayers };
+function renderHistory() {
+    checkCompatibility(2)
+        .then(isCompatible => {
+            if (!isCompatible) incompatibleServerMessage();
+        });
+}
+
+function incompatibleServerMessage() {
+    const $history = document.querySelector(".history");
+    $history.innerHTML = "<p>History is not supported on this server. Sorry for the Inconvenience.</p>";
+}
+
+export { renderOtherPlayers, renderHistory };

@@ -40,8 +40,11 @@ function renderAvatar(gameCreatorName) {
     const avatar = loadFromStorage("avatar");
     const $avatar = document.querySelector("header div.avatar");
 
+    if ($avatar.childElementCount > 0) return;
+
     safeEmptyContainer($avatar);
     insertImageInto($avatar, `avatars/${avatar}`, avatar, avatar);
+
     if (loadFromStorage("playerName") === gameCreatorName) $avatar.querySelector("img").classList.add("game-creator");
 }
 
