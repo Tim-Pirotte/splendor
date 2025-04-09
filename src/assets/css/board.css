@@ -20,17 +20,22 @@ body {
 body > section {
     display: grid;
     grid-template-rows: 10% 90%;
+    background-image: url("../images/board_background.webp");
+    background-size: contain;
+    height: 200%;
+    transform-style: preserve-3d;
+    transform-origin: center top;
+    transform: rotateX(60deg);
+    overflow: clip;
 }
 
-div.main {
+main {
     display: grid;
     grid-template-columns: 50% 30% 6% 14%;
     grid-template-rows: 80% 5% 15%;
     grid-template-areas:    "decks board-tokens nobles timer"
                             "player-points player-tokens player-tokens action-button"
                             "reserved-cards player-tokens player-tokens action-button";
-    background-image: url("../images/board_background.webp");
-    background-size: contain;
 }
 
 .decks {
