@@ -1,10 +1,10 @@
 import { copyNode } from "./data-handler.js";
 
-function insertImageInto($container, standardPath, before, alt, prefix = "..") {
+function insertImageInto($container, standardPath, insertAtStart, alt, prefix = "..") {
     const $image = copyNode(document.querySelector("#image-template"));
     setImageData($image, standardPath, alt, prefix);
 
-    $container.insertAdjacentHTML(before ? "afterbegin" : "beforeend", $image.outerHTML);
+    $container.insertAdjacentHTML(insertAtStart ? "afterbegin" : "beforeend", $image.outerHTML);
 }
 
 function setImageData($image, standardPath, alt, prefix) {
