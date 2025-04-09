@@ -4,6 +4,7 @@
 body {
     display: grid;
     grid-template-columns: 20% 80%;
+    height: 100vh;
 }
 
 /* SWITCH TOKEN BUTTONS */
@@ -28,6 +29,8 @@ div.main {
     grid-template-areas:    "decks board-tokens nobles timer"
                             "player-points player-tokens player-tokens action-button"
                             "reserved-cards player-tokens player-tokens action-button";
+    background-image: url("../images/board_background.webp");
+    background-size: contain;
 }
 
 .decks {
@@ -59,6 +62,8 @@ aside {
     flex-direction: column;
     justify-content: space-between;
     padding: 0.5rem;
+    background-image: url("../images/UI/sidebar_background.webp");
+    background-size: contain;
 }
 
 .player-card > ul {

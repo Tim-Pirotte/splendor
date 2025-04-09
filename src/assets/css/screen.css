@@ -34,3 +34,5 @@ h4 {
 strong {
     font-weight: bold;
 }
+
+* { image-rendering: pixelated; }
