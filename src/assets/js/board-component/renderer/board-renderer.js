@@ -72,7 +72,7 @@ function renderBoardToken($numberedItemTemplate, token, unclaimedTokens, playerL
 }
 
 function insertTokenImage($boardToken, token) {
-    insertImageInto($boardToken, `UI/tokens/${TOKEN_MAPPER[token]}_chip`, false, `${TOKEN_MAPPER[token]} chip`);
+    insertImageInto($boardToken, `UI/tokens/board_token_${TOKEN_MAPPER[token]}`, false, `${TOKEN_MAPPER[token]} chip`);
 }
 
 function getNobleAlt(costs) {

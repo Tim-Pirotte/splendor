@@ -25,7 +25,7 @@ body > section {
     padding-left: 2rem;
     overflow: hidden;
     background-image: url("../images/board_background.webp");
-    background-size: 80rem;
+    background-size: 120rem 67.5rem;
 }
 
 main {
@@ -47,6 +47,10 @@ main {
 .board-tokens {
     grid-area: board-tokens;
     color: whitesmoke;
+}
+
+.board-tokens img {
+    width: 3.25rem;
 }
 
 .nobles {
@@ -323,7 +327,7 @@ section header picture {
 
 .player-card > picture img {
     margin-left: 1rem;
-    width: 1.5rem;
+    width: 2.75rem;
 }
 
 .player-card.current-player {
