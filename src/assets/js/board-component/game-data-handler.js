@@ -102,7 +102,7 @@ function getClientBonuses() {
 }
 
 function getClientTotalPrestigePoints() {
-    return parseInt(document.querySelector(".player-points p").dataset.totalPrestigePoints);
+    return parseInt(document.querySelector(".player-points h4").dataset.totalPrestigePoints);
 }
 
 export { updateGameData, getClientTokens, getClientBonuses, getClientTotalPrestigePoints, startGameStatePolling };

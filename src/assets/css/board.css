@@ -46,6 +46,7 @@ main {
 
 .board-tokens {
     grid-area: board-tokens;
+    color: whitesmoke;
 }
 
 .nobles {
@@ -54,6 +55,7 @@ main {
 
 .player-tokens {
     grid-area: player-tokens;
+    color: whitesmoke;
 }
 
 .reserved-cards {
@@ -136,6 +138,10 @@ aside {
     margin: 0 auto;
 }
 
+section h3, section h2, section h4 {
+    color: whitesmoke;
+}
+
 .top-bar div {
     display: flex;
     align-items: center;
@@ -161,6 +167,7 @@ section header picture {
     flex: 0 1 6vw;
     aspect-ratio: 70 / 100;
     position: relative;
+    transition: 0.3s;
 }
 
 .card ul {
@@ -248,13 +255,12 @@ section header picture {
 }
 
 .buyable-card {
-    outline: 0.275rem solid yellow;
-    border-radius: 0.25rem;
+    box-shadow: 0 0 1rem 0.5rem rgb(255, 175, 2);
 }
 
 .selected-card {
-    outline: 0.275rem solid hotpink;
-    border-radius: 0.25rem;
+    transform: scale(1.2);
+    z-index: 10;
 }
 
 .selectable-noble {

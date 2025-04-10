@@ -57,7 +57,7 @@ function saveHighestScore(highestScore) {
 }
 
 function renderPrestigePointsScore(totalPrestigePoints) {
-    const $totalPrestigePoints = document.querySelector(".player-points p");
+    const $totalPrestigePoints = document.querySelector(".player-points h4");
     $totalPrestigePoints.dataset.totalPrestigePoints = totalPrestigePoints;
     $totalPrestigePoints.textContent = `${formatNumber(totalPrestigePoints)} / ${PRESTIGE_POINTS_NEEDED_TO_WIN}`;
     highlightPointsWinner(totalPrestigePoints, $totalPrestigePoints);
