@@ -139,7 +139,7 @@ function renderHistory(history) {
     checkCompatibility(2)
         .then(isCompatible => {
             if (!isCompatible) {
-                incompatibleServerMessage();
+                renderIncompatibleServerMessage();
                 return;
             }
 
@@ -214,7 +214,7 @@ function renderForfeitEntry() {
     return copyNode(document.querySelector("#forfeit-history-template"));
 }
 
-function incompatibleServerMessage() {
+function renderIncompatibleServerMessage() {
     const $history = document.querySelector(".history");
     $history.innerHTML = "<p>History is not supported on this server. Sorry for the Inconvenience.</p>";
 }
