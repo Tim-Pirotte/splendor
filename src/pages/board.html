@@ -113,7 +113,7 @@
         <main>
             <!-- Decks -->
             <ul class="decks">
-                <li class="level-3" data-deck-level="3">
+                <li class="level-3 perspective" data-deck-level="3">
                     <picture class="hidden-cards">
                         <source srcset="../assets/images/cards/empty/deck_level_3_top.webp" type="image/webp">
                         <img src="../assets/images/fallback/cards/empty/deck_level_3_top.png" alt="Deck level 3" title="Deck level 3">
@@ -121,7 +121,7 @@
                     <!-- Cards in deck -->
                     <ul class="cards-in-deck"></ul>
                 </li>
-                <li class="level-2" data-deck-level="2">
+                <li class="level-2 perspective" data-deck-level="2">
                     <picture class="hidden-cards">
                         <source srcset="../assets/images/cards/empty/deck_level_2_top.webp" type="image/webp">
                         <img src="../assets/images/fallback/cards/empty/deck_level_2_top.png" alt="Deck level 2" title="Deck level 2">
@@ -129,7 +129,7 @@
                     <!-- Cards in deck -->
                     <ul class="cards-in-deck"></ul>
                 </li>
-                <li class="level-1" data-deck-Level="1">
+                <li class="level-1 perspective" data-deck-Level="1">
                     <picture class="hidden-cards">
                         <source srcset="../assets/images/cards/empty/deck_level_1_top.webp" type="image/webp">
                         <img src="../assets/images/fallback/cards/empty/deck_level_1_top.png" alt="Deck level 1" title="Deck level 1">
@@ -143,7 +143,7 @@
             <!-- Nobles -->
             <ul class="nobles">
                 <template id="noble-template">
-                    <li></li>
+                    <li class="perspective"></li>
                 </template>
             </ul>
             <!-- Timer https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles -->
@@ -191,7 +191,7 @@
     </section>
 
     <template id="card-template">
-        <li class="card">
+        <li class="card perspective">
             <p class="points"></p>
             <ul class="cost"></ul>
         </li>

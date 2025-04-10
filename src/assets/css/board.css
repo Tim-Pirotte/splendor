@@ -20,14 +20,32 @@ body {
 body > section {
     display: grid;
     grid-template-rows: 10% 90%;
-    background-image: url("../images/board_background.webp");
-    background-size: contain;
-    height: 200%;
-    transform-style: preserve-3d;
-    transform-origin: center top;
-    transform: rotateX(60deg);
-    overflow: clip;
+    perspective: 100vh;
+    perspective-origin: 60% top;
     padding-left: 2rem;
+    overflow: hidden;
+}
+
+body > section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("../images/board_background.webp");
+    background-size: 80rem;
+    background-position: center;
+    transform-style: preserve-3d;
+    transform: rotateX(30deg) scale(2);
+    z-index: -1;
+}
+
+.perspective {
+    transform-style: preserve-3d;
+    transform: rotateX(30deg);
+    perspective: 100vh;
+    perspective-origin: 60% top;
 }
 
 main {
@@ -104,8 +122,14 @@ aside {
 }
 
 /* Player cards */
-.player-card header *, .player-card li * {
-    display: inline-block;
+.player-card header, .player-card li {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.player-card header {
+    margin-bottom: 0.5rem;
 }
 
 .game-creator {
@@ -127,7 +151,7 @@ aside {
 }
 
 .top-bar h1 {
-    background-color: hotpink;
+    color: whitesmoke;
 }
 
 .top-bar div {
@@ -284,8 +308,12 @@ section header picture {
     padding: 0.2rem;
 }
 
+.player-card {
+
+}
+
 .player-card.current-player {
-    background-color: hotpink;
+    transform: translateX(2rem);
     position: relative;
     margin-left: 1.25rem;
 }

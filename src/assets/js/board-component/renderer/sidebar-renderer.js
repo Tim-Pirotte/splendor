@@ -43,7 +43,7 @@ function renderOtherPlayer($playerTemplate, otherPlayer, highestScore, currentPl
 
     showOtherPlayerTurn(playerName, currentPlayer, $playerCard);
 
-    insertImageInto($playerCard, `avatars/${avatar}`, true, avatar);
+    insertImageInto($playerCard.querySelector("header"), `avatars/${avatar}`, true, avatar);
     if (isGameCreator) $playerCard.querySelector("img").classList.add("game-creator");
 
     setPlayerName($playerCard, otherPlayer);
