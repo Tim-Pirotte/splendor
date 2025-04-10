@@ -31,3 +31,14 @@ strong {
 }
 
 * { image-rendering: pixelated; }
+
+.sound-button {
+    background-color: transparent;
+    border: none;
+    width: fit-content;
+    padding: 0;
+}
+
+.sound-button img {
+    width: 2rem;
+}

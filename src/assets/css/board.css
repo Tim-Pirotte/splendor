@@ -55,6 +55,10 @@ main {
     height: 26rem;
 }
 
+.board-tokens li {
+    height: 33%;
+}
+
 .board-tokens img {
     width: 3.25rem;
 }
@@ -165,6 +169,17 @@ aside {
     margin: 0 auto;
 }
 
+.forfeit {
+    background-color: transparent;
+    border: none;
+    width: fit-content;
+    padding: 0;
+}
+
+.forfeit img {
+    width: 2rem;
+}
+
 section h3, section h2, section h4 {
     color: whitesmoke;
 }
@@ -173,10 +188,6 @@ section h3, section h2, section h4 {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-}
-
-section header picture {
-    padding-right: 1rem;
 }
 
 /* PROGRESS BAR */
