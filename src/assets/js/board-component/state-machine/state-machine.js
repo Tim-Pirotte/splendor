@@ -31,7 +31,7 @@ function initRoundBegin(gameData){
 
 
     if(!isPlayer(gameData["players"], loadFromStorage("playerName"))) {
-        setActionButtonState("Stop spectating", "doNothing", {});
+        setActionButtonState("Stop spectating", "stopSpectating", {});
         getActionButton().disabled = false;
     }
 

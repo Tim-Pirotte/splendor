@@ -1,7 +1,7 @@
 import { saveToStorage } from "../data-connector/local-storage-abstractor.js";
 import * as API from "../api.js" 
 import { joinGameById } from "./helper.js";
-import { spectateGame } from "../board-component/spectate/spectate.js";
+import { spectateGame } from "./spectate.js";
 
 function locateMainMenu(e) {
     location.href = "./../index.html";
