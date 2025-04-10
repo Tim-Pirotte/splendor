@@ -100,9 +100,12 @@ function renderClientPlayer(players, gems) {
     const highestScore = getHighestScore(players);
     renderClientPlayerPoints(clientPlayer["totalPrestigePoints"] , highestScore);
 
-    renderClientPlayerReserve(clientPlayer);
     renderClientPlayerTokenCount(clientPlayer["tokens"]);
     renderClientPlayerTokens(clientPlayer["tokens"], clientPlayer["bonuses"], gems);
+
+    // Needs to know the players tokens to determine if a card should be highlighted
+    renderClientPlayerReserve(clientPlayer);
+
     renderTimer();
 }
 
