@@ -2,6 +2,7 @@ import { CHIP_SPACING, TOKEN_MAPPER } from "../config.js";
 import { MAX_PRESTIGE_POINTS } from "../../config.js";
 import { copyNode } from "../../utils/data-handler.js";
 import { validCardBuy } from "../state-machine/valid-action-checker.js";
+import { insertImageInto } from "../../utils/renderer.js";
 
 function addNodesToEmptiedContainer($container, list, mapFunction) {
     safeEmptyContainer($container);
@@ -9,22 +10,6 @@ function addNodesToEmptiedContainer($container, list, mapFunction) {
     for (const listItem of list) {
         $container.appendChild(mapFunction(listItem));
     }
-}
-
-function insertImageInto($container, standardPath, before, alt) {
-    const $image = copyNode(document.querySelector("#image-template"));
-    setImageData($image, standardPath, alt);
-
-    $container.insertAdjacentHTML(before ? "afterbegin" : "beforeend", $image.outerHTML);
-}
-
-function setImageData($image, standardPath, alt) {
-    $image.querySelector("source").srcset = `../assets/images/${standardPath}.webp`;
-
-    const $img = $image.querySelector("img");
-
-    $img.src = `../assets/images/fallback/${standardPath}.png`;
-    $img.alt = $img.title = alt;
 }
 
 function constructBackground(value, color) {
@@ -130,7 +115,6 @@ function isCreator(players, otherPlayer) {
 }
 
 export {
-    insertImageInto,
     renderProgressBar,
     formatNumber,
     safeEmptyContainer,

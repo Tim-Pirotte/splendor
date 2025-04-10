@@ -18,4 +18,8 @@ function copyNode($node) {
     return $node.content.firstElementChild.cloneNode(true);
 }
 
-export { copyNode, binarySearchObjects };
+function locateToMainMenu(e) {
+    location.href = "../index.html";
+}
+
+export { copyNode, binarySearchObjects, locateToMainMenu };

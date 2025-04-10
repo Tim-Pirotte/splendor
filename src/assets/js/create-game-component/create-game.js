@@ -1,6 +1,7 @@
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
-import { createGame, locateMainMenu } from "./handler.js";
+import { createGame } from "./handler.js";
 import { renderPlayerInfo } from "./renderer.js";
+import { locateToMainMenu } from "../utils/data-handler.js";
 
 function createInit() {
     setupUI();
@@ -8,13 +9,13 @@ function createInit() {
 }
 
 function setupUI() {
-    if (!loadFromStorage("playerName")) locateMainMenu();
-    if (!loadFromStorage("avatar")) locateMainMenu();
+    if (!loadFromStorage("playerName")) locateToMainMenu();
+    if (!loadFromStorage("avatar")) locateToMainMenu();
     renderPlayerInfo();
 }
 
 function setupEventListeners() {
-    document.querySelector("#back-button").addEventListener("click", locateMainMenu);
+    document.querySelector("#back-button").addEventListener("click", locateToMainMenu);
     document.querySelector("form").addEventListener("submit", createGame);
 }
 
