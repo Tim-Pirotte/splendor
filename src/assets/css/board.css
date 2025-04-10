@@ -24,34 +24,14 @@ body > section {
     perspective-origin: 60% top;
     padding-left: 2rem;
     overflow: hidden;
-}
-
-body > section::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
     background-image: url("../images/board_background.webp");
     background-size: 80rem;
-    background-position: center;
-    transform-style: preserve-3d;
-    transform: rotateX(30deg) scale(2);
-    z-index: -1;
-}
-
-.perspective {
-    transform-style: preserve-3d;
-    transform: rotateX(30deg);
-    perspective: 100vh;
-    perspective-origin: 60% top;
 }
 
 main {
     display: grid;
     grid-template-columns: 50% 30% 6% 14%;
-    grid-template-rows: 80% 5% 15%;
+    grid-template-rows: 70% 5% 25%;
     grid-template-areas:    "decks board-tokens nobles timer"
                             "player-points player-tokens player-tokens action-button"
                             "reserved-cards player-tokens player-tokens action-button";
@@ -85,14 +65,16 @@ aside {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 0.5rem;
+    padding: 0.75rem;
     background-image: url("../images/UI/sidebar_background.webp");
     background-size: contain;
+    z-index: 2;
 }
 
-.player-card > ul {
+.player-card .left-content > ul {
     display: flex;
     gap: 0 0.2rem;
+    margin-bottom: 0.5rem;
 }
 
 .card li {
@@ -112,7 +94,7 @@ aside {
     gap: 0.5rem;
 }
 
-.player-card > ul > li {
+.player-card .left-content > ul > li {
     display: flex;
     align-items: center;
 }
@@ -147,11 +129,11 @@ aside {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    justify-content: space-between;
 }
 
 .top-bar h1 {
     color: whitesmoke;
+    margin: 0 auto;
 }
 
 .top-bar div {
@@ -309,13 +291,22 @@ section header picture {
 }
 
 .player-card {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background-color: #d9b56f;
+    transition: transform 2s;
+    padding: 0.1rem;
+    width: max-content;
+}
 
+.player-card > picture img {
+    margin-left: 1rem;
 }
 
 .player-card.current-player {
-    transform: translateX(2rem);
+    transform: translateX(7rem);
     position: relative;
-    margin-left: 1.25rem;
 }
 
 /* TIMER */
