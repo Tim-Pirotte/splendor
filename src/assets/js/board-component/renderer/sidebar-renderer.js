@@ -70,7 +70,7 @@ function setPlayerPoints($playerCard, prestigePoints, highestScore) {
 
     highlightPointsWinner(prestigePoints, $playerPoints);
 
-    if (prestigePoints >= highestScore) insertImageInto($playerCard, "UI/tokens/white_chip", false, "Score amongst the highest");
+    if (prestigePoints >= highestScore) insertImageInto($playerCard, "UI/diamond", false, "Score amongst the highest");
 }
 
 function renderTokenList(containerToInsertInto, tokenAmounts, gems) {
