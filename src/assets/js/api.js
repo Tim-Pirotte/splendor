@@ -1,6 +1,9 @@
 import { fetchFromServer } from "./data-connector/api-communication-abstractor.js";
 import { loadFromStorage } from "./data-connector/local-storage-abstractor.js";
+import { DUMMY_DATA } from "./dummy-data.js";
 import { checkCompatibility } from "./server-version-component/server-version.js";
+
+const USE_DUMMY = true;
 
 /* Game Management */
 function getGames(hasStarted = "") {
@@ -18,9 +21,10 @@ function createGame(requestBody) {
     });
 }
 
-function getGame(dummyData=false) {
-    
-    if(dummyData){return DUMMY_DATA};
+function getGame() {
+    if (USE_DUMMY) {
+        return Promise.resolve(DUMMY_DATA);;
+    }
 
     const gameId = loadFromStorage("gameId");
     return fetchFromServer(`/games/${gameId}`);
@@ -65,5 +69,6 @@ function takeNobles(requestBody) {
 function getApiInfo() {
     return fetchFromServer("/info");
 }
+
 
 export { getGames, createGame, getGame, joinGame, takeTokens, buyCard, reserveCard, takeNobles, getApiInfo };

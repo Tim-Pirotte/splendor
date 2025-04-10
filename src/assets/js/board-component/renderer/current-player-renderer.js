@@ -98,7 +98,10 @@ function setTotalTokensColor($totalTokenCount, totalTokens) {
 }
 
 function renderClientPlayer(players, gems) {
-    const clientPlayer = getPlayerByName(players, loadFromStorage("playerName"));
+    let clientPlayer = getPlayerByName(players, loadFromStorage("playerName"));
+    if(clientPlayer === undefined) {
+        clientPlayer = players[0];
+    }
 
     const highestScore = getHighestScore(players);
     renderClientPlayerPoints(clientPlayer["totalPrestigePoints"] , highestScore);

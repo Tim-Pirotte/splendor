@@ -1,65 +1,45 @@
 const DUMMY_DATA =
 {
-    "gameId": 2,
-    "gameName": null,
+    "gameId": 239,
+    "gameName": "test18game",
     "numberOfPlayers": 2,
-    "returnExcessTokensRequired": false,
-    "pickNobleRequired": false,
+    "returnExcessTokensRequired": true,
+    "pickNobleRequired": true,
     "players": [
         {
-            "name": "Alice",
-            "tokens": {
-                "Diamond": 2
-            },
+            "name": "test18",
+            "tokens": {},
             "reserve": [],
-            "built": [
-                {
-                    "name": "Obsidian Workshop",
-                    "level": 1,
-                    "cost": {
-                        "Emerald": 2,
-                        "Diamond": 2
-                    },
-                    "bonus": "Onyx",
-                    "prestigePoints": 0
-                }
-            ],
+            "built": [],
             "nobles": [],
-            "totalPrestigePoints": 0,
-            "bonuses": {
-                "Onyx": 1,
-                "Ruby": 2
-            }
+            "bonuses": {},
+            "totalPrestigePoints": 0
         },
         {
-            "name": "Bob",
-            "tokens": {
-                "Ruby": 2
-            },
+            "name": "johny",
+            "tokens": {},
             "reserve": [],
-            "built": [
-                {
-                    "name": "Shimmering Quarry",
-                    "level": 1,
-                    "cost": {
-                        "Sapphire": 3
-                    },
-                    "bonus": "Diamond",
-                    "prestigePoints": 0
-                }
-            ],
+            "built": [],
             "nobles": [],
-            "totalPrestigePoints": 0,
-            "bonuses": {
-                "Diamond": 1
-            }
+            "bonuses": {},
+            "totalPrestigePoints": 0
         }
     ],
     "market": [
         {
             "level": 1,
-            "cardStackSize": 34,
+            "cardStackSize": 36,
             "visibleCards": [
+                {
+                    "name": "Diamond Vein",
+                    "level": 1,
+                    "cost": {
+                        "Onyx": 2,
+                        "Sapphire": 2
+                    },
+                    "bonus": "Diamond",
+                    "prestigePoints": 0
+                },
                 {
                     "name": "Fiery Chamber",
                     "level": 1,
@@ -70,33 +50,26 @@ const DUMMY_DATA =
                     "prestigePoints": 1
                 },
                 {
-                    "name": "Celestial Chamber",
-                    "level": 1,
-                    "cost": {
-                        "Ruby": 4
-                    },
-                    "bonus": "Sapphire",
-                    "prestigePoints": 1
-                },
-                {
-                    "name": "Gloomy Chamber",
-                    "level": 1,
-                    "cost": {
-                        "Sapphire": 4
-                    },
-                    "bonus": "Onyx",
-                    "prestigePoints": 1
-                },
-                {
-                    "name": "Dark Gem Cave",
+                    "name": "Verdant Quarry",
                     "level": 1,
                     "cost": {
                         "Emerald": 1,
-                        "Ruby": 1,
-                        "Diamond": 1,
-                        "Sapphire": 1
+                        "Sapphire": 3,
+                        "Diamond": 1
                     },
-                    "bonus": "Onyx",
+                    "bonus": "Emerald",
+                    "prestigePoints": 0
+                },
+                {
+                    "name": "Lush Gem Mine",
+                    "level": 1,
+                    "cost": {
+                        "Ruby": 1,
+                        "Onyx": 2,
+                        "Sapphire": 1,
+                        "Diamond": 1
+                    },
+                    "bonus": "Emerald",
                     "prestigePoints": 0
                 }
             ]
@@ -106,42 +79,42 @@ const DUMMY_DATA =
             "cardStackSize": 26,
             "visibleCards": [
                 {
+                    "name": "Radiant Vault",
+                    "level": 2,
+                    "cost": {
+                        "Ruby": 2,
+                        "Onyx": 3,
+                        "Sapphire": 3
+                    },
+                    "bonus": "Ruby",
+                    "prestigePoints": 1
+                },
+                {
+                    "name": "Gleaming Estate",
+                    "level": 2,
+                    "cost": {
+                        "Ruby": 5
+                    },
+                    "bonus": "Diamond",
+                    "prestigePoints": 2
+                },
+                {
                     "name": "Azure Refinery",
                     "level": 2,
                     "cost": {
-                        "Diamond": 5,
-                        "Sapphire": 3
+                        "Sapphire": 3,
+                        "Diamond": 5
                     },
                     "bonus": "Sapphire",
                     "prestigePoints": 2
                 },
                 {
-                    "name": "Obsidian Vault",
+                    "name": "Blazing Refinery",
                     "level": 2,
                     "cost": {
                         "Emerald": 2,
-                        "Diamond": 3,
-                        "Sapphire": 2
-                    },
-                    "bonus": "Onyx",
-                    "prestigePoints": 1
-                },
-                {
-                    "name": "Polished Vault",
-                    "level": 2,
-                    "cost": {
-                        "Emerald": 3,
-                        "Ruby": 2,
-                        "Onyx": 2
-                    },
-                    "bonus": "Diamond",
-                    "prestigePoints": 1
-                },
-                {
-                    "name": "Ruby Guild",
-                    "level": 2,
-                    "cost": {
-                        "Onyx": 5
+                        "Sapphire": 4,
+                        "Diamond": 1
                     },
                     "bonus": "Ruby",
                     "prestigePoints": 2
@@ -153,15 +126,6 @@ const DUMMY_DATA =
             "cardStackSize": 16,
             "visibleCards": [
                 {
-                    "name": "Royal Sapphire Chamber",
-                    "level": 3,
-                    "cost": {
-                        "Diamond": 7
-                    },
-                    "bonus": "Sapphire",
-                    "prestigePoints": 4
-                },
-                {
                     "name": "Master Onyx Atelier",
                     "level": 3,
                     "cost": {
@@ -172,45 +136,48 @@ const DUMMY_DATA =
                     "prestigePoints": 5
                 },
                 {
-                    "name": "Master Emerald Atelier",
+                    "name": "Royal Ruby Chamber",
                     "level": 3,
                     "cost": {
-                        "Emerald": 3,
-                        "Sapphire": 7
+                        "Emerald": 7
                     },
-                    "bonus": "Emerald",
-                    "prestigePoints": 5
+                    "bonus": "Ruby",
+                    "prestigePoints": 4
                 },
                 {
-                    "name": "Exquisite Diamond Vault",
+                    "name": "Grand Diamond Vault",
                     "level": 3,
                     "cost": {
-                        "Onyx": 7
+                        "Ruby": 5,
+                        "Onyx": 3,
+                        "Emerald": 3,
+                        "Sapphire": 3
                     },
                     "bonus": "Diamond",
-                    "prestigePoints": 4
+                    "prestigePoints": 3
+                },
+                {
+                    "name": "Master Diamond Atelier",
+                    "level": 3,
+                    "cost": {
+                        "Onyx": 7,
+                        "Diamond": 3
+                    },
+                    "bonus": "Diamond",
+                    "prestigePoints": 5
                 }
             ]
         }
     ],
     "unclaimedTokens": {
+        "Ruby": 4,
+        "Onyx": 4,
         "Emerald": 4,
-        "Ruby": 2,
         "Gold": 5,
-        "Diamond": 2,
         "Sapphire": 4,
-        "Onyx": 4
+        "Diamond": 4
     },
     "unclaimedNobles": [
-        {
-            "name": "Elizabeth of Austria",
-            "neededBonuses": {
-                "Diamond": 3,
-                "Sapphire": 3,
-                "Onyx": 3
-            },
-            "prestigePoints": 3
-        },
         {
             "name": "Suleiman the Magnificent",
             "neededBonuses": {
@@ -220,15 +187,27 @@ const DUMMY_DATA =
             "prestigePoints": 3
         },
         {
-            "name": "Isabella of Castile",
+            "name": "Henry VIII",
             "neededBonuses": {
-                "Diamond": 4,
+                "Ruby": 4,
                 "Onyx": 4
+            },
+            "prestigePoints": 3
+        },
+        {
+            "name": "Niccolo Machiavelli",
+            "neededBonuses": {
+                "Sapphire": 4,
+                "Diamond": 4
             },
             "prestigePoints": 3
         }
     ],
+    "active": true,
     "gameState": "TurnAction",
-    "currentPlayer": "Alice",
-    "winner": null
+    "currentPlayer": "johny",
+    "winner": null,
+    "started": true
 }
+
+export { DUMMY_DATA }
