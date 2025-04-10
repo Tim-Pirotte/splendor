@@ -3,7 +3,7 @@ import { loadFromStorage } from "./data-connector/local-storage-abstractor.js";
 import { DUMMY_DATA } from "./dummy-data.js";
 import { checkCompatibility } from "./server-version-component/server-version.js";
 
-const USE_DUMMY = true;
+const USE_DUMMY = false;
 
 /* Game Management */
 function getGames(hasStarted = "") {
