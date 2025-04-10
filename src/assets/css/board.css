@@ -262,13 +262,13 @@ section header picture {
 /* Player points */
 .player-points {
     display: flex;
-    align-items: center;
+    align-items: baseline;
     gap: 0 0.5rem;
     grid-area: player-points;
 }
 
-.enough-points-to-win {
-    color: hotpink;
+.enough-points-to-win, .highlighted-number {
+    color: #fa716c;
 }
 
 .buyable-card {
@@ -298,15 +298,12 @@ section header picture {
 /* PLAYER TOKENS */
 .player-tokens header {
     display: flex;
+    align-items: flex-end;
     gap: 0 0.5rem;
 }
 
 .player-tokens li:first-of-type {
     margin: 1rem 0;
-}
-
-.highlighted-number {
-    color: hotpink;
 }
 
 .discard-container button {
@@ -320,6 +317,7 @@ section header picture {
     background-color: #d9b56f;
     transition: transform 2s;
     padding: 0.2rem;
+    margin-top: 0.5rem;
     width: max-content;
 }
 
@@ -336,19 +334,23 @@ section header picture {
 .timer {
     height: 100%;
     width: 2rem;
-    background: whitesmoke;
+    background: #d9b56f;
     transform: rotate(180deg);
+    border: #9c7444 solid 0.2rem;
+    box-shadow: 0 0 0 0.2rem #00000020, inset 0 0 0 0.2rem #00000035;
 }
 
 .timer-fill {
     height: 0;
     width: 100%;
-    background: lightpink;
-    transition: background-color 1s ease-in-out;
+    background: #3b6992;
+    transition: background-color 1s ease-in-out, box-shadow 1s ease-in-out;
+    box-shadow: inset 0 0 0 0.2rem #4c86ba;
 }
 
 .time-almost-ends {
-    background: hotpink;
+    background: #fa716c;
+    box-shadow: inset 0 0 0 0.2rem #ff8e89;
 }
 
 .button-container { 
