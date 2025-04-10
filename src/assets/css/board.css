@@ -27,6 +27,7 @@ body > section {
     transform-origin: center top;
     transform: rotateX(60deg);
     overflow: clip;
+    padding-left: 2rem;
 }
 
 main {
@@ -122,7 +123,7 @@ aside {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    justify-content: space-between
+    justify-content: space-between;
 }
 
 .top-bar h1 {
