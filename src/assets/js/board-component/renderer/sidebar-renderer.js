@@ -149,7 +149,7 @@ function renderHistory(history) {
             const historyCurrentLength = history.length;
             const amountOfNewItems = historyCurrentLength - historyPreviousLength;
 
-            for (const entry of history.splice(-amountOfNewItems, historyCurrentLength)) {
+            for (const entry of history.slice(-amountOfNewItems)) {
                 $history.appendChild(renderHistoryEntry(entry));
             }
         });
