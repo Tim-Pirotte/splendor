@@ -20,6 +20,7 @@ function joinGame(e) {
         if( gameState === "join" ) {
             joinGameById(gameId);
         }else {
+            saveToStorage("gameId", gameId);
         }
     }
 }

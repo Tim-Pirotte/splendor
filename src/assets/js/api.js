@@ -18,7 +18,10 @@ function createGame(requestBody) {
     });
 }
 
-function getGame() {
+function getGame(dummyData=false) {
+    
+    if(dummyData){return DUMMY_DATA};
+
     const gameId = loadFromStorage("gameId");
     return fetchFromServer(`/games/${gameId}`);
 }

@@ -1,4 +1,4 @@
-const dummyGameState =
+const DUMMY_DATA =
 {
     "gameId": 2,
     "gameName": null,
