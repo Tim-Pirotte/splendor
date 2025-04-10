@@ -99,6 +99,7 @@ function setTotalTokensColor($totalTokenCount, totalTokens) {
 
 function renderClientPlayer(players, gems) {
     let clientPlayer = getPlayerByName(players, loadFromStorage("playerName"));
+
     if(clientPlayer === undefined) {
         clientPlayer = players[0];
     }

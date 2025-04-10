@@ -100,7 +100,7 @@ function getOrderedPlayersWithoutClientPlayer(players, clientPlayerName) {
     if (clientPlayerIndex === undefined) {
         return players;
     }
-    
+
     return orderPlayers(players, clientPlayerIndex);
 }
 

@@ -29,12 +29,15 @@ function initRoundBegin(gameData){
         getActionButton().disabled = true;
     }
 
+    setSpectatorState(gameData["players"], loadFromStorage("playerName"));
 
-    if(!isPlayer(gameData["players"], loadFromStorage("playerName"))) {
+}
+
+function setSpectatorState(players, playerName) {
+    if(!isPlayer(players, playerName)) {
         setActionButtonState("Stop spectating", "stopSpectating", {});
         getActionButton().disabled = false;
     }
-
 }
 
 function isPlayer(players, playerName) { //Spectator

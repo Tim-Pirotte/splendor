@@ -8,7 +8,6 @@ function isCurrentlyPlaying() {
     return playerName === currentlyPlaying;
 }
 
-
 function getActionButton() {
     return document.querySelector(".action-button");
 }

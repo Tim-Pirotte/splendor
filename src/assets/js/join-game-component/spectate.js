@@ -1,15 +1,13 @@
-import { renderPage } from "../board-component/renderer/renderer.js";
-import { DUMMY_DATA } from "../dummy-data.js"
 import { checkCompatibility } from "../server-version-component/server-version.js";
 
-function spectateGame(gameId) {
+function spectateGame() {
     checkCompatibility(2)
         .then(isCompatible => {
             if (!isCompatible) {
                 spectateNotAvailable();
             } else {
-                location.href = "./board.html"
-            }
+                location.href = "./board.html";
+            };
         });
 }
 
@@ -18,7 +16,7 @@ function spectateNotAvailable() {
 }
 
 function stopSpectating() {
-    location.href = "./join-game.html"
+    location.href = "./join-game.html";
 }
 
-export { spectateGame, stopSpectating }
+export { spectateGame, stopSpectating };

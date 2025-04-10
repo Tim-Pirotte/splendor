@@ -3,7 +3,7 @@ import { loadFromStorage } from "./data-connector/local-storage-abstractor.js";
 import { DUMMY_DATA } from "./dummy-data.js";
 import { checkCompatibility } from "./server-version-component/server-version.js";
 
-const USE_DUMMY = false;
+const USE_DUMMY = true;
 
 /* Game Management */
 function getGames(hasStarted = "") {
@@ -69,6 +69,5 @@ function takeNobles(requestBody) {
 function getApiInfo() {
     return fetchFromServer("/info");
 }
-
 
 export { getGames, createGame, getGame, joinGame, takeTokens, buyCard, reserveCard, takeNobles, getApiInfo };
