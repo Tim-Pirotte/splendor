@@ -1,3 +1,5 @@
+import { saveToStorage } from "../data-connector/local-storage-abstractor.js";
+import * as API from "../api.js" 
 import { joinGameById } from "./helper.js";
 
 function locateMainMenu(e) {
@@ -12,7 +14,13 @@ function joinGameUsingUsersInputId(e) {
 function joinGame(e) {
     e.preventDefault();
     if (e.target.type === "button") {
-        joinGameById(e.target.closest("li").dataset.gameId);
+        const gameState = e.target.closest("li").dataset.gameState;
+        const gameId = e.target.closest("li").dataset.gameId;
+        
+        if( gameState === "join" ) {
+            joinGameById(gameId);
+        }else {
+        }
     }
 }
 
