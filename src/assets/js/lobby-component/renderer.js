@@ -41,4 +41,16 @@ function renderPlayerCount(g) {
     document.querySelector("#player-count").textContent = `${getCurrentUsersAmount(g)} / ${getMaxUsersAmount(g)}`;
 }
 
-export { renderGameInfo, renderPlayersList, renderPlayerCount };
+function setCopyGameIdImageColor(color) {
+    const $copyButton = document.querySelector("#copy-game-id-button");
+    $copyButton.querySelector("source").setAttribute(
+        "srcset",
+        `../assets/images/UI/copyButton/copy_button_${color}.webp`,
+    );
+
+    $copyButton.querySelector("img").setAttribute(
+        "src",
+        `../assets/images/fallback/UI/copyButton/copy_button_${color}.png`);
+}
+
+export { renderGameInfo, renderPlayersList, renderPlayerCount, setCopyGameIdImageColor };

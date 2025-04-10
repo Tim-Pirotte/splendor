@@ -70,3 +70,14 @@ footer .sound-button {
     background-color: transparent;
     border: none;
 }
+
+/* COPY ID BUTTON */
+#copy-game-id-button img {
+    max-height: 100%;
+}
+
+#copy-game-id-button {
+    background-color: transparent;
+    margin-bottom: 1rem;
+    width: fit-content;
+}

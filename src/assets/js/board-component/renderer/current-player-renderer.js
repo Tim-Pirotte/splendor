@@ -8,7 +8,6 @@ import {
     formatNumber,
     getNumberedItemTemplate,
     addSwitchButton,
-    insertImageInto,
     renderCard,
     renderProgressBar,
     safeEmptyContainer,
@@ -24,11 +23,8 @@ import { getHighestScore, sumObjectValues } from "../../utils/game-object-handle
 import { getClientTokens, getClientTotalPrestigePoints } from "../game-data-handler.js";
 import { copyNode } from "../../utils/data-handler.js";
 import { isCurrentlyPlaying } from "../game-status-interface.js";
-
-function renderHeader(currentPlayer, gameCreatorName) {
-    renderGameStatusMessage(currentPlayer);
-    renderPlayerProfile(gameCreatorName);
-}
+import { insertImageInto } from "../../utils/renderer.js";
+import { checkCompatibility } from "../../server-version-component/server-version.js";
 
 function renderGameStatusMessage(currentPlayer) {
     const $statusMessage = document.querySelector("h1");
@@ -39,15 +35,26 @@ function renderGameStatusMessage(currentPlayer) {
 function renderPlayerProfile(gameCreatorName) {
     document.querySelector(".top-bar h2").textContent = loadFromStorage("playerName");
     renderAvatar(gameCreatorName);
+    renderForfeitButton();
 }
 
 function renderAvatar(gameCreatorName) {
     const avatar = loadFromStorage("avatar");
     const $avatar = document.querySelector("header div.avatar");
 
+    if ($avatar.childElementCount > 0) return;
+
     safeEmptyContainer($avatar);
-    insertImageInto($avatar, `avatars/${avatar}`, avatar);
+    insertImageInto($avatar, `avatars/${avatar}`, avatar, avatar);
+
     if (loadFromStorage("playerName") === gameCreatorName) $avatar.querySelector("img").classList.add("game-creator");
+}
+
+function renderForfeitButton() {
+    checkCompatibility(2)
+        .then(isCompatible => {
+            document.querySelector(".forfeit").classList.toggle("hidden", !isCompatible);
+        });
 }
 
 function renderClientPlayerPoints(totalPrestigePoints, highestScore) {
@@ -74,9 +81,9 @@ function renderPrestigePointsProgressBar(totalPrestigePoints) {
 }
 
 function addHighestScoreIndicator(totalPrestigePoints, highestScore) {
-    const $playerDiamondLocation = document.querySelector(".player-points p");
+    const $highestScoreIndicator = document.querySelector(".player-points picture");
 
-    if (totalPrestigePoints >= highestScore) insertImageInto($playerDiamondLocation, "UI/tokens/white_chip", false, "Score amongst the highest");
+    if (totalPrestigePoints >= highestScore) $highestScoreIndicator.classList.remove("hidden");
 }
 
 function renderClientPlayerReserve(currentPlayer) {
@@ -265,7 +272,6 @@ function addGoldToken() {
 }
 
 export {
-    renderHeader,
     renderClientPlayer,
     renderSwitchPaymentButtons,
     renderClientPlayerTokenCount,renderClientPlayerTokens,
@@ -274,4 +280,6 @@ export {
     hideSwitchPaymentButtons,
     setButtonStatuses,
     addGoldToken,
+    renderGameStatusMessage,
+    renderPlayerProfile,
 };

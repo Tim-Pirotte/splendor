@@ -1,11 +1,11 @@
-import { getApiInfo } from "../api.js";
+import * as API from "../api.js";
 
 function checkCompatibility(minimumServerVersion) {
     const serverVersion = sessionStorage.getItem("serverVersion");
 
     if (serverVersion !== null) return Promise.resolve(parseInt(serverVersion) >= minimumServerVersion);
 
-    return getApiInfo()
+    return API.getApiInfo()
         .then(res => {
             const version = res["version"] || "1";
             sessionStorage.setItem("serverVersion", version);
