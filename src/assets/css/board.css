@@ -30,7 +30,7 @@ body > section {
 
 main {
     display: grid;
-    grid-template-columns: 50% 30% 6% 14%;
+    grid-template-columns: 50% 30% 10% 10%;
     grid-template-rows: 70% 5% 25%;
     grid-template-areas:    "decks board-tokens nobles timer"
                             "player-points player-tokens player-tokens action-button"
@@ -65,6 +65,13 @@ main {
 
 .nobles {
     grid-area: nobles;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem 0;
+}
+
+.nobles img {
+    width: 4.5rem;
 }
 
 .player-tokens {
@@ -188,6 +195,10 @@ section h3, section h2, section h4 {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+}
+
+.top-bar {
+    margin-right: 0.5rem;
 }
 
 /* PROGRESS BAR */
