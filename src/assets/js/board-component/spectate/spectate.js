@@ -4,7 +4,7 @@ import { checkCompatibility } from "../../server-version-component/server-versio
 
 function spectateGame(gameId) {
     location.href = "./board.html"
-    //renderPage(DUMMY_DATA);
+    
     // checkCompatibility(2)
     //     .then(isCompatible => {
     //         if (!isCompatible) spectateNotAvailable();

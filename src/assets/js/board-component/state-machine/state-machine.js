@@ -1,5 +1,6 @@
 import { setActionButtonState, getActionButton, isCurrentlyPlaying } from "../game-status-interface.js";
 import { GAME_STATE } from "./data.js";
+import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
 
 function initRoundBegin(gameData){
     const gameState = gameData["gameState"];
@@ -27,6 +28,23 @@ function initRoundBegin(gameData){
         setActionButtonState("Wait until your turn", "doNothing", {});
         getActionButton().disabled = true;
     }
+
+
+    if(!isPlayer(gameData["players"], loadFromStorage("playerName"))) {
+        setActionButtonState("Stop spectating", "doNothing", {});
+        getActionButton().disabled = false;
+    }
+
+}
+
+function isPlayer(players, playerName) { //Spectator
+    for( const playerObject of players) {
+        if(playerObject["name"] === playerName) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 function saveGameState(gameState) {
