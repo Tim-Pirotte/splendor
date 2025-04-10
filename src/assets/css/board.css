@@ -47,6 +47,12 @@ main {
 .board-tokens {
     grid-area: board-tokens;
     color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    /* 3 * height of card + 3 * gap size */
+    height: 26rem;
 }
 
 .board-tokens img {
@@ -343,6 +349,7 @@ section header picture {
     transform: rotate(180deg);
     border: #9c7444 solid 0.2rem;
     box-shadow: 0 0 0 0.2rem #00000020, inset 0 0 0 0.2rem #00000035;
+    transition: opacity 1s;
 }
 
 .timer-fill {

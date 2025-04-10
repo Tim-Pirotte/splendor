@@ -248,9 +248,9 @@ function hideSwitchPaymentButtons() {
 
 function renderTimer() {
     if (isCurrentlyPlaying()) {
-        document.querySelector(".timer").style.display = "block";
+        document.querySelector(".timer").style.opacity = "1";
     } else {
-        document.querySelector(".timer").style.display = "none";
+        document.querySelector(".timer").style.opacity = "0";
     }
 }
 
