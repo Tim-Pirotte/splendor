@@ -67,6 +67,19 @@ main {
     text-align: center;
 }
 
+.pulsing-text {
+    animation: pulse-bright 1s ease-in-out infinite;
+}
+
+@keyframes pulse-bright {
+    0%, 100% {
+        filter: brightness(100%);
+    }
+    50% {
+        filter: brightness(70%);
+    }
+}
+
 .selected-token p {
     color: #d88e4f;
 }

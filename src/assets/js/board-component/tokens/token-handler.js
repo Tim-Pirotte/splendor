@@ -36,6 +36,7 @@ function tokenInStack($selectedToken, $actionButton, stackPointer) {
 
 function deselectToken($selectedToken) {
     $selectedToken.querySelector("span").textContent = "";
+    $selectedToken.querySelector("p").classList.remove("pulsing-text");
 }
 
 function unHighlightTokens() {
@@ -92,7 +93,14 @@ function setActionToTokenAction(stackPointer) {
 
 function highlightTokens($actionButton, amountToTake) {
     for (let i = 0; i < parseInt($actionButton.dataset.stackPointer); i++) {
-        document.querySelector(`.board-tokens [data-type=${$actionButton.dataset[`token${i}`]}] span`).textContent = `- ${amountToTake}`;
+        const $boardToken = document.querySelector(`.board-tokens [data-type=${$actionButton.dataset[`token${i}`]}]`);
+        $boardToken.querySelector("span").textContent = `- ${amountToTake}`;
+        const $boardTokenText = $boardToken.querySelector("p");
+        // Remove them first to sync animations between elements
+        $boardTokenText.classList.remove("pulsing-text");
+        // This forces css to handle the above class removal
+        $boardTokenText.offsetHeight;
+        $boardTokenText.classList.add("pulsing-text");
     }
 }
 
