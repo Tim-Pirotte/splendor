@@ -65,7 +65,7 @@ function renderPrestigePointsScore(totalPrestigePoints) {
 
 function renderPrestigePointsProgressBar(totalPrestigePoints) {
     const $progressBar = document.querySelector(".player-points .progress-bar");
-    renderProgressBar($progressBar, totalPrestigePoints, "score");
+    renderProgressBar($progressBar, totalPrestigePoints, "score_topdown_chip");
 }
 
 function addHighestScoreIndicator(totalPrestigePoints, highestScore) {
@@ -164,7 +164,7 @@ function addTokenTypeAmount($token, token, currentPlayerTokens) {
 
 function addProgressBar($progressBarTemplate, currentPlayerTokens, token, $token) {
     const $progressBar = copyNode($progressBarTemplate);
-    renderProgressBar($progressBar, currentPlayerTokens[token], TOKEN_MAPPER[token]);
+    renderProgressBar($progressBar, currentPlayerTokens[token], `${TOKEN_MAPPER[token]}_topdown_chip`);
     $token.appendChild($progressBar);
 }
 

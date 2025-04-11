@@ -12,24 +12,49 @@ function addNodesToEmptiedContainer($container, list, mapFunction) {
     }
 }
 
-function constructBackground(value, color) {
+function constructBackground(value, imageName, spacing) {
     let background = "";
 
     for (let i = 0; i < value - 1; i++) {
-        background += `url("../assets/images/UI/tokens/${color}_topdown_chip.webp") ${i * CHIP_SPACING}rem 100%,\n`;
+        background += `url("../assets/images/UI/tokens/${imageName}.webp") ${i * spacing}rem 100%,\n`;
     }
 
     if (value > 0) {
-        background += `url("../assets/images/UI/tokens/${color}_topdown_chip_end.webp") ${(value - 1) * CHIP_SPACING}rem 100%`;
+        background += `url("../assets/images/UI/tokens/${imageName}.webp") ${(value - 1) * spacing}rem 100%`;
     }
 
     return background;
 }
 
-function renderProgressBar($progressBar, value, color) {
-    $progressBar.style.background = constructBackground(value, color);
+function constructVerticalBackground(value, imageName, spacing) {
+    let background = "";
+
+    for (let i = value - 1; i > 0; i--) {
+        background += `url("../assets/images/UI/tokens/${imageName}.webp") 0 calc(100% - ${i * spacing}rem),\n`;
+    }
+
+    if (value > 0) {
+        background += `url("../assets/images/UI/tokens/${imageName}.webp") 0 calc(100% - 0rem)`;
+    }
+
+    return background;
+}
+
+function renderProgressBar(
+    $progressBar,
+    value,
+    imageName,
+    spacing = CHIP_SPACING,
+    setWidth = true,
+    vertical = false,
+) {
+    if (vertical) {
+        $progressBar.style.background = constructVerticalBackground(value, imageName, spacing);
+    } else {
+        $progressBar.style.background = constructBackground(value, imageName, spacing);
+    }
     $progressBar.style.backgroundRepeat = "no-repeat";
-    $progressBar.style.width = `${(value + 1) * CHIP_SPACING}rem`;
+    if (setWidth) $progressBar.style.width = `${(value + 1) * spacing}rem`;
 }
 
 function formatNumber(number) {

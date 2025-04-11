@@ -57,10 +57,12 @@ main {
 
 .board-tokens li {
     height: 33%;
+    width: 3.25rem;
 }
 
-.board-tokens img {
-    width: 3.25rem;
+.board-tokens p {
+    text-align: center;
+    padding-top: 2rem;
 }
 
 .nobles {

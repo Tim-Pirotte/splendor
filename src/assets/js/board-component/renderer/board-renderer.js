@@ -10,7 +10,7 @@ import {
 import {
     addNodesToEmptiedContainer,
     getNumberedItemTemplate,
-    renderCard,
+    renderCard, renderProgressBar,
     safeEmptyContainer,
 } from "./helper.js";
 import { getUnclaimedTokens, sumObjectValues } from "../helper.js";
@@ -66,13 +66,10 @@ function renderBoardToken($numberedItemTemplate, token, unclaimedTokens, playerL
     const maxTokens = getMaxTokens(playerLength, token);
 
     $boardToken.querySelector(".amount").textContent = `${(unclaimedTokens[token] || 0)}/${maxTokens}`;
-    insertTokenImage($boardToken, token);
+    renderProgressBar($boardToken, unclaimedTokens[token] || 0, `board_token_${TOKEN_MAPPER[token]}`, 0.5, false, true)
+    $boardToken.style.backgroundSize = "3.25rem";
 
     return $boardToken;
-}
-
-function insertTokenImage($boardToken, token) {
-    insertImageInto($boardToken, `UI/tokens/board_token_${TOKEN_MAPPER[token]}`, false, `${TOKEN_MAPPER[token]} chip`);
 }
 
 function getNobleAlt(costs) {
