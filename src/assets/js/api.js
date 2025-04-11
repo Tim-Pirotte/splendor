@@ -66,6 +66,12 @@ function takeNobles(requestBody) {
     return fetchFromServer(`/games/${gameId}/players/${playerName}/nobles`, "POST", requestBody);
 }
 
+function forfeit() {
+    const gameId = loadFromStorage("gameId");
+    const playerName = loadFromStorage("playerName");
+    return fetchFromServer(`/games/${gameId}/players/${playerName}/forfeit`, "POST");
+}
+
 function getApiInfo() {
     if (USE_DUMMY) {
         return Promise.resolve(DUMMY_DATA);;
@@ -74,4 +80,4 @@ function getApiInfo() {
     return fetchFromServer("/info");
 }
 
-export { getGames, createGame, getGame, joinGame, takeTokens, buyCard, reserveCard, takeNobles, getApiInfo };
+export { getGames, createGame, getGame, joinGame, takeTokens, buyCard, reserveCard, takeNobles, getApiInfo, forfeit };

@@ -6,7 +6,6 @@ import { GEMS } from "../data.js";
 function renderPage(gameData) {
     renderPlayerProfile(gameData["players"][0]["name"]);
     renderGameStatusMessage(gameData["currentPlayer"]);
-    renderNobles(gameData["unclaimedNobles"]);
     renderOtherPlayers(gameData["players"], gameData["currentPlayer"]);
     renderHistory();
     renderBoardTokens(gameData["unclaimedTokens"], gameData["players"].length);
