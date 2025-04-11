@@ -1,5 +1,6 @@
 const DUMMY_DATA =
 {
+    version: 2,
     gameId: 239,
     gameName: "test18game",
     numberOfPlayers: 2,
@@ -7,7 +8,7 @@ const DUMMY_DATA =
     pickNobleRequired: true,
     players: [
         {
-            name: "test18",
+            name: "user1",
             tokens: {},
             reserve: [],
             built: [],
@@ -16,7 +17,7 @@ const DUMMY_DATA =
             totalPrestigePoints: 0,
         },
         {
-            name: "johny",
+            name: "user2",
             tokens: {},
             reserve: [],
             built: [],
@@ -26,7 +27,7 @@ const DUMMY_DATA =
         },
     ],
     spectators: [
-        "spectator"
+        "arne"
     ],
     market: [
         {
@@ -208,7 +209,7 @@ const DUMMY_DATA =
     ],
     active: true,
     gameState: "TurnAction",
-    currentPlayer: "johny",
+    currentPlayer: "user1",
     winner: null,
     started: true,
 };

@@ -67,6 +67,10 @@ function takeNobles(requestBody) {
 }
 
 function getApiInfo() {
+    if (USE_DUMMY) {
+        return Promise.resolve(DUMMY_DATA);;
+    }
+
     return fetchFromServer("/info");
 }
 
