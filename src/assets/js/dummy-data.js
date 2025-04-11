@@ -25,6 +25,9 @@ const DUMMY_DATA =
             totalPrestigePoints: 0,
         },
     ],
+    spectators: [
+        "spectator"
+    ],
     market: [
         {
             level: 1,
