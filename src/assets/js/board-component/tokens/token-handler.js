@@ -7,11 +7,7 @@ import { deselectCard } from "../buy-reserve/select.js";
 import { startGameStatePolling } from "../game-data-handler.js";
 
 function clickedOnToken(target) {
-    return target.tagName.toLowerCase() === "img";
-}
-
-function getToken(target) {
-    return target.closest("li");
+    return target.tagName.toLowerCase() === "li";
 }
 
 function stackExists($actionButton) {
@@ -120,7 +116,7 @@ function selectToken(e) {
 
     getActionButton().disabled = false;
 
-    const $selectedToken = getToken(e.target);
+    const $selectedToken = e.target;
 
     if ($selectedToken.dataset.amount < 1) return;
 
