@@ -86,7 +86,7 @@ function renderCard(card) {
     $card.dataset.name = card["name"];
     $card.querySelector(".points").textContent = card["prestigePoints"];
 
-    if (validCardBuy(card["name"])) $card.classList.add("buyable-card");
+    if (validCardBuy(card["name"])) $card.classList.add(`${TOKEN_MAPPER[card["bonus"]]}-buyable-card`);
 
     const $cardCost = $card.querySelector(".cost");
     renderCardCost(card, $cardCost);

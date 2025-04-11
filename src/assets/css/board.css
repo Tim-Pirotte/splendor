@@ -330,8 +330,24 @@ section h3, section h2, section h4 {
     color: #fa716c;
 }
 
-.buyable-card {
-    box-shadow: 0 0 1rem 0.5rem rgb(255, 175, 2);
+.green-buyable-card {
+    box-shadow: 0 0 1rem 0.5rem #97bd56;
+}
+
+.white-buyable-card {
+    box-shadow: 0 0 1rem 0.5rem #e5e3e3;
+}
+
+.blue-buyable-card {
+    box-shadow: 0 0 1rem 0.5rem #518da3;
+}
+
+.red-buyable-card {
+    box-shadow: 0 0 1rem 0.5rem #d88e4f;
+}
+
+.black-buyable-card {
+    box-shadow: 0 0 1rem 0.5rem #9c7444;
 }
 
 .selected-card {
