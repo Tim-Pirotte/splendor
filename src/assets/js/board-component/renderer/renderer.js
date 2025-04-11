@@ -7,7 +7,7 @@ function renderPage(gameData) {
     renderPlayerProfile(gameData["players"][0]["name"]);
     renderGameStatusMessage(gameData["currentPlayer"]);
     renderOtherPlayers(gameData["players"], gameData["currentPlayer"]);
-    renderHistory();
+    renderHistory(gameData["history"]);
     renderBoardTokens(gameData["unclaimedTokens"], gameData["players"].length);
     renderClientPlayer(gameData["players"], GEMS);
     // Has to be rendered after the client player so that the player wallet exists
