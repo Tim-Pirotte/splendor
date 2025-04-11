@@ -59,6 +59,11 @@ main {
 .board-tokens li {
     height: 30%;
     width: 4rem;
+    transition: filter 0.3s ease-in-out;
+}
+
+.board-tokens li:hover {
+    filter: brightness(105%);
 }
 
 .board-tokens p {
@@ -91,6 +96,15 @@ main {
 
 .nobles img {
     width: 4.5rem;
+    transition: filter 0.3s ease-in-out;
+    /* This is needed to prevent a redraw on a new texture which causes sub-pixel shifting due to anti-aliasing.
+       Usage of will-change outside of optimization is frowned upon so if there is another way to fix this please change this.
+       https://developer.mozilla.org/en-US/docs/Web/CSS/will-change */
+    will-change: filter;
+}
+
+.nobles img:hover {
+    filter: brightness(110%);
 }
 
 .player-tokens {
@@ -237,6 +251,10 @@ section h3, section h2, section h4 {
     aspect-ratio: 70 / 100;
     position: relative;
     transition: 0.3s;
+}
+
+.card:hover {
+    filter: brightness(105%);
 }
 
 .card .points {
