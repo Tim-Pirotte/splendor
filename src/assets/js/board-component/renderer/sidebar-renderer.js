@@ -70,7 +70,11 @@ function setPlayerPoints($playerCard, prestigePoints, highestScore) {
 
     highlightPointsWinner(prestigePoints, $playerPoints);
 
-    if (prestigePoints >= highestScore) insertImageInto($playerCard, "UI/diamond", false, "Score amongst the highest");
+    if (prestigePoints >= highestScore) {
+        insertImageInto($playerCard.querySelector("header"), "UI/diamond", false, "Score amongst the highest");
+
+        $playerCard.querySelector("header picture:last-of-type img").classList.add("diamond");
+    }
 }
 
 function renderTokenList(containerToInsertInto, tokenAmounts, gems) {
