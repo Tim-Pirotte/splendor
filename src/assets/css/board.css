@@ -60,11 +60,15 @@ main {
 
 .board-tokens li {
     height: 30%;
-    width: 3.25rem;
+    width: 4rem;
 }
 
 .board-tokens p {
     text-align: center;
+}
+
+.selected-token p {
+    color: #d88e4f;
 }
 
 .nobles {

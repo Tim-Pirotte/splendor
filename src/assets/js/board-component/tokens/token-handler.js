@@ -35,7 +35,7 @@ function tokenInStack($selectedToken, $actionButton, stackPointer) {
 }
 
 function deselectToken($selectedToken) {
-    $selectedToken.classList.remove("selected-token");
+    $selectedToken.querySelector("span").textContent = "";
 }
 
 function unHighlightTokens() {
@@ -83,13 +83,17 @@ function setActionToTokenAction(stackPointer) {
 
     if (stackPointer === 1 && tokenAmount >= MIN_TOKENS_FOR_PICKING_TWO) {
         setActionButtonState("Take two", "processTakeTwoTokensClick", {}, false);
+        highlightTokens(getActionButton(), "2");
     } else {
         setActionButtonState("Take up to three", "processTakeTokenClick", {}, false);
+        highlightTokens(getActionButton(), "1");
     }
 }
 
-function highlightToken($selectedToken) {
-    $selectedToken.classList.add("selected-token");
+function highlightTokens($actionButton, amountToTake) {
+    for (let i = 0; i < parseInt($actionButton.dataset.stackPointer); i++) {
+        document.querySelector(`.board-tokens [data-type=${$actionButton.dataset[`token${i}`]}] span`).textContent = `- ${amountToTake}`;
+    }
 }
 
 function removeTokenFromList($selectedToken, $actionButton, stackPointer) {
@@ -105,7 +109,6 @@ function addTokenToList($selectedToken, $actionButton, stackPointer) {
     pushTokenToStack($selectedToken, $actionButton, stackPointer);
     stackPointer++;
     $actionButton.dataset.stackPointer = stackPointer;
-    highlightToken($selectedToken);
     return stackPointer;
 }
 
@@ -143,7 +146,6 @@ function selectToken(e) {
 
     stackPointer = addTokenToList($selectedToken, $actionButton, stackPointer);
     setActionToTokenAction(stackPointer);
-
 }
 
 function setTokensTo(stackPointer, $actionButton, amountOfTokens) {
