@@ -15,7 +15,10 @@ function createGame(e) {
                 pickNobleRequired: true,
             };
 
-            if (isCompatible) requestBody.avatar = loadFromStorage("avatar");
+            if (isCompatible) {
+                requestBody.avatar = loadFromStorage("avatar");
+                requestBody.visibility = getCheckedRadioButtonValue(document.querySelectorAll("input[name=visibility]"));
+            }
 
             createGameWithBody(requestBody);
         });

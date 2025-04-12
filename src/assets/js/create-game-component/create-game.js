@@ -1,7 +1,8 @@
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { createGame } from "./handler.js";
-import { renderPlayerInfo } from "./renderer.js";
+import {renderPlayerInfo, removeVisibilitySelector} from "./renderer.js";
 import { locateToMainMenu } from "../utils/data-handler.js";
+import {checkCompatibility} from "../server-version-component/server-version.js";
 
 function createInit() {
     setupUI();
@@ -11,7 +12,14 @@ function createInit() {
 function setupUI() {
     if (!loadFromStorage("playerName")) locateToMainMenu();
     if (!loadFromStorage("avatar")) locateToMainMenu();
-    renderPlayerInfo();
+    checkCompatibility(2).then(isCompatible => {
+        renderPlayerInfo();
+
+        if (!isCompatible) removeVisibilitySelector();
+
+    })
+
+
 }
 
 function setupEventListeners() {
