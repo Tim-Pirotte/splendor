@@ -121,21 +121,19 @@ function highlightPointsWinner(prestigePoints, $playerPoints) {
 
 function getOrderedPlayersWithoutClientPlayer(players, clientPlayerName) {
     const clientPlayerIndex = getClientPlayerIndex(players, clientPlayerName);
-
-    //For the spectator, otherwise the list is dubbled
-    if (clientPlayerIndex === undefined) {
-        return players;
-    }
-
     return orderPlayers(players, clientPlayerIndex);
 }
 
 function getClientPlayerIndex(players, clientPlayerName) {
+    const gameCreatorIndex = 0;
+
     for (const playerIndex in players) {
         if (players[playerIndex]["name"] === clientPlayerName) {
             return parseInt(playerIndex);
         }
     }
+
+    return gameCreatorIndex;
 }
 
 function orderPlayers(players, clientPlayerIndex) {
