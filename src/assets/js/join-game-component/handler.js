@@ -18,7 +18,7 @@ function joinGame(e) {
 
         if( gameState === "join" ) {
             joinGameById(gameId);
-        }else {
+        } else {
             spectateGame(gameId);
         }
     }
