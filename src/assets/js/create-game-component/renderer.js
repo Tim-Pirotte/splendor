@@ -1,5 +1,5 @@
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
-import { insertImageInto } from "../utils/renderer.js";
+import { insertImageInto, renderUnsupportedError } from "../utils/renderer.js";
 
 function renderPlayerInfo() {
     const playerName = loadFromStorage("playerName");
@@ -11,7 +11,7 @@ function renderPlayerInfo() {
 
 function removeVisibilitySelector() {
     const $container = document.querySelector("#visibility-selector-container");
-    $container.remove();
+    renderUnsupportedError($container, "Private game");
 }
 
 export { renderPlayerInfo, removeVisibilitySelector };

@@ -13,7 +13,7 @@ import { getHighestScore } from "../../utils/game-object-handler.js";
 import { copyNode } from "../../utils/data-handler.js";
 import { avatars } from "../../main-menu-component/data.js";
 import { checkCompatibility } from "../../server-version-component/server-version.js";
-import { insertImageInto } from "../../utils/renderer.js";
+import { insertImageInto, renderUnsupportedError } from "../../utils/renderer.js";
 
 function renderOtherPlayers(players, currentPlayer) {
     const currentPlayerName = loadFromStorage("playerName");
@@ -216,7 +216,7 @@ function renderForfeitEntry() {
 
 function renderIncompatibleServerMessage() {
     const $history = document.querySelector(".history");
-    $history.innerHTML = "<p>History is not supported on this server. Sorry for the Inconvenience.</p>";
+    renderUnsupportedError($history, "History");
 }
 
 function insertPlayerName(renderedEntry, playerName) {

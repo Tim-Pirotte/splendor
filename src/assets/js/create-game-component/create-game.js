@@ -12,13 +12,10 @@ function createInit() {
 function setupUI() {
     if (!loadFromStorage("playerName")) locateToMainMenu();
     if (!loadFromStorage("avatar")) locateToMainMenu();
-    checkCompatibility(2).then(isCompatible => {
-        renderPlayerInfo();
+    renderPlayerInfo();
 
-        if (!isCompatible) removeVisibilitySelector();
-
-    });
-
+    checkCompatibility(2)
+        .then(isCompatible => {if (!isCompatible) removeVisibilitySelector();});
 }
 
 function setupEventListeners() {
