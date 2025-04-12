@@ -105,7 +105,7 @@ main {
 .nobles img {
     width: 4.5rem;
     transition: filter 0.3s ease-in-out;
-    /* This is needed to prevent a redraw on a new texture which causes sub-pixel shifting due to anti-aliasing.
+    /* This is needed to prevent a redraw on a new texture which causes sub-pixel shifting due to different anti-aliasing.
        Usage of will-change outside of optimization is frowned upon so if there is another way to fix this please change this.
        https://developer.mozilla.org/en-US/docs/Web/CSS/will-change */
     will-change: filter;
@@ -276,6 +276,10 @@ section h3, section h2, section h4 {
     position: relative;
     transition: 0.3s;
     border-radius: 0.5rem;
+    /* This is needed to prevent a redraw on a new texture which causes sub-pixel shifting due to different anti-aliasing.
+       Usage of will-change outside of optimization is frowned upon so if there is another way to fix this please change this.
+       https://developer.mozilla.org/en-US/docs/Web/CSS/will-change */
+    will-change: filter;
 }
 
 .card:hover {
@@ -377,23 +381,28 @@ section h3, section h2, section h4 {
 }
 
 .green-buyable-card {
-    box-shadow: 0 0 0.7rem 0.4rem #97bd56;
+    box-shadow: 0 0 0.5rem 0.4rem #97bd56d6;
+    filter: brightness(105%);
 }
 
 .white-buyable-card {
-    box-shadow: 0 0 0.7rem 0.4rem #e5e3e3;
+    box-shadow: 0 0 0.5rem 0.4rem #e5e3e3d6;
+    filter: brightness(105%);
 }
 
 .blue-buyable-card {
-    box-shadow: 0 0 0.7rem 0.4rem #518da3;
+    box-shadow: 0 0 0.5rem 0.4rem #518da3d6;
+    filter: brightness(105%);
 }
 
 .red-buyable-card {
-    box-shadow: 0 0 0.7rem 0.4rem #d88e4f;
+    box-shadow: 0 0 0.5rem 0.4rem #d88e4fd6;
+    filter: brightness(105%);
 }
 
 .black-buyable-card {
-    box-shadow: 0 0 0.7rem 0.4rem #9c7444;
+    box-shadow: 0 0 0.5rem 0.4rem #9c7444d6;
+    filter: brightness(105%);
 }
 
 .selected-card {
