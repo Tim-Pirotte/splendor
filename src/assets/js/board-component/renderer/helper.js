@@ -121,6 +121,12 @@ function highlightPointsWinner(prestigePoints, $playerPoints) {
 
 function getOrderedPlayersWithoutClientPlayer(players, clientPlayerName) {
     const clientPlayerIndex = getClientPlayerIndex(players, clientPlayerName);
+
+    //For the spectator, otherwise the list is dubbled
+    if (clientPlayerIndex === undefined) {
+        return players;
+    }
+
     return orderPlayers(players, clientPlayerIndex);
 }
 
