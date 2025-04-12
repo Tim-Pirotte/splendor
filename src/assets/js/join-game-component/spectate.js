@@ -1,7 +1,6 @@
 import { checkCompatibility } from "../server-version-component/server-version.js";
 import { saveToStorage } from "../data-connector/local-storage-abstractor.js";
 
-
 function spectateGame(gameId) {
     checkCompatibility(2)
         .then(isCompatible => {

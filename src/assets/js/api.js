@@ -1,8 +1,6 @@
 import { fetchFromServer } from "./data-connector/api-communication-abstractor.js";
 import { loadFromStorage } from "./data-connector/local-storage-abstractor.js";
-import { DUMMY_DATA } from "./dummy-data.js";
 import { checkCompatibility } from "./server-version-component/server-version.js";
-
 
 /* Game Management */
 function getGames(hasStarted = "") {

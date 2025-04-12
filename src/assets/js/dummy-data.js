@@ -27,7 +27,7 @@ const DUMMY_DATA =
         },
     ],
     spectators: [
-        "arne"
+        "arne",
     ],
     market: [
         {
