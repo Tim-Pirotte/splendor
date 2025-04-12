@@ -67,7 +67,7 @@ main {
 }
 
 .board-tokens li:hover {
-    filter: brightness(105%);
+    filter: brightness(80%);
 }
 
 .board-tokens p {
@@ -108,7 +108,7 @@ main {
 }
 
 .nobles img:hover {
-    filter: brightness(110%);
+    filter: brightness(80%);
 }
 
 .player-tokens {
@@ -193,7 +193,7 @@ aside {
 }
 
 .game-creator {
-    border: solid gold;
+    border: solid #ffc107;
     border-radius: 50%;
 }
 
@@ -274,7 +274,7 @@ section h3, section h2, section h4 {
 }
 
 .card:hover {
-    filter: brightness(105%);
+    filter: brightness(80%);
 }
 
 .card .points {
@@ -355,8 +355,8 @@ section h3, section h2, section h4 {
     transition: 0.3s;
 }
 
-.decks > li > picture {
-    filter: brightness(105%);
+.decks > li > picture:hover {
+    filter: brightness(80%);
 }
 
 /* Player points */
@@ -493,7 +493,7 @@ section h3, section h2, section h4 {
 }
 
 .button-container button:hover {
-    filter: brightness(105%);
+    filter: brightness(115%);
 }
 
 .button-container button:disabled {
