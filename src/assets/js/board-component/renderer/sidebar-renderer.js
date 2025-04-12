@@ -125,7 +125,7 @@ function renderOtherPlayerReservedCard($numberedItemTemplate, reservedCard, cont
     const $reservedCard = copyNode($numberedItemTemplate);
     $reservedCard.querySelector(".amount").textContent = reservedCard["prestigePoints"];
 
-    insertImageInto($reservedCard, `cards/empty/${TOKEN_MAPPER[reservedCard["bonus"]]}_empty_card`, false, `${TOKEN_MAPPER[reservedCard["bonus"]]} chip`);
+    insertImageInto($reservedCard, `UI/cards/${TOKEN_MAPPER[reservedCard["bonus"]]}_card_small`, false, `${TOKEN_MAPPER[reservedCard["bonus"]]} chip`);
 
     containerToInsertInto.appendChild($reservedCard);
 }

@@ -8,8 +8,12 @@ body {
 }
 
 /* SWITCH TOKEN BUTTONS */
-.hidden, .switch-token-container .hidden {
+.switch-token-container .hidden {
     display: none;
+}
+
+.hidden {
+    visibility: hidden;
 }
 
 .switch-token-container p {
@@ -30,11 +34,11 @@ body > section {
 
 main {
     display: grid;
-    grid-template-columns: 50% 30% 10% 10%;
+    grid-template-columns: 50% 20% 20% 10%;
     grid-template-rows: 72% 5% 23%;
     grid-template-areas:    "decks board-tokens nobles timer"
-                            "player-points player-tokens player-tokens action-button"
-                            "reserved-cards player-tokens player-tokens action-button";
+                            "player-points player-tokens action-button action-button"
+                            "reserved-cards player-tokens action-button action-button";
 }
 
 .decks {
@@ -155,6 +159,22 @@ aside {
 .player-card > ul > li {
     display: flex;
     align-items: center;
+}
+
+.player-card .reserved li {
+    position: relative;
+}
+
+.player-card .reserved p {
+    position: absolute;
+    color: whitesmoke;
+    top: 10%;
+    left: 25%;
+}
+
+.player-card .reserved img {
+    height: 4.250rem;
+    left: 0;
 }
 
 .discard-container > * {
@@ -352,23 +372,23 @@ section h3, section h2, section h4 {
 }
 
 .green-buyable-card {
-    box-shadow: 0 0 1rem 0.5rem #97bd56;
+    box-shadow: 0 0 0.7rem 0.4rem #97bd56;
 }
 
 .white-buyable-card {
-    box-shadow: 0 0 1rem 0.5rem #e5e3e3;
+    box-shadow: 0 0 0.7rem 0.4rem #e5e3e3;
 }
 
 .blue-buyable-card {
-    box-shadow: 0 0 1rem 0.5rem #518da3;
+    box-shadow: 0 0 0.7rem 0.4rem #518da3;
 }
 
 .red-buyable-card {
-    box-shadow: 0 0 1rem 0.5rem #d88e4f;
+    box-shadow: 0 0 0.7rem 0.4rem #d88e4f;
 }
 
 .black-buyable-card {
-    box-shadow: 0 0 1rem 0.5rem #9c7444;
+    box-shadow: 0 0 0.7rem 0.4rem #9c7444;
 }
 
 .selected-card {
@@ -431,9 +451,11 @@ section h3, section h2, section h4 {
     width: 2rem;
     background: #d9b56f;
     transform: rotate(180deg);
-    border: #9c7444 solid 0.2rem;
+    outline: #9c7444 solid 0.2rem;
     box-shadow: 0 0 0 0.2rem #00000020, inset 0 0 0 0.2rem #00000035;
     transition: opacity 1s;
+    margin-left: auto;
+    margin-right: 2rem;
 }
 
 .timer-fill {
@@ -453,7 +475,28 @@ section h3, section h2, section h4 {
     grid-area: action-button;
     height: 2rem;
     width: fit-content;
-    margin-top: auto;
-    margin-left: auto;
-    margin-right: auto;
+    margin: auto 2rem 2rem auto;
+    display: flex;
+    gap: 0 1rem;
+}
+
+.button-container button {
+    width: 7.65rem;
+    height: 2.55rem;
+    background-size: cover;
+    background-color: transparent;
+    border: none;
+    background-image: url("../images/UI/action_button.webp"), url("../images/fallback/UI/action_button.png");
+    color: whitesmoke;
+    font-size: 0.7rem;
+    transition: filter 0.3s ease-in-out;
+}
+
+.button-container button:hover {
+    filter: brightness(105%);
+}
+
+.button-container button:disabled {
+    cursor: not-allowed;
+    filter: grayscale(80%);
 }
