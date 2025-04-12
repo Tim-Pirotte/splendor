@@ -275,6 +275,7 @@ section h3, section h2, section h4 {
     aspect-ratio: 70 / 100;
     position: relative;
     transition: 0.3s;
+    border-radius: 0.5rem;
 }
 
 .card:hover {
@@ -440,7 +441,6 @@ section h3, section h2, section h4 {
 }
 
 .diamond {
-    margin-left: 1rem;
     width: 1.25rem;
 }
 
