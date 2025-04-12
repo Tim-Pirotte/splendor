@@ -335,6 +335,10 @@ section h3, section h2, section h4 {
     transition: 0.3s;
 }
 
+.decks > li > picture {
+    filter: brightness(105%);
+}
+
 /* Player points */
 .player-points {
     display: flex;
