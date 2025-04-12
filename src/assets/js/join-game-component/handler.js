@@ -1,4 +1,5 @@
 import { joinGameById } from "./helper.js";
+import { spectateGame } from "./spectate.js";
 
 function locateMainMenu(e) {
     location.href = "./../index.html";
@@ -12,7 +13,14 @@ function joinGameUsingUsersInputId(e) {
 function joinGame(e) {
     e.preventDefault();
     if (e.target.type === "button") {
-        joinGameById(e.target.closest("li").dataset.gameId);
+        const gameState = e.target.closest("li").dataset.gameState;
+        const gameId = e.target.closest("li").dataset.gameId;
+
+        if( gameState === "join" ) {
+            joinGameById(gameId);
+        } else {
+            spectateGame(gameId);
+        }
     }
 }
 
