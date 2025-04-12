@@ -66,7 +66,7 @@ function renderBoardToken($numberedItemTemplate, token, unclaimedTokens, playerL
     const maxTokens = getMaxTokens(playerLength, token);
 
     $boardToken.querySelector(".amount").innerHTML = `${(unclaimedTokens[token] || 0)}/${maxTokens} <span></span>`;
-    renderProgressBar($boardToken, unclaimedTokens[token] || 0, `board_token_${TOKEN_MAPPER[token]}`, 0.5, false, true)
+    renderProgressBar($boardToken, unclaimedTokens[token] || 0, `board_token_${TOKEN_MAPPER[token]}`, 0.5, false, true);
     $boardToken.style.backgroundSize = "3.25rem";
 
     return $boardToken;
