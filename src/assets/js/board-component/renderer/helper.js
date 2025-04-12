@@ -53,6 +53,7 @@ function renderProgressBar(
     } else {
         $progressBar.style.background = constructBackground(value, imageName, spacing);
     }
+
     $progressBar.style.backgroundRepeat = "no-repeat";
     if (setWidth) $progressBar.style.width = `${(value + 1) * spacing}rem`;
 }

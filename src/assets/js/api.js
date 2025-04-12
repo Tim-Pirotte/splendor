@@ -1,5 +1,6 @@
 import { fetchFromServer } from "./data-connector/api-communication-abstractor.js";
 import { loadFromStorage } from "./data-connector/local-storage-abstractor.js";
+import { checkCompatibility } from "./server-version-component/server-version.js";
 
 /* Game Management */
 function getGames(hasStarted = "") {
@@ -11,7 +12,10 @@ function getGames(hasStarted = "") {
 }
 
 function createGame(requestBody) {
-    return fetchFromServer("/games", "POST", requestBody);
+    return checkCompatibility(2).then(isOk => {
+        if (isOk) requestBody.avatar = loadFromStorage("avatar");
+        return fetchFromServer("/games", "POST", requestBody);
+    });
 }
 
 function getGame() {
@@ -20,8 +24,14 @@ function getGame() {
 }
 
 function joinGame(gameId) {
-    const playerName = loadFromStorage("playerName");
-    return fetchFromServer(`/games/${gameId}/players/${playerName}`, "POST");
+    return checkCompatibility(2).then(isCompatible => {
+        let body = {};
+
+        if (isCompatible) body = { avatar: loadFromStorage("avatar") };
+
+        const playerName = loadFromStorage("playerName");
+        return fetchFromServer(`/games/${gameId}/players/${playerName}`, "POST", body);
+    });
 }
 
 /* Game Actions */
@@ -49,4 +59,14 @@ function takeNobles(requestBody) {
     return fetchFromServer(`/games/${gameId}/players/${playerName}/nobles`, "POST", requestBody);
 }
 
-export { getGames, createGame, getGame, joinGame, takeTokens, buyCard, reserveCard, takeNobles };
+function forfeit() {
+    const gameId = loadFromStorage("gameId");
+    const playerName = loadFromStorage("playerName");
+    return fetchFromServer(`/games/${gameId}/players/${playerName}/forfeit`, "POST");
+}
+
+function getApiInfo() {
+    return fetchFromServer("/info");
+}
+
+export { getGames, createGame, getGame, joinGame, takeTokens, buyCard, reserveCard, takeNobles, getApiInfo, forfeit };

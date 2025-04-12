@@ -1,3 +1,5 @@
+import { GEMS } from "../data.js";
+import { TOKEN_MAPPER } from "../config.js";
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
 import {
     formatNumber,
@@ -7,11 +9,10 @@ import {
     isCreator,
     safeEmptyContainer,
 } from "./helper.js";
-import { TOKEN_MAPPER } from "../config.js";
 import { getHighestScore } from "../../utils/game-object-handler.js";
 import { copyNode } from "../../utils/data-handler.js";
-import { GEMS } from "../data.js";
 import { avatars } from "../../main-menu-component/data.js";
+import { checkCompatibility } from "../../server-version-component/server-version.js";
 import { insertImageInto } from "../../utils/renderer.js";
 
 function renderOtherPlayers(players, currentPlayer) {
@@ -36,10 +37,18 @@ function renderOtherPlayers(players, currentPlayer) {
     }
 }
 
+function getAvatar(otherPlayer) {
+    if ("avatar" in otherPlayer) {
+        return otherPlayer.avatar;
+    } else {
+        return avatars[otherPlayer.name.toLowerCase().charCodeAt(0) % avatars.length];
+    }
+}
+
 function renderOtherPlayer($playerTemplate, otherPlayer, highestScore, currentPlayer, isGameCreator) {
     const $playerCard = copyNode($playerTemplate);
     const playerName = otherPlayer.name;
-    const avatar = avatars[playerName.toLowerCase().charCodeAt(0) % avatars.length];
+    const avatar = getAvatar(otherPlayer);
 
     showOtherPlayerTurn(playerName, currentPlayer, $playerCard);
 
@@ -130,4 +139,92 @@ function renderOtherPlayerReservedCard($numberedItemTemplate, reservedCard, cont
     containerToInsertInto.appendChild($reservedCard);
 }
 
-export { renderOtherPlayers };
+function renderHistory(history) {
+    checkCompatibility(2)
+        .then(isCompatible => {
+            if (!isCompatible) {
+                renderIncompatibleServerMessage();
+                return;
+            }
+
+            const $history = document.querySelector(".history");
+
+            const historyPreviousLength = $history.querySelectorAll(":scope> *").length;
+            const historyCurrentLength = history.length;
+            const amountOfNewItems = historyCurrentLength - historyPreviousLength;
+
+            for (const entry of history.slice(-amountOfNewItems)) {
+                $history.appendChild(renderHistoryEntry(entry));
+            }
+        });
+}
+
+const HISTORY_ACTIONS = {
+    take: renderTakeTokensEntry,
+    return: renderDiscardTokensEntry,
+    buy: renderBuyCardEntry,
+    reserve: renderReserveCardEntry,
+    noble: renderChooseNobleEntry,
+    forfeit: renderForfeitEntry,
+};
+
+function renderHistoryEntry(entry) {
+    const renderedEntry = HISTORY_ACTIONS[entry["action"]](entry);
+    insertPlayerName(renderedEntry, entry["player"]);
+    return renderedEntry;
+}
+
+function renderTakeTokensEntry(entry) {
+    const $takeTokensEntry = copyNode(document.querySelector("#take-tokens-history-template"));
+    renderHistoryTokenList(entry["tokens"], $takeTokensEntry);
+    return $takeTokensEntry;
+}
+
+function renderDiscardTokensEntry(entry) {
+    const $discardTokensEntry = copyNode(document.querySelector("#discard-tokens-history-template"));
+    renderHistoryTokenList(entry["tokens"], $discardTokensEntry);
+    return $discardTokensEntry;
+}
+
+function renderHistoryTokenList(tokens, $tokensEntry) {
+    for (const [tokenType, amount] of Object.entries(tokens)) {
+        $tokensEntry.insertAdjacentHTML("beforeend", amount);
+        insertImageInto($tokensEntry, `UI/tokens/${TOKEN_MAPPER[tokenType]}_chip`, false, `${TOKEN_MAPPER[tokenType]} chip`);
+    }
+}
+
+function renderBuyCardEntry(entry) {
+    const $buyCardEntry = copyNode(document.querySelector("#buy-card-history-template"));
+    renderHistoryCard($buyCardEntry, entry["bonus"]);
+    return $buyCardEntry;
+}
+
+function renderReserveCardEntry(entry) {
+    const $reserveCardEntry = copyNode(document.querySelector("#reserve-card-history-template"));
+    renderHistoryCard($reserveCardEntry, entry["bonus"]);
+    return $reserveCardEntry;
+}
+
+function renderHistoryCard($cardEntry, cardType) {
+    insertImageInto($cardEntry, `UI/cards/${TOKEN_MAPPER[cardType]}_card_small`, false, `${TOKEN_MAPPER[cardType]} card`);
+    $cardEntry.insertAdjacentHTML("beforeend", "<p>card</p>");
+}
+
+function renderChooseNobleEntry() {
+    return copyNode(document.querySelector("#receive-noble-history-template"));
+}
+
+function renderForfeitEntry() {
+    return copyNode(document.querySelector("#forfeit-history-template"));
+}
+
+function renderIncompatibleServerMessage() {
+    const $history = document.querySelector(".history");
+    $history.innerHTML = "<p>History is not supported on this server. Sorry for the Inconvenience.</p>";
+}
+
+function insertPlayerName(renderedEntry, playerName) {
+    renderedEntry.querySelector("strong").textContent = playerName;
+}
+
+export { renderOtherPlayers, renderHistory };

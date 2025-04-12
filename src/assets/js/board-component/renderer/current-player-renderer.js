@@ -24,6 +24,7 @@ import { getClientTokens, getClientTotalPrestigePoints } from "../game-data-hand
 import { copyNode } from "../../utils/data-handler.js";
 import { isCurrentlyPlaying } from "../game-status-interface.js";
 import { insertImageInto } from "../../utils/renderer.js";
+import { checkCompatibility } from "../../server-version-component/server-version.js";
 
 function renderGameStatusMessage(currentPlayer) {
     const $statusMessage = document.querySelector("h1");
@@ -34,15 +35,26 @@ function renderGameStatusMessage(currentPlayer) {
 function renderPlayerProfile(gameCreatorName) {
     document.querySelector(".top-bar h2").textContent = loadFromStorage("playerName");
     renderAvatar(gameCreatorName);
+    renderForfeitButton();
 }
 
 function renderAvatar(gameCreatorName) {
     const avatar = loadFromStorage("avatar");
     const $avatar = document.querySelector("header div.avatar");
 
+    if ($avatar.childElementCount > 0) return;
+
     safeEmptyContainer($avatar);
     insertImageInto($avatar, `avatars/${avatar}`, avatar, avatar);
+
     if (loadFromStorage("playerName") === gameCreatorName) $avatar.querySelector("img").classList.add("game-creator");
+}
+
+function renderForfeitButton() {
+    checkCompatibility(2)
+        .then(isCompatible => {
+            document.querySelector(".forfeit").classList.toggle("hidden", !isCompatible);
+        });
 }
 
 function renderClientPlayerPoints(totalPrestigePoints, highestScore) {

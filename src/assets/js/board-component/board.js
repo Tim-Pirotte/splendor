@@ -6,10 +6,9 @@ import { selectCard } from "./buy-reserve/select.js";
 import { processReserve, selectDeckForReserving } from "./buy-reserve/reserve-handler.js";
 import { handlePaymentMethodChange } from "./buy-reserve/buy-handler.js";
 import { selectPlayerToken } from "./tokens/discard.js";
-import { renderPlayerProfile } from "./renderer/current-player-renderer.js";
+import * as API from "../api.js";
 
 function init() {
-    renderPlayerProfile();
     updateGameData();
     initGameStatusInterface();
     initializeActions();
@@ -19,6 +18,7 @@ function initializeActions() {
     tokenInit();
     noblesInit();
     buyReserveInit();
+    forfeitInit();
 }
 
 function tokenInit(){
@@ -38,6 +38,10 @@ function buyReserveInit() {
     document.querySelector(".player-tokens").addEventListener("click", handlePaymentMethodChange);
     document.querySelector(".reserve-button").addEventListener("click", processReserve);
     document.querySelector(".reserved-cards ul").addEventListener("click", selectCard);
+}
+
+function forfeitInit() {
+    document.querySelector(".forfeit").addEventListener("click", API.forfeit);
 }
 
 init();
