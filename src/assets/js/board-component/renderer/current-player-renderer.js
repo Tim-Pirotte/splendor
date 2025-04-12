@@ -53,7 +53,7 @@ function renderAvatar(gameCreatorName) {
 function renderForfeitButton() {
     checkCompatibility(2)
         .then(isCompatible => {
-            document.querySelector(".forfeit").classList.toggle("hidden", !isCompatible);
+            document.querySelector(".forfeit").classList.toggle("none", !isCompatible);
         });
 }
 

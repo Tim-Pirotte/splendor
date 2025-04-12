@@ -16,6 +16,10 @@ body {
     visibility: hidden;
 }
 
+.none {
+    display: none;
+}
+
 .switch-token-container p {
     display: inline-block;
 }
@@ -441,7 +445,7 @@ section h3, section h2, section h4 {
 }
 
 .player-card.current-player {
-    transform: translateX(7rem);
+    transform: translateX(10rem);
     position: relative;
 }
 
