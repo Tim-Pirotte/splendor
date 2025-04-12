@@ -109,7 +109,7 @@ function setTotalTokensColor($totalTokenCount, totalTokens) {
 function renderClientPlayer(players, gems) {
     let clientPlayer = getPlayerByName(players, loadFromStorage("playerName"));
 
-    if(clientPlayer === undefined) {
+    if(isNotCurrentActivePlayer()) {
         clientPlayer = players[0];
     }
 
@@ -120,6 +120,10 @@ function renderClientPlayer(players, gems) {
     renderClientPlayerTokenCount(clientPlayer["tokens"]);
     renderClientPlayerTokens(clientPlayer["tokens"], clientPlayer["bonuses"], gems);
     renderTimer();
+}
+
+function isNotCurrentActivePlayer(clientPlayer) {
+    return clientPlayer === undefined;
 }
 
 function getPlayerByName(players, currentPlayerName) {

@@ -3,7 +3,6 @@ import { loadFromStorage } from "./data-connector/local-storage-abstractor.js";
 import { DUMMY_DATA } from "./dummy-data.js";
 import { checkCompatibility } from "./server-version-component/server-version.js";
 
-const USE_DUMMY = false;
 
 /* Game Management */
 function getGames(hasStarted = "") {
@@ -22,10 +21,6 @@ function createGame(requestBody) {
 }
 
 function getGame() {
-    if (USE_DUMMY) {
-        return Promise.resolve(DUMMY_DATA);;
-    }
-
     const gameId = loadFromStorage("gameId");
     return fetchFromServer(`/games/${gameId}`);
 }
@@ -73,10 +68,6 @@ function forfeit() {
 }
 
 function getApiInfo() {
-    if (USE_DUMMY) {
-        return Promise.resolve(DUMMY_DATA);;
-    }
-
     return fetchFromServer("/info");
 }
 

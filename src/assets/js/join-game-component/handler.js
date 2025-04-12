@@ -1,4 +1,3 @@
-import { saveToStorage } from "../data-connector/local-storage-abstractor.js";
 import { joinGameById } from "./helper.js";
 import { spectateGame } from "./spectate.js";
 
@@ -20,8 +19,7 @@ function joinGame(e) {
         if( gameState === "join" ) {
             joinGameById(gameId);
         }else {
-            saveToStorage("gameId", gameId);
-            spectateGame();
+            spectateGame(gameId);
         }
     }
 }
