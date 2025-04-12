@@ -135,16 +135,92 @@ function renderOtherPlayerReservedCard($numberedItemTemplate, reservedCard, cont
     containerToInsertInto.appendChild($reservedCard);
 }
 
-function renderHistory() {
+function renderHistory(history) {
     checkCompatibility(2)
         .then(isCompatible => {
-            if (!isCompatible) incompatibleServerMessage();
+            if (!isCompatible) {
+                renderIncompatibleServerMessage();
+                return;
+            }
+
+            const $history = document.querySelector(".history");
+
+            const historyPreviousLength = $history.querySelectorAll(":scope> *").length;
+            const historyCurrentLength = history.length;
+            const amountOfNewItems = historyCurrentLength - historyPreviousLength;
+
+            for (const entry of history.slice(-amountOfNewItems)) {
+                $history.appendChild(renderHistoryEntry(entry));
+            }
         });
 }
 
-function incompatibleServerMessage() {
+const HISTORY_ACTIONS = {
+    take: renderTakeTokensEntry,
+    return: renderDiscardTokensEntry,
+    buy: renderBuyCardEntry,
+    reserve: renderReserveCardEntry,
+    noble: renderChooseNobleEntry,
+    forfeit: renderForfeitEntry,
+};
+
+function renderHistoryEntry(entry) {
+    const renderedEntry = HISTORY_ACTIONS[entry["action"]](entry);
+    insertPlayerName(renderedEntry, entry["player"]);
+    return renderedEntry;
+}
+
+function renderTakeTokensEntry(entry) {
+    const $takeTokensEntry = copyNode(document.querySelector("#take-tokens-history-template"));
+    renderHistoryTokenList(entry["tokens"], $takeTokensEntry);
+    return $takeTokensEntry;
+}
+
+function renderDiscardTokensEntry(entry) {
+    const $discardTokensEntry = copyNode(document.querySelector("#discard-tokens-history-template"));
+    renderHistoryTokenList(entry["tokens"], $discardTokensEntry);
+    return $discardTokensEntry;
+}
+
+function renderHistoryTokenList(tokens, $tokensEntry) {
+    for (const [tokenType, amount] of Object.entries(tokens)) {
+        $tokensEntry.insertAdjacentHTML("beforeend", amount);
+        insertImageInto($tokensEntry, `UI/tokens/${TOKEN_MAPPER[tokenType]}_chip`, false, `${TOKEN_MAPPER[tokenType]} chip`);
+    }
+}
+
+function renderBuyCardEntry(entry) {
+    const $buyCardEntry = copyNode(document.querySelector("#buy-card-history-template"));
+    renderHistoryCard($buyCardEntry, entry["bonus"]);
+    return $buyCardEntry;
+}
+
+function renderReserveCardEntry(entry) {
+    const $reserveCardEntry = copyNode(document.querySelector("#reserve-card-history-template"));
+    renderHistoryCard($reserveCardEntry, entry["bonus"]);
+    return $reserveCardEntry;
+}
+
+function renderHistoryCard($cardEntry, cardType) {
+    insertImageInto($cardEntry, `UI/cards/${TOKEN_MAPPER[cardType]}_card_small`, false, `${TOKEN_MAPPER[cardType]} card`);
+    $cardEntry.insertAdjacentHTML("beforeend", "<p>card</p>");
+}
+
+function renderChooseNobleEntry() {
+    return copyNode(document.querySelector("#receive-noble-history-template"));
+}
+
+function renderForfeitEntry() {
+    return copyNode(document.querySelector("#forfeit-history-template"));
+}
+
+function renderIncompatibleServerMessage() {
     const $history = document.querySelector(".history");
     $history.innerHTML = "<p>History is not supported on this server. Sorry for the Inconvenience.</p>";
+}
+
+function insertPlayerName(renderedEntry, playerName) {
+    renderedEntry.querySelector("strong").textContent = playerName;
 }
 
 export { renderOtherPlayers, renderHistory };
