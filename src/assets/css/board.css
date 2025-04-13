@@ -76,6 +76,7 @@ main {
 
 .board-tokens p {
     text-align: center;
+    text-shadow: 0 0 0.3125rem black;
 }
 
 .pulsing-text {
@@ -160,6 +161,10 @@ aside {
     gap: 0.5rem;
 }
 
+.player-tokens .progress-bar {
+    width: 10rem;
+}
+
 .player-card > ul > li {
     display: flex;
     align-items: center;
@@ -179,6 +184,10 @@ aside {
 .player-card .reserved img {
     height: 4.250rem;
     left: 0;
+}
+
+.player-card .reserved .amount {
+    text-shadow: 0 0 0.3125rem black;
 }
 
 .discard-container > * {
@@ -231,6 +240,7 @@ aside {
 
 .top-bar h1 {
     color: whitesmoke;
+    text-shadow: 0 0 0.3125rem black;
     margin: 0 auto;
 }
 
@@ -247,6 +257,7 @@ aside {
 
 section h3, section h2, section h4 {
     color: whitesmoke;
+    text-shadow: 0 0 0.3125rem black;
 }
 
 .top-bar div {
@@ -381,27 +392,27 @@ section h3, section h2, section h4 {
 }
 
 .green-buyable-card {
-    box-shadow: 0 0 0.5rem 0.4rem #97bd56d6;
+    box-shadow: 0 0 0.4rem 0.3rem #97bd56d6;
     filter: brightness(105%);
 }
 
 .white-buyable-card {
-    box-shadow: 0 0 0.5rem 0.4rem #e5e3e3d6;
+    box-shadow: 0 0 0.4rem 0.3rem #e5e3e3d6;
     filter: brightness(105%);
 }
 
 .blue-buyable-card {
-    box-shadow: 0 0 0.5rem 0.4rem #518da3d6;
+    box-shadow: 0 0 0.4rem 0.3rem #518da3d6;
     filter: brightness(105%);
 }
 
 .red-buyable-card {
-    box-shadow: 0 0 0.5rem 0.4rem #d88e4fd6;
+    box-shadow: 0 0 0.4rem 0.3rem #d88e4fd6;
     filter: brightness(105%);
 }
 
 .black-buyable-card {
-    box-shadow: 0 0 0.5rem 0.4rem #9c7444d6;
+    box-shadow: 0 0 0.4rem 0.3rem #9c7444d6;
     filter: brightness(105%);
 }
 

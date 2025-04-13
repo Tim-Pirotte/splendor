@@ -88,7 +88,13 @@ function addHighestScoreIndicator(totalPrestigePoints, highestScore) {
 
 function renderClientPlayerReserve(currentPlayer) {
     const $reserved = document.querySelector(".reserved-cards ul");
-    addNodesToEmptiedContainer($reserved, currentPlayer["reserve"], renderCard);
+    const reservedCards = currentPlayer["reserve"];
+    if (reservedCards.length > 0) {
+        addNodesToEmptiedContainer($reserved, reservedCards, renderCard);
+    } else {
+        safeEmptyContainer($reserved);
+        $reserved.insertAdjacentHTML("beforeend", "<p>No reserved cards</p>");
+    }
 }
 
 function renderClientPlayerTokenCount(tokens) {
@@ -109,7 +115,7 @@ function setTotalTokensColor($totalTokenCount, totalTokens) {
 function renderClientPlayer(players, gems) {
     let clientPlayer = getPlayerByName(players, loadFromStorage("playerName"));
 
-    if(isNotCurrentActivePlayer()) {
+    if(isNotCurrentActivePlayer(clientPlayer)) {
         clientPlayer = players[0];
     }
 

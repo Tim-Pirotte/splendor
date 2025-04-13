@@ -13,31 +13,31 @@ function addNodesToEmptiedContainer($container, list, mapFunction) {
 }
 
 function constructBackground(value, imageName, spacing) {
+    /* Notice: css stacking order differs from html (https://www.w3.org/TR/css-backgrounds-3/#layering) */
     let background = "";
 
-    for (let i = 0; i < value - 1; i++) {
-        background += `url("../assets/images/UI/tokens/${imageName}.webp") ${i * spacing}rem 100%,\n`;
+    const layers = [];
+
+    for (let i = 0; i < value; i++) {
+        layers.push(
+            `url("../assets/images/UI/tokens/${imageName}.webp") ${i * spacing}rem 100% no-repeat`
+        );
     }
 
-    if (value > 0) {
-        background += `url("../assets/images/UI/tokens/${imageName}.webp") ${(value - 1) * spacing}rem 100%`;
-    }
-
-    return background;
+    return layers.reverse().join(",\n");
 }
 
 function constructVerticalBackground(value, imageName, spacing) {
-    let background = "";
+    /* Notice: css stacking order differs from html (https://www.w3.org/TR/css-backgrounds-3/#layering) */
+    const layers = [];
 
-    for (let i = value - 1; i > 0; i--) {
-        background += `url("../assets/images/UI/tokens/${imageName}.webp") 0 calc(100% - ${i * spacing}rem),\n`;
+    for (let i = value - 1; i >= 0; i--) {
+        layers.push(
+            `url("../assets/images/UI/tokens/${imageName}.webp") 0 calc(100% - ${i * spacing}rem) no-repeat`
+        );
     }
 
-    if (value > 0) {
-        background += `url("../assets/images/UI/tokens/${imageName}.webp") 0 calc(100% - 0rem)`;
-    }
-
-    return background;
+    return layers.join(",\n");
 }
 
 function renderProgressBar(
@@ -45,7 +45,6 @@ function renderProgressBar(
     value,
     imageName,
     spacing = CHIP_SPACING,
-    setWidth = true,
     vertical = false,
 ) {
     if (vertical) {
@@ -53,9 +52,6 @@ function renderProgressBar(
     } else {
         $progressBar.style.background = constructBackground(value, imageName, spacing);
     }
-
-    $progressBar.style.backgroundRepeat = "no-repeat";
-    if (setWidth) $progressBar.style.width = `${(value + 1) * spacing}rem`;
 }
 
 function formatNumber(number) {
