@@ -361,6 +361,11 @@ section h3, section h2, section h4 {
     gap: 0 1rem;
 }
 
+.reserved-cards > ul > p {
+    color: whitesmoke;
+    text-shadow: 0 0 0.3125rem black;
+}
+
 /* DECKS */
 .cards-in-deck {
     flex: 0 1 auto;
