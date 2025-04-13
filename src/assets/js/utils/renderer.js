@@ -16,4 +16,8 @@ function setImageData($image, standardPath, alt, prefix) {
     $img.alt = $img.title = alt;
 }
 
-export { insertImageInto };
+function renderUnsupportedError($container, feature) {
+    $container.innerHTML = `<p>${feature} is not supported on this server. Sorry for the inconvenience.</p>`;
+}
+
+export { insertImageInto, renderUnsupportedError };
