@@ -82,7 +82,6 @@ function renderPrestigePointsProgressBar(totalPrestigePoints) {
 
 function addHighestScoreIndicator(totalPrestigePoints, highestScore) {
     const $highestScoreIndicator = document.querySelector(".player-points picture");
-
     if (totalPrestigePoints >= highestScore) $highestScoreIndicator.classList.remove("hidden");
 }
 
