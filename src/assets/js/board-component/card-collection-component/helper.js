@@ -3,6 +3,7 @@
 
 function hashDigest(textToHash) {
     let textAsBinary = convertToBinary(textToHash);
+    console.log(textAsBinary)
     textAsBinary = appendOne(textAsBinary);
     textAsBinary = addPadding(textAsBinary);
     textAsBinary = addLength(textAsBinary, textToHash.length);
@@ -28,7 +29,14 @@ function hashDigest(textToHash) {
 }
 
 function convertToBinary(textToHash) {
-    return undefined;
+    // https://developer.mozilla.org/en-US/docs/Web/API/TextEncoder
+    const encoder = new TextEncoder();
+    // Text is encoded as UTF-8
+    const bytes = encoder.encode(textToHash);
+
+    return Array.from(bytes)
+        .map(byte => byte.toString(2).padStart(8, '0'))
+        .join(" ");
 }
 
 function appendOne(textAsBinary) {
@@ -110,6 +118,7 @@ function compressWords(words, h0, h1, h2, h3, h4, h5, h6, h7) {
         a = temp1 + temp2;
     }
 
+    // >>> 0 correctly handles negative integers, and it is much faster than modulo 2**32
     h0 = (h0 + a) >>> 0;
     h1 = (h1 + b) >>> 0;
     h2 = (h2 + c) >>> 0;
@@ -149,3 +158,5 @@ function getCompressionTemp2(s0, maj) {
 function combineDigestParts(h0, h1, h2, h3, h4, h5, h6, h7) {
     return undefined;
 }
+
+export { hashDigest };
