@@ -5,7 +5,8 @@ function hashDigest(textToHash) {
     let textAsBinary = convertToBinary(textToHash);
     textAsBinary = appendOne(textAsBinary);
     textAsBinary = addPadding(textAsBinary);
-    textAsBinary = addLength(textAsBinary, textToHash.length * 8);
+    textAsBinary = addLength(textAsBinary, textToHash);
+    console.log(textAsBinary)
 
     const blocks = convertToBlocks(textAsBinary);
 
@@ -50,8 +51,13 @@ function addPadding(textAsBinary) {
     return textAsBinary;
 }
 
-function addLength(textAsBinary, length) {
-    return undefined;
+function addLength(textAsBinary, originalText) {
+    const encoder = new TextEncoder();
+    // We have to encode this because not every character in a string is the same length in bytes
+    const bitLength = encoder.encode(originalText).length * 8;
+
+    const bitLengthBinary = bitLength.toString(2).padStart(64, '0');
+    return textAsBinary + bitLengthBinary;
 }
 
 function convertToBlocks() {
