@@ -21,9 +21,10 @@ function hashDigest(textToHash) {
     for (const block of blocks) {
         let words = convertToWords(block);
         words = modifyZeroWords(words);
-        console.log(words);
         [h0, h1, h2, h3, h4, h5, h6, h7] = compressWords(words, h0, h1, h2, h3, h4, h5, h6, h7);
     }
+
+    console.log([h0, h1, h2, h3, h4, h5, h6, h7])
 
     return combineDigestParts(h0, h1, h2, h3, h4, h5, h6, h7);
 }
@@ -83,26 +84,24 @@ function convertToWords(block) {
 }
 
 function getS0(word) {
-    const wordLength = 32;
     const shift7 = 7;
     const shift18 = 18;
     const shift3 = 3;
 
-    const rotateRight7 = (word >>> shift7) | (word << (wordLength - shift7));
-    const rotateRight18 = (word >>> shift18) | (word << (wordLength - shift18));
+    const rotateRight7 = rotateRight(word, shift7);
+    const rotateRight18 = rotateRight(word, shift18);
     const shiftRight3 = word >>> shift3;
 
     return rotateRight7 ^ rotateRight18 ^ shiftRight3;
 }
 
 function getS1(word) {
-    const wordLength = 32;
     const shift17 = 17;
     const shift19 = 19;
     const shift10 = 10;
 
-    const rotateRight17 = (word >>> shift17) | (word << (wordLength - shift17));
-    const rotateRight19 = (word >>> shift19) | (word << (wordLength - shift19));
+    const rotateRight17 = rotateRight(word, shift17);
+    const rotateRight19 = rotateRight(word, shift19);
     const shiftRight10 = word >>> shift10;
 
     return rotateRight17 ^ rotateRight19 ^ shiftRight10;
@@ -175,27 +174,38 @@ function compressWords(words, h0, h1, h2, h3, h4, h5, h6, h7) {
 }
 
 function getCompressionS1(e) {
-    return undefined;
+    const rotate6 = 6;
+    const rotate11 = 11;
+    const rotate25 = 25;
+    return rotateRight(e, rotate6) ^ rotateRight(e, rotate11) ^ rotateRight(e, rotate25);
 }
 
 function getCompressionCh(e, f, g) {
-    return undefined;
+    return (e & f) ^ (~e & g);
 }
 
-function getCompressionTemp1(h, s1, ch, number, word) {
-    return undefined;
+function getCompressionTemp1(h, s1, ch, k, w) {
+    return h + s1 + ch + k + w;
 }
 
 function getCompressionS0(a) {
-    return undefined;
+    const rotate2 = 2;
+    const rotate13 = 13;
+    const rotate22 = 22;
+    return rotateRight(a, rotate2) ^ rotateRight(a, rotate13) ^ rotateRight(a, rotate22);
 }
 
 function getCompressionMaj(a, b, c) {
-    return undefined;
+    return (a & b) ^ (a & c) ^ (b & c);
 }
 
 function getCompressionTemp2(s0, maj) {
-    return undefined;
+    return s0 + maj;
+}
+
+function rotateRight(x, n) {
+    const wordLength = 32;
+    return (x >>> n) | (x << (wordLength - n));
 }
 
 function combineDigestParts(h0, h1, h2, h3, h4, h5, h6, h7) {
