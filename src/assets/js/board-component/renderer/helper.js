@@ -103,6 +103,7 @@ function renderCardCost(card, $cardCost) {
     for (const [type, cost] of Object.entries(card["cost"])) {
         const $costItem = copyNode($costAmountTemplate);
         $costItem.querySelector(".amount").textContent = cost;
+        $costItem.dataset.tokenType = type;
 
         insertImageInto($costItem, `UI/tokens/${TOKEN_MAPPER[type]}_chip`, true, `${TOKEN_MAPPER[type]} chip`);
 

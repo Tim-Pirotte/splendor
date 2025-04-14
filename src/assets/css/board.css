@@ -317,8 +317,8 @@ section h3, section h2, section h4 {
 
 .card > p {
     position: absolute;
-    left: 15.5%;
-    top: 4%;
+    left: 14.5%;
+    top: 3.5%;
 }
 
 .card li picture {
@@ -336,8 +336,13 @@ section h3, section h2, section h4 {
 
 .card li p {
     position: absolute;
+    font-size: 0.7rem;
     left: 35%;
-    top: 35%;
+    top: 37%;
+}
+
+.card li[data-token-type="Onyx"] p {
+    color: whitesmoke;
 }
 
 .card li > * {
@@ -394,6 +399,10 @@ section h3, section h2, section h4 {
     align-items: baseline;
     gap: 0 0.5rem;
     grid-area: player-points;
+}
+
+.player-points img {
+    width: 1.25rem;
 }
 
 .enough-points-to-win, .highlighted-number {
