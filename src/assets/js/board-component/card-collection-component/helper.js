@@ -1,4 +1,4 @@
-/* Since javascript only has a built-in async version of sha256, I had to make it myself. */
+/* Since javascript only has a built-in async version of sha256, I added a synchronous version. */
 /* The following code is based on this resource: https://github.com/liangtengyu/wx_gzh_article/blob/master/How%20SHA-2%20Works%20Step-By-Step%20(SHA-256).md */
 
 function hashDigest(textToHash) {
@@ -7,11 +7,24 @@ function hashDigest(textToHash) {
     textAsBinary = addPadding(textAsBinary);
     textAsBinary = addLength(textAsBinary, textToHash.length);
 
-    const words = convertToWords(textAsBinary);
+    const blocks = convertToBlocks(textAsBinary);
 
-    modifyZeroWords(words);
+    let h0 = 0x6a09e667;
+    let h1 = 0xbb67ae85;
+    let h2 = 0x3c6ef372;
+    let h3 = 0xa54ff53a;
+    let h4 = 0x510e527f;
+    let h5 = 0x9b05688c;
+    let h6 = 0x1f83d9ab;
+    let h7 = 0x5be0cd19;
 
-    return compressWords(words);
+    for (const block of blocks) {
+        const words = convertToWords(block);
+        modifyZeroWords(words);
+        [h0, h1, h2, h3, h4, h5, h6, h7] = compressWords(words, h0, h1, h2, h3, h4, h5, h6, h7);
+    }
+
+    return combineDigestParts(h0, h1, h2, h3, h4, h5, h6, h7);
 }
 
 function convertToBinary(textToHash) {
@@ -27,6 +40,10 @@ function addPadding(textAsBinary) {
 }
 
 function addLength(textAsBinary, length) {
+    return undefined;
+}
+
+function convertToBlocks() {
     return undefined;
 }
 
@@ -55,7 +72,7 @@ function modifyZeroWord(word, s0, word2, s1) {
     return undefined;
 }
 
-function compressWords(words) {
+function compressWords(words, h0, h1, h2, h3, h4, h5, h6, h7) {
     const k = [
         0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
         0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
@@ -66,15 +83,6 @@ function compressWords(words) {
         0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3,
         0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
     ];
-
-    let h0 = 0x6a09e667;
-    let h1 = 0xbb67ae85;
-    let h2 = 0x3c6ef372;
-    let h3 = 0xa54ff53a;
-    let h4 = 0x510e527f;
-    let h5 = 0x9b05688c;
-    let h6 = 0x1f83d9ab;
-    let h7 = 0x5be0cd19;
 
     let a = h0;
     let b = h1;
@@ -102,16 +110,16 @@ function compressWords(words) {
         a = temp1 + temp2;
     }
 
-    h0 += a;
-    h1 += b;
-    h2 += c;
-    h3 += d;
-    h4 += e;
-    h5 += f;
-    h6 += g;
-    h7 += h;
+    h0 = (h0 + a) >>> 0;
+    h1 = (h1 + b) >>> 0;
+    h2 = (h2 + c) >>> 0;
+    h3 = (h3 + d) >>> 0;
+    h4 = (h4 + e) >>> 0;
+    h5 = (h5 + f) >>> 0;
+    h6 = (h6 + g) >>> 0;
+    h7 = (h7 + h) >>> 0;
 
-    return combineDigestParts(h0, h1, h2, h3, h4, h5, h6, h7);
+    return [h0, h1, h2, h3, h4, h5, h6, h7];
 }
 
 function getCompressionS1(e) {
