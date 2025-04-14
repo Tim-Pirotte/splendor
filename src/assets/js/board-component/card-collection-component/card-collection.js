@@ -1,16 +1,21 @@
 import {loadFromStorage} from "../../data-connector/local-storage-abstractor.js";
 
-function trackCardEncounter(bonusColor, illustrationName, illustrationColor) {
+function trackCardEncounter(bonusColor, illustrationName, variant, gameId, illustrationColor) {
     const seenTree = loadFromStorage("cardCollection") || {};
 
     if (!seenTree[bonusColor]) seenTree[bonusColor] = {};
-    if (!seenTree[bonusColor][illustrationName]) seenTree[bonusColor][illustrationName] = [];
+    if (!seenTree[bonusColor][illustrationName]) seenTree[bonusColor][illustrationName] = {};
 
-    const list = seenTree[bonusColor][illustrationName];
-    if (!list.includes(illustrationColor)) {
-        list.push(illustrationColor);
-        localStorage.setItem("cardCollection", JSON.stringify(seenTree));
+    const branch = seenTree[bonusColor][illustrationName];
+
+    if (variant === "MISPRINT") {
+        if (!branch[variant]) branch[variant] = {};
+        branch[variant][illustrationColor] = gameId;
+    } else {
+        branch[variant] = gameId;
     }
+
+    localStorage.setItem("cardCollection", JSON.stringify(seenTree));
 }
 
 function hashToNumber(hashString, rangeMax = 1000) {
