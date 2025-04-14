@@ -3,6 +3,8 @@ import { MAX_PRESTIGE_POINTS } from "../../config.js";
 import { copyNode } from "../../utils/data-handler.js";
 import { validCardBuy } from "../state-machine/valid-action-checker.js";
 import { insertImageInto } from "../../utils/renderer.js";
+import {loadFromStorage} from "../../data-connector/local-storage-abstractor.js";
+import {hashDigest} from "../card-collection-component/helper.js";
 
 function addNodesToEmptiedContainer($container, list, mapFunction) {
     safeEmptyContainer($container);
@@ -108,7 +110,15 @@ function renderCardCost(card, $cardCost) {
 
 function renderCardGraphics($card, card) {
     insertImageInto($card, `cards/empty/${TOKEN_MAPPER[card["bonus"]]}_empty_card`, false, `${TOKEN_MAPPER[card["bonus"]]} card`);
-    insertImageInto($card, "cards/illustrations/camel", false, "camel");
+
+    const illustration = getIllustration(card["name"]);
+    insertImageInto($card, `cards/illustrations/${illustration}`, false, illustration.replace("_", " "));
+}
+
+function getIllustration(cardName) {
+    const seed = hashDigest(`${loadFromStorage("gameId")}-${cardName}`);
+    console.log(seed)
+    return undefined;
 }
 
 function highlightPointsWinner(prestigePoints, $playerPoints) {
