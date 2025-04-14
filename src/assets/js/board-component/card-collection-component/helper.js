@@ -8,7 +8,6 @@ function hashDigest(textToHash) {
     textAsBinary = addLength(textAsBinary, textToHash);
 
     const blocks = convertToBlocks(textAsBinary);
-    console.log(blocks)
 
     let h0 = 0x6a09e667;
     let h1 = 0xbb67ae85;
@@ -71,8 +70,15 @@ function convertToBlocks(textAsBinary) {
     return blocks;
 }
 
-function convertToWords(textAsBinary) {
-    return undefined;
+function convertToWords(block) {
+    const wordLength = 32;
+    const words = [];
+
+    for (let i = 0; i < block.length; i += wordLength) {
+        words.push(parseInt(block.slice(i, i + wordLength), 2));
+    }
+
+    return words;
 }
 
 function getS0(word) {
