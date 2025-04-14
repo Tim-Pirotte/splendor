@@ -142,20 +142,20 @@ function compressWords(words, h0, h1, h2, h3, h4, h5, h6, h7) {
     let h = h7;
 
     for (let i = 0; i < 64; i++) {
-        const s1 = getCompressionS1(e);
-        const ch = getCompressionCh(e, f, g);
-        const temp1 = getCompressionTemp1(h, s1, ch, k[i], words[i]);
-        const s0 = getCompressionS0(a);
-        const maj = getCompressionMaj(a, b, c);
-        const temp2 = getCompressionTemp2(s0, maj);
+        const s1 = getCompressionS1(e) >>> 0;
+        const ch = getCompressionCh(e, f, g) >>> 0;
+        const temp1 = getCompressionTemp1(h, s1, ch, k[i], words[i]) >>> 0;
+        const s0 = getCompressionS0(a) >>> 0;
+        const maj = getCompressionMaj(a, b, c) >>> 0;
+        const temp2 = getCompressionTemp2(s0, maj) >>> 0;
 
         h = g;
         g = f;
-        e = d + temp1;
+        e = (d + temp1) >>> 0;
         d = c;
         c = b;
         b = a;
-        a = temp1 + temp2;
+        a = (temp1 + temp2) >>> 0;
     }
 
     // >>> 0 correctly handles negative integers, and it is much faster than modulo 2**32
