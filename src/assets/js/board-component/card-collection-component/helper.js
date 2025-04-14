@@ -3,10 +3,10 @@
 
 function hashDigest(textToHash) {
     let textAsBinary = convertToBinary(textToHash);
-    console.log(textAsBinary)
     textAsBinary = appendOne(textAsBinary);
+    console.log(textAsBinary)
     textAsBinary = addPadding(textAsBinary);
-    textAsBinary = addLength(textAsBinary, textToHash.length);
+    textAsBinary = addLength(textAsBinary, textToHash.length * 32);
 
     const blocks = convertToBlocks(textAsBinary);
 
@@ -40,7 +40,7 @@ function convertToBinary(textToHash) {
 }
 
 function appendOne(textAsBinary) {
-    return undefined;
+    return textAsBinary + "1";
 }
 
 function addPadding(textAsBinary) {
