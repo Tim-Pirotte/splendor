@@ -24,8 +24,6 @@ function hashDigest(textToHash) {
         [h0, h1, h2, h3, h4, h5, h6, h7] = compressWords(words, h0, h1, h2, h3, h4, h5, h6, h7);
     }
 
-    console.log([h0, h1, h2, h3, h4, h5, h6, h7])
-
     return combineDigestParts(h0, h1, h2, h3, h4, h5, h6, h7);
 }
 
@@ -205,11 +203,16 @@ function getCompressionTemp2(s0, maj) {
 
 function rotateRight(x, n) {
     const wordLength = 32;
-    return (x >>> n) | (x << (wordLength - n));
+    return (x >>> n) | (x << (wordLength - n)) >>> 0;
 }
 
 function combineDigestParts(h0, h1, h2, h3, h4, h5, h6, h7) {
-    return undefined;
+    const base16 = 16;
+    const hexLength = 8;
+
+    return [h0, h1, h2, h3, h4, h5, h6, h7]
+        .map(part => part.toString(base16).padStart(hexLength, '0'))
+        .join('');
 }
 
 export { hashDigest };

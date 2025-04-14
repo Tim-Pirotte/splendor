@@ -10,7 +10,7 @@ import * as API from "../api.js";
 import {hashDigest} from "./card-collection-component/helper.js";
 
 function init() {
-    hashDigest("Hello, world!")
+    console.log(hashDigest("Hello, world!"))
     updateGameData();
     initGameStatusInterface();
     initializeActions();
