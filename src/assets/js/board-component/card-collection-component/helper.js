@@ -6,9 +6,9 @@ function hashDigest(textToHash) {
     textAsBinary = appendOne(textAsBinary);
     textAsBinary = addPadding(textAsBinary);
     textAsBinary = addLength(textAsBinary, textToHash);
-    console.log(textAsBinary)
 
     const blocks = convertToBlocks(textAsBinary);
+    console.log(blocks)
 
     let h0 = 0x6a09e667;
     let h1 = 0xbb67ae85;
@@ -60,8 +60,15 @@ function addLength(textAsBinary, originalText) {
     return textAsBinary + bitLengthBinary;
 }
 
-function convertToBlocks() {
-    return undefined;
+function convertToBlocks(textAsBinary) {
+    const blockSize = 512;
+    const blocks = [];
+
+    for (let i = 0; i < textAsBinary.length; i += blockSize) {
+        blocks.push(textAsBinary.slice(i, i + blockSize));
+    }
+
+    return blocks;
 }
 
 function convertToWords(textAsBinary) {
