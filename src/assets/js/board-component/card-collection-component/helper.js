@@ -19,8 +19,9 @@ function hashDigest(textToHash) {
     let h7 = 0x5be0cd19;
 
     for (const block of blocks) {
-        const words = convertToWords(block);
-        modifyZeroWords(words);
+        let words = convertToWords(block);
+        words = modifyZeroWords(words);
+        console.log(words);
         [h0, h1, h2, h3, h4, h5, h6, h7] = compressWords(words, h0, h1, h2, h3, h4, h5, h6, h7);
     }
 
@@ -82,11 +83,29 @@ function convertToWords(block) {
 }
 
 function getS0(word) {
-    return undefined;
+    const wordLength = 32;
+    const shift7 = 7;
+    const shift18 = 18;
+    const shift3 = 3;
+
+    const rotateRight7 = (word >>> shift7) | (word << (wordLength - shift7));
+    const rotateRight18 = (word >>> shift18) | (word << (wordLength - shift18));
+    const shiftRight3 = word >>> shift3;
+
+    return rotateRight7 ^ rotateRight18 ^ shiftRight3;
 }
 
 function getS1(word) {
-    return undefined;
+    const wordLength = 32;
+    const shift17 = 17;
+    const shift19 = 19;
+    const shift10 = 10;
+
+    const rotateRight17 = (word >>> shift17) | (word << (wordLength - shift17));
+    const rotateRight19 = (word >>> shift19) | (word << (wordLength - shift19));
+    const shiftRight10 = word >>> shift10;
+
+    return rotateRight17 ^ rotateRight19 ^ shiftRight10;
 }
 
 function modifyZeroWords(words) {
@@ -96,10 +115,12 @@ function modifyZeroWords(words) {
 
         words[i] = modifyZeroWord(words[i - 16], s0, words[i - 7], s1);
     }
+
+    return words;
 }
 
-function modifyZeroWord(word, s0, word2, s1) {
-    return undefined;
+function modifyZeroWord(word16, s0, word7, s1) {
+    return (word16 + s0 + word7 + s1) >>> 0;
 }
 
 function compressWords(words, h0, h1, h2, h3, h4, h5, h6, h7) {
