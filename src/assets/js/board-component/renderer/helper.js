@@ -5,7 +5,7 @@ import { validCardBuy } from "../state-machine/valid-action-checker.js";
 import { insertImageInto } from "../../utils/renderer.js";
 import {loadFromStorage} from "../../data-connector/local-storage-abstractor.js";
 import {hashDigest} from "../card-collection-component/helper.js";
-import {hashToNumber} from "../card-collection-component/card-collection.js";
+import {hashToNumber, trackCardEncounter} from "../card-collection-component/card-collection.js";
 import {CHANCE_CATEGORIES, CHANCES, ILLUSTRATIONS} from "../card-collection-component/data.js";
 
 function addNodesToEmptiedContainer($container, list, mapFunction) {
@@ -118,18 +118,27 @@ function renderCardGraphics($card, card) {
 }
 
 function getIllustration(cardName, cardBonus) {
-    const illustrationSeed = hashToNumber(hashDigest(`${loadFromStorage("gameId")}-${cardName}`), ILLUSTRATIONS.length);
+    const gameId = loadFromStorage("gameId");
+    const illustrationSeed = hashToNumber(hashDigest(`${gameId}-${cardName}`), ILLUSTRATIONS.length);
+    const illustration = ILLUSTRATIONS[illustrationSeed];
 
-    const illustrationModifierSeed = hashToNumber(hashDigest(`${loadFromStorage("gameId")}-${cardName}-modifier`));
+    const illustrationModifierSeed = hashToNumber(hashDigest(`${gameId}-${cardName}-modifier`));
 
     const chanceCategory = getChanceCategory(illustrationModifierSeed);
 
     if (chanceCategory === "REGULAR") {
-        return `${TOKEN_MAPPER[cardBonus]}_${ILLUSTRATIONS[illustrationSeed]}`;
-    } else if(chanceCategory === "MISPRINT") {
-        const misprintSeed = hashToNumber(hashDigest(`${loadFromStorage("gameId")}-${cardName}-misprint`), Object.keys(TOKEN_MAPPER).length);
+        trackCardEncounter(cardBonus, illustration, cardBonus);
 
-        return `${Object.values(TOKEN_MAPPER)[misprintSeed]}_${ILLUSTRATIONS[illustrationSeed]}`;
+        return `${TOKEN_MAPPER[cardBonus]}_${illustration}`;
+
+    } else if(chanceCategory === "MISPRINT") {
+        const misprintSeed = hashToNumber(hashDigest(`${gameId}-${cardName}-misprint`), Object.keys(TOKEN_MAPPER).length);
+
+        const illustrationColor = Object.values(TOKEN_MAPPER)[misprintSeed];
+
+        trackCardEncounter(cardBonus, illustration, illustrationColor);
+
+        return `${illustrationColor}_${illustration}`;
     }
 }
 

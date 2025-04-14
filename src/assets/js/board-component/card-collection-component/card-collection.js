@@ -9,7 +9,7 @@ function trackCardEncounter(bonusColor, illustrationName, illustrationColor) {
     const list = seenTree[bonusColor][illustrationName];
     if (!list.includes(illustrationColor)) {
         list.push(illustrationColor);
-        localStorage.setItem("seenTree", JSON.stringify(seenTree));
+        localStorage.setItem("cardCollection", JSON.stringify(seenTree));
     }
 }
 
@@ -29,4 +29,4 @@ function hashToNumber(hashString, rangeMax = 1000) {
     return number % rangeMax;
 }
 
-export { hashToNumber };
+export { hashToNumber, trackCardEncounter };
