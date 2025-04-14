@@ -1,0 +1,6 @@
+const ILLUSTRATIONS = ["camel", "elephant", "market"];
+
+const CHANCES = [980, 10, 10];
+const CHANCE_CATEGORIES = ["REGULAR", "MISPRINT", "IMPLEMENT_LATER"];
+
+export { ILLUSTRATIONS, CHANCES, CHANCE_CATEGORIES };

@@ -24,5 +24,9 @@ function hashToNumber(hashString, rangeMax = 1000) {
         number = (number << 8) + byteArray[i];
     }
 
+    number = number >>> 0;
+
     return number % rangeMax;
 }
+
+export { hashToNumber };
