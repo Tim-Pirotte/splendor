@@ -353,10 +353,10 @@ section h3, section h2, section h4 {
 }
 
 .card > picture:last-of-type img {
-    width: 60%;
+    width: 100%;
     position: absolute;
-    left: 18%;
-    bottom: 34%;
+    left: 0;
+    bottom: 33%;
 }
 
 /* RESERVED */
