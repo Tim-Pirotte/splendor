@@ -1,3 +1,10 @@
+:root {
+    --hover-effect: brightness(80%);
+    --hover-transition-duration: filter 0.3s ease-in-out;
+    --buyable-card-box-shadow: 0 0 0.4rem 0.3rem;
+    --buyable-card-brightness: brightness(105%);
+}
+
 /* GENERAL LAY-OUT */
 
 /* Sidebar and main content alignment */
@@ -5,7 +12,6 @@ body {
     display: grid;
     grid-template-columns: 20% 80%;
     height: 100vh;
-    perspective: 100vh;
 }
 
 /* SWITCH TOKEN BUTTONS */
@@ -31,7 +37,7 @@ body > section {
     grid-template-rows: 10% 90%;
     perspective: 100vh;
     perspective-origin: 60% top;
-    padding-left: 2rem;
+    padding-left: 4rem;
     overflow: hidden;
     background-image: url("../images/board_background_perspective.webp");
     background-size: 120rem 67.5rem;
@@ -51,12 +57,11 @@ main {
     display: flex;
     flex-direction: column;
     gap: 0.4rem 0;
-    margin-top: 1.5rem;
 }
 
 .board-tokens {
     grid-area: board-tokens;
-    color: whitesmoke;
+    color: var(--light-text-color);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -69,16 +74,16 @@ main {
 .board-tokens li {
     height: 30%;
     width: 4rem;
-    transition: filter 0.3s ease-in-out;
+    transition: var(--hover-transition-duration);
 }
 
 .board-tokens li:hover {
-    filter: brightness(80%);
+    filter: var(--hover-effect);
 }
 
 .board-tokens p {
     text-align: center;
-    text-shadow: 0 0 0.3125rem black;
+    text-shadow: var(--primary-text-shadow);
 }
 
 .pulsing-text {
@@ -103,17 +108,12 @@ main {
     display: flex;
     flex-direction: column;
     gap: 0.5rem 0;
-}
-
-.nobles > li {
-    transform: rotateX(45deg);
-    /* This is to remove the empty space that the rotate creates */
-    margin-block: -0.6rem;
+    margin-top: 1.5rem;
 }
 
 .nobles img {
     width: 4.5rem;
-    transition: filter 0.3s ease-in-out;
+    transition: var(--hover-transition-duration);
     /* This is needed to prevent a redraw on a new texture which causes sub-pixel shifting due to different anti-aliasing.
        Usage of will-change outside of optimization is frowned upon so if there is another way to fix this please change this.
        https://developer.mozilla.org/en-US/docs/Web/CSS/will-change */
@@ -121,12 +121,12 @@ main {
 }
 
 .nobles img:hover {
-    filter: brightness(80%);
+    filter: var(--hover-effect);
 }
 
 .player-tokens {
     grid-area: player-tokens;
-    color: whitesmoke;
+    color: var(--light-text-color);
 }
 
 .reserved-cards {
@@ -184,7 +184,7 @@ aside {
 
 .player-card .reserved p {
     position: absolute;
-    color: whitesmoke;
+    color: var(--light-text-color);
     top: 10%;
     left: 25%;
 }
@@ -195,7 +195,7 @@ aside {
 }
 
 .player-card .reserved .amount {
-    text-shadow: 0 0 0.3125rem black;
+    text-shadow: var(--primary-text-shadow);
 }
 
 .discard-container > * {
@@ -247,8 +247,8 @@ aside {
 }
 
 .top-bar h1 {
-    color: whitesmoke;
-    text-shadow: 0 0 0.3125rem black;
+    color: var(--light-text-color);
+    text-shadow: var(--primary-text-shadow);
     margin: 0 auto;
 }
 
@@ -264,8 +264,8 @@ aside {
 }
 
 section h3, section h2, section h4 {
-    color: whitesmoke;
-    text-shadow: 0 0 0.3125rem black;
+    color: var(--light-text-color);
+    text-shadow: var(--primary-text-shadow);
 }
 
 .top-bar > div {
@@ -294,13 +294,10 @@ section h3, section h2, section h4 {
 
 /* CARD */
 .card {
-    flex: 0 1 7.5rem;
+    flex: 0 1 6rem;
     aspect-ratio: 70 / 100;
     position: relative;
     transition: 0.3s;
-    transform: rotateX(45deg);
-    /* This is to remove the empty space that the rotate creates */
-    margin-block: -1.5rem;
     border-radius: 0.5rem;
     /* This is needed to prevent a redraw on a new texture which causes sub-pixel shifting due to different anti-aliasing.
        Usage of will-change outside of optimization is frowned upon so if there is another way to fix this please change this.
@@ -309,11 +306,11 @@ section h3, section h2, section h4 {
 }
 
 .card:hover {
-    filter: brightness(80%);
+    filter: var(--hover-effect);
 }
 
 .card .points {
-    color: whitesmoke;
+    color: var(--light-text-color);
     font-size: 0.75rem;
 }
 
@@ -336,11 +333,6 @@ section h3, section h2, section h4 {
     width: 100%;
 }
 
-.selected-token img {
-    outline: 0.275rem solid hotpink;
-    border-radius: 0.75rem;
-}
-
 .card li img {
     width: 100%;
 }
@@ -354,7 +346,7 @@ section h3, section h2, section h4 {
 
 /* Makes text on the black chip readable */
 .card li[data-token-type="Onyx"] p {
-    color: whitesmoke;
+    color: var(--light-text-color);
 }
 
 .card li > * {
@@ -383,8 +375,8 @@ section h3, section h2, section h4 {
 }
 
 .reserved-cards > ul > p {
-    color: whitesmoke;
-    text-shadow: 0 0 0.3125rem black;
+    color: var(--light-text-color);
+    text-shadow: var(--primary-text-shadow);
 }
 
 /* DECKS */
@@ -397,15 +389,12 @@ section h3, section h2, section h4 {
 
 /* DECK CARDS */
 .decks > li > picture {
-    flex: 0 1 7.5rem;
-    transform: rotateX(45deg);
-    /* This is to remove the empty space that the rotate creates */
-    margin-block: -1.5rem;
+    flex: 0 1 6rem;
     transition: 0.3s;
 }
 
 .decks > li > picture:hover {
-    filter: brightness(80%);
+    filter: var(--hover-effect);
 }
 
 /* Player points */
@@ -425,32 +414,32 @@ section h3, section h2, section h4 {
 }
 
 .green-buyable-card {
-    box-shadow: 0 0 0.4rem 0.3rem #97bd56d6;
-    filter: brightness(105%);
+    box-shadow: var(--buyable-card-box-shadow) #97bd56d6;
+    filter: var(--buyable-card-brightness);
 }
 
 .white-buyable-card {
-    box-shadow: 0 0 0.4rem 0.3rem #e5e3e3d6;
-    filter: brightness(105%);
+    box-shadow: var(--buyable-card-box-shadow) #e5e3e3d6;
+    filter: var(--buyable-card-brightness);
 }
 
 .blue-buyable-card {
-    box-shadow: 0 0 0.4rem 0.3rem #518da3d6;
-    filter: brightness(105%);
+    box-shadow: var(--buyable-card-box-shadow) #518da3d6;
+    filter: var(--buyable-card-brightness);
 }
 
 .red-buyable-card {
-    box-shadow: 0 0 0.4rem 0.3rem #d88e4fd6;
-    filter: brightness(105%);
+    box-shadow: var(--buyable-card-box-shadow) #d88e4fd6;
+    filter: var(--buyable-card-brightness);
 }
 
 .black-buyable-card {
-    box-shadow: 0 0 0.4rem 0.3rem #9c7444d6;
-    filter: brightness(105%);
+    box-shadow: var(--buyable-card-box-shadow) #9c7444d6;
+    filter: var(--buyable-card-brightness);
 }
 
 .selected-card {
-    transform: rotateX(15deg) scale(1.15);
+    transform: scale(1.3);
     z-index: 10;
 }
 
@@ -570,9 +559,9 @@ section h3, section h2, section h4 {
     background-color: transparent;
     border: none;
     background-image: url("../images/UI/action_button.webp"), url("../images/fallback/UI/action_button.png");
-    color: whitesmoke;
+    color: var(--light-text-color);
     font-size: 0.7rem;
-    transition: filter 0.3s ease-in-out;
+    transition: var(--hover-transition-duration);
 }
 
 .button-container button:hover {
