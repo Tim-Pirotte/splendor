@@ -242,7 +242,8 @@ function renderSwitchPayment($tokenSwitchContainer, currentPayment, defaultPayme
 function renderAmountOfTokenSelected($tokenContainer, paymentOfType) {
     const $amountToTake = $tokenContainer.querySelector(".amount span");
     $amountToTake.textContent = ` - ${paymentOfType}`;
-    $amountToTake.classList.remove("hidden");
+    $amountToTake.classList.remove("none");
+    $tokenContainer.querySelector(".amount").classList.add("pulsing-text");
 }
 
 function renderUpdatedPlayerTokens(bonus) {
@@ -265,7 +266,8 @@ function renderUpdatedPlayerScore(extraScore) {
 function hideSwitchPaymentButtons() {
     document.querySelectorAll(".switch-token-container").forEach(($container) => {
         $container.querySelector(".switch-token").classList.add("hidden");
-        $container.closest("li").querySelector(".amount span").classList.add("hidden");
+        $container.closest("li").querySelector(".amount span").classList.add("none");
+        $container.closest("li").querySelector(".amount").classList.remove("pulsing-text");
     });
 }
 
