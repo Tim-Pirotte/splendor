@@ -39,7 +39,7 @@ body > section {
 
 main {
     display: grid;
-    grid-template-columns: 55% 20% 15% 10%;
+    grid-template-columns: 57% 20% 13% 10%;
     grid-template-rows: 72% 5% 23%;
     grid-template-areas:    "decks board-tokens nobles timer"
                             "player-points player-tokens action-button action-button"
@@ -328,7 +328,7 @@ section h3, section h2, section h4 {
 
 .card > p {
     position: absolute;
-    left: 14.5%;
+    left: 15.5%;
     top: 3.5%;
 }
 
@@ -348,8 +348,8 @@ section h3, section h2, section h4 {
 .card li p {
     position: absolute;
     font-size: 0.7rem;
-    left: 35%;
-    top: 37%;
+    left: 39%;
+    top: 39%;
 }
 
 /* Makes text on the black chip readable */
@@ -450,7 +450,7 @@ section h3, section h2, section h4 {
 }
 
 .selected-card {
-    transform: scale(1.2);
+    transform: rotateX(15deg) scale(1.15);
     z-index: 10;
 }
 
