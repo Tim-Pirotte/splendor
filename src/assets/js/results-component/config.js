@@ -1,4 +1,3 @@
-//TODO make and add correct images
 const WINNER_ANIMATION_IMAGES = [
     "./../assets/images/fallback/UI/tokens/black_chip.png",
     "./../assets/images/fallback/UI/tokens/blue_chip.png",

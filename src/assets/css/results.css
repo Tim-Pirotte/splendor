@@ -65,14 +65,12 @@ footer .sound-button {
     to {transform: translateY(110vh)}
 }
 
-div.animated {
+div.raining-animation {
     width: 2rem;
     height: 2rem;
     position: absolute;
     top: -2.5rem;
-    animation-name: rainingImage;
-    animation-duration: 3s;
-    animation-timing-function: ease-in;
+    animation: rainingImage 3s ease-in;
     z-index: -1;
     background-repeat: no-repeat;
     background-size: contain;
