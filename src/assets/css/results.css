@@ -76,4 +76,5 @@ div.animated {
     z-index: -1;
     background-repeat: no-repeat;
     background-size: contain;
+    transform: translateX(-50%);
 }

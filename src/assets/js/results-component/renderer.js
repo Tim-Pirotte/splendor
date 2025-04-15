@@ -50,7 +50,6 @@ function renderResultAnimation(isWinner) {
 }
 
 function renderOneAnimation(imageArray) {
-    //TODO correctly adjust the formula (now it can overflow on the right but not on the left)
     const $animationDiv = document.createElement("div");
     const randomImage = imageArray[Math.floor(Math.random() * imageArray.length)];
 
