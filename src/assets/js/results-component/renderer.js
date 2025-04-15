@@ -1,7 +1,12 @@
 import { MAX_PRESTIGE_POINTS } from "../config.js";
 import { getSortedResults } from "./helper.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
-import { LOSER_ANIMATION_IMAGES, WINNER_ANIMATION_IMAGES } from "./config.js";
+import {
+    INTERVAL_BETWEEN_ANIMATING_IMAGES,
+    LOSER_ANIMATION_IMAGES,
+    TIMEOUT_BEFORE_ANIMATED_IMAGE_DELETION,
+    WINNER_ANIMATION_IMAGES,
+} from "./config.js";
 
 function renderResultMessage(isWinner) {
     const $status = document.querySelector("h1");
@@ -14,7 +19,7 @@ function renderResults() {
             const isPlayer = player.name === loadFromStorage("playerName");
 
             if (isPlayer) {
-                renderResultMessage(isPlayer && player.isWinner);
+                renderResultMessage(player.isWinner);
                 renderResultAnimation(player.isWinner);
             }
         }
@@ -41,7 +46,7 @@ function renderResultTable(data) {
 
 function renderResultAnimation(isWinner) {
     const imageArray = isWinner ? WINNER_ANIMATION_IMAGES : LOSER_ANIMATION_IMAGES;
-    setInterval(renderOneAnimation, 50, imageArray);
+    setInterval(renderOneAnimation, INTERVAL_BETWEEN_ANIMATING_IMAGES, imageArray);
 }
 
 function renderOneAnimation(imageArray) {
@@ -55,8 +60,7 @@ function renderOneAnimation(imageArray) {
 
     document.querySelector("body").appendChild($animationDiv);
 
-    // The animation lasts 3 second!!!
-    setTimeout(() => $animationDiv.remove(), 3100);
+    setTimeout(() => $animationDiv.remove(), TIMEOUT_BEFORE_ANIMATED_IMAGE_DELETION);
 }
 
 export { renderResults };
