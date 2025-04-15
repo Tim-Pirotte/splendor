@@ -73,7 +73,11 @@ function addSwitchButton($token, token) {
     const $switchButtonContainerTemplate = document.querySelector("#switch-tokens-container-template");
     const $container = copyNode($switchButtonContainerTemplate);
 
-    if (token === "Gold") $container.querySelector(".switch-token").textContent = "Reset";
+    if (token === "Gold") {
+        const $button = $container.querySelector(".switch-token");
+        safeEmptyContainer($button);
+        insertImageInto($button, "UI/reset", false, "Reset payment");
+    }
 
     $token.appendChild($container);
 }

@@ -554,10 +554,13 @@
 
     <template id="switch-tokens-container-template">
         <div class="switch-token-container">
-            <button class="switch-token hidden">Switch one to gold</button>
-            <p class="hidden">Selected: <span></span></p>
+            <button class="switch-token hidden">
+                <picture>
+                    <source srcset="../assets/images/UI/switch_to_gold.webp" type="image/webp">
+                    <img src="../assets/images/fallback/UI/switch_to_gold.png" alt="Switch to gold" loading="lazy">
+                </picture>
+            </button>
         </div>
-
     </template>
 
     <template id="image-template">
