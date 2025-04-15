@@ -1,7 +1,7 @@
 import { MAX_PRESTIGE_POINTS } from "../config.js";
 import { getSortedResults } from "./helper.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
-import {LOSER_ANIMATION_IMAGES, WINNER_ANIMATION_IMAGES} from "./config.js";
+import { LOSER_ANIMATION_IMAGES, WINNER_ANIMATION_IMAGES } from "./config.js";
 
 function renderResultMessage(isWinner) {
     const $status = document.querySelector("h1");
@@ -14,7 +14,7 @@ function renderResults() {
             const isPlayer = player.name === loadFromStorage("playerName");
 
             if (isPlayer) {
-                renderResultMessage(isPlayer && player.isWinner)
+                renderResultMessage(isPlayer && player.isWinner);
                 renderResultAnimation(player.isWinner);
             }
         }

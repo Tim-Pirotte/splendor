@@ -1,8 +1,8 @@
-import {GEMS} from "../data.js";
-import {MAX_TOKENS_ALLOWED, PRESTIGE_POINTS_NEEDED_TO_WIN, TOKEN_MAPPER} from "../config.js";
-import {loadFromStorage} from "../../data-connector/local-storage-abstractor.js";
-import {getTokenAmount, getTotalAmountDiscarded, getTotalTokenAmount} from "../tokens/discard.js";
-import {validTokenDiscard} from "../state-machine/valid-action-checker.js";
+import { GEMS } from "../data.js";
+import { MAX_TOKENS_ALLOWED, PRESTIGE_POINTS_NEEDED_TO_WIN, TOKEN_MAPPER } from "../config.js";
+import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
+import { getTokenAmount, getTotalAmountDiscarded, getTotalTokenAmount } from "../tokens/discard.js";
+import { validTokenDiscard } from "../state-machine/valid-action-checker.js";
 import {
     addNodesToEmptiedContainer,
     addSwitchButton,
@@ -19,12 +19,12 @@ import {
     removePaidTokens,
     updateCurrentPlayerBonuses,
 } from "../buy-reserve/buy-handler.js";
-import {getHighestScore, getPlayerByName, sumObjectValues} from "../../utils/game-object-handler.js";
-import {getClientTokens, getClientTotalPrestigePoints} from "../game-data-handler.js";
-import {copyNode} from "../../utils/data-handler.js";
-import {isCurrentlyPlaying} from "../game-status-interface.js";
-import {insertImageInto} from "../../utils/renderer.js";
-import {checkCompatibility} from "../../server-version-component/server-version.js";
+import { getHighestScore, getPlayerByName, sumObjectValues } from "../../utils/game-object-handler.js";
+import { getClientTokens, getClientTotalPrestigePoints } from "../game-data-handler.js";
+import { copyNode } from "../../utils/data-handler.js";
+import { isCurrentlyPlaying } from "../game-status-interface.js";
+import { insertImageInto } from "../../utils/renderer.js";
+import { checkCompatibility } from "../../server-version-component/server-version.js";
 
 function renderGameStatusMessage(currentPlayer) {
     const $statusMessage = document.querySelector("h1");
@@ -108,6 +108,7 @@ function setTotalTokensColor($totalTokenCount, totalTokens) {
 
 function renderClientPlayer(players, gems) {
     let clientPlayer = getPlayerByName(players, loadFromStorage("playerName"));
+
     if(isNotCurrentActivePlayer(clientPlayer)) {
         clientPlayer = players[0];
     }

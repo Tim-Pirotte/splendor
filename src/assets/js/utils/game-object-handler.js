@@ -40,7 +40,7 @@ function getHighestScore(players) {
 
 function getPlayerByName(players, currentPlayerName) {
     for (const player of players) {
-        if (player.name===currentPlayerName) {
+        if (player.name === currentPlayerName) {
             return player;
         }
     }
@@ -57,6 +57,6 @@ export {
     hasGameStarted,
     sumObjectValues,
     getHighestScore,
-    getPlayerByName
+    getPlayerByName,
 };
 
