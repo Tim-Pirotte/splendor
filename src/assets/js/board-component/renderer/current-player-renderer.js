@@ -184,7 +184,7 @@ function renderClientToken($numberedItemTemplate, token, $progressBarTemplate, c
 function addTokenTypeAmount($token, token, currentPlayerTokens) {
     $token.dataset.type = token;
     $token.dataset.amount = (currentPlayerTokens[token] || 0);
-    $token.querySelector(".amount").textContent = (currentPlayerTokens[token] || 0);
+    $token.querySelector(".amount").innerHTML = `${(currentPlayerTokens[token] || 0)}<span></span>`;
 }
 
 function addProgressBar($progressBarTemplate, currentPlayerTokens, token, $token) {
@@ -219,18 +219,19 @@ function renderSwitchPaymentButtons(currentPayment, cost) {
     const tokensInWallet = getClientTokens();
     const $tokensContainers = document.querySelectorAll(".switch-token-container");
     const defaultPaymentMethod = getDefaultPaymentMethod(cost);
-    hideSwitchPayment($tokensContainers);
+    hideSwitchPaymentButtons();
 
     for (const $tokenContainer of $tokensContainers) {
         renderSwitchPayment($tokenContainer, currentPayment, defaultPaymentMethod, cost, tokensInWallet);
     }
 }
 
-function renderSwitchPayment($tokenContainer, currentPayment, defaultPaymentMethod, cost, tokensInWallet) {
-    const tokenType = $tokenContainer.closest("li").dataset.type;
+function renderSwitchPayment($tokenSwitchContainer, currentPayment, defaultPaymentMethod, cost, tokensInWallet) {
+    const $tokenContainer = $tokenSwitchContainer.closest("li");
+    const tokenType = $tokenContainer.dataset.type;
 
     if (allowedToSwitchToken(tokenType, currentPayment, defaultPaymentMethod, cost, tokensInWallet)) {
-        $tokenContainer.querySelector(".switch-token").classList.remove("hidden");
+        $tokenSwitchContainer.querySelector(".switch-token").classList.remove("hidden");
     }
 
     if (Object.keys(cost).includes(tokenType) || (tokenType === "Gold" && tokensInWallet["Gold"] > 0)) {
@@ -238,16 +239,10 @@ function renderSwitchPayment($tokenContainer, currentPayment, defaultPaymentMeth
     }
 }
 
-function hideSwitchPayment($tokenSwitchContainers) {
-    $tokenSwitchContainers.forEach($tokenSwitchContainer => {
-        $tokenSwitchContainer.querySelector(".switch-token").classList.add("hidden");
-        $tokenSwitchContainer.querySelector("p").classList.add("hidden");
-    });
-}
-
 function renderAmountOfTokenSelected($tokenContainer, paymentOfType) {
-    $tokenContainer.querySelector("span").textContent = paymentOfType;
-    $tokenContainer.querySelector("p").classList.remove("hidden");
+    const $amountToTake = $tokenContainer.querySelector(".amount span");
+    $amountToTake.textContent = ` - ${paymentOfType}`;
+    $amountToTake.classList.remove("hidden");
 }
 
 function renderUpdatedPlayerTokens(bonus) {
@@ -270,7 +265,7 @@ function renderUpdatedPlayerScore(extraScore) {
 function hideSwitchPaymentButtons() {
     document.querySelectorAll(".switch-token-container").forEach(($container) => {
         $container.querySelector(".switch-token").classList.add("hidden");
-        $container.querySelector("p").classList.add("hidden");
+        $container.closest("li").querySelector(".amount span").classList.add("hidden");
     });
 }
 

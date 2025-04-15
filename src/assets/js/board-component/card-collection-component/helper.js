@@ -212,11 +212,10 @@ function rotateRight(x, n) {
 }
 
 function combineDigestParts(h0, h1, h2, h3, h4, h5, h6, h7) {
-    const base16 = 16;
     const hexLength = 8;
 
     return [h0, h1, h2, h3, h4, h5, h6, h7]
-        .map(part => part.toString(base16).padStart(hexLength, '0'))
+        .map(part => part.toString(16).padStart(hexLength, '0'))
         .join('');
 }
 

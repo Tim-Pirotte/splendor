@@ -341,6 +341,7 @@ section h3, section h2, section h4 {
     top: 37%;
 }
 
+/* Makes text on the black chip readable */
 .card li[data-token-type="Onyx"] p {
     color: whitesmoke;
 }
