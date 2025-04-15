@@ -66,13 +66,14 @@ footer .sound-button {
 }
 
 div.animated {
-    width: 2.5rem;
-    height: 2.5rem;
-    background-color: hotpink;
+    width: 2rem;
+    height: 2rem;
     position: absolute;
     top: -2.5rem;
     animation-name: rainingImage;
     animation-duration: 3s;
     animation-timing-function: ease-in;
     z-index: -1;
+    background-repeat: no-repeat;
+    background-size: contain;
 }

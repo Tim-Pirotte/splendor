@@ -41,7 +41,7 @@ function renderResultTable(data) {
 
 function renderResultAnimation(isWinner) {
     const imageArray = isWinner ? WINNER_ANIMATION_IMAGES : LOSER_ANIMATION_IMAGES;
-    setInterval(renderOneAnimation, 100, imageArray);
+    setInterval(renderOneAnimation, 50, imageArray);
 }
 
 function renderOneAnimation(imageArray) {
