@@ -12,7 +12,7 @@ const LOSER_ANIMATION_IMAGES = [
 
 const INTERVAL_BETWEEN_ANIMATING_IMAGES = 50;
 
-//the animation takes 3 seconds
+//the animation takes 3 seconds. 3100 is to make sure it's below the screen
 const TIMEOUT_BEFORE_ANIMATED_IMAGE_DELETION = 3100;
 
 export {

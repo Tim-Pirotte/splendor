@@ -53,6 +53,8 @@ function renderOneAnimation(imageArray) {
     const $animationDiv = document.createElement("div");
     const randomImage = imageArray[Math.floor(Math.random() * imageArray.length)];
 
+    // The translateX must be here because JS and CSS aren't great friends
+    $animationDiv.style.transform = "translateX(-50%)"
     $animationDiv.classList.add("raining-animation");
     $animationDiv.style.left = `${Math.random() * 100}%`;
     $animationDiv.style.backgroundImage = `url("${randomImage}")`;
