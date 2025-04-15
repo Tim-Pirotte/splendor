@@ -1,6 +1,7 @@
 import { MAX_PRESTIGE_POINTS } from "../config.js";
 import { getSortedResults } from "./helper.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
+import {LOSER_ANIMATION_IMAGES, WINNER_ANIMATION_IMAGES} from "./config.js";
 
 function renderResultMessage(isWinner) {
     const $status = document.querySelector("h1");
@@ -39,14 +40,19 @@ function renderResultTable(data) {
 }
 
 function renderResultAnimation(isWinner) {
-    setInterval(renderOneAnimation, 100);
+    const imageArray = isWinner ? WINNER_ANIMATION_IMAGES : LOSER_ANIMATION_IMAGES;
+    setInterval(renderOneAnimation, 100, imageArray);
 }
 
-function renderOneAnimation() {
+function renderOneAnimation(imageArray) {
     //TODO correctly adjust the formula (now it can overflow on the right but not on the left)
     const $animationDiv = document.createElement("div");
+    const randomImage = imageArray[Math.floor(Math.random() * imageArray.length)];
+
     $animationDiv.classList.add("animated");
     $animationDiv.style.left = `${Math.random() * 100}%`;
+    $animationDiv.style.backgroundImage = `url("${randomImage}")`;
+
     document.querySelector("body").appendChild($animationDiv);
 
     // The animation lasts 3 second!!!
