@@ -1,5 +1,5 @@
 import { MAX_PRESTIGE_POINTS } from "../config.js";
-import { getSortedResults } from "./helper.js";
+import { getRandomNumber, getSortedResults } from "./helper.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import {
     INTERVAL_BETWEEN_ANIMATING_IMAGES,
@@ -51,12 +51,10 @@ function renderResultAnimation(isWinner) {
 
 function renderOneAnimation(imageArray) {
     const $animationDiv = document.createElement("div");
-    const randomImage = imageArray[Math.floor(Math.random() * imageArray.length)];
+    const randomImage = imageArray[Math.floor(getRandomNumber(imageArray.length))];
 
-    // The translateX must be here because JS and CSS aren't great friends
-    $animationDiv.style.transform = "translateX(-50%)"
     $animationDiv.classList.add("raining-animation");
-    $animationDiv.style.left = `${Math.random() * 100}%`;
+    $animationDiv.style.left = `${getRandomNumber(100)}%`;
     $animationDiv.style.backgroundImage = `url("${randomImage}")`;
 
     document.querySelector("body").appendChild($animationDiv);
