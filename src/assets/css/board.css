@@ -33,7 +33,7 @@ body > section {
     perspective-origin: 60% top;
     padding-left: 2rem;
     overflow: hidden;
-    background-image: url("../images/board_background.webp");
+    background-image: url("../images/board_background_perspective.webp");
     background-size: 120rem 67.5rem;
 }
 
@@ -51,6 +51,7 @@ main {
     display: flex;
     flex-direction: column;
     gap: 0.4rem 0;
+    margin-top: 1.5rem;
 }
 
 .board-tokens {
