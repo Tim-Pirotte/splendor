@@ -239,9 +239,11 @@ function renderSwitchPayment($tokenSwitchContainer, currentPayment, defaultPayme
     }
 }
 
-function renderAmountOfTokenSelected($tokenContainer, paymentOfType) {
+function renderAmountOfTokenSelected($tokenContainer, amount) {
+    if (amount <= 0) return;
+
     const $amountToTake = $tokenContainer.querySelector(".amount span");
-    $amountToTake.textContent = ` - ${paymentOfType}`;
+    $amountToTake.textContent = ` - ${amount}`;
     $amountToTake.classList.remove("none");
     $tokenContainer.querySelector(".amount").classList.add("pulsing-text");
 }
