@@ -39,12 +39,18 @@ function renderResultTable(data) {
 }
 
 function renderResultAnimation(isWinner) {
-    renderOneAnimation();
+    setInterval(renderOneAnimation, 100);
 }
 
 function renderOneAnimation() {
     //TODO correctly adjust the formula (now it can overflow on the right but not on the left)
-    document.querySelector("body").insertAdjacentHTML("beforeend", `<div class="animated" style="left:${Math.random() * 100}%"'></div>`);
+    const $animationDiv = document.createElement("div");
+    $animationDiv.classList.add("animated");
+    $animationDiv.style.left = `${Math.random() * 100}%`;
+    document.querySelector("body").appendChild($animationDiv);
+
+    // The animation lasts 3 second!!!
+    setTimeout(() => $animationDiv.remove(), 3100);
 }
 
 export { renderResults };

@@ -72,7 +72,7 @@ div.animated {
     position: absolute;
     top: -2.5rem;
     animation-name: rainingImage;
-    animation-duration: 4s;
+    animation-duration: 3s;
     animation-timing-function: ease-in;
     z-index: -1;
 }
