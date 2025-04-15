@@ -37,6 +37,10 @@ tbody tr:nth-child(even) {
     background: whitesmoke;
 }
 
+tbody tr:nth-child(odd) {
+    background: white;
+}
+
 /* Place the audio toggle at the right side of the footer */
 footer {
     align-self: flex-end;
@@ -56,10 +60,19 @@ footer .sound-button {
 }
 
 /* ANIMATIONS */
+@keyframes rainingImage {
+    from {transform: translateY(-2.5rem)}
+    to {transform: translateY(110vh)}
+}
+
 div.animated {
     width: 2.5rem;
     height: 2.5rem;
     background-color: hotpink;
     position: absolute;
     top: -2.5rem;
+    animation-name: rainingImage;
+    animation-duration: 4s;
+    animation-timing-function: ease-in;
+    z-index: -1;
 }
