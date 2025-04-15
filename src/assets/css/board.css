@@ -5,6 +5,7 @@ body {
     display: grid;
     grid-template-columns: 20% 80%;
     height: 100vh;
+    perspective: 100vh;
 }
 
 /* SWITCH TOKEN BUTTONS */
@@ -38,7 +39,7 @@ body > section {
 
 main {
     display: grid;
-    grid-template-columns: 50% 20% 20% 10%;
+    grid-template-columns: 55% 20% 15% 10%;
     grid-template-rows: 72% 5% 23%;
     grid-template-areas:    "decks board-tokens nobles timer"
                             "player-points player-tokens action-button action-button"
@@ -101,6 +102,12 @@ main {
     display: flex;
     flex-direction: column;
     gap: 0.5rem 0;
+}
+
+.nobles > li {
+    transform: rotateX(45deg);
+    /* This is to remove the empty space that the rotate creates */
+    margin-block: -0.6rem;
 }
 
 .nobles img {
@@ -286,10 +293,13 @@ section h3, section h2, section h4 {
 
 /* CARD */
 .card {
-    flex: 0 1 6rem;
+    flex: 0 1 7.5rem;
     aspect-ratio: 70 / 100;
     position: relative;
     transition: 0.3s;
+    transform: rotateX(45deg);
+    /* This is to remove the empty space that the rotate creates */
+    margin-block: -1.5rem;
     border-radius: 0.5rem;
     /* This is needed to prevent a redraw on a new texture which causes sub-pixel shifting due to different anti-aliasing.
        Usage of will-change outside of optimization is frowned upon so if there is another way to fix this please change this.
@@ -386,7 +396,10 @@ section h3, section h2, section h4 {
 
 /* DECK CARDS */
 .decks > li > picture {
-    flex: 0 1 6rem;
+    flex: 0 1 7.5rem;
+    transform: rotateX(45deg);
+    /* This is to remove the empty space that the rotate creates */
+    margin-block: -1.5rem;
     transition: 0.3s;
 }
 
