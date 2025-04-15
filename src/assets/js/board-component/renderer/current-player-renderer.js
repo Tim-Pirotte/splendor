@@ -1,17 +1,17 @@
-import { GEMS } from "../data.js";
-import { MAX_TOKENS_ALLOWED, PRESTIGE_POINTS_NEEDED_TO_WIN, TOKEN_MAPPER } from "../config.js";
-import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
-import { getTokenAmount, getTotalAmountDiscarded, getTotalTokenAmount } from "../tokens/discard.js";
-import { validTokenDiscard } from "../state-machine/valid-action-checker.js";
+import {GEMS} from "../data.js";
+import {MAX_TOKENS_ALLOWED, PRESTIGE_POINTS_NEEDED_TO_WIN, TOKEN_MAPPER} from "../config.js";
+import {loadFromStorage} from "../../data-connector/local-storage-abstractor.js";
+import {getTokenAmount, getTotalAmountDiscarded, getTotalTokenAmount} from "../tokens/discard.js";
+import {validTokenDiscard} from "../state-machine/valid-action-checker.js";
 import {
     addNodesToEmptiedContainer,
+    addSwitchButton,
     formatNumber,
     getNumberedItemTemplate,
-    addSwitchButton,
+    highlightPointsWinner,
     renderCard,
     renderProgressBar,
     safeEmptyContainer,
-    highlightPointsWinner,
 } from "./helper.js";
 import {
     allowedToSwitchToken,
@@ -19,12 +19,12 @@ import {
     removePaidTokens,
     updateCurrentPlayerBonuses,
 } from "../buy-reserve/buy-handler.js";
-import { getHighestScore, sumObjectValues } from "../../utils/game-object-handler.js";
-import { getClientTokens, getClientTotalPrestigePoints } from "../game-data-handler.js";
-import { copyNode } from "../../utils/data-handler.js";
-import { isCurrentlyPlaying } from "../game-status-interface.js";
-import { insertImageInto } from "../../utils/renderer.js";
-import { checkCompatibility } from "../../server-version-component/server-version.js";
+import {getHighestScore, getPlayerByName, sumObjectValues} from "../../utils/game-object-handler.js";
+import {getClientTokens, getClientTotalPrestigePoints} from "../game-data-handler.js";
+import {copyNode} from "../../utils/data-handler.js";
+import {isCurrentlyPlaying} from "../game-status-interface.js";
+import {insertImageInto} from "../../utils/renderer.js";
+import {checkCompatibility} from "../../server-version-component/server-version.js";
 
 function renderGameStatusMessage(currentPlayer) {
     const $statusMessage = document.querySelector("h1");
@@ -123,14 +123,6 @@ function renderClientPlayer(players, gems) {
 
 function isNotCurrentActivePlayer(clientPlayer) {
     return clientPlayer === undefined;
-}
-
-function getPlayerByName(players, currentPlayerName) {
-    for (const player of players) {
-        if (player.name === currentPlayerName) {
-            return player;
-        }
-    }
 }
 
 function countTokens(tokens) {

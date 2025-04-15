@@ -38,4 +38,25 @@ function getHighestScore(players) {
     return Math.max(...players.map(player => player["totalPrestigePoints"]));
 }
 
-export { getGameState, getGameName, getGameId, getCurrentUsersAmount, getMaxUsersAmount, getGameCreator, getPlayersObjects, hasGameStarted, sumObjectValues, getHighestScore };
+function getPlayerByName(players, currentPlayerName) {
+    for (const player of players) {
+        if (player.name===currentPlayerName) {
+            return player;
+        }
+    }
+}
+
+export {
+    getGameState,
+    getGameName,
+    getGameId,
+    getCurrentUsersAmount,
+    getMaxUsersAmount,
+    getGameCreator,
+    getPlayersObjects,
+    hasGameStarted,
+    sumObjectValues,
+    getHighestScore,
+    getPlayerByName
+};
+

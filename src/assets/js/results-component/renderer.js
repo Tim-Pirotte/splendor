@@ -12,7 +12,10 @@ function renderResults() {
         for (const player of gameResults) {
             const isPlayer = player.name === loadFromStorage("playerName");
 
-            if (isPlayer) renderResultMessage(isPlayer && player.isWinner);
+            if (isPlayer) {
+                renderResultMessage(isPlayer && player.isWinner)
+                renderResultAnimation(player.isWinner);
+            }
         }
         renderResultTable(gameResults);
     });
@@ -33,6 +36,15 @@ function renderResultTable(data) {
 
         $tbody.appendChild($clone);
     });
+}
+
+function renderResultAnimation(isWinner) {
+    renderOneAnimation();
+}
+
+function renderOneAnimation() {
+    //TODO correctly adjust the formula (now it can overflow on the right but not on the left)
+    document.querySelector("body").insertAdjacentHTML("beforeend", `<div class="animated" style="left:${Math.random() * 100}%"'></div>`);
 }
 
 export { renderResults };
