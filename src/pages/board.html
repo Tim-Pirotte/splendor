@@ -525,9 +525,22 @@
                 <ul>
                     <template id="token-discard-template">
                         <div class="discard-container">
-                            <button type="button" data-action="remove">-</button>
+                            <button type="button" data-action="remove">
+                                <!-- You might be wondering: "Why would we use images here instead of the + and - characters".
+                                The reason for this is simpel. The font that we use has spacing below and above these chars so making
+                                the text large enough so that the average person can read it makes the container overflow. -->
+                                <picture>
+                                    <source srcset="../assets/images/UI/minus.webp" type="image/webp">
+                                    <img src="../assets/images/fallback/UI/minus.png" alt="Remove from discard pile" loading="lazy">
+                                </picture>
+                            </button>
                             <p data-amount="0" class="amount">0</p>
-                            <button type="button" data-action="add">+</button>
+                            <button type="button" data-action="add">
+                                <picture>
+                                    <source srcset="../assets/images/UI/plus.webp" type="image/webp">
+                                    <img src="../assets/images/fallback/UI/plus.png" alt="Add to discard pile" loading="lazy">
+                                </picture>
+                            </button>
                         </div>
                     </template>
                 </ul>

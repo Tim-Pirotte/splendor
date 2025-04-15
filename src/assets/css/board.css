@@ -475,8 +475,12 @@ section h3, section h2, section h4 {
     height: 0.95rem;
 }
 
-.discard-container button {
-    padding: 0.2rem;
+.discard-container button:disabled {
+    opacity: 0.4;
+}
+
+.discard-container p {
+    font-size: 0.9rem;
 }
 
 .player-card {
