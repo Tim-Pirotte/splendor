@@ -1,4 +1,4 @@
-import {loadFromStorage} from "../../data-connector/local-storage-abstractor.js";
+import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
 
 function trackCardEncounter(bonusColor, illustrationName, variant, gameId, illustrationColor) {
     const seenTree = loadFromStorage("cardCollection") || {};
@@ -20,11 +20,13 @@ function trackCardEncounter(bonusColor, illustrationName, variant, gameId, illus
 
 function hashToNumber(hashString, rangeMax = 1000) {
     const byteArray = [];
+
     for (let i = 0; i < hashString.length; i += 2) {
         byteArray.push(parseInt(hashString.slice(i, i + 2), 16));
     }
 
     let number = 0;
+
     for (let i = 0; i < byteArray.length; i++) {
         number = (number << 8) + byteArray[i];
     }

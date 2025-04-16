@@ -7,7 +7,7 @@ import { processReserve, selectDeckForReserving } from "./buy-reserve/reserve-ha
 import { handlePaymentMethodChange } from "./buy-reserve/buy-handler.js";
 import { selectPlayerToken } from "./tokens/discard.js";
 import * as API from "../api.js";
-import {hashDigest} from "./card-collection-component/helper.js";
+import { hashDigest } from "./card-collection-component/helper.js";
 
 function init() {
     updateGameData();

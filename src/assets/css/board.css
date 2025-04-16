@@ -39,7 +39,7 @@ body > section {
     perspective-origin: 60% top;
     padding-left: 4rem;
     overflow: hidden;
-    background-image: url("../images/board_background_perspective.webp");
+    background-image: url("../images/board_background.webp");
     background-size: 120rem 67.5rem;
 }
 
@@ -340,8 +340,8 @@ section h3, section h2, section h4 {
 .card li p {
     position: absolute;
     font-size: 0.7rem;
-    left: 39%;
-    top: 39%;
+    left: 36%;
+    top: 37%;
 }
 
 /* Makes text on the black chip readable */
@@ -388,9 +388,28 @@ section h3, section h2, section h4 {
 }
 
 /* DECK CARDS */
-.decks > li > picture {
+.hidden-cards {
     flex: 0 1 6rem;
     transition: 0.3s;
+    position: relative;
+}
+
+.hidden-cards::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+            0deg,
+            var(--light-text-color),
+            var(--light-text-color) 0.05rem,
+            lightgrey 0.05rem,
+            lightgrey 0.1rem
+    );
+    border-radius: 5%;
+    z-index: -1;
 }
 
 .decks > li > picture:hover {

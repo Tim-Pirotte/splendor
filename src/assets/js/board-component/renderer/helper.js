@@ -3,10 +3,10 @@ import { MAX_PRESTIGE_POINTS } from "../../config.js";
 import { copyNode } from "../../utils/data-handler.js";
 import { validCardBuy } from "../state-machine/valid-action-checker.js";
 import { insertImageInto } from "../../utils/renderer.js";
-import {loadFromStorage} from "../../data-connector/local-storage-abstractor.js";
-import {hashDigest} from "../card-collection-component/helper.js";
-import {hashToNumber, trackCardEncounter} from "../card-collection-component/card-collection.js";
-import {CHANCE_CATEGORIES, CHANCES, ILLUSTRATIONS} from "../card-collection-component/data.js";
+import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
+import { hashDigest } from "../card-collection-component/helper.js";
+import { hashToNumber, trackCardEncounter } from "../card-collection-component/card-collection.js";
+import { CHANCE_CATEGORIES, CHANCES, ILLUSTRATIONS } from "../card-collection-component/data.js";
 
 function addNodesToEmptiedContainer($container, list, mapFunction) {
     safeEmptyContainer($container);
@@ -18,14 +18,10 @@ function addNodesToEmptiedContainer($container, list, mapFunction) {
 
 function constructBackground(value, imageName, spacing) {
     /* Notice: css stacking order differs from html (https://www.w3.org/TR/css-backgrounds-3/#layering) */
-    let background = "";
-
     const layers = [];
 
     for (let i = 0; i < value; i++) {
-        layers.push(
-            `url("../assets/images/UI/tokens/${imageName}.webp") ${i * spacing}rem 100% no-repeat`
-        );
+        layers.push(`url("../assets/images/UI/tokens/${imageName}.webp") ${i * spacing}rem 100% no-repeat`);
     }
 
     return layers.reverse().join(",\n");
@@ -36,9 +32,7 @@ function constructVerticalBackground(value, imageName, spacing) {
     const layers = [];
 
     for (let i = value - 1; i >= 0; i--) {
-        layers.push(
-            `url("../assets/images/UI/tokens/${imageName}.webp") 0 calc(100% - ${i * spacing}rem) no-repeat`
-        );
+        layers.push(`url("../assets/images/UI/tokens/${imageName}.webp") 0 calc(100% - ${i * spacing}rem) no-repeat`);
     }
 
     return layers.join(",\n");

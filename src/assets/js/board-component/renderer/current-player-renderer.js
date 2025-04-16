@@ -82,12 +82,14 @@ function renderPrestigePointsProgressBar(totalPrestigePoints) {
 
 function addHighestScoreIndicator(totalPrestigePoints, highestScore) {
     const $highestScoreIndicator = document.querySelector(".player-points picture");
+
     if (totalPrestigePoints >= highestScore) $highestScoreIndicator.classList.remove("hidden");
 }
 
 function renderClientPlayerReserve(currentPlayer) {
     const $reserved = document.querySelector(".reserved-cards ul");
     const reservedCards = currentPlayer["reserve"];
+
     if (reservedCards.length > 0) {
         addNodesToEmptiedContainer($reserved, reservedCards, renderCard);
     } else {
