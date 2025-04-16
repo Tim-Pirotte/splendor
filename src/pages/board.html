@@ -96,7 +96,7 @@
                 <div class="avatar"></div>
             </div>
         </header>
-        <main>
+        <div class="main">
             <!-- Decks -->
             <ul class="decks">
                 <li class="level-3" data-deck-level="3">
@@ -142,7 +142,7 @@
                 <div class="progress-bar-container">
                     <div class="progress-bar"></div>
                 </div>
-                <h4></h4>
+                <h4>00 / 15</h4>
                 <picture class="hidden">
                     <source srcset="../assets/images/UI/diamond.webp" type="image/webp">
                     <img src="../assets/images/fallback/UI/diamond.png" alt="Score amongst the highest" title="Score amongst the highest" loading="lazy">
@@ -150,6 +150,7 @@
             </section>
             <!-- Reserved cards -->
             <section class="reserved-cards">
+                <h4>No reserved cards</h4>
                 <ul></ul>
             </section>
             <!-- Player tokens -->
@@ -185,21 +186,25 @@
                 <button type="button" class="reserve-button hidden">Reserve card</button>
                 <button type="button" class="action-button">Action</button>
             </div>
-        </main>
+        </div>
     </section>
 
+    <!-- NOSONAR_BEGIN -->
     <template id="card-template">
         <li class="card">
             <p class="points"></p>
             <ul class="cost"></ul>
         </li>
     </template>
+    <!-- NOSONAR_END -->
 
+    <!-- NOSONAR_BEGIN -->
     <template id="numbered-item-template">
         <li>
             <p class="amount"></p>
         </li>
     </template>
+    <!-- NOSONAR_END -->
 
     <template id="switch-tokens-container-template">
         <div class="switch-token-container">

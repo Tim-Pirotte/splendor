@@ -93,13 +93,18 @@ function setActionToTokenAction(stackPointer) {
 
 function highlightTokens($actionButton, amountToTake) {
     for (let i = 0; i < parseInt($actionButton.dataset.stackPointer); i++) {
-        const $boardToken = document.querySelector(`.board-tokens [data-type=${$actionButton.dataset[`token${i}`]}]`);
+        const tokenType = $actionButton.dataset[`token${i}`];
+        const $boardToken = document.querySelector(`.board-tokens [data-type=${tokenType}]`);
+
         $boardToken.querySelector("span").textContent = `- ${amountToTake}`;
+
         const $boardTokenText = $boardToken.querySelector("p");
         // Remove them first to sync animations between elements
         $boardTokenText.classList.remove("pulsing-text");
+        // NOSONAR_BEGIN
         // This forces css to handle the above class removal
         $boardTokenText.offsetHeight;
+        // NOSONAR_END
         $boardTokenText.classList.add("pulsing-text");
     }
 }

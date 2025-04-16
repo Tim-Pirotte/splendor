@@ -81,7 +81,7 @@ function convertToWords(block) {
     return words;
 }
 
-function getS0(word) {
+function getSigma0(word) {
     const shift7 = 7;
     const shift18 = 18;
     const shift3 = 3;
@@ -93,7 +93,7 @@ function getS0(word) {
     return rotateRight7 ^ rotateRight18 ^ shiftRight3;
 }
 
-function getS1(word) {
+function getSigma1(word) {
     const shift17 = 17;
     const shift19 = 19;
     const shift10 = 10;
@@ -106,11 +106,17 @@ function getS1(word) {
 }
 
 function modifyZeroWords(words) {
-    for (let i = 16; i < 64; i++) {
-        const s0 = getS0(words[i - 15]);
-        const s1 = getS1(words[i - 2]);
+    const sigma0Constant = 15;
+    const sigma1Constant = 2;
 
-        words[i] = modifyZeroWord(words[i - 16], s0, words[i - 7], s1);
+    const zeroWordConstant1 = 16;
+    const zeroWordConstant2 = 7;
+
+    for (let i = 16; i < 64; i++) {
+        const s0 = getSigma0(words[i - sigma0Constant]);
+        const s1 = getSigma1(words[i - sigma1Constant]);
+
+        words[i] = modifyZeroWord(words[i - zeroWordConstant1], s0, words[i - zeroWordConstant2], s1);
     }
 
     return words;
@@ -120,6 +126,7 @@ function modifyZeroWord(word16, s0, word7, s1) {
     return ( (( ((word16 + s0) >>> 0) + word7 ) >>> 0) + s1) >>> 0;
 }
 
+// NOSONAR_BEGIN
 function compressWords(words, h0, h1, h2, h3, h4, h5, h6, h7) {
     const k = [
         0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
@@ -172,6 +179,7 @@ function compressWords(words, h0, h1, h2, h3, h4, h5, h6, h7) {
 
     return [h0, h1, h2, h3, h4, h5, h6, h7];
 }
+// NOSONAR_END
 
 function getCompressionS1(e) {
     const rotate6 = 6;
@@ -211,6 +219,7 @@ function rotateRight(x, n) {
     return (x >>> n) | (x << (wordLength - n)) >>> 0;
 }
 
+// NOSONAR_BEGIN
 function combineDigestParts(h0, h1, h2, h3, h4, h5, h6, h7) {
     const hexLength = 8;
 
@@ -218,5 +227,6 @@ function combineDigestParts(h0, h1, h2, h3, h4, h5, h6, h7) {
         .map(part => part.toString(16).padStart(hexLength, "0"))
         .join("");
 }
+// NOSONAR_END
 
 export { hashDigest };

@@ -1,5 +1,6 @@
 import { GEMS } from "../data.js";
 import {
+    CARDS_IN_DECK_TO_DECK_HEIGHT_SCALE,
     GOLD_TOKEN_LIMIT,
     NOBLES_MAPPER,
     TOKEN_LIMIT,
@@ -8,9 +9,9 @@ import {
     TOKEN_MAPPER,
 } from "../config.js";
 import {
-    addNodesToEmptiedContainer,
+    addNodesToEmptiedContainer, constructVerticalBackground,
     getNumberedItemTemplate,
-    renderCard, renderProgressBar,
+    renderCard,
     safeEmptyContainer,
 } from "./helper.js";
 import { getUnclaimedTokens, sumObjectValues } from "../helper.js";
@@ -39,7 +40,7 @@ function setAmountOfCardsInDeck($currentDeck, deck) {
 
 function renderDeckSize($currentDeck, amountOfCardsInDeck) {
     const $hiddenCard = $currentDeck.closest("li").querySelector(":scope > picture img");
-    $hiddenCard.style.transform = `translateY(-${amountOfCardsInDeck / 45}rem)`;
+    $hiddenCard.style.transform = `translateY(-${amountOfCardsInDeck / CARDS_IN_DECK_TO_DECK_HEIGHT_SCALE}rem)`;
 }
 
 function getMaxTokens(playerLength, tokenType) {
@@ -72,7 +73,7 @@ function renderBoardToken($numberedItemTemplate, token, unclaimedTokens, playerL
     const maxTokens = getMaxTokens(playerLength, token);
 
     $boardToken.querySelector(".amount").innerHTML = `${(unclaimedTokens[token] || 0)}/${maxTokens} <span></span>`;
-    renderProgressBar($boardToken, unclaimedTokens[token] || 0, `board_token_${TOKEN_MAPPER[token]}`, 0.5, true);
+    $boardToken.style.background = constructVerticalBackground(unclaimedTokens[token] || 0, `board_token_${TOKEN_MAPPER[token]}`, 0.5);
     $boardToken.style.backgroundSize = "3.25rem";
 
     return $boardToken;

@@ -1,5 +1,5 @@
 import { GEMS } from "../data.js";
-import { MAX_TOKENS_ALLOWED, PRESTIGE_POINTS_NEEDED_TO_WIN, TOKEN_MAPPER } from "../config.js";
+import { CHIP_SPACING, MAX_TOKENS_ALLOWED, PRESTIGE_POINTS_NEEDED_TO_WIN, TOKEN_MAPPER } from "../config.js";
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
 import { getTokenAmount, getTotalAmountDiscarded, getTotalTokenAmount } from "../tokens/discard.js";
 import { validTokenDiscard } from "../state-machine/valid-action-checker.js";
@@ -9,9 +9,8 @@ import {
     getNumberedItemTemplate,
     addSwitchButton,
     renderCard,
-    renderProgressBar,
     safeEmptyContainer,
-    highlightPointsWinner,
+    highlightPointsWinner, constructBackground,
 } from "./helper.js";
 import {
     allowedToSwitchToken,
@@ -77,7 +76,7 @@ function renderPrestigePointsScore(totalPrestigePoints) {
 
 function renderPrestigePointsProgressBar(totalPrestigePoints) {
     const $progressBar = document.querySelector(".player-points .progress-bar");
-    renderProgressBar($progressBar, totalPrestigePoints, "score_topdown_chip");
+    $progressBar.style.background = constructBackground(totalPrestigePoints, "score_topdown_chip", CHIP_SPACING);
 }
 
 function addHighestScoreIndicator(totalPrestigePoints, highestScore) {
@@ -88,13 +87,15 @@ function addHighestScoreIndicator(totalPrestigePoints, highestScore) {
 
 function renderClientPlayerReserve(currentPlayer) {
     const $reserved = document.querySelector(".reserved-cards ul");
+    const $reservedContainer = $reserved.closest(".reserved-cards");
     const reservedCards = currentPlayer["reserve"];
 
     if (reservedCards.length > 0) {
+        $reservedContainer.querySelector("h4").innerHTML = "";
         addNodesToEmptiedContainer($reserved, reservedCards, renderCard);
     } else {
         safeEmptyContainer($reserved);
-        $reserved.insertAdjacentHTML("beforeend", "<p>No reserved cards</p>");
+        $reservedContainer.querySelector("h4").innerHTML = "No reserved cards";
     }
 }
 
@@ -192,7 +193,8 @@ function addTokenTypeAmount($token, token, currentPlayerTokens) {
 
 function addProgressBar($progressBarTemplate, currentPlayerTokens, token, $token) {
     const $progressBar = copyNode($progressBarTemplate);
-    renderProgressBar($progressBar, currentPlayerTokens[token], `${TOKEN_MAPPER[token]}_topdown_chip`);
+    $progressBar.style.background = constructBackground(currentPlayerTokens[token], `${TOKEN_MAPPER[token]}_topdown_chip`, CHIP_SPACING);
+
     $token.appendChild($progressBar);
 }
 

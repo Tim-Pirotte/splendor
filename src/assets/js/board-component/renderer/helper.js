@@ -1,4 +1,4 @@
-import { CHIP_SPACING, TOKEN_MAPPER } from "../config.js";
+import { TOKEN_MAPPER } from "../config.js";
 import { MAX_PRESTIGE_POINTS } from "../../config.js";
 import { copyNode } from "../../utils/data-handler.js";
 import { validCardBuy } from "../state-machine/valid-action-checker.js";
@@ -24,7 +24,7 @@ function constructBackground(value, imageName, spacing) {
         layers.push(`url("../assets/images/UI/tokens/${imageName}.webp") ${i * spacing}rem 100% no-repeat`);
     }
 
-    return layers.reverse().join(",\n");
+    return layers.toReversed().join(",\n");
 }
 
 function constructVerticalBackground(value, imageName, spacing) {
@@ -36,20 +36,6 @@ function constructVerticalBackground(value, imageName, spacing) {
     }
 
     return layers.join(",\n");
-}
-
-function renderProgressBar(
-    $progressBar,
-    value,
-    imageName,
-    spacing = CHIP_SPACING,
-    vertical = false,
-) {
-    if (vertical) {
-        $progressBar.style.background = constructVerticalBackground(value, imageName, spacing);
-    } else {
-        $progressBar.style.background = constructBackground(value, imageName, spacing);
-    }
 }
 
 function formatNumber(number) {
@@ -138,6 +124,8 @@ function getIllustration(cardName, cardBonus) {
         trackCardEncounter(cardBonus, illustration, "MISPRINT", gameId, illustrationColor);
 
         return `${illustrationColor}_${illustration}`;
+    } else {
+        console.log("Yet to be implemented");
     }
 }
 
@@ -182,7 +170,6 @@ function isCreator(players, otherPlayer) {
 }
 
 export {
-    renderProgressBar,
     formatNumber,
     safeEmptyContainer,
     addSwitchButton,
@@ -192,4 +179,6 @@ export {
     highlightPointsWinner,
     getOrderedPlayersWithoutClientPlayer,
     isCreator,
+    constructVerticalBackground,
+    constructBackground,
 };

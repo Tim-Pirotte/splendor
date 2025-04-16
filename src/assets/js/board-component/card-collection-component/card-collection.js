@@ -27,8 +27,8 @@ function hashToNumber(hashString, rangeMax = 1000) {
 
     let number = 0;
 
-    for (let i = 0; i < byteArray.length; i++) {
-        number = (number << 8) + byteArray[i];
+    for (const byte of byteArray) {
+        number = (number << 8) + byte;
     }
 
     number = number >>> 0;
