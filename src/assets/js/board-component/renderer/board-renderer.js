@@ -34,6 +34,12 @@ function getDeck(deck) {
 
 function setAmountOfCardsInDeck($currentDeck, deck) {
     $currentDeck.dataset.amount = deck["cardStackSize"];
+    renderDeckSize($currentDeck, deck["cardStackSize"]);
+}
+
+function renderDeckSize($currentDeck, amountOfCardsInDeck) {
+    const $hiddenCard = $currentDeck.closest("li").querySelector(":scope > picture img");
+    $hiddenCard.style.transform = `translateY(-${amountOfCardsInDeck / 45}rem)`
 }
 
 function getMaxTokens(playerLength, tokenType) {
