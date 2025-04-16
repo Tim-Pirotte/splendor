@@ -175,10 +175,11 @@ function renderClientToken($numberedItemTemplate, token, $progressBarTemplate, c
 
     insertImageInto($token, `UI/tokens/${TOKEN_MAPPER[token]}_chip`, false, `${TOKEN_MAPPER[token]} chip`);
 
-    addProgressBar($progressBarTemplate, currentPlayerTokens, token, $token);
     addSwitchButton($token, token);
 
     if (validTokenDiscard()) addDiscardNav($discardNavTemplate, $token);
+
+    addProgressBar($progressBarTemplate, currentPlayerTokens, token, $token);
 
     $clientPlayerTokensContainer.appendChild($token);
 }
