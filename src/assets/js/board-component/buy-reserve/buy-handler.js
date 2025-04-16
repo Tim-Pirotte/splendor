@@ -112,20 +112,21 @@ function isWalletHigher(wallet, cost) {
 function getDefaultPaymentMethod(cost) {
     const tokens = getClientTokens();
     const bonuses = getClientBonuses();
-
-    removeBonusesFromCost(cost, bonuses);
+    const costWithoutBonuses = removeBonusesFromCost(cost, bonuses);
 
     return calculateDefaultPayment(cost, tokens);
 }
 
 function removeBonusesFromCost(cost, bonuses) {
-    for (const tokenType in cost) {
-        if (cost[tokenType] >= (bonuses[tokenType] || 0)) {
-            cost[tokenType] -= bonuses[tokenType] || 0;
+    const costWithoutBonuses = [...cost];
+    for (const tokenType in costWithoutBonuses) {
+        if (costWithoutBonuses[tokenType] >= (bonuses[tokenType] || 0)) {
+            costWithoutBonuses[tokenType] -= bonuses[tokenType] || 0;
         } else {
-            cost[tokenType] = 0;
+            costWithoutBonuses[tokenType] = 0;
         }
     }
+    return costWithoutBonuses
 }
 
 function calculateDefaultPayment(cost, tokens) {
