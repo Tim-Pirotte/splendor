@@ -25,9 +25,10 @@ function renderResultTable(data) {
     $tbody.innerHTML = "";
 
     data.forEach(player => {
-        const $clone = $template.content.cloneNode(true);
+        const $clone = $template.content.firstElementChild.cloneNode(true);
         const $td = $clone.querySelectorAll("td");
 
+        if (player.isWinner) $clone.classList.add("winner");
         $td[1].textContent = player.name;
         $td[2].textContent = `${player.points}/${MAX_PRESTIGE_POINTS}`;
 

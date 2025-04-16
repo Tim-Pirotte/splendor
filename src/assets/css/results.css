@@ -17,6 +17,15 @@ header {
     margin: 2rem 0;
 }
 
+h1 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 3rem;
+}
+
+.winner td {
+    color: darkgoldenrod;
+}
 /* Score table */
 table {
     width: 100%;
