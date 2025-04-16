@@ -177,7 +177,7 @@ aside {
 
 .player-tokens .progress-bar::before {
     content: "";
-    background-color: #232323;
+    background: linear-gradient(0deg,rgba(35, 35, 35, 1) 0%, rgb(45, 45, 45) 50%, rgba(35, 35, 35, 1) 100%);
     border: 0.1rem solid #3d3d3d;
     border-radius: 12%;
     position: absolute;
@@ -527,10 +527,12 @@ section h3, section h2, section h4 {
     gap: 0.4rem;
     background-color: #d9b56f;
     transition: transform 2s;
-    padding: 0.2rem;
+    padding: 0.2rem 0.2rem 0.2rem 7%;
     margin-top: 0.5rem;
-    width: max-content;
+    width: 98%;
     position: relative;
+    /* This prevents the padding from increasing the box size */
+    box-sizing: border-box;
 }
 
 .player-card.current-player::after {
@@ -550,7 +552,7 @@ section h3, section h2, section h4 {
 }
 
 .player-card.current-player {
-    transform: translateX(10rem);
+    transform: translateX(42%);
     position: relative;
 }
 
