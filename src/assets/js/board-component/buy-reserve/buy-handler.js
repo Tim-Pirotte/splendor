@@ -163,6 +163,7 @@ function allowedToSwitchToken(tokenType, currentPayment, defaultPaymentMethod, c
 
 function handlePaymentMethodChange(e) {
     const $button = e.target.closest("button");
+
     if ($button && $button.classList.contains("switch-token")) {
         const tokenType = e.target.closest("li").dataset.type;
         const cost = getCardData(document.querySelector(".action-button").dataset.name)["cost"];

@@ -39,7 +39,7 @@ function setAmountOfCardsInDeck($currentDeck, deck) {
 
 function renderDeckSize($currentDeck, amountOfCardsInDeck) {
     const $hiddenCard = $currentDeck.closest("li").querySelector(":scope > picture img");
-    $hiddenCard.style.transform = `translateY(-${amountOfCardsInDeck / 45}rem)`
+    $hiddenCard.style.transform = `translateY(-${amountOfCardsInDeck / 45}rem)`;
 }
 
 function getMaxTokens(playerLength, tokenType) {
