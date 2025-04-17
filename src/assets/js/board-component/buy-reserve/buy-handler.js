@@ -114,7 +114,7 @@ function getDefaultPaymentMethod(cost) {
     const bonuses = getClientBonuses();
     const costWithoutBonuses = removeBonusesFromCost(cost, bonuses);
 
-    return calculateDefaultPayment(cost, tokens);
+    return calculateDefaultPayment(costWithoutBonuses, tokens);
 }
 
 function removeBonusesFromCost(cost, bonuses) {
