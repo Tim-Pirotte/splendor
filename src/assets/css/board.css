@@ -81,6 +81,7 @@ body > section {
     transition: 0.3s;
     position: relative;
     box-shadow: 0 -0.5rem 0.2rem 0.2rem #00000040;
+    z-index: 0;
 }
 
 .hidden-cards img {
@@ -478,7 +479,7 @@ aside {
 
 .player-card.current-player::after {
     content: "";
-    width: 39.5%;
+    width: 38.5%;
     height: 97%;
     right: 0;
     bottom: 0;
