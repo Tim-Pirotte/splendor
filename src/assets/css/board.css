@@ -162,10 +162,6 @@ body > section {
     width: 1.25rem;
 }
 
-.progress-bar {
-    background-repeat: no-repeat;
-}
-
 .player-points .progress-bar {
     width: 5.4rem;
     height: 1rem;
@@ -294,19 +290,13 @@ body > section {
     width: 4rem;
     height: 100%;
     position: relative;
+    z-index: 0;
 }
 
-.player-tokens .progress-bar::before, .player-points .progress-bar::before {
-    content: "";
+.player-tokens .progress-bar-container, .player-points .progress-bar-container {
     background: linear-gradient(0deg,rgba(35, 35, 35, 1) 0%, rgb(45, 45, 45) 50%, rgba(35, 35, 35, 1) 100%);
-    border: 0.1rem solid #3d3d3d;
-    border-radius: 12%;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    z-index: -1;
+    outline: 0.1rem solid #3d3d3d;
+    border-radius: 10%;
 }
 
 .button-container button {

@@ -193,10 +193,10 @@ function addTokenTypeAmount($token, token, currentPlayerTokens) {
 }
 
 function addProgressBar($progressBarTemplate, currentPlayerTokens, token, $token) {
-    const $progressBar = copyNode($progressBarTemplate);
-    $progressBar.style.background = constructBackground(currentPlayerTokens[token], `${TOKEN_MAPPER[token]}_topdown_chip`, CHIP_SPACING);
+    const $progressBarContainer = copyNode($progressBarTemplate);
+    $progressBarContainer.querySelector(".progress-bar").style.background = constructBackground(currentPlayerTokens[token], `${TOKEN_MAPPER[token]}_topdown_chip`, CHIP_SPACING);
 
-    $token.appendChild($progressBar);
+    $token.appendChild($progressBarContainer);
 }
 
 function addDiscardNav($discardNavTemplate, $token) {
