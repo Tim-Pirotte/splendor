@@ -10,7 +10,8 @@ import {
     addSwitchButton,
     renderCard,
     safeEmptyContainer,
-    highlightPointsWinner, constructBackground,
+    highlightPointsWinner,
+    constructBackground,
 } from "./helper.js";
 import {
     allowedToSwitchToken,
@@ -24,7 +25,7 @@ import { copyNode } from "../../utils/data-handler.js";
 import { isCurrentlyPlaying } from "../game-status-interface.js";
 import { insertImageInto } from "../../utils/renderer.js";
 import { checkCompatibility } from "../../server-version-component/server-version.js";
-import {reflowCSS} from "../helper.js";
+import { reflowCSS } from "../helper.js";
 
 function renderGameStatusMessage(currentPlayer) {
     const $statusMessage = document.querySelector("h1");

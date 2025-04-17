@@ -5,7 +5,7 @@ import { getActionButton, setActionButtonState } from "../game-status-interface.
 import { validTokenTake } from "../state-machine/valid-action-checker.js";
 import { deselectCard } from "../buy-reserve/select.js";
 import { startGameStatePolling } from "../game-data-handler.js";
-import {reflowCSS} from "../helper.js";
+import { reflowCSS } from "../helper.js";
 
 function clickedOnToken(target) {
     return target.tagName.toLowerCase() === "li";

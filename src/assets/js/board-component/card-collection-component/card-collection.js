@@ -19,15 +19,10 @@ function trackCardEncounter(bonusColor, illustrationName, variant, gameId, illus
 }
 
 function hashToNumber(hashString, rangeMax = 1000) {
-    const byteArray = [];
-
-    for (let i = 0; i < hashString.length; i += 2) {
-        byteArray.push(parseInt(hashString.slice(i, i + 2), 16));
-    }
-
     let number = 0;
 
-    for (const byte of byteArray) {
+    for (let i = 0; i < hashString.length; i += 2) {
+        const byte = parseInt(hashString.slice(i, i + 2), 16);
         number = (number << 8) + byte;
     }
 

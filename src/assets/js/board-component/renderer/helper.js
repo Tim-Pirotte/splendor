@@ -109,7 +109,7 @@ function getIllustration(cardName, cardBonus) {
 
     const illustrationModifierSeed = hashToNumber(hashDigest(`${gameId}-${cardName}-modifier`));
 
-    const chanceCategory = getChanceCategory(illustrationModifierSeed);
+    const chanceCategory = getChanceCategory(illustrationModifierSeed, CHANCES, CHANCE_CATEGORIES);
 
     if (chanceCategory === "REGULAR") {
         trackCardEncounter(cardBonus, illustration, "REGULAR", gameId, cardBonus);
@@ -129,13 +129,13 @@ function getIllustration(cardName, cardBonus) {
     }
 }
 
-function getChanceCategory(seed) {
+function getChanceCategory(seed, chances, chanceCategories) {
     let cumulativeChance = 0;
 
-    for (let i = 0; i < CHANCES.length; i++) {
-        cumulativeChance += CHANCES[i];
+    for (let i = 0; i < chances.length; i++) {
+        cumulativeChance += chances[i];
         if (seed < cumulativeChance) {
-            return CHANCE_CATEGORIES[i];
+            return chanceCategories[i];
         }
     }
 }

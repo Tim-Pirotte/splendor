@@ -293,6 +293,12 @@ body > section {
     z-index: 0;
 }
 
+/* Progress bar */
+.progress-bar-container {
+    display: flex;
+    align-items: center;
+}
+
 .player-tokens .progress-bar-container, .player-points .progress-bar-container {
     background: linear-gradient(0deg,rgba(35, 35, 35, 1) 0%, rgb(45, 45, 45) 50%, rgba(35, 35, 35, 1) 100%);
     outline: 0.1rem solid #3d3d3d;
@@ -551,12 +557,6 @@ aside {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-}
-
-/* Progress bar */
-.progress-bar-container {
-    display: flex;
-    align-items: center;
 }
 
 /* Reserved */

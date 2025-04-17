@@ -9,7 +9,8 @@ import {
     TOKEN_MAPPER,
 } from "../config.js";
 import {
-    addNodesToEmptiedContainer, constructVerticalBackground,
+    addNodesToEmptiedContainer,
+    constructVerticalBackground,
     getNumberedItemTemplate,
     renderCard,
     safeEmptyContainer,
