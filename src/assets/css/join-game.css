@@ -14,7 +14,8 @@ header {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
-    margin: 2rem 2rem;
+    align-items: center;
+    margin: 2rem 2rem 3rem 2rem;
 }
 
 #playerInformation {
@@ -22,6 +23,11 @@ header {
     flex-flow: row nowrap;
     gap: 1rem;
     align-items: center;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 2rem;
 }
 
 /* Form styling (inc. related features) */
