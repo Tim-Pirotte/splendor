@@ -11,6 +11,9 @@ body {
     flex-flow: column nowrap;
     height: 100vh;
     overflow: clip;
+    background-image: url("../images/board_background.webp");
+    background-size: 120rem 67.5rem;
+
 }
 
 /* Splendor logo */
