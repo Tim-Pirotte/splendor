@@ -4,7 +4,7 @@ import { copyNode } from "../../utils/data-handler.js";
 import { validCardBuy } from "../state-machine/valid-action-checker.js";
 import { insertImageInto } from "../../utils/renderer.js";
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
-import { hashDigest } from "../card-collection-component/helper.js";
+import { hashDigest } from "../../utils/crypto.js";
 import { hashToNumber, trackCardEncounter } from "../card-collection-component/card-collection.js";
 import { CHANCE_CATEGORIES, CHANCES, ILLUSTRATIONS } from "../../card-collection-component/data.js";
 

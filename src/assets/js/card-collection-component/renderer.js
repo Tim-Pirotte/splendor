@@ -1,5 +1,7 @@
-import {CHANCE_CATEGORIES} from "./data.js";
+import {CHANCE_CATEGORIES, ILLUSTRATIONS} from "./data.js";
 import {loadFromStorage} from "../data-connector/local-storage-abstractor.js";
+import {hashToNumber} from "../board-component/card-collection-component/card-collection.js";
+import {hashDigest} from "../utils/crypto.js";
 
 function renderCardCollection() {
     const seenTree = loadFromStorage("cardCollection") || {};
@@ -49,13 +51,21 @@ function renderMisprintedCollectedCards(cardType, illustration, collectedCategor
 
 function renderCollectedCard(cardType, illustration, category, gameId, cardName, misprintType) {
     if (!isValidCard(illustration, category, gameId, cardName, misprintType)) {
-        throw new Error(`Card data has been tampered with (${illustration["category"]["name"]}: ${category})`)
+        throw new Error(`Card data has been tampered with (${illustration}: ${category})`)
     }
 }
 
 function isValidCard(illustration, category, gameId, cardName, misprintType) {
+    if (!isCorrectIllustration(illustration, gameId, cardName)) return false;
     console.log(illustration, gameId, cardName, category, misprintType)
     return true;
+}
+
+function isCorrectIllustration(illustration, gameId, cardName) {
+    const illustrationSeed = hashToNumber(hashDigest(`${gameId}-${cardName}`), ILLUSTRATIONS.length);
+    const validIllustration = ILLUSTRATIONS[illustrationSeed];
+
+    return illustration === validIllustration;
 }
 
 export { renderCardCollection };
