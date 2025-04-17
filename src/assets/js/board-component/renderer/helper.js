@@ -112,7 +112,7 @@ function getIllustration(cardName, cardBonus) {
     const chanceCategory = getChanceCategory(illustrationModifierSeed, CHANCES, CHANCE_CATEGORIES);
 
     if (chanceCategory === "REGULAR") {
-        trackCardEncounter(cardBonus, illustration, "REGULAR", gameId, cardBonus);
+        trackCardEncounter(cardBonus, illustration, "REGULAR", gameId, cardBonus, cardName);
 
         return `${TOKEN_MAPPER[cardBonus]}_${illustration}`;
 
@@ -121,7 +121,7 @@ function getIllustration(cardName, cardBonus) {
 
         const illustrationColor = Object.values(TOKEN_MAPPER)[misprintSeed];
 
-        trackCardEncounter(cardBonus, illustration, "MISPRINT", gameId, illustrationColor);
+        trackCardEncounter(cardBonus, illustration, "MISPRINT", gameId, illustrationColor, cardName);
 
         return `${illustrationColor}_${illustration}`;
     } else {
