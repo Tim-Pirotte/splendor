@@ -5,7 +5,7 @@ import { startGameStatePolling } from "../game-data-handler.js";
 import { deselectCard } from "./select.js";
 import { validDeckReserve } from "../state-machine/valid-action-checker.js";
 import { highlightCard, setActionToBuyReserve } from "./buy-handler.js";
-import { addGoldToken } from "../renderer/current-player-renderer.js";
+import {addGoldToken, renderClientPlayerReserve} from "../renderer/current-player-renderer.js";
 import { getActionButton, isCurrentlyPlaying } from "../game-status-interface.js";
 
 function processReserve(){
@@ -27,16 +27,11 @@ function processReserve(){
         };
     }
 
-    API.reserveCard(requestBody).then(res => renderReservedCards(res["reserve"]));
+    API.reserveCard(requestBody).then(res => renderClientPlayerReserve(res["reserve"]));
 
     addGoldToken();
     endBuyReserveAction();
     startGameStatePolling();
-}
-
-function renderReservedCards(reservedCards) {
-    const $reservedCards = document.querySelector(".reserved-cards ul");
-    addNodesToEmptiedContainer($reservedCards, reservedCards, renderCard);
 }
 
 function selectDeckForReserving(e) {

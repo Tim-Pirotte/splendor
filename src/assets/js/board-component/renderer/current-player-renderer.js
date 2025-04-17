@@ -87,10 +87,9 @@ function addHighestScoreIndicator(totalPrestigePoints, highestScore) {
     if (totalPrestigePoints >= highestScore) $highestScoreIndicator.classList.remove("hidden");
 }
 
-function renderClientPlayerReserve(currentPlayer) {
+function renderClientPlayerReserve(reservedCards) {
     const $reserved = document.querySelector(".reserved-cards ul");
     const $reservedContainer = $reserved.closest(".reserved-cards");
-    const reservedCards = currentPlayer["reserve"];
 
     if (reservedCards.length > 0) {
         $reservedContainer.querySelector("h4").innerHTML = "";
@@ -130,7 +129,7 @@ function renderClientPlayer(players, gems) {
     renderClientPlayerTokens(clientPlayer["tokens"], clientPlayer["bonuses"], gems);
 
     // Needs to know the players tokens to determine if a card should be highlighted
-    renderClientPlayerReserve(clientPlayer);
+    renderClientPlayerReserve(clientPlayer["reserve"]);
 
     renderTimer();
 }
@@ -297,4 +296,5 @@ export {
     addGoldToken,
     renderGameStatusMessage,
     renderPlayerProfile,
+    renderClientPlayerReserve,
 };
