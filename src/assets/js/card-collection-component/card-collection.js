@@ -6,6 +6,8 @@ import {getChanceCategory} from "../board-component/renderer/helper.js";
 import {TOKEN_MAPPER} from "../board-component/config.js";
 
 function init() {
+    document.querySelector("main").addEventListener("click", handleCorruptButtonClick);
+
     try {
         renderCardCollection();
     } catch (err) {
@@ -44,6 +46,11 @@ function isCorrectMisprint(misprintType, gameId, cardName) {
     const validMisprintType = Object.values(TOKEN_MAPPER)[misprintSeed];
 
     return misprintType === validMisprintType;
+}
+
+function handleCorruptButtonClick(e) {
+    if (e.target.tagName.toLowerCase() !== "button") return;
+    console.log("clicked");
 }
 
 export { isValidCard, isCorrectIllustration, isCorrectCategory, isCorrectMisprint };

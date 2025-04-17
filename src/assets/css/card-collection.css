@@ -94,3 +94,37 @@ ul {
     scroll-snap-type: y mandatory;
     overflow-y: scroll;
 }
+
+.corrupt-data-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem 0;
+    color: var(--light-text-color);
+}
+
+.corrupt-data-message p {
+    color: #d7d7d7;
+    font-size: 0.8rem;
+}
+
+.corrupt-data-message .corrupt-buttons {
+    display: flex;
+    gap: 0 1rem;
+}
+
+.corrupt-data-message .corrupt-buttons button {
+    width: 7.65rem;
+    height: 2.55rem;
+    background-size: cover;
+    background-color: transparent;
+    border: none;
+    background-image: url("../images/UI/action_button.webp"), url("../images/fallback/UI/action_button.png");
+    color: var(--light-text-color);
+    font-size: 0.7rem;
+    transition: filter 0.3s ease-in-out;
+}
+
+.corrupt-data-message .corrupt-buttons button:hover {
+    filter: brightness(115%);
+}
