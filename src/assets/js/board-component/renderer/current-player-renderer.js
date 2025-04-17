@@ -282,7 +282,9 @@ function renderTimer() {
 
 function addGoldToken() {
     const $goldTokenCountContainer = document.querySelector(".player-tokens li[data-type='Gold'] .amount");
-    $goldTokenCountContainer.textContent = parseInt($goldTokenCountContainer.textContent) + 1;
+    if (parseInt(document.querySelector(".board-tokens li[data-type='Gold']").dataset.amount)) {
+        $goldTokenCountContainer.textContent = parseInt($goldTokenCountContainer.textContent) + 1;
+    }
 }
 
 export {
