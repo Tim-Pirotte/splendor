@@ -50,7 +50,22 @@ function isCorrectMisprint(misprintType, gameId, cardName) {
 
 function handleCorruptButtonClick(e) {
     if (e.target.tagName.toLowerCase() !== "button") return;
-    console.log("clicked");
+
+    e.target.disabled = true;
+
+    if (e.target.dataset.action === "deleteData") {
+        deleteData();
+    } else {
+        tryRestoringData();
+    }
+}
+
+function deleteData() {
+    console.log("deleting data");
+}
+
+function tryRestoringData() {
+    console.log("restoring data");
 }
 
 export { isValidCard, isCorrectIllustration, isCorrectCategory, isCorrectMisprint };

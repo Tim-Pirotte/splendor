@@ -128,3 +128,8 @@ ul {
 .corrupt-data-message .corrupt-buttons button:hover {
     filter: brightness(115%);
 }
+
+.corrupt-data-message .corrupt-buttons button:disabled {
+    filter: grayscale(80%);
+    cursor: not-allowed;
+}
