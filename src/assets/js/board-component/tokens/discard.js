@@ -4,10 +4,12 @@ import { setButtonStatuses } from "../renderer/current-player-renderer.js";
 import { getActionButton, setActionButtonState } from "../game-status-interface.js";
 
 function selectPlayerToken(e) {
-    if (!clickedOnDiscardButton(e.target)) return;
+    const $button = e.target.closest("button");
 
-    const action = getButtonAction(e.target);
-    const $tokenContainer = getTokenContainer(e.target);
+    if (!clickedOnDiscardButton($button)) return;
+
+    const action = getButtonAction($button);
+    const $tokenContainer = getTokenContainer($button);
     const $amountCounter = getAmountCounter($tokenContainer);
 
     if (action === "add") {
@@ -29,8 +31,8 @@ function selectPlayerToken(e) {
     }
 }
 
-function clickedOnDiscardButton(target) {
-    return target.tagName.toLowerCase() === "button" && target.closest("div").classList.contains("discard-container");
+function clickedOnDiscardButton(button) {
+    return button.tagName.toLowerCase() === "button" && button.closest("div").classList.contains("discard-container");
 }
 
 function getButtonAction(target) {

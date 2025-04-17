@@ -1,13 +1,34 @@
-/* GENERAL LAY-OUT */
+:root {
+    --hover-effect: brightness(80%);
+    --hover-transition-duration: filter 0.3s ease-in-out;
+    --buyable-card-box-shadow: 0 0 0.4rem 0.3rem;
+    --buyable-card-brightness: brightness(105%);
+}
 
 /* Sidebar and main content alignment */
 body {
     display: grid;
     grid-template-columns: 20% 80%;
+    height: 100vh;
 }
 
-/* SWITCH TOKEN BUTTONS */
-.hidden, .switch-token-container .hidden {
+/* Styles to hide content */
+.hidden {
+    visibility: hidden;
+}
+
+.none {
+    display: none;
+}
+
+/* Header styles */
+section h3, section h2, section h4 {
+    color: var(--light-text-color);
+    text-shadow: var(--primary-text-shadow);
+}
+
+/* Switch token buttons */
+.switch-token-container .hidden {
     display: none;
 }
 
@@ -19,58 +40,27 @@ body {
 body > section {
     display: grid;
     grid-template-rows: 10% 90%;
+    padding-left: 4rem;
+    overflow: hidden;
+    background-image: url("../images/board_background.webp");
+    background-size: 120rem 67.5rem;
 }
 
-div.main {
+.main {
     display: grid;
-    grid-template-columns: 50% 30% 6% 14%;
-    grid-template-rows: 80% 5% 15%;
+    grid-template-columns: 57% 20% 13% 10%;
+    grid-template-rows: 72% 5% 23%;
     grid-template-areas:    "decks board-tokens nobles timer"
-                            "player-points player-tokens player-tokens action-button"
-                            "reserved-cards player-tokens player-tokens action-button";
+                            "player-points player-tokens action-button action-button"
+                            "reserved-cards player-tokens action-button action-button";
 }
 
+/* DECKS */
 .decks {
     grid-area: decks;
     display: flex;
     flex-direction: column;
-    gap: 0.4rem 0;
-}
-
-.board-tokens {
-    grid-area: board-tokens;
-}
-
-.nobles {
-    grid-area: nobles;
-}
-
-.player-tokens {
-    grid-area: player-tokens;
-}
-
-.reserved-cards {
-    grid-area: reserved-cards;
-}
-
-/* ASIDE */
-aside {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 0.5rem;
-}
-
-.player-card > ul {
-    display: flex;
-    gap: 0 0.2rem;
-}
-
-.card li {
-    display: flex;
-    align-items: center;
-    width: 25%;
-    position: relative;
+    gap: 0.9rem 0;
 }
 
 .decks > li {
@@ -78,72 +68,275 @@ aside {
     gap: 0 1rem;
 }
 
+.cards-in-deck {
+    flex: 0 1 auto;
+    display: flex;
+    gap: 0.9rem;
+    justify-content: space-between;
+}
+
+/* DECK CARDS */
+.hidden-cards {
+    flex: 0 1 6rem;
+    transition: 0.3s;
+    position: relative;
+    box-shadow: 0 -0.5rem 0.2rem 0.2rem #00000040;
+    z-index: 0;
+}
+
+.hidden-cards img {
+    width: 100%;
+}
+
+.hidden-cards::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+            0deg,
+            var(--light-text-color),
+            var(--light-text-color) 0.05rem,
+            lightgrey 0.05rem,
+            lightgrey 0.1rem
+    );
+    border-radius: 5%;
+    z-index: -1;
+}
+
+.hidden-cards:hover {
+    filter: var(--hover-effect);
+}
+
+/* Board tokens I */
+.board-tokens p {
+    text-align: center;
+    text-shadow: var(--primary-text-shadow);
+}
+
+.board-tokens li {
+    height: 30%;
+    width: 4rem;
+    transition: var(--hover-transition-duration);
+}
+
+.selected-token p {
+    color: #d88e4f;
+}
+
+/* Nobles I */
+.selected-noble img {
+    transform: scale(1.3);
+    box-shadow: 0 0 0.5rem 0.5rem #00000040;
+    filter: var(--buyable-card-brightness);
+    z-index: 10;
+}
+
+.selectable-noble img {
+    box-shadow: var(--buyable-card-box-shadow) #c98c08c2;
+    filter: var(--buyable-card-brightness);
+    border-radius: 0.25rem;
+}
+
+.nobles img {
+    width: 4.5rem;
+    transition: var(--hover-transition-duration);
+    box-shadow: 0 0 0.1rem 0.1rem #00000020;
+    /* This is needed to prevent a redraw on a new texture which causes sub-pixel shifting due to different anti-aliasing.
+       Usage of will-change outside of optimization is frowned upon so if there is another way to fix this please change this.
+       https://developer.mozilla.org/en-US/docs/Web/CSS/will-change */
+    will-change: filter;
+}
+
+.forfeit img {
+    width: 2rem;
+}
+
+.avatar img {
+    width: 2rem;
+}
+
+.player-points img {
+    width: 1.25rem;
+}
+
+.player-points .progress-bar {
+    width: 5.4rem;
+    height: 1rem;
+    position: relative;
+}
+
+/* Player tokens */
+.player-tokens button img {
+    height: 0.95rem;
+}
+
+/* Cards */
+.card li img {
+    width: 100%;
+}
+
+.nobles img:hover {
+    filter: var(--hover-effect);
+}
+
+/* Cards */
+.card li {
+    display: flex;
+    align-items: center;
+    width: 20%;
+    position: relative;
+    font-size: 0.75rem;
+}
+
+.card > p {
+    position: absolute;
+    left: 15.5%;
+    top: 3.5%;
+}
+
+/* Player tokens */
 .player-tokens li {
     display: flex;
     gap: 0.5rem;
 }
 
-.player-card > ul > li {
+/* Discard tokens */
+.discard-container p {
+    font-size: 0.9rem;
+}
+
+.player-card header, .player-card li {
     display: flex;
-    align-items: center;
+    align-items: baseline;
+    gap: 0.4rem;
 }
 
-.discard-container > * {
-    display: inline-block;
-}
-
-/* Player cards */
-.player-card header *, .player-card li * {
-    display: inline-block;
-}
-
-.game-creator {
-    border: solid gold;
-    border-radius: 50%;
-}
-
-/* History */
-.history li * {
-    display: inline-block;
-}
-
-/* HEADER */
-.top-bar {
+.history li {
     display: flex;
+    height: 1.5rem;
     align-items: center;
-    gap: 0.5rem;
-    justify-content: space-between
-}
-
-.top-bar h1 {
-    background-color: hotpink;
-}
-
-.top-bar div {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-section header picture {
-    padding-right: 1rem;
-}
-
-/* PROGRESS BAR */
-.progress-bar-container {
-    display: flex;
-    align-items: center;
+    padding-left: 0.2rem;
 }
 
 .progress-bar picture {
     display: flex;
 }
 
-/* CARD */
+/* Player cards I */
+.player-card > ul > li {
+    display: flex;
+    align-items: center;
+}
+
+.card li p {
+    position: absolute;
+    font-size: 0.7rem;
+    left: 36%;
+    top: 37%;
+}
+
+.reserved-cards > ul > p {
+    color: var(--light-text-color);
+    text-shadow: var(--primary-text-shadow);
+}
+
+.player-card .reserved p {
+    position: absolute;
+    color: var(--light-text-color);
+    top: 10%;
+    left: 25%;
+}
+
+.player-card .reserved img {
+    height: 4.250rem;
+    left: 0;
+}
+
+/* Cards I */
+.card li picture {
+    width: 100%;
+}
+
+/* Player tokens */
+.player-tokens {
+    grid-area: player-tokens;
+    color: var(--light-text-color);
+}
+
+.player-tokens header {
+    display: flex;
+    align-items: flex-end;
+    gap: 0 0.5rem;
+}
+
+.player-tokens li:first-of-type {
+    margin: 1rem 0;
+}
+
+.player-tokens li picture:last-of-type {
+    margin-right: auto;
+}
+
+.player-tokens button {
+    padding: 0;
+    background: transparent;
+    border: none;
+}
+
+.player-tokens .progress-bar {
+    width: 4rem;
+    height: 100%;
+    position: relative;
+    z-index: 0;
+}
+
+/* Progress bar */
+.progress-bar-container {
+    display: flex;
+    align-items: center;
+}
+
+.player-tokens .progress-bar-container, .player-points .progress-bar-container {
+    background: linear-gradient(0deg,rgba(35, 35, 35, 1) 0%, rgb(45, 45, 45) 50%, rgba(35, 35, 35, 1) 100%);
+    outline: 0.1rem solid #3d3d3d;
+    border-radius: 10%;
+}
+
+.button-container button {
+    width: 7.65rem;
+    height: 2.55rem;
+    background-size: cover;
+    background-color: transparent;
+    border: none;
+    background-image: url("../images/UI/action_button.webp"), url("../images/fallback/UI/action_button.png");
+    color: var(--light-text-color);
+    font-size: 0.7rem;
+    transition: var(--hover-transition-duration);
+}
+
+.discard-container button:disabled {
+    opacity: 0.4;
+}
+
+.discard-container > * {
+    display: inline-block;
+}
+
+/* Cards II */
 .card {
-    flex: 0 1 6vw;
+    flex: 0 1 6rem;
     aspect-ratio: 70 / 100;
     position: relative;
+    transition: 0.3s;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 0.1rem 0.1rem #00000020;
+    /* This is needed to prevent a redraw on a new texture which causes sub-pixel shifting due to different anti-aliasing.
+       Usage of will-change outside of optimization is frowned upon so if there is another way to fix this please change this.
+       https://developer.mozilla.org/en-US/docs/Web/CSS/will-change */
+    will-change: filter;
 }
 
 .card ul {
@@ -155,154 +348,284 @@ section header picture {
     bottom: 0;
 }
 
-.card > p {
-    position: absolute;
-    left: 15.5%;
-    top: 4%;
+.card .points {
+    color: var(--light-text-color);
+    font-size: 0.75rem;
 }
 
-.card li picture {
-    width: 100%;
+.card:hover {
+    filter: var(--hover-effect);
 }
 
-.selected-token img {
-    outline: 0.275rem solid hotpink;
-    border-radius: 0.75rem;
-}
-
-.card li img {
-    width: 100%;
-}
-
-.card li p {
-    position: absolute;
-    left: 35%;
-    top: 35%;
+/* Makes text on the black chip readable */
+.card li[data-token-type="Onyx"] p {
+    color: var(--light-text-color);
 }
 
 .card li > * {
     position: absolute;
 }
 
-.decks > li > picture img {
-    width: 100%;
-}
-
 .card > picture:first-of-type img {
     width: 100%;
+    height: 100%;
 }
 
 .card > picture:last-of-type img {
-    width: 60%;
+    width: 100%;
     position: absolute;
-    left: 18%;
-    bottom: 34%;
+    left: 0;
+    bottom: 33%;
 }
 
-/* RESERVED */
-.reserved-cards ul {
+.selected-card {
+    transform: scale(1.3);
+    box-shadow: 0 0 0.5rem 0.5rem #00000040;
+    z-index: 10;
+}
+
+.green-buyable-card {
+    box-shadow: var(--buyable-card-box-shadow) #97bd56d6;
+    filter: var(--buyable-card-brightness);
+}
+
+.white-buyable-card {
+    box-shadow: var(--buyable-card-box-shadow) #e5e3e3d6;
+    filter: var(--buyable-card-brightness);
+}
+
+.blue-buyable-card {
+    box-shadow: var(--buyable-card-box-shadow) #518da3d6;
+    filter: var(--buyable-card-brightness);
+}
+
+.red-buyable-card {
+    box-shadow: var(--buyable-card-box-shadow) #d88e4fd6;
+    filter: var(--buyable-card-brightness);
+}
+
+.black-buyable-card {
+    box-shadow: var(--buyable-card-box-shadow) #9c7444d6;
+    filter: var(--buyable-card-brightness);
+}
+
+/* Board tokens II */
+.board-tokens {
+    grid-area: board-tokens;
+    color: var(--light-text-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-content: flex-start;
+    gap: 0 0.5rem;
+    flex-wrap: wrap;
+    height: 22rem;
+}
+
+.board-tokens li:hover {
+    filter: var(--hover-effect);
+}
+
+.pulsing-text {
+    animation: pulse-bright 1s ease-in-out infinite;
+}
+
+@keyframes pulse-bright {
+    0%, 100% {
+        filter: brightness(100%);
+    }
+    50% {
+        filter: brightness(70%);
+    }
+}
+
+/* Nobles II */
+.nobles {
+    grid-area: nobles;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem 0;
+    margin-top: 1.5rem;
+}
+
+/* ASIDE */
+aside {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0 0.42rem;
+    background-image: url("../images/UI/sidebar_background.webp");
+    background-size: contain;
+    z-index: 2;
+    box-shadow: 0.3rem 0 0 0 rgba(121, 96, 72, 0.5);
+}
+
+/* Player cards II */
+.player-card {
+    gap: 0.4rem;
+    background-color: #d9b56f;
+    transition: transform 2s;
+    padding: 0.2rem 0.2rem 0.2rem 7%;
+    margin-top: 0.5rem;
+    width: 98%;
+    position: relative;
+    /* This prevents the padding from increasing the box size */
+    box-sizing: border-box;
+}
+
+.player-card.current-player::after {
+    content: "";
+    width: 38.5%;
+    height: 97%;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    border: rgb(187, 146, 86) solid 0.2rem;
+    border-left: none;
+    box-shadow: 0.2rem 0.2rem 0 0 rgba(121, 96, 72, 0.5);
+}
+
+.player-card > ul {
+    display: flex;
+    gap: 0 0.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.player-card .reserved li {
+    position: relative;
+}
+
+.player-card .reserved .amount {
+    text-shadow: var(--primary-text-shadow);
+}
+
+.player-card header {
+    margin-bottom: 0.5rem;
+}
+
+.diamond {
+    width: 1.25rem;
+}
+
+.player-card.current-player {
+    transform: translateX(42%);
+    position: relative;
+}
+
+
+.game-creator {
+    outline: solid #ffc107;
+    border-radius: 50%;
+}
+
+/* History */
+.history {
+    height: 11rem;
+    overflow-y: scroll;
+    scrollbar-color: #9c7444 transparent;
+    scrollbar-width: thin;
+    border-top: rgb(187 146 86) solid 0.2rem;
+    box-shadow: 0 -0.1875rem 0 0 rgb(121 85 72 / 11%);
+}
+
+.history li:nth-child(even) {
+    background-color: rgb(187 146 86);
+}
+
+/* HEADER */
+.top-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.top-bar h1 {
+    color: var(--light-text-color);
+    text-shadow: var(--primary-text-shadow);
+    margin: 0 auto;
+}
+
+.forfeit {
+    background-color: transparent;
+    border: none;
+    width: fit-content;
+    padding: 0;
+}
+
+.top-bar > div {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Reserved */
+.reserved-cards {
+    grid-area: reserved-cards;
+}
+
+.reserved-cards h4 {
+    font-size: 1rem;
+}
+
+.reserved-cards > ul {
     display: flex;
     gap: 0 1rem;
-}
-
-/* DECKS */
-.decks > li > ul {
-    flex: 0 1 auto;
-    display: flex;
-    justify-content: space-between;
-    gap: 0 0.4rem;
-}
-
-/* DECK CARDS */
-.decks > li > picture {
-    flex: 0 1 6vw;
 }
 
 /* Player points */
 .player-points {
     display: flex;
-    align-items: center;
+    align-items: baseline;
     gap: 0 0.5rem;
     grid-area: player-points;
 }
 
-.enough-points-to-win {
-    color: hotpink;
-}
-
-.buyable-card {
-    outline: 0.275rem solid yellow;
-    border-radius: 0.25rem;
-}
-
-.selected-card {
-    outline: 0.275rem solid hotpink;
-    border-radius: 0.25rem;
-}
-
-.selectable-noble {
-    outline: 0.275rem solid yellow;
-    border-radius: 0.25rem;
-}
-
-.selected-noble {
-    outline: 0.275rem solid hotpink;
-    border-radius: 0.25rem;
-}
-
-.progress-bar {
-    height: 0.5rem;
-    background-repeat: no-repeat;
-}
-
-/* PLAYER TOKENS */
-.player-tokens header {
-    display: flex;
-    gap: 0 0.5rem;
-}
-
-.player-tokens li:first-of-type {
-    margin: 1rem 0;
-}
-
-.highlighted-number {
-    color: hotpink;
-}
-
-.discard-container button {
-    padding: 0.2rem;
-}
-
-.player-card.current-player {
-    background-color: hotpink;
-    position: relative;
-    margin-left: 1.25rem;
+.enough-points-to-win, .highlighted-number {
+    color: #fa716c;
 }
 
 /* TIMER */
 .timer {
     height: 100%;
     width: 2rem;
-    background: whitesmoke;
+    background: #d9b56f;
     transform: rotate(180deg);
+    outline: #9c7444 solid 0.2rem;
+    box-shadow: 0 0 0 0.2rem #00000020, inset 0 0 0 0.2rem #00000035;
+    transition: opacity 1s;
+    margin-left: auto;
+    margin-right: 2rem;
 }
 
 .timer-fill {
     height: 0;
     width: 100%;
-    background: lightpink;
-    transition: background-color 1s ease-in-out;
+    background: #3b6992;
+    transition: background-color 1s ease-in-out, box-shadow 1s ease-in-out;
+    box-shadow: inset 0 0 0 0.2rem #4c86ba;
 }
 
 .time-almost-ends {
-    background: hotpink;
+    background: #fa716c;
+    box-shadow: inset 0 0 0 0.2rem #ff8e89;
 }
 
+/* Action buttons */
 .button-container { 
     grid-area: action-button;
     height: 2rem;
     width: fit-content;
-    margin-top: auto;
-    margin-left: auto;
-    margin-right: auto;
+    margin: auto 2rem 2rem auto;
+    display: flex;
+    gap: 0 1rem;
+}
+
+.button-container button:hover {
+    filter: brightness(115%);
+}
+
+.button-container button:disabled {
+    cursor: not-allowed;
+    filter: grayscale(80%);
 }

@@ -26,7 +26,7 @@ function initRoundBegin(gameData) {
     }
 
     if (!isCurrentlyPlaying()) {
-        setActionButtonState("Wait until your turn", "doNothing", {});
+        setActionButtonState("Wait your turn", "doNothing", {});
         getActionButton().disabled = true;
     }
 

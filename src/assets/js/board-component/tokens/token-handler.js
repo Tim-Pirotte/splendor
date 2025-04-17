@@ -5,13 +5,10 @@ import { getActionButton, setActionButtonState } from "../game-status-interface.
 import { validTokenTake } from "../state-machine/valid-action-checker.js";
 import { deselectCard } from "../buy-reserve/select.js";
 import { startGameStatePolling } from "../game-data-handler.js";
+import { reflowCSS } from "../helper.js";
 
 function clickedOnToken(target) {
-    return target.tagName.toLowerCase() === "img";
-}
-
-function getToken(target) {
-    return target.closest("li");
+    return target.tagName.toLowerCase() === "li";
 }
 
 function stackExists($actionButton) {
@@ -39,7 +36,8 @@ function tokenInStack($selectedToken, $actionButton, stackPointer) {
 }
 
 function deselectToken($selectedToken) {
-    $selectedToken.classList.remove("selected-token");
+    $selectedToken.querySelector("span").textContent = "";
+    $selectedToken.querySelector("p").classList.remove("pulsing-text");
 }
 
 function unHighlightTokens() {
@@ -87,13 +85,26 @@ function setActionToTokenAction(stackPointer) {
 
     if (stackPointer === 1 && tokenAmount >= MIN_TOKENS_FOR_PICKING_TWO) {
         setActionButtonState("Take two", "processTakeTwoTokensClick", {}, false);
+        highlightTokens(getActionButton(), "2");
     } else {
         setActionButtonState("Take up to three", "processTakeTokenClick", {}, false);
+        highlightTokens(getActionButton(), "1");
     }
 }
 
-function highlightToken($selectedToken) {
-    $selectedToken.classList.add("selected-token");
+function highlightTokens($actionButton, amountToTake) {
+    for (let i = 0; i < parseInt($actionButton.dataset.stackPointer); i++) {
+        const tokenType = $actionButton.dataset[`token${i}`];
+        const $boardToken = document.querySelector(`.board-tokens [data-type=${tokenType}]`);
+
+        $boardToken.querySelector("span").textContent = `- ${amountToTake}`;
+
+        const $boardTokenText = $boardToken.querySelector("p");
+        // Remove them first to sync animations between elements
+        $boardTokenText.classList.remove("pulsing-text");
+        reflowCSS($boardTokenText);
+        $boardTokenText.classList.add("pulsing-text");
+    }
 }
 
 function removeTokenFromList($selectedToken, $actionButton, stackPointer) {
@@ -109,7 +120,6 @@ function addTokenToList($selectedToken, $actionButton, stackPointer) {
     pushTokenToStack($selectedToken, $actionButton, stackPointer);
     stackPointer++;
     $actionButton.dataset.stackPointer = stackPointer;
-    highlightToken($selectedToken);
     return stackPointer;
 }
 
@@ -120,7 +130,7 @@ function selectToken(e) {
 
     getActionButton().disabled = false;
 
-    const $selectedToken = getToken(e.target);
+    const $selectedToken = e.target;
 
     if ($selectedToken.dataset.amount < 1) return;
 
@@ -147,7 +157,6 @@ function selectToken(e) {
 
     stackPointer = addTokenToList($selectedToken, $actionButton, stackPointer);
     setActionToTokenAction(stackPointer);
-
 }
 
 function setTokensTo(stackPointer, $actionButton, amountOfTokens) {

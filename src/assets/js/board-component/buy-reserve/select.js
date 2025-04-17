@@ -45,15 +45,18 @@ function selectCard(e) {
 }
 
 function deselectCard(currentlyClickedIsCard = false) {
+    hideSwitchPaymentButtons();
+
     unHighlightCards();
+
     getActionButton().disabled = false;
     getReserveCardButton().classList.add("hidden");
 
     clearDatasetAttributes(getReserveCardButton());
+
     if (currentlyClickedIsCard) {
         setActionButtonState("skip turn", "skipTurn", {}, true);
     }
-
 }
 
 export { selectCard, deselectCard };
