@@ -37,7 +37,7 @@ function getRandomNumber(max) {
     const randomNumber = arr[0];
 
     //by dividing by one above the maximum number it becomes exclusive
-    //we use 32bit since this function is used for rendering images in a random place and otherwise it would horrible
+    //we use 32bit since this function is used for rendering images in a random place and otherwise it would look horrible
     return (randomNumber / (2 ** 32)) * max;
 }
 
