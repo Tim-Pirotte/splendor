@@ -181,4 +181,5 @@ export {
     isCreator,
     constructVerticalBackground,
     constructBackground,
+    getChanceCategory,
 };

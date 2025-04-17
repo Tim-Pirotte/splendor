@@ -1,7 +1,11 @@
-import {CHANCE_CATEGORIES, ILLUSTRATIONS} from "./data.js";
+import {CHANCE_CATEGORIES, CHANCES, ILLUSTRATIONS} from "./data.js";
 import {loadFromStorage} from "../data-connector/local-storage-abstractor.js";
 import {hashToNumber} from "../board-component/card-collection-component/card-collection.js";
 import {hashDigest} from "../utils/crypto.js";
+import {getChanceCategory, safeEmptyContainer} from "../board-component/renderer/helper.js";
+import {TOKEN_MAPPER} from "../board-component/config.js";
+import {isValidCard} from "./card-collection.js";
+import {copyNode} from "../utils/data-handler.js";
 
 function renderCardCollection() {
     const seenTree = loadFromStorage("cardCollection") || {};
@@ -55,17 +59,13 @@ function renderCollectedCard(cardType, illustration, category, gameId, cardName,
     }
 }
 
-function isValidCard(illustration, category, gameId, cardName, misprintType) {
-    if (!isCorrectIllustration(illustration, gameId, cardName)) return false;
-    console.log(illustration, gameId, cardName, category, misprintType)
-    return true;
+function renderCorruptDataMessage() {
+    const $main = document.querySelector("main");
+    safeEmptyContainer($main);
+
+    const $corruptDataMessage = copyNode(document.querySelector("#corrupt-data-template"));
+
+    $main.appendChild($corruptDataMessage);
 }
 
-function isCorrectIllustration(illustration, gameId, cardName) {
-    const illustrationSeed = hashToNumber(hashDigest(`${gameId}-${cardName}`), ILLUSTRATIONS.length);
-    const validIllustration = ILLUSTRATIONS[illustrationSeed];
-
-    return illustration === validIllustration;
-}
-
-export { renderCardCollection };
+export { renderCardCollection, renderCorruptDataMessage };
