@@ -29,4 +29,16 @@ function getWinner(player, topPlayerScore, topPlayerBonuses) {
     return player.points === topPlayerScore && player.amountOfBonuses === topPlayerBonuses;
 }
 
-export { getSortedResults };
+//this function was made because sonar cried about me using Math.random
+function getRandomNumber(max) {
+    const arr = new Uint32Array(1);
+    crypto.getRandomValues(arr);
+
+    const randomNumber = arr[0];
+
+    //by dividing by one above the maximum number it becomes exclusive
+    //we use 32bit since this function is used for rendering images in a random place and otherwise it would look horrible
+    return (randomNumber / (2 ** 32)) * max;
+}
+
+export { getSortedResults, getRandomNumber };

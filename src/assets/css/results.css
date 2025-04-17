@@ -3,13 +3,14 @@ main {
     flex: 1 0 auto;
 }
 
-body > div {
+body {
     padding-top: 5rem;
     box-sizing: border-box;
     display: flex;
     align-items: center;
     flex-flow: column nowrap;
     height: 100vh;
+    overflow: clip;
 }
 
 /* Splendor logo */
@@ -36,6 +37,10 @@ tbody tr:nth-child(even) {
     background: whitesmoke;
 }
 
+tbody tr:nth-child(odd) {
+    background: white;
+}
+
 /* Place the audio toggle at the right side of the footer */
 footer {
     align-self: flex-end;
@@ -52,4 +57,22 @@ footer .sound-button {
     height: 3rem;
     background-color: transparent;
     border: none;
+}
+
+/* ANIMATIONS */
+@keyframes rainingImage {
+    from {transform: translateY(-2.5rem)}
+    to {transform: translateY(110vh)}
+}
+
+div.raining-animation {
+    width: 2rem;
+    height: 2rem;
+    position: absolute;
+    top: -2.5rem;
+    animation: rainingImage 3s ease-in;
+    z-index: -1;
+    background-repeat: no-repeat;
+    background-size: contain;
+    transform: translateX(-50%);
 }
