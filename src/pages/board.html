@@ -38,36 +38,6 @@
         </ol>
         <!-- History -->
         <ol class="history">
-            <li>Game starts</li>
-            <li>Round 1 starts</li>
-            <li>
-                <p><strong>Alice</strong> takes</p>
-                <picture>
-                    <source srcset="../assets/images/UI/tokens/red_chip.webp">
-                    <img src="../assets/images/fallback/UI/tokens/red_chip.png" alt="Red Chip" title="Red chip">
-                </picture>
-                <p>,</p>
-                <picture>
-                    <source srcset="../assets/images/UI/tokens/blue_chip.webp">
-                    <img src="../assets/images/fallback/UI/tokens/blue_chip.png" alt="Blue chip" title="Blue chip">
-                </picture>
-            </li>
-            <li>
-                <p><strong>Bob</strong> buys a </p>
-                <picture>
-                    <source srcset="../assets/images/UI/cards/blue_card_small.webp">
-                    <img src="../assets/images/fallback/UI/cards/blue_card_small.png" alt="Blue card" title="Blue card">
-                </picture>
-                <p>card</p>
-            </li>
-            <li>
-                <p><strong>You</strong> reserve a</p>
-                <picture>
-                    <source srcset="../assets/images/UI/cards/green_card_small.webp">
-                    <img src="../assets/images/fallback/UI/cards/green_card_small.png" alt="Green card" title="Green card">
-                </picture>
-                <p>card</p>
-            </li>
             <template id="take-tokens-history-template">
                 <li>
                     <p><strong></strong> takes</p>
@@ -116,7 +86,12 @@
                         <img src="../assets/images/fallback/UI/sound_off.png" alt="Toggle sound" title="Toggle sound">
                     </picture>
                 </button>
-                <button type="button" class="forfeit">Forfeit button</button>
+                <button type="button" class="forfeit">
+                    <picture>
+                        <source srcset="../assets/images/UI/forfeit.webp" type="image/webp">
+                        <img src="../assets/images/fallback/UI/forfeit.png" alt="Toggle sound" title="Toggle sound">
+                    </picture>
+                </button>
                 <h2>Username</h2>
                 <div class="avatar"></div>
             </div>
@@ -167,15 +142,15 @@
                 <div class="progress-bar-container">
                     <div class="progress-bar"></div>
                 </div>
-                <p></p>
+                <h4>00 / 15</h4>
                 <picture class="hidden">
-                    <source srcset="../assets/images/UI/tokens/white_chip.webp" type="image/webp">
-                    <img src="../assets/images/fallback/UI/tokens/white_chip.png" alt="Score amongst the highest" title="Score amongst the highest" loading="lazy">
+                    <source srcset="../assets/images/UI/diamond.webp" type="image/webp">
+                    <img src="../assets/images/fallback/UI/diamond.png" alt="Score amongst the highest" title="Score amongst the highest" loading="lazy">
                 </picture>
             </section>
             <!-- Reserved cards -->
             <section class="reserved-cards">
-                <h3>Reserved</h3>
+                <h4>No reserved cards</h4>
                 <ul></ul>
             </section>
             <!-- Player tokens -->
@@ -187,9 +162,22 @@
                 <ul>
                     <template id="token-discard-template">
                         <div class="discard-container">
-                            <button type="button" data-action="remove">-</button>
+                            <button type="button" data-action="remove">
+                                <!-- You might be wondering: "Why would we use images here instead of the + and - characters".
+                                The reason for this is simpel. The font that we use has spacing below and above these chars so making
+                                the text large enough so that the average person can read it makes the container overflow. -->
+                                <picture>
+                                    <source srcset="../assets/images/UI/minus.webp" type="image/webp">
+                                    <img src="../assets/images/fallback/UI/minus.png" alt="Remove from discard pile" loading="lazy">
+                                </picture>
+                            </button>
                             <p data-amount="0" class="amount">0</p>
-                            <button type="button" data-action="add">+</button>
+                            <button type="button" data-action="add">
+                                <picture>
+                                    <source srcset="../assets/images/UI/plus.webp" type="image/webp">
+                                    <img src="../assets/images/fallback/UI/plus.png" alt="Add to discard pile" loading="lazy">
+                                </picture>
+                            </button>
                         </div>
                     </template>
                 </ul>
@@ -201,31 +189,32 @@
         </div>
     </section>
 
-    <!-- UL is to fix sonar issues-->
-    <ul>
-        <template id="card-template">
-            <li class="card">
-                <p class="points"></p>
-                <ul class="cost"></ul>
-            </li>
-        </template>
-    </ul>
+    <!-- NOSONAR_BEGIN -->
+    <template id="card-template">
+        <li class="card">
+            <p class="points"></p>
+            <ul class="cost"></ul>
+        </li>
+    </template>
+    <!-- NOSONAR_END -->
 
-    <!-- UL is to fix sonar issues-->
-    <ul>
-        <template id="numbered-item-template">
-            <li>
-                <p class="amount"></p>
-            </li>
-        </template>
-    </ul>
+    <!-- NOSONAR_BEGIN -->
+    <template id="numbered-item-template">
+        <li>
+            <p class="amount"></p>
+        </li>
+    </template>
+    <!-- NOSONAR_END -->
 
     <template id="switch-tokens-container-template">
         <div class="switch-token-container">
-            <button class="switch-token hidden">Switch one to gold</button>
-            <p class="hidden">Selected: <span></span></p>
+            <button class="switch-token hidden">
+                <picture>
+                    <source srcset="../assets/images/UI/switch_to_gold.webp" type="image/webp">
+                    <img src="../assets/images/fallback/UI/switch_to_gold.png" alt="Switch to gold" loading="lazy">
+                </picture>
+            </button>
         </div>
-
     </template>
 
     <template id="image-template">

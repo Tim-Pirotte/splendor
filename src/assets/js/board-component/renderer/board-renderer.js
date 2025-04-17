@@ -1,5 +1,6 @@
 import { GEMS } from "../data.js";
 import {
+    CARDS_IN_DECK_TO_DECK_HEIGHT_SCALE,
     GOLD_TOKEN_LIMIT,
     NOBLES_MAPPER,
     TOKEN_LIMIT,
@@ -9,6 +10,7 @@ import {
 } from "../config.js";
 import {
     addNodesToEmptiedContainer,
+    constructVerticalBackground,
     getNumberedItemTemplate,
     renderCard,
     safeEmptyContainer,
@@ -34,6 +36,12 @@ function getDeck(deck) {
 
 function setAmountOfCardsInDeck($currentDeck, deck) {
     $currentDeck.dataset.amount = deck["cardStackSize"];
+    renderDeckSize($currentDeck, deck["cardStackSize"]);
+}
+
+function renderDeckSize($currentDeck, amountOfCardsInDeck) {
+    const $hiddenCard = $currentDeck.closest("li").querySelector(":scope > picture img");
+    $hiddenCard.style.transform = `translateY(-${amountOfCardsInDeck / CARDS_IN_DECK_TO_DECK_HEIGHT_SCALE}rem)`;
 }
 
 function getMaxTokens(playerLength, tokenType) {
@@ -65,14 +73,11 @@ function renderBoardToken($numberedItemTemplate, token, unclaimedTokens, playerL
 
     const maxTokens = getMaxTokens(playerLength, token);
 
-    $boardToken.querySelector(".amount").textContent = `${(unclaimedTokens[token] || 0)}/${maxTokens}`;
-    insertTokenImage($boardToken, token);
+    $boardToken.querySelector(".amount").innerHTML = `${(unclaimedTokens[token] || 0)}/${maxTokens} <span></span>`;
+    $boardToken.style.background = constructVerticalBackground(unclaimedTokens[token] || 0, `board_token_${TOKEN_MAPPER[token]}`, 0.5);
+    $boardToken.style.backgroundSize = "3.25rem";
 
     return $boardToken;
-}
-
-function insertTokenImage($boardToken, token) {
-    insertImageInto($boardToken, `UI/tokens/${TOKEN_MAPPER[token]}_chip`, false, `${TOKEN_MAPPER[token]} chip`);
 }
 
 function getNobleAlt(costs) {

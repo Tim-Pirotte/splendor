@@ -1,7 +1,8 @@
 const PRESTIGE_POINTS_NEEDED_TO_WIN = 15;
 const MAX_TOKENS_ALLOWED = 10;
-const CHIP_SPACING = 0.15;
+const CHIP_SPACING = 0.3;
 const HIGHEST_CARD_LEVEL = 3;
+const CARDS_IN_DECK_TO_DECK_HEIGHT_SCALE = 45;
 
 const NOBLES_MAPPER = {
     "Elizabeth of Austria": "noble_border",
@@ -51,4 +52,5 @@ export {
     HIGHEST_CARD_LEVEL,
     SECONDS_PER_ROUND,
     SECONDS_WHEN_TURN_ALMOST_ENDS,
+    CARDS_IN_DECK_TO_DECK_HEIGHT_SCALE,
 };

@@ -52,7 +52,7 @@ function renderOtherPlayer($playerTemplate, otherPlayer, highestScore, currentPl
 
     showOtherPlayerTurn(playerName, currentPlayer, $playerCard);
 
-    insertImageInto($playerCard, `avatars/${avatar}`, true, avatar);
+    insertImageInto($playerCard.querySelector("header"), `avatars/${avatar}`, true, avatar);
     if (isGameCreator) $playerCard.querySelector("img").classList.add("game-creator");
 
     setPlayerName($playerCard, otherPlayer);
@@ -79,7 +79,11 @@ function setPlayerPoints($playerCard, prestigePoints, highestScore) {
 
     highlightPointsWinner(prestigePoints, $playerPoints);
 
-    if (prestigePoints >= highestScore) insertImageInto($playerCard, "UI/tokens/white_chip", false, "Score amongst the highest");
+    if (prestigePoints >= highestScore) {
+        insertImageInto($playerCard.querySelector("header"), "UI/diamond", false, "Score amongst the highest");
+
+        $playerCard.querySelector("header picture:last-of-type img").classList.add("diamond");
+    }
 }
 
 function renderTokenList(containerToInsertInto, tokenAmounts, gems) {
@@ -130,7 +134,7 @@ function renderOtherPlayerReservedCard($numberedItemTemplate, reservedCard, cont
     const $reservedCard = copyNode($numberedItemTemplate);
     $reservedCard.querySelector(".amount").textContent = reservedCard["prestigePoints"];
 
-    insertImageInto($reservedCard, `cards/empty/${TOKEN_MAPPER[reservedCard["bonus"]]}_empty_card`, false, `${TOKEN_MAPPER[reservedCard["bonus"]]} chip`);
+    insertImageInto($reservedCard, `UI/cards/${TOKEN_MAPPER[reservedCard["bonus"]]}_card_small`, false, `${TOKEN_MAPPER[reservedCard["bonus"]]} chip`);
 
     containerToInsertInto.appendChild($reservedCard);
 }

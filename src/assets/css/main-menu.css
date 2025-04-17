@@ -58,10 +58,6 @@ footer {
     padding: 2rem;
 }
 
-footer picture source, footer picture img{
-    height: 3rem;
-}
-
 footer .sound-button {
     width: 3rem;
     height: 3rem;

@@ -21,4 +21,10 @@ function getUnclaimedTokens() {
     return tokens;
 }
 
-export { sumObjectValues, getUnclaimedTokens };
+function reflowCSS($node) {
+    // NOSONAR_BEGIN
+    $node.offsetHeight;
+    // NOSONAR_END
+}
+
+export { sumObjectValues, getUnclaimedTokens, reflowCSS };

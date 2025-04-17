@@ -1,13 +1,53 @@
-/* General body styling */
+:root {
+    --light-text-color: whitesmoke;
+    --primary-text-shadow: 0 0 0.3125rem black;
+}
+
+@font-face {
+    font-family: "Pixeloid sans";
+    src: url("../fonts/pixeloid_sans.woff");
+}
+
+/* General styling */
 body {
     background-color: white;
     color: black;
-    font-family: "Arial", sans-serif;
+    font-family: "Pixeloid sans", sans-serif;
 }
 
-/* General input field styling */
-input {
-    background-color: white;
-    border: black solid 0.025rem;
-    padding: 0.25rem;
+button {
+    font-family: "Pixeloid sans", sans-serif;
+}
+
+h1 {
+    font-size: 1.8rem;
+}
+
+h2 {
+    font-size: 1.6rem;
+}
+
+h3 {
+    font-size: 1.4rem;
+}
+
+h4 {
+    font-size: 1.2rem;
+}
+
+strong {
+    font-weight: bold;
+}
+
+* { image-rendering: pixelated; }
+
+.sound-button {
+    background-color: transparent;
+    border: none;
+    width: fit-content;
+    padding: 0;
+}
+
+.sound-button img {
+    width: 2rem;
 }
