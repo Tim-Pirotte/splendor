@@ -5,6 +5,7 @@ import { getActionButton, setActionButtonState } from "../game-status-interface.
 import { validTokenTake } from "../state-machine/valid-action-checker.js";
 import { deselectCard } from "../buy-reserve/select.js";
 import { startGameStatePolling } from "../game-data-handler.js";
+import {reflowCSS} from "../helper.js";
 
 function clickedOnToken(target) {
     return target.tagName.toLowerCase() === "li";
@@ -101,10 +102,7 @@ function highlightTokens($actionButton, amountToTake) {
         const $boardTokenText = $boardToken.querySelector("p");
         // Remove them first to sync animations between elements
         $boardTokenText.classList.remove("pulsing-text");
-        // NOSONAR_BEGIN
-        // This forces css to handle the above class removal
-        $boardTokenText.offsetHeight;
-        // NOSONAR_END
+        reflowCSS($boardTokenText);
         $boardTokenText.classList.add("pulsing-text");
     }
 }
