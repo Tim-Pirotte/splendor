@@ -6,7 +6,7 @@ import { insertImageInto } from "../../utils/renderer.js";
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
 import { hashDigest } from "../card-collection-component/helper.js";
 import { hashToNumber, trackCardEncounter } from "../card-collection-component/card-collection.js";
-import { CHANCE_CATEGORIES, CHANCES, ILLUSTRATIONS } from "../card-collection-component/data.js";
+import { CHANCE_CATEGORIES, CHANCES, ILLUSTRATIONS } from "../../card-collection-component/data.js";
 
 function addNodesToEmptiedContainer($container, list, mapFunction) {
     safeEmptyContainer($container);
