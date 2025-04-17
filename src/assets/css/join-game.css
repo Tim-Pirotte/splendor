@@ -17,6 +17,13 @@ header {
     margin: 2rem 2rem;
 }
 
+#playerInformation {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 1rem;
+    align-items: center;
+}
+
 /* Form styling (inc. related features) */
 form {
     margin: 0 auto;
