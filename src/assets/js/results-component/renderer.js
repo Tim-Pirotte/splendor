@@ -1,6 +1,12 @@
 import { MAX_PRESTIGE_POINTS } from "../config.js";
-import { getSortedResults } from "./helper.js";
+import { getRandomNumber, getSortedResults } from "./helper.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
+import {
+    INTERVAL_BETWEEN_ANIMATING_IMAGES,
+    LOSER_ANIMATION_IMAGES,
+    TIMEOUT_BEFORE_ANIMATED_IMAGE_DELETION,
+    WINNER_ANIMATION_IMAGES,
+} from "./config.js";
 
 function renderResultMessage(isWinner) {
     const $status = document.querySelector("h1");
@@ -12,7 +18,10 @@ function renderResults() {
         for (const player of gameResults) {
             const isPlayer = player.name === loadFromStorage("playerName");
 
-            if (isPlayer) renderResultMessage(isPlayer && player.isWinner);
+            if (isPlayer) {
+                renderResultMessage(player.isWinner);
+                renderResultAnimation(player.isWinner);
+            }
         }
         renderResultTable(gameResults);
     });
@@ -33,6 +42,24 @@ function renderResultTable(data) {
 
         $tbody.appendChild($clone);
     });
+}
+
+function renderResultAnimation(isWinner) {
+    const imageArray = isWinner ? WINNER_ANIMATION_IMAGES : LOSER_ANIMATION_IMAGES;
+    setInterval(renderOneAnimation, INTERVAL_BETWEEN_ANIMATING_IMAGES, imageArray);
+}
+
+function renderOneAnimation(imageArray) {
+    const $animationDiv = document.createElement("div");
+    const randomImage = imageArray[Math.floor(getRandomNumber(imageArray.length))];
+
+    $animationDiv.classList.add("raining-animation");
+    $animationDiv.style.left = `${getRandomNumber(100)}%`;
+    $animationDiv.style.backgroundImage = `url("${randomImage}")`;
+
+    document.querySelector("body").appendChild($animationDiv);
+
+    setTimeout(() => $animationDiv.remove(), TIMEOUT_BEFORE_ANIMATED_IMAGE_DELETION);
 }
 
 export { renderResults };

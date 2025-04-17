@@ -5,12 +5,12 @@ import { getTokenAmount, getTotalAmountDiscarded, getTotalTokenAmount } from "..
 import { validTokenDiscard } from "../state-machine/valid-action-checker.js";
 import {
     addNodesToEmptiedContainer,
+    addSwitchButton,
     formatNumber,
     getNumberedItemTemplate,
-    addSwitchButton,
+    highlightPointsWinner,
     renderCard,
     safeEmptyContainer,
-    highlightPointsWinner,
     constructBackground,
 } from "./helper.js";
 import {
@@ -19,7 +19,7 @@ import {
     removePaidTokens,
     updateCurrentPlayerBonuses,
 } from "../buy-reserve/buy-handler.js";
-import { getHighestScore, sumObjectValues } from "../../utils/game-object-handler.js";
+import { getHighestScore, getPlayerByName, sumObjectValues } from "../../utils/game-object-handler.js";
 import { getClientTokens, getClientTotalPrestigePoints } from "../game-data-handler.js";
 import { copyNode } from "../../utils/data-handler.js";
 import { isCurrentlyPlaying } from "../game-status-interface.js";
@@ -137,14 +137,6 @@ function renderClientPlayer(players, gems) {
 
 function isNotCurrentActivePlayer(clientPlayer) {
     return clientPlayer === undefined;
-}
-
-function getPlayerByName(players, currentPlayerName) {
-    for (const player of players) {
-        if (player.name === currentPlayerName) {
-            return player;
-        }
-    }
 }
 
 function countTokens(tokens) {
