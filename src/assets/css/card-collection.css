@@ -133,3 +133,18 @@ ul {
     filter: grayscale(80%);
     cursor: not-allowed;
 }
+
+p.error-message {
+    color: #ca0000;
+    text-align: center;
+    line-height: 150%;
+    text-shadow: none;
+}
+
+p.error-message a {
+    color: var(--light-text-color);
+}
+
+p.error-message a:visited {
+    color: #eecfff;
+}

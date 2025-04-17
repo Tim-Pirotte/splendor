@@ -1,4 +1,4 @@
-import { renderCardCollection, renderCorruptDataMessage } from "./renderer.js";
+import {renderCannotRestoreMessage, renderCardCollection, renderCorruptDataMessage} from "./renderer.js";
 import {hashToNumber} from "../board-component/card-collection-component/card-collection.js";
 import {hashDigest} from "../utils/crypto.js";
 import {CHANCE_CATEGORIES, CHANCES, ILLUSTRATIONS} from "./data.js";
@@ -55,17 +55,27 @@ function handleCorruptButtonClick(e) {
 
     if (e.target.dataset.action === "deleteData") {
         deleteData();
+        location.reload();
     } else {
         tryRestoringData();
     }
 }
 
 function deleteData() {
-    console.log("deleting data");
+
 }
 
 function tryRestoringData() {
-    console.log("restoring data");
+    try {
+        restoreData();
+    } catch (err) {
+        console.error(err);
+        renderCannotRestoreMessage();
+    }
+}
+
+function restoreData() {
+
 }
 
 export { isValidCard, isCorrectIllustration, isCorrectCategory, isCorrectMisprint };
