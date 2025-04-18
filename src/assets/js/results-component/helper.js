@@ -1,10 +1,13 @@
 import * as API from "../api.js";
 import { sumObjectValues } from "../utils/game-object-handler.js";
+import { GAME_STATE } from "../board-component/state-machine/data.js";
 
 function getSortedResults() {
     return API.getGame()
-        .then(({ players }) => {
-            const results = players.map(player => ({
+        .then(gameData => {
+            if (gameData.gameState !== GAME_STATE.WINNER_IS_FOUND) location.href = "./board.html";
+
+            const results = gameData.players.map(player => ({
                 name: player.name,
                 points: player["totalPrestigePoints"],
                 amountOfBonuses: getAmountOfBonuses(player),
