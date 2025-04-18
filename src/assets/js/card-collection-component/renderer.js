@@ -18,8 +18,6 @@ function renderCardCollection() {
 
     const categoryNodes = getCategoryNodes();
 
-    console.log(cardCollection)
-
     for (const card of cardCollection) {
         if (card["variant"] !== "MISPRINT") {
             renderCollectedCard(
@@ -47,7 +45,6 @@ function getCategoryNodes() {
 }
 
 function renderCollectedCard(cardType, illustration, category, gameId, cardName, categoryNodes, misprintType) {
-    console.log(cardType, illustration, category, gameId, cardName, categoryNodes, misprintType)
     if (!isValidCard(illustration, category, gameId, cardName, misprintType)) {
         throw new Error(`Card data has been tampered with (${illustration}: ${category})`)
     }
@@ -61,13 +58,15 @@ function renderCollectedCard(cardType, illustration, category, gameId, cardName,
             break;
         case "MISPRINT":
             insertImageInto($card, `cards/illustrations/${TOKEN_MAPPER[misprintType]}_${illustration}`, false, illustration.replace("_", " "));
+            break;
+        default:
+            insertImageInto($card, `cards/illustrations/${category.toLowerCase()}_${illustration}`, false, illustration.replace("_", " "));
     }
 
     categoryNodes[category].appendChild($card);
 }
 
 function renderMisprintCard(card, categoryNodes) {
-    console.log(card)
     for (const tokenType of GEMS) {
         if (tokenType in card) {
             renderCollectedCard(
