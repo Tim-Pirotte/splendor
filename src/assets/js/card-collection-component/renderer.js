@@ -108,6 +108,10 @@ function renderCollectionAmounts(cardCollection, categoryNodes) {
         if (category in cardCounts) {
             categoryNode.querySelector(".current-amount").textContent = cardCounts[category].toFixed(0).padStart(2, "0");
         }
+
+        categoryNode.querySelector(".max-amount").textContent = category === "MISPRINT"
+            ? (Object.values(TOKEN_MAPPER).length - 1)**2 * ILLUSTRATIONS.length
+            : (Object.values(TOKEN_MAPPER).length - 1) * ILLUSTRATIONS.length;
     }
 }
 
