@@ -102,7 +102,7 @@ function renderCollectionAmounts(cardCollection, categoryNodes) {
     const cardCounts = countCards(cardCollection);
 
     document.querySelector("header .current-amount").textContent = cardCounts["total"].toFixed().padStart(2, "0");
-    document.querySelector("header .max-amount").textContent = Object.values(TOKEN_MAPPER).length * ILLUSTRATIONS.length * variationsPerIllustrationPerCard;
+    document.querySelector("header .max-amount").textContent = (Object.values(TOKEN_MAPPER).length - 1) * ILLUSTRATIONS.length * variationsPerIllustrationPerCard;
 
     for (const [category, categoryNode] of Object.entries(categoryNodes)) {
         if (category in cardCounts) {
