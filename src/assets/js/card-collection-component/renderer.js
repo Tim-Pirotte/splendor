@@ -26,6 +26,7 @@ function renderCardCollection() {
                 card["variant"],
                 card["gameId"],
                 card["cardName"],
+                card["discoveryDate"],
                 categoryNodes,
             );
         } else {
@@ -46,7 +47,7 @@ function getCategoryNodes() {
     return result;
 }
 
-function renderCollectedCard(cardType, illustration, category, gameId, cardName, categoryNodes, misprintType) {
+function renderCollectedCard(cardType, illustration, category, gameId, cardName, discoveryDate, categoryNodes, misprintType) {
     if (!isValidCard(illustration, category, gameId, cardName, misprintType)) {
         throw new Error(`Card data has been tampered with (${illustration}: ${category})`)
     }
@@ -65,6 +66,8 @@ function renderCollectedCard(cardType, illustration, category, gameId, cardName,
             insertImageInto($card, `cards/illustrations/${category.toLowerCase()}_${illustration}`, false, illustration.replace("_", " "));
     }
 
+    $card.insertAdjacentHTML("beforeend", `<p>Discovered on ${new Date(discoveryDate).toLocaleDateString()}</p>`);
+
     categoryNodes[category].querySelector("ul").appendChild($card);
 }
 
@@ -77,6 +80,7 @@ function renderMisprintCard(card, categoryNodes) {
                 "MISPRINT",
                 card[tokenType]["gameId"],
                 card[tokenType]["cardName"],
+                card[tokenType]["discoveryDate"],
                 categoryNodes,
                 tokenType);
         }

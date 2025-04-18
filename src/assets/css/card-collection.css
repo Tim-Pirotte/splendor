@@ -40,7 +40,7 @@ header {
     border-top-right-radius: 25%;
     box-shadow: 0 0 0.9rem 0.3rem #2a2a2a50, inset 0 0 0.5rem 0.2rem #2a2a2a50;
     width: fit-content;
-    margin: 3rem auto 0;
+    margin: 2rem auto 0;
     padding: 1rem;
 }
 
@@ -138,7 +138,7 @@ h4 {
 
 ul {
     display: flex;
-    padding: 3rem 0 3.5rem 3.5rem;
+    padding: 3.15rem 0 3.5rem 3.5rem;
     gap: 3.5rem 3.5rem;
     flex-wrap: wrap;
     margin-top: 0.5rem;
@@ -184,6 +184,13 @@ li picture:last-of-type img {
     bottom: 6.1rem;
     width: 100%;
     z-index: -1;
+}
+
+li p {
+    color: var(--light-text-color);
+    text-align: center;
+    line-height: 120%;
+    margin-top: 14rem;
 }
 
 .corrupt-data-message {

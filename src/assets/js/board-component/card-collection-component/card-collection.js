@@ -8,7 +8,7 @@ function trackCardEncounter(bonusColor, illustrationName, variant, gameId, illus
         ? [bonusColor, illustrationName, variant, illustrationColor]
         : [bonusColor, illustrationName, variant];
 
-    updateTree(seenTree, path, path.length, { gameId, cardName });
+    updateTree(seenTree, path, path.length, { gameId, cardName, discoveryDate: Date.now() });
 
     localStorage.setItem("cardCollection", JSON.stringify(seenTree));
 }
