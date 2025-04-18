@@ -98,8 +98,11 @@ function renderCannotRestoreMessage() {
 }
 
 function renderCollectionAmounts(cardCollection) {
+    const variationsPerIllustrationPerCard = 9;
     const cardCounts = countCards(cardCollection);
-    console.log(cardCounts)
+
+    document.querySelector("header .current-amount").textContent = cardCounts["total"];
+    document.querySelector("header .max-amount").textContent = Object.values(TOKEN_MAPPER).length * ILLUSTRATIONS.length * variationsPerIllustrationPerCard;
 }
 
 export { renderCardCollection, renderCorruptDataMessage, renderCannotRestoreMessage };
