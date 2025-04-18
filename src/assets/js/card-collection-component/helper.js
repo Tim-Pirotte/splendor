@@ -17,8 +17,7 @@ function convertTreeToArray(tree, keyNames, result, previousPath, maxDepth) {
     }
 
     for (const branch of Object.keys(tree)) {
-        // .shift() dequeues the first element in the array
-        previousPath[keyNames.shift()] = branch;
+        previousPath[keyNames[keyNames.length - maxDepth + 1]] = branch;
         convertTreeToArray(tree[branch], keyNames, result, previousPath, maxDepth - 1);
     }
 }
