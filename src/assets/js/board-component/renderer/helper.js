@@ -119,11 +119,11 @@ function getIllustration(cardName, cardBonus) {
     } else if(chanceCategory === "MISPRINT") {
         const misprintSeed = hashToNumber(hashDigest(`${gameId}-${cardName}-misprint`), Object.keys(TOKEN_MAPPER).length);
 
-        const illustrationColor = Object.values(TOKEN_MAPPER)[misprintSeed];
+        const illustrationColor = Object.keys(TOKEN_MAPPER)[misprintSeed];
 
         trackCardEncounter(cardBonus, illustration, "MISPRINT", gameId, illustrationColor, cardName);
 
-        return `${illustrationColor}_${illustration}`;
+        return `${TOKEN_MAPPER[illustrationColor]}_${illustration}`;
     } else {
         console.log("Yet to be implemented");
     }

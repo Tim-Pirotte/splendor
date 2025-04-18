@@ -22,7 +22,7 @@ init();
 function isValidCard(illustration, category, gameId, cardName, misprintType) {
     if (!isCorrectIllustration(illustration, gameId, cardName)) return false;
     if (!isCorrectCategory(category, gameId, cardName)) return false;
-    if (misprintType) return !isCorrectMisprint(misprintType, gameId, cardName);
+    if (misprintType) return isCorrectMisprint(misprintType, gameId, cardName);
 
     return true;
 }
@@ -44,9 +44,9 @@ function isCorrectCategory(category, gameId, cardName) {
 
 function isCorrectMisprint(misprintType, gameId, cardName) {
     const misprintSeed = hashToNumber(hashDigest(`${gameId}-${cardName}-misprint`), Object.keys(TOKEN_MAPPER).length);
-    const validMisprintType = Object.values(TOKEN_MAPPER)[misprintSeed];
+    const validMisprintType = Object.keys(TOKEN_MAPPER)[misprintSeed];
 
-    return misprintType === TOKEN_MAPPER[validMisprintType];
+    return misprintType === validMisprintType;
 }
 
 function handleCorruptButtonClick(e) {

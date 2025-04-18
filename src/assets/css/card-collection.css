@@ -23,7 +23,7 @@ main {
     border: 0.3rem solid #9c7444;
     border-radius: 1rem;
     box-shadow: 0 0 0.9rem 0.3rem #2a2a2a50, inset 0 0 0.5rem 0.2rem #2a2a2a50;
-    height: 65vh;
+    height: 70vh;
     overflow-y: scroll;
 }
 

@@ -60,7 +60,7 @@ function renderCollectedCard(cardType, illustration, category, gameId, cardName,
             insertImageInto($card, `cards/illustrations/${TOKEN_MAPPER[cardType]}_${illustration}`, false, illustration.replace("_", " "));
             break;
         case "MISPRINT":
-            insertImageInto($card, `cards/illustrations/${misprintType}_${illustration}`, false, illustration.replace("_", " "));
+            insertImageInto($card, `cards/illustrations/${TOKEN_MAPPER[misprintType]}_${illustration}`, false, illustration.replace("_", " "));
     }
 
     categoryNodes[category].appendChild($card);
@@ -69,15 +69,15 @@ function renderCollectedCard(cardType, illustration, category, gameId, cardName,
 function renderMisprintCard(card, categoryNodes) {
     console.log(card)
     for (const tokenType of GEMS) {
-        if (TOKEN_MAPPER[tokenType] in card) {
+        if (tokenType in card) {
             renderCollectedCard(
                 card["bonusColor"],
                 card["illustrationName"],
                 "MISPRINT",
-                card[TOKEN_MAPPER[tokenType]]["gameId"],
-                card[TOKEN_MAPPER[tokenType]]["cardName"],
+                card[tokenType]["gameId"],
+                card[tokenType]["cardName"],
                 categoryNodes,
-                TOKEN_MAPPER[tokenType]);
+                tokenType);
         }
     }
 }
