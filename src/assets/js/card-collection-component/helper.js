@@ -1,12 +1,13 @@
-function updateTree(current, pathArray, depth, value) {
+function addToTree(current, pathArray, depth, value) {
     const keyToInsert = pathArray[pathArray.length - depth];
 
     if (!(keyToInsert in current)) current[keyToInsert] = {};
 
     if (depth === 1) {
-        current[keyToInsert] = value;
+        // Prevents overwriting existing values
+        if (!(keyToInsert in current)) current[keyToInsert] = value;
     } else {
-        updateTree(current[keyToInsert], pathArray, depth - 1, value);
+        addToTree(current[keyToInsert], pathArray, depth - 1, value);
     }
 }
 
@@ -22,4 +23,4 @@ function convertTreeToArray(tree, keyNames, result, previousPath, maxDepth) {
     }
 }
 
-export { updateTree, convertTreeToArray };
+export { addToTree, convertTreeToArray };

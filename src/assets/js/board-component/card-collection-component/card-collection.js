@@ -1,5 +1,5 @@
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
-import { updateTree } from "../../card-collection-component/helper.js";
+import { addToTree } from "../../card-collection-component/helper.js";
 
 function trackCardEncounter(bonusColor, illustrationName, variant, gameId, illustrationColor, cardName) {
     const seenTree = loadFromStorage("cardCollection") || {};
@@ -8,7 +8,7 @@ function trackCardEncounter(bonusColor, illustrationName, variant, gameId, illus
         ? [bonusColor, illustrationName, variant, illustrationColor]
         : [bonusColor, illustrationName, variant];
 
-    updateTree(seenTree, path, path.length, { gameId, cardName, discoveryDate: Date.now() });
+    addToTree(seenTree, path, path.length, { gameId, cardName, discoveryDate: Date.now() });
 
     localStorage.setItem("cardCollection", JSON.stringify(seenTree));
 }
