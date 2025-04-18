@@ -1,3 +1,8 @@
+:root {
+    --light-text-color: whitesmoke;
+    --hover-transition-duration: filter 0.3s ease-in-out;
+}
+
 /* General styling for the body and main container */
 header img {
     width: 23.75rem;
@@ -87,6 +92,27 @@ footer .sound-button {
     height: 3rem;
     background-color: transparent;
     border: none;
+}
+
+#return-to-menu {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    width: 7.65rem;
+    height: 2.55rem;
+    background-size: cover;
+    background-color: transparent;
+    border: none;
+    text-decoration: none;
+    background-image: url("../images/UI/action_button.webp"), url("../images/fallback/UI/action_button.png");
+    color: var(--light-text-color);
+    font-size: 0.7rem;
+    transition: var(--hover-transition-duration);
+    margin: 2rem auto 0;
+}
+
+#return-to-menu:hover {
+    filter: brightness(115%);
 }
 
 /* ANIMATIONS */
