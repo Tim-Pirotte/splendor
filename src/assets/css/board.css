@@ -629,3 +629,12 @@ aside {
     cursor: not-allowed;
     filter: grayscale(80%);
 }
+
+.sound-button img {
+    width: 2rem;
+}
+
+.sound-button {
+    position: initial;
+}
+

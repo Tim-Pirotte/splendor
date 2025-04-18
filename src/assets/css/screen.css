@@ -49,5 +49,11 @@ strong {
 }
 
 .sound-button img {
-    width: 100%;
+    width: 3.125rem;
+}
+
+.sound-button {
+    position: absolute;
+    bottom: 4rem;
+    right: 4rem;
 }
