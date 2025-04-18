@@ -41,6 +41,8 @@ strong {
 
 * { image-rendering: pixelated; }
 
+
+/* styled separately since button and input elements don't inherent the font-family property */
 button, input {
     font-family: "Pixeloid sans", sans-serif;
 }
