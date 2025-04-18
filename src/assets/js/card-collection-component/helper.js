@@ -5,7 +5,7 @@ function addToTree(current, pathArray, depth, value) {
 
     if (depth === 1) {
         // Prevents overwriting existing values
-        if (!(keyToInsert in current)) {
+        if (isEmpty(current[keyToInsert])) {
             current[keyToInsert] = value;
             return true;
         } else {
@@ -14,6 +14,10 @@ function addToTree(current, pathArray, depth, value) {
     } else {
         return addToTree(current[keyToInsert], pathArray, depth - 1, value);
     }
+}
+
+function isEmpty(object) {
+    return Object.keys(object).length === 0;
 }
 
 function convertTreeToArray(tree, keyNames, result, previousPath, maxDepth) {

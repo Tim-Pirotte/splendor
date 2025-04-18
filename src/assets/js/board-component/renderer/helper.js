@@ -19,7 +19,7 @@ function addNodesToEmptiedContainer($container, list, mapFunction) {
 }
 
 function constructBackground(value, imageName, spacing) {
-    /* Notice: css stacking order differs from html (https://www.w3.org/TR/css-backgrounds-3/#layering) */
+    /* Notice: CSS stacking order differs from html (https://www.w3.org/TR/css-backgrounds-3/#layering) */
     const layers = [];
 
     for (let i = 0; i < value; i++) {

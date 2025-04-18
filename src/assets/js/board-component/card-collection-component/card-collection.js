@@ -10,9 +10,16 @@ function trackCardEncounter(bonusColor, illustrationName, variant, gameId, illus
 
     const valueChanged = addToTree(seenTree, path, path.length, { gameId, cardName, discoveryDate: Date.now() });
 
-    if (valueChanged) console.log("New card unlocked")
+    if (valueChanged) renderCardUnlockedMessage(variant);
 
     localStorage.setItem("cardCollection", JSON.stringify(seenTree));
+}
+
+function renderCardUnlockedMessage(variant) {
+    document.querySelector(".unlocked-card-message")
+        .insertAdjacentHTML(
+            "beforeend",
+            `<p>${variant.charAt(0) + variant.slice(1).toLowerCase().replace("_", " ")} card discovered!</p>`)
 }
 
 function hashToNumber(hashString, rangeMax = 1000) {

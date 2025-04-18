@@ -629,3 +629,35 @@ aside {
     cursor: not-allowed;
     filter: grayscale(80%);
 }
+
+.unlocked-card-message {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+@keyframes message {
+    from {
+        transform: translateX(10rem);
+    }
+    25% {
+        transform: translateX(0);
+    }
+    75% {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+.unlocked-card-message p {
+    background-color: #d88e4f;
+    border: 0.1rem solid #b56246;
+    color: var(--light-text-color);
+    padding: 0.5rem;
+    margin: 1rem 0;
+    box-shadow: 0 0 0.1rem 0.1rem #00000020;
+    animation: message 10s normal ease-in-out;
+    animation-fill-mode: forwards;
+}
