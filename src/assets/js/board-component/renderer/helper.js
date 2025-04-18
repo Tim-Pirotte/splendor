@@ -111,21 +111,25 @@ function getIllustration(cardName, cardBonus) {
 
     const chanceCategory = getChanceCategory(illustrationModifierSeed, CHANCES, CHANCE_CATEGORIES);
 
-    if (chanceCategory === "REGULAR") {
-        trackCardEncounter(cardBonus, illustration, "REGULAR", gameId, cardBonus, cardName);
+    switch (chanceCategory) {
+        case "REGULAR":
+            trackCardEncounter(cardBonus, illustration, "REGULAR", gameId, cardBonus, cardName);
+            return `${TOKEN_MAPPER[cardBonus]}_${illustration}`;
+        case "MISPRINT":
+            const misprintSeed = hashToNumber(hashDigest(`${gameId}-${cardName}-misprint`), Object.keys(TOKEN_MAPPER).length);
+            const illustrationColor = Object.keys(TOKEN_MAPPER)[misprintSeed];
 
-        return `${TOKEN_MAPPER[cardBonus]}_${illustration}`;
-
-    } else if(chanceCategory === "MISPRINT") {
-        const misprintSeed = hashToNumber(hashDigest(`${gameId}-${cardName}-misprint`), Object.keys(TOKEN_MAPPER).length);
-
-        const illustrationColor = Object.keys(TOKEN_MAPPER)[misprintSeed];
-
-        trackCardEncounter(cardBonus, illustration, "MISPRINT", gameId, illustrationColor, cardName);
-
-        return `${TOKEN_MAPPER[illustrationColor]}_${illustration}`;
-    } else {
-        console.log("Yet to be implemented");
+            trackCardEncounter(cardBonus, illustration, "MISPRINT", gameId, illustrationColor, cardName);
+            return `${TOKEN_MAPPER[illustrationColor]}_${illustration}`;
+        case "INVERTED":
+            trackCardEncounter(cardBonus, illustration, "INVERTED", gameId, "inverted", cardName);
+            return `inverted_${illustration}`;
+        case "GREYSCALE":
+            trackCardEncounter(cardBonus, illustration, "GREYSCALE", gameId, "greyscale", cardName);
+            return `greyscale_${illustration}`;
+        case "GLITCHED":
+            trackCardEncounter(cardBonus, illustration, "GLITCHED", gameId, "glitched", cardName);
+            return `glitched_${illustration}`;
     }
 }
 
