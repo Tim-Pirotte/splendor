@@ -1,4 +1,5 @@
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
+import { updateTree } from "../../card-collection-component/helper.js";
 
 function trackCardEncounter(bonusColor, illustrationName, variant, gameId, illustrationColor, cardName) {
     const seenTree = loadFromStorage("cardCollection") || {};

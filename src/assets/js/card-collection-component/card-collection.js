@@ -4,10 +4,15 @@ import {hashDigest} from "../utils/crypto.js";
 import {CHANCE_CATEGORIES, CHANCES, ILLUSTRATIONS} from "./data.js";
 import {getChanceCategory} from "../board-component/renderer/helper.js";
 import {TOKEN_MAPPER} from "../board-component/config.js";
-import {saveToStorage} from "../data-connector/local-storage-abstractor.js";
+import {loadFromStorage, saveToStorage} from "../data-connector/local-storage-abstractor.js";
+import {convertTreeToArray} from "./helper.js";
 
 function init() {
     document.querySelector("main").addEventListener("click", handleCorruptButtonClick);
+
+    const result = [];
+    convertTreeToArray(loadFromStorage("cardCollection"), ["l1", "l2", "l3"], result, {}, 4);
+    console.log(result);
 
     try {
         renderCardCollection();

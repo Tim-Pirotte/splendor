@@ -10,6 +10,17 @@ function updateTree(current, pathArray, depth, value) {
     }
 }
 
-function convertTreeToArray() {
+function convertTreeToArray(tree, keyNames, result, previousPath, maxDepth) {
+    if (typeof tree !== "object" || maxDepth === 1) {
+        result.push(Object.assign(tree, previousPath));
+        return;
+    }
 
+    for (const branch of Object.keys(tree)) {
+        // .shift() dequeues the first element in the array
+        previousPath[keyNames.shift()] = branch;
+        convertTreeToArray(tree[branch], keyNames, result, previousPath, maxDepth - 1);
+    }
 }
+
+export { updateTree, convertTreeToArray };
