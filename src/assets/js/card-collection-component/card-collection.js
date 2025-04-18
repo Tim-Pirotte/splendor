@@ -46,7 +46,7 @@ function isCorrectMisprint(misprintType, gameId, cardName) {
     const misprintSeed = hashToNumber(hashDigest(`${gameId}-${cardName}-misprint`), Object.keys(TOKEN_MAPPER).length);
     const validMisprintType = Object.values(TOKEN_MAPPER)[misprintSeed];
 
-    return misprintType === validMisprintType;
+    return misprintType === TOKEN_MAPPER[validMisprintType];
 }
 
 function handleCorruptButtonClick(e) {

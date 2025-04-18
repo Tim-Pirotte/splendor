@@ -8,6 +8,7 @@ import {isValidCard} from "./card-collection.js";
 import {copyNode} from "../utils/data-handler.js";
 import {convertTreeToArray} from "./helper.js";
 import {insertImageInto} from "../utils/renderer.js";
+import {GEMS} from "../board-component/data.js";
 
 function renderCardCollection() {
     const seenTree = loadFromStorage("cardCollection") || {};
@@ -20,14 +21,18 @@ function renderCardCollection() {
     console.log(cardCollection)
 
     for (const card of cardCollection) {
-        renderCollectedCard(
-            card["bonusColor"],
-            card["illustrationName"],
-            card["variant"],
-            card["gameId"],
-            card["cardName"],
-            categoryNodes,
-        );
+        if (card["variant"] !== "MISPRINT") {
+            renderCollectedCard(
+                card["bonusColor"],
+                card["illustrationName"],
+                card["variant"],
+                card["gameId"],
+                card["cardName"],
+                categoryNodes,
+            );
+        } else {
+            renderMisprintCard(card, categoryNodes);
+        }
     }
 }
 
@@ -42,6 +47,7 @@ function getCategoryNodes() {
 }
 
 function renderCollectedCard(cardType, illustration, category, gameId, cardName, categoryNodes, misprintType) {
+    console.log(cardType, illustration, category, gameId, cardName, categoryNodes, misprintType)
     if (!isValidCard(illustration, category, gameId, cardName, misprintType)) {
         throw new Error(`Card data has been tampered with (${illustration}: ${category})`)
     }
@@ -49,7 +55,31 @@ function renderCollectedCard(cardType, illustration, category, gameId, cardName,
     const $card = document.createElement("li");
     insertImageInto($card, `cards/empty/${TOKEN_MAPPER[cardType]}_empty_card`, false, `${TOKEN_MAPPER[cardType]} card`);
 
+    switch (category) {
+        case "REGULAR":
+            insertImageInto($card, `cards/illustrations/${TOKEN_MAPPER[cardType]}_${illustration}`, false, illustration.replace("_", " "));
+            break;
+        case "MISPRINT":
+            insertImageInto($card, `cards/illustrations/${misprintType}_${illustration}`, false, illustration.replace("_", " "));
+    }
+
     categoryNodes[category].appendChild($card);
+}
+
+function renderMisprintCard(card, categoryNodes) {
+    console.log(card)
+    for (const tokenType of GEMS) {
+        if (TOKEN_MAPPER[tokenType] in card) {
+            renderCollectedCard(
+                card["bonusColor"],
+                card["illustrationName"],
+                "MISPRINT",
+                card[TOKEN_MAPPER[tokenType]]["gameId"],
+                card[TOKEN_MAPPER[tokenType]]["cardName"],
+                categoryNodes,
+                TOKEN_MAPPER[tokenType]);
+        }
+    }
 }
 
 function renderCorruptDataMessage() {
