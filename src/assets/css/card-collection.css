@@ -49,6 +49,23 @@ h1 {
     color: var(--light-text-color);
 }
 
+.misprints-title {
+    color: var(--light-text-color);
+}
+
+.misprints-title span {
+    color: black;
+    display: inline-block;
+}
+
+.misprints-title span.down {
+    transform: translateY(0.3rem);
+}
+
+.misprints-title span.up {
+    transform: translateY(-0.3rem);
+}
+
 .inverted-cards-title span {
     color: var(--light-text-color);
 }
