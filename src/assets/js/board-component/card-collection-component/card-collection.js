@@ -8,7 +8,9 @@ function trackCardEncounter(bonusColor, illustrationName, variant, gameId, illus
         ? [bonusColor, illustrationName, variant, illustrationColor]
         : [bonusColor, illustrationName, variant];
 
-    addToTree(seenTree, path, path.length, { gameId, cardName, discoveryDate: Date.now() });
+    const valueChanged = addToTree(seenTree, path, path.length, { gameId, cardName, discoveryDate: Date.now() });
+
+    if (valueChanged) console.log("New card unlocked")
 
     localStorage.setItem("cardCollection", JSON.stringify(seenTree));
 }

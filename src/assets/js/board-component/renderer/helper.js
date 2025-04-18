@@ -12,7 +12,9 @@ function addNodesToEmptiedContainer($container, list, mapFunction) {
     safeEmptyContainer($container);
 
     for (const listItem of list) {
-        $container.appendChild(mapFunction(listItem));
+        const $itemToAdd = mapFunction(listItem);
+        if (!$itemToAdd) continue;
+        $container.appendChild($itemToAdd);
     }
 }
 
@@ -67,6 +69,8 @@ function getNumberedItemTemplate() {
 }
 
 function renderCard(card) {
+    if (!card) return;
+
     const $card = copyNode(document.querySelector("#card-template"));
     $card.dataset.name = card["name"];
     $card.querySelector(".points").textContent = card["prestigePoints"];

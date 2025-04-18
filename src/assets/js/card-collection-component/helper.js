@@ -5,9 +5,14 @@ function addToTree(current, pathArray, depth, value) {
 
     if (depth === 1) {
         // Prevents overwriting existing values
-        if (!(keyToInsert in current)) current[keyToInsert] = value;
+        if (!(keyToInsert in current)) {
+            current[keyToInsert] = value;
+            return true;
+        } else {
+            return false;
+        }
     } else {
-        addToTree(current[keyToInsert], pathArray, depth - 1, value);
+        return addToTree(current[keyToInsert], pathArray, depth - 1, value);
     }
 }
 
