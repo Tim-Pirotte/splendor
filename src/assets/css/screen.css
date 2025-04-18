@@ -41,6 +41,10 @@ strong {
 
 * { image-rendering: pixelated; }
 
+button, input {
+    font-family: "Pixeloid sans", sans-serif;
+}
+
 .sound-button {
     background-color: transparent;
     border: none;
