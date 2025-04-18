@@ -47,8 +47,29 @@ label {
 }
 
 /* Join and create buttons */
-button[type="submit"] {
-    margin-top: 1rem;
+.form-actions {
+    grid-area: action-button;
+    height: 2rem;
+    width: fit-content;
+    margin: 1rem 2rem 2rem auto;
+    display: flex;
+    gap: 0 1rem;
+}
+
+.form-actions button:hover {
+    filter: brightness(115%);
+}
+
+.form-actions button {
+    width: 7.65rem;
+    height: 2.55rem;
+    background-size: cover;
+    background-color: transparent;
+    border: none;
+    background-image: url("../images/UI/action_button.webp"), url("../images/fallback/UI/action_button.png");
+    color: var(--light-text-color);
+    font-size: 0.7rem;
+    transition: var(--hover-transition-duration);
 }
 
 /* Place the audio toggle at the right side of the footer */
