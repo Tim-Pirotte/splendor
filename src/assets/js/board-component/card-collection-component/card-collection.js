@@ -3,21 +3,11 @@ import { loadFromStorage } from "../../data-connector/local-storage-abstractor.j
 function trackCardEncounter(bonusColor, illustrationName, variant, gameId, illustrationColor, cardName) {
     const seenTree = loadFromStorage("cardCollection") || {};
 
-    if (!seenTree[bonusColor]) seenTree[bonusColor] = {};
-    if (!seenTree[bonusColor][illustrationName]) seenTree[bonusColor][illustrationName] = {};
+    const path = variant === "MISPRINT"
+        ? [bonusColor, illustrationName, variant, illustrationColor]
+        : [bonusColor, illustrationName, variant];
 
-    const branch = seenTree[bonusColor][illustrationName];
-
-    if (!branch[variant]) branch[variant] = {};
-
-    if (variant === "MISPRINT") {
-        if (!branch[variant][illustrationColor]) branch[variant][illustrationColor] = {};
-        branch[variant][illustrationColor]["gameId"] = gameId;
-        branch[variant][illustrationColor]["cardName"] = cardName;
-    } else {
-        branch[variant]["gameId"] = gameId;
-        branch[variant]["cardName"] = cardName
-    }
+    updateTree(seenTree, path, path.length, { gameId, cardName });
 
     localStorage.setItem("cardCollection", JSON.stringify(seenTree));
 }
