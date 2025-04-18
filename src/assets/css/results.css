@@ -5,17 +5,35 @@ main {
 
 body {
     padding-top: 5rem;
-    box-sizing: border-box;
     display: flex;
     align-items: center;
     flex-flow: column nowrap;
     height: 100vh;
+    width: 100vw;
     overflow: clip;
-    background-image: url("../images/board_background.webp");
-    background-size: 120rem 67.5rem;
-
+    z-index: 0;
+    position: relative;
 }
 
+@keyframes hueShift {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+}
+
+body:before {
+    content: "";
+    display: block;
+    height: 100vh;
+    width: 100vw;
+    background-image: url("../images/board_background.webp");
+    animation: hueShift 20s linear infinite;
+    background-size: contain;
+    background-position: center;
+    z-index: -1;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
 /* Splendor logo */
 header {
     margin: 2rem 0;
@@ -28,7 +46,7 @@ h1 {
 }
 
 .winner td {
-    color: darkgoldenrod;
+    color: gold;
 }
 /* Score table */
 table {
@@ -36,7 +54,7 @@ table {
 }
 
 thead {
-    background: whitesmoke;
+    background: rgba(72, 90, 70, 0.5);
     font-weight: bold;
 }
 
@@ -46,11 +64,11 @@ thead th, tbody td {
 }
 
 tbody tr:nth-child(even) {
-    background: whitesmoke;
+    background: rgba(255, 255, 255, 0.5);
 }
 
 tbody tr:nth-child(odd) {
-    background: white;
+    background: rgba(161, 161, 161, 0.5);
 }
 
 /* Place the audio toggle at the right side of the footer */
