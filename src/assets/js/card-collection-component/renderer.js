@@ -33,14 +33,14 @@ function renderCardCollection() {
         }
     }
 
-    renderCollectionAmounts(cardCollection);
+    renderCollectionAmounts(cardCollection, categoryNodes);
 }
 
 function getCategoryNodes() {
     const result = {};
 
     for (const category of CHANCE_CATEGORIES) {
-        result[category] = document.querySelector(`#${category} ul`);
+        result[category] = document.querySelector(`#${category}`);
     }
 
     return result;
@@ -65,7 +65,7 @@ function renderCollectedCard(cardType, illustration, category, gameId, cardName,
             insertImageInto($card, `cards/illustrations/${category.toLowerCase()}_${illustration}`, false, illustration.replace("_", " "));
     }
 
-    categoryNodes[category].appendChild($card);
+    categoryNodes[category].querySelector("ul").appendChild($card);
 }
 
 function renderMisprintCard(card, categoryNodes) {
@@ -97,12 +97,18 @@ function renderCannotRestoreMessage() {
     document.querySelector(".corrupt-data-message").appendChild($errorMessage);
 }
 
-function renderCollectionAmounts(cardCollection) {
+function renderCollectionAmounts(cardCollection, categoryNodes) {
     const variationsPerIllustrationPerCard = 9;
     const cardCounts = countCards(cardCollection);
 
-    document.querySelector("header .current-amount").textContent = cardCounts["total"];
+    document.querySelector("header .current-amount").textContent = cardCounts["total"].toFixed().padStart(2, "0");
     document.querySelector("header .max-amount").textContent = Object.values(TOKEN_MAPPER).length * ILLUSTRATIONS.length * variationsPerIllustrationPerCard;
+
+    for (const [category, categoryNode] of Object.entries(categoryNodes)) {
+        if (category in cardCounts) {
+            categoryNode.querySelector(".current-amount").textContent = cardCounts[category].toFixed(0).padStart(2, "0");
+        }
+    }
 }
 
 export { renderCardCollection, renderCorruptDataMessage, renderCannotRestoreMessage };
