@@ -79,4 +79,22 @@ function restoreData() {
 
 }
 
-export { isValidCard, isCorrectIllustration, isCorrectCategory, isCorrectMisprint };
+function countCards(cardCollection) {
+    const cardCounts = {total: 0};
+
+    for (const card of cardCollection) {
+        if (card["variant"] in cardCounts) {
+            cardCounts[card["variant"]]++;
+        } else {
+            cardCounts[card["variant"]] = 1;
+        }
+    }
+
+    for (const amount of Object.values(cardCounts)) {
+        cardCounts["total"] += amount;
+    }
+
+    return cardCounts;
+}
+
+export { isValidCard, isCorrectIllustration, isCorrectCategory, isCorrectMisprint, countCards };

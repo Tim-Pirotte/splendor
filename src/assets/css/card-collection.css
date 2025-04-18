@@ -31,18 +31,27 @@ section {
     padding: 1rem 0;
 }
 
-h1 {
-    font-size: 3rem;
-    width: fit-content;
-    margin: 3rem auto 0;
-    padding: 1rem;
-    color: white;
+header {
+    color: var(--light-text-color);
     background-color: #d9b56f;
     border: 0.3rem solid #9c7444;
     border-bottom: none;
     border-top-left-radius: 25%;
     border-top-right-radius: 25%;
     box-shadow: 0 0 0.9rem 0.3rem #2a2a2a50, inset 0 0 0.5rem 0.2rem #2a2a2a50;
+    width: fit-content;
+    margin: 3rem auto 0;
+    padding: 1rem;
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+h2 {
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    text-align: center;
 }
 
 .regular-cards-title {
@@ -75,7 +84,7 @@ h1 {
     content: "Inverted";
     position: absolute;
     left: 0;
-    top: 1.25rem;
+    top: 1.15rem;
     color: var(--light-text-color);
     transform: rotateX(180deg);
 }
@@ -83,8 +92,8 @@ h1 {
 .inverted-cards-title::after {
     content: "cards";
     position: absolute;
-    left: 8.25rem;
-    top: 1.25rem;
+    left: 7.15rem;
+    top: 1.15rem;
     transform: rotateX(180deg);
 }
 

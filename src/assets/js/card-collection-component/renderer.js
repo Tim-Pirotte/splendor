@@ -4,7 +4,7 @@ import {hashToNumber} from "../board-component/card-collection-component/card-co
 import {hashDigest} from "../utils/crypto.js";
 import {getChanceCategory, safeEmptyContainer} from "../board-component/renderer/helper.js";
 import {TOKEN_MAPPER} from "../board-component/config.js";
-import {isValidCard} from "./card-collection.js";
+import {countCards, isValidCard} from "./card-collection.js";
 import {copyNode} from "../utils/data-handler.js";
 import {convertTreeToArray} from "./helper.js";
 import {insertImageInto} from "../utils/renderer.js";
@@ -32,6 +32,8 @@ function renderCardCollection() {
             renderMisprintCard(card, categoryNodes);
         }
     }
+
+    renderCollectionAmounts(cardCollection);
 }
 
 function getCategoryNodes() {
@@ -93,6 +95,11 @@ function renderCorruptDataMessage() {
 function renderCannotRestoreMessage() {
     const $errorMessage = copyNode(document.querySelector("#error-message-template"));
     document.querySelector(".corrupt-data-message").appendChild($errorMessage);
+}
+
+function renderCollectionAmounts(cardCollection) {
+    const cardCounts = countCards(cardCollection);
+    console.log(cardCounts)
 }
 
 export { renderCardCollection, renderCorruptDataMessage, renderCannotRestoreMessage };
