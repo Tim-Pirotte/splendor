@@ -69,10 +69,8 @@ function renderCorruptDataMessage() {
 }
 
 function renderCannotRestoreMessage() {
-    document.querySelector(".corrupt-data-message").insertAdjacentHTML(
-        "beforeend",
-        "<p class='error-message'>Could not restore the data.<br>Sorry for the inconvenience.<br>(Unless if you are trying to cheat. Then you totally deserve this.)<br>If you think that something is wrong with our systems, feel free to contact us at <a href='mailto:example@example.com' target='_blank'>example@example.com</a>.</p>"
-    );
+    const $errorMessage = copyNode(document.querySelector("#error-message-template"));
+    document.querySelector(".corrupt-data-message").appendChild($errorMessage);
 }
 
 export { renderCardCollection, renderCorruptDataMessage, renderCannotRestoreMessage };

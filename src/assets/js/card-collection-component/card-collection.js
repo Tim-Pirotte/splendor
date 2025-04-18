@@ -4,6 +4,7 @@ import {hashDigest} from "../utils/crypto.js";
 import {CHANCE_CATEGORIES, CHANCES, ILLUSTRATIONS} from "./data.js";
 import {getChanceCategory} from "../board-component/renderer/helper.js";
 import {TOKEN_MAPPER} from "../board-component/config.js";
+import {saveToStorage} from "../data-connector/local-storage-abstractor.js";
 
 function init() {
     document.querySelector("main").addEventListener("click", handleCorruptButtonClick);
@@ -62,7 +63,7 @@ function handleCorruptButtonClick(e) {
 }
 
 function deleteData() {
-
+    saveToStorage("cardCollection", {});
 }
 
 function tryRestoringData() {
