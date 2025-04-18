@@ -6,50 +6,16 @@ import {getChanceCategory, safeEmptyContainer} from "../board-component/renderer
 import {TOKEN_MAPPER} from "../board-component/config.js";
 import {isValidCard} from "./card-collection.js";
 import {copyNode} from "../utils/data-handler.js";
+import {convertTreeToArray} from "./helper.js";
 
 function renderCardCollection() {
     const seenTree = loadFromStorage("cardCollection") || {};
 
-    for (const chanceCategory of CHANCE_CATEGORIES) {
-        renderCollectionCategory(seenTree, chanceCategory);
-    }
-}
+    const cardCollection = [];
+    convertTreeToArray(seenTree, ["bonusColor", "illustrationName", "variant"], cardCollection, {}, 4);
 
-function renderCollectionCategory(seenTree, category) {
-    for (const [cardType, illustrations] of Object.entries(seenTree)) {
-        renderCardType(cardType, illustrations, category);
-    }
-}
-
-function renderCardType(cardType, illustrations, category) {
-    for (const [illustration, collectedCategories] of Object.entries(illustrations)) {
-        if (!(category in collectedCategories)) continue;
-
-        if (category === "MISPRINT") {
-            renderMisprintedCollectedCards(cardType, illustration, collectedCategories);
-            continue;
-        }
-
-        renderCollectedCard(
-            cardType,
-            illustration,
-            category,
-            collectedCategories[category]["gameId"],
-            collectedCategories[category]["cardName"],
-        );
-    }
-}
-
-function renderMisprintedCollectedCards(cardType, illustration, collectedCategories) {
-    for (const [misprintType, validationData] of Object.entries(collectedCategories["MISPRINT"])) {
-        renderCollectedCard(
-            cardType,
-            illustration,
-            "MISPRINT",
-            validationData["gameId"],
-            validationData["cardName"],
-            misprintType
-        );
+    for (const card of cardCollection) {
+        renderCollectedCard(card["bonusColor"], card["illustrationName"], card["variant"], card["gameId"], card["name"]);
     }
 }
 

@@ -10,10 +10,6 @@ import {convertTreeToArray} from "./helper.js";
 function init() {
     document.querySelector("main").addEventListener("click", handleCorruptButtonClick);
 
-    const result = [];
-    convertTreeToArray(loadFromStorage("cardCollection"), ["l1", "l2", "l3"], result, {}, 4);
-    console.log(result);
-
     try {
         renderCardCollection();
     } catch (err) {
