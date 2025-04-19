@@ -16,10 +16,13 @@ function trackCardEncounter(bonusColor, illustrationName, variant, gameId, illus
 }
 
 function renderCardUnlockedMessage(variant) {
-    document.querySelector(".unlocked-card-message")
-        .insertAdjacentHTML(
-            "beforeend",
-            `<p>${variant.charAt(0) + variant.slice(1).toLowerCase().replace("_", " ")} card discovered!</p>`)
+    if (variant !== "REGULAR") {
+        document.querySelector(".unlocked-card-message")
+            .insertAdjacentHTML(
+                "beforeend",
+                `<p>${variant.charAt(0) + variant.slice(1).toLowerCase().replace("_", " ")} card discovered!</p>`
+            );
+    }
 }
 
 function hashToNumber(hashString, rangeMax = 1000) {
