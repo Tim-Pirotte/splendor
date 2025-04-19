@@ -13,6 +13,8 @@ function getSortedResults() {
                 amountOfBonuses: getAmountOfBonuses(player),
             })).sort((a, b) => compareByPointsThenBonuses(b, a));
 
+            addPositionToPlayers(results);
+
             const topPlayerScore = results[0].points;
             const topPlayerBonuses = results[0].amountOfBonuses;
 
@@ -44,4 +46,11 @@ function getRandomNumber(max) {
     return (randomNumber / (2 ** 32)) * max;
 }
 
+function addPositionToPlayers(players) {
+    for (const index in players) players[index]["position"] = index;
+
+    for (let i = 1; i < players.length; i++) {
+        if (compareByPointsThenBonuses(players[i], players[i - 1]) === 0) players[i]["position"] = players[i - 1]["position"];
+    }
+}
 export { getSortedResults, getRandomNumber };

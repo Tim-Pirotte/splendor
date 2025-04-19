@@ -38,6 +38,7 @@ function renderResultTable(data) {
         const $td = $clone.querySelectorAll("td");
 
         if (player.isWinner) $clone.classList.add("winner");
+        $td[0].textContent = player.position;
         $td[1].textContent = player.name;
         $td[2].textContent = `${player.points}/${MAX_PRESTIGE_POINTS}`;
 
