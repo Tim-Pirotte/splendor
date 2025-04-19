@@ -20,20 +20,28 @@ function isEmpty(object) {
     return Object.keys(object).length === 0;
 }
 
+function dequeue(pathArray) {
+    return pathArray.shift();
+}
+
 function removeFromTree(current, pathArray) {
     if (pathArray.length === 1) {
         delete current[pathArray];
         return;
     }
 
-    // This dequeues the first element
-    const currentKey = pathArray.shift();
+    const currentKey = dequeue(pathArray);
     removeFromTree(current[currentKey], pathArray);
+    if (isEmpty(current[currentKey])) delete current[currentKey];
 }
 
 function convertTreeToArray(tree, keyNames, result, previousPath, maxDepth) {
     if (typeof tree !== "object" || maxDepth === 1) {
-        result.push(Object.assign(tree, previousPath));
+        // If 'tree' is an object, the complete tree has a pointer to it.
+        // Merging it with 'previousPath' would mutate the original tree structure.
+        typeof tree === "object"
+            ? result.push(Object.assign({ ...tree }, previousPath))
+            : result.push(Object.assign(tree, previousPath));
         return;
     }
 
@@ -43,4 +51,4 @@ function convertTreeToArray(tree, keyNames, result, previousPath, maxDepth) {
     }
 }
 
-export { addToTree, convertTreeToArray };
+export { addToTree, removeFromTree, convertTreeToArray };
