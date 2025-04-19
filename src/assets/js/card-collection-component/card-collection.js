@@ -87,16 +87,12 @@ function restoreData() {
     const seenTree = loadFromStorage("cardCollection") || {};
 
     const faultyBranches = getFaultyBranches(seenTree);
-
-    console.log("NRESKBJDKBQSLKJQDKQDSK")
     removeFaultyBranches(faultyBranches, seenTree);
 
-    console.log(seenTree);
-    //localStorage.setItem("cardCollection", JSON.stringify(seenTree));
+    if (getFaultyBranches(seenTree).length !== 0) throw new Error("Could not restore the card collection data");
 
-    // Loop through cards
-    // If card is invalid
-    // Let user know that data coudn't be restored
+    localStorage.setItem("cardCollection", JSON.stringify(seenTree));
+    location.reload();
 }
 
 function getFaultyBranches(seenTree) {
