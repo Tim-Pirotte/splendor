@@ -77,7 +77,13 @@ function tryRestoringData() {
 }
 
 function restoreData() {
+    // Loop through cards
+    // If card is invalid
+    // Call helper function with card data to remove the branch
 
+    // Loop through cards
+    // If card is invalid
+    // Let user know that data coudn't be restored
 }
 
 function countCards(cardCollection) {

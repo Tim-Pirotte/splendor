@@ -20,6 +20,17 @@ function isEmpty(object) {
     return Object.keys(object).length === 0;
 }
 
+function removeFromTree(current, pathArray) {
+    if (pathArray.length === 1) {
+        delete current[pathArray];
+        return;
+    }
+
+    // This dequeues the first element
+    const currentKey = pathArray.shift();
+    removeFromTree(current[currentKey], pathArray);
+}
+
 function convertTreeToArray(tree, keyNames, result, previousPath, maxDepth) {
     if (typeof tree !== "object" || maxDepth === 1) {
         result.push(Object.assign(tree, previousPath));
