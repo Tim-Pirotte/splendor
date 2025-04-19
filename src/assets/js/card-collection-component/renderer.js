@@ -119,4 +119,4 @@ function renderCollectionAmounts(cardCollection, categoryNodes) {
     }
 }
 
-export { renderCardCollection, renderCorruptDataMessage, renderCannotRestoreMessage };
+export { renderCardCollection, renderCorruptDataMessage, renderCannotRestoreMessage, getCategoryNodes };

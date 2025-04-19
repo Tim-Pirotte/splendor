@@ -1,10 +1,17 @@
-import {renderCannotRestoreMessage, renderCardCollection, renderCorruptDataMessage} from "./renderer.js";
+import {
+    getCategoryNodes,
+    renderCannotRestoreMessage,
+    renderCardCollection,
+    renderCorruptDataMessage
+} from "./renderer.js";
 import {hashToNumber} from "../board-component/card-collection-component/card-collection.js";
 import {hashDigest} from "../utils/crypto.js";
 import {CHANCE_CATEGORIES, CHANCES, ILLUSTRATIONS} from "./data.js";
 import {getChanceCategory} from "../board-component/renderer/helper.js";
 import {TOKEN_MAPPER} from "../board-component/config.js";
 import {loadFromStorage, saveToStorage} from "../data-connector/local-storage-abstractor.js";
+import {convertTreeToArray} from "./helper.js";
+import {GEMS} from "../board-component/data.js";
 
 function init() {
     document.querySelector("main").addEventListener("click", handleCorruptButtonClick);
@@ -76,7 +83,65 @@ function tryRestoringData() {
     }
 }
 
+function isFaultyBranch(card) {
+    if (card["variant"] !== "MISPRINT") {
+        if (!isValidCard(
+            card["illustrationName"],
+            card["variant"],
+            card["gameId"],
+            card["cardName"],
+            null,
+            card["bonusColor"]
+        )) {
+            return true;
+        }
+    } else {
+        for (const tokenType of GEMS) {
+            if (tokenType in card) {
+                if (!isValidCard(
+                    card["illustrationName"],
+                    "MISPRINT",
+                    card[tokenType]["gameId"],
+                    card[tokenType]["cardName"],
+                    tokenType,
+                    card["bonusColor"]
+                )) {
+                    return true;
+                }
+            }
+        }
+    }
+
+    return false;
+}
+
+function getFaultyBranches(seenTree) {
+    const faultyBranches = [];
+
+    const cardCollection = [];
+    convertTreeToArray(seenTree, ["bonusColor", "illustrationName", "variant"], cardCollection, {}, 4);
+
+    for (const card of cardCollection) {
+        if (isFaultyBranch(card)) {
+            if (card["variant"] !== "MISPRINT") {
+                faultyBranches.push([card["bonusColor"], card["illustration"], card["variant"]]);
+            } else {
+                for (const tokenType of GEMS) {
+                    if (tokenType in card) {
+                        faultyBranches.push([card["bonusColor"], card["illustration"], card["variant"], tokenType]);
+                    }
+                }
+            }
+        }
+    }
+
+    return faultyBranches;
+}
+
 function restoreData() {
+    const seenTree = loadFromStorage("cardCollection") || {};
+
+    console.log(getFaultyBranches(seenTree));
     // Loop through cards
     // If card is invalid
     // Call helper function with card data to remove the branch
