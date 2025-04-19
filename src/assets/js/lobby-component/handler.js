@@ -4,6 +4,7 @@ import { hasGameStarted } from "../utils/game-object-handler.js";
 import { renderGameInfo, renderPlayerCount, renderPlayersList, setCopyGameIdImageColor } from "./renderer.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { locateToMainMenu } from "../utils/data-handler.js";
+import {checkCompatibility} from "../server-version-component/server-version.js";
 
 function loadLobbyInformation() {
     if (!loadFromStorage("gameId")) {
@@ -17,6 +18,7 @@ function loadLobbyInformation() {
             renderGameInfo(gameObject);
             renderPlayersList(gameObject);
             renderPlayerCount(gameObject);
+            hideIncompatibleElements();
             setTimeout(loadLobbyInformation, POLLING_TIME_OUT);
         }
     });
@@ -29,4 +31,9 @@ function copyGameId(){
     setTimeout(setCopyGameIdImageColor, COPY_BUTTON_REMOVE_FEEDBACK_DELAY, "black");
 }
 
+function hideIncompatibleElements() {
+    checkCompatibility(2).then(isCompatible => {
+        if (!isCompatible) document.querySelector(".leave-button").classList.add("none");
+    })
+}
 export { loadLobbyInformation , copyGameId };
