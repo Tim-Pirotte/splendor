@@ -120,8 +120,9 @@ function getIllustration(cardName, cardBonus) {
             trackCardEncounter(cardBonus, illustration, "REGULAR", gameId, cardBonus, cardName);
             return `${TOKEN_MAPPER[cardBonus]}_${illustration}`;
         case "MISPRINT":
-            const misprintSeed = hashToNumber(hashDigest(`${gameId}-${cardName}-misprint`), Object.keys(TOKEN_MAPPER).length);
-            const illustrationColor = Object.keys(TOKEN_MAPPER)[misprintSeed];
+            const colorsToChooseFrom = Object.keys(TOKEN_MAPPER).filter(k => k !== cardBonus);
+            const misprintSeed = hashToNumber(hashDigest(`${gameId}-${cardName}-misprint`), colorsToChooseFrom.length);
+            const illustrationColor = colorsToChooseFrom[misprintSeed];
 
             trackCardEncounter(cardBonus, illustration, "MISPRINT", gameId, illustrationColor, cardName);
             return `${TOKEN_MAPPER[illustrationColor]}_${illustration}`;

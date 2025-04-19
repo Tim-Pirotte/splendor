@@ -19,10 +19,10 @@ function init() {
 
 init();
 
-function isValidCard(illustration, category, gameId, cardName, misprintType) {
+function isValidCard(illustration, category, gameId, cardName, misprintType, cardBonus) {
     if (!isCorrectIllustration(illustration, gameId, cardName)) return false;
     if (!isCorrectCategory(category, gameId, cardName)) return false;
-    if (misprintType) return isCorrectMisprint(misprintType, gameId, cardName);
+    if (misprintType) return isCorrectMisprint(misprintType, gameId, cardName, cardBonus);
 
     return true;
 }
@@ -42,9 +42,10 @@ function isCorrectCategory(category, gameId, cardName) {
 }
 
 
-function isCorrectMisprint(misprintType, gameId, cardName) {
-    const misprintSeed = hashToNumber(hashDigest(`${gameId}-${cardName}-misprint`), Object.keys(TOKEN_MAPPER).length);
-    const validMisprintType = Object.keys(TOKEN_MAPPER)[misprintSeed];
+function isCorrectMisprint(misprintType, gameId, cardName, cardBonus) {
+    const colorsToChooseFrom = Object.keys(TOKEN_MAPPER).filter(k => k !== cardBonus);
+    const misprintSeed = hashToNumber(hashDigest(`${gameId}-${cardName}-misprint`), colorsToChooseFrom.length);
+    const validMisprintType = colorsToChooseFrom[misprintSeed];
 
     return misprintType === validMisprintType;
 }

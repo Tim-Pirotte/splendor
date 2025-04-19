@@ -48,7 +48,7 @@ function getCategoryNodes() {
 }
 
 function renderCollectedCard(cardType, illustration, category, gameId, cardName, discoveryDate, categoryNodes, misprintType) {
-    if (!isValidCard(illustration, category, gameId, cardName, misprintType)) {
+    if (!isValidCard(illustration, category, gameId, cardName, misprintType, cardType)) {
         throw new Error(`Card data has been tampered with (${illustration}: ${category})`)
     }
 
