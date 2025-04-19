@@ -18,11 +18,11 @@ body::before {
 
 main {
     margin: 0 3rem;
-    padding: 1rem;
+    padding: 0 1rem;
     background-color: #d9b56f;
     border: 0.3rem solid #9c7444;
     box-shadow: 0 0 0.9rem 0.3rem #2a2a2a50;
-    height: 70vh;
+    height: 68vh;
     overflow-y: scroll;
     scrollbar-color: #72532f transparent;
     scrollbar-width: thin;
@@ -32,7 +32,16 @@ section {
     padding: 1rem 0;
 }
 
-header {
+header a {
+    display: block;
+    margin: 1rem;
+}
+
+header a img {
+    width: 2.375rem;
+}
+
+header .top {
     color: var(--light-text-color);
     background-color: #d9b56f;
     border: 0.3rem solid #9c7444;
@@ -40,7 +49,7 @@ header {
     box-shadow: 0 0 0.9rem 0.3rem #2a2a2a50;
     width: fit-content;
     margin: 1rem auto 0;
-    padding: 1rem;
+    padding: 0.5rem;
 }
 
 h1 {
