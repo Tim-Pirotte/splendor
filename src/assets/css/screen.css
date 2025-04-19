@@ -68,3 +68,11 @@ button, input {
 .sound-button:hover {
     filter: brightness(115%);
 }
+
+.hidden {
+    visibility: hidden;
+}
+
+.none {
+    display: none;
+}

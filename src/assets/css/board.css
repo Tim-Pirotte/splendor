@@ -13,13 +13,7 @@ body {
 }
 
 /* Styles to hide content */
-.hidden {
-    visibility: hidden;
-}
 
-.none {
-    display: none;
-}
 
 /* Header styles */
 section h3, section h2, section h4 {
