@@ -3,9 +3,8 @@ import { getRandomNumber, getSortedResults } from "./helper.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import {
     INTERVAL_BETWEEN_ANIMATING_IMAGES,
-    LOSER_ANIMATION_IMAGES,
     TIMEOUT_BEFORE_ANIMATED_IMAGE_DELETION,
-    WINNER_ANIMATION_IMAGES,
+    IMAGE_PATHS_FROM_RESULTS_PAGE,
 } from "./config.js";
 
 function renderResultMessage(isWinner) {
@@ -47,13 +46,13 @@ function renderResultTable(data) {
 }
 
 function renderResultAnimation(isWinner) {
-    const imageArray = isWinner ? WINNER_ANIMATION_IMAGES : LOSER_ANIMATION_IMAGES;
-    setInterval(renderOneAnimation, INTERVAL_BETWEEN_ANIMATING_IMAGES, imageArray);
+    if (isWinner) setInterval(renderOneAnimation, INTERVAL_BETWEEN_ANIMATING_IMAGES);
+
 }
 
-function renderOneAnimation(imageArray) {
+function renderOneAnimation() {
     const $animationDiv = document.createElement("div");
-    const randomImage = imageArray[Math.floor(getRandomNumber(imageArray.length))];
+    const randomImage = IMAGE_PATHS_FROM_RESULTS_PAGE[Math.floor(getRandomNumber(IMAGE_PATHS_FROM_RESULTS_PAGE.length))];
 
     $animationDiv.classList.add("raining-animation");
     $animationDiv.style.left = `${getRandomNumber(100)}%`;
