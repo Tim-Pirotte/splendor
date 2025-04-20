@@ -94,9 +94,15 @@ thead th, tbody td {
 }
 
 tbody tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 tbody tr:nth-child(odd) {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+table tbody tr.clientPlayer {
+    background-color: rgba(61, 101, 77, 0.6);
 }
 
 /* Place the audio toggle at the right side of the footer */

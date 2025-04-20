@@ -29,6 +29,7 @@ function renderResults() {
 function renderResultTable(data) {
     const $template = document.querySelector("#result-template");
     const $tbody = document.querySelector("tbody");
+    const clientPlayerName = loadFromStorage("playerName");
 
     $tbody.innerHTML = "";
 
@@ -37,6 +38,7 @@ function renderResultTable(data) {
         const $td = $clone.querySelectorAll("td");
 
         if (player.isWinner) $clone.classList.add("winner");
+        if (player.name === clientPlayerName) $clone.classList.add("clientPlayer");
         $td[0].textContent = player.position;
         $td[1].textContent = player.name;
         $td[2].textContent = `${player.points}/${MAX_PRESTIGE_POINTS}`;
