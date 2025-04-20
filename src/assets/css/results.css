@@ -10,30 +10,31 @@ header img {
 #banner {
     position: relative;
     width: 100%;
+    flex: 1 0 auto;
 }
 
 #banner::before {
     content: "";
     background-image: url("../images/UI/results_banner.webp"), url("../images/fallback/UI/results_banner.png");
     background-size: 100%;
-    background-position: center;
+    background-position-x: center;
     background-repeat: no-repeat;
     width: 109.5%;
     height: 140%;
     position: absolute;
     z-index: -1;
     left: 50%;
-    transform: translate(-50%, -5%);
+    transform: translateX(-50%);
 }
 main {
     flex: 1 0 auto;
     z-index: 5;
     background-repeat: no-repeat;
-
+    display: flex;
+    flex-flow: column nowrap;
 }
 
 body {
-    padding-top: 3rem;
     display: flex;
     align-items: center;
     flex-flow: column nowrap;
@@ -65,7 +66,7 @@ body:before {
 }
 /* Splendor logo */
 header {
-    margin-top: 2rem;
+    margin-top: 1rem;
 }
 
 h1 {
