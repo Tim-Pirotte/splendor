@@ -33,7 +33,7 @@ body > section {
     grid-template-rows: 10% 90%;
     padding-left: 4rem;
     overflow: hidden;
-    background-image: url("../images/board_background.webp");
+    background-image: url("../images/board_background.webp"), url("../images/fallback/board_background.png");
     background-size: 120rem 67.5rem;
 }
 
