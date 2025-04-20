@@ -7,9 +7,29 @@
 header img {
     width: 23.75rem;
 }
+#banner {
+    position: relative;
+    width: 100%;
+}
 
+#banner::before {
+    content: "";
+    display: block;
+    background-image: url("../images/UI/results_banner.webp"), url("../images/fallback/UI/results_banner.png");
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 130%;
+    overflow: auto;
+    position: absolute;
+    z-index: -1;
+}
 main {
     flex: 1 0 auto;
+    z-index: 5;
+    background-repeat: no-repeat;
+
 }
 
 body {
@@ -63,7 +83,6 @@ table {
 }
 
 thead {
-    background: rgba(72, 90, 70, 0.5);
     font-weight: bold;
 }
 
@@ -73,11 +92,9 @@ thead th, tbody td {
 }
 
 tbody tr:nth-child(even) {
-    background: rgba(255, 255, 255, 0.5);
 }
 
 tbody tr:nth-child(odd) {
-    background: rgba(161, 161, 161, 0.5);
 }
 
 /* Place the audio toggle at the right side of the footer */
