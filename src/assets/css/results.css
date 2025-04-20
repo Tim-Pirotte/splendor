@@ -14,16 +14,16 @@ header img {
 
 #banner::before {
     content: "";
-    display: block;
     background-image: url("../images/UI/results_banner.webp"), url("../images/fallback/UI/results_banner.png");
     background-size: 100%;
     background-position: center;
     background-repeat: no-repeat;
-    width: 100%;
-    height: 130%;
-    overflow: auto;
+    width: 109.5%;
+    height: 140%;
     position: absolute;
     z-index: -1;
+    left: 50%;
+    transform: translate(-50%, -5%);
 }
 main {
     flex: 1 0 auto;
@@ -79,6 +79,7 @@ h1 {
 }
 /* Score table */
 table {
+    color: white;
     width: 100%;
 }
 
