@@ -117,8 +117,8 @@ footer .sound-button {
 
 /* ANIMATIONS */
 @keyframes rainingImage {
-    from {transform: translateY(-2.5rem)}
-    to {transform: translateY(110vh)}
+    from {transform: translateX(-50%) translateY(-2.5rem)}
+    to {transform: translateX(-50%) translateY(110vh)}
 }
 
 div.raining-animation {
@@ -130,5 +130,4 @@ div.raining-animation {
     z-index: -1;
     background-repeat: no-repeat;
     background-size: contain;
-    transform: translateX(-50%);
 }
