@@ -4,9 +4,7 @@
 }
 
 /* General styling for the body and main container */
-header img {
-    width: 23.75rem;
-}
+
 #banner {
     position: relative;
     width: 100%;
@@ -28,7 +26,6 @@ header img {
 }
 main {
     flex: 1 0 auto;
-    z-index: 5;
     background-repeat: no-repeat;
     display: flex;
     flex-flow: column nowrap;
@@ -64,9 +61,10 @@ body:before {
     left: 0;
     top: 0;
 }
-/* Splendor logo */
+/* Winner image */
 header {
-    margin-top: 1rem;
+    margin-top: 3rem;
+    margin-bottom: 2rem;
 }
 
 h1 {
@@ -75,7 +73,8 @@ h1 {
 }
 
 h1 img {
-    width: 100%;
+    width: 23.75rem;
+
 }
 
 .winner td {
