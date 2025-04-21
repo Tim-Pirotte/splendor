@@ -80,6 +80,7 @@ h1 {
 }
 /* Score table */
 table {
+    color: lightgray;
     width: 100%;
 }
 
@@ -94,17 +95,17 @@ thead th, tbody td {
 }
 
 tbody tr:nth-child(even) {
-    color: white;
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 tbody tr:nth-child(odd) {
-    color: lightgray;
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
 table tbody tr.clientPlayer {
-font-weight: 900;
+    color: white;
+    font-weight: 900;
 }
-
 /* Place the audio toggle at the right side of the footer */
 footer {
     align-self: flex-end;
