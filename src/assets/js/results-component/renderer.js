@@ -9,8 +9,14 @@ import {
 import {formatNumber} from "../board-component/renderer/helper.js";
 
 function renderResultMessage(isWinner) {
-    const $status = document.querySelector("h1");
-    $status.textContent = isWinner ? "WINNER" : "DEFEAT";
+    if (isWinner) {
+        const $h1 = document.querySelector("h1");
+        const $img = $h1.querySelector("img");
+
+        $h1.querySelector("source").srcset = "../assets/images/UI/winner_text.webp";
+        $img.src = "../assets/images/fallback/UI/winner_text.png";
+        $img.title = $img.alt = "winner text"
+    }
 }
 
 function renderResults() {
