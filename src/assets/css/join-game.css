@@ -106,5 +106,9 @@ footer {
 }
 
 .game-info {
-    width: 14rem;
+    width: 16rem;
+}
+
+.game-info h3 {
+    overflow-wrap: break-word;
 }
