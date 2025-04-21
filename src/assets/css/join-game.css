@@ -130,6 +130,8 @@ ul {
     overflow-x: hidden;
     overflow-y: scroll;
     height: 18rem;
+    /* https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-color */
+    scrollbar-color: gold transparent;
 }
 
 li {
