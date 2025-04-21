@@ -36,37 +36,6 @@ main {
     flex: 1 0 auto;
 }
 
-
-main section::before {
-    content: "";
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%) translateY(-3rem);
-    width: 70vw;
-    height: 45rem;
-    background-size: 100% 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    z-index: -1;
-    display: block;
-    background-image: url("../images/UI/game_list_background.webp"), url("../images/fallback/UI/game_list_background.png");
-
-}
-/*
-main::before {
-    content: "";
-    background-image: url("../images/UI/game_list_background.webp"), url("../images/fallback/UI/game_list_background.png");
-    background-size: 100%;
-    background-position-x: center;
-    background-repeat: no-repeat;
-    width: 22rem;
-    height: 31rem;
-    position: absolute;
-    z-index: -1;
-    left: 50%;
-    transform: translateX(-50%);
-}
-*/
 /* Header styling */
 header {
     display: flex;
@@ -96,10 +65,14 @@ form {
 
 section{
     position: relative;
-    width: 60vw;
+    padding: 2.5rem;
+    width: calc(60vw + 2.5rem);
+    height: 45rem;
     text-align: center;
     margin: 1.5rem auto 0 auto;
-    padding-top: 3rem;
+    box-sizing: border-box;
+    background-image: url("../images/UI/game_list_background.webp"), url("../images/fallback/UI/game_list_background.png");
+    background-size: 100% 100%;
 }
 
 section h2 {
