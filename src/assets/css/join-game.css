@@ -1,3 +1,8 @@
+:root {
+    --light-text-color: whitesmoke;
+    --hover-transition-duration: filter 0.3s ease-in-out;
+}
+
 /* General styling for the body and main container */
 body::before {
     content: "";
@@ -18,6 +23,7 @@ body {
     height: 100vh;
     display: flex;
     flex-flow: column nowrap;
+    color: white;
 }
 
 @keyframes hueShift {
@@ -72,13 +78,6 @@ section form {
     margin-bottom: 2.4rem;
 }
 
-button {
-    /* Added a fixed with because otherwise
-       the flex would handle the spectate different than the
-       join so the numbers of players are not aligned wel */
-    width: 8rem;
-}
-
 label[for="game-id"]{
     margin-right: 1.2rem;
 }
@@ -131,4 +130,20 @@ footer {
 
 .game-info h3 {
     overflow-wrap: break-word;
+}
+
+button {
+    width: 7.65rem;
+    height: 2.55rem;
+    background-size: cover;
+    background-color: transparent;
+    border: none;
+    background-image: url("../images/UI/action_button.webp"), url("../images/fallback/UI/action_button.png");
+    color: var(--light-text-color);
+    font-size: 0.7rem;
+    transition: var(--hover-transition-duration);
+}
+
+button:hover {
+    filter: brightness(115%);
 }
