@@ -80,11 +80,11 @@ h1 {
 }
 /* Score table */
 table {
-    color: white;
     width: 100%;
 }
 
 thead {
+    color: white;
     font-weight: bold;
 }
 
@@ -94,15 +94,15 @@ thead th, tbody td {
 }
 
 tbody tr:nth-child(even) {
-    background-color: rgba(0, 0, 0, 0.4);
+    color: white;
 }
 
 tbody tr:nth-child(odd) {
-    background-color: rgba(0, 0, 0, 0.3);
+    color: lightgray;
 }
 
 table tbody tr.clientPlayer {
-    background-color: rgba(61, 101, 77, 0.6);
+font-weight: 900;
 }
 
 /* Place the audio toggle at the right side of the footer */
@@ -141,6 +141,7 @@ footer .sound-button {
 }
 
 #table-container {
+    margin-top: 0.5rem;
     height: 14rem;
 }
 

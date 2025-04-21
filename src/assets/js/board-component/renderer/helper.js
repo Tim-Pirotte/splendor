@@ -38,8 +38,8 @@ function constructVerticalBackground(value, imageName, spacing) {
     return layers.join(",\n");
 }
 
-function formatNumber(number) {
-    return number.toString().padStart(2, "0");
+function formatNumber(number, length=2) {
+    return number.toString().padStart(length, "0");
 }
 
 function safeEmptyContainer($container) {

@@ -6,6 +6,7 @@ import {
     TIMEOUT_BEFORE_ANIMATED_IMAGE_DELETION,
     IMAGE_PATHS_FROM_RESULTS_PAGE,
 } from "./config.js";
+import {formatNumber} from "../board-component/renderer/helper.js";
 
 function renderResultMessage(isWinner) {
     const $status = document.querySelector("h1");
@@ -41,7 +42,7 @@ function renderResultTable(data) {
         if (player.name === clientPlayerName) $clone.classList.add("clientPlayer");
         $td[0].textContent = player.position;
         $td[1].textContent = player.name;
-        $td[2].textContent = `${player.points}/${MAX_PRESTIGE_POINTS}`;
+        $td[2].textContent = `${formatNumber(player.points)}/${MAX_PRESTIGE_POINTS}`;
 
         $tbody.appendChild($clone);
     });
