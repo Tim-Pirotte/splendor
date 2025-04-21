@@ -140,6 +140,10 @@ footer .sound-button {
     filter: brightness(115%);
 }
 
+#table-container {
+    height: 14rem;
+}
+
 /* ANIMATIONS */
 @keyframes rainingImage {
     from {transform: translateX(-50%) translateY(-2.5rem)}
