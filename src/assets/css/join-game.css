@@ -132,7 +132,7 @@ footer {
     overflow-wrap: break-word;
 }
 
-button {
+main button {
     width: 7.65rem;
     height: 2.55rem;
     background-size: cover;
@@ -146,4 +146,18 @@ button {
 
 button:hover {
     filter: brightness(115%);
+}
+
+/* TODO don't forget to fix this styling when adding the new back button*/
+#back-button {
+    background-color: transparent;
+    border: none;
+}
+
+#back-button img {
+    width: 5rem;
+}
+
+#back-button:hover {
+    filter: brightness(130%);
 }

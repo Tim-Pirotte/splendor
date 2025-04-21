@@ -32,7 +32,8 @@ function renderPublicGames() {
         }
 
         $gameList.innerHTML = $gameListCopy.innerHTML;
-        setTimeout(renderPublicGames, POLLING_TIME_OUT);
+        //TODO re-enable polling
+        //setTimeout(renderPublicGames, POLLING_TIME_OUT);
     });
 }
 
