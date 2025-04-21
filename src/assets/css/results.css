@@ -40,7 +40,7 @@ body {
     100% { filter: hue-rotate(360deg); }
 }
 
-body:before {
+body::before {
     content: "";
     display: block;
     height: 100vh;
