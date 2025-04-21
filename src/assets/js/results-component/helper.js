@@ -47,7 +47,7 @@ function getRandomNumber(max) {
 }
 
 function addPositionToPlayers(players) {
-    for (const index in players) players[index]["position"] = index;
+    for (const index in players) players[index]["position"] = parseInt(index) + 1;
 
     for (let i = 1; i < players.length; i++) {
         if (compareByPointsThenBonuses(players[i], players[i - 1]) === 0) players[i]["position"] = players[i - 1]["position"];

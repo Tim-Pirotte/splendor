@@ -140,6 +140,10 @@ footer .sound-button {
     width: 20rem;
 }
 
+table li {
+    list-style-type: none;
+}
+
 /* ANIMATIONS */
 @keyframes rainingImage {
     from {transform: translateX(-50%) translateY(-2.5rem)}
