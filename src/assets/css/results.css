@@ -7,7 +7,7 @@
 main::before {
     content: "";
     background-image: url("../images/UI/results_banner.webp"), url("../images/fallback/UI/results_banner.png");
-    background-size: 100%;
+    background-size: 100% 100%;
     background-position-x: center;
     background-repeat: no-repeat;
     width: 22rem;
@@ -21,7 +21,6 @@ main::before {
 main {
     z-index: 1;
     flex: 1 0 auto;
-    background-repeat: no-repeat;
     display: flex;
     flex-flow: column nowrap;
 }
