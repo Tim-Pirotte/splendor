@@ -9,6 +9,7 @@ function getCheckedRadioButtonValue(buttonList){
 }
 
 function createGameWithBody(requestBody) {
+    console.log(requestBody)
     API.createGame(requestBody)
         .then(response => {
             checkCompatibility(2)
@@ -16,7 +17,7 @@ function createGameWithBody(requestBody) {
                     if (isCompatible) saveToStorage("timeSync", response["gameId"]);
                     saveToStorage("gameId", response["gameId"]);
                     saveToStorage("playerToken", response["playerToken"]);
-                    location.href = "./lobby.html";
+                    //location.href = "./lobby.html";
                 });
         });
 }
