@@ -83,12 +83,10 @@ input[type="text"], input[type="number"], select {
     outline: #e9bd5c 0.1rem solid;
     color: white;
     padding: 0.15rem 0 0.15rem 0.2rem;
-    transition: var(--hover-transition-duration);
 }
 
 select:hover {
     cursor: pointer;
-    filter: brightness(115%);
 }
 /* https://www.geeksforgeeks.org/how-to-disable-arrows-from-number-input/ */
 /* This hides the arrow buttons for input[type="number'] */

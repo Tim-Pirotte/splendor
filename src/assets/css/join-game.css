@@ -172,7 +172,6 @@ button:hover, #filter-form > input[type="reset"]:hover {
     cursor: pointer;
 }
 
-/* TODO don't forget to fix this styling when adding the new back button*/
 #back-button {
     background-color: transparent;
     border: none;
