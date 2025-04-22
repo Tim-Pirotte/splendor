@@ -14,4 +14,9 @@ function removeVisibilitySelector() {
     renderUnsupportedError($container, "Private game");
 }
 
-export { renderPlayerInfo, removeVisibilitySelector };
+function addDefaultGameNamePlaceholder() {
+    document.querySelector("#game-name")
+            .setAttribute("placeholder", `${loadFromStorage("playerName")}'s game`);
+}
+
+export { renderPlayerInfo, removeVisibilitySelector, addDefaultGameNamePlaceholder };
