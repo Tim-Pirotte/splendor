@@ -14,8 +14,8 @@ function renderResultMessage(isWinner) {
         const $h1 = document.querySelector("h1");
         const $img = $h1.querySelector("img");
 
-        $h1.querySelector("source").srcset = "../assets/images/UI/winner_text.webp";
-        $img.src = "../assets/images/fallback/UI/winner_text.png";
+        $h1.querySelector("source").srcset = "../assets/images/results/winner_text.webp";
+        $img.src = "../assets/images/fallback/results/winner_text.png";
         $img.title = $img.alt = "winner text"
     }
 }
@@ -47,7 +47,7 @@ function renderResultTable(data) {
 
         if (player.isWinner) $clone.classList.add("winner");
         if (player.name === clientPlayerName) $clone.classList.add("clientPlayer");
-        insertImageInto($td[0], `UI/results/${player.position}_place`, false, `number ${player.position}`);
+        insertImageInto($td[0], `results/${player.position}_place`, false, `number ${player.position}`);
         $td[1].textContent = player.name;
         $td[2].textContent = `${formatNumber(player.points)}/${MAX_PRESTIGE_POINTS}`;
 
