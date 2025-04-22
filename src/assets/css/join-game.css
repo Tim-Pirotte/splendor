@@ -63,9 +63,11 @@ form {
     text-align: center;
 }
 
-section{
-    padding: 1rem;
-    width: 45rem;
+section {
+    display: flex;
+    flex-flow: column nowrap;
+    padding: 1rem 1rem 0;
+    width: 50rem;
     height: 30rem;
     text-align: center;
     margin: 2.5rem auto 0 auto;
@@ -80,8 +82,10 @@ section h2 {
     margin-bottom: 2rem;
 }
 
-section form {
-    margin-bottom: 2.4rem;
+#filter-form {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.75rem;
 }
 
 #game-id {
@@ -97,7 +101,9 @@ label[for="game-name"], label[for="game-id"], label[for="amount-filter"]{
     margin-right: 2rem;
 }
 
+
 ul {
+    flex-grow: 1;
     overflow-x: hidden;
     overflow-y: scroll;
     height: 20rem;
@@ -110,7 +116,7 @@ li {
     flex-flow: row nowrap;
     justify-content: space-around;
     align-items: center;
-    padding: 1.2rem 0;
+    padding: 0.75rem 0;
 }
 
 li:nth-child(even) {
@@ -132,16 +138,21 @@ footer {
     width: 20rem;
 }
 
-.game-info h3 {
+.game-name {
     font-size: 1.2rem;
     overflow-wrap: break-word;
-    margin-bottom: 0.4rem;
+    margin-right: -3.5rem;
+    width: 20rem;
 }
 
-main button {
+.game-id, .amount-of-players {
+    width: 2.5rem;
+}
+
+main button, #filter-form > input[type="reset"] {
     width: 7.65rem;
     height: 2.55rem;
-    background-size: cover;
+    background-size: 100% 100%;
     background-color: transparent;
     border: none;
     background-image: url("../images/UI/action_button.webp"), url("../images/fallback/UI/action_button.png");
@@ -150,8 +161,15 @@ main button {
     transition: var(--hover-transition-duration);
 }
 
-button:hover {
+#filter-form > input[type="reset"] {
+    width: 5rem;
+    height: 2rem;
+    margin-left: 1rem;
+}
+
+button:hover, #filter-form > input[type="reset"]:hover {
     filter: brightness(115%);
+    cursor: pointer;
 }
 
 /* TODO don't forget to fix this styling when adding the new back button*/
