@@ -47,7 +47,6 @@ label {
 
 input {
     margin: 4rem 0;
-    display: inline-flex;
 }
 
 input[type="radio"] {
