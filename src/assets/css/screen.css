@@ -76,3 +76,26 @@ button, input {
 .none {
     display: none;
 }
+
+input[type="text"], input[type="number"], select {
+    background-color: #372b52;
+    border: #d18a4c 0.1rem solid;
+    outline: #e9bd5c 0.1rem solid;
+    color: white;
+    padding: 0.15rem 0 0.15rem 0.2rem;
+}
+
+/* https://www.geeksforgeeks.org/how-to-disable-arrows-from-number-input/ */
+/* This hides the arrow buttons for input[type="number'] */
+
+/* Hide the spin buttons in WebKit browsers */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Hide spin buttons in Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+}

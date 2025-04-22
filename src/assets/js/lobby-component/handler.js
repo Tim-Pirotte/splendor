@@ -12,7 +12,6 @@ function loadLobbyInformation() {
     }
 
     API.getGame().then(gameData => {
-        console.log(gameData);
         if (gameData.started) {
             location.href = "./board.html";
         } else {

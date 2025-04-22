@@ -8,8 +8,7 @@ function joinInit() {
 }
 
 function setupUI() {
-    if (!loadFromStorage("playerName")) locateMainMenu();
-    if (!loadFromStorage("avatar")) locateMainMenu();
+    if (!loadFromStorage("playerName") || !loadFromStorage("avatar")) {locateMainMenu(); return;}
     renderPlayerInfo();
     renderPublicGames();
 }
