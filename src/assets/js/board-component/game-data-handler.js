@@ -23,6 +23,8 @@ function updateGameData() {
     if (gameId === null) location.href = "../index.html";
 
     API.getGame().then(gameData => {
+        if (!gameData.started) location.href = "./lobby.html";
+
         saveToStorage("gameData", gameData);
         saveGameState(gameData["gameState"]);
         renderPage(gameData);
