@@ -17,6 +17,7 @@ function setupEventListeners() {
     document.querySelector("#back-button").addEventListener("click", locateMainMenu);
     document.querySelector("#join-form").addEventListener("submit", joinGameUsingUsersInputId);
     document.querySelector("ul").addEventListener("click", joinGame);
+    document.querySelector("#amount-filter").addEventListener("change", renderPublicGames);
 }
 
 joinInit();
