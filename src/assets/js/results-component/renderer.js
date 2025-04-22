@@ -8,6 +8,7 @@ import {
 } from "./config.js";
 import {formatNumber} from "../board-component/renderer/helper.js";
 import {insertImageInto} from "../utils/renderer.js";
+import {gameId} from "../board-component/tokens/config.js";
 
 function renderResultMessage(isWinner) {
     if (isWinner) {
@@ -21,6 +22,7 @@ function renderResultMessage(isWinner) {
 }
 
 function renderResults() {
+    if (loadFromStorage("gameId") === null) location.href = "../index.html"
     getSortedResults().then(gameResults => {
         for (const player of gameResults) {
             const isPlayer = player.name === loadFromStorage("playerName");
