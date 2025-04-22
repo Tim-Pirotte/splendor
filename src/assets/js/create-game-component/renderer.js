@@ -10,8 +10,7 @@ function renderPlayerInfo() {
 }
 
 function removeVisibilitySelector() {
-    const $container = document.querySelector("#visibility-selector-container");
-    renderUnsupportedError($container, "Private game");
+    document.querySelector("#visibility-selector-container").remove();
 }
 
 function addDefaultGameNamePlaceholder() {

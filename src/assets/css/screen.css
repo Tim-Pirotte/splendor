@@ -83,22 +83,23 @@ input[type="text"], input[type="number"], select {
     outline: #e9bd5c 0.1rem solid;
     color: white;
     padding: 0.15rem 0 0.15rem 0.2rem;
-}
 
-/* This is needed since chrome decided to be an asshole and override
-    my styling for my input fields when using autocompletion */
-/* https://dev.to/atndesign/a-trick-to-change-the-autocomplete-background-color-21ll */
-input:-webkit-autofill{
-    -webkit-box-shadow: 0 0 0 1000px #372b52 inset !important;
-    -webkit-text-fill-color: white !important;
+    /* This is needed since chrome decided to be an asshole and override
+    my styling for my input fields when using autocompletion
+    since input:autofill also works but this gives an error in webstorm which I don't like */
+    /* sidenote: this took me way to long to figure out */
+    /* https://noahliebman.net/2024/08/beating-important-user-agent-styles/ */
+    transition:
+            color calc(infinity * 1s) step-end,
+            background-color calc(infinity * 1s) step-end;
 }
 
 select:hover {
     cursor: pointer;
 }
+
 /* https://www.geeksforgeeks.org/how-to-disable-arrows-from-number-input/ */
 /* This hides the arrow buttons for input[type="number'] */
-
 /* Hide the spin buttons in WebKit browsers */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

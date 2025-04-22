@@ -50,9 +50,4 @@ function populateGame($template, game) {
     return $game;
 }
 
-function renderFilteredGames(e) {
-    e.preventDefault();
-    renderPublicGames();
-}
-
-export { renderPlayerInfo, renderPublicGames, renderFilteredGames };
+export { renderPlayerInfo, renderPublicGames };
