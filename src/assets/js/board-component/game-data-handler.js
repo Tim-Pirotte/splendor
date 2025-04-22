@@ -20,10 +20,10 @@ function handleGameDataError(err) {
 function updateGameData() {
     const gameId = loadFromStorage("gameId");
 
-    if (gameId === null) location.href = "../index.html";
+    if (gameId === null) {location.href = "../index.html"; return}
 
     API.getGame().then(gameData => {
-        if (!gameData.started) location.href = "./lobby.html";
+        if (!gameData.started) {location.href = "./lobby.html"; return}
 
         saveToStorage("gameData", gameData);
         saveGameState(gameData["gameState"]);

@@ -11,13 +11,14 @@ function loadLobbyInformation() {
         locateToMainMenu();
     }
 
-    API.getGame().then(gameObject => {
-        if (hasGameStarted(gameObject)) {
+    API.getGame().then(gameData => {
+        console.log(gameData);
+        if (gameData.started) {
             location.href = "./board.html";
         } else {
-            renderGameInfo(gameObject);
-            renderPlayersList(gameObject);
-            renderPlayerCount(gameObject);
+            renderGameInfo(gameData);
+            renderPlayersList(gameData);
+            renderPlayerCount(gameData);
             hideIncompatibleElements();
             setTimeout(loadLobbyInformation, POLLING_TIME_OUT);
         }

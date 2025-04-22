@@ -10,7 +10,7 @@ function spectateGame(gameId) {
             } else {
                 saveToStorage("gameId", gameId);
                 location.href = "./board.html";
-            };
+            }
         });
 }
 
