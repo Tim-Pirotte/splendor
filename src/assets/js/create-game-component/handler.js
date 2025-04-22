@@ -6,10 +6,11 @@ function createGame(e) {
     e.preventDefault();
     checkCompatibility(2)
         .then(isCompatible => {
+            const visibility = getCheckedRadioButtonValue(document.querySelectorAll("input[name=visibility]"));
             const requestBody = {
                 playerName: loadFromStorage("playerName"),
                 gameName: document.querySelector("#game-name").value.trim() || `${loadFromStorage("playerName")}'s game`,
-                visibility: getCheckedRadioButtonValue(document.querySelectorAll("input[name=visibility]")),
+                visibility: visibility,
                 numberOfPlayers: parseInt(getCheckedRadioButtonValue(document.querySelectorAll("input[name=players]"))),
                 returnExcessTokensRequired: true,
                 pickNobleRequired: true,
@@ -17,7 +18,7 @@ function createGame(e) {
 
             if (isCompatible) {
                 requestBody.avatar = loadFromStorage("avatar");
-                requestBody.visibility = getCheckedRadioButtonValue(document.querySelectorAll("input[name=visibility]"));
+                requestBody.visibility = visibility;
             }
 
             createGameWithBody(requestBody);
