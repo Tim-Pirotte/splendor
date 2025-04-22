@@ -85,6 +85,14 @@ input[type="text"], input[type="number"], select {
     padding: 0.15rem 0 0.15rem 0.2rem;
 }
 
+/* This is needed since chrome decided to be an asshole and override
+    my styling for my input fields when using autocompletion */
+/* https://dev.to/atndesign/a-trick-to-change-the-autocomplete-background-color-21ll */
+input:-webkit-autofill{
+    -webkit-box-shadow: 0 0 0 1000px #372b52 inset !important;
+    -webkit-text-fill-color: white !important;
+}
+
 select:hover {
     cursor: pointer;
 }

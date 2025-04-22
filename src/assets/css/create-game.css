@@ -53,6 +53,10 @@ input[type="radio"] {
     margin-right: 0.4rem;
 }
 
+input[type="text"] {
+    width: 14rem;
+}
+
 
 
 form > button {
