@@ -38,7 +38,7 @@ function constructVerticalBackground(value, imageName, spacing) {
     return layers.join(",\n");
 }
 
-function formatNumber(number, length=2) {
+function formatNumber(number, length = 2) {
     return number.toString().padStart(length, "0");
 }
 

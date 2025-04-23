@@ -6,7 +6,7 @@ import { getActionButton, isCurrentlyPlaying } from "./game-status-interface.js"
 import { initRoundBegin, saveGameState } from "./state-machine/state-machine.js";
 import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
 import { processSkipTurn } from "./tokens/token-handler.js";
-import {locateToMainMenu} from "../utils/data-handler.js";
+import { locateToMainMenu } from "../utils/data-handler.js";
 
 function handleGameDataError(err) {
     const forbidden = 403;
@@ -21,10 +21,10 @@ function handleGameDataError(err) {
 function updateGameData() {
     const gameId = loadFromStorage("gameId");
 
-    if (gameId === null) {locateToMainMenu(); return}
+    if (gameId === null) {locateToMainMenu(); return;}
 
     API.getGame().then(gameData => {
-        if (!gameData.started) {location.href = "./lobby.html"; return}
+        if (!gameData.started) {location.href = "./lobby.html"; return;}
 
         saveToStorage("gameData", gameData);
         saveGameState(gameData["gameState"]);

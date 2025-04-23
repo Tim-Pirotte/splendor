@@ -118,7 +118,8 @@ function getDefaultPaymentMethod(cost) {
 }
 
 function removeBonusesFromCost(cost, bonuses) {
-    const costWithoutBonuses = {...cost};
+    const costWithoutBonuses = { ...cost };
+
     for (const tokenType in costWithoutBonuses) {
         if (costWithoutBonuses[tokenType] >= (bonuses[tokenType] || 0)) {
             costWithoutBonuses[tokenType] -= bonuses[tokenType] || 0;
@@ -126,7 +127,7 @@ function removeBonusesFromCost(cost, bonuses) {
             costWithoutBonuses[tokenType] = 0;
         }
     }
-    return costWithoutBonuses
+    return costWithoutBonuses;
 }
 
 function calculateDefaultPayment(cost, tokens) {

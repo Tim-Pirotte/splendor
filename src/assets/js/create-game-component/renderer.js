@@ -1,5 +1,5 @@
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
-import { insertImageInto, renderUnsupportedError } from "../utils/renderer.js";
+import { insertImageInto } from "../utils/renderer.js";
 
 function renderPlayerInfo() {
     const playerName = loadFromStorage("playerName");
@@ -15,7 +15,7 @@ function removeVisibilitySelector() {
 
 function addDefaultGameNamePlaceholder() {
     document.querySelector("#game-name")
-            .setAttribute("placeholder", `${loadFromStorage("playerName")}'s game`);
+        .setAttribute("placeholder", `${loadFromStorage("playerName")}'s game`);
 }
 
 export { renderPlayerInfo, removeVisibilitySelector, addDefaultGameNamePlaceholder };

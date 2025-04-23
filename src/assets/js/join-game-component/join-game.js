@@ -1,7 +1,7 @@
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { joinGame, joinGameUsingUsersInputId } from "./handler.js";
-import { renderPlayerInfo, renderPublicGames} from "./renderer.js";
-import {locateToMainMenu} from "../utils/data-handler.js";
+import { renderPlayerInfo, renderPublicGames } from "./renderer.js";
+import { locateToMainMenu } from "../utils/data-handler.js";
 
 function joinInit() {
     setupUI();
@@ -19,7 +19,7 @@ function setupEventListeners() {
     document.querySelector("ul").addEventListener("click", joinGame);
     document.querySelector("#filter-form").addEventListener("change", renderPublicGames);
     document.querySelector("#filter-form").addEventListener("submit", renderPublicGames);
-    document.querySelector("#filter-form input[type='reset']").addEventListener("click", renderPublicGames)
+    document.querySelector("#filter-form input[type='reset']").addEventListener("click", renderPublicGames);
 }
 
 joinInit();
