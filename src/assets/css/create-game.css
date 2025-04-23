@@ -11,8 +11,15 @@ header {
     margin: 2rem 0.5rem 2rem 2rem;
 }
 
-img {
-    max-width: 3rem;
+header > button {
+    width: 8rem;
+}
+
+#playerInformation {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 1rem;
+    align-items: center;
 }
 
 main {
@@ -24,33 +31,36 @@ p {
 }
 
 h1 {
-    margin-left: 45%;
-    font-size: 2.5rem;
+    text-align: center;
 }
 
 form {
-    width: 20rem;
+    width: 50%;
     margin: 3rem auto;
-    background-color: white;
-}
-
-input {
-    margin-top: 3rem;
-    display: inline-flex;
+    text-align: center;
 }
 
 label {
     font-size: 1.5rem;
+    margin-right: 0.4rem;
 }
 
-header > button {
-
-    width: 8rem;
+input {
+    margin: 4rem 0;
+    display: inline-flex;
 }
+
+input[type="radio"] {
+    margin-right: 0.4rem;
+}
+
+
 
 form > button {
-    margin-top: 10rem;
-    margin-left: 30%;
+    margin: 2rem auto;
+    display: block;
+    width: 8rem;
+    height: 2rem;
 }
 
 footer {
