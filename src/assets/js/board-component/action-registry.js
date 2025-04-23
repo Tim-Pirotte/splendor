@@ -5,13 +5,13 @@ import { processDiscardTokens } from "./tokens/discard.js";
 import { stopSpectating } from "../join-game-component/spectate.js";
 
 const ACTION_REGISTRY = {
-    processTakeTokenClick: () => processTakeTokensClick(),
-    processTakeTwoTokensClick: () => processTakeTwoTokens(),
-    processBuyCardClick: () => processBuyCardClick(),
-    skipTurn: () => processSkipTurn(),
-    processTakeNoble: () => processTakeNoble(),
-    processDiscardTokens: () => processDiscardTokens(),
-    stopSpectating: () => stopSpectating(),
+    processTakeTokenClick: () => processTakeTokensClick,
+    processTakeTwoTokensClick: () => processTakeTwoTokens,
+    processBuyCardClick: () => processBuyCardClick,
+    skipTurn: () => processSkipTurn,
+    processTakeNoble: () => processTakeNoble,
+    processDiscardTokens: () => processDiscardTokens,
+    stopSpectating: () => stopSpectating,
     doNothing: () => {},
 };
 
