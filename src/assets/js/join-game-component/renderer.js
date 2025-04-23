@@ -16,7 +16,9 @@ function renderPlayerInfo() {
 }
 
 function renderPublicGames(e) {
-    if (e) e.preventDefault();
+    const wasTriggeredByPolling = e === undefined;
+
+    if (!wasTriggeredByPolling) e.preventDefault();
 
     const $template = document.querySelector("#game-template");
     const $gameList = document.querySelector("ul");
@@ -34,7 +36,7 @@ function renderPublicGames(e) {
         }
 
         $gameList.innerHTML = $gameListCopy.innerHTML;
-        if (!e) setTimeout(renderPublicGames, POLLING_TIME_OUT);
+        if (wasTriggeredByPolling) setTimeout(renderPublicGames, POLLING_TIME_OUT);
     });
 }
 
