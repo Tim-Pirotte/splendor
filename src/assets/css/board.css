@@ -321,6 +321,25 @@ main {
     display: inline-block;
 }
 
+/* Nobles II */
+.nobles {
+    grid-area: nobles;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem 0;
+    margin-top: 1.5rem;
+}
+
+.nobles img:hover {
+    cursor: not-allowed;
+}
+
+
+.selectable-noble img:hover {
+    filter: var(--hover-effect);
+    cursor: pointer;
+}
+
 /* Cards II */
 .card {
     flex: 0 1 6rem;
@@ -435,19 +454,6 @@ main {
     50% {
         filter: brightness(70%);
     }
-}
-
-/* Nobles II */
-.nobles {
-    grid-area: nobles;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem 0;
-    margin-top: 1.5rem;
-}
-
-.nobles img:hover {
-    cursor: not-allowed;
 }
 
 /* ASIDE */
@@ -635,11 +641,6 @@ body.client-player-turn .hidden-cards:hover {
 }
 
 body.client-player-turn .card:hover {
-    filter: var(--hover-effect);
-    cursor: pointer;
-}
-
-.selectable-noble img:hover {
     filter: var(--hover-effect);
     cursor: pointer;
 }

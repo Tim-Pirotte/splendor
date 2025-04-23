@@ -62,5 +62,5 @@ export {
     setActionButtonState,
     getActionButton,
     clearDatasetAttributes,
-    resetCurrentPlayer
+    resetCurrentPlayer,
 };
