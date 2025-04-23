@@ -43,8 +43,9 @@ function processReserve(){
 function selectDeckForReserving(e) {
     if (!isCurrentlyPlaying()) return;
 
-    const $clickedPictureTag = e.currentTarget;
-    const deckLevel = $clickedPictureTag.closest("li").dataset.deckLevel;
+    const $clickedDeck = e.currentTarget;
+    const $clickedCard = $clickedDeck.querySelector(".hidden-cards");
+    const deckLevel = $clickedDeck.closest("li").dataset.deckLevel;
     const previousSelectedLevel = getReserveCardButton().dataset.level;
 
     console.log("jema")
@@ -55,26 +56,15 @@ function selectDeckForReserving(e) {
 
     getReserveCardButton().classList.remove("hidden");
 
-    highlightCard($clickedPictureTag);
-    setActionToBuyReserve($clickedPictureTag.closest("li"), deckLevel, false, validDeckReserve(deckLevel));
+    highlightCard($clickedDeck);
+    setActionToBuyReserve($clickedCard, deckLevel, false, validDeckReserve(deckLevel));
 
     getActionButton().disabled = true;
     getReserveCardButton().disabled = !validDeckReserve(deckLevel);
 }
 
-function allowToReserve($card, deckLevel) {
-    const $reserveCardButton = getReserveCardButton();
-
-    clearDatasetAttributes($reserveCardButton);
-
-
-    if (deckLevel) {
-        $reserveCardButton.dataset.level = deckLevel;
-    } else {
-        $reserveCardButton.dataset.name = $card.dataset.name;
-    }
-
-    $reserveCardButton.classList.remove("hidden");
+function allowToReserve() {
+    getReserveCardButton().classList.remove("hidden");
 }
 
 export { processReserve, selectDeckForReserving, allowToReserve };

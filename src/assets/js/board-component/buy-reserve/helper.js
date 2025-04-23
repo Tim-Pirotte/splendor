@@ -5,6 +5,14 @@ function getReserveCardButton() {
     return document.querySelector(".reserve-button");
 }
 
+function setReserveButtonData($card, deckLevel) {
+    if (deckLevel) {
+        getReserveCardButton().dataset.level = deckLevel;
+    } else {
+        getReserveCardButton().dataset.name = $card.dataset.name;
+    }
+}
+
 function endBuyReserveAction() {
     const $actionButton = getActionButton();
     const $reserveButton = getReserveCardButton();
@@ -16,4 +24,4 @@ function endBuyReserveAction() {
     setActionButtonState("Waiting on server", "doNothing", {});
 }
 
-export { getReserveCardButton, endBuyReserveAction };
+export { getReserveCardButton, endBuyReserveAction, setReserveButtonData };
