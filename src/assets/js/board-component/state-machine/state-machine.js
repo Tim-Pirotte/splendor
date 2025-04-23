@@ -54,9 +54,11 @@ function saveGameState(gameState) {
 
 function saveCurrentPlayerAndGameStateInDom(gameState) {
     const $body = document.querySelector("body");
+    $body.classList.toggle("client-player-turn-action", isClientPlayerTurnAction(gameState));
+}
 
-    $body.classList.toggle("client-player-turn", gameState["currentPlayer"] === loadFromStorage("playerName"));
-    $body.classList.toggle("state-is-turn-action", gameState["gameState"] === GAME_STATE.TURN_ACTION);
+function isClientPlayerTurnAction(gameState) {
+    return gameState["currentPlayer"] === loadFromStorage("playerName") && gameState["gameState"] === GAME_STATE.TURN_ACTION;
 }
 
 export { initRoundBegin, saveGameState, saveCurrentPlayerAndGameStateInDom };
