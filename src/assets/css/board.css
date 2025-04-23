@@ -28,7 +28,7 @@ body {
 }
 
 /* Main content alignment */
-body > section {
+body > .page-view {
     display: grid;
     grid-template-rows: 10% 90%;
     padding-left: 4rem;
