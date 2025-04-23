@@ -446,7 +446,7 @@ body > section {
     margin-top: 1.5rem;
 }
 
-.nobles:hover {
+.nobles img:hover {
     cursor: not-allowed;
 }
 
@@ -639,7 +639,7 @@ body.client-player-turn .card:hover {
     cursor: pointer;
 }
 
-body.client-player-turn .nobles img:hover {
+.selectable-noble img:hover {
     filter: var(--hover-effect);
     cursor: pointer;
 }
