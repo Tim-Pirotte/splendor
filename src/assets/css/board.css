@@ -125,12 +125,6 @@ main {
     z-index: 10;
 }
 
-.selectable-noble img {
-    box-shadow: var(--buyable-card-box-shadow) #c98c08c2;
-    filter: var(--buyable-card-brightness);
-    border-radius: 0.25rem;
-}
-
 .nobles img {
     width: 4.5rem;
     transition: var(--hover-transition-duration);
@@ -139,6 +133,12 @@ main {
        Usage of will-change outside of optimization is frowned upon so if there is another way to fix this please change this.
        https://developer.mozilla.org/en-US/docs/Web/CSS/will-change */
     will-change: filter;
+}
+
+.selectable-noble img {
+    box-shadow: var(--buyable-card-box-shadow) #c98c08c2;
+    filter: var(--buyable-card-brightness);
+    border-radius: 0.25rem;
 }
 
 .forfeit img {
@@ -629,28 +629,28 @@ aside {
     gap: 0 0.5rem;
 }
 
-.button-container button:disabled {
+body div.page-view .button-container button[type="button"]:disabled {
     cursor: not-allowed;
     filter: grayscale(80%);
 }
 
 /* hover effects for clickable for when it's the client player's turn */
-body.client-player-turn .hidden-cards:hover {
+body.client-player-turn[data-game-state="TurnAction"] .hidden-cards:hover {
     filter: var(--hover-effect);
     cursor: pointer;
 }
 
-body.client-player-turn .card:hover {
+body.client-player-turn[data-game-state="TurnAction"] .card:hover {
     filter: var(--hover-effect);
     cursor: pointer;
 }
 
-body.client-player-turn .board-tokens li:hover {
+body.client-player-turn[data-game-state="TurnAction"] .board-tokens li:hover {
     filter: var(--hover-effect);
     cursor: pointer;
 }
 
-body.client-player-turn .button-container button:hover {
+body.client-player-turn[data-game-state="TurnAction"] .button-container button:hover {
     filter: brightness(115%);
     cursor: pointer;
 }
