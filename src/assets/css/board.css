@@ -13,7 +13,7 @@ body {
 }
 
 /* Header styles */
-section h3, section h2, section h4 {
+.page-view h3, .page-view h2, .page-view h4 {
     color: var(--light-text-color);
     text-shadow: var(--primary-text-shadow);
 }
@@ -37,7 +37,7 @@ body > section {
     background-size: 120rem 67.5rem;
 }
 
-.main {
+main {
     display: grid;
     grid-template-columns: 57% 20% 13% 10%;
     grid-template-rows: 72% 5% 23%;
