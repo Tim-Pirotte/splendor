@@ -52,4 +52,11 @@ function saveGameState(gameState) {
     sessionStorage.setItem("gameState", gameState);
 }
 
-export { initRoundBegin, saveGameState };
+function saveCurrentPlayerAndGameStateInDom(gameState) {
+    const $body = document.querySelector("body");
+
+    $body.classList.toggle("client-player-turn", gameState["currentPlayer"] === loadFromStorage("playerName"));
+    $body.dataset.gameState = gameState["gameState"];
+}
+
+export { initRoundBegin, saveGameState, saveCurrentPlayerAndGameStateInDom };

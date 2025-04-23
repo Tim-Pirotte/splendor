@@ -61,7 +61,7 @@ form {
 section {
     display: flex;
     flex-flow: column nowrap;
-    padding: 1rem 1rem 0;
+    padding-top: 1rem;
     width: 50rem;
     height: 30rem;
     text-align: center;
@@ -133,10 +133,14 @@ footer {
 }
 
 .game-name {
-    font-size: 1.2rem;
+    font-size: 0.9rem;
     overflow-wrap: break-word;
     margin-right: -3.5rem;
     width: 20rem;
+}
+
+li p {
+    font-size: 0.9rem;
 }
 
 .game-id, .amount-of-players {

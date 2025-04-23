@@ -33,8 +33,6 @@ function renderGameStatusMessage(currentPlayer) {
 
     $statusMessage.textContent = isClientPlayerTurn ? "It's your turn" : `It's ${currentPlayer}'s turn`;
     $statusMessage.dataset.currentlyPlaying = currentPlayer;
-
-    document.querySelector("body").classList.toggle("client-player-turn", isClientPlayerTurn);
 }
 
 function renderPlayerProfile(gameCreatorName) {

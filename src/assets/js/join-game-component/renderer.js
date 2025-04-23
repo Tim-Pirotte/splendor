@@ -36,7 +36,7 @@ function renderPublicGames(e) {
         }
 
         $gameList.innerHTML = $gameListCopy.innerHTML;
-        if (wasTriggeredByPolling) setTimeout(renderPublicGames, POLLING_TIME_OUT);
+        //if (wasTriggeredByPolling) setTimeout(renderPublicGames, POLLING_TIME_OUT);
     });
 }
 
