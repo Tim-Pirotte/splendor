@@ -56,7 +56,7 @@ function saveCurrentPlayerAndGameStateInDom(gameState) {
     const $body = document.querySelector("body");
 
     $body.classList.toggle("client-player-turn", gameState["currentPlayer"] === loadFromStorage("playerName"));
-    $body.dataset.gameState = gameState["gameState"];
+    $body.classList.toggle("state-is-turn-action", gameState["gameState"] === GAME_STATE.TURN_ACTION);
 }
 
 export { initRoundBegin, saveGameState, saveCurrentPlayerAndGameStateInDom };

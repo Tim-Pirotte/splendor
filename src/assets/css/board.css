@@ -639,22 +639,22 @@ body div.page-view .button-container button[type="button"]:disabled {
 }
 
 /* hover effects for clickable for when it's the client player's turn */
-body.client-player-turn[data-game-state="TurnAction"] .hidden-cards:hover {
+body.client-player-turn.state-is-turn-action .hidden-cards:hover {
     filter: var(--hover-effect);
     cursor: pointer;
 }
 
-body.client-player-turn[data-game-state="TurnAction"] .card:hover {
+body.client-player-turn.state-is-turn-action .card:hover {
     filter: var(--hover-effect);
     cursor: pointer;
 }
 
-body.client-player-turn[data-game-state="TurnAction"] .board-tokens li:hover {
+body.client-player-turn.state-is-turn-action .board-tokens li:hover {
     filter: var(--hover-effect);
     cursor: pointer;
 }
 
-body.client-player-turn[data-game-state="TurnAction"] .button-container button:hover {
+body.client-player-turn.state-is-turn-action .button-container button:hover {
     filter: brightness(115%);
     cursor: pointer;
 }
