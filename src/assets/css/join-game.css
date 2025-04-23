@@ -164,15 +164,15 @@ button:hover, #filter-form > input[type="reset"]:hover {
     cursor: pointer;
 }
 
-#back-button {
+header > a {
     background-color: transparent;
     border: none;
 }
 
-#back-button img {
+header > a img {
     width: 3rem;
 }
 
-#back-button:hover {
+header > a:hover {
     filter: brightness(130%);
 }

@@ -98,6 +98,10 @@ body > section {
 }
 
 .hidden-cards:hover {
+    cursor: not-allowed;
+}
+
+body.client-player-turn .hidden-cards:hover {
     filter: var(--hover-effect);
     cursor: pointer;
 }
@@ -170,7 +174,11 @@ body > section {
     width: 100%;
 }
 
-.nobles img:hover {
+.nobles:hover {
+    cursor: not-allowed;
+}
+
+body.client-player-turn .nobles img:hover {
     filter: var(--hover-effect);
     cursor: pointer;
 }
@@ -349,6 +357,10 @@ body > section {
 }
 
 .card:hover {
+    cursor: not-allowed;
+}
+
+body.client-player-turn .card:hover {
     filter: var(--hover-effect);
     cursor: pointer;
 }
@@ -419,6 +431,10 @@ body > section {
 }
 
 .board-tokens li:hover {
+    cursor: not-allowed;
+}
+
+body.client-player-turn .board-tokens li:hover {
     filter: var(--hover-effect);
     cursor: pointer;
 }
@@ -618,7 +634,7 @@ aside {
     gap: 0 0.5rem;
 }
 
-.button-container button:hover {
+body.client-player-turn .button-container button:hover {
     filter: brightness(115%);
     cursor: pointer;
 }

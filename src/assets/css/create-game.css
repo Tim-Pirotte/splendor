@@ -32,16 +32,16 @@ header {
     margin: 2rem 2rem 0 2rem;
 }
 
-header > button {
+header > a {
     background-color: transparent;
     border: none;
 }
 
-header > button img {
+header > a img {
     width: 3rem;
 }
 
-header > button:hover {
+header > a:hover {
     filter: brightness(130%);
 }
 

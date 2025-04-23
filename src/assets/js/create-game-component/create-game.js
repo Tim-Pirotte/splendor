@@ -20,7 +20,6 @@ function setupUI() {
 }
 
 function setupEventListeners() {
-    document.querySelector("#back-button").addEventListener("click", locateToMainMenu);
     document.querySelector("form").addEventListener("submit", createGame);
 }
 
