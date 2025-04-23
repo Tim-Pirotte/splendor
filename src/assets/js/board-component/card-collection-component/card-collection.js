@@ -20,7 +20,7 @@ function renderCardUnlockedMessage(variant) {
         document.querySelector(".unlocked-card-message")
             .insertAdjacentHTML(
                 "beforeend",
-                `<p>${variant.charAt(0) + variant.slice(1).toLowerCase().replace("_", " ")} card discovered!</p>`
+                `<p>${variant.charAt(0) + variant.slice(1).toLowerCase().replace("_", " ")} card discovered!</p>`,
             );
     }
 }

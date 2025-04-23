@@ -13,8 +13,10 @@ function addNodesToEmptiedContainer($container, list, mapFunction) {
 
     for (const listItem of list) {
         const $itemToAdd = mapFunction(listItem);
-        if (!$itemToAdd) continue;
-        $container.appendChild($itemToAdd);
+
+        if ($itemToAdd) {
+            $container.appendChild($itemToAdd);
+        }
     }
 }
 
@@ -112,29 +114,23 @@ function getIllustration(cardName, cardBonus) {
     const illustration = ILLUSTRATIONS[illustrationSeed];
 
     const illustrationModifierSeed = hashToNumber(hashDigest(`${gameId}-${cardName}-modifier`));
-
     const chanceCategory = getChanceCategory(illustrationModifierSeed, CHANCES, CHANCE_CATEGORIES);
 
     switch (chanceCategory) {
-        case "REGULAR":
-            trackCardEncounter(cardBonus, illustration, "REGULAR", gameId, cardBonus, cardName);
-            return `${TOKEN_MAPPER[cardBonus]}_${illustration}`;
-        case "MISPRINT":
-            const colorsToChooseFrom = Object.keys(TOKEN_MAPPER).filter(k => k !== cardBonus);
-            const misprintSeed = hashToNumber(hashDigest(`${gameId}-${cardName}-misprint`), colorsToChooseFrom.length);
-            const illustrationColor = colorsToChooseFrom[misprintSeed];
+    case "REGULAR":
+        trackCardEncounter(cardBonus, illustration, "REGULAR", gameId, cardBonus, cardName);
+        return `${TOKEN_MAPPER[cardBonus]}_${illustration}`;
+    case "MISPRINT": {
+        const colorsToChooseFrom = Object.keys(TOKEN_MAPPER).filter(k => k !== cardBonus);
+        const misprintSeed = hashToNumber(hashDigest(`${gameId}-${cardName}-misprint`), colorsToChooseFrom.length);
+        const illustrationColor = colorsToChooseFrom[misprintSeed];
 
-            trackCardEncounter(cardBonus, illustration, "MISPRINT", gameId, illustrationColor, cardName);
-            return `${TOKEN_MAPPER[illustrationColor]}_${illustration}`;
-        case "INVERTED":
-            trackCardEncounter(cardBonus, illustration, "INVERTED", gameId, "inverted", cardName);
-            return `inverted_${illustration}`;
-        case "GREYSCALE":
-            trackCardEncounter(cardBonus, illustration, "GREYSCALE", gameId, "greyscale", cardName);
-            return `greyscale_${illustration}`;
-        case "GLITCHED":
-            trackCardEncounter(cardBonus, illustration, "GLITCHED", gameId, "glitched", cardName);
-            return `glitched_${illustration}`;
+        trackCardEncounter(cardBonus, illustration, "MISPRINT", gameId, illustrationColor, cardName);
+        return `${TOKEN_MAPPER[illustrationColor]}_${illustration}`;
+    }
+    default:
+        trackCardEncounter(cardBonus, illustration, chanceCategory, gameId, null, cardName);
+        return `${chanceCategory.toLowerCase()}_${illustration}`;
     }
 }
 

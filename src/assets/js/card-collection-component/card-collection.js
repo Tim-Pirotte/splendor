@@ -1,17 +1,15 @@
 import {
-    getCategoryNodes,
     renderCannotRestoreMessage,
     renderCardCollection,
-    renderCorruptDataMessage
+    renderCorruptDataMessage,
 } from "./renderer.js";
-import {hashToNumber} from "../board-component/card-collection-component/card-collection.js";
-import {hashDigest} from "../utils/crypto.js";
-import {CHANCE_CATEGORIES, CHANCES, ILLUSTRATIONS} from "./data.js";
-import {getChanceCategory} from "../board-component/renderer/helper.js";
-import {TOKEN_MAPPER} from "../board-component/config.js";
-import {loadFromStorage, saveToStorage} from "../data-connector/local-storage-abstractor.js";
-import {convertTreeToArray, removeFromTree} from "./helper.js";
-import {GEMS} from "../board-component/data.js";
+import { hashToNumber } from "../board-component/card-collection-component/card-collection.js";
+import { hashDigest } from "../utils/crypto.js";
+import { CHANCE_CATEGORIES, CHANCES, ILLUSTRATIONS } from "./data.js";
+import { getChanceCategory } from "../board-component/renderer/helper.js";
+import { TOKEN_MAPPER } from "../board-component/config.js";
+import { deleteFromStorage, loadFromStorage } from "../data-connector/local-storage-abstractor.js";
+import {convertTreeToArray, removeFromTree, unpackMisprintObjects} from "./helper.js";
 
 function init() {
     document.querySelector("main").addEventListener("click", handleCorruptButtonClick);
@@ -48,7 +46,6 @@ function isCorrectCategory(category, gameId, cardName) {
     return category === validCategory;
 }
 
-
 function isCorrectMisprint(misprintType, gameId, cardName, cardBonus) {
     const colorsToChooseFrom = Object.keys(TOKEN_MAPPER).filter(k => k !== cardBonus);
     const misprintSeed = hashToNumber(hashDigest(`${gameId}-${cardName}-misprint`), colorsToChooseFrom.length);
@@ -60,9 +57,10 @@ function isCorrectMisprint(misprintType, gameId, cardName, cardBonus) {
 function handleCorruptButtonClick(e) {
     if (e.target.tagName.toLowerCase() !== "button") return;
 
-    e.target.disabled = true;
+    const $button = e.target;
+    $button.disabled = true;
 
-    if (e.target.dataset.action === "deleteData") {
+    if ($button.dataset.action === "deleteData") {
         deleteData();
         location.reload();
     } else {
@@ -71,7 +69,7 @@ function handleCorruptButtonClick(e) {
 }
 
 function deleteData() {
-    saveToStorage("cardCollection", {});
+    deleteFromStorage("cardCollection");
 }
 
 function tryRestoringData() {
@@ -99,19 +97,13 @@ function getFaultyBranches(seenTree) {
     const faultyBranches = [];
 
     const cardCollection = [];
-    convertTreeToArray(seenTree, ["bonusColor", "illustrationName", "variant"], cardCollection, {}, 4);
+    convertTreeToArray(seenTree, ["bonusColor", "illustrationName", "variant"], cardCollection, {});
+    unpackMisprintObjects(cardCollection);
 
     for (const card of cardCollection) {
         if (isFaultyBranch(card)) {
-            if (card["variant"] !== "MISPRINT") {
-                faultyBranches.push([card["bonusColor"], card["illustrationName"], card["variant"]]);
-            } else {
-                for (const tokenType of GEMS) {
-                    if (tokenType in card) {
-                        faultyBranches.push([card["bonusColor"], card["illustrationName"], card["variant"], tokenType]);
-                    }
-                }
-            }
+            faultyBranches.push([card["bonusColor"], card["illustrationName"], card["variant"]]);
+            if (card["variant"] === "MISPRINT") faultyBranches[faultyBranches.length - 1].push(card["misprintType"]);
         }
     }
 
@@ -119,46 +111,24 @@ function getFaultyBranches(seenTree) {
 }
 
 function isFaultyBranch(card) {
-    if (card["variant"] !== "MISPRINT") {
-        if (!isValidCard(
-            card["illustrationName"],
-            card["variant"],
-            card["gameId"],
-            card["cardName"],
-            null,
-            card["bonusColor"]
-        )) {
-            return true;
-        }
-    } else {
-        for (const tokenType of GEMS) {
-            if (tokenType in card) {
-                if (!isValidCard(
-                    card["illustrationName"],
-                    "MISPRINT",
-                    card[tokenType]["gameId"],
-                    card[tokenType]["cardName"],
-                    tokenType,
-                    card["bonusColor"]
-                )) {
-                    return true;
-                }
-            }
-        }
-    }
-
-    return false;
+    return !isValidCard(
+        card["illustrationName"],
+        card["variant"],
+        card["gameId"],
+        card["cardName"],
+        card["misprintType"],
+        card["bonusColor"],
+    );
 }
 
 function removeFaultyBranches(faultyBranches, seenTree) {
     for (const faultyBranch of faultyBranches) {
-        console.log(faultyBranch)
         removeFromTree(seenTree, faultyBranch);
     }
 }
 
 function countCards(cardCollection) {
-    const cardCounts = {total: 0};
+    const cardCounts = { total: 0 };
 
     for (const card of cardCollection) {
         if (card["variant"] in cardCounts) {

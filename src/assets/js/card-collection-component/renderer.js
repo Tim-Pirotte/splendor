@@ -1,37 +1,24 @@
-import {CHANCE_CATEGORIES, CHANCES, ILLUSTRATIONS} from "./data.js";
-import {loadFromStorage} from "../data-connector/local-storage-abstractor.js";
-import {hashToNumber} from "../board-component/card-collection-component/card-collection.js";
-import {hashDigest} from "../utils/crypto.js";
-import {getChanceCategory, safeEmptyContainer} from "../board-component/renderer/helper.js";
-import {TOKEN_MAPPER} from "../board-component/config.js";
-import {countCards, isValidCard} from "./card-collection.js";
-import {copyNode} from "../utils/data-handler.js";
-import {convertTreeToArray} from "./helper.js";
-import {insertImageInto} from "../utils/renderer.js";
-import {GEMS} from "../board-component/data.js";
+import { CHANCE_CATEGORIES, ILLUSTRATIONS } from "./data.js";
+import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
+import { safeEmptyContainer } from "../board-component/renderer/helper.js";
+import { TOKEN_MAPPER } from "../board-component/config.js";
+import { countCards, isValidCard } from "./card-collection.js";
+import { copyNode } from "../utils/data-handler.js";
+import {convertTreeToArray, unpackMisprintObjects} from "./helper.js";
+import { insertImageInto } from "../utils/renderer.js";
 
 function renderCardCollection() {
     const seenTree = loadFromStorage("cardCollection") || {};
 
     const cardCollection = [];
-    convertTreeToArray(seenTree, ["bonusColor", "illustrationName", "variant"], cardCollection, {}, 4);
+    convertTreeToArray(seenTree, ["bonusColor", "illustrationName", "variant"], cardCollection, {});
+    unpackMisprintObjects(cardCollection);
 
+    // Avoids going to the DOM tree for each card render
     const categoryNodes = getCategoryNodes();
 
     for (const card of cardCollection) {
-        if (card["variant"] !== "MISPRINT") {
-            renderCollectedCard(
-                card["bonusColor"],
-                card["illustrationName"],
-                card["variant"],
-                card["gameId"],
-                card["cardName"],
-                card["discoveryDate"],
-                categoryNodes,
-            );
-        } else {
-            renderMisprintCard(card, categoryNodes);
-        }
+        renderCollectedCard(card, categoryNodes);
     }
 
     renderCollectionAmounts(cardCollection, categoryNodes);
@@ -47,44 +34,28 @@ function getCategoryNodes() {
     return result;
 }
 
-function renderCollectedCard(cardType, illustration, category, gameId, cardName, discoveryDate, categoryNodes, misprintType) {
-    if (!isValidCard(illustration, category, gameId, cardName, misprintType, cardType)) {
-        throw new Error(`Card data has been tampered with (${illustration}: ${category})`)
+function renderCollectedCard(card, categoryNodes) {
+    if (!isValidCard(card["illustrationName"], card["variant"], card["gameId"], card["cardName"], card["misprintType"], card["bonusColor"])) {
+        throw new Error(`Card data has been tampered with (${card["illustrationName"]}: ${card["variant"]})`);
     }
 
     const $card = document.createElement("li");
-    insertImageInto($card, `cards/empty/${TOKEN_MAPPER[cardType]}_empty_card`, false, `${TOKEN_MAPPER[cardType]} card`);
+    insertImageInto($card, `cards/empty/${TOKEN_MAPPER[card["bonusColor"]]}_empty_card`, false, `${TOKEN_MAPPER[card["bonusColor"]]} card`);
 
-    switch (category) {
-        case "REGULAR":
-            insertImageInto($card, `cards/illustrations/${TOKEN_MAPPER[cardType]}_${illustration}`, false, illustration.replace("_", " "));
-            break;
-        case "MISPRINT":
-            insertImageInto($card, `cards/illustrations/${TOKEN_MAPPER[misprintType]}_${illustration}`, false, illustration.replace("_", " "));
-            break;
-        default:
-            insertImageInto($card, `cards/illustrations/${category.toLowerCase()}_${illustration}`, false, illustration.replace("_", " "));
+    switch (card["variant"]) {
+    case "REGULAR":
+        insertImageInto($card, `cards/illustrations/${TOKEN_MAPPER[card["bonusColor"]]}_${card["illustrationName"]}`, false, card["illustrationName"].replace("_", " "));
+        break;
+    case "MISPRINT":
+        insertImageInto($card, `cards/illustrations/${TOKEN_MAPPER[card["misprintType"]]}_${card["illustrationName"]}`, false, card["illustrationName"].replace("_", " "));
+        break;
+    default:
+        insertImageInto($card, `cards/illustrations/${card["variant"].toLowerCase()}_${card["illustrationName"]}`, false, card["illustrationName"].replace("_", " "));
     }
 
-    $card.insertAdjacentHTML("beforeend", `<p>Discovered on ${new Date(discoveryDate).toLocaleDateString()}</p>`);
+    $card.insertAdjacentHTML("beforeend", `<p>Discovered on ${new Date(card["discoveryDate"]).toLocaleDateString()}</p>`);
 
-    categoryNodes[category].querySelector("ul").appendChild($card);
-}
-
-function renderMisprintCard(card, categoryNodes) {
-    for (const tokenType of GEMS) {
-        if (tokenType in card) {
-            renderCollectedCard(
-                card["bonusColor"],
-                card["illustrationName"],
-                "MISPRINT",
-                card[tokenType]["gameId"],
-                card[tokenType]["cardName"],
-                card[tokenType]["discoveryDate"],
-                categoryNodes,
-                tokenType);
-        }
-    }
+    categoryNodes[card["variant"]].querySelector("ul").appendChild($card);
 }
 
 function renderCorruptDataMessage() {
@@ -114,7 +85,7 @@ function renderCollectionAmounts(cardCollection, categoryNodes) {
         }
 
         categoryNode.querySelector(".max-amount").textContent = category === "MISPRINT"
-            ? (Object.values(TOKEN_MAPPER).length - 1)**2 * ILLUSTRATIONS.length
+            ? (Object.values(TOKEN_MAPPER).length - 1) ** 2 * ILLUSTRATIONS.length
             : (Object.values(TOKEN_MAPPER).length - 1) * ILLUSTRATIONS.length;
     }
 }

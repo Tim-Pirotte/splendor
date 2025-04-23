@@ -1,7 +1,8 @@
 const ILLUSTRATIONS = ["camel", "elephant", "market"];
 
 // NOSONAR_BEGIN
-const CHANCES = [980, 10, 5, 3, 2];
+//const CHANCES = [980, 10, 5, 3, 2];
+const CHANCES = [500, 500, 0, 0, 0];
 // NOSONAR_END
 
 const CHANCE_CATEGORIES = ["REGULAR", "MISPRINT", "GREYSCALE", "INVERTED", "GLITCHED"];

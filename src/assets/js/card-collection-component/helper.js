@@ -35,20 +35,35 @@ function removeFromTree(current, pathArray) {
     if (isEmpty(current[currentKey])) delete current[currentKey];
 }
 
-function convertTreeToArray(tree, keyNames, result, previousPath, maxDepth) {
-    if (typeof tree !== "object" || maxDepth === 1) {
+function convertTreeToArray(tree, keyNames, result, previousPath) {
+    const depth = Object.keys(previousPath).length;
+
+    if (typeof tree !== "object" || depth === keyNames.length) {
         // If 'tree' is an object, the complete tree has a pointer to it.
         // Merging it with 'previousPath' would mutate the original tree structure.
         typeof tree === "object"
-            ? result.push(Object.assign({ ...tree }, previousPath))
-            : result.push(Object.assign(tree, previousPath));
+            ? result.push({ ...tree, ...previousPath })
+            : result.push({ ...previousPath, value: tree });
         return;
     }
 
     for (const branch of Object.keys(tree)) {
-        previousPath[keyNames[keyNames.length - maxDepth + 1]] = branch;
-        convertTreeToArray(tree[branch], keyNames, result, previousPath, maxDepth - 1);
+        const treeLevelName = keyNames[depth];
+        previousPath[treeLevelName] = branch;
+        convertTreeToArray(tree[branch], keyNames, result, { ...previousPath });
     }
 }
 
-export { addToTree, removeFromTree, convertTreeToArray };
+function unpackMisprintObjects(cardCollection) {
+    for (const card of cardCollection) {
+        for (const [key, value] of Object.entries(card)) {
+            if (typeof value === "object") {
+                card["misprintType"] = key;
+                Object.assign(card, value);
+                delete card[key];
+            }
+        }
+    }
+}
+
+export { addToTree, removeFromTree, convertTreeToArray, unpackMisprintObjects };
