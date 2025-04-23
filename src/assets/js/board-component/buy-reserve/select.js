@@ -8,18 +8,19 @@ import {
     setActionButtonState,
 } from "../game-status-interface.js";
 import {
-    allowToBuy,
     cardAlreadySelected,
     getCard,
     highlightCard,
     setActionToBuyReserve,
     unHighlightCards,
 } from "./buy-handler.js";
+import {loadFromStorage} from "../../data-connector/local-storage-abstractor.js";
+import {GAME_STATE} from "../state-machine/data.js";
 
 function selectCard(e) {
     const $card = getCard(e);
+    if (!($card && isCurrentlyPlaying() && loadFromStorage("gameData")["gameState"] === GAME_STATE.TURN_ACTION)) return;
 
-    if (!($card && isCurrentlyPlaying())) return;
 
     const cardName = $card.dataset.name;
 
@@ -34,14 +35,7 @@ function selectCard(e) {
     getReserveCardButton().classList.remove("hidden");
 
     highlightCard($card);
-    setActionToBuyReserve($card, "", $card.classList.contains("reserved"));
-
-    const isValidCardBuy = validCardBuy(cardName);
-
-    if (isValidCardBuy) allowToBuy($card);
-
-    getActionButton().disabled = !isValidCardBuy;
-    getReserveCardButton().disabled = !validCardReserve($card);
+    setActionToBuyReserve($card, "", validCardBuy(cardName), validCardReserve($card));
 }
 
 function deselectCard(currentlyClickedIsCard = false) {

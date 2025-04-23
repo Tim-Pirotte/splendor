@@ -40,9 +40,7 @@ function deselectToken($selectedToken) {
 }
 
 function unHighlightTokens() {
-    for (const $cardToDeselect of document.querySelectorAll(".board-tokens > li")) {
-        $cardToDeselect.classList.remove("selected-token");
-    }
+    document.querySelectorAll(".board-tokens > li").forEach($token => deselectToken($token));
 }
 
 function removeTokenFromStack($selectedToken, $actionButton) {

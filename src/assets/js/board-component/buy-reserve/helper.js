@@ -1,4 +1,4 @@
-import { getActionButton, setActionButtonState } from "../game-status-interface.js";
+import {clearDatasetAttributes, getActionButton, setActionButtonState} from "../game-status-interface.js";
 import { unHighlightCards } from "./buy-handler.js";
 
 function getReserveCardButton() {
@@ -6,10 +6,14 @@ function getReserveCardButton() {
 }
 
 function endBuyReserveAction() {
+    const $actionButton = getActionButton();
+    const $reserveButton = getReserveCardButton();
+
+    $actionButton.disabled = true;
+    $reserveButton.classList.add("hidden");
+    clearDatasetAttributes($reserveButton);
     unHighlightCards();
-    getReserveCardButton().classList.add("hidden");
     setActionButtonState("Waiting on server", "doNothing", {});
-    getActionButton().disabled = true;
 }
 
 export { getReserveCardButton, endBuyReserveAction };

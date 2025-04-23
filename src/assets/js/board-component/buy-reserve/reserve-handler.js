@@ -5,7 +5,12 @@ import { deselectCard } from "./select.js";
 import { validDeckReserve } from "../state-machine/valid-action-checker.js";
 import { highlightCard, setActionToBuyReserve } from "./buy-handler.js";
 import { addGoldToken, renderClientPlayerReserve } from "../renderer/current-player-renderer.js";
-import { getActionButton, isCurrentlyPlaying, resetCurrentPlayer } from "../game-status-interface.js";
+import {
+    clearDatasetAttributes,
+    getActionButton,
+    isCurrentlyPlaying,
+    resetCurrentPlayer
+} from "../game-status-interface.js";
 
 function processReserve(){
     resetCurrentPlayer();
@@ -42,6 +47,7 @@ function selectDeckForReserving(e) {
     const deckLevel = $clickedPictureTag.closest("li").dataset.deckLevel;
     const previousSelectedLevel = getReserveCardButton().dataset.level;
 
+    console.log("jema")
     if (previousSelectedLevel === deckLevel) {
         deselectCard(true);
         return;
@@ -50,10 +56,25 @@ function selectDeckForReserving(e) {
     getReserveCardButton().classList.remove("hidden");
 
     highlightCard($clickedPictureTag);
-    setActionToBuyReserve($clickedPictureTag.closest("li"), deckLevel);
+    setActionToBuyReserve($clickedPictureTag.closest("li"), deckLevel, false, validDeckReserve(deckLevel));
 
     getActionButton().disabled = true;
     getReserveCardButton().disabled = !validDeckReserve(deckLevel);
 }
 
-export { processReserve, selectDeckForReserving };
+function allowToReserve($card, deckLevel) {
+    const $reserveCardButton = getReserveCardButton();
+
+    clearDatasetAttributes($reserveCardButton);
+
+
+    if (deckLevel) {
+        $reserveCardButton.dataset.level = deckLevel;
+    } else {
+        $reserveCardButton.dataset.name = $card.dataset.name;
+    }
+
+    $reserveCardButton.classList.remove("hidden");
+}
+
+export { processReserve, selectDeckForReserving, allowToReserve };
