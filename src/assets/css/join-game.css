@@ -116,9 +116,11 @@ li {
 
 /* TODO */
 li:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.10);
 }
 
 li:nth-child(odd) {
+    background-color: rgba(0, 0, 0, 0.20);
 }
 
 footer {

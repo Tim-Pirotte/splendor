@@ -28,13 +28,13 @@ import { checkCompatibility } from "../../server-version-component/server-versio
 import { reflowCSS } from "../helper.js";
 
 function renderGameStatusMessage(currentPlayer) {
-    const isCurrentlyPlaying = currentPlayer === loadFromStorage("playerName");
+    const isClientPlayerTurn = currentPlayer === loadFromStorage("playerName");
     const $statusMessage = document.querySelector("h1");
 
-    $statusMessage.textContent = isCurrentlyPlaying ? "It's your turn" : `It's ${currentPlayer}'s turn`;
+    $statusMessage.textContent = isClientPlayerTurn ? "It's your turn" : `It's ${currentPlayer}'s turn`;
     $statusMessage.dataset.currentlyPlaying = currentPlayer;
 
-    document.querySelector("body").classList.toggle("client-player-turn", isCurrentlyPlaying);
+    document.querySelector("body").classList.toggle("client-player-turn", isClientPlayerTurn);
 }
 
 function renderPlayerProfile(gameCreatorName) {

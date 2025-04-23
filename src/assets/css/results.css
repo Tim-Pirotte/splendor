@@ -53,9 +53,6 @@ h1 img {
 
 }
 
-.winner td {
-    color: gold;
-}
 /* Score table */
 table {
     color: lightgray;
@@ -83,6 +80,10 @@ tbody tr:nth-child(odd) {
 table tbody tr.clientPlayer {
     color: white;
     font-weight: 900;
+}
+
+table tbody tr.winner td {
+    color: gold;
 }
 /* Place the audio toggle at the right side of the footer */
 footer {

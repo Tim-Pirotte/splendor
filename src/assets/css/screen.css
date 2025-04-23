@@ -52,17 +52,14 @@ button, input {
     border: none;
     width: fit-content;
     padding: 0;
-}
-
-.sound-button img {
-    width: 3.125rem;
-}
-
-.sound-button {
     position: absolute;
     bottom: 4rem;
     right: 4rem;
     transition: var(--hover-transition-duration);
+}
+
+.sound-button img {
+    width: 3.125rem;
 }
 
 .sound-button:hover {
