@@ -101,11 +101,6 @@ body > section {
     cursor: not-allowed;
 }
 
-body.client-player-turn .hidden-cards:hover {
-    filter: var(--hover-effect);
-    cursor: pointer;
-}
-
 /* Board tokens I */
 .board-tokens p {
     text-align: center;
@@ -164,6 +159,15 @@ body.client-player-turn .hidden-cards:hover {
     position: relative;
 }
 
+/* sound button */
+.sound-button img {
+    width: 2rem;
+}
+
+.sound-button {
+    position: initial;
+}
+
 /* Player tokens */
 .player-tokens button img {
     height: 0.95rem;
@@ -172,15 +176,6 @@ body.client-player-turn .hidden-cards:hover {
 /* Cards */
 .card li img {
     width: 100%;
-}
-
-.nobles:hover {
-    cursor: not-allowed;
-}
-
-body.client-player-turn .nobles img:hover {
-    filter: var(--hover-effect);
-    cursor: pointer;
 }
 
 /* Cards */
@@ -360,11 +355,6 @@ body.client-player-turn .nobles img:hover {
     cursor: not-allowed;
 }
 
-body.client-player-turn .card:hover {
-    filter: var(--hover-effect);
-    cursor: pointer;
-}
-
 /* Makes text on the black chip readable */
 .card li[data-token-type="Onyx"] p {
     color: var(--light-text-color);
@@ -434,11 +424,6 @@ body.client-player-turn .card:hover {
     cursor: not-allowed;
 }
 
-body.client-player-turn .board-tokens li:hover {
-    filter: var(--hover-effect);
-    cursor: pointer;
-}
-
 .pulsing-text {
     animation: pulse-bright 1s ease-in-out infinite;
 }
@@ -459,6 +444,10 @@ body.client-player-turn .board-tokens li:hover {
     flex-direction: column;
     gap: 0.5rem 0;
     margin-top: 1.5rem;
+}
+
+.nobles:hover {
+    cursor: not-allowed;
 }
 
 /* ASIDE */
@@ -634,21 +623,33 @@ aside {
     gap: 0 0.5rem;
 }
 
-body.client-player-turn .button-container button:hover {
-    filter: brightness(115%);
-    cursor: pointer;
-}
-
 .button-container button:disabled {
     cursor: not-allowed;
     filter: grayscale(80%);
 }
 
-.sound-button img {
-    width: 2rem;
+/* hover effects for clickable for when it's the client player's turn */
+body.client-player-turn .hidden-cards:hover {
+    filter: var(--hover-effect);
+    cursor: pointer;
 }
 
-.sound-button {
-    position: initial;
+body.client-player-turn .card:hover {
+    filter: var(--hover-effect);
+    cursor: pointer;
 }
 
+body.client-player-turn .nobles img:hover {
+    filter: var(--hover-effect);
+    cursor: pointer;
+}
+
+body.client-player-turn .board-tokens li:hover {
+    filter: var(--hover-effect);
+    cursor: pointer;
+}
+
+body.client-player-turn .button-container button:hover {
+    filter: brightness(115%);
+    cursor: pointer;
+}
