@@ -99,6 +99,7 @@ body > section {
 
 .hidden-cards:hover {
     filter: var(--hover-effect);
+    cursor: pointer;
 }
 
 /* Board tokens I */
@@ -171,6 +172,7 @@ body > section {
 
 .nobles img:hover {
     filter: var(--hover-effect);
+    cursor: pointer;
 }
 
 /* Cards */
@@ -330,6 +332,8 @@ body > section {
     will-change: filter;
 }
 
+
+
 .card ul {
     display: flex;
     justify-content: space-around;
@@ -346,6 +350,7 @@ body > section {
 
 .card:hover {
     filter: var(--hover-effect);
+    cursor: pointer;
 }
 
 /* Makes text on the black chip readable */
@@ -415,6 +420,7 @@ body > section {
 
 .board-tokens li:hover {
     filter: var(--hover-effect);
+    cursor: pointer;
 }
 
 .pulsing-text {
@@ -614,6 +620,7 @@ aside {
 
 .button-container button:hover {
     filter: brightness(115%);
+    cursor: pointer;
 }
 
 .button-container button:disabled {

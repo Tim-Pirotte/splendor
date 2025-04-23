@@ -94,7 +94,7 @@ input[type="text"], input[type="number"], select {
             background-color calc(infinity * 1s) step-end;
 }
 
-select:hover {
+select:hover, button:hover {
     cursor: pointer;
 }
 

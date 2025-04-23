@@ -1,7 +1,6 @@
 import { intersection } from "./helper.js";
 
 function filterGames(gameList) {
-    console.log(document.querySelector("#game-name").value)
     return intersection(
         filterByPlayerCount(gameList, document.querySelector("#amount-filter").value),
         filterByName(gameList, document.querySelector("#game-name").value),

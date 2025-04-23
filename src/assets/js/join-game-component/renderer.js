@@ -15,7 +15,9 @@ function renderPlayerInfo() {
     insertImageInto(document.querySelector("#playerInformation"), `avatars/${avatar}`, false, avatar);
 }
 
-function renderPublicGames() {
+function renderPublicGames(e) {
+    if (e) e.preventDefault();
+
     const $template = document.querySelector("#game-template");
     const $gameList = document.querySelector("ul");
     const $gameListCopy = $gameList.cloneNode(true);
@@ -32,7 +34,7 @@ function renderPublicGames() {
         }
 
         $gameList.innerHTML = $gameListCopy.innerHTML;
-        setTimeout(renderPublicGames, POLLING_TIME_OUT);
+        if (!e) setTimeout(renderPublicGames, POLLING_TIME_OUT);
     });
 }
 

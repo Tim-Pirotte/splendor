@@ -17,7 +17,7 @@ function createGameWithBody(requestBody) {
                     if (isCompatible) saveToStorage("timeSync", response["gameId"]);
                     saveToStorage("gameId", response["gameId"]);
                     saveToStorage("playerToken", response["playerToken"]);
-                    //location.href = "./lobby.html";
+                    location.href = "./lobby.html";
                 });
         });
 }
