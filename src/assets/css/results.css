@@ -1,8 +1,3 @@
-:root {
-    --light-text-color: whitesmoke;
-    --hover-transition-duration: filter 0.3s ease-in-out;
-}
-
 /* General styling for the body and main container */
 main {
     z-index: 1;
