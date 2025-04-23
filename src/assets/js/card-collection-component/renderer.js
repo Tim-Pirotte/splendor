@@ -4,7 +4,7 @@ import { safeEmptyContainer } from "../board-component/renderer/helper.js";
 import { TOKEN_MAPPER } from "../board-component/config.js";
 import { countCards, isValidCard } from "./card-collection.js";
 import { copyNode } from "../utils/data-handler.js";
-import {convertTreeToArray, unpackMisprintObjects} from "./helper.js";
+import { convertTreeToArray, unpackMisprintObjects } from "./helper.js";
 import { insertImageInto } from "../utils/renderer.js";
 
 function renderCardCollection() {

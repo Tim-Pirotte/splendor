@@ -56,12 +56,16 @@ function convertTreeToArray(tree, keyNames, result, previousPath) {
 
 function unpackMisprintObjects(cardCollection) {
     for (const card of cardCollection) {
-        for (const [key, value] of Object.entries(card)) {
-            if (typeof value === "object") {
-                card["misprintType"] = key;
-                Object.assign(card, value);
-                delete card[key];
-            }
+        unpackMisprintFromCard(card);
+    }
+}
+
+function unpackMisprintFromCard(card) {
+    for (const [key, value] of Object.entries(card)) {
+        if (typeof value === "object") {
+            card["misprintType"] = key;
+            Object.assign(card, value);
+            delete card[key];
         }
     }
 }

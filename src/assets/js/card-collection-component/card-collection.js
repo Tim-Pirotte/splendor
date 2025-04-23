@@ -9,7 +9,7 @@ import { CHANCE_CATEGORIES, CHANCES, ILLUSTRATIONS } from "./data.js";
 import { getChanceCategory } from "../board-component/renderer/helper.js";
 import { TOKEN_MAPPER } from "../board-component/config.js";
 import { deleteFromStorage, loadFromStorage } from "../data-connector/local-storage-abstractor.js";
-import {convertTreeToArray, removeFromTree, unpackMisprintObjects} from "./helper.js";
+import { convertTreeToArray, removeFromTree, unpackMisprintObjects } from "./helper.js";
 
 function init() {
     document.querySelector("main").addEventListener("click", handleCorruptButtonClick);
@@ -102,12 +102,16 @@ function getFaultyBranches(seenTree) {
 
     for (const card of cardCollection) {
         if (isFaultyBranch(card)) {
-            faultyBranches.push([card["bonusColor"], card["illustrationName"], card["variant"]]);
-            if (card["variant"] === "MISPRINT") faultyBranches[faultyBranches.length - 1].push(card["misprintType"]);
+            addFaultyBranch(faultyBranches, card);
         }
     }
 
     return faultyBranches;
+}
+
+function addFaultyBranch(faultyBranches, card) {
+    faultyBranches.push([card["bonusColor"], card["illustrationName"], card["variant"]]);
+    if (card["variant"] === "MISPRINT") faultyBranches[faultyBranches.length - 1].push(card["misprintType"]);
 }
 
 function isFaultyBranch(card) {
