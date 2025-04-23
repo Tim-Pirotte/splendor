@@ -1,6 +1,7 @@
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
-import { joinGame, joinGameUsingUsersInputId, locateMainMenu } from "./handler.js";
+import { joinGame, joinGameUsingUsersInputId } from "./handler.js";
 import { renderPlayerInfo, renderPublicGames} from "./renderer.js";
+import {locateToMainMenu} from "../utils/data-handler.js";
 
 function joinInit() {
     setupUI();
@@ -8,13 +9,12 @@ function joinInit() {
 }
 
 function setupUI() {
-    if (!loadFromStorage("playerName") || !loadFromStorage("avatar")) {locateMainMenu(); return;}
+    if (!loadFromStorage("playerName") || !loadFromStorage("avatar")) {locateToMainMenu(); return;}
     renderPlayerInfo();
     renderPublicGames();
 }
 
 function setupEventListeners() {
-    document.querySelector("#back-button").addEventListener("click", locateMainMenu);
     document.querySelector("#join-form").addEventListener("submit", joinGameUsingUsersInputId);
     document.querySelector("ul").addEventListener("click", joinGame);
     document.querySelector("#filter-form").addEventListener("change", renderPublicGames);

@@ -6,6 +6,7 @@ import { getActionButton, isCurrentlyPlaying } from "./game-status-interface.js"
 import { initRoundBegin, saveGameState } from "./state-machine/state-machine.js";
 import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
 import { processSkipTurn } from "./tokens/token-handler.js";
+import {locateToMainMenu} from "../utils/data-handler.js";
 
 function handleGameDataError(err) {
     const forbidden = 403;
@@ -13,14 +14,14 @@ function handleGameDataError(err) {
     const gameNotExists = 404;
     const statusCode = err["failure"];
 
-    if (statusCode === forbidden || statusCode === unauthorized || statusCode === gameNotExists) location.href = "../index.html";
+    if (statusCode === forbidden || statusCode === unauthorized || statusCode === gameNotExists) locateToMainMenu();
     console.error(err);
 }
 
 function updateGameData() {
     const gameId = loadFromStorage("gameId");
 
-    if (gameId === null) {location.href = "../index.html"; return}
+    if (gameId === null) {locateToMainMenu(); return}
 
     API.getGame().then(gameData => {
         if (!gameData.started) {location.href = "./lobby.html"; return}

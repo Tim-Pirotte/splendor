@@ -9,7 +9,6 @@ function getCheckedRadioButtonValue(buttonList){
 }
 
 function createGameWithBody(requestBody) {
-    console.log(requestBody)
     API.createGame(requestBody)
         .then(response => {
             checkCompatibility(2)
