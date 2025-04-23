@@ -53,7 +53,7 @@ function initGameStatusInterface() {
 }
 
 function resetCurrentPlayer() {
-    document.querySelector(".top-bar h1").dataset.currentlyPlaying = "";
+    document.querySelector("body").classList.remove("client-player-turn");
 }
 
 export {

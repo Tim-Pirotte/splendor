@@ -317,6 +317,10 @@ main {
     opacity: 0.4;
 }
 
+.discard-container button:disabled:hover {
+    cursor: not-allowed;
+}
+
 .discard-container > * {
     display: inline-block;
 }
