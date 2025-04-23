@@ -3,7 +3,7 @@ import { SECONDS_PER_ROUND, SECONDS_WHEN_TURN_ALMOST_ENDS } from "./config.js";
 import * as API from "../api.js";
 import { renderPage } from "./renderer/renderer.js";
 import { getActionButton, isCurrentlyPlaying } from "./game-status-interface.js";
-import {initRoundBegin, saveCurrentPlayerAndGameStateInDom, saveGameState} from "./state-machine/state-machine.js";
+import { initRoundBegin, saveCurrentPlayerAndGameStateInDom, saveGameState } from "./state-machine/state-machine.js";
 import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
 import { processSkipTurn } from "./tokens/token-handler.js";
 import { locateToMainMenu } from "../utils/data-handler.js";
@@ -28,7 +28,7 @@ function updateGameData() {
 
         saveToStorage("gameData", gameData);
         saveGameState(gameData["gameState"]);
-        saveCurrentPlayerAndGameStateInDom(gameData)
+        saveCurrentPlayerAndGameStateInDom(gameData);
         renderPage(gameData);
         initRoundBegin(gameData);
 

@@ -6,10 +6,9 @@ import { validDeckReserve } from "../state-machine/valid-action-checker.js";
 import { highlightCard, setActionToBuyReserve } from "./buy-handler.js";
 import { addGoldToken, renderClientPlayerReserve } from "../renderer/current-player-renderer.js";
 import {
-    clearDatasetAttributes,
     getActionButton,
     isCurrentlyPlaying,
-    resetCurrentPlayer
+    resetCurrentPlayer,
 } from "../game-status-interface.js";
 
 function processReserve(){
@@ -48,7 +47,6 @@ function selectDeckForReserving(e) {
     const deckLevel = $clickedDeck.closest("li").dataset.deckLevel;
     const previousSelectedLevel = getReserveCardButton().dataset.level;
 
-    console.log("jema")
     if (previousSelectedLevel === deckLevel) {
         deselectCard(true);
         return;
@@ -57,7 +55,7 @@ function selectDeckForReserving(e) {
     getReserveCardButton().classList.remove("hidden");
 
     highlightCard($clickedDeck);
-    setActionToBuyReserve($clickedCard, deckLevel, false, validDeckReserve(deckLevel));
+    setActionToBuyReserve($clickedCard, false, validDeckReserve(deckLevel), deckLevel);
 
     getActionButton().disabled = true;
     getReserveCardButton().disabled = !validDeckReserve(deckLevel);

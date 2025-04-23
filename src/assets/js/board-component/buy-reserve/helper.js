@@ -1,4 +1,4 @@
-import {clearDatasetAttributes, getActionButton, setActionButtonState} from "../game-status-interface.js";
+import { clearDatasetAttributes, getActionButton, setActionButtonState } from "../game-status-interface.js";
 import { unHighlightCards } from "./buy-handler.js";
 
 function getReserveCardButton() {

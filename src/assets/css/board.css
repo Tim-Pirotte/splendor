@@ -633,11 +633,6 @@ aside {
     gap: 0 0.5rem;
 }
 
-body div.page-view .button-container button:disabled {
-    cursor: not-allowed;
-    filter: grayscale(80%);
-}
-
 /* hover effects for clickable for when it's the client player's turn */
 body.client-player-turn-action .hidden-cards:hover {
     filter: var(--hover-effect);
@@ -657,4 +652,9 @@ body.client-player-turn-action .board-tokens li:hover {
 body.client-player-turn-action .button-container button:hover {
     filter: brightness(115%);
     cursor: pointer;
+}
+
+body div.page-view .button-container button:disabled {
+    cursor: not-allowed;
+    filter: grayscale(80%);
 }
