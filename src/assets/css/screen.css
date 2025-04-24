@@ -94,7 +94,7 @@ input[type="text"], input[type="number"], select {
             background-color calc(infinity * 1s) step-end;
 }
 
-select:hover, button:hover {
+select:hover, button:hover, input[type="radio"] {
     cursor: var(--clickable-item-cursor);
 }
 

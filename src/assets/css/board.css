@@ -12,6 +12,18 @@ body {
     height: 100vh;
 }
 
+/* Player points */
+.player-points {
+    display: flex;
+    align-items: baseline;
+    gap: 0 0.5rem;
+    grid-area: player-points;
+}
+
+.player-points .enough-points-to-win, .player-card .enough-points-to-win, .highlighted-number {
+    color: #fa0f06;
+}
+
 /* Header styles */
 .page-view h3, .page-view h2, .page-view h4 {
     color: var(--light-text-color);
@@ -98,7 +110,7 @@ main {
 }
 
 .hidden-cards:hover {
-    filter: var(--hover-effect);
+    cursor: var(--disabled-button-cursor);
 }
 
 /* Board tokens I */
@@ -137,6 +149,7 @@ main {
     box-shadow: 0 0 0.5rem 0.5rem #00000040;
     filter: var(--buyable-card-brightness);
     z-index: 10;
+}
 
 .forfeit img {
     width: 2rem;
@@ -601,18 +614,6 @@ aside {
     gap: 0 1rem;
 }
 
-/* Player points */
-.player-points {
-    display: flex;
-    align-items: baseline;
-    gap: 0 0.5rem;
-    grid-area: player-points;
-}
-
-.enough-points-to-win, .highlighted-number {
-    color: #fa716c;
-}
-
 /* TIMER */
 .timer {
     height: 100%;
@@ -640,7 +641,7 @@ aside {
 }
 
 /* Action buttons */
-.button-container { 
+.button-container {
     grid-area: action-button;
     height: 2rem;
     width: fit-content;

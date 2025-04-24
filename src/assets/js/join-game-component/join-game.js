@@ -19,7 +19,7 @@ function setupUI() {
 function setupEventListeners() {
     document.querySelector("#join-form").addEventListener("submit", joinGameUsingUsersInputId);
     document.querySelector("ul").addEventListener("click", joinGame);
-    document.querySelector("#filter-form").addEventListener("input", renderPublicGames);
+    document.querySelector("#filter-form").addEventListener("change", renderPublicGames);
     document.querySelector("#filter-form").addEventListener("submit", renderPublicGames);
     document.querySelector("#filter-form input[type='reset']").addEventListener("click", renderPublicGames);
 }
