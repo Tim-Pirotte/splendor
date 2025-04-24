@@ -1,5 +1,5 @@
 import * as API from "../../api.js";
-import { clearDatasetAttributes, getActionButton, setActionButtonState } from "../game-status-interface.js";
+import { getActionButton, setActionButtonState } from "../game-status-interface.js";
 import {
     renderSwitchPaymentButtons,
     renderUpdatedPlayerScore,
@@ -10,7 +10,7 @@ import { renderUpdatedBoardTokens } from "../renderer/board-renderer.js";
 import { sumObjectValues } from "../helper.js";
 import { getClientBonuses, getClientTokens } from "../game-data-handler.js";
 import { binarySearchObjects } from "../../utils/data-handler.js";
-import { endBuyReserveAction, getReserveCardButton } from "./helper.js";
+import { endBuyReserveAction, getReserveCardButton, setReserveButtonData } from "./helper.js";
 import { unHighlightTokens } from "../tokens/token-handler.js";
 
 function allowToBuy($card) {
@@ -21,28 +21,25 @@ function allowToBuy($card) {
     renderSwitchPaymentButtons(defaultPayment, cardData["cost"]);
 }
 
-function setActionToBuyReserve($card, deckLevel = "", selectedAReservedCard = false) {
+function setActionToBuyReserve($card, isValidCardBuy, isValidCardReserve, deckLevel = "") {
     const datasetParameters = deckLevel ? {} : { name: $card.dataset.name };
+    const $reserveCardButton = getReserveCardButton();
+
+    unHighlightTokens();
     setActionButtonState(
         "buy",
         "processBuyCardClick",
         datasetParameters,
         true,
     );
+    setReserveButtonData($card, deckLevel);
 
-    const $reserveCardButton = getReserveCardButton();
-
-    clearDatasetAttributes($reserveCardButton);
-
-    if (selectedAReservedCard) getActionButton().dataset.reservedCard = "true";
-
-    if (deckLevel) {
-        $reserveCardButton.dataset.level = deckLevel;
-    } else {
-        $reserveCardButton.dataset.name = $card.dataset.name;
-    }
+    if (isValidCardBuy) allowToBuy($card);
 
     $reserveCardButton.classList.remove("hidden");
+
+    getActionButton().disabled = !isValidCardBuy;
+    $reserveCardButton.disabled = !isValidCardReserve;
 }
 
 function unHighlightCards() {
@@ -112,20 +109,22 @@ function isWalletHigher(wallet, cost) {
 function getDefaultPaymentMethod(cost) {
     const tokens = getClientTokens();
     const bonuses = getClientBonuses();
+    const costWithoutBonuses = removeBonusesFromCost(cost, bonuses);
 
-    removeBonusesFromCost(cost, bonuses);
-
-    return calculateDefaultPayment(cost, tokens);
+    return calculateDefaultPayment(costWithoutBonuses, tokens);
 }
 
 function removeBonusesFromCost(cost, bonuses) {
-    for (const tokenType in cost) {
-        if (cost[tokenType] >= (bonuses[tokenType] || 0)) {
-            cost[tokenType] -= bonuses[tokenType] || 0;
+    const costWithoutBonuses = { ...cost };
+
+    for (const tokenType in costWithoutBonuses) {
+        if (costWithoutBonuses[tokenType] >= (bonuses[tokenType] || 0)) {
+            costWithoutBonuses[tokenType] -= bonuses[tokenType] || 0;
         } else {
-            cost[tokenType] = 0;
+            costWithoutBonuses[tokenType] = 0;
         }
     }
+    return costWithoutBonuses;
 }
 
 function calculateDefaultPayment(cost, tokens) {

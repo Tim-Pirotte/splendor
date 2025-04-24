@@ -21,67 +21,64 @@
     <noscript>
         Javascript is required for this experience to work properly. Please enable it or use a modern browser with support.
     </noscript>
-    <div id="page-layout">
-        <header>
-            <button type="button" id="back-button">
+    <header>
+        <a href="../index.html">
+            <picture>
+                <source srcset="./../assets/images/UI/back_button.webp" type="image/webp">
+                <img src="./../assets/images/fallback/UI/back_button.png" alt="back arrow" title="back arrow">
+            </picture>
+        </a>
+        <div class="error-messages"></div>
+        <div id="player-information">
+            <h2 id="playerName">playerName</h2>
+            <template id="image-template">
                 <picture>
-                    <source srcset="./../assets/images/back_button.webp" type="image/webp">
-                    <img src="./../assets/images/no-image-demo.jpg" alt="back arrow" title="back arrow">
+                    <source srcset="#" type="image/webp">
+                    <img src="#" alt="" title="">
                 </picture>
-            </button>
-            <div class="error-messages"></div>
-            <div id="playerInformation">
-                <h2 id="playerName">playerName</h2>
-                <template id="image-template">
-                    <picture>
-                        <source srcset="#" type="image/webp">
-                        <img src="#" alt="" title="">
-                    </picture>
-                </template>
-            </div>
-        </header>
-        <main>
-            <h1>Join game</h1>
-            <form action="#" id="join-form">
-                <label for="game-id">Game ID:</label>
-                <input id="game-id" type="number" name="game-id-holder">
-                <button type="submit">Join game</button>
+            </template>
+        </div>
+    </header>
+    <main>
+        <h1>Join game</h1>
+        <form action="#" id="join-form">
+            <label for="game-id">Game ID:</label>
+            <input type="number" id="game-id" name="game-id-holder" placeholder="E.g. 123456789">
+            <button type="submit">Join game</button>
+        </form>
+        <section>
+            <h2>Available games</h2>
+            <form id="filter-form" action="#">
+                <label for="game-name">Game name:</label>
+                <input type="text" id="game-name" name="game-name-holder" placeholder="E.g. Mobly's game" spellcheck="false">
+                <label for="amount-filter">Filter on amount:</label>
+                <select id="amount-filter" name="amount-filter">
+                    <option value="any">Any</option>
+                    <option value="2">2 players</option>
+                    <option value="3">3 players</option>
+                    <option value="4">4 players</option>
+                </select>
+                <input type="reset" value="Reset">
             </form>
-            <section>
-                <h2>Available games</h2>
-                <form id="filter-form" action="#">
-                    <label for="game-name">Game name:</label>
-                    <input id="game-name" type="text" name="game-name-holder" placeholder="E.g. Mobly's game">
-                    <label for="amount-filter">Filter on amount:</label>
-                    <select id="amount-filter" name="amount-filter">
-                        <option value="any">Any</option>
-                        <option value="2">2 players</option>
-                        <option value="3">3 players</option>
-                        <option value="4">4 players</option>
-                    </select>
-                </form>
-                <ul>
-                    <template id="game-template">
-                        <li data-gameState="" data-gameId="">
-                            <div class="game-info">
-                                <h3>...</h3>
-                                <p class="game-id"></p>
-                            </div>
-                            <p class="amount-of-players"></p>
-                            <button type="button"></button>
-                        </li>
-                    </template>
-                </ul>
-            </section>
-        </main>
-        <footer>
-            <button type="button" class="sound-button">
-                <picture>
-                    <source srcset="../assets/images/UI/sound_off.webp" type="image/webp">
-                    <img src="../assets/images/fallback/UI/sound_off.png" title="sound button" alt="sound button">
-                </picture>
-            </button>
-        </footer>
-    </div>
+            <ul>
+                <template id="game-template">
+                    <li data-gameState="" data-gameId="">
+                        <h3 class="game-name">...</h3>
+                        <p class="game-id"></p>
+                        <p class="amount-of-players"></p>
+                        <button type="button"></button>
+                    </li>
+                </template>
+            </ul>
+        </section>
+    </main>
+    <footer>
+        <button type="button" class="sound-button">
+            <picture>
+                <source srcset="../assets/images/UI/sound_off.webp" type="image/webp">
+                <img src="../assets/images/fallback/UI/sound_off.png" title="sound button" alt="sound button">
+            </picture>
+        </button>
+    </footer>
 </body>
 </html>

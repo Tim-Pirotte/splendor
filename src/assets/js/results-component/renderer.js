@@ -3,17 +3,26 @@ import { getRandomNumber, getSortedResults } from "./helper.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import {
     INTERVAL_BETWEEN_ANIMATING_IMAGES,
-    LOSER_ANIMATION_IMAGES,
     TIMEOUT_BEFORE_ANIMATED_IMAGE_DELETION,
-    WINNER_ANIMATION_IMAGES,
+    IMAGE_PATHS_FROM_RESULTS_PAGE,
 } from "./config.js";
+import { formatNumber } from "../board-component/renderer/helper.js";
+import { insertImageInto } from "../utils/renderer.js";
+import { locateToMainMenu } from "../utils/data-handler.js";
 
 function renderResultMessage(isWinner) {
-    const $status = document.querySelector("h1");
-    $status.textContent = isWinner ? "WINNER" : "DEFEAT";
+    if (isWinner) {
+        const $h1 = document.querySelector("h1");
+        const $img = $h1.querySelector("img");
+
+        $h1.querySelector("source").srcset = "../assets/images/results/winner_text.webp";
+        $img.src = "../assets/images/fallback/results/winner_text.png";
+        $img.title = $img.alt = "winner text";
+    }
 }
 
 function renderResults() {
+    if (loadFromStorage("gameId") === null) {locateToMainMenu(); return;}
     getSortedResults().then(gameResults => {
         for (const player of gameResults) {
             const isPlayer = player.name === loadFromStorage("playerName");
@@ -30,28 +39,32 @@ function renderResults() {
 function renderResultTable(data) {
     const $template = document.querySelector("#result-template");
     const $tbody = document.querySelector("tbody");
+    const clientPlayerName = loadFromStorage("playerName");
 
     $tbody.innerHTML = "";
 
     data.forEach(player => {
-        const $clone = $template.content.cloneNode(true);
+        const $clone = $template.content.firstElementChild.cloneNode(true);
         const $td = $clone.querySelectorAll("td");
 
+        if (player.isWinner) $clone.classList.add("winner");
+        if (player.name === clientPlayerName) $clone.classList.add("clientPlayer");
+        insertImageInto($td[0], `results/${player.position}_place`, false, `number ${player.position}`);
         $td[1].textContent = player.name;
-        $td[2].textContent = `${player.points}/${MAX_PRESTIGE_POINTS}`;
+        $td[2].textContent = `${formatNumber(player.points)}/${MAX_PRESTIGE_POINTS}`;
 
         $tbody.appendChild($clone);
     });
 }
 
 function renderResultAnimation(isWinner) {
-    const imageArray = isWinner ? WINNER_ANIMATION_IMAGES : LOSER_ANIMATION_IMAGES;
-    setInterval(renderOneAnimation, INTERVAL_BETWEEN_ANIMATING_IMAGES, imageArray);
+    if (isWinner) setInterval(renderOneAnimation, INTERVAL_BETWEEN_ANIMATING_IMAGES);
+
 }
 
-function renderOneAnimation(imageArray) {
+function renderOneAnimation() {
     const $animationDiv = document.createElement("div");
-    const randomImage = imageArray[Math.floor(getRandomNumber(imageArray.length))];
+    const randomImage = IMAGE_PATHS_FROM_RESULTS_PAGE[Math.floor(getRandomNumber(IMAGE_PATHS_FROM_RESULTS_PAGE.length))];
 
     $animationDiv.classList.add("raining-animation");
     $animationDiv.style.left = `${getRandomNumber(100)}%`;

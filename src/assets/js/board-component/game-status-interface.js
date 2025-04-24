@@ -38,7 +38,9 @@ function clearDatasetAttributes($actionButton) {
 }
 
 function actionRegistryRouter() {
+    resetCurrentPlayer();
     const $actionButton = getActionButton();
+
     ACTION_REGISTRY[$actionButton.dataset.functionToRun]();
     setActionButtonState("Waiting on server", "doNothing", {});
     getActionButton().disabled = true;
@@ -50,4 +52,15 @@ function initGameStatusInterface() {
     $actionButton.addEventListener("click", actionRegistryRouter);
 }
 
-export { isCurrentlyPlaying, initGameStatusInterface, setActionButtonState, getActionButton, clearDatasetAttributes };
+function resetCurrentPlayer() {
+    document.querySelector("body").classList.remove("client-player-turn");
+}
+
+export {
+    isCurrentlyPlaying,
+    initGameStatusInterface,
+    setActionButtonState,
+    getActionButton,
+    clearDatasetAttributes,
+    resetCurrentPlayer,
+};

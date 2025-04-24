@@ -6,7 +6,7 @@ import { checkCompatibility } from "../../server-version-component/server-versio
 function initRoundBegin(gameData) {
     const gameState = gameData["gameState"];
 
-    if (!gameData["started"]) location.href = "./lobby-page.html";
+    if (!gameData["started"]) {location.href = "./lobby-page.html"; return;}
 
     switch (gameState) {
     case GAME_STATE.WINNER_IS_FOUND:
@@ -52,4 +52,13 @@ function saveGameState(gameState) {
     sessionStorage.setItem("gameState", gameState);
 }
 
-export { initRoundBegin, saveGameState };
+function saveCurrentPlayerAndGameStateInDom(gameState) {
+    const $body = document.querySelector("body");
+    $body.classList.toggle("client-player-turn-action", isClientPlayerTurnAction(gameState));
+}
+
+function isClientPlayerTurnAction(gameState) {
+    return gameState["currentPlayer"] === loadFromStorage("playerName") && gameState["gameState"] === GAME_STATE.TURN_ACTION;
+}
+
+export { initRoundBegin, saveGameState, saveCurrentPlayerAndGameStateInDom };

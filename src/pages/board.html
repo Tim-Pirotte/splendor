@@ -76,7 +76,7 @@
         </ol>
     </aside>
 
-    <section>
+    <div class="page-view">
         <header class="top-bar">
             <h1>It's your turn</h1>
             <div>
@@ -96,7 +96,7 @@
                 <div class="avatar"></div>
             </div>
         </header>
-        <div class="main">
+        <main>
             <!-- Decks -->
             <ul class="decks">
                 <li class="level-3" data-deck-level="3">
@@ -133,7 +133,7 @@
                 </template>
             </ul>
             <!-- Timer https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Roles -->
-            <div class="timer" style="height: 100%;" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="45">
+            <div class="timer" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="45">
                 <div class="timer-fill"></div>
             </div>
             <!-- Player points -->
@@ -164,7 +164,7 @@
                         <div class="discard-container">
                             <button type="button" data-action="remove">
                                 <!-- You might be wondering: "Why would we use images here instead of the + and - characters".
-                                The reason for this is simpel. The font that we use has spacing below and above these chars so making
+                                The reason for this is simple. The font that we use has spacing below and above these chars so making
                                 the text large enough so that the average person can read it makes the container overflow. -->
                                 <picture>
                                     <source srcset="../assets/images/UI/minus.webp" type="image/webp">
@@ -186,8 +186,8 @@
                 <button type="button" class="reserve-button hidden">Reserve card</button>
                 <button type="button" class="action-button">Action</button>
             </div>
-        </div>
-    </section>
+        </main>
+    </div>
 
     <!-- NOSONAR_BEGIN -->
     <template id="card-template">

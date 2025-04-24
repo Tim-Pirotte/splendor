@@ -2,8 +2,7 @@ import { saveToStorage } from "../data-connector/local-storage-abstractor.js";
 import { renderPlayerInfo } from "./renderer.js";
 
 function toggleAvatarListVisibility(e) {
-    const avatarListStyle = document.querySelector(".avatar-selector section").style;
-    avatarListStyle.display = (avatarListStyle.display === "none") ? "block" : "none";
+    document.querySelector(".avatar-selector section").classList.toggle("none");
 }
 
 function updateSelectedAvatar(e) {

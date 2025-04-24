@@ -10,7 +10,6 @@ function createGame(e) {
             const requestBody = {
                 playerName: loadFromStorage("playerName"),
                 gameName: document.querySelector("#game-name").value.trim() || `${loadFromStorage("playerName")}'s game`,
-                visibility: visibility,
                 numberOfPlayers: parseInt(getCheckedRadioButtonValue(document.querySelectorAll("input[name=players]"))),
                 returnExcessTokensRequired: true,
                 pickNobleRequired: true,

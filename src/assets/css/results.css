@@ -1,68 +1,135 @@
 /* General styling for the body and main container */
 main {
+    z-index: 1;
     flex: 1 0 auto;
+    display: flex;
+    flex-flow: column nowrap;
+    background-image: url("../images/results/results_banner.webp"), url("../images/fallback/results/results_banner.png");
+    background-size: 100% 100%;
+    width: 22rem;
+    height: 32rem;
 }
 
 body {
-    padding-top: 5rem;
-    box-sizing: border-box;
     display: flex;
     align-items: center;
     flex-flow: column nowrap;
     height: 100vh;
     overflow: clip;
+    box-sizing: border-box;
 }
 
-/* Splendor logo */
+@keyframes hueShift {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+}
+
+body::before {
+    content: "";
+    display: block;
+    height: 100vh;
+    width: 100vw;
+    background-image: url("../images/board_background.webp"), url("../images/fallback/board_background.png");
+    animation: hueShift 20s linear infinite;
+    background-size: contain;
+    background-position: center;
+    z-index: -1;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+/* Winner image */
 header {
-    margin: 2rem 0;
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+}
+
+h1 {
+    text-align: center;
+}
+
+h1 img {
+    width: 25rem;
+
 }
 
 /* Score table */
 table {
+    color: lightgray;
     width: 100%;
 }
 
 thead {
-    background: whitesmoke;
+    color: white;
     font-weight: bold;
 }
 
 thead th, tbody td {
-    padding: 1rem 1rem;
-    text-align: left;
+    padding: 1rem;
+    text-align: center;
 }
 
 tbody tr:nth-child(even) {
-    background: whitesmoke;
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 tbody tr:nth-child(odd) {
-    background: white;
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
-/* Place the audio toggle at the right side of the footer */
+table tbody tr.clientPlayer {
+    color: white;
+    font-weight: 900;
+}
+
+table tbody tr.winner td {
+    color: gold;
+}
+
+#table-container {
+    margin: 1rem auto;
+    height: 14rem;
+    width: 20rem;
+}
+
+table li {
+    list-style-type: none;
+}
+
+/* audio button */
 footer {
     align-self: flex-end;
     flex-flow: row nowrap;
     padding: 2rem;
 }
 
-footer picture source, footer picture img{
-    height: 3rem;
-}
-
-footer .sound-button {
-    width: 3rem;
-    height: 3rem;
+/* return to menu button */
+#return-to-menu {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    width: 7.65rem;
+    height: 2.55rem;
+    background-size: cover;
     background-color: transparent;
     border: none;
+    text-decoration: none;
+    background-image: url("../images/UI/action_button.webp"), url("../images/fallback/UI/action_button.png");
+    color: var(--light-text-color);
+    font-size: 0.7rem;
+    transition: var(--hover-transition-duration);
+    margin: 2.5rem auto 0;
+}
+
+#return-to-menu:hover {
+    filter: var(--button-hover-filter);
 }
 
 /* ANIMATIONS */
 @keyframes rainingImage {
-    from {transform: translateY(-2.5rem)}
-    to {transform: translateY(110vh)}
+    from {transform: translateX(-50%) translateY(-2.5rem)}
+    to {transform: translateX(-50%) translateY(110vh)}
 }
 
 div.raining-animation {
@@ -74,5 +141,4 @@ div.raining-animation {
     z-index: -1;
     background-repeat: no-repeat;
     background-size: contain;
-    transform: translateX(-50%);
 }

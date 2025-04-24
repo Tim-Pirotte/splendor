@@ -1,14 +1,19 @@
 import * as API from "../api.js";
 import { sumObjectValues } from "../utils/game-object-handler.js";
+import { GAME_STATE } from "../board-component/state-machine/data.js";
 
 function getSortedResults() {
     return API.getGame()
-        .then(({ players }) => {
-            const results = players.map(player => ({
+        .then(gameData => {
+            if (gameData.gameState !== GAME_STATE.WINNER_IS_FOUND) location.href = "./board.html";
+
+            const results = gameData.players.map(player => ({
                 name: player.name,
                 points: player["totalPrestigePoints"],
                 amountOfBonuses: getAmountOfBonuses(player),
             })).sort((a, b) => compareByPointsThenBonuses(b, a));
+
+            addPositionToPlayers(results);
 
             const topPlayerScore = results[0].points;
             const topPlayerBonuses = results[0].amountOfBonuses;
@@ -41,4 +46,11 @@ function getRandomNumber(max) {
     return (randomNumber / (2 ** 32)) * max;
 }
 
+function addPositionToPlayers(players) {
+    for (const index in players) players[index]["position"] = parseInt(index) + 1;
+
+    for (let i = 1; i < players.length; i++) {
+        if (compareByPointsThenBonuses(players[i], players[i - 1]) === 0) players[i]["position"] = players[i - 1]["position"];
+    }
+}
 export { getSortedResults, getRandomNumber };
