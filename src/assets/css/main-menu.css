@@ -14,7 +14,8 @@ body > div {
 
 /* Splendor logo */
 header {
-    margin: 2rem 0;
+    margin: 2rem auto 5rem auto;
+    scale: 225%;
 }
 
 /* Form */
