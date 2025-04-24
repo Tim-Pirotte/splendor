@@ -41,6 +41,7 @@ header > a {
 
 header > a img {
     width: 3rem;
+    transition: var(--hover-transition-duration);
 }
 
 header > a:hover {

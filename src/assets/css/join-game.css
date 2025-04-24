@@ -54,7 +54,7 @@ h1 {
 
 header > a {
     background-color: transparent;
-    border: none;
+    transition: var(--hover-transition-duration);
 }
 
 header > a img {
