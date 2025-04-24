@@ -2,13 +2,13 @@
    https://thomaswilburn.github.io/viz-book/perf-flip.html
    It uses the FLIP technique (First, Last, Invert, Play) */
 
-function animateFromTo($sourceNode, $targetNode, keyframes, duration, easingFunction) {
+function animateFromTo($sourceNode, $targetNode, animation) {
     const sourcePosition = $sourceNode.getBoundingClientRect();
     const targetPosition = $targetNode.getBoundingClientRect();
 
     const invertedPosSize = getInvertedPositionSize(sourcePosition, targetPosition);
 
-    startTargetAnimation($targetNode, invertedPosSize, keyframes, duration, easingFunction);
+    startTargetAnimation($targetNode, invertedPosSize, animation);
 }
 
 function getInvertedPositionSize(sourcePosition, targetPosition) {
@@ -20,12 +20,18 @@ function getInvertedPositionSize(sourcePosition, targetPosition) {
   };
 }
 
-function startTargetAnimation($targetNode, invertedPosSize, keyframes, duration, easingFunction) {
-  $targetNode.animate([
-    { transform: `translateX(${invertedPosSize.left}px) translateY(${invertedPosSize.top}px)` },
-    { transform: "translateX(0) translateY(0)" }
-  ], {
-    duration: 300,
-    easing: "linear",
-  });
+function startTargetAnimation($targetNode, invertedPosSize, animation) {
+  $targetNode.animate(
+    insertVariables(animation.keyFrames, invertedPosSize),
+    {
+      duration: animation.duration,
+      easing: animation.easeFunction,
+      },
+  );
+}
+
+function insertVariables(targetString, varsToInsert) {
+  for (const [varName, value] of Object.entries(varsToInsert)) {
+    targetString.replaceAll(`{{ ${varName} }}`, value);
+  }
 }
