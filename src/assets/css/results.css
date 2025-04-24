@@ -117,7 +117,7 @@ footer .sound-button {
 }
 
 #return-to-menu:hover {
-    filter: brightness(115%);
+    filter: var(--button-hover-filter);
 }
 
 #table-container {

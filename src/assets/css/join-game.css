@@ -114,7 +114,6 @@ li {
     padding: 0.75rem 0;
 }
 
-/* TODO */
 li:nth-child(even) {
     background-color: rgba(0, 0, 0, 0.10);
 }
@@ -166,8 +165,8 @@ main button, #filter-form > input[type="reset"] {
 }
 
 button:hover, #filter-form > input[type="reset"]:hover {
-    filter: brightness(115%);
-    cursor: pointer;
+    filter: var(--button-hover-filter);
+    cursor: var(--clickable-item-cursor);
 }
 
 header > a {
@@ -177,8 +176,9 @@ header > a {
 
 header > a img {
     width: 3rem;
+    transition: var(--hover-transition-duration);
 }
 
 header > a:hover {
-    filter: brightness(130%);
+    filter: var(--button-hover-filter);
 }

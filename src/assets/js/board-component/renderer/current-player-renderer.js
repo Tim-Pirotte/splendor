@@ -162,7 +162,7 @@ function renderClientPlayerTokens(currentPlayerTokens, currentPlayerBonuses, gem
         renderClientToken($numberedItemTemplate, token, $progressBarTemplate, currentPlayerBonuses, currentPlayerTokens, $currentPlayerTokensContainer, $discardNavTemplate);
     }
 
-    setDiscardButtonStatuses();
+    if (clientMustDiscardToken()) setDiscardButtonStatuses();
 }
 
 function renderClientToken($numberedItemTemplate, token, $progressBarTemplate, currentPlayerBonuses, currentPlayerTokens, $clientPlayerTokensContainer, $discardNavTemplate) {

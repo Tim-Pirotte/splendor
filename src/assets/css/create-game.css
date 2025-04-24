@@ -113,8 +113,8 @@ form > button {
 }
 
 form > button:hover {
-    filter: brightness(115%);
-    cursor: pointer;
+    filter: var(--button-hover-filter);
+    cursor: var(--clickable-item-cursor);
 }
 
 footer {

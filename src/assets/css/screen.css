@@ -2,6 +2,9 @@
     --light-text-color: whitesmoke;
     --primary-text-shadow: 0 0 0.3125rem black;
     --hover-transition-duration: filter 0.3s ease-in-out;
+    --button-hover-filter: brightness(115%);
+    --clickable-item-cursor: pointer;
+    --disabled-button-cursor: not-allowed;
 }
 
 @font-face {
@@ -63,7 +66,7 @@ button, input {
 }
 
 .sound-button:hover {
-    filter: brightness(115%);
+    filter: var(--button-hover-filter);
 }
 
 .hidden {
@@ -92,7 +95,7 @@ input[type="text"], input[type="number"], select {
 }
 
 select:hover, button:hover {
-    cursor: pointer;
+    cursor: var(--clickable-item-cursor);
 }
 
 /* https://www.geeksforgeeks.org/how-to-disable-arrows-from-number-input/ */

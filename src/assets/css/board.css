@@ -98,7 +98,7 @@ main {
 }
 
 .hidden-cards:hover {
-    cursor: not-allowed;
+    cursor: var(--disabled-button-cursor);
 }
 
 /* Board tokens I */
@@ -318,7 +318,7 @@ main {
 }
 
 .discard-container button:disabled:hover {
-    cursor: not-allowed;
+    cursor: var(--disabled-button-cursor);
 }
 
 .discard-container > * {
@@ -335,13 +335,13 @@ main {
 }
 
 .nobles img:hover {
-    cursor: not-allowed;
+    cursor: var(--disabled-button-cursor);
 }
 
 
 .selectable-noble img:hover {
     filter: var(--hover-effect);
-    cursor: pointer;
+    cursor: var(--clickable-item-cursor);
 }
 
 /* Cards II */
@@ -375,7 +375,7 @@ main {
 }
 
 .card:hover {
-    cursor: not-allowed;
+    cursor: var(--disabled-button-cursor);
 }
 
 /* Makes text on the black chip readable */
@@ -444,7 +444,7 @@ main {
 }
 
 .board-tokens li:hover {
-    cursor: not-allowed;
+    cursor: var(--disabled-button-cursor);
 }
 
 .pulsing-text {
@@ -636,25 +636,25 @@ aside {
 /* hover effects for clickable for when it's the client player's turn */
 body.client-player-turn-action .hidden-cards:hover {
     filter: var(--hover-effect);
-    cursor: pointer;
+    cursor: var(--clickable-item-cursor);
 }
 
 body.client-player-turn-action .card:hover {
     filter: var(--hover-effect);
-    cursor: pointer;
+    cursor: var(--clickable-item-cursor);
 }
 
 body.client-player-turn-action .board-tokens li:hover {
     filter: var(--hover-effect);
-    cursor: pointer;
+    cursor: var(--clickable-item-cursor);
 }
 
 body.client-player-turn-action .button-container button:hover {
-    filter: brightness(115%);
-    cursor: pointer;
+    filter: var(--button-hover-filter);
+    cursor: var(--clickable-item-cursor);
 }
 
 body div.page-view .button-container button:disabled {
-    cursor: not-allowed;
+    cursor: var(--disabled-button-cursor);
     filter: grayscale(80%);
 }
