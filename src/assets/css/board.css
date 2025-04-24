@@ -133,6 +133,22 @@ main {
     width: 1.25rem;
 }
 
+/* sound button */
+.sound-button img {
+    width: 2rem;
+}
+
+.sound-button {
+    position: initial;
+}
+
+.forfeit img {
+    width: 2rem;
+}
+
+.avatar img {
+    width: 2rem;
+}
 /* Nobles I */
 .nobles img {
     width: 4.5rem;
@@ -151,14 +167,6 @@ main {
     z-index: 10;
 }
 
-.forfeit img {
-    width: 2rem;
-}
-
-.avatar img {
-    width: 2rem;
-}
-
 .selectable-noble picture img {
     box-shadow: var(--buyable-card-box-shadow) #c98c08c2;
     filter: var(--buyable-card-brightness);
@@ -169,15 +177,6 @@ main {
     width: 5.4rem;
     height: 1rem;
     position: relative;
-}
-
-/* sound button */
-.sound-button img {
-    width: 2rem;
-}
-
-.sound-button {
-    position: initial;
 }
 
 /* Player tokens */

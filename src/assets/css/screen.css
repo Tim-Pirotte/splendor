@@ -56,13 +56,13 @@ button, input {
     width: fit-content;
     padding: 0;
     position: absolute;
-    bottom: 4rem;
-    right: 4rem;
+    bottom: 2rem;
+    right: 2rem;
     transition: var(--hover-transition-duration);
 }
 
 .sound-button img {
-    width: 3.125rem;
+    width: 2rem;
 }
 
 .sound-button:hover {
