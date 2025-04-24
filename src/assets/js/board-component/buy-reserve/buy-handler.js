@@ -35,7 +35,8 @@ function setActionToBuyReserve($card, isValidCardBuy, isValidCardReserve, deckLe
     setReserveButtonData($card, deckLevel);
 
     if (isValidCardBuy) allowToBuy($card);
-    if (isValidCardReserve) $reserveCardButton.classList.remove("hidden");
+
+    $reserveCardButton.classList.remove("hidden");
 
     getActionButton().disabled = !isValidCardBuy;
     $reserveCardButton.disabled = !isValidCardReserve;
