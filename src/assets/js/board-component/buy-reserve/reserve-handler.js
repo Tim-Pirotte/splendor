@@ -52,8 +52,6 @@ function selectDeckForReserving(e) {
         return;
     }
 
-    getReserveCardButton().classList.remove("hidden");
-
     highlightCard($clickedDeck);
     setActionToBuyReserve($clickedCard, false, validDeckReserve(deckLevel), deckLevel);
 
@@ -61,8 +59,4 @@ function selectDeckForReserving(e) {
     getReserveCardButton().disabled = !validDeckReserve(deckLevel);
 }
 
-function allowToReserve() {
-    getReserveCardButton().classList.remove("hidden");
-}
-
-export { processReserve, selectDeckForReserving, allowToReserve };
+export { processReserve, selectDeckForReserving };

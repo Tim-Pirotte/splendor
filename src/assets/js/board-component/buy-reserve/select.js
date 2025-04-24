@@ -32,8 +32,6 @@ function selectCard(e) {
         return;
     }
 
-    getReserveCardButton().classList.remove("hidden");
-
     highlightCard($card);
     setActionToBuyReserve($card, validCardBuy(cardName), validCardReserve($card));
 }
