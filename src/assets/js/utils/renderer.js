@@ -1,5 +1,5 @@
-import {copyNode} from "./data-handler.js";
-import {loadFromStorage} from "../data-connector/local-storage-abstractor.js";
+import { copyNode } from "./data-handler.js";
+import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 
 function insertImageInto($container, standardPath, insertAtStart, alt, prefix = "..") {
     const $image = copyNode(document.querySelector("#image-template"));

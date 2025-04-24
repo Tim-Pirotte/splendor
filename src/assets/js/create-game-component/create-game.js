@@ -3,7 +3,7 @@ import { createGame } from "./handler.js";
 import { renderPlayerInfo, removeVisibilitySelector } from "./renderer.js";
 import { locateToMainMenu } from "../utils/data-handler.js";
 import { checkCompatibility } from "../server-version-component/server-version.js";
-import {renderDefaultGameNamePlaceholder} from "../utils/renderer.js";
+import { renderDefaultGameNamePlaceholder } from "../utils/renderer.js";
 
 function createInit() {
     setupUI();

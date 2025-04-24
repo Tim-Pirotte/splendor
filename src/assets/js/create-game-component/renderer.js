@@ -1,5 +1,5 @@
-import {loadFromStorage} from "../data-connector/local-storage-abstractor.js";
-import {insertImageInto} from "../utils/renderer.js";
+import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
+import { insertImageInto } from "../utils/renderer.js";
 
 function renderPlayerInfo() {
     const playerName = loadFromStorage("playerName");
