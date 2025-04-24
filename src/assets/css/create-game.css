@@ -47,7 +47,7 @@ header > a:hover {
     filter: var(--button-hover-filter);
 }
 
-#playerInformation {
+#player-information {
     display: flex;
     flex-flow: row nowrap;
     gap: 1rem;

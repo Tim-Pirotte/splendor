@@ -6,7 +6,7 @@ function renderPlayerInfo() {
     const avatar = loadFromStorage("avatar");
 
     document.querySelector("#playerName").textContent = playerName;
-    insertImageInto(document.querySelector("#playerInformation"), `avatars/${avatar}`, false, avatar);
+    insertImageInto(document.querySelector("#player-information"), `avatars/${avatar}`, false, avatar);
 }
 
 function removeVisibilitySelector() {

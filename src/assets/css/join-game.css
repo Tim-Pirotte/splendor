@@ -40,7 +40,7 @@ header {
     margin: 2rem 2rem 0 2rem;
 }
 
-#playerInformation {
+#player-information {
     display: flex;
     flex-flow: row nowrap;
     gap: 1rem;
