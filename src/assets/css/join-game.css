@@ -14,17 +14,17 @@ body::before {
     top: 0;
 }
 
+@keyframes hueShift {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+}
+
 body {
     height: 100vh;
     display: flex;
     flex-flow: column nowrap;
     color: var(--light-text-color);
     overflow: clip;
-}
-
-@keyframes hueShift {
-    0% { filter: hue-rotate(0deg); }
-    100% { filter: hue-rotate(360deg); }
 }
 
 main {
@@ -50,6 +50,20 @@ header {
 h1 {
     text-align: center;
     margin-bottom: 2rem;
+}
+
+header > a {
+    background-color: transparent;
+    border: none;
+}
+
+header > a img {
+    width: 3rem;
+    transition: var(--hover-transition-duration);
+}
+
+header > a:hover {
+    filter: var(--button-hover-filter);
 }
 
 /* Form styling (inc. related features) */
@@ -92,6 +106,7 @@ label[for="game-name"], label[for="game-id"], label[for="amount-filter"]{
     font-size: 1.2rem;
 }
 
+/* this references the game name input field */
 #game-name {
     margin-right: 2rem;
 }
@@ -122,11 +137,7 @@ li:nth-child(odd) {
     background-color: rgba(0, 0, 0, 0.20);
 }
 
-footer {
-    align-self: flex-end;
-    padding: 2rem;
-}
-
+/* this references the game name and info for visible public games */
 .game-info {
     width: 20rem;
 }
@@ -146,6 +157,14 @@ li p {
     width: 2.5rem;
 }
 
+/* footer */
+footer {
+    align-self: flex-end;
+    padding: 2rem;
+}
+
+
+/* button styling */
 main button, #filter-form > input[type="reset"] {
     width: 7.65rem;
     height: 2.55rem;
@@ -167,18 +186,4 @@ main button, #filter-form > input[type="reset"] {
 button:hover, #filter-form > input[type="reset"]:hover {
     filter: var(--button-hover-filter);
     cursor: var(--clickable-item-cursor);
-}
-
-header > a {
-    background-color: transparent;
-    border: none;
-}
-
-header > a img {
-    width: 3rem;
-    transition: var(--hover-transition-duration);
-}
-
-header > a:hover {
-    filter: var(--button-hover-filter);
 }

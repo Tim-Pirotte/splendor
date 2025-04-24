@@ -38,6 +38,7 @@ body::before {
     left: 0;
     top: 0;
 }
+
 /* Winner image */
 header {
     margin-top: 3rem;
@@ -85,7 +86,18 @@ table tbody tr.clientPlayer {
 table tbody tr.winner td {
     color: gold;
 }
-/* Place the audio toggle at the right side of the footer */
+
+#table-container {
+    margin: 1rem auto;
+    height: 14rem;
+    width: 20rem;
+}
+
+table li {
+    list-style-type: none;
+}
+
+/* audio button */
 footer {
     align-self: flex-end;
     flex-flow: row nowrap;
@@ -99,6 +111,7 @@ footer .sound-button {
     border: none;
 }
 
+/* return to menu button */
 #return-to-menu {
     display: flex;
     align-items: center;
@@ -118,16 +131,6 @@ footer .sound-button {
 
 #return-to-menu:hover {
     filter: var(--button-hover-filter);
-}
-
-#table-container {
-    margin: 1rem auto;
-    height: 14rem;
-    width: 20rem;
-}
-
-table li {
-    list-style-type: none;
 }
 
 /* ANIMATIONS */

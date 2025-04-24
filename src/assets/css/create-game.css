@@ -1,3 +1,4 @@
+/* General styling for the body and main container */
 @keyframes hueShift {
     0% { filter: hue-rotate(0deg); }
     100% { filter: hue-rotate(360deg); }
@@ -25,6 +26,7 @@ body {
     color: var(--light-text-color);
 }
 
+/* header styling */
 header {
     display: flex;
     flex-flow: row nowrap;
@@ -52,6 +54,7 @@ header > a:hover {
     align-items: center;
 }
 
+/* create game form styling */
 main {
     padding: 1rem 1rem 0;
     width: 40em;
@@ -95,9 +98,7 @@ input[type="text"] {
     width: 14rem;
 }
 
-
-
-
+/* confirm button */
 form > button {
     margin: 1rem auto 2rem;
     display: block;
@@ -117,6 +118,7 @@ form > button:hover {
     cursor: var(--clickable-item-cursor);
 }
 
+/* footer */
 footer {
     align-self: flex-end;
     flex-flow: row nowrap;
