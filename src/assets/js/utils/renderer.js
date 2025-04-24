@@ -1,4 +1,5 @@
-import { copyNode } from "./data-handler.js";
+import {copyNode} from "./data-handler.js";
+import {loadFromStorage} from "../data-connector/local-storage-abstractor.js";
 
 function insertImageInto($container, standardPath, insertAtStart, alt, prefix = "..") {
     const $image = copyNode(document.querySelector("#image-template"));
@@ -20,4 +21,8 @@ function renderUnsupportedError($container, feature) {
     $container.innerHTML = `<p>${feature} is not supported on this server. Sorry for the inconvenience.</p>`;
 }
 
-export { insertImageInto, renderUnsupportedError };
+function renderDefaultGameNamePlaceholder($target) {
+    $target.setAttribute("placeholder", `${loadFromStorage("playerName")}'s game`);
+}
+
+export { insertImageInto, renderUnsupportedError, renderDefaultGameNamePlaceholder };

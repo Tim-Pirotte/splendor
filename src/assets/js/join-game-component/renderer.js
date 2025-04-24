@@ -18,7 +18,7 @@ function renderPlayerInfo() {
 function renderPublicGames(e) {
     const wasTriggeredByPolling = e === undefined;
 
-    if (!wasTriggeredByPolling) e.preventDefault();
+    if (!wasTriggeredByPolling && e.target.value !== "Reset") e.preventDefault();
 
     const $template = document.querySelector("#game-template");
     const $gameList = document.querySelector("ul");
