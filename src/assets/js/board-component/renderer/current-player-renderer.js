@@ -2,7 +2,7 @@ import { GEMS } from "../data.js";
 import { CHIP_SPACING, MAX_TOKENS_ALLOWED, PRESTIGE_POINTS_NEEDED_TO_WIN, TOKEN_MAPPER } from "../config.js";
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
 import { getTokenAmount, getTotalAmountDiscarded, getTotalTokenAmount } from "../tokens/discard.js";
-import { validTokenDiscard } from "../state-machine/valid-action-checker.js";
+import { clientMustDiscardToken } from "../state-machine/valid-action-checker.js";
 import {
     addNodesToEmptiedContainer,
     addSwitchButton,
@@ -161,6 +161,8 @@ function renderClientPlayerTokens(currentPlayerTokens, currentPlayerBonuses, gem
     for (const token of gems.toReversed()) {
         renderClientToken($numberedItemTemplate, token, $progressBarTemplate, currentPlayerBonuses, currentPlayerTokens, $currentPlayerTokensContainer, $discardNavTemplate);
     }
+
+    setDiscardButtonStatuses();
 }
 
 function renderClientToken($numberedItemTemplate, token, $progressBarTemplate, currentPlayerBonuses, currentPlayerTokens, $clientPlayerTokensContainer, $discardNavTemplate) {
@@ -173,7 +175,7 @@ function renderClientToken($numberedItemTemplate, token, $progressBarTemplate, c
 
     addSwitchButton($token, token);
 
-    if (validTokenDiscard()) addDiscardNav($discardNavTemplate, $token);
+    if (clientMustDiscardToken()) addDiscardNav($discardNavTemplate, $token);
 
     addProgressBar($progressBarTemplate, currentPlayerTokens, token, $token);
 
@@ -194,12 +196,10 @@ function addProgressBar($progressBarTemplate, currentPlayerTokens, token, $token
 }
 
 function addDiscardNav($discardNavTemplate, $token) {
-    const $discardNav = copyNode($discardNavTemplate);
-    $token.appendChild($discardNav);
-    setButtonStatuses();
+    $token.appendChild(copyNode($discardNavTemplate));
 }
 
-function setButtonStatuses() {
+function setDiscardButtonStatuses() {
     const totalAmountOfTokens = getTotalTokenAmount();
     const totalAmountDiscarded = getTotalAmountDiscarded();
 
@@ -297,7 +297,7 @@ export {
     renderUpdatedPlayerTokens,
     renderUpdatedPlayerScore,
     hideSwitchPaymentButtons,
-    setButtonStatuses,
+    setDiscardButtonStatuses,
     addGoldToken,
     renderGameStatusMessage,
     renderPlayerProfile,
