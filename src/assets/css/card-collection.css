@@ -1,0 +1,262 @@
+body {
+    text-shadow: 0 0 0.2rem #3d3d3d;
+}
+
+body::before {
+    content: "";
+    display: block;
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    left: 0;
+    top: 0;
+    background-image: url("../images/board_background.webp");
+    background-size: cover;
+    filter: hue-rotate(237deg) contrast(120%);
+    z-index: -10;
+}
+
+main {
+    margin: 0 3rem;
+    padding: 0 1rem;
+    background-color: #d9b56f;
+    border: 0.3rem solid #9c7444;
+    box-shadow: 0 0 0.9rem 0.3rem #2a2a2a50;
+    height: 68vh;
+    overflow-y: scroll;
+    scrollbar-color: #72532f transparent;
+    scrollbar-width: thin;
+}
+
+section {
+    padding: 1rem 0;
+}
+
+header a {
+    display: block;
+    margin: 1rem;
+}
+
+header a img {
+    width: 2.375rem;
+}
+
+header .top {
+    color: var(--light-text-color);
+    background-color: #d9b56f;
+    border: 0.3rem solid #9c7444;
+    border-bottom: none;
+    box-shadow: 0 0 0.9rem 0.3rem #2a2a2a50;
+    width: fit-content;
+    margin: 1rem auto 0;
+    padding: 0.5rem;
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+h2 {
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    text-align: center;
+}
+
+h4 {
+    font-size: 1rem;
+    color: var(--light-text-color);
+    padding-top: 0.5rem;
+}
+
+.regular-cards-title {
+    color: var(--light-text-color);
+}
+
+.misprints-title {
+    color: var(--light-text-color);
+}
+
+.misprints-title span {
+    color: black;
+    display: inline-block;
+}
+
+.misprints-title span.down {
+    transform: translateY(0.3rem) rotate(15deg);
+}
+
+.misprints-title span.up {
+    transform: translateY(-0.3rem) rotate(-5deg);
+}
+
+.inverted-cards-title {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.inverted-cards-title::before {
+    content: "Inverted";
+    position: absolute;
+    left: 0;
+    top: 1.15rem;
+    color: var(--light-text-color);
+    transform: rotateX(180deg);
+}
+
+.inverted-cards-title::after {
+    content: "cards";
+    position: absolute;
+    left: 7.15rem;
+    top: 1.15rem;
+    transform: rotateX(180deg);
+}
+
+.inverted-cards-title span {
+    color: var(--light-text-color);
+}
+
+.greyscale-cards-title {
+    color: #606060;
+}
+
+.glitched-cards-title {
+    color: var(--light-text-color);
+    position: relative;
+    width: fit-content;
+    z-index: 0;
+}
+
+.glitched-cards-title::before {
+    content: "Glitched cards";
+    color: #ff4040;
+    position: absolute;
+    left: -0.1rem;
+    top: -0.1rem;
+    z-index: -1;
+}
+
+.glitched-cards-title::after {
+    content: "Glitched cards";
+    color: #40ff43;
+    position: absolute;
+    bottom: -0.1rem;
+    right: -0.1rem;
+    z-index: -2;
+}
+
+ul {
+    display: flex;
+    padding: 3.15rem 0 3.5rem 3.5rem;
+    gap: 3.5rem 3.5rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+    width: 100%;
+    height: 25rem;
+    background-image: url("../images/card_collection_background.webp"), url("../images/fallback/card_collection_background.png");
+    background-size: 4rem;
+    box-shadow: inset 0 0 0.5rem 0.2rem #2a2a2a50;
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    scrollbar-color: #72532f transparent;
+    scrollbar-width: thin;
+    /* Prevents the left-padding from overflowing the container */
+    box-sizing: border-box;
+}
+
+li {
+    flex: 0 1 13rem;
+    height: 18.57rem;
+    scroll-snap-align: center;
+    box-shadow: 0 0 0.2rem 0.2rem #00000020;
+    border-radius: 0.5rem;
+    transition: 0.3s;
+    position: relative;
+    z-index: 0;
+}
+
+li:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 0.7rem 0.8rem #00000030;
+}
+
+li picture:first-of-type img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: -2;
+}
+
+li picture:last-of-type img {
+    position: absolute;
+    left: 0;
+    bottom: 6.1rem;
+    width: 100%;
+    z-index: -1;
+}
+
+li p {
+    color: var(--light-text-color);
+    text-align: center;
+    line-height: 120%;
+    margin-top: 14rem;
+}
+
+.corrupt-data-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem 0;
+    color: var(--light-text-color);
+}
+
+.corrupt-data-message p {
+    color: #d7d7d7;
+    font-size: 0.8rem;
+}
+
+.corrupt-data-message .corrupt-buttons {
+    display: flex;
+    gap: 0 1rem;
+}
+
+.corrupt-data-message .corrupt-buttons button {
+    width: 7.65rem;
+    height: 2.55rem;
+    background-size: cover;
+    background-color: transparent;
+    border: none;
+    background-image: url("../images/UI/action_button.webp"), url("../images/fallback/UI/action_button.png");
+    color: var(--light-text-color);
+    font-size: 0.7rem;
+    transition: filter 0.3s ease-in-out;
+}
+
+.corrupt-data-message .corrupt-buttons button:hover {
+    filter: brightness(115%);
+}
+
+.corrupt-data-message .corrupt-buttons button:disabled {
+    filter: grayscale(80%);
+    cursor: not-allowed;
+}
+
+p.error-message {
+    color: #ca0000;
+    text-align: center;
+    line-height: 150%;
+    text-shadow: none;
+}
+
+p.error-message a {
+    color: var(--light-text-color);
+}
+
+p.error-message a:visited {
+    color: mediumpurple;
+}
+
+.sound-button {
+    margin-left: auto;
+}

@@ -1,9 +1,0 @@
-const ILLUSTRATIONS = ["camel", "elephant", "market"];
-
-// NOSONAR_BEGIN
-const CHANCES = [980, 20, 0];
-// NOSONAR_END
-
-const CHANCE_CATEGORIES = ["REGULAR", "MISPRINT", "IMPLEMENT_LATER"];
-
-export { ILLUSTRATIONS, CHANCES, CHANCE_CATEGORIES };
