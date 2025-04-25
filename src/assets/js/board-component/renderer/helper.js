@@ -4,20 +4,24 @@ import { copyNode } from "../../utils/data-handler.js";
 import { validCardBuy } from "../state-machine/valid-action-checker.js";
 import { insertImageInto } from "../../utils/renderer.js";
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
-import { hashDigest } from "../card-collection-component/helper.js";
+import { hashDigest } from "../../utils/crypto.js";
 import { hashToNumber, trackCardEncounter } from "../card-collection-component/card-collection.js";
-import { CHANCE_CATEGORIES, CHANCES, ILLUSTRATIONS } from "../card-collection-component/data.js";
+import { CHANCE_CATEGORIES, CHANCES, ILLUSTRATIONS } from "../../card-collection-component/data.js";
 
 function addNodesToEmptiedContainer($container, list, mapFunction) {
     safeEmptyContainer($container);
 
     for (const listItem of list) {
-        $container.appendChild(mapFunction(listItem));
+        const $itemToAdd = mapFunction(listItem);
+
+        if ($itemToAdd) {
+            $container.appendChild($itemToAdd);
+        }
     }
 }
 
 function constructBackground(value, imageName, spacing) {
-    /* Notice: css stacking order differs from html (https://www.w3.org/TR/css-backgrounds-3/#layering) */
+    /* Notice: CSS stacking order differs from html (https://www.w3.org/TR/css-backgrounds-3/#layering) */
     const layers = [];
 
     for (let i = 0; i < value; i++) {
@@ -38,8 +42,8 @@ function constructVerticalBackground(value, imageName, spacing) {
     return layers.join(",\n");
 }
 
-function formatNumber(number) {
-    return number.toString().padStart(2, "0");
+function formatNumber(number, length = 2) {
+    return number.toString().padStart(length, "0");
 }
 
 function safeEmptyContainer($container) {
@@ -67,6 +71,8 @@ function getNumberedItemTemplate() {
 }
 
 function renderCard(card) {
+    if (!card) return;
+
     const $card = copyNode(document.querySelector("#card-template"));
     $card.dataset.name = card["name"];
     $card.querySelector(".points").textContent = card["prestigePoints"];
@@ -108,24 +114,23 @@ function getIllustration(cardName, cardBonus) {
     const illustration = ILLUSTRATIONS[illustrationSeed];
 
     const illustrationModifierSeed = hashToNumber(hashDigest(`${gameId}-${cardName}-modifier`));
-
     const chanceCategory = getChanceCategory(illustrationModifierSeed, CHANCES, CHANCE_CATEGORIES);
 
-    if (chanceCategory === "REGULAR") {
-        trackCardEncounter(cardBonus, illustration, "REGULAR", gameId, cardBonus);
-
+    switch (chanceCategory) {
+    case "REGULAR":
+        trackCardEncounter(cardBonus, illustration, "REGULAR", gameId, cardBonus, cardName);
         return `${TOKEN_MAPPER[cardBonus]}_${illustration}`;
+    case "MISPRINT": {
+        const colorsToChooseFrom = Object.keys(TOKEN_MAPPER).filter(k => k !== cardBonus);
+        const misprintSeed = hashToNumber(hashDigest(`${gameId}-${cardName}-misprint`), colorsToChooseFrom.length);
+        const illustrationColor = colorsToChooseFrom[misprintSeed];
 
-    } else if(chanceCategory === "MISPRINT") {
-        const misprintSeed = hashToNumber(hashDigest(`${gameId}-${cardName}-misprint`), Object.keys(TOKEN_MAPPER).length);
-
-        const illustrationColor = Object.values(TOKEN_MAPPER)[misprintSeed];
-
-        trackCardEncounter(cardBonus, illustration, "MISPRINT", gameId, illustrationColor);
-
-        return `${illustrationColor}_${illustration}`;
-    } else {
-        console.log("Yet to be implemented");
+        trackCardEncounter(cardBonus, illustration, "MISPRINT", gameId, illustrationColor, cardName);
+        return `${TOKEN_MAPPER[illustrationColor]}_${illustration}`;
+    }
+    default:
+        trackCardEncounter(cardBonus, illustration, chanceCategory, gameId, null, cardName);
+        return `${chanceCategory.toLowerCase()}_${illustration}`;
     }
 }
 
@@ -181,4 +186,5 @@ export {
     isCreator,
     constructVerticalBackground,
     constructBackground,
+    getChanceCategory,
 };

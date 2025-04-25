@@ -1,6 +1,6 @@
 import { MAX_TOKENS_ALLOWED } from "../config.js";
 import * as API from "../../api.js";
-import { setButtonStatuses } from "../renderer/current-player-renderer.js";
+import { setDiscardButtonStatuses } from "../renderer/current-player-renderer.js";
 import { getActionButton, setActionButtonState } from "../game-status-interface.js";
 
 function selectPlayerToken(e) {
@@ -20,7 +20,7 @@ function selectPlayerToken(e) {
         decreaseTotalDiscardCount();
     }
 
-    setButtonStatuses();
+    setDiscardButtonStatuses();
 
     if (getTotalTokenAmount() - MAX_TOKENS_ALLOWED === getTotalAmountDiscarded()) {
         setActionButtonState("Discard tokens", "processDiscardTokens", {}, true);

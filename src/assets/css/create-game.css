@@ -1,22 +1,69 @@
-#page-layout {
-    display: flex;
-    flex-flow: column nowrap;
-    min-height: 100vh;
+/* General styling for the body and main container */
+@keyframes hueShift {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
 }
 
+body::before {
+    content: "";
+    display: block;
+    height: 100vh;
+    width: 100vw;
+    background-image: url("../images/board_background.webp"), url("../images/fallback/board_background.png");
+    animation: hueShift 20s linear infinite;
+    background-size: contain;
+    background-position: center;
+    z-index: -1;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+body {
+    display: flex;
+    flex-flow: column nowrap;
+    height: 100vh;
+    color: var(--light-text-color);
+}
+
+/* header styling */
 header {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
-    margin: 2rem 0.5rem 2rem 2rem;
+    margin: 2rem 2rem 0 2rem;
 }
 
-img {
-    max-width: 3rem;
+header > a {
+    background-color: transparent;
+    border: none;
 }
 
+header > a img {
+    width: 3rem;
+}
+
+header > a:hover {
+    filter: var(--button-hover-filter);
+}
+
+#player-information {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 1rem;
+    align-items: center;
+}
+
+/* create game form styling */
 main {
-    flex: 1 0 auto;
+    padding: 1rem 1rem 0;
+    width: 40em;
+    margin: auto;
+    box-sizing: border-box;
+    background-color: #372b53;
+    border : rgb(214, 141, 78) solid 0.5rem;
+    outline: rgb(237, 191, 94) solid 0.5rem;
+    background-size: 100% 100%;
 }
 
 p {
@@ -24,35 +71,54 @@ p {
 }
 
 h1 {
-    margin-left: 45%;
-    font-size: 2.5rem;
+    text-align: center;
+    margin-top: 1rem;
 }
 
 form {
-    width: 20rem;
-    margin: 3rem auto;
-    background-color: white;
-}
-
-input {
-    margin-top: 3rem;
-    display: inline-flex;
+    margin: 1.5rem auto;
+    text-align: center;
 }
 
 label {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
+    margin-right: 0.4rem;
 }
 
-header > button {
-
-    width: 8rem;
+input {
+    margin: 2rem 0;
 }
 
+input[type="radio"] {
+    margin-right: 0.4rem;
+    accent-color: #e9bd5c;
+}
+
+input[type="text"] {
+    width: 14rem;
+}
+
+/* confirm button */
 form > button {
-    margin-top: 10rem;
-    margin-left: 30%;
+    margin: 1rem auto 2rem;
+    display: block;
+    width: 7.65rem;
+    height: 2.55rem;
+    background-size: 100% 100%;
+    background-color: transparent;
+    border: none;
+    background-image: url("../images/UI/action_button.webp"), url("../images/fallback/UI/action_button.png");
+    color: var(--light-text-color);
+    font-size: 0.7rem;
+    transition: var(--hover-transition-duration);
 }
 
+form > button:hover {
+    filter: var(--button-hover-filter);
+    cursor: var(--clickable-item-cursor);
+}
+
+/* footer */
 footer {
     align-self: flex-end;
     flex-flow: row nowrap;

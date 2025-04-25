@@ -2,7 +2,7 @@ import { GEMS } from "../data.js";
 import { CHIP_SPACING, MAX_TOKENS_ALLOWED, PRESTIGE_POINTS_NEEDED_TO_WIN, TOKEN_MAPPER } from "../config.js";
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
 import { getTokenAmount, getTotalAmountDiscarded, getTotalTokenAmount } from "../tokens/discard.js";
-import { validTokenDiscard } from "../state-machine/valid-action-checker.js";
+import { clientMustDiscardToken } from "../state-machine/valid-action-checker.js";
 import {
     addNodesToEmptiedContainer,
     addSwitchButton,
@@ -28,8 +28,10 @@ import { checkCompatibility } from "../../server-version-component/server-versio
 import { reflowCSS } from "../helper.js";
 
 function renderGameStatusMessage(currentPlayer) {
+    const isClientPlayerTurn = currentPlayer === loadFromStorage("playerName");
     const $statusMessage = document.querySelector("h1");
-    $statusMessage.textContent = isCurrentlyPlaying() ? "It's your turn" : `It's ${currentPlayer}'s turn`;
+
+    $statusMessage.textContent = isClientPlayerTurn ? "It's your turn" : `It's ${currentPlayer}'s turn`;
     $statusMessage.dataset.currentlyPlaying = currentPlayer;
 }
 
@@ -87,10 +89,9 @@ function addHighestScoreIndicator(totalPrestigePoints, highestScore) {
     if (totalPrestigePoints >= highestScore) $highestScoreIndicator.classList.remove("hidden");
 }
 
-function renderClientPlayerReserve(currentPlayer) {
+function renderClientPlayerReserve(reservedCards) {
     const $reserved = document.querySelector(".reserved-cards ul");
     const $reservedContainer = $reserved.closest(".reserved-cards");
-    const reservedCards = currentPlayer["reserve"];
 
     if (reservedCards.length > 0) {
         $reservedContainer.querySelector("h4").innerHTML = "";
@@ -130,7 +131,7 @@ function renderClientPlayer(players, gems) {
     renderClientPlayerTokens(clientPlayer["tokens"], clientPlayer["bonuses"], gems);
 
     // Needs to know the players tokens to determine if a card should be highlighted
-    renderClientPlayerReserve(clientPlayer);
+    renderClientPlayerReserve(clientPlayer["reserve"]);
 
     renderTimer();
 }
@@ -160,6 +161,8 @@ function renderClientPlayerTokens(currentPlayerTokens, currentPlayerBonuses, gem
     for (const token of gems.toReversed()) {
         renderClientToken($numberedItemTemplate, token, $progressBarTemplate, currentPlayerBonuses, currentPlayerTokens, $currentPlayerTokensContainer, $discardNavTemplate);
     }
+
+    if (clientMustDiscardToken()) setDiscardButtonStatuses();
 }
 
 function renderClientToken($numberedItemTemplate, token, $progressBarTemplate, currentPlayerBonuses, currentPlayerTokens, $clientPlayerTokensContainer, $discardNavTemplate) {
@@ -172,7 +175,7 @@ function renderClientToken($numberedItemTemplate, token, $progressBarTemplate, c
 
     addSwitchButton($token, token);
 
-    if (validTokenDiscard()) addDiscardNav($discardNavTemplate, $token);
+    if (clientMustDiscardToken()) addDiscardNav($discardNavTemplate, $token);
 
     addProgressBar($progressBarTemplate, currentPlayerTokens, token, $token);
 
@@ -193,12 +196,10 @@ function addProgressBar($progressBarTemplate, currentPlayerTokens, token, $token
 }
 
 function addDiscardNav($discardNavTemplate, $token) {
-    const $discardNav = copyNode($discardNavTemplate);
-    $token.appendChild($discardNav);
-    setButtonStatuses();
+    $token.appendChild(copyNode($discardNavTemplate));
 }
 
-function setButtonStatuses() {
+function setDiscardButtonStatuses() {
     const totalAmountOfTokens = getTotalTokenAmount();
     const totalAmountDiscarded = getTotalAmountDiscarded();
 
@@ -283,7 +284,10 @@ function renderTimer() {
 
 function addGoldToken() {
     const $goldTokenCountContainer = document.querySelector(".player-tokens li[data-type='Gold'] .amount");
-    $goldTokenCountContainer.textContent = parseInt($goldTokenCountContainer.textContent) + 1;
+
+    if (parseInt(document.querySelector(".board-tokens li[data-type='Gold']").dataset.amount)) {
+        $goldTokenCountContainer.textContent = parseInt($goldTokenCountContainer.textContent) + 1;
+    }
 }
 
 export {
@@ -293,8 +297,9 @@ export {
     renderUpdatedPlayerTokens,
     renderUpdatedPlayerScore,
     hideSwitchPaymentButtons,
-    setButtonStatuses,
+    setDiscardButtonStatuses,
     addGoldToken,
     renderGameStatusMessage,
     renderPlayerProfile,
+    renderClientPlayerReserve,
 };

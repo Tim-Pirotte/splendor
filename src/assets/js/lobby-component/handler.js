@@ -1,22 +1,23 @@
 import * as API from "../api.js";
 import { COPY_BUTTON_REMOVE_FEEDBACK_DELAY, POLLING_TIME_OUT } from "../config.js";
-import { hasGameStarted } from "../utils/game-object-handler.js";
 import { renderGameInfo, renderPlayerCount, renderPlayersList, setCopyGameIdImageColor } from "./renderer.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { locateToMainMenu } from "../utils/data-handler.js";
+import { checkCompatibility } from "../server-version-component/server-version.js";
 
 function loadLobbyInformation() {
     if (!loadFromStorage("gameId")) {
         locateToMainMenu();
     }
 
-    API.getGame().then(gameObject => {
-        if (hasGameStarted(gameObject)) {
+    API.getGame().then(gameData => {
+        if (gameData.started) {
             location.href = "./board.html";
         } else {
-            renderGameInfo(gameObject);
-            renderPlayersList(gameObject);
-            renderPlayerCount(gameObject);
+            renderGameInfo(gameData);
+            renderPlayersList(gameData);
+            renderPlayerCount(gameData);
+            hideIncompatibleElements();
             setTimeout(loadLobbyInformation, POLLING_TIME_OUT);
         }
     });
@@ -29,4 +30,9 @@ function copyGameId(){
     setTimeout(setCopyGameIdImageColor, COPY_BUTTON_REMOVE_FEEDBACK_DELAY, "black");
 }
 
+function hideIncompatibleElements() {
+    checkCompatibility(2).then(isCompatible => {
+        if (!isCompatible) document.querySelector(".leave-button").classList.add("none");
+    });
+}
 export { loadLobbyInformation , copyGameId };

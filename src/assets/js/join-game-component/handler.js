@@ -1,10 +1,6 @@
 import { joinGameById } from "./helper.js";
 import { spectateGame } from "./spectate.js";
 
-function locateMainMenu(e) {
-    location.href = "./../index.html";
-}
-
 function joinGameUsingUsersInputId(e) {
     e.preventDefault();
     joinGameById(document.querySelector("#game-id").value);
@@ -24,4 +20,4 @@ function joinGame(e) {
     }
 }
 
-export { locateMainMenu, joinGameUsingUsersInputId, joinGame };
+export { joinGameUsingUsersInputId, joinGame };

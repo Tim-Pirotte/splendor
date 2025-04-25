@@ -1,21 +1,28 @@
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
+import { addToTree } from "../../card-collection-component/helper.js";
 
-function trackCardEncounter(bonusColor, illustrationName, variant, gameId, illustrationColor) {
+function trackCardEncounter(bonusColor, illustrationName, variant, gameId, illustrationColor, cardName) {
     const seenTree = loadFromStorage("cardCollection") || {};
 
-    if (!seenTree[bonusColor]) seenTree[bonusColor] = {};
-    if (!seenTree[bonusColor][illustrationName]) seenTree[bonusColor][illustrationName] = {};
+    const path = variant === "MISPRINT"
+        ? [bonusColor, illustrationName, variant, illustrationColor]
+        : [bonusColor, illustrationName, variant];
 
-    const branch = seenTree[bonusColor][illustrationName];
+    const valueChanged = addToTree(seenTree, path, path.length, { gameId, cardName, discoveryDate: Date.now() });
 
-    if (variant === "MISPRINT") {
-        if (!branch[variant]) branch[variant] = {};
-        branch[variant][illustrationColor] = gameId;
-    } else {
-        branch[variant] = gameId;
-    }
+    if (valueChanged) renderCardUnlockedMessage(variant);
 
     localStorage.setItem("cardCollection", JSON.stringify(seenTree));
+}
+
+function renderCardUnlockedMessage(variant) {
+    if (variant !== "REGULAR") {
+        document.querySelector(".unlocked-card-message")
+            .insertAdjacentHTML(
+                "beforeend",
+                `<p>${variant.charAt(0) + variant.slice(1).toLowerCase().replace("_", " ")} card discovered!</p>`,
+            );
+    }
 }
 
 function hashToNumber(hashString, rangeMax = 1000) {

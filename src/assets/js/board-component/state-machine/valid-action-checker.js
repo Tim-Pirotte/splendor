@@ -8,7 +8,7 @@ function validTokenTake() {
     return isCurrentlyPlaying() && getGameState() === GAME_STATE.TURN_ACTION;
 }
 
-function validTokenDiscard() {
+function clientMustDiscardToken() {
     return isCurrentlyPlaying() && getGameState() === GAME_STATE.RETURN_GEMS;
 }
 
@@ -44,7 +44,7 @@ function getCardObject(cardName) {
 
 export {
     validTokenTake,
-    validTokenDiscard,
+    clientMustDiscardToken,
     validCardBuy,
     validCardReserve,
     validDeckReserve,

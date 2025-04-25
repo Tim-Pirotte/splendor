@@ -1,8 +1,30 @@
 /* General styling for the body and main container */
-#page-layout {
+body::before {
+    content: "";
+    display: block;
+    height: 100vh;
+    width: 100vw;
+    background-image: url("../images/board_background.webp"), url("../images/fallback/board_background.png");
+    animation: hueShift 20s linear infinite;
+    background-size: contain;
+    background-position: center;
+    z-index: -1;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+@keyframes hueShift {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+}
+
+body {
+    height: 100vh;
     display: flex;
     flex-flow: column nowrap;
-    min-height: 100vh;
+    color: var(--light-text-color);
+    overflow: clip;
 }
 
 main {
@@ -14,7 +36,34 @@ header {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
-    margin: 2rem 2rem;
+    align-items: center;
+    margin: 2rem 2rem 0 2rem;
+}
+
+#player-information {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 1rem;
+    align-items: center;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+header > a {
+    background-color: transparent;
+    border: none;
+}
+
+header > a img {
+    width: 3rem;
+    transition: var(--hover-transition-duration);
+}
+
+header > a:hover {
+    filter: var(--button-hover-filter);
 }
 
 /* Form styling (inc. related features) */
@@ -23,70 +72,118 @@ form {
     text-align: center;
 }
 
-section{
-    background-color: whitesmoke;
-    width: 60%;
+section {
+    display: flex;
+    flex-flow: column nowrap;
+    padding-top: 1rem;
+    width: 50rem;
+    height: 30rem;
     text-align: center;
-    margin: 3rem auto 0 auto;
-    padding: 3rem 0;
+    margin: 2.5rem auto 0 auto;
+    box-sizing: border-box;
+    background-color: #372b53;
+    border : rgb(214, 141, 78) solid 0.5rem;
+    outline: rgb(237, 191, 94) solid 0.5rem;
+    background-size: 100% 100%;
 }
 
 section h2 {
     margin-bottom: 2rem;
 }
 
-section form {
-    margin-bottom: 2.4rem;
-}
-
-button {
-    /* Added a fixed with because otherwise
-       the flex would handle the spectate different than the
-       join so the numbers of players are not aligned wel */
-    width: 8rem;
-}
-
-label[for="game-id"]{
-    margin-right: 1.2rem;
+#filter-form {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.75rem;
 }
 
 #game-id {
     margin-right: 2rem;
 }
 
-label[for="game-name"]{
-    margin-right: 1.2rem;
+label[for="game-name"], label[for="game-id"], label[for="amount-filter"]{
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
 }
 
+/* this references the game name input field */
 #game-name {
     margin-right: 2rem;
 }
 
+
 ul {
-    overflow: scroll;
-    height: 30rem;
+    flex-grow: 1;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: 20rem;
+    /* https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-color */
+    scrollbar-color: #d68d4e transparent;
 }
 
 li {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-around;
-    padding: 1.2rem 0;
+    align-items: center;
+    padding: 0.75rem 0;
 }
 
-li h3 {
-    margin-bottom: 0.4rem;
+li:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.10);
 }
 
-img {
-    max-width: 3rem;
+li:nth-child(odd) {
+    background-color: rgba(0, 0, 0, 0.20);
 }
 
+/* this references the game name and info for visible public games */
+.game-info {
+    width: 20rem;
+}
+
+.game-name {
+    font-size: 0.9rem;
+    overflow-wrap: break-word;
+    margin-right: -3.5rem;
+    width: 20rem;
+}
+
+li p {
+    font-size: 0.9rem;
+}
+
+.game-id, .amount-of-players {
+    width: 2.5rem;
+}
+
+/* footer */
 footer {
     align-self: flex-end;
     padding: 2rem;
 }
 
-.game-info {
-    width: 14rem;
+
+/* button styling */
+main button, #filter-form > input[type="reset"] {
+    width: 7.65rem;
+    height: 2.55rem;
+    background-size: 100% 100%;
+    background-color: transparent;
+    border: none;
+    background-image: url("../images/UI/action_button.webp"), url("../images/fallback/UI/action_button.png");
+    color: var(--light-text-color);
+    font-size: 0.7rem;
+    transition: var(--hover-transition-duration);
+}
+
+#filter-form > input[type="reset"] {
+    width: 5rem;
+    height: 2rem;
+    margin-left: 1rem;
+}
+
+button:hover, #filter-form > input[type="reset"]:hover {
+    filter: var(--button-hover-filter);
+    cursor: var(--clickable-item-cursor);
 }

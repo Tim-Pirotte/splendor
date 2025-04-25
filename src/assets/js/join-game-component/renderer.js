@@ -12,10 +12,14 @@ function renderPlayerInfo() {
     const avatar = loadFromStorage("avatar");
 
     document.querySelector("#playerName").textContent = playerName;
-    insertImageInto(document.querySelector("#playerInformation"), `avatars/${avatar}`, false, avatar);
+    insertImageInto(document.querySelector("#player-information"), `avatars/${avatar}`, false, avatar);
 }
 
-function renderPublicGames() {
+function renderPublicGames(e) {
+    const wasTriggeredByPolling = e === undefined;
+
+    if (!wasTriggeredByPolling && e.target.value !== "Reset") e.preventDefault();
+
     const $template = document.querySelector("#game-template");
     const $gameList = document.querySelector("ul");
     const $gameListCopy = $gameList.cloneNode(true);
@@ -32,7 +36,7 @@ function renderPublicGames() {
         }
 
         $gameList.innerHTML = $gameListCopy.innerHTML;
-        setTimeout(renderPublicGames, POLLING_TIME_OUT);
+        if (wasTriggeredByPolling) setTimeout(renderPublicGames, POLLING_TIME_OUT);
     });
 }
 
