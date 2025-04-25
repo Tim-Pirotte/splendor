@@ -54,16 +54,16 @@ label {
     font-size: 1.2rem;
 }
 
-form > .avatar-selector {
-    transform: translateY(0.625rem);
-}
-
 /* Avatar selector */
 .avatar-selector {
     position: relative;
     display: inline-block;
     margin-left: 1.25rem;
     list-style-type: none;
+}
+
+form > .avatar-selector {
+    transform: translateY(0.625rem);
 }
 
 .avatar-selector section ul {
@@ -113,10 +113,6 @@ form > .avatar-selector {
     margin: 4rem auto 0 auto;
 }
 
-.form-actions button:hover {
-    filter: brightness(115%);
-}
-
 .form-actions button {
     width: 7.65rem;
     height: 2.55rem;
@@ -127,6 +123,10 @@ form > .avatar-selector {
     color: var(--light-text-color);
     font-size: 0.7rem;
     transition: var(--hover-transition-duration);
+}
+
+.form-actions button:hover {
+    filter: brightness(115%);
 }
 
 /* Link to card collection */
