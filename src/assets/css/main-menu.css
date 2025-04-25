@@ -51,42 +51,46 @@ header {
 /* Form */
 label {
     display: inline-block;
-    margin-right: 0.5rem;
     font-size: 1.2rem;
+}
+
+form > .avatar-selector {
+    transform: translateY(0.625rem);
 }
 
 /* Avatar selector */
 .avatar-selector {
     position: relative;
     display: inline-block;
-    margin-left: 2rem;
+    margin-left: 1.25rem;
     list-style-type: none;
-}
-
-.avatar-selector section {
-    background-color: whitesmoke;
-    position: absolute;
 }
 
 .avatar-selector section ul {
     display: flex;
+    flex-wrap: wrap;
     gap: 0.5rem;
 }
 
 .avatar-selector button {
     background-color: transparent;
-    padding: 0;
     border: none;
 }
 
+.avatar-selector button img {
+    width: 2rem;
+    height: 2rem;
+}
+
 .avatar-selector section {
+    position: absolute;
     background-color: #372b53;
     color: white;
     border : rgb(214, 141, 78) solid 0.1rem;
     outline: rgb(237, 191, 94) solid 0.1rem;
     padding: 1rem;
     border-radius: 0.5rem;
-    top: 1.5rem;
+    top: 2.5rem;
     left: 0;
     z-index: 5;
 }
