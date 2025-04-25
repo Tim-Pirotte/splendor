@@ -30,7 +30,7 @@
         <main>
             <form action="#">
                 <label for="username">Username:</label>
-                <input type="text" name="username" id="username" placeholder="E.g. claryn" required pattern="^[a-zA-Z0-9]+$" title="Username must be alphanumeric (letters and numbers only).">
+                <input type="text" name="username" id="username" placeholder="E.g. claryn" required pattern="^[a-zA-Z0-9]{1,16}$" title="Username must be alphanumeric (letters and numbers only). No longer than 16 characters">
                 <div class="avatar-selector">
                     <button id="avatar"></button>
                     <section class="none">
