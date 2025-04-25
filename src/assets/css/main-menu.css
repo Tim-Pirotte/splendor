@@ -1,15 +1,12 @@
 /* General styling for the body and main container */
 main {
-    flex: 1 0 auto;
-    padding-top: 1rem;
-    width: 50rem;
-    height: 15rem;
+    padding: 1rem 0 1rem 0;
+    width: 40rem;
     text-align: center;
     margin: 2.5rem auto 2.5rem auto;
     background-color: #372b53;
     border : rgb(214, 141, 78) solid 0.3rem;
     outline: rgb(237, 191, 94) solid 0.3rem;
-    background-size: 100% 100%;
 }
 
 body {
@@ -105,12 +102,11 @@ label {
 
 /* Join and create buttons */
 .form-actions {
-    grid-area: action-button;
-    height: 2rem;
-    width: fit-content;
-    margin: 1rem 2rem 2rem auto;
     display: flex;
-    gap: 0 1rem;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin: 4rem auto 0 auto;
 }
 
 .form-actions button:hover {
