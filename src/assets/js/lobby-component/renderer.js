@@ -4,17 +4,17 @@ import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { safeEmptyContainer } from "../board-component/renderer/helper.js";
 import { copyNode } from "../utils/data-handler.js";
 
-function renderGameInfo(g) {
+function renderGameInfo(g, started) {
     document.querySelector("#game-name-id").innerHTML = `${getGameName(g)} / <span>${getGameId(g)}</span>`;
-    document.querySelector("h3").textContent = `Created by ${getGameCreator(g)}`;
+    document.querySelector("h3").textContent = `Created by ${getGameCreator(g, started)}`;
 }
 
-function renderPlayersList(g) {
+function renderPlayersList(g, started) {
     const $template = document.querySelector("#joined-player-template");
     const $joinedPlayers = document.querySelector("#joined-players");
 
     safeEmptyContainer($joinedPlayers);
-    getPlayersObjects(g).forEach(player => $joinedPlayers.appendChild(renderPlayer($template, player)));
+    getPlayersObjects(g, started).forEach(player => $joinedPlayers.appendChild(renderPlayer($template, player)));
 }
 
 function renderPlayer($template, playerName) {

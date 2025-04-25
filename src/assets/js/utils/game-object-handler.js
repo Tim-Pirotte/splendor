@@ -18,12 +18,12 @@ function getMaxUsersAmount(gameData) {
     return gameData["numberOfPlayers"];
 }
 
-function getGameCreator(gameData) {
-    return gameData["players"][0];
+function getGameCreator(gameData, started) {
+    return started ? gameData["players"][0]["name"] :gameData["players"][0];
 }
 
-function getPlayersObjects(gameData) {
-    return gameData["players"];
+function getPlayersObjects(gameData, started) {
+    return started ? gameData["players"].map(player => player.name) :gameData["players"];
 }
 
 function hasGameStarted(gameData) {
