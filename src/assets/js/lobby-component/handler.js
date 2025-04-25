@@ -11,14 +11,15 @@ function loadLobbyInformation() {
     }
 
     API.getGame().then(gameData => {
-        if (gameData.started) {
+        //TODO ja ge wetet wel eh
+        if (gameData.started && false) {
             location.href = "./board.html";
         } else {
             renderGameInfo(gameData);
             renderPlayersList(gameData);
             renderPlayerCount(gameData);
             hideIncompatibleElements();
-            setTimeout(loadLobbyInformation, POLLING_TIME_OUT);
+            //setTimeout(loadLobbyInformation, POLLING_TIME_OUT);
         }
     });
 }

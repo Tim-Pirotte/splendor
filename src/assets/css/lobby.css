@@ -1,3 +1,6 @@
+:root {
+    --players-container-width: 15rem;
+}
 /* general */
 
 @keyframes hueShift {
@@ -42,7 +45,7 @@ main {
     flex: 1 0 auto;
     display: flex;
     justify-content: center;
-    align-content: center;
+    align-items: center;
 }
 
 main > div {
@@ -92,4 +95,39 @@ footer {
     background-color: transparent;
     margin-bottom: 1rem;
     width: fit-content;
+}
+
+ul {
+    position: relative;
+    width: var(--players-container-width);
+    height: var(--players-container-width);
+}
+
+li {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4rem;
+    height: 4rem;
+}
+
+li img {
+    width: 2rem;
+    height: 2rem;
+}
+
+li:nth-of-type(1) {
+    transform: translateX(calc(var(--players-container-width) / 2 - 50%));
+}
+
+li:nth-of-type(2) {
+    transform: translateX(calc(var(--players-container-width) - 50%)) translateY(calc(var(--players-container-width) / 2 - 50%));
+}
+
+li:nth-of-type(3) {
+    transform: translateX(calc(var(--players-container-width) / 2 - 50%)) translateY(calc(var(--players-container-width) - 50%));
+}
+
+li:nth-of-type(4) {
+    transform: translateY(calc(var(--players-container-width) / 2 - 50%));
 }

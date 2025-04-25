@@ -30,22 +30,20 @@
             </picture>
         </button>
         <h3>Created by ...</h3>
+        <h4 id="player-count">.../...</h4>
     </header>
     <main>
-        <div id="players-container">
-            <ul id="joined-players">
-                <template id="joined-player-template">
-                    <li class="player">
-                        <p class="player-name"></p>
-                        <picture>
-                            <source srcset="../assets/images/avatars/placeholder.webp">
-                            <img src="../assets/images/fallback/avatars/placeholder.png" alt="placeholder" title="placeholder">
-                        </picture>
-                    </li>
-                </template>
-            </ul>
-            <h4 id="player-count">.../...</h4>
-        </div>
+        <ul id="joined-players">
+            <template id="joined-player-template">
+                <li class="player">
+                    <p class="player-name"></p>
+                    <picture>
+                        <source srcset="../assets/images/avatars/placeholder.webp">
+                        <img src="../assets/images/fallback/avatars/placeholder.png" alt="placeholder" title="placeholder">
+                    </picture>
+                </li>
+            </template>
+        </ul>
     </main>
     <footer>
         <button type="button" class="leave-button">Leave</button>
