@@ -53,10 +53,17 @@ function setCopyGameIdImageColor(color) {
         `../assets/images/fallback/UI/copyButton/copy_button_${color}.png`);
 }
 
-function renderGameStartingCountdown(count) {
-    if (count === 0) {/*location.href = "./board.html" ; return;*/}
-    document.querySelector("li.starting-countdown").textContent = count;
+function renderGameStartingCountdown(count, $container) {
+    if (count === 0) {location.href = "./board.html"; return}
 
-    setTimeout(renderGameStartingCountdown, 1000, count - 1)
+    $container.innerText = count;
+
+    $container.classList.remove("starting-countdown");
+    $container.offsetHeight;
+    $container.innerText = count;
+    $container.classList.add("starting-countdown");
+
+    setTimeout(renderGameStartingCountdown, 1000, count - 1, $container);
 }
+
 export { renderGameInfo, renderPlayersList, renderPlayerCount, setCopyGameIdImageColor, renderGameStartingCountdown };

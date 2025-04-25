@@ -1,5 +1,5 @@
 :root {
-    --players-container-width: 15rem;
+    --players-container-width: 20rem;
 }
 /* general */
 
@@ -76,6 +76,7 @@ h2 {
 }
 
 h3 {
+    display: inline-block;
     width: fit-content;
 }
 
@@ -137,10 +138,34 @@ li img {
 }
 
 .starting-countdown {
+    font-size: 15rem;
     height: fit-content;
-    width: fit-content;
+    width: 6rem;
     position: absolute;
+    text-align: center;
     top: calc(var(--players-container-width) / 2);
     left: calc(var(--players-container-width) / 2);
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
+    animation: scaleUp linear 1s forwards;
+    transform-origin: center;
+    will-change: transform;
+}
+
+#player-count {
+    display: inline-block;
+    margin-left: 1rem;
+}
+
+div {
+    text-align: left;
+}
+
+@keyframes scaleUp {
+    0% {
+        transform: translate(-50%, -50%) scale(0) ;
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
 }
