@@ -8,7 +8,7 @@ function animateFromTo($sourceNode, $targetNode, animation) {
 
     const invertedPosSize = getInvertedPositionSize(sourcePosition, targetPosition);
 
-    startTargetAnimation($targetNode, invertedPosSize, animation);
+    startTargetAnimation($targetNode, invertedPosSize, { ...animation });
 }
 
 function getInvertedPositionSize(sourcePosition, targetPosition) {
@@ -43,7 +43,7 @@ function insertVariablesIntoKeyframes(animation, invertedPosSize) {
 function cleanupAnimation($targetNode, keyframes) {
   for (const keyframe of keyframes) {
     for (const property of Object.keys(keyframe)) {
-      $targetNode.removeProperty(property);
+      $targetNode.style.removeProperty(property);
     }
   }
 }
@@ -60,7 +60,7 @@ function insertVariables(targetString, varsToInsert, templateStartSymbol = "{{",
   let result = "";
   let currentPos = 0;
 
-  while (currentPos !== targetString.length) {
+  while (currentPos < targetString.length) {
     const nextTemplatePos = getNextTemplatePos(targetString, currentPos, templateStartSymbol);
 
     if (nextTemplatePos === -1) {
@@ -74,7 +74,7 @@ function insertVariables(targetString, varsToInsert, templateStartSymbol = "{{",
     const varToInsert = getVarToInsert(targetString, nextTemplatePos, templateStartSymbol, templateEndPos, varsToInsert);
 
     result += varsToInsert[varToInsert];
-    currentPos = templateEndPos + templateEndPos.length;
+    currentPos = templateEndPos + templateEndSymbol.length;
   }
 
   return result;
@@ -97,3 +97,5 @@ function getVarToInsert(targetString, nextTemplatePos, templateStartSymbol, temp
 
   return varToInsert;
 }
+
+export { animateFromTo };

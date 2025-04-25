@@ -2,7 +2,7 @@ import * as API from "../../api.js";
 import { endBuyReserveAction, getReserveCardButton } from "./helper.js";
 import { startGameStatePolling } from "../game-data-handler.js";
 import { deselectCard } from "./select.js";
-import { validDeckReserve } from "../state-machine/valid-action-checker.js";
+import {getCardObject, validDeckReserve} from "../state-machine/valid-action-checker.js";
 import { highlightCard, setActionToBuyReserve } from "./buy-handler.js";
 import { addGoldToken, renderClientPlayerReserve } from "../renderer/current-player-renderer.js";
 import {
@@ -10,6 +10,9 @@ import {
     isCurrentlyPlaying,
     resetCurrentPlayer,
 } from "../game-status-interface.js";
+import {renderCard} from "../renderer/helper.js";
+import {animateFromTo} from "../animation-component/animation-handler.js";
+import {cardAnimation} from "../animation-component/data.js";
 
 function processReserve(){
     resetCurrentPlayer();
@@ -18,7 +21,9 @@ function processReserve(){
     const cardDeckLevel = getReserveCardButton().dataset.level;
     let requestBody;
 
-    if( selectedCardName ) {
+    if (selectedCardName) {
+        playCardToReservedAnimation(selectedCardName);
+
         requestBody = {
             "development": {
                 "name": selectedCardName,
@@ -37,6 +42,13 @@ function processReserve(){
     addGoldToken();
     endBuyReserveAction();
     startGameStatePolling();
+}
+
+function playCardToReservedAnimation(selectedCardName) {
+    const $card = renderCard(getCardObject(selectedCardName));
+    document.querySelector(".reserved-cards ul").appendChild($card);
+
+    animateFromTo(document.querySelector(`[data-name="${selectedCardName}"]`), $card, cardAnimation);
 }
 
 function selectDeckForReserving(e) {
