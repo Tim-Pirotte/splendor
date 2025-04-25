@@ -3,6 +3,21 @@ main {
     flex: 1 0 auto;
 }
 
+body::before {
+    content: "";
+    display: block;
+    height: 100vh;
+    width: 100vw;
+    background-image: url("../images/board_background.webp"), url("../images/fallback/board_background.png");
+    animation: hueShift 20s linear infinite;
+    background-size: contain;
+    background-position: center;
+    z-index: -1;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
 body > div {
     padding-top: 5rem;
     box-sizing: border-box;
@@ -10,6 +25,11 @@ body > div {
     align-items: center;
     flex-flow: column nowrap;
     height: 100vh;
+}
+
+@keyframes hueShift {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
 }
 
 /* Splendor logo */
