@@ -1,6 +1,15 @@
 /* General styling for the body and main container */
 main {
     flex: 1 0 auto;
+    padding-top: 1rem;
+    width: 50rem;
+    height: 15rem;
+    text-align: center;
+    margin: 2.5rem auto 2.5rem auto;
+    background-color: #372b53;
+    border : rgb(214, 141, 78) solid 0.3rem;
+    outline: rgb(237, 191, 94) solid 0.3rem;
+    background-size: 100% 100%;
 }
 
 body {
@@ -43,18 +52,6 @@ header {
 }
 
 /* Form */
-form {
-    padding-top: 1rem;
-    width: 50rem;
-    height: 15rem;
-    text-align: center;
-    margin: 2.5rem auto 2.5rem auto;
-    background-color: #372b53;
-    border : rgb(214, 141, 78) solid 0.3rem;
-    outline: rgb(237, 191, 94) solid 0.3rem;
-    background-size: 100% 100%;
-}
-
 label {
     display: inline-block;
     margin-right: 0.5rem;
@@ -130,6 +127,14 @@ label {
     color: var(--light-text-color);
     font-size: 0.7rem;
     transition: var(--hover-transition-duration);
+}
+
+/* Link to card collection */
+main > a {
+    display: block;
+    margin: 2rem 2rem auto 2rem;
+    text-align: left;
+    color: white;
 }
 
 /* Place the audio toggle at the right side of the footer */
