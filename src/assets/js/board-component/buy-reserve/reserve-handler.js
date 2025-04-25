@@ -37,18 +37,24 @@ function processReserve(){
         };
     }
 
-    API.reserveCard(requestBody).then(res => renderClientPlayerReserve(res["reserve"]));
+    API.reserveCard(requestBody).then(res => {
+        if (res["reservedCards"].length === 0) {
+            document.querySelector(".reserved-cards h4").innerHTML = "No reserved cards";
+        }
+    });
 
     addGoldToken();
     endBuyReserveAction();
-    startGameStatePolling();
+
+    setTimeout(startGameStatePolling, cardAnimation.duration);
 }
 
 function playCardToReservedAnimation(selectedCardName) {
+    const $source = document.querySelector(`[data-name="${selectedCardName}"]`);
     const $card = renderCard(getCardObject(selectedCardName));
     document.querySelector(".reserved-cards ul").appendChild($card);
 
-    animateFromTo(document.querySelector(`[data-name="${selectedCardName}"]`), $card, cardAnimation);
+    animateFromTo($source, $card, cardAnimation);
 }
 
 function selectDeckForReserving(e) {
