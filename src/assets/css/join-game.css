@@ -82,9 +82,8 @@ section {
     margin: 2.5rem auto 0 auto;
     box-sizing: border-box;
     background-color: #372b53;
-    border : rgb(214, 141, 78) solid 0.5rem;
-    outline: rgb(237, 191, 94) solid 0.5rem;
-    background-size: 100% 100%;
+    border : var(--border-collor) solid 0.5rem;
+    outline: var(--outline-collor) solid 0.5rem;
 }
 
 section h2 {
@@ -110,7 +109,6 @@ label[for="game-name"], label[for="game-id"], label[for="amount-filter"]{
 #game-name {
     margin-right: 2rem;
 }
-
 
 ul {
     flex-grow: 1;
@@ -163,9 +161,8 @@ footer {
     padding: 2rem;
 }
 
-
 /* button styling */
-main button, #filter-form > input[type="reset"] {
+main button, #filter-form input[type="reset"] {
     width: 7.65rem;
     height: 2.55rem;
     background-size: 100% 100%;
@@ -177,13 +174,13 @@ main button, #filter-form > input[type="reset"] {
     transition: var(--hover-transition-duration);
 }
 
-#filter-form > input[type="reset"] {
+#filter-form input[type="reset"] {
     width: 5rem;
     height: 2rem;
     margin-left: 1rem;
 }
 
-button:hover, #filter-form > input[type="reset"]:hover {
+button:hover, #filter-form input[type="reset"]:hover {
     filter: var(--button-hover-filter);
     cursor: var(--clickable-item-cursor);
 }

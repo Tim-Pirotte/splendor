@@ -1,10 +1,9 @@
 const avatars = [
-    "blacky",
-    "blueberry",
-    "goldie",
-    "greenie",
-    "reddy",
-    "snowy",
+    "frankenstein",
+    "goblin",
+    "dude",
+    "terminator",
+    "mcdonalds-mario",
 ];
 
 export { avatars };
