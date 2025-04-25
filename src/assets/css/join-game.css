@@ -162,7 +162,7 @@ footer {
 }
 
 /* button styling */
-main button, #filter-form > input[type="reset"] {
+main button, #filter-form input[type="reset"] {
     width: 7.65rem;
     height: 2.55rem;
     background-size: 100% 100%;
@@ -174,13 +174,13 @@ main button, #filter-form > input[type="reset"] {
     transition: var(--hover-transition-duration);
 }
 
-#filter-form > input[type="reset"] {
+#filter-form input[type="reset"] {
     width: 5rem;
     height: 2rem;
     margin-left: 1rem;
 }
 
-button:hover, #filter-form > input[type="reset"]:hover {
+button:hover, #filter-form input[type="reset"]:hover {
     filter: var(--button-hover-filter);
     cursor: var(--clickable-item-cursor);
 }

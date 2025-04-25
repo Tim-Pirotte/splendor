@@ -62,7 +62,7 @@ label {
     list-style-type: none;
 }
 
-form > .avatar-selector {
+form .avatar-selector {
     transform: translateY(0.625rem);
 }
 
@@ -130,7 +130,7 @@ form > .avatar-selector {
 }
 
 /* Link to card collection */
-main > a {
+main a {
     display: block;
     margin: 2rem 2rem auto 2rem;
     text-align: left;
