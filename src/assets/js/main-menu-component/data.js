@@ -1,9 +1,9 @@
 const avatars = [
-    "dude",
     "frankenstein",
     "goblin",
-    "mcdonalds-mario",
+    "dude",
     "terminator",
+    "mcdonalds-mario",
 ];
 
 export { avatars };
