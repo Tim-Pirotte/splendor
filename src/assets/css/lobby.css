@@ -1,4 +1,25 @@
 /* general */
+
+@keyframes hueShift {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+}
+
+body::before {
+    content: "";
+    display: block;
+    height: 100vh;
+    width: 100vw;
+    background-image: url("../images/board_background.webp"), url("../images/fallback/board_background.png");
+    animation: hueShift 20s linear infinite;
+    background-size: contain;
+    background-position: center;
+    z-index: -1;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
 button {
     vertical-align: middle;
     background-color: black;
@@ -10,9 +31,11 @@ button {
 }
 
 body {
+    width: 100vw;
     height: 100vh;
     display: flex;
     flex-flow: column nowrap;
+    color: var(--light-text-color);
 }
 
 main {
@@ -40,7 +63,7 @@ header p {
 
 h1 {
     font-size: 5em;
-    margin-bottom: 1.5rem;
+    margin: 1.5rem 0;
 }
 
 h2 {

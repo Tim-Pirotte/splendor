@@ -27,7 +27,7 @@ function copyGameId(){
     setCopyGameIdImageColor("red");
     const gameId = loadFromStorage("gameId");
     navigator.clipboard.writeText(gameId);
-    setTimeout(setCopyGameIdImageColor, COPY_BUTTON_REMOVE_FEEDBACK_DELAY, "black");
+    setTimeout(setCopyGameIdImageColor, COPY_BUTTON_REMOVE_FEEDBACK_DELAY, "white");
 }
 
 function hideIncompatibleElements() {
