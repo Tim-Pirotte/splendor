@@ -54,9 +54,8 @@ function setCopyGameIdImageColor(color) {
 }
 
 function renderGameStartingCountdown(count) {
-    if (count === 0) {location.href = "./board.html" ; return;}
-
-    document.querySelector(".starting-countdown").textContent = count;
+    if (count === 0) {/*location.href = "./board.html" ; return;*/}
+    document.querySelector("li.starting-countdown").textContent = count;
 
     setTimeout(renderGameStartingCountdown, 1000, count - 1)
 }

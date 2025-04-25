@@ -22,6 +22,7 @@ function loadLobbyInformation() {
         renderPlayerCount(gameData);
         hideIncompatibleElements();
         if (gameData.started) {
+            document.querySelector("ul").insertAdjacentHTML("beforeend", `<li class="starting-countdown"></li>`)
             renderGameStartingCountdown(3);
         } else {
             setTimeout(loadLobbyInformation, POLLING_TIME_OUT);
