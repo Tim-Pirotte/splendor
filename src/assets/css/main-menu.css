@@ -50,8 +50,8 @@ form {
     text-align: center;
     margin: 2.5rem auto 2.5rem auto;
     background-color: #372b53;
-    border : rgb(214, 141, 78) solid 0.5rem;
-    outline: rgb(237, 191, 94) solid 0.5rem;
+    border : rgb(214, 141, 78) solid 0.3rem;
+    outline: rgb(237, 191, 94) solid 0.3rem;
     background-size: 100% 100%;
 }
 
@@ -83,6 +83,27 @@ label {
     background-color: transparent;
     padding: 0;
     border: none;
+}
+
+.avatar-selector section {
+    background-color: #372b53;
+    color: white;
+    border : rgb(214, 141, 78) solid 0.1rem;
+    outline: rgb(237, 191, 94) solid 0.1rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    top: 2.5rem;
+    left: 0;
+    z-index: 5;
+}
+
+.avatar-selector section ul li {
+    list-style: none;
+}
+
+.avatar-selector section h2 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
 }
 
 /* Join and create buttons */
