@@ -53,4 +53,11 @@ function setCopyGameIdImageColor(color) {
         `../assets/images/fallback/UI/copyButton/copy_button_${color}.png`);
 }
 
-export { renderGameInfo, renderPlayersList, renderPlayerCount, setCopyGameIdImageColor };
+function renderGameStartingCountdown(count) {
+    if (count === 0) {location.href = "./board.html" ; return;}
+
+    document.querySelector(".starting-countdown").textContent = count;
+
+    setTimeout(renderGameStartingCountdown, 1000, count - 1)
+}
+export { renderGameInfo, renderPlayersList, renderPlayerCount, setCopyGameIdImageColor, renderGameStartingCountdown };

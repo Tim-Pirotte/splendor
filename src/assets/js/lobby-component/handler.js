@@ -1,6 +1,12 @@
 import * as API from "../api.js";
 import { COPY_BUTTON_REMOVE_FEEDBACK_DELAY, POLLING_TIME_OUT } from "../config.js";
-import { renderGameInfo, renderPlayerCount, renderPlayersList, setCopyGameIdImageColor } from "./renderer.js";
+import {
+    renderGameInfo,
+    renderGameStartingCountdown,
+    renderPlayerCount,
+    renderPlayersList,
+    setCopyGameIdImageColor
+} from "./renderer.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { locateToMainMenu } from "../utils/data-handler.js";
 import { checkCompatibility } from "../server-version-component/server-version.js";
@@ -11,14 +17,13 @@ function loadLobbyInformation() {
     }
 
     API.getGame().then(gameData => {
-        console.log(gameData)
-        if (gameData.started && false) {
-            location.href = "./board.html";
+        renderGameInfo(gameData, gameData.started);
+        renderPlayersList(gameData, gameData.started);
+        renderPlayerCount(gameData);
+        hideIncompatibleElements();
+        if (gameData.started) {
+            renderGameStartingCountdown(3);
         } else {
-            renderGameInfo(gameData, gameData.started);
-            renderPlayersList(gameData, gameData.started);
-            renderPlayerCount(gameData);
-            hideIncompatibleElements();
             setTimeout(loadLobbyInformation, POLLING_TIME_OUT);
         }
     });
