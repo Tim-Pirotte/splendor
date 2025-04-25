@@ -137,6 +137,10 @@ main > a {
     color: white;
 }
 
+main > a:hover {
+    color: rgb(214, 141, 78);
+}
+
 /* Place the audio toggle at the right side of the footer */
 footer {
     align-self: flex-end;
