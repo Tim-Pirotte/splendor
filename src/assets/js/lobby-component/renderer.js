@@ -3,6 +3,7 @@ import { getCurrentUsersAmount, getGameCreator, getGameId, getGameName, getMaxUs
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { safeEmptyContainer } from "../board-component/renderer/helper.js";
 import { copyNode } from "../utils/data-handler.js";
+import { reflowCSS } from "../board-component/helper.js";
 
 function renderGameInfo(g, started) {
     document.querySelector("#game-name-id").innerHTML = `${getGameName(g)} / <span>${getGameId(g)}</span>`;
@@ -54,12 +55,12 @@ function setCopyGameIdImageColor(color) {
 }
 
 function renderGameStartingCountdown(count, $container) {
-    if (count === 0) {location.href = "./board.html"; return}
+    if (count === 0) {location.href = "./board.html"; return;}
 
     $container.innerText = count;
 
     $container.classList.remove("starting-countdown");
-    $container.offsetHeight;
+    reflowCSS($container);
     $container.innerText = count;
     $container.classList.add("starting-countdown");
 

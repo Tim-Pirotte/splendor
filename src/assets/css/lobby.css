@@ -48,9 +48,14 @@ main {
     align-items: center;
 }
 
+div {
+    text-align: left;
+}
+
 main > div {
     justify-content: center;
     align-content: center;
+
 }
 
 /* header */
@@ -87,17 +92,6 @@ footer {
     padding: 2rem;
 }
 
-/* COPY ID BUTTON */
-#copy-game-id-button img {
-    max-height: 100%;
-}
-
-#copy-game-id-button {
-    background-color: transparent;
-    margin-bottom: 1rem;
-    width: fit-content;
-}
-
 ul {
     position: relative;
     width: var(--players-container-width);
@@ -109,7 +103,7 @@ li {
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     top: 0;
     left: 0;
     width: 4rem;
@@ -156,8 +150,15 @@ li img {
     margin-left: 1rem;
 }
 
-div {
-    text-align: left;
+/* COPY ID BUTTON */
+#copy-game-id-button img {
+    max-height: 100%;
+}
+
+#copy-game-id-button {
+    background-color: transparent;
+    margin-bottom: 1rem;
+    width: fit-content;
 }
 
 @keyframes scaleUp {

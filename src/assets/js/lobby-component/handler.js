@@ -1,11 +1,11 @@
 import * as API from "../api.js";
-import { COPY_BUTTON_REMOVE_FEEDBACK_DELAY, POLLING_TIME_OUT } from "../config.js";
+import { COPY_BUTTON_REMOVE_FEEDBACK_DELAY, LOBBY_COUNTDOWN_DURATION, POLLING_TIME_OUT } from "../config.js";
 import {
     renderGameInfo,
     renderGameStartingCountdown,
     renderPlayerCount,
     renderPlayersList,
-    setCopyGameIdImageColor
+    setCopyGameIdImageColor,
 } from "./renderer.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { locateToMainMenu } from "../utils/data-handler.js";
@@ -23,11 +23,11 @@ function loadLobbyInformation() {
         hideIncompatibleElements();
         if (gameData.started) {
             const $countdownContainer = document.createElement("li");
-            $countdownContainer.classList.add("starting-countdown")
+            $countdownContainer.classList.add("starting-countdown");
 
             document.querySelector("ul").insertAdjacentElement("beforeend", $countdownContainer);
 
-            renderGameStartingCountdown(3, $countdownContainer);
+            renderGameStartingCountdown(LOBBY_COUNTDOWN_DURATION, $countdownContainer);
         } else {
             setTimeout(loadLobbyInformation, POLLING_TIME_OUT);
         }
