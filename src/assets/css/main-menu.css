@@ -3,6 +3,10 @@ main {
     flex: 1 0 auto;
 }
 
+body {
+    color: var(--light-text-color);
+}
+
 body::before {
     content: "";
     display: block;
@@ -39,8 +43,22 @@ header {
 }
 
 /* Form */
+form {
+    padding-top: 1rem;
+    width: 50rem;
+    height: 15rem;
+    text-align: center;
+    margin: 2.5rem auto 2.5rem auto;
+    background-color: #372b53;
+    border : rgb(214, 141, 78) solid 0.5rem;
+    outline: rgb(237, 191, 94) solid 0.5rem;
+    background-size: 100% 100%;
+}
+
 label {
-    display: block;
+    display: inline-block;
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
 }
 
 /* Avatar selector */

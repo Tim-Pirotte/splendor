@@ -111,7 +111,6 @@ label[for="game-name"], label[for="game-id"], label[for="amount-filter"]{
     margin-right: 2rem;
 }
 
-
 ul {
     flex-grow: 1;
     overflow-x: hidden;
