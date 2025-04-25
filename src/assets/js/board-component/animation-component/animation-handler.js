@@ -3,12 +3,14 @@
    It uses the FLIP technique (First, Last, Invert, Play) */
 
 function animateFromTo($sourceNode, $targetNode, animation) {
+    animation = JSON.parse(JSON.stringify(animation))
+
     const sourcePosition = $sourceNode.getBoundingClientRect();
     const targetPosition = $targetNode.getBoundingClientRect();
 
     const invertedPosSize = getInvertedPositionSize(sourcePosition, targetPosition);
 
-    startTargetAnimation($targetNode, invertedPosSize, { ...animation });
+    startTargetAnimation($targetNode, invertedPosSize, animation);
 }
 
 function getInvertedPositionSize(sourcePosition, targetPosition) {

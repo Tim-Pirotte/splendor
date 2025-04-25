@@ -379,7 +379,7 @@ main {
     flex: 0 1 6rem;
     aspect-ratio: 70 / 100;
     position: relative;
-    transition: 0.3s;
+    transition: filter, transform 0.3s;
     border-radius: 0.5rem;
     box-shadow: 0 0 0.1rem 0.1rem #00000020;
     /* This is needed to prevent a redraw on a new texture which causes sub-pixel shifting due to different anti-aliasing.

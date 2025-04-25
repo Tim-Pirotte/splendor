@@ -13,6 +13,7 @@ import {
 import {renderCard} from "../renderer/helper.js";
 import {animateFromTo} from "../animation-component/animation-handler.js";
 import {cardAnimation} from "../animation-component/data.js";
+import {reflowCSS} from "../helper.js";
 
 function processReserve(){
     resetCurrentPlayer();
@@ -37,11 +38,7 @@ function processReserve(){
         };
     }
 
-    API.reserveCard(requestBody).then(res => {
-        if (res["reservedCards"].length === 0) {
-            document.querySelector(".reserved-cards h4").innerHTML = "No reserved cards";
-        }
-    });
+    API.reserveCard(requestBody).then(_ => {});
 
     addGoldToken();
     endBuyReserveAction();
@@ -51,6 +48,10 @@ function processReserve(){
 
 function playCardToReservedAnimation(selectedCardName) {
     const $source = document.querySelector(`[data-name="${selectedCardName}"]`);
+    $source.classList.add("hidden");
+
+    document.querySelector(".reserved-cards h4")?.style.setProperty("display", "none");
+
     const $card = renderCard(getCardObject(selectedCardName));
     document.querySelector(".reserved-cards ul").appendChild($card);
 
