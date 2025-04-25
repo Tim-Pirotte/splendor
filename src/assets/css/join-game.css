@@ -82,8 +82,8 @@ section {
     margin: 2.5rem auto 0 auto;
     box-sizing: border-box;
     background-color: #372b53;
-    border : rgb(214, 141, 78) solid 0.5rem;
-    outline: rgb(237, 191, 94) solid 0.5rem;
+    border : var(--border-collor) solid 0.5rem;
+    outline: var(--outline-collor) solid 0.5rem;
 }
 
 section h2 {
