@@ -12,8 +12,10 @@ import {
 } from "../game-status-interface.js";
 import {renderCard} from "../renderer/helper.js";
 import {animateFromTo} from "../animation-component/animation-handler.js";
-import {cardAnimation} from "../animation-component/data.js";
-import {reflowCSS} from "../helper.js";
+import {
+    reserveCardAnimation,
+    setAnimationDelayBeforePolling
+} from "../animation-component/data.js";
 
 function processReserve(){
     resetCurrentPlayer();
@@ -43,7 +45,9 @@ function processReserve(){
     addGoldToken();
     endBuyReserveAction();
 
-    setTimeout(startGameStatePolling, cardAnimation.duration);
+    setAnimationDelayBeforePolling(reserveCardAnimation.duration);
+
+    startGameStatePolling();
 }
 
 function playCardToReservedAnimation(selectedCardName) {
@@ -55,7 +59,7 @@ function playCardToReservedAnimation(selectedCardName) {
     const $card = renderCard(getCardObject(selectedCardName));
     document.querySelector(".reserved-cards ul").appendChild($card);
 
-    animateFromTo($source, $card, cardAnimation);
+    animateFromTo($source, $card, reserveCardAnimation);
 }
 
 function selectDeckForReserving(e) {

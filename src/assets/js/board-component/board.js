@@ -8,7 +8,7 @@ import { handlePaymentMethodChange } from "./buy-reserve/buy-handler.js";
 import { selectPlayerToken } from "./tokens/discard.js";
 import * as API from "../api.js";
 import {animateFromTo} from "./animation-component/animation-handler.js";
-import {cardAnimation} from "./animation-component/data.js";
+import {reserveCardAnimation} from "./animation-component/data.js";
 
 function init() {
     updateGameData();

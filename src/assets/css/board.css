@@ -205,9 +205,19 @@ main {
 }
 
 /* Player tokens */
-.player-tokens li {
+.player-tokens ul > li {
     display: flex;
     gap: 0.5rem;
+    position: relative;
+}
+
+.player-tokens .card {
+    position: absolute;
+    left: 1.5rem;
+    top: 0;
+    box-shadow: none;
+    flex: none;
+    transform: scale(0);
 }
 
 /* Discard tokens */
@@ -298,11 +308,11 @@ main {
     gap: 0 0.5rem;
 }
 
-.player-tokens li:first-of-type {
+.player-tokens ul > li:first-of-type {
     margin: 1rem 0;
 }
 
-.player-tokens li picture:last-of-type {
+.player-tokens ul > li picture:last-of-type {
     margin-right: auto;
 }
 

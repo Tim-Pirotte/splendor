@@ -130,7 +130,7 @@ function renderClientPlayer(players, gems) {
     renderClientPlayerTokenCount(clientPlayer["tokens"]);
     renderClientPlayerTokens(clientPlayer["tokens"], clientPlayer["bonuses"], gems);
 
-    // Needs to know the players tokens to determine if a card should be highlighted
+    // Needs to know the player tokens to determine if a card should be highlighted
     renderClientPlayerReserve(clientPlayer["reserve"]);
 
     renderTimer();
@@ -253,7 +253,14 @@ function renderUpdatedPlayerTokens(bonus) {
     const updatedBonuses = updateCurrentPlayerBonuses(bonus);
 
     renderClientPlayerTokenCount(getClientTokens());
-    renderClientPlayerTokens(updatedTokens, updatedBonuses, GEMS);
+
+    for (const token of GEMS) {
+        const $token = document.querySelector(`.player-tokens [data-type="${token}"]`);
+        $token.querySelector(".amount").innerHTML = `${(updatedTokens[token] || 0)}<span></span>`;
+
+        const $bonusCounter = $token.querySelector("p:not(.amount)");
+        if ($bonusCounter) $bonusCounter.textContent = updatedBonuses[bonus];
+    }
 }
 
 function renderUpdatedPlayerScore(extraScore) {

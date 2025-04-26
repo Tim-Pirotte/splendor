@@ -1,4 +1,3 @@
-import { POLLING_TIME_OUT } from "../config.js";
 import { SECONDS_PER_ROUND, SECONDS_WHEN_TURN_ALMOST_ENDS } from "./config.js";
 import * as API from "../api.js";
 import { renderPage } from "./renderer/renderer.js";
@@ -7,6 +6,8 @@ import { initRoundBegin, saveCurrentPlayerAndGameStateInDom, saveGameState } fro
 import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
 import { processSkipTurn } from "./tokens/token-handler.js";
 import { locateToMainMenu } from "../utils/data-handler.js";
+import {getAnimationDelayBeforePolling, setAnimationDelayBeforePolling} from "./animation-component/data.js";
+import {POLLING_TIME_OUT} from "../config.js";
 
 function handleGameDataError(err) {
     const forbidden = 403;
@@ -19,6 +20,7 @@ function handleGameDataError(err) {
 }
 
 function updateGameData() {
+    setAnimationDelayBeforePolling(POLLING_TIME_OUT);
     const gameId = loadFromStorage("gameId");
 
     if (gameId === null) {locateToMainMenu(); return;}
@@ -33,7 +35,7 @@ function updateGameData() {
         initRoundBegin(gameData);
 
         if (!isCurrentlyPlaying()) {
-            startGameStatePolling();
+            setTimeout(updateGameData, POLLING_TIME_OUT);
         } else {
             startRoundTimer();
         }
@@ -41,14 +43,14 @@ function updateGameData() {
 }
 
 function startGameStatePolling() {
-    setTimeout(updateGameData, POLLING_TIME_OUT);
+    setTimeout(updateGameData, getAnimationDelayBeforePolling());
 }
 
 /* https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame
-The reason for the timer being implemented this way and not with setTimeOut and a css transition goes as follows:
+The reason for the timer being implemented this way and not with setTimeOut and a CSS transition goes as follows:
  - setTimeOut doesn't ensure that it runs exactly at the specified time
  - The execution time of the update function would have to also be subtracted from the delay
- - The execution order between js and css can differ which can make the timer bar go back and forth
+ - The execution order between js and CSS can differ which can make the timer bar go back and forth
  - Page inactivity can halt the execution of a timed out function in certain browsers
 */
 function setTimer(duration, $timerFill) {
