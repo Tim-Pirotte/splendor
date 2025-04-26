@@ -5,6 +5,8 @@
     --button-hover-filter: brightness(115%);
     --clickable-item-cursor: pointer;
     --disabled-button-cursor: not-allowed;
+    --border-collor: rgb(214, 141, 78);
+    --outline-collor: rgb(237, 191, 94);
 }
 
 @font-face {
