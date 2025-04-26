@@ -9,6 +9,7 @@ import { selectPlayerToken } from "./tokens/discard.js";
 import * as API from "../api.js";
 import {animateFromTo} from "./animation-component/animation-handler.js";
 import {reserveCardAnimation} from "./animation-component/data.js";
+import {insertVariables} from "./animation-component/template-renderer.js";
 
 function init() {
     updateGameData();
