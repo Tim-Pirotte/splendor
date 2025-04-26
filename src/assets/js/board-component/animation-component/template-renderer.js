@@ -33,6 +33,32 @@ function getTemplateEndPos(targetString, nextTemplatePos, templateEndSymbol) {
   return templateEndPos;
 }
 
+/* Examples:
+* 1: expression = 'myTestVar'
+*   - Default case gets triggered until the end of the string
+*   - Stack is empty and buffer isn't so return the var equal to the token buffer
+* 2: expression = 'testFunc(arg1, nestedFunc(arg2, arg3), arg4)'
+*   - Default case gets triggered until the first '(' symbol
+*   - Function token is pushed to the stack with name = testFunc
+*   - Default case gets triggered until ',' is encountered
+*   - Argument token is pushed to the stack with value = value of arg1
+*   - Default case gets triggered until the '(' symbol
+*   - Function token is pushed to the stack with name = nestedFunc
+*   - Default case gets triggered until ',' is encountered
+*   - Argument token is pushed to the stack with value = value of arg2
+*   - Default case gets triggered until ')' is encountered
+*   - Argument token is pushed to the stack with value = value of arg3
+*   - arg3 gets popped of the stack and added to args
+*   - arg2 gets popped of the stack and added to args
+*   - nestedFunc gets popped of the stack and gets called with the args
+*   - result gets pushed to the stack so now we are basically left with 'testFunc(arg1, resOfNestedFunc, arg4)'
+*   - Default case gets triggered until ')' is encountered
+*   - arg4 gets popped of the stack and added to args
+*   - resOfNestedFunc gets popped of the stack and added to args
+*   - arg1 gets popped of the stack and added to args
+*   - testFunc gets popped of the stack and gets called with the args
+*   - result gets pushed to the stack
+*   - The buffer is empty and the stack is of length 1 so we return the value at position 0 in the stack */
 function evaluateExpression(targetString, nextTemplatePos, templateStartSymbol, templateEndPos, varsToInsert, functions) {
   let result = "";
 
@@ -100,13 +126,14 @@ function processFunctionCallEnd(currentTokenBuffer, tokenStack, varsToInsert, ex
 
     if (token.type === "functionName") {
       if (!(token.name in functions)) funcDoesNotExistError(currentTokenBuffer, expression);
-      tokenStack.push({type: "argument", value: functions[token.name](args)});
+      tokenStack.push({type: "argument", value: functions[token.name](args.toReversed())});
       currentTokenBuffer = "";
       break;
     }
 
     args.push(token.value);
   }
+
   return currentTokenBuffer;
 }
 
