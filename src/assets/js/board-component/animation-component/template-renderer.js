@@ -53,6 +53,7 @@ function getTemplateEndPos(targetString, nextTemplatePos, templateEndSymbol) {
 *   - nestedFunc gets popped of the stack and gets called with the args
 *   - result gets pushed to the stack so now we are basically left with 'testFunc(arg1, resOfNestedFunc, arg4)'
 *   - Default case gets triggered until ')' is encountered
+*   - Argument token is pushed to the stack with value = value of arg4
 *   - arg4 gets popped of the stack and added to args
 *   - resOfNestedFunc gets popped of the stack and added to args
 *   - arg1 gets popped of the stack and added to args

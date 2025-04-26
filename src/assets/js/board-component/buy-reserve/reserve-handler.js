@@ -13,9 +13,11 @@ import {
 import {renderCard} from "../renderer/helper.js";
 import {animateFromTo} from "../animation-component/animation-handler.js";
 import {
-    reserveCardAnimation,
+    reserveCardAnimation, reserveCardFromDeckAnimationBack, reserveCardFromDeckAnimationFront,
     setAnimationDelayBeforePolling
 } from "../animation-component/data.js";
+import {copyNode} from "../../utils/data-handler.js";
+import {insertImageInto} from "../../utils/renderer.js";
 
 function processReserve(){
     resetCurrentPlayer();
@@ -26,6 +28,7 @@ function processReserve(){
 
     if (selectedCardName) {
         playCardToReservedAnimation(selectedCardName);
+        setAnimationDelayBeforePolling(reserveCardAnimation.duration);
 
         requestBody = {
             "development": {
@@ -40,12 +43,14 @@ function processReserve(){
         };
     }
 
-    API.reserveCard(requestBody).then(_ => {});
+    API.reserveCard(requestBody).then(res => {
+        if (!selectedCardName) {
+            playDeckToReservedAnimation(cardDeckLevel, res["reserve"][res["reserve"].length - 1]);
+        }
+    });
 
     addGoldToken();
     endBuyReserveAction();
-
-    setAnimationDelayBeforePolling(reserveCardAnimation.duration);
 
     startGameStatePolling();
 }
@@ -60,6 +65,24 @@ function playCardToReservedAnimation(selectedCardName) {
     document.querySelector(".reserved-cards ul").appendChild($card);
 
     animateFromTo($source, $card, reserveCardAnimation);
+}
+
+function playDeckToReservedAnimation(deckLevel, cardData) {
+    console.log("ITS DEBUGGING TIME. AND THEN HE DEBUGGED AL OVER THE CODE BASE")
+    const $source = document.querySelector(`[data-deck-level=\"${deckLevel}\"] .hidden-cards`);
+
+    document.querySelector(".reserved-cards h4").textContent = "";
+
+    const $card = renderCard(cardData);
+    const $reservedCards = document.querySelector(".reserved-cards ul");
+    const $cardSidesContainer = document.createElement("div");
+    $cardSidesContainer.appendChild($card);
+    const $cardBack = $source.querySelector("img").cloneNode(true);
+    $cardSidesContainer.appendChild($cardBack);
+    $reservedCards.appendChild($cardSidesContainer);
+
+    animateFromTo($source, $card, reserveCardFromDeckAnimationFront);
+    animateFromTo($source, $cardBack, reserveCardFromDeckAnimationBack);
 }
 
 function selectDeckForReserving(e) {
