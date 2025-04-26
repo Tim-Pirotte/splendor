@@ -625,6 +625,10 @@ aside {
     gap: 0 1rem;
 }
 
+.reserved-cards .card {
+    height: 99%;
+}
+
 /* TIMER */
 .timer {
     height: 100%;
