@@ -54,7 +54,7 @@ function playCardToReservedAnimation(selectedCardName) {
     const $source = document.querySelector(`[data-name="${selectedCardName}"]`);
     $source.classList.add("hidden");
 
-    document.querySelector(".reserved-cards h4")?.style.setProperty("display", "none");
+    document.querySelector(".reserved-cards h4").textContent = "";
 
     const $card = renderCard(getCardObject(selectedCardName));
     document.querySelector(".reserved-cards ul").appendChild($card);

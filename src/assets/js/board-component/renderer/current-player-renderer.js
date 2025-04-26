@@ -259,7 +259,7 @@ function renderUpdatedPlayerTokens(bonus) {
         $token.querySelector(".amount").innerHTML = `${(updatedTokens[token] || 0)}<span></span>`;
 
         const $bonusCounter = $token.querySelector("p:not(.amount)");
-        if ($bonusCounter) $bonusCounter.textContent = updatedBonuses[bonus];
+        if ($bonusCounter) $bonusCounter.textContent = updatedBonuses[token];
     }
 }
 

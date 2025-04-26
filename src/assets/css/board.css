@@ -216,10 +216,10 @@ main {
     position: absolute;
     left: 1.5rem;
     top: 0;
-    box-shadow: none;
     flex: none;
     transform: scale(0);
     color: transparent;
+    box-shadow: var(--buyable-card-box-shadow) #ffffff00;
 }
 
 /* Discard tokens */
@@ -391,7 +391,7 @@ main {
     flex: 0 1 6rem;
     aspect-ratio: 70 / 100;
     position: relative;
-    transition: filter, transform 0.3s;
+    transition: filter 0.3s, transform 0.3s, box-shadow 0.3s;
     border-radius: 0.5rem;
     box-shadow: 0 0 0.1rem 0.1rem #00000020;
     /* This is needed to prevent a redraw on a new texture which causes sub-pixel shifting due to different anti-aliasing.
