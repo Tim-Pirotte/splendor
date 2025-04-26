@@ -212,12 +212,14 @@ main {
 }
 
 .player-tokens .card {
+    width: 6rem;
     position: absolute;
     left: 1.5rem;
     top: 0;
     box-shadow: none;
     flex: none;
     transform: scale(0);
+    color: transparent;
 }
 
 /* Discard tokens */

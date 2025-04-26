@@ -76,12 +76,13 @@ function processBuyCardClick() {
     const $actionButton = getActionButton();
     const cardData = getCardData($actionButton.dataset.name);
 
-    playBuyCardAnimation(cardData);
-
     renderUpdatedPlayerTokens(cardData["bonus"]);
     renderUpdatedPlayerScore(cardData["prestigePoints"]);
+
     renderUpdatedBoardTokens(JSON.parse(sessionStorage.getItem("paymentMethod")));
     endBuyReserveAction();
+
+    playBuyCardAnimation(cardData);
 
     API.buyCard({ development: { name: cardData["name"] }, payment: getCurrentPaymentMethod() });
 }

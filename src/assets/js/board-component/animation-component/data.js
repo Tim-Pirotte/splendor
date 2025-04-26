@@ -19,13 +19,10 @@ const reserveCardAnimation = {
 
 const buyCardAnimation = {
   keyFrames: [
-    {
-      transform: "translateX({{ left }}px) translateY({{ top }}px) scale(1.3)",
-      color: "transparent",
-    },
-    { transform: "translateX(-2rem) translateY(-2.75rem) scale(0.23)" },
+    { transform: "translateX(calc({{ left }}px + 63px)) translateY(calc({{ top }}px + 92px)) scale(1.3)" },
+    { transform: "translateX(-2.8rem) translateY(-3.75rem) scale(0.14)" },
   ],
-  duration: 20_000,
+  duration: 1_500,
   easeFunction: "ease-in-out",
 };
 
