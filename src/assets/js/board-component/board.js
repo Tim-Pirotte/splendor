@@ -7,9 +7,6 @@ import { processReserve, selectDeckForReserving } from "./buy-reserve/reserve-ha
 import { handlePaymentMethodChange } from "./buy-reserve/buy-handler.js";
 import { selectPlayerToken } from "./tokens/discard.js";
 import * as API from "../api.js";
-import {animateFromTo} from "./animation-component/animation-handler.js";
-import {reserveCardAnimation} from "./animation-component/data.js";
-import {insertVariables} from "./animation-component/template-renderer.js";
 
 function init() {
     updateGameData();

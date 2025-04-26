@@ -6,8 +6,8 @@ import { initRoundBegin, saveCurrentPlayerAndGameStateInDom, saveGameState } fro
 import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
 import { processSkipTurn } from "./tokens/token-handler.js";
 import { locateToMainMenu } from "../utils/data-handler.js";
-import {getAnimationDelayBeforePolling, setAnimationDelayBeforePolling} from "./animation-component/data.js";
-import {POLLING_TIME_OUT} from "../config.js";
+import { getAnimationDelayBeforePolling, setAnimationDelayBeforePolling } from "./animation-component/data.js";
+import { POLLING_TIME_OUT } from "../config.js";
 
 function handleGameDataError(err) {
     const forbidden = 403;

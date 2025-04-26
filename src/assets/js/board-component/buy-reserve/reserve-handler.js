@@ -2,22 +2,20 @@ import * as API from "../../api.js";
 import { endBuyReserveAction, getReserveCardButton } from "./helper.js";
 import { startGameStatePolling } from "../game-data-handler.js";
 import { deselectCard } from "./select.js";
-import {getCardObject, validDeckReserve} from "../state-machine/valid-action-checker.js";
+import { getCardObject, validDeckReserve } from "../state-machine/valid-action-checker.js";
 import { highlightCard, setActionToBuyReserve } from "./buy-handler.js";
-import { addGoldToken, renderClientPlayerReserve } from "../renderer/current-player-renderer.js";
+import { addGoldToken } from "../renderer/current-player-renderer.js";
 import {
     getActionButton,
     isCurrentlyPlaying,
     resetCurrentPlayer,
 } from "../game-status-interface.js";
-import {renderCard} from "../renderer/helper.js";
-import {animateFromTo} from "../animation-component/animation-handler.js";
+import { renderCard } from "../renderer/helper.js";
+import { animateFromTo } from "../animation-component/animation-handler.js";
 import {
     reserveCardAnimation, reserveCardFromDeckAnimationBack, reserveCardFromDeckAnimationFront,
-    setAnimationDelayBeforePolling
+    setAnimationDelayBeforePolling,
 } from "../animation-component/data.js";
-import {copyNode} from "../../utils/data-handler.js";
-import {insertImageInto} from "../../utils/renderer.js";
 
 function processReserve(){
     resetCurrentPlayer();
@@ -68,8 +66,8 @@ function playCardToReservedAnimation(selectedCardName) {
 }
 
 function playDeckToReservedAnimation(deckLevel, cardData) {
-    console.log("CRAZY... I WAS CRAZY ONCE")
-    const $source = document.querySelector(`[data-deck-level=\"${deckLevel}\"] .hidden-cards`);
+    console.log("CRAZY... I WAS CRAZY ONCE");
+    const $source = document.querySelector(`[data-deck-level="${deckLevel}"] .hidden-cards`);
 
     document.querySelector(".reserved-cards h4").textContent = "";
 
