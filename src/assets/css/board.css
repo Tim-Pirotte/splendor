@@ -91,7 +91,7 @@ main {
     width: 100%;
 }
 
-.hidden-cards::before {
+.decks .hidden-cards::before {
     content: "";
     position: absolute;
     width: 100%;
@@ -637,7 +637,7 @@ aside {
     z-index: 10;
 }
 
-.reserved-cards div > img {
+.reserved-cards div > picture {
     position: absolute;
     left: 0;
     top: 0;

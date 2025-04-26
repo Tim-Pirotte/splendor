@@ -68,7 +68,7 @@ function playCardToReservedAnimation(selectedCardName) {
 }
 
 function playDeckToReservedAnimation(deckLevel, cardData) {
-    console.log("ITS DEBUGGING TIME. AND THEN HE DEBUGGED AL OVER THE CODE BASE")
+    console.log("CRAZY... I WAS CRAZY ONCE")
     const $source = document.querySelector(`[data-deck-level=\"${deckLevel}\"] .hidden-cards`);
 
     document.querySelector(".reserved-cards h4").textContent = "";
@@ -77,7 +77,7 @@ function playDeckToReservedAnimation(deckLevel, cardData) {
     const $reservedCards = document.querySelector(".reserved-cards ul");
     const $cardSidesContainer = document.createElement("div");
     $cardSidesContainer.appendChild($card);
-    const $cardBack = $source.querySelector("img").cloneNode(true);
+    const $cardBack = $source.cloneNode(true);
     $cardSidesContainer.appendChild($cardBack);
     $reservedCards.appendChild($cardSidesContainer);
 
