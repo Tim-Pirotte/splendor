@@ -40,34 +40,33 @@ function evaluateExpression(targetString, nextTemplatePos, templateStartSymbol, 
   const tokenStack = [];
   let currentTokenBuffer = "";
 
+  currentTokenBuffer = processExpression(expression, currentTokenBuffer, tokenStack, varsToInsert, functions);
+
+  if (currentTokenBuffer.length !== 0) {
+    if (!(currentTokenBuffer in varsToInsert)) varDoesNotExistError(currentTokenBuffer, expression);
+    return varsToInsert[currentTokenBuffer];
+  }
+
+  if (tokenStack.length !== 0) return tokenStack[0].value;
+
+  throw new SyntaxError(`Expected expression to end (${expression})`);
+}
+
+function getExpression(targetString, nextTemplatePos, templateStartSymbol, templateEndPos) {
+  return targetString.slice(nextTemplatePos + templateStartSymbol.length, templateEndPos).trim();
+}
+
+function processExpression(expression, currentTokenBuffer, tokenStack, varsToInsert, functions) {
   for (const char of expression) {
     switch (char) {
       case "(":
-        if (currentTokenBuffer.length === 0) throw new SyntaxError(`A '(' symbol must have a function name preceding it (${expression})`);
-        tokenStack.push({ type: "functionName", name: currentTokenBuffer });
-        currentTokenBuffer = "";
+        currentTokenBuffer = processFunctionCallStart(currentTokenBuffer, expression, tokenStack, functions);
         break;
       case ")":
-        if (currentTokenBuffer.length !== 0) tokenStack.push({ type: "argument", value: varsToInsert[currentTokenBuffer] });
-
-        const args = [];
-        while (true) {
-          if (tokenStack.length === 0) throw new SyntaxError(`Unopened ')' tag (${expression})`);
-
-          const token = tokenStack.pop();
-
-          if (token.type === "functionName") {
-            tokenStack.push({ type: "argument", value: functions[token.name](args) });
-            currentTokenBuffer = "";
-            break;
-          }
-
-          args.push(token.value);
-        }
+        currentTokenBuffer = processFunctionCallEnd(currentTokenBuffer, tokenStack, varsToInsert, expression, functions);
         break;
       case ",":
-        tokenStack.push({ type: "argument", value: varsToInsert[currentTokenBuffer] });
-        currentTokenBuffer = "";
+        currentTokenBuffer = processFunctionArgument(tokenStack, varsToInsert, currentTokenBuffer, expression);
         break;
       case " ":
         break;
@@ -76,20 +75,53 @@ function evaluateExpression(targetString, nextTemplatePos, templateStartSymbol, 
     }
   }
 
-  if (currentTokenBuffer.length !== 0) return varsToInsert[currentTokenBuffer];
-  if (tokenStack.length !== 0) return tokenStack[0].value;
-  throw new SyntaxError("Expected expression to end (${expression})");
+  return currentTokenBuffer;
 }
 
-function getExpression(targetString, nextTemplatePos, templateStartSymbol, templateEndPos) {
-  return targetString.slice(nextTemplatePos + templateStartSymbol.length, templateEndPos).trim();
+function processFunctionCallStart(currentTokenBuffer, expression, tokenStack, functions) {
+  if (currentTokenBuffer.length === 0) throw new SyntaxError(`A '(' symbol must have a function name preceding it (${expression})`);
+  if (!(currentTokenBuffer in functions)) funcDoesNotExistError(currentTokenBuffer, expression);
+
+  tokenStack.push({ type: "functionName", name: currentTokenBuffer });
+  return "";
 }
 
-function evaluateExpressionOLD(targetString, nextTemplatePos, templateStartSymbol, templateEndPos, varsToInsert) {
-  const varToInsert = targetString.slice(nextTemplatePos + templateStartSymbol.length, templateEndPos).trim();
-  if (!(varToInsert in varsToInsert)) throw new SyntaxError(`Variable ${varToInsert} does not exist`);
+function processFunctionCallEnd(currentTokenBuffer, tokenStack, varsToInsert, expression, functions) {
+  if (currentTokenBuffer.length !== 0) {
+    if (!(currentTokenBuffer in varsToInsert)) varDoesNotExistError();
+    tokenStack.push({ type: "argument", value: varsToInsert[currentTokenBuffer] });
+  }
 
-  return varToInsert;
+  const args = [];
+  while (true) {
+    if (tokenStack.length === 0) throw new SyntaxError(`Unopened ')' tag (${expression})`);
+
+    const token = tokenStack.pop();
+
+    if (token.type === "functionName") {
+      if (!(token.name in functions)) funcDoesNotExistError(currentTokenBuffer, expression);
+      tokenStack.push({type: "argument", value: functions[token.name](args)});
+      currentTokenBuffer = "";
+      break;
+    }
+
+    args.push(token.value);
+  }
+  return currentTokenBuffer;
+}
+
+function processFunctionArgument(tokenStack, varsToInsert, currentTokenBuffer, expression) {
+  if (!(currentTokenBuffer in varsToInsert)) varDoesNotExistError(currentTokenBuffer, expression);
+  tokenStack.push({ type: "argument", value: varsToInsert[currentTokenBuffer] });
+  return "";
+}
+
+function funcDoesNotExistError(currentTokenBuffer, expression) {
+  throw new SyntaxError(`Function ${currentTokenBuffer} does not exist (${expression})`);
+}
+
+function varDoesNotExistError(currentTokenBuffer, expression) {
+  throw new SyntaxError(`Variable ${currentTokenBuffer} does not exist (${expression})`)
 }
 
 export { insertVariables };
