@@ -45,7 +45,7 @@ const reserveCardFromDeckAnimationFront = {
             transform: "translateX(0) translateY(0) scale(1) rotateY(0)",
         },
     ],
-    duration: 1_000,
+    duration: 1_300,
     easeFunction: "ease-in-out",
 };
 
@@ -68,7 +68,7 @@ const reserveCardFromDeckAnimationBack = {
             transform: "translateX(0) translateY(0) scale(1) rotateY(180deg)",
         },
     ],
-    duration: 1_000,
+    duration: 1_300,
     easeFunction: "ease-in-out",
 };
 

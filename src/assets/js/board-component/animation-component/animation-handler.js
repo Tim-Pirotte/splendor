@@ -5,7 +5,7 @@
 import { insertVariables } from "./template-renderer.js";
 import { ANIMATION_FUNCTIONS } from "./data.js";
 
-function animateFromTo($sourceNode, $targetNode, animation) {
+function animateFromTo($sourceNode, $targetNode, animation, fnToRunAfterAnimation) {
     animation = deepCopyObject(animation);
 
     const sourcePosition = $sourceNode.getBoundingClientRect();
@@ -13,7 +13,7 @@ function animateFromTo($sourceNode, $targetNode, animation) {
 
     const invertedPosSize = getInvertedPositionSize(sourcePosition, targetPosition);
 
-    startTargetAnimation($targetNode, invertedPosSize, animation, $sourceNode);
+    startTargetAnimation($targetNode, invertedPosSize, animation, $sourceNode, fnToRunAfterAnimation);
 }
 
 function animateShiftListItems($listItems, sourceBoundingBoxes, targetBoundingBoxes, animation) {
@@ -44,7 +44,7 @@ function getInvertedPositionSize(sourcePosition, targetPosition) {
     };
 }
 
-function startTargetAnimation($targetNode, invertedPosSize, animation, $sourceNode) {
+function startTargetAnimation($targetNode, invertedPosSize, animation, $sourceNode, fnToRunAfterAnimation) {
     insertVariablesIntoKeyframes(animation, invertedPosSize, $sourceNode, $targetNode);
 
     const animationPlayer = $targetNode.animate(
@@ -55,7 +55,7 @@ function startTargetAnimation($targetNode, invertedPosSize, animation, $sourceNo
         },
     );
 
-    animationPlayer.addEventListener("finish", () => cleanupAnimation($targetNode, animation.keyFrames));
+    animationPlayer.addEventListener("finish", () => cleanupAnimation($targetNode, animation.keyFrames, fnToRunAfterAnimation));
 }
 
 function insertVariablesIntoKeyframes(animation, invertedPosSize, $sourceNode, $targetNode) {
@@ -67,12 +67,14 @@ function insertVariablesIntoKeyframes(animation, invertedPosSize, $sourceNode, $
     }
 }
 
-function cleanupAnimation($targetNode, keyframes) {
+function cleanupAnimation($targetNode, keyframes, fnToRunAfterAnimation) {
     for (const keyframe of keyframes) {
         for (const property of Object.keys(keyframe)) {
             $targetNode.style.removeProperty(property);
         }
     }
+
+    if (fnToRunAfterAnimation) fnToRunAfterAnimation($targetNode);
 }
 
 function insertVariablesIntoKeyframe(keyFrame, invertedPosSize) {

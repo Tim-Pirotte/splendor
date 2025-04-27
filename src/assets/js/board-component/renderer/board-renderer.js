@@ -41,6 +41,7 @@ function setAmountOfCardsInDeck($currentDeck, deck) {
 
 function renderDeckSize($currentDeck, amountOfCardsInDeck) {
     const $hiddenCard = $currentDeck.closest("li").querySelector(":scope > picture img");
+    // TODO fix the scale and make hidden if 0
     $hiddenCard.style.transform = `translateY(-${amountOfCardsInDeck / CARDS_IN_DECK_TO_DECK_HEIGHT_SCALE}rem)`;
 }
 

@@ -66,7 +66,6 @@ function playCardToReservedAnimation(selectedCardName) {
 }
 
 function playDeckToReservedAnimation(deckLevel, cardData) {
-    console.log("CRAZY... I WAS CRAZY ONCE");
     const $source = document.querySelector(`[data-deck-level="${deckLevel}"] .hidden-cards`);
 
     document.querySelector(".reserved-cards h4").textContent = "";
@@ -79,8 +78,12 @@ function playDeckToReservedAnimation(deckLevel, cardData) {
     $cardSidesContainer.appendChild($cardBack);
     $reservedCards.appendChild($cardSidesContainer);
 
-    animateFromTo($source, $card, reserveCardFromDeckAnimationFront);
+    animateFromTo($source, $card, reserveCardFromDeckAnimationFront, removeBackFromCard);
     animateFromTo($source, $cardBack, reserveCardFromDeckAnimationBack);
+}
+
+function removeBackFromCard($target) {
+    document.querySelector(".reserved-cards ul > div").outerHTML = $target.outerHTML;
 }
 
 function selectDeckForReserving(e) {
