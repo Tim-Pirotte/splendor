@@ -17,11 +17,10 @@ function animateFromTo($sourceNode, $targetNode, animation) {
 }
 
 function animateShiftListItems($listItems, sourceBoundingBoxes, targetBoundingBoxes, animation) {
-    animation = deepCopyObject(animation);
-
     for (const [index, $listItem] of $listItems.entries()) {
+        const animationCopy = deepCopyObject(animation);
         const invertedPosSize = getInvertedPositionSize(sourceBoundingBoxes[index], targetBoundingBoxes[index]);
-        startTargetAnimation($listItem, invertedPosSize, animation, null);
+        startTargetAnimation($listItem, invertedPosSize, animationCopy, null);
     }
 }
 
