@@ -16,6 +16,7 @@ import {
     reserveCardAnimation, reserveCardFromDeckAnimationBack, reserveCardFromDeckAnimationFront,
     setAnimationDelayBeforePolling,
 } from "../animation-component/data.js";
+import {removeBackFromCard} from "../renderer/board-renderer.js";
 
 function processReserve(){
     resetCurrentPlayer();
@@ -80,10 +81,6 @@ function playDeckToReservedAnimation(deckLevel, cardData) {
 
     animateFromTo($source, $card, reserveCardFromDeckAnimationFront, removeBackFromCard);
     animateFromTo($source, $cardBack, reserveCardFromDeckAnimationBack);
-}
-
-function removeBackFromCard($target) {
-    document.querySelector(".reserved-cards ul > div").outerHTML = $target.outerHTML;
 }
 
 function selectDeckForReserving(e) {

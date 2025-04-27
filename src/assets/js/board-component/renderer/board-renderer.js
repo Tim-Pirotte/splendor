@@ -46,13 +46,23 @@ function renderCards(market) {
 
             console.log("New card")
 
-            const $newCard = renderCard(cardData)
-            // outerHTML makes a copy of the node so you don't have a reference to the node in the DOM.
+            const $source = document.querySelector(`.level-${deck["level"]} picture`);
+
+            const $newCard = renderCard(cardData);
+            const $cardSidesContainer = document.createElement("div");
+            $cardSidesContainer.appendChild($newCard);
+            const $cardBack = $source.cloneNode(true);
+            $cardSidesContainer.appendChild($cardBack);
+            // outerHTML makes a copy of the nodes outerHTML attribute so you don't have a reference to the node in the DOM.
             // I am using replaceWith because then I don't have to query the card again to get a new reference.
-            $previousCard.replaceWith($newCard);
-            animateFromTo(document.querySelector(`.level-${deck["level"]} picture`), $newCard, reserveCardFromDeckAnimationFront);
+            $previousCard.replaceWith($cardSidesContainer);
+            animateFromTo($source, $newCard, reserveCardFromDeckAnimationFront, removeBackFromCard);
         }
     }
+}
+
+function removeBackFromCard($target) {
+    $target.closest("div").outerHTML = $target.outerHTML;
 }
 
 function getDeck(deck) {
@@ -139,4 +149,4 @@ function renderUpdatedBoardTokens(tokensToAdd) {
     renderBoardTokens(newAmountsOfTokens, amountOfPlayers);
 }
 
-export { renderCards, renderBoardTokens, renderNobles, renderUpdatedBoardTokens };
+export { renderCards, renderBoardTokens, renderNobles, renderUpdatedBoardTokens, removeBackFromCard };
