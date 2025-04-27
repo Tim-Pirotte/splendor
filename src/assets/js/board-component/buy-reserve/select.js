@@ -10,7 +10,6 @@ import {
 import {
     cardAlreadySelected,
     getCard,
-    highlightCard,
     setActionToBuyReserve,
     unHighlightCards,
 } from "./buy-handler.js";

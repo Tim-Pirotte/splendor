@@ -3,10 +3,9 @@ import { endBuyReserveAction, getReserveCardButton } from "./helper.js";
 import { startGameStatePolling } from "../game-data-handler.js";
 import { deselectCard } from "./select.js";
 import { validDeckReserve } from "../state-machine/valid-action-checker.js";
-import { highlightCard, setActionToBuyReserve } from "./buy-handler.js";
+import { setActionToBuyReserve } from "./buy-handler.js";
 import { addGoldToken, renderClientPlayerReserve } from "../renderer/current-player-renderer.js";
 import {
-    getActionButton,
     isCurrentlyPlaying,
     resetCurrentPlayer,
 } from "../game-status-interface.js";
