@@ -1,7 +1,7 @@
 /* Variables available for animation
 *  Inverted positions: left, top, right, bottom
 *  Inverted sizes: width, height
-*  Nodes: $sourceNode, $targetNode */
+*  Nodes: $sourceNode (Unless if it's a shift list animation), $targetNode */
 
 let animationDelayBeforePolling = 0;
 
@@ -72,6 +72,15 @@ const reserveCardFromDeckAnimationBack = {
     easeFunction: "ease-in-out",
 };
 
+const reserveCardShiftAnimation = {
+    keyFrames: [
+        { transform: "translateX({{ left }}px) translateY({{ top }}px)" },
+        { transform: "translateX(0) translateY(0)" },
+    ],
+    duration: 1_000,
+    easeFunction: "ease-in-out",
+};
+
 const buyCardAnimation = {
     keyFrames: [
         { transform: "translateX(calc({{ left }}px + 3.9375rem)) translateY(calc({{ top }}px + 5.75rem)) scale(1.3)" },
@@ -87,6 +96,7 @@ export {
     reserveCardAnimation,
     reserveCardFromDeckAnimationFront,
     reserveCardFromDeckAnimationBack,
+    reserveCardShiftAnimation,
     buyCardAnimation,
     ANIMATION_FUNCTIONS,
 };

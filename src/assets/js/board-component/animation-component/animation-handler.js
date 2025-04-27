@@ -6,7 +6,7 @@ import { insertVariables } from "./template-renderer.js";
 import { ANIMATION_FUNCTIONS } from "./data.js";
 
 function animateFromTo($sourceNode, $targetNode, animation) {
-    animation = JSON.parse(JSON.stringify(animation));
+    animation = deepCopyObject(animation);
 
     const sourcePosition = $sourceNode.getBoundingClientRect();
     const targetPosition = $targetNode.getBoundingClientRect();
@@ -14,6 +14,24 @@ function animateFromTo($sourceNode, $targetNode, animation) {
     const invertedPosSize = getInvertedPositionSize(sourcePosition, targetPosition);
 
     startTargetAnimation($targetNode, invertedPosSize, animation, $sourceNode);
+}
+
+function animateShiftListItems($listItems, sourceBoundingBoxes, targetBoundingBoxes, animation) {
+    animation = deepCopyObject(animation);
+
+    for (const [index, $listItem] of $listItems.entries()) {
+        const invertedPosSize = getInvertedPositionSize(sourceBoundingBoxes[index], targetBoundingBoxes[index]);
+        startTargetAnimation($listItem, invertedPosSize, animation, null);
+    }
+}
+
+function deepCopyObject(object) {
+    return JSON.parse(JSON.stringify(object));
+}
+
+function getVisibleListItemsBoundingBoxes($container) {
+    return [...$container.querySelectorAll(":scope > li:not(.hidden)")]
+        .map($listItem => $listItem.getBoundingClientRect());
 }
 
 function getInvertedPositionSize(sourcePosition, targetPosition) {
@@ -66,4 +84,4 @@ function insertVariablesIntoKeyframe(keyFrame, invertedPosSize) {
     }
 }
 
-export { animateFromTo };
+export { animateFromTo, animateShiftListItems, getVisibleListItemsBoundingBoxes };

@@ -26,6 +26,8 @@ import { isCurrentlyPlaying } from "../game-status-interface.js";
 import { insertImageInto } from "../../utils/renderer.js";
 import { checkCompatibility } from "../../server-version-component/server-version.js";
 import { reflowCSS } from "../helper.js";
+import {animateShiftListItems, getVisibleListItemsBoundingBoxes} from "../animation-component/animation-handler.js";
+import {reserveCardShiftAnimation} from "../animation-component/data.js";
 
 function renderGameStatusMessage(currentPlayer) {
     const isClientPlayerTurn = currentPlayer === loadFromStorage("playerName");
@@ -103,7 +105,15 @@ function renderClientPlayerReserve(reservedCards) {
 }
 
 function renderReservedCards($reserved, reservedCards) {
+    const originalReservedAmount = $reserved.children.length;
+
+    const sourceBoundingBoxes = getVisibleListItemsBoundingBoxes($reserved);
     removeBoughtCards($reserved);
+    const targetBoundingBoxes = getVisibleListItemsBoundingBoxes($reserved);
+
+    if (originalReservedAmount !== $reserved.children.length) {
+        animateShiftListItems($reserved.querySelectorAll(":scope > li"), sourceBoundingBoxes, targetBoundingBoxes, reserveCardShiftAnimation);
+    }
 
     for (const card of reservedCards) {
         const $reservedCard = getCardFromReserve($reserved, card);
