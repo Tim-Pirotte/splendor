@@ -21,6 +21,8 @@ import { copyNode } from "../../utils/data-handler.js";
 import { insertImageInto } from "../../utils/renderer.js";
 import {validCardBuy, validNobelPick} from "../state-machine/valid-action-checker.js";
 import { canSelectNoble } from "../nobles/nobles-handler.js";
+import {animateFromTo} from "../animation-component/animation-handler.js";
+import {reserveCardFromDeckAnimationFront} from "../animation-component/data.js";
 
 function renderCards(market) {
     for (const deck of market) {
@@ -42,7 +44,13 @@ function renderCards(market) {
                 continue;
             }
 
-            $previousCard.outerHTML = renderCard(cardData).outerHTML;
+            console.log("New card")
+
+            const $newCard = renderCard(cardData)
+            // outerHTML makes a copy of the node so you don't have a reference to the node in the DOM.
+            // I am using replaceWith because then I don't have to query the card again to get a new reference.
+            $previousCard.replaceWith($newCard);
+            animateFromTo(document.querySelector(`.level-${deck["level"]} picture`), $newCard, reserveCardFromDeckAnimationFront);
         }
     }
 }
