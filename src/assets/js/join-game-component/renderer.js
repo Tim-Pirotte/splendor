@@ -20,22 +20,32 @@ function renderPublicGames(e) {
 
     if (!wasTriggeredByPolling && e.target.value !== "Reset") e.preventDefault();
 
-    const $template = document.querySelector("#game-template");
     const $gameList = document.querySelector("ul");
-    const $gameListCopy = $gameList.cloneNode(true);
 
-    safeEmptyContainer($gameListCopy);
 
     API.getGames().then(gameObject => {
         const gamesToRender = filterGames(gameObject["games"]);
+        const amountOfGamesToRender = gamesToRender.size;
 
-        if (gamesToRender.size !== 0) {
+        if (amountOfGamesToRender !== (parseInt(document.querySelector("ul").dataset.renderedGames) || 0)) {
+            const $template = document.querySelector("#game-template");
+            const $gameListCopy = $gameList.cloneNode(true);
+
+            safeEmptyContainer($gameListCopy);
+
+            $gameList.dataset.renderedGames = amountOfGamesToRender;
             gamesToRender.forEach(game => $gameListCopy.appendChild(populateGame($template, game)));
+
+            $gameList.innerHTML = $gameListCopy.innerHTML;
+        } else if (amountOfGamesToRender === 0){
+            safeEmptyContainer($gameList);
+
+            $gameList.insertAdjacentHTML("beforeend", "<p>There are no games based on your selections</p>");
         } else {
-            $gameListCopy.insertAdjacentHTML("beforeend", "<p>There are no games based on your selections</p>");
+            // https://www.keyboardfaces.com/
+            //sonar: ( ︶︿︶)_╭∩╮ me: ლ(ಠ益ಠლ)
         }
 
-        $gameList.innerHTML = $gameListCopy.innerHTML;
         if (wasTriggeredByPolling) setTimeout(renderPublicGames, POLLING_TIME_OUT);
     });
 }

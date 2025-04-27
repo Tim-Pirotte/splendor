@@ -27,7 +27,6 @@ button {
     vertical-align: middle;
     background-color: black;
     color: white;
-    border-radius: 0.2rem;
     border: none;
     height: 2.5rem;
     width: 10rem;
@@ -46,6 +45,7 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 1.5rem;
 }
 
 div {
@@ -85,11 +85,26 @@ h3 {
     width: fit-content;
 }
 
-/* Place the audio toggle at the right side of the footer */
 footer {
-    align-self: flex-end;
-    flex-flow: row nowrap;
     padding: 2rem;
+}
+
+.leave-button {
+    margin: 1rem auto 2rem;
+    display: block;
+    width: 7.65rem;
+    height: 2.55rem;
+    background-size: 100% 100%;
+    background-color: transparent;
+    background-image: url("../images/UI/action_button.webp"), url("../images/fallback/UI/action_button.png");
+    color: var(--light-text-color);
+    font-size: 0.7rem;
+    transition: var(--hover-transition-duration);
+}
+
+.leave-button:hover {
+    filter: var(--button-hover-filter);
+    cursor: var(--clickable-item-cursor);
 }
 
 ul {
@@ -120,12 +135,14 @@ li img {
 }
 
 .player:nth-of-type(2) {
-    transform: translateX(calc(var(--players-container-width) - 50%)) translateY(calc(var(--players-container-width) / 2 - 50%));
+    transform: translateX(calc(var(--players-container-width) / 2 - 50%)) translateY(calc(var(--players-container-width) - 50%));
 }
 
 .player:nth-of-type(3) {
-    transform: translateX(calc(var(--players-container-width) / 2 - 50%)) translateY(calc(var(--players-container-width) - 50%));
+    transform: translateX(calc(var(--players-container-width) - 50%)) translateY(calc(var(--players-container-width) / 2 - 50%));
 }
+
+
 
 .player:nth-of-type(4) {
     transform: translateX(-50%) translateY(calc(var(--players-container-width) / 2 - 50%));
