@@ -22,7 +22,6 @@ function renderPublicGames(e) {
 
     const $gameList = document.querySelector("ul");
 
-
     API.getGames().then(gameObject => {
         const gamesToRender = filterGames(gameObject["games"]);
         const amountOfGamesToRender = gamesToRender.size;
