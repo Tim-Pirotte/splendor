@@ -25,14 +25,12 @@ function selectCard(e) {
     const cardName = $card.dataset.name;
 
     sessionStorage.removeItem("paymentMethod");
-    hideSwitchPaymentButtons();
 
     if (cardAlreadySelected(cardName)) {
         deselectCard(true);
         return;
     }
 
-    highlightCard($card);
     setActionToBuyReserve($card, validCardBuy(cardName), validCardReserve($card));
 }
 

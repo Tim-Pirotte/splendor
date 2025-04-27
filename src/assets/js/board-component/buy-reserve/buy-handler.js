@@ -1,6 +1,7 @@
 import * as API from "../../api.js";
 import { getActionButton, setActionButtonState } from "../game-status-interface.js";
 import {
+    hideSwitchPaymentButtons,
     renderSwitchPaymentButtons,
     renderUpdatedPlayerScore,
     renderUpdatedPlayerTokens,
@@ -12,6 +13,7 @@ import { getClientBonuses, getClientTokens } from "../game-data-handler.js";
 import { binarySearchObjects } from "../../utils/data-handler.js";
 import { endBuyReserveAction, getReserveCardButton, setReserveButtonData } from "./helper.js";
 import { unHighlightTokens } from "../tokens/token-handler.js";
+import {deselectCard} from "./select.js";
 
 function allowToBuy($card) {
     const cardData = getCardData($card.dataset.name);
@@ -25,7 +27,8 @@ function setActionToBuyReserve($card, isValidCardBuy, isValidCardReserve, deckLe
     const datasetParameters = deckLevel ? {} : { name: $card.dataset.name };
     const $reserveCardButton = getReserveCardButton();
 
-    unHighlightTokens();
+    hideSwitchPaymentButtons();
+    highlightCard($card);
     setActionButtonState(
         "buy",
         "processBuyCardClick",

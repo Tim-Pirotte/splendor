@@ -43,7 +43,6 @@ function selectDeckForReserving(e) {
     if (!isCurrentlyPlaying()) return;
 
     const $clickedDeck = e.currentTarget;
-    const $clickedCard = $clickedDeck.querySelector(".hidden-cards");
     const deckLevel = $clickedDeck.closest("li").dataset.deckLevel;
     const previousSelectedLevel = getReserveCardButton().dataset.level;
 
@@ -52,11 +51,7 @@ function selectDeckForReserving(e) {
         return;
     }
 
-    highlightCard($clickedDeck);
-    setActionToBuyReserve($clickedCard, false, validDeckReserve(deckLevel), deckLevel);
-
-    getActionButton().disabled = true;
-    getReserveCardButton().disabled = !validDeckReserve(deckLevel);
+    setActionToBuyReserve($clickedDeck, false, validDeckReserve(deckLevel), deckLevel);
 }
 
 export { processReserve, selectDeckForReserving };

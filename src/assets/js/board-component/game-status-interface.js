@@ -31,9 +31,9 @@ function setActionButtonDataset(datasetParameters, $actionButton) {
     }
 }
 
-function clearDatasetAttributes($actionButton) {
-    for (const datasetAttribute of Object.keys($actionButton.dataset)) {
-        $actionButton.removeAttribute(`data-${datasetAttribute}`);
+function clearDatasetAttributes($target) {
+    for (const datasetAttribute in $target.dataset) {
+        delete $target.dataset[datasetAttribute];
     }
 }
 
