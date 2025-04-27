@@ -1,5 +1,6 @@
 import { GEMS } from "../data.js";
 import {
+    CARDS_IN_DECK_TO_DECK_HEIGHT_OFFSET,
     CARDS_IN_DECK_TO_DECK_HEIGHT_SCALE,
     GOLD_TOKEN_LIMIT,
     NOBLES_MAPPER,
@@ -18,7 +19,7 @@ import {
 import { getUnclaimedTokens, sumObjectValues } from "../helper.js";
 import { copyNode } from "../../utils/data-handler.js";
 import { insertImageInto } from "../../utils/renderer.js";
-import { validNobelPick } from "../state-machine/valid-action-checker.js";
+import {validCardBuy, validNobelPick} from "../state-machine/valid-action-checker.js";
 import { canSelectNoble } from "../nobles/nobles-handler.js";
 
 function renderCards(market) {
@@ -26,7 +27,23 @@ function renderCards(market) {
         const $currentDeck = getDeck(deck);
 
         setAmountOfCardsInDeck($currentDeck, deck);
-        addNodesToEmptiedContainer($currentDeck, deck["visibleCards"], renderCard);
+
+        if ($currentDeck.children.length === 0) addNodesToEmptiedContainer($currentDeck, deck["visibleCards"], renderCard);
+
+        for (const [index, $previousCard] of $currentDeck.querySelectorAll(":scope > li").entries()) {
+            const cardData = deck["visibleCards"][index];
+            if (!cardData) continue;
+            if ($previousCard.dataset.name === cardData["name"]) {
+                $previousCard.classList.toggle(
+                    `${TOKEN_MAPPER[cardData["bonus"]]}-buyable-card`,
+                    validCardBuy(cardData["name"])
+                );
+
+                continue;
+            }
+
+            $previousCard.outerHTML = renderCard(cardData).outerHTML;
+        }
     }
 }
 
@@ -42,7 +59,7 @@ function setAmountOfCardsInDeck($currentDeck, deck) {
 function renderDeckSize($currentDeck, amountOfCardsInDeck) {
     const $hiddenCard = $currentDeck.closest("li").querySelector(":scope > picture img");
     $hiddenCard.closest("picture").classList.toggle("hidden", amountOfCardsInDeck === 0);
-    $hiddenCard.style.transform = `translateY(${-(amountOfCardsInDeck / CARDS_IN_DECK_TO_DECK_HEIGHT_SCALE) + CARDS_IN_DECK_TO_DECK_HEIGHT_SCALE}rem)`;
+    $hiddenCard.style.transform = `translateY(${-(amountOfCardsInDeck / CARDS_IN_DECK_TO_DECK_HEIGHT_SCALE) + CARDS_IN_DECK_TO_DECK_HEIGHT_OFFSET}rem)`;
 }
 
 function getMaxTokens(playerLength, tokenType) {
