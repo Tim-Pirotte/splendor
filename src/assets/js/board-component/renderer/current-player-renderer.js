@@ -2,7 +2,7 @@ import { GEMS } from "../data.js";
 import { CHIP_SPACING, MAX_TOKENS_ALLOWED, PRESTIGE_POINTS_NEEDED_TO_WIN, TOKEN_MAPPER } from "../config.js";
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
 import { getTokenAmount, getTotalAmountDiscarded, getTotalTokenAmount } from "../tokens/discard.js";
-import { clientMustDiscardToken } from "../state-machine/valid-action-checker.js";
+import {clientMustDiscardToken, validCardBuy} from "../state-machine/valid-action-checker.js";
 import {
     addNodesToEmptiedContainer,
     addSwitchButton,
@@ -95,11 +95,36 @@ function renderClientPlayerReserve(reservedCards) {
 
     if (reservedCards.length > 0) {
         $reservedContainer.querySelector("h4").innerHTML = "";
-        addNodesToEmptiedContainer($reserved, reservedCards, renderCard);
+        renderReservedCards($reserved, reservedCards);
     } else {
         safeEmptyContainer($reserved);
         $reservedContainer.querySelector("h4").innerHTML = "No reserved cards";
     }
+}
+
+function renderReservedCards($reserved, reservedCards) {
+    removeBoughtCards($reserved);
+
+    for (const card of reservedCards) {
+        const $reservedCard = getCardFromReserve($reserved, card);
+
+        if ($reservedCard) {
+            $reservedCard.classList.toggle(`${TOKEN_MAPPER[card["bonus"]]}-buyable-card`, validCardBuy(card["name"]));
+            continue;
+        }
+
+        $reserved.appendChild(renderCard(card));
+    }
+}
+
+function removeBoughtCards($reserved) {
+    for (const $boughtCard of $reserved.querySelectorAll(".hidden")) {
+        $boughtCard.outerHTML = "";
+    }
+}
+
+function getCardFromReserve($reserved, card) {
+    return $reserved.querySelector(`[data-name="${card["name"]}"]`);
 }
 
 function renderClientPlayerTokenCount(tokens) {
