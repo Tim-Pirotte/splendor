@@ -128,7 +128,7 @@ li {
 }
 
 li p {
-    animation: fadeIn 0.5s linear forwards;
+    animation: nameAppear 0.5s ease-in-out forwards;
 }
 
 li img {
@@ -207,7 +207,7 @@ li img {
     }
 }
 
-@keyframes fadeIn {
+@keyframes nameAppear {
     from {
         opacity: 0.5;
         transform: scale(0);
