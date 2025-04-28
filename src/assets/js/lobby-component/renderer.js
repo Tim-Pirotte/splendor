@@ -1,7 +1,6 @@
 import { avatars } from "../main-menu-component/data.js";
 import { getCurrentUsersAmount, getGameCreator, getGameId, getGameName, getMaxUsersAmount, getPlayersObjects } from "../utils/game-object-handler.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
-import { safeEmptyContainer } from "../board-component/renderer/helper.js";
 import { copyNode } from "../utils/data-handler.js";
 import { reflowCSS } from "../board-component/helper.js";
 
@@ -14,7 +13,7 @@ function renderPlayersList(g, started) {
     const $template = document.querySelector("#joined-player-template");
     const $joinedPlayers = document.querySelector("#joined-players");
     getPlayersObjects(g, started).slice($joinedPlayers.querySelectorAll("li").length)
-                                 .forEach(player => $joinedPlayers.appendChild(renderPlayer($template, player)));
+        .forEach(player => $joinedPlayers.appendChild(renderPlayer($template, player)));
 }
 
 function renderPlayer($template, playerName) {

@@ -1,11 +1,11 @@
 import { SECONDS_PER_ROUND, SECONDS_WHEN_TURN_ALMOST_ENDS } from "./config.js";
 import * as API from "../api.js";
 import { renderPage } from "./renderer/renderer.js";
-import {deselectAll, getActionButton, isCurrentlyPlaying} from "./game-status-interface.js";
+import { deselectAll, getActionButton, isCurrentlyPlaying } from "./game-status-interface.js";
 import { initRoundBegin, saveCurrentPlayerAndGameStateInDom, saveGameState } from "./state-machine/state-machine.js";
 import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
 import { locateToMainMenu } from "../utils/data-handler.js";
-import {IN_GAME_POLLING_TIME_OUT} from "../config.js";
+import { IN_GAME_POLLING_TIME_OUT } from "../config.js";
 
 function handleGameDataError(err) {
     const forbidden = 403;
@@ -75,7 +75,7 @@ function setTimer(duration, $timerFill) {
             deselectAll();
         }
 
-        getActionButton().click()
+        getActionButton().click();
     }
 
     requestAnimationFrame(update);

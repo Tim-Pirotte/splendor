@@ -45,7 +45,6 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 1.5rem;
 }
 
 div {
@@ -61,6 +60,7 @@ main > div {
 /* header */
 header {
     text-align: center;
+    height: 15rem;
     width: fit-content;
     margin: auto;
 }
@@ -100,6 +100,10 @@ footer {
     color: var(--light-text-color);
     font-size: 0.7rem;
     transition: var(--hover-transition-duration);
+}
+
+.leave-button.none {
+    display: none;
 }
 
 .leave-button:hover {

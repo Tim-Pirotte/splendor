@@ -129,6 +129,7 @@ form .avatar-selector {
     color: var(--light-text-color);
     font-size: 0.7rem;
     transition: var(--hover-transition-duration);
+    animation: buttonAppear 0.5s ease-in-out forwards;
 }
 
 .form-actions button:hover {
@@ -156,10 +157,6 @@ footer .sound-button {
     height: 3rem;
     background-color: transparent;
     border: none;
-}
-
-.form-actions button {
-    animation: buttonAppear 0.5s ease-in-out forwards;
 }
 
 @keyframes buttonAppear {

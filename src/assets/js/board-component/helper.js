@@ -1,4 +1,4 @@
-import {getActionButton} from "./game-status-interface.js";
+import { getActionButton } from "./game-status-interface.js";
 
 function sumObjectValues(obj1, obj2) {
     for (const tokenType in obj2) {

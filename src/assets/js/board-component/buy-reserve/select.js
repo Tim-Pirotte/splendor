@@ -16,7 +16,7 @@ import {
 } from "./buy-handler.js";
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
 import { GAME_STATE } from "../state-machine/data.js";
-import {getCurrentAction} from "../helper.js";
+import { getCurrentAction } from "../helper.js";
 
 function selectCard(e) {
     const $card = getCard(e);
