@@ -13,9 +13,8 @@ function renderGameInfo(g, started) {
 function renderPlayersList(g, started) {
     const $template = document.querySelector("#joined-player-template");
     const $joinedPlayers = document.querySelector("#joined-players");
-
-    safeEmptyContainer($joinedPlayers);
-    getPlayersObjects(g, started).forEach(player => $joinedPlayers.appendChild(renderPlayer($template, player)));
+    getPlayersObjects(g, started).slice($joinedPlayers.querySelectorAll("li").length)
+                                 .forEach(player => $joinedPlayers.appendChild(renderPlayer($template, player)));
 }
 
 function renderPlayer($template, playerName) {

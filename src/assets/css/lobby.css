@@ -123,6 +123,9 @@ li {
     left: 0;
     width: 4rem;
     height: 4rem;
+    transform: scale(0);
+    animation: rotateScaleUp 2s forwards linear;
+    transform-origin: center;
 }
 
 li img {
@@ -131,21 +134,25 @@ li img {
 }
 
 .player:nth-of-type(1) {
-    transform: translateX(calc(var(--players-container-width) / 2 - 50%)) translateY(-50%);
+    --translateX: calc(var(--players-container-width) / 2 - 50%);
+    --translateY: -50%;
 }
 
 .player:nth-of-type(2) {
-    transform: translateX(calc(var(--players-container-width) / 2 - 50%)) translateY(calc(var(--players-container-width) - 50%));
+    --translateX: calc(var(--players-container-width) / 2 - 50%);
+    --translateY: calc(var(--players-container-width) - 50%);
 }
 
 .player:nth-of-type(3) {
-    transform: translateX(calc(var(--players-container-width) - 50%)) translateY(calc(var(--players-container-width) / 2 - 50%));
+    --translateX: calc(calc(var(--players-container-width) - 50%));
+    --translateY: calc(calc(var(--players-container-width) / 2 - 50%));
 }
 
 
 
 .player:nth-of-type(4) {
-    transform: translateX(-50%) translateY(calc(var(--players-container-width) / 2 - 50%));
+    --translateX: -50%;
+    --translateY: calc(var(--players-container-width) / 2 - 50%);
 }
 
 .starting-countdown {
@@ -185,5 +192,15 @@ li img {
 
     100% {
         transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes rotateScaleUp {
+    from {
+        transform: translateX(var(--translateX)) translateY(var(--translateY)) scale(0) rotateZ(0deg) ;
+    }
+
+    to {
+        transform:  translateX(var(--translateX)) translateY(var(--translateY)) scale(1) rotateZ(720deg);
     }
 }
