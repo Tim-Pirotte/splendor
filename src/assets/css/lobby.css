@@ -1,35 +1,66 @@
+:root {
+    --players-container-width: 20rem;
+}
 /* general */
+
+@keyframes hueShift {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+}
+
+body::before {
+    content: "";
+    display: block;
+    height: 100vh;
+    width: 100vw;
+    background-image: url("../images/board_background.webp"), url("../images/fallback/board_background.png");
+    animation: hueShift 20s linear infinite;
+    background-size: contain;
+    background-position: center;
+    z-index: -1;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
 button {
     vertical-align: middle;
     background-color: black;
     color: white;
-    border-radius: 0.2rem;
     border: none;
     height: 2.5rem;
     width: 10rem;
 }
 
 body {
+    width: 100vw;
     height: 100vh;
     display: flex;
     flex-flow: column nowrap;
+    color: var(--light-text-color);
 }
 
 main {
     flex: 1 0 auto;
     display: flex;
     justify-content: center;
-    align-content: center;
+    align-items: center;
+}
+
+div {
+    text-align: left;
 }
 
 main > div {
     justify-content: center;
     align-content: center;
+
 }
 
 /* header */
 header {
     text-align: center;
+    height: 15rem;
     width: fit-content;
     margin: auto;
 }
@@ -40,7 +71,7 @@ header p {
 
 h1 {
     font-size: 5em;
-    margin-bottom: 1.5rem;
+    margin: 1.5rem 0;
 }
 
 h2 {
@@ -50,14 +81,101 @@ h2 {
 }
 
 h3 {
+    display: inline-block;
     width: fit-content;
 }
 
-/* Place the audio toggle at the right side of the footer */
 footer {
-    align-self: flex-end;
-    flex-flow: row nowrap;
     padding: 2rem;
+}
+
+.leave-button {
+    margin: 1rem auto 2rem;
+    display: block;
+    width: 7.65rem;
+    height: 2.55rem;
+    background-size: 100% 100%;
+    background-color: transparent;
+    background-image: url("../images/UI/action_button.webp"), url("../images/fallback/UI/action_button.png");
+    color: var(--light-text-color);
+    font-size: 0.7rem;
+    transition: var(--hover-transition-duration);
+}
+
+.leave-button.none {
+    display: none;
+}
+
+.leave-button:hover {
+    filter: var(--button-hover-filter);
+    cursor: var(--clickable-item-cursor);
+}
+
+ul {
+    position: relative;
+    width: var(--players-container-width);
+    height: var(--players-container-width);
+}
+
+li {
+    position: absolute;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: space-around;
+    top: 0;
+    left: 0;
+    width: 4rem;
+    height: 4rem;
+    transform: scale(0);
+    transform-origin: center;
+}
+
+li p {
+    animation: nameAppear 0.5s ease-in-out forwards;
+}
+
+li img {
+    width: 2rem;
+    height: 2rem;
+    animation: rotateScaleUp 0.5s forwards linear;
+}
+
+.player:nth-of-type(1) {
+    transform: translateX(calc(var(--players-container-width) / 2 - 50%)) translateY(-50%);
+}
+
+.player:nth-of-type(2) {
+    transform: translateX(calc(var(--players-container-width) / 2 - 50%)) translateY(calc(var(--players-container-width) - 50%));
+}
+
+.player:nth-of-type(3) {
+    transform: translateX(calc(var(--players-container-width) - 50%)) translateY(calc(var(--players-container-width) / 2 - 50%));
+}
+
+
+
+.player:nth-of-type(4) {
+    transform: translateX(-50%) translateY(calc(var(--players-container-width) / 2 - 50%));
+}
+
+.starting-countdown {
+    font-size: 15rem;
+    height: fit-content;
+    width: 6rem;
+    position: absolute;
+    text-align: center;
+    top: calc(var(--players-container-width) / 2);
+    left: calc(var(--players-container-width) / 2);
+    transform: translate(-50%, -50%);
+    animation: scaleUp linear 1s forwards;
+    transform-origin: center;
+    will-change: transform;
+}
+
+#player-count {
+    display: inline-block;
+    margin-left: 1rem;
 }
 
 /* COPY ID BUTTON */
@@ -69,4 +187,38 @@ footer {
     background-color: transparent;
     margin-bottom: 1rem;
     width: fit-content;
+}
+
+@keyframes scaleUp {
+    0% {
+        transform: translate(-50%, -50%) scale(0) ;
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes rotateScaleUp {
+    from {
+        opacity: 0.5;
+        transform: scale(0) rotateZ(-180deg);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) rotateZ(0deg);
+    }
+}
+
+@keyframes nameAppear {
+    from {
+        opacity: 0.5;
+        transform: scale(0);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }

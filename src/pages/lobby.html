@@ -22,30 +22,32 @@
     </noscript>
     <header>
         <h1>Lobby</h1>
-        <h2 id="game-name-id">...</h2>
-        <button id="copy-game-id-button">
-            <picture>
-                <source srcset="../assets/images/UI/copyButton/copy_button_black.webp">
-                <img src="../assets/images/fallback/UI/copyButton/copy_button_black.png" alt="copy game id to clipboard">
-            </picture>
-        </button>
-        <h3>Created by ...</h3>
-    </header>
-    <main>
-        <div id="players-container">
-            <ul id="joined-players">
-                <template id="joined-player-template">
-                    <li class="player">
-                        <p class="player-name"></p>
-                        <picture>
-                            <source srcset="../assets/images/avatars/placeholder.webp">
-                            <img src="../assets/images/fallback/avatars/placeholder.png" alt="placeholder" title="placeholder">
-                        </picture>
-                    </li>
-                </template>
-            </ul>
+        <div>
+            <h2 id="game-name-id">...</h2>
+            <button type="button" id="copy-game-id-button">
+                <picture>
+                    <source srcset="../assets/images/UI/copyButton/copy_button_white.webp">
+                    <img src="../assets/images/fallback/UI/copyButton/copy_button_white.png" alt="copy game id to clipboard">
+                </picture>
+            </button>
+        </div>
+        <div>
+            <h3>Created by ...</h3>
             <h4 id="player-count">.../...</h4>
         </div>
+    </header>
+    <main>
+        <ul id="joined-players">
+            <template id="joined-player-template">
+                <li class="player">
+                    <p class="player-name"></p>
+                    <picture>
+                        <source srcset="../assets/images/avatars/placeholder.webp">
+                        <img src="../assets/images/fallback/avatars/placeholder.png" alt="placeholder" title="placeholder">
+                    </picture>
+                </li>
+            </template>
+        </ul>
     </main>
     <footer>
         <button type="button" class="leave-button">Leave</button>

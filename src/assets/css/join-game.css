@@ -54,15 +54,15 @@ h1 {
 
 header > a {
     background-color: transparent;
-    border: none;
 }
 
 header > a img {
     width: 3rem;
     transition: var(--hover-transition-duration);
+    will-change: filter;
 }
 
-header > a:hover {
+header > a img:hover {
     filter: var(--button-hover-filter);
 }
 

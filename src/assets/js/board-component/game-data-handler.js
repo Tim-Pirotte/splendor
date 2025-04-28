@@ -1,12 +1,11 @@
-import { POLLING_TIME_OUT } from "../config.js";
 import { SECONDS_PER_ROUND, SECONDS_WHEN_TURN_ALMOST_ENDS } from "./config.js";
 import * as API from "../api.js";
 import { renderPage } from "./renderer/renderer.js";
-import { getActionButton, isCurrentlyPlaying } from "./game-status-interface.js";
+import { deselectAll, getActionButton, isCurrentlyPlaying } from "./game-status-interface.js";
 import { initRoundBegin, saveCurrentPlayerAndGameStateInDom, saveGameState } from "./state-machine/state-machine.js";
 import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
-import { processSkipTurn } from "./tokens/token-handler.js";
 import { locateToMainMenu } from "../utils/data-handler.js";
+import { IN_GAME_POLLING_TIME_OUT } from "../config.js";
 
 function handleGameDataError(err) {
     const forbidden = 403;
@@ -41,7 +40,7 @@ function updateGameData() {
 }
 
 function startGameStatePolling() {
-    setTimeout(updateGameData, POLLING_TIME_OUT);
+    setTimeout(updateGameData, IN_GAME_POLLING_TIME_OUT);
 }
 
 /* https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame
@@ -69,11 +68,14 @@ function setTimer(duration, $timerFill) {
 
         if (remaining > 0) {
             requestAnimationFrame(update);
-        } else if (!getActionButton().disabled) {
-            getActionButton().click();
-        } else {
-            processSkipTurn();
+            return;
         }
+
+        if (getActionButton().disabled) {
+            deselectAll();
+        }
+
+        getActionButton().click();
     }
 
     requestAnimationFrame(update);

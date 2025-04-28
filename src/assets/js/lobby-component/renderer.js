@@ -1,20 +1,19 @@
 import { avatars } from "../main-menu-component/data.js";
 import { getCurrentUsersAmount, getGameCreator, getGameId, getGameName, getMaxUsersAmount, getPlayersObjects } from "../utils/game-object-handler.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
-import { safeEmptyContainer } from "../board-component/renderer/helper.js";
 import { copyNode } from "../utils/data-handler.js";
+import { reflowCSS } from "../board-component/helper.js";
 
-function renderGameInfo(g) {
+function renderGameInfo(g, started) {
     document.querySelector("#game-name-id").innerHTML = `${getGameName(g)} / <span>${getGameId(g)}</span>`;
-    document.querySelector("h3").textContent = `Created by ${getGameCreator(g)}`;
+    document.querySelector("h3").textContent = `Created by ${getGameCreator(g, started)}`;
 }
 
-function renderPlayersList(g) {
+function renderPlayersList(g, started) {
     const $template = document.querySelector("#joined-player-template");
     const $joinedPlayers = document.querySelector("#joined-players");
-
-    safeEmptyContainer($joinedPlayers);
-    getPlayersObjects(g).forEach(player => $joinedPlayers.appendChild(renderPlayer($template, player)));
+    getPlayersObjects(g, started).slice($joinedPlayers.querySelectorAll("li").length)
+        .forEach(player => $joinedPlayers.appendChild(renderPlayer($template, player)));
 }
 
 function renderPlayer($template, playerName) {
@@ -53,4 +52,17 @@ function setCopyGameIdImageColor(color) {
         `../assets/images/fallback/UI/copyButton/copy_button_${color}.png`);
 }
 
-export { renderGameInfo, renderPlayersList, renderPlayerCount, setCopyGameIdImageColor };
+function renderGameStartingCountdown(count, $container) {
+    if (count === 0) {location.href = "./board.html"; return;}
+
+    $container.innerText = count;
+
+    $container.classList.remove("starting-countdown");
+    reflowCSS($container);
+    $container.innerText = count;
+    $container.classList.add("starting-countdown");
+
+    setTimeout(renderGameStartingCountdown, 1000, count - 1, $container);
+}
+
+export { renderGameInfo, renderPlayersList, renderPlayerCount, setCopyGameIdImageColor, renderGameStartingCountdown };

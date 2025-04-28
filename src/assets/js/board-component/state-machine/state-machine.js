@@ -31,7 +31,6 @@ function initRoundBegin(gameData) {
     }
 
     setSpectatorState(gameData, loadFromStorage("playerName"));
-
 }
 
 function setSpectatorState(gameData, playerName) {
@@ -40,7 +39,7 @@ function setSpectatorState(gameData, playerName) {
             if (isCompatible && isSpectator(gameData["spectators"], playerName)) {
                 setActionButtonState("Stop spectating", "stopSpectating", {});
                 getActionButton().disabled = false;
-            };
+            }
         });
 }
 

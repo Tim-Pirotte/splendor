@@ -1,3 +1,5 @@
+import { getActionButton } from "./game-status-interface.js";
+
 function sumObjectValues(obj1, obj2) {
     for (const tokenType in obj2) {
         if (tokenType in obj1) {
@@ -27,4 +29,7 @@ function reflowCSS($node) {
     // NOSONAR_END
 }
 
-export { sumObjectValues, getUnclaimedTokens, reflowCSS };
+function getCurrentAction() {
+    return getActionButton().dataset.functionToRun;
+}
+export { sumObjectValues, getUnclaimedTokens, reflowCSS, getCurrentAction };

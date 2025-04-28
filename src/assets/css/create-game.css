@@ -32,6 +32,7 @@ header {
     flex-flow: row nowrap;
     justify-content: space-between;
     margin: 2rem 2rem 0 2rem;
+    height: 3rem;
 }
 
 header > a {
@@ -41,9 +42,10 @@ header > a {
 
 header > a img {
     width: 3rem;
+    transition: var(--hover-transition-duration);
 }
 
-header > a:hover {
+header > a img:hover {
     filter: var(--button-hover-filter);
 }
 
