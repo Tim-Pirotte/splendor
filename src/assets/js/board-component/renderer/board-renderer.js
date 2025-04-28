@@ -22,7 +22,12 @@ import { insertImageInto } from "../../utils/renderer.js";
 import {validCardBuy, validNobelPick} from "../state-machine/valid-action-checker.js";
 import { canSelectNoble } from "../nobles/nobles-handler.js";
 import {animateFromTo} from "../animation-component/animation-handler.js";
-import {reserveCardFromDeckAnimationFront} from "../animation-component/data.js";
+import {
+    reserveCardFromDeckAnimationBack,
+    reserveCardFromDeckAnimationFront,
+    setAnimationDelayBeforePolling
+} from "../animation-component/data.js";
+import {isCurrentlyPlaying} from "../game-status-interface.js";
 
 function renderCards(market) {
     for (const deck of market) {
@@ -35,16 +40,19 @@ function renderCards(market) {
         for (const [index, $previousCard] of $currentDeck.querySelectorAll(":scope > li").entries()) {
             const cardData = deck["visibleCards"][index];
             if (!cardData) continue;
+            
             if ($previousCard.dataset.name === cardData["name"]) {
                 $previousCard.classList.toggle(
                     `${TOKEN_MAPPER[cardData["bonus"]]}-buyable-card`,
-                    validCardBuy(cardData["name"])
+                    validCardBuy(cardData["name"]),
                 );
 
                 continue;
             }
 
-            console.log("New card")
+            console.log("CARD RERENDER", isCurrentlyPlaying())
+            console.log(Date.now().toLocaleString())
+            console.trace()
 
             const $source = document.querySelector(`.level-${deck["level"]} picture`);
 
@@ -56,7 +64,9 @@ function renderCards(market) {
             // outerHTML makes a copy of the nodes outerHTML attribute so you don't have a reference to the node in the DOM.
             // I am using replaceWith because then I don't have to query the card again to get a new reference.
             $previousCard.replaceWith($cardSidesContainer);
+            setAnimationDelayBeforePolling(reserveCardFromDeckAnimationFront.duration);
             animateFromTo($source, $newCard, reserveCardFromDeckAnimationFront, removeBackFromCard);
+            animateFromTo($source, $cardBack, reserveCardFromDeckAnimationBack);
         }
     }
 }

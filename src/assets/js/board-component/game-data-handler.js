@@ -6,7 +6,11 @@ import { initRoundBegin, saveCurrentPlayerAndGameStateInDom, saveGameState } fro
 import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
 import { processSkipTurn } from "./tokens/token-handler.js";
 import { locateToMainMenu } from "../utils/data-handler.js";
-import { getAnimationDelayBeforePolling, setAnimationDelayBeforePolling } from "./animation-component/data.js";
+import {
+    getAnimationDelayBeforePolling,
+    reserveCardFromDeckAnimationFront,
+    setAnimationDelayBeforePolling
+} from "./animation-component/data.js";
 import { POLLING_TIME_OUT } from "../config.js";
 
 function handleGameDataError(err) {
@@ -20,7 +24,6 @@ function handleGameDataError(err) {
 }
 
 function updateGameData() {
-    setAnimationDelayBeforePolling(POLLING_TIME_OUT);
     const gameId = loadFromStorage("gameId");
 
     if (gameId === null) {locateToMainMenu(); return;}
@@ -35,11 +38,19 @@ function updateGameData() {
         initRoundBegin(gameData);
 
         if (!isCurrentlyPlaying()) {
-            setTimeout(updateGameData, POLLING_TIME_OUT);
+            deckAnimationPlaying()
+                ? setTimeout(updateGameData, reserveCardFromDeckAnimationFront.duration)
+                : setTimeout(updateGameData, POLLING_TIME_OUT);
         } else {
             startRoundTimer();
         }
+
+        setAnimationDelayBeforePolling(POLLING_TIME_OUT);
     }).catch(err => handleGameDataError(err));
+}
+
+function deckAnimationPlaying() {
+    return getAnimationDelayBeforePolling() === reserveCardFromDeckAnimationFront.duration;
 }
 
 function startGameStatePolling() {
