@@ -3,7 +3,7 @@
 *  Inverted sizes: width, height
 *  Nodes: $sourceNode (Unless if it's a shift list animation), $targetNode */
 
-let animationDelayBeforePolling = 0;
+let animationDelayBeforePolling = 1000;
 
 function setAnimationDelayBeforePolling(value) {
     animationDelayBeforePolling = value;

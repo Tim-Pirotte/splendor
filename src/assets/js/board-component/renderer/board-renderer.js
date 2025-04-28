@@ -27,7 +27,6 @@ import {
     reserveCardFromDeckAnimationFront,
     setAnimationDelayBeforePolling
 } from "../animation-component/data.js";
-import {isCurrentlyPlaying} from "../game-status-interface.js";
 
 function renderCards(market) {
     for (const deck of market) {
@@ -49,10 +48,6 @@ function renderCards(market) {
 
                 continue;
             }
-
-            console.log("CARD RERENDER", isCurrentlyPlaying())
-            console.log(Date.now().toLocaleString())
-            console.trace()
 
             const $source = document.querySelector(`.level-${deck["level"]} picture`);
 

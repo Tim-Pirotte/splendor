@@ -8,8 +8,7 @@ import { processSkipTurn } from "./tokens/token-handler.js";
 import { locateToMainMenu } from "../utils/data-handler.js";
 import {
     getAnimationDelayBeforePolling,
-    reserveCardFromDeckAnimationFront,
-    setAnimationDelayBeforePolling
+    setAnimationDelayBeforePolling,
 } from "./animation-component/data.js";
 import { POLLING_TIME_OUT } from "../config.js";
 
@@ -29,28 +28,22 @@ function updateGameData() {
     if (gameId === null) {locateToMainMenu(); return;}
 
     API.getGame().then(gameData => {
-        if (!gameData.started) {location.href = "./lobby.html"; return;}
+        if (!gameData.started) { location.href = "./lobby.html"; return; }
 
-        saveToStorage("gameData", gameData);
         saveGameState(gameData["gameState"]);
         saveCurrentPlayerAndGameStateInDom(gameData);
         renderPage(gameData);
         initRoundBegin(gameData);
 
         if (!isCurrentlyPlaying()) {
-            deckAnimationPlaying()
-                ? setTimeout(updateGameData, reserveCardFromDeckAnimationFront.duration)
-                : setTimeout(updateGameData, POLLING_TIME_OUT);
+            // Add a delay to evade a race condition between the animation cleanup and the rendering system
+            setTimeout(updateGameData, getAnimationDelayBeforePolling() + 500);
         } else {
             startRoundTimer();
         }
 
         setAnimationDelayBeforePolling(POLLING_TIME_OUT);
     }).catch(err => handleGameDataError(err));
-}
-
-function deckAnimationPlaying() {
-    return getAnimationDelayBeforePolling() === reserveCardFromDeckAnimationFront.duration;
 }
 
 function startGameStatePolling() {
