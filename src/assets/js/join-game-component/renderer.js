@@ -1,5 +1,5 @@
 import * as API from "../api.js";
-import { POLLING_TIME_OUT } from "../config.js";
+import {JOIN_GAME_PAGE_POLLING_TIME_OUT} from "../config.js";
 import { copyNode } from "../utils/data-handler.js";
 import { getCurrentUsersAmount, getGameId, getGameName, getGameState, getMaxUsersAmount } from "../utils/game-object-handler.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
@@ -45,7 +45,7 @@ function renderPublicGames(e) {
             //sonar: ( ︶︿︶)_╭∩╮ me: ლ(ಠ益ಠლ)
         }
 
-        if (wasTriggeredByPolling) setTimeout(renderPublicGames, POLLING_TIME_OUT);
+        if (wasTriggeredByPolling) setTimeout(renderPublicGames, JOIN_GAME_PAGE_POLLING_TIME_OUT);
     });
 }
 

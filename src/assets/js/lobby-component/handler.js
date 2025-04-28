@@ -1,5 +1,5 @@
 import * as API from "../api.js";
-import { COPY_BUTTON_REMOVE_FEEDBACK_DELAY, LOBBY_COUNTDOWN_DURATION, POLLING_TIME_OUT } from "../config.js";
+import {COPY_BUTTON_REMOVE_FEEDBACK_DELAY, IN_GAME_POLLING_TIME_OUT, LOBBY_COUNTDOWN_DURATION} from "../config.js";
 import {
     renderGameInfo,
     renderGameStartingCountdown,
@@ -29,7 +29,7 @@ function loadLobbyInformation() {
 
             renderGameStartingCountdown(LOBBY_COUNTDOWN_DURATION, $countdownContainer);
         } else {
-            setTimeout(loadLobbyInformation, POLLING_TIME_OUT);
+            setTimeout(loadLobbyInformation, IN_GAME_POLLING_TIME_OUT);
         }
     });
 }

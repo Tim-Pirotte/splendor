@@ -44,7 +44,7 @@ header > a img {
     transition: var(--hover-transition-duration);
 }
 
-header > a:hover {
+header > a img:hover {
     filter: var(--button-hover-filter);
 }
 
