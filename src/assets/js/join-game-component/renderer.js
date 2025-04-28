@@ -36,9 +36,8 @@ function renderPublicGames(e) {
             gamesToRender.forEach(game => $gameListCopy.appendChild(populateGame($template, game)));
 
             $gameList.innerHTML = $gameListCopy.innerHTML;
-        } else if (amountOfGamesToRender === 0){
+        } else if (amountOfGamesToRender === 0) {
             safeEmptyContainer($gameList);
-
             $gameList.insertAdjacentHTML("beforeend", "<p>There are no games based on your selections</p>");
         } else {
             // https://www.keyboardfaces.com/
