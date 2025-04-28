@@ -15,6 +15,8 @@ import {
 } from "./buy-handler.js";
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
 import { GAME_STATE } from "../state-machine/data.js";
+import {getCurrentAction} from "../helper.js";
+import {deselectAll} from "../board.js";
 
 function selectCard(e) {
     const $card = getCard(e);
@@ -24,6 +26,8 @@ function selectCard(e) {
     const cardName = $card.dataset.name;
 
     sessionStorage.removeItem("paymentMethod");
+
+    if (getCurrentAction() !== "processBuyCardClick") deselectAll();
 
     if (cardAlreadySelected(cardName)) {
         deselectCard(true);

@@ -7,6 +7,7 @@ import { initRoundBegin, saveCurrentPlayerAndGameStateInDom, saveGameState } fro
 import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
 import { processSkipTurn } from "./tokens/token-handler.js";
 import { locateToMainMenu } from "../utils/data-handler.js";
+import {deselectAll} from "./board.js";
 
 function handleGameDataError(err) {
     const forbidden = 403;
@@ -69,11 +70,14 @@ function setTimer(duration, $timerFill) {
 
         if (remaining > 0) {
             requestAnimationFrame(update);
-        } else if (!getActionButton().disabled) {
-            getActionButton().click();
-        } else {
-            processSkipTurn();
+            return;
         }
+
+        if (getActionButton().disabled) {
+            deselectAll();
+        }
+
+        getActionButton().click()
     }
 
     requestAnimationFrame(update);

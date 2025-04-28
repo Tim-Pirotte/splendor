@@ -4,7 +4,9 @@ import { getActionButton, setActionButtonState } from "../game-status-interface.
 import { validTokenTake } from "../state-machine/valid-action-checker.js";
 import { deselectCard } from "../buy-reserve/select.js";
 import { startGameStatePolling } from "../game-data-handler.js";
-import { reflowCSS } from "../helper.js";
+import {getCurrentAction, reflowCSS} from "../helper.js";
+import {deselectAll} from "../board.js";
+import {getCheckedRadioButtonValue} from "../../create-game-component/helper.js";
 
 function clickedOnToken(target) {
     return target.tagName.toLowerCase() === "li";
@@ -122,8 +124,7 @@ function addTokenToList($selectedToken, $actionButton, stackPointer) {
 
 function selectToken(e) {
     if (!validTokenTake() || !clickedOnToken(e.target)) return;
-
-    deselectCard();
+    if (!["processTakeTokenClick", "processTakeTwoTokensClick"].includes(getCurrentAction())) deselectAll();
 
     getActionButton().disabled = false;
 

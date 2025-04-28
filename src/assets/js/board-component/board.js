@@ -1,12 +1,18 @@
 import { updateGameData } from "./game-data-handler.js";
-import { initGameStatusInterface } from "./game-status-interface.js";
-import { selectToken } from "./tokens/token-handler.js";
+import {
+    clearDatasetAttributes,
+    getActionButton,
+    initGameStatusInterface,
+    setActionButtonState
+} from "./game-status-interface.js";
+import {selectToken, unHighlightTokens} from "./tokens/token-handler.js";
 import { selectNoble } from "./nobles/nobles-handler.js";
-import { selectCard } from "./buy-reserve/select.js";
+import {deselectCard, selectCard} from "./buy-reserve/select.js";
 import { processReserve, selectDeckForReserving } from "./buy-reserve/reserve-handler.js";
 import { handlePaymentMethodChange } from "./buy-reserve/buy-handler.js";
 import { selectPlayerToken } from "./tokens/discard.js";
 import * as API from "../api.js";
+import {getReserveCardButton} from "./buy-reserve/helper.js";
 
 function init() {
     updateGameData();
@@ -44,4 +50,15 @@ function forfeitInit() {
     document.querySelector(".forfeit").addEventListener("click", API.forfeit);
 }
 
+function deselectAll() {
+    clearDatasetAttributes(getReserveCardButton());
+    unHighlightTokens();
+    deselectCard();
+    getReserveCardButton().classList.add('hidden');
+    setActionButtonState("skip turn", "skipTurn", {}, true);
+    getActionButton().disabled = false;
+}
+
 init();
+
+export { deselectAll }
