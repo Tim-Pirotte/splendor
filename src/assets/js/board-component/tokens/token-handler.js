@@ -1,12 +1,9 @@
 import { MAX_TAKE_TOKENS, MIN_TOKENS_FOR_PICKING_TWO } from "../config.js";
 import * as API from "../../api.js";
-import { getActionButton, setActionButtonState } from "../game-status-interface.js";
+import {deselectAll, getActionButton, setActionButtonState} from "../game-status-interface.js";
 import { validTokenTake } from "../state-machine/valid-action-checker.js";
-import { deselectCard } from "../buy-reserve/select.js";
 import { startGameStatePolling } from "../game-data-handler.js";
 import {getCurrentAction, reflowCSS} from "../helper.js";
-import {deselectAll} from "../board.js";
-import {getCheckedRadioButtonValue} from "../../create-game-component/helper.js";
 
 function clickedOnToken(target) {
     return target.tagName.toLowerCase() === "li";

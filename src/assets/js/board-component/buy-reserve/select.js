@@ -3,6 +3,7 @@ import { validCardBuy, validCardReserve } from "../state-machine/valid-action-ch
 import { getReserveCardButton } from "./helper.js";
 import {
     clearDatasetAttributes,
+    deselectAll,
     getActionButton,
     isCurrentlyPlaying,
     setActionButtonState,
@@ -16,7 +17,6 @@ import {
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
 import { GAME_STATE } from "../state-machine/data.js";
 import {getCurrentAction} from "../helper.js";
-import {deselectAll} from "../board.js";
 
 function selectCard(e) {
     const $card = getCard(e);
