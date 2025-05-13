@@ -15,7 +15,8 @@ const COPY_BUTTON_REMOVE_FEEDBACK_DELAY = 500;
 const LOBBY_COUNTDOWN_DURATION = 3;
 
 function getAPIUrl() {
-    return GROUP_DEPLOYED_SERVER;
+    // TODO set this back to the deployed server
+    return LOCAL_SERVER;
 }
 
 export {

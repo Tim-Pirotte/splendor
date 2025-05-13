@@ -34,7 +34,7 @@ function updateGameData() {
         if (!isCurrentlyPlaying()) {
             startGameStatePolling();
         } else {
-            startRoundTimer();
+            startRoundTimer(gameData["timePassedForCurrentRound"]);
         }
     }).catch(err => handleGameDataError(err));
 }
@@ -50,8 +50,8 @@ The reason for the timer being implemented this way and not with setTimeOut and 
  - The execution order between js and css can differ which can make the timer bar go back and forth
  - Page inactivity can halt the execution of a timed out function in certain browsers
 */
-function setTimer(duration, $timerFill) {
-    const startTime = Date.now();
+function setTimer(duration, timePassedForCurrentRound, $timerFill) {
+    const startTime = Date.now() - timePassedForCurrentRound * 1000;
 
     function update() {
         const now = Date.now();
@@ -71,20 +71,26 @@ function setTimer(duration, $timerFill) {
             return;
         }
 
-        if (getActionButton().disabled) {
-            deselectAll();
+        // this is to attempt to at least do something if the timer runs out withing the time added as a buffer serverside
+        try {
+            if (getActionButton().disabled) {
+                deselectAll();
+            }
+
+            getActionButton().click();
+        } catch(err) {
+            startGameStatePolling();
         }
 
-        getActionButton().click();
     }
 
     requestAnimationFrame(update);
 }
 
-function startRoundTimer() {
+function startRoundTimer(timePassedForCurrentRound) {
     const $timerFill = document.querySelector(".timer-fill");
     $timerFill.classList.remove("time-almost-ends");
-    setTimer(SECONDS_PER_ROUND, $timerFill);
+    setTimer(SECONDS_PER_ROUND, timePassedForCurrentRound, $timerFill);
 }
 
 function getClientTokens() {

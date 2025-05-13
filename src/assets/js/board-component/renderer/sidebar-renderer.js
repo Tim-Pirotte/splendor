@@ -140,7 +140,8 @@ function renderOtherPlayerReservedCard($numberedItemTemplate, reservedCard, cont
 }
 
 function renderHistory(history) {
-    checkCompatibility(2)
+    //TODO set this back to minimumversion 2
+    checkCompatibility(3)
         .then(isCompatible => {
             if (!isCompatible) {
                 renderIncompatibleServerMessage();
