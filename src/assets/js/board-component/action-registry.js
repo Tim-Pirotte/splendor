@@ -3,6 +3,8 @@ import { processSkipTurn, processTakeTokensClick, processTakeTwoTokens } from ".
 import { processTakeNoble } from "./nobles/nobles-handler.js";
 import { processDiscardTokens } from "./tokens/discard.js";
 import { stopSpectating } from "../join-game-component/spectate.js";
+import {getActionButton} from "./game-status-interface.js";
+import {getReserveCardButton} from "./buy-reserve/helper.js";
 
 const ACTION_REGISTRY = {
     processTakeTokenClick: () => processTakeTokensClick(),
@@ -15,4 +17,26 @@ const ACTION_REGISTRY = {
     doNothing: () => {},
 };
 
-export { ACTION_REGISTRY };
+function handleKeyPress(e) {
+    const activeElement = document.activeElement;
+    if (e.key === "Enter") {
+        if (!(activeElement.classList.contains("action-button") || activeElement.classList.contains("reserve-button"))) {
+            getActionButton().click();
+        } else {
+            activeElement.click();
+        }
+
+        return;
+    }
+
+    if (e.key === "Tab") {
+        e.preventDefault();
+        if(activeElement.classList.contains("action-button")) {
+            getReserveCardButton().focus()
+        } else {
+            getActionButton().focus();
+        }
+    }
+}
+
+export { ACTION_REGISTRY, handleKeyPress };

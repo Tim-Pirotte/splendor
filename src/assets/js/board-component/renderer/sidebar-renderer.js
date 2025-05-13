@@ -1,5 +1,5 @@
 import { GEMS } from "../data.js";
-import { TOKEN_MAPPER } from "../config.js";
+import {AMOUNT_OF_TEMPLATES, TOKEN_MAPPER} from "../config.js";
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
 import {
     formatNumber,
@@ -150,7 +150,7 @@ function renderHistory(history) {
 
             const $history = document.querySelector(".history");
 
-            const historyPreviousLength = $history.querySelectorAll(":scope> *").length;
+            const historyPreviousLength = $history.querySelectorAll(":scope> *").length - AMOUNT_OF_TEMPLATES;
             const historyCurrentLength = history.length;
             const amountOfNewItems = historyCurrentLength - historyPreviousLength;
 
