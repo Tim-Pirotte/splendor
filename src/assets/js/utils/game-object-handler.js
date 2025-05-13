@@ -26,7 +26,9 @@ function getPlayersObjects(gameData, started, $joinedPlayers) {
     const players = [];
 
     for (const player of gameData["players"].slice($joinedPlayers.querySelectorAll("li").length)) {
-        players.push({"name": player, "avatar": started ? player.avatar : gameData["avatars"][player]});
+        players.push({
+            "name": started ? player.name: player, "avatar": started ? player.avatar : gameData["avatars"][player]
+        });
     }
 
     return players;

@@ -9,7 +9,7 @@ import {
     isCreator,
     safeEmptyContainer,
 } from "./helper.js";
-import { getHighestScore } from "../../utils/game-object-handler.js";
+import {convertAvatarToCorrectCasing, getHighestScore} from "../../utils/game-object-handler.js";
 import { copyNode } from "../../utils/data-handler.js";
 import { avatars } from "../../main-menu-component/data.js";
 import { checkCompatibility } from "../../server-version-component/server-version.js";
@@ -39,9 +39,9 @@ function renderOtherPlayers(players, currentPlayer) {
 
 function getAvatar(otherPlayer) {
     if ("avatar" in otherPlayer) {
-        return otherPlayer.avatar;
+        return convertAvatarToCorrectCasing(otherPlayer.avatar);
     } else {
-        return avatars[otherPlayer.name.toLowerCase().charCodeAt(0) % avatars.length];
+        return convertAvatarToCorrectCasing(avatars[otherPlayer.name.toLowerCase().charCodeAt(0) % avatars.length]);
     }
 }
 

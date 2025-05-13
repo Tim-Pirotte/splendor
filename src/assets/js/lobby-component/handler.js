@@ -17,7 +17,6 @@ function loadLobbyInformation() {
     }
 
     API.getGame().then(gameData => {
-        console.log(gameData)
         renderGameInfo(gameData, gameData.started);
         renderPlayersList(gameData, gameData.started);
         renderPlayerCount(gameData);

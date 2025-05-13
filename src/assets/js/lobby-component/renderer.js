@@ -24,7 +24,6 @@ function renderPlayersList(g, started) {
 }
 
 function renderPlayer($template, player) {
-    console.log(player)
     const $li = copyNode($template);
     const avatar = determinePlayerAvatar(player.name, player.avatar);
 
