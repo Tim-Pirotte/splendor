@@ -64,9 +64,11 @@ function populateGame($template, game) {
 
 function renderUserNameTakenMessage() {
     const $target = document.querySelector(".username-in-use");
+
     $target.classList.remove("none");
     $target.innerHTML =
-        `<p>The game you are trying to join already has a player/spectator with the username: ${loadFromStorage("userName")}</p>`;
+        `<p>${loadFromStorage("playerName")}: duplicate player name not allowed</p>`;
+
     setTimeout(() => $target.classList.add("none"), 10000)
 }
 

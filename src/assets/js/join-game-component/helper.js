@@ -6,13 +6,9 @@ import {renderUserNameTakenMessage} from "./renderer.js";
 function joinGameById(gameId) {
     API.joinGame(gameId)
         .then(response => {
-            checkCompatibility(2)
-                .then(isCompatible => {
-                    if (isCompatible) saveToStorage("timeSync", response["gameId"]);
-                    saveToStorage("gameId", response["gameId"]);
-                    saveToStorage("playerToken", response["playerToken"]);
-                    location.href = "./lobby.html";
-                });
+            saveToStorage("gameId", response["gameId"]);
+            saveToStorage("playerToken", response["playerToken"]);
+            location.href = "./lobby.html";
         }).catch(err => {
             if (err.failure === 409) renderUserNameTakenMessage();
     });

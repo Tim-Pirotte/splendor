@@ -80,8 +80,8 @@ function decreaseTotalDiscardCount() {
 
 function processDiscardTokens() {
     const tokensToDiscard = getTokensToDiscard();
-    const requestBody = { "return": tokensToDiscard };
-    API.takeTokens(requestBody).then(res => console.log(res));
+    const requestBody = {"return": tokensToDiscard};
+    API.takeTokens(requestBody);
 }
 
 function getTokensToDiscard() {

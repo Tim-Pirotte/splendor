@@ -16,7 +16,9 @@ function createGame(e) {
             };
 
             if (isCompatible) {
-                requestBody.avatar = loadFromStorage("avatar");
+                requestBody.avatar = loadFromStorage("avatar").split("-")
+                                                        .map(word => (word[0].toUpperCase() + word.slice(1)))
+                                                        .join("");
                 requestBody.visibility = visibility;
             }
 

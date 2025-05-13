@@ -24,7 +24,9 @@ function joinGame(gameId) {
     return checkCompatibility(2).then(isCompatible => {
         let body = {};
 
-        if (isCompatible) body = { avatar: loadFromStorage("avatar") };
+        if (isCompatible) body = { avatar: loadFromStorage("avatar").split("-")
+                                            .map(word => (word[0].toUpperCase() + word.slice(1)))
+                                            .join("")};
 
         const playerName = loadFromStorage("playerName");
         return fetchFromServer(`/games/${gameId}/players/${playerName}`, "POST", body);

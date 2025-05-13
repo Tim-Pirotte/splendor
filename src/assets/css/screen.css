@@ -115,7 +115,7 @@ input[type="number"] {
 
 @keyframes message {
     from {
-        transform: translateX(15rem);
+        transform: translateX(100%);
     }
     10% {
         transform: translateX(0);

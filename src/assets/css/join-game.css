@@ -194,8 +194,8 @@ button:hover, #filter-form input[type="reset"]:hover {
 }
 
 .username-in-use p {
-    background-color: #d88e4f;
-    border: 0.1rem solid #b56246;
+    background-color: #752b39;
+    border: 0.1rem solid #542434;
     color: var(--light-text-color);
     padding: 0.5rem;
     margin: 1rem 0;
