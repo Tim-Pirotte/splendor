@@ -1,6 +1,7 @@
 import * as API from "../api.js";
 import { saveToStorage } from "../data-connector/local-storage-abstractor.js";
 import { checkCompatibility } from "../server-version-component/server-version.js";
+import {renderUserNameTakenMessage} from "./renderer.js";
 
 function joinGameById(gameId) {
     API.joinGame(gameId)
@@ -12,7 +13,9 @@ function joinGameById(gameId) {
                     saveToStorage("playerToken", response["playerToken"]);
                     location.href = "./lobby.html";
                 });
-        });
+        }).catch(err => {
+            if (err.failure === 409) renderUserNameTakenMessage();
+    });
 }
 
 function intersection(setA, setB) {

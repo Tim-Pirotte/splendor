@@ -62,4 +62,12 @@ function populateGame($template, game) {
     return $game;
 }
 
-export { renderPlayerInfo, renderPublicGames };
+function renderUserNameTakenMessage() {
+    const $target = document.querySelector(".username-in-use");
+    $target.classList.remove("none");
+    $target.innerHTML =
+        `<p>The game you are trying to join already has a player/spectator with the username: ${loadFromStorage("userName")}</p>`;
+    setTimeout(() => $target.classList.add("none"), 10000)
+}
+
+export { renderPlayerInfo, renderPublicGames, renderUserNameTakenMessage };

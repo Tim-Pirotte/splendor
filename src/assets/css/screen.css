@@ -112,3 +112,18 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
     -moz-appearance: textfield;
 }
+
+@keyframes message {
+    from {
+        transform: translateX(15rem);
+    }
+    10% {
+        transform: translateX(0);
+    }
+    75% {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}

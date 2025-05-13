@@ -21,7 +21,11 @@ function handleKeyPress(e) {
     const activeElement = document.activeElement;
     if (e.key === "Enter") {
         if (!(activeElement.classList.contains("action-button") || activeElement.classList.contains("reserve-button"))) {
-            getActionButton().click();
+            if (getActionButton().disabled === false) {
+                getActionButton().click();
+            } else {
+                getReserveCardButton().click();
+            }
         } else {
             activeElement.click();
         }

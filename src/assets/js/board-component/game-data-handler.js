@@ -6,6 +6,7 @@ import { initRoundBegin, saveCurrentPlayerAndGameStateInDom, saveGameState } fro
 import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
 import { locateToMainMenu } from "../utils/data-handler.js";
 import { IN_GAME_POLLING_TIME_OUT } from "../config.js";
+import {getGameState} from "../utils/game-object-handler.js";
 
 function handleGameDataError(err) {
     const forbidden = 403;
@@ -23,7 +24,10 @@ function updateGameData() {
     if (gameId === null) {locateToMainMenu(); return;}
 
     API.getGame().then(gameData => {
-        if (!gameData.started) {location.href = "./lobby.html"; return;}
+        if (!gameData.started) {
+            location.href = "./lobby.html";
+            return;
+        }
 
         saveToStorage("gameData", gameData);
         saveGameState(gameData["gameState"]);
@@ -34,7 +38,7 @@ function updateGameData() {
         if (!isCurrentlyPlaying()) {
             startGameStatePolling();
         } else {
-            startRoundTimer(gameData["timePassedForCurrentRound"]);
+            startRoundTimer(gameData["timePassedForCurrentRound"], gameData["gameState"]);
         }
     }).catch(err => handleGameDataError(err));
 }
@@ -49,29 +53,30 @@ The reason for the timer being implemented this way and not with setTimeOut and 
  - The execution time of the update function would have to also be subtracted from the delay
  - The execution order between js and css can differ which can make the timer bar go back and forth
  - Page inactivity can halt the execution of a timed out function in certain browsers
+
+The reason we need to compare the gameState and currentPlayer is so that we can stop the timer when the turn ends.
 */
-function setTimer(duration, timePassedForCurrentRound, $timerFill) {
+function setTimer(duration, timePassedForCurrentRound, $timerFill, gameState) {
     const startTime = Date.now() - timePassedForCurrentRound * 1000;
 
     function update() {
         const now = Date.now();
-        const elapsed = (now - startTime) / 1000;
-        const remaining = Math.max(0, duration - elapsed);
+        const elapsed = now - startTime;
+        const remaining = Math.max(0, duration * 1000 - elapsed);
 
-        const percent = (remaining / duration) * 100;
+        const percent = (remaining / (duration * 1000)) * 100;
         $timerFill.style.height = `${percent}%`;
         $timerFill.closest(".timer").setAttribute("aria-valuenow", Math.floor(remaining));
 
-        $timerFill.classList.toggle("time-almost-ends", remaining < SECONDS_WHEN_TURN_ALMOST_ENDS);
+        $timerFill.classList.toggle("time-almost-ends", remaining < SECONDS_WHEN_TURN_ALMOST_ENDS * 1000);
 
         if (!isCurrentlyPlaying()) return;
 
         if (remaining > 0) {
-            requestAnimationFrame(update);
+            if (isCurrentlyPlaying() && sessionStorage.getItem("gameState") === gameState) requestAnimationFrame(update);
             return;
         }
 
-        // this is to attempt to at least do something if the timer runs out withing the time added as a buffer serverside
         try {
             if (getActionButton().disabled) {
                 deselectAll();
@@ -87,10 +92,10 @@ function setTimer(duration, timePassedForCurrentRound, $timerFill) {
     requestAnimationFrame(update);
 }
 
-function startRoundTimer(timePassedForCurrentRound) {
+function startRoundTimer(timePassedForCurrentRound, gameState) {
     const $timerFill = document.querySelector(".timer-fill");
     $timerFill.classList.remove("time-almost-ends");
-    setTimer(SECONDS_PER_ROUND, timePassedForCurrentRound, $timerFill);
+    setTimer(SECONDS_PER_ROUND, timePassedForCurrentRound, $timerFill, gameState);
 }
 
 function getClientTokens() {

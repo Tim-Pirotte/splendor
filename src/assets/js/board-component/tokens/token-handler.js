@@ -196,7 +196,7 @@ function processTakeTwoTokens() {
 }
 
 function processSkipTurn() {
-    API.takeTokens({ take: {} }).then(startGameStatePolling);
+    API.takeTokens({take: {}}).then();
 }
 
 export { selectToken, processTakeTokensClick, updateTokens, processTakeTwoTokens, processSkipTurn, unHighlightTokens };

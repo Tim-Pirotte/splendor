@@ -53,7 +53,10 @@ function setCopyGameIdImageColor(color) {
 }
 
 function renderGameStartingCountdown(count, $container) {
-    if (count === 0) {location.href = "./board.html"; return;}
+    if (count === 0) {
+        location.href = "./board.html";
+        return;
+    }
 
     $container.innerText = count;
 

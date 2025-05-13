@@ -184,3 +184,22 @@ button:hover, #filter-form input[type="reset"]:hover {
     filter: var(--button-hover-filter);
     cursor: var(--clickable-item-cursor);
 }
+
+.username-in-use {
+    overflow: clip;
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding-left: 1rem;
+}
+
+.username-in-use p {
+    background-color: #d88e4f;
+    border: 0.1rem solid #b56246;
+    color: var(--light-text-color);
+    padding: 0.5rem;
+    margin: 1rem 0;
+    box-shadow: 0 0 0.1rem 0.1rem #00000020, var(--buyable-card-box-shadow) #c98c08c2;
+    animation: message 10s normal ease-in-out;
+    animation-fill-mode: forwards;
+}
