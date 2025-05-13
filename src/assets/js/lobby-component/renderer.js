@@ -1,5 +1,13 @@
 import { avatars } from "../main-menu-component/data.js";
-import { getCurrentUsersAmount, getGameCreator, getGameId, getGameName, getMaxUsersAmount, getPlayersObjects } from "../utils/game-object-handler.js";
+import {
+    convertAvatarToCorrectCasing,
+    getCurrentUsersAmount,
+    getGameCreator,
+    getGameId,
+    getGameName,
+    getMaxUsersAmount,
+    getPlayersObjects
+} from "../utils/game-object-handler.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { copyNode } from "../utils/data-handler.js";
 import { reflowCSS } from "../board-component/helper.js";
@@ -12,15 +20,15 @@ function renderGameInfo(g, started) {
 function renderPlayersList(g, started) {
     const $template = document.querySelector("#joined-player-template");
     const $joinedPlayers = document.querySelector("#joined-players");
-    getPlayersObjects(g, started).slice($joinedPlayers.querySelectorAll("li").length)
-        .forEach(player => $joinedPlayers.appendChild(renderPlayer($template, player)));
+    getPlayersObjects(g, started, $joinedPlayers).forEach(player => $joinedPlayers.appendChild(renderPlayer($template, player)));
 }
 
-function renderPlayer($template, playerName) {
+function renderPlayer($template, player) {
+    console.log(player)
     const $li = copyNode($template);
-    const avatar = determinePlayerAvatar(playerName);
+    const avatar = determinePlayerAvatar(player.name, player.avatar);
 
-    $li.querySelector(".player-name").textContent = playerName;
+    $li.querySelector(".player-name").textContent = player.name;
     $li.querySelector("source").srcset = `../assets/images/avatars/${avatar}.webp`;
     $li.querySelector("img").src = `../assets/images/fallback/avatars/${avatar}.png`;
     $li.querySelector("img").alt = $li.querySelector("img").title = avatar;
@@ -28,12 +36,16 @@ function renderPlayer($template, playerName) {
     return $li;
 }
 
-function determinePlayerAvatar(playerName) {
+function determinePlayerAvatar(playerName, avatar) {
     if (playerName === loadFromStorage("playerName")) {
         return loadFromStorage("avatar");
     }
 
-    return avatars[playerName.toLowerCase().charCodeAt(0) % avatars.length];
+    if (avatar) {
+        return convertAvatarToCorrectCasing(avatar);
+    } else {
+        return convertAvatarToCorrectCasing(avatars[playerName.toLowerCase().charCodeAt(0) % avatars.length]);
+    }
 }
 
 function renderPlayerCount(g) {

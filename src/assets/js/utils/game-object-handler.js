@@ -22,8 +22,14 @@ function getGameCreator(gameData, started) {
     return started ? gameData["players"][0]["name"] : gameData["players"][0];
 }
 
-function getPlayersObjects(gameData, started) {
-    return started ? gameData["players"].map(player => player.name) : gameData["players"];
+function getPlayersObjects(gameData, started, $joinedPlayers) {
+    const players = [];
+
+    for (const player of gameData["players"].slice($joinedPlayers.querySelectorAll("li").length)) {
+        players.push({"name": player, "avatar": started ? player.avatar : gameData["avatars"][player]});
+    }
+
+    return players;
 }
 
 function hasGameStarted(gameData) {
@@ -46,6 +52,10 @@ function getPlayerByName(players, currentPlayerName) {
     }
 }
 
+function convertAvatarToCorrectCasing(avatar) {
+    return avatar.replaceAll(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
+}
+
 export {
     getGameState,
     getGameName,
@@ -58,5 +68,6 @@ export {
     sumObjectValues,
     getHighestScore,
     getPlayerByName,
+    convertAvatarToCorrectCasing,
 };
 
