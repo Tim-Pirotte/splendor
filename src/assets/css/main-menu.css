@@ -65,6 +65,10 @@ label {
     list-style-type: none;
 }
 
+.avatar-selector li:hover {
+    cursor: var(--clickable-item-cursor);
+}
+
 form .avatar-selector {
     transform: translateY(0.625rem);
 }
