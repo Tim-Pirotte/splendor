@@ -5,6 +5,7 @@ import { GAME_STATE } from "../board-component/state-machine/data.js";
 function getSortedResults() {
     return API.getGame()
         .then(gameData => {
+            console.log(gameData);
             if (gameData.gameState !== GAME_STATE.WINNER_IS_FOUND) location.href = "./board.html";
 
             const results = gameData.players.map(player => ({

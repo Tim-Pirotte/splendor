@@ -20,29 +20,33 @@ const ACTION_REGISTRY = {
 function handleKeyPress(e) {
     if (!isCurrentlyPlaying()) return;
 
-    const activeElement = document.activeElement;
-    if (e.key === "Enter") {
-        if (!(activeElement.classList.contains("action-button") || activeElement.classList.contains("reserve-button"))) {
-            if (getActionButton().disabled === false) {
-                getActionButton().click();
-            } else {
-                getReserveCardButton().click();
-            }
-        } else {
-            activeElement.click();
-        }
+    e.preventDefault();
 
+    const activeElement = document.activeElement;
+
+    if (e.key === "Enter") {
+        clickOnSelectedButton(activeElement);
         return;
     }
 
-    if (e.key === "Tab") {
-        e.preventDefault();
-        if(activeElement.classList.contains("action-button")) {
-            getReserveCardButton().focus()
-        } else {
-            getActionButton().focus();
-        }
+    if (e.key === "Tab") focusOtherButton(activeElement);
+}
+
+function clickOnSelectedButton(activeElement) {
+    if (activeElement.classList.contains("action-button") || activeElement.classList.contains("reserve-button")) {
+        activeElement.click();
+        return;
     }
+
+    getActionButton().disabled
+        ? getReserveCardButton().click()
+        : getActionButton().click();
+}
+
+function focusOtherButton(activeElement) {
+    activeElement.classList.contains("action-button")
+        ? getReserveCardButton().focus()
+        : getActionButton().focus();
 }
 
 export { ACTION_REGISTRY, handleKeyPress };
