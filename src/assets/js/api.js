@@ -20,7 +20,7 @@ function getGame() {
     return fetchFromServer(`/games/${gameId}`);
 }
 
-function joinGame(gameId, spectatingEnabled) {
+function joinGame(gameId, spectatingEnabled, forfeit) {
     return checkCompatibility(2).then(isCompatible => {
         let body = {};
 
@@ -29,6 +29,7 @@ function joinGame(gameId, spectatingEnabled) {
                                             .map(word => (word[0].toUpperCase() + word.slice(1)))
                                             .join(""),
                 "spectatingEnabled": spectatingEnabled,
+                "forfeit": forfeit,
             };
         }
 
