@@ -3,8 +3,8 @@ import { saveToStorage } from "../data-connector/local-storage-abstractor.js";
 import { checkCompatibility } from "../server-version-component/server-version.js";
 import {renderErrorMessage} from "./renderer.js";
 
-function joinGameById(gameId) {
-    API.joinGame(gameId, false)
+function joinGameById(gameId, spectatingEnabled) {
+    API.joinGame(gameId, spectatingEnabled, false)
         .then(response => {
             saveToStorage("gameId", response["gameId"]);
             saveToStorage("playerToken", response["playerToken"]);

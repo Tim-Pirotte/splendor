@@ -47,7 +47,7 @@ function setSpectatorState(gameData, playerName) {
 }
 
 function isSpectator(spectators, playerName) {
-    return spectators.includes(playerName);
+    return spectators.map(spectator => spectator.name).includes(playerName);
 }
 
 function saveGameState(gameState) {

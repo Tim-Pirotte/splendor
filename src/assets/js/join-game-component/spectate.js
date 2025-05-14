@@ -1,5 +1,5 @@
 import { checkCompatibility } from "../server-version-component/server-version.js";
-import { saveToStorage } from "../data-connector/local-storage-abstractor.js";
+import {loadFromStorage, saveToStorage} from "../data-connector/local-storage-abstractor.js";
 import { renderUnsupportedError } from "../utils/renderer.js";
 import * as API from "../api.js";
 import {renderErrorMessage} from "./renderer.js";
@@ -10,18 +10,20 @@ function spectateGame(gameId) {
             if (!isCompatible) {
                 renderUnsupportedError(document.querySelector(".error-messages"), "Spectating");
             } else {
-                API.joinGame(gameId, true)
+                API.joinGame(gameId, true, false)
                     .then(response => {
                         saveToStorage("gameId", response["gameId"]);
                         saveToStorage("playerToken", response["playerToken"]);
-                        location.href = "./board.html";
+                        location.href = "./lobby.html";
                     }).catch(err => renderErrorMessage(err));
             }
         });
 }
 
 function stopSpectating() {
-    location.href = "./join-game.html";
+    API.joinGame(loadFromStorage("gameId"), true, true)
+        .then(() => location.href = "../index.html")
+        .catch(() => location.href = "../index.html");
 }
 
 export { spectateGame, stopSpectating };
