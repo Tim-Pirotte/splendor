@@ -20,13 +20,17 @@ function getGame() {
     return fetchFromServer(`/games/${gameId}`);
 }
 
-function joinGame(gameId) {
+function joinGame(gameId, spectatingEnabled) {
     return checkCompatibility(2).then(isCompatible => {
         let body = {};
 
-        if (isCompatible) body = { avatar: loadFromStorage("avatar").split("-")
+        if (isCompatible) {
+            body = {"avatar": loadFromStorage("avatar").split("-")
                                             .map(word => (word[0].toUpperCase() + word.slice(1)))
-                                            .join("")};
+                                            .join(""),
+                "spectatingEnabled": spectatingEnabled,
+            };
+        }
 
         const playerName = loadFromStorage("playerName");
         return fetchFromServer(`/games/${gameId}/players/${playerName}`, "POST", body);

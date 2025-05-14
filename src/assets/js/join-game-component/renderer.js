@@ -62,14 +62,14 @@ function populateGame($template, game) {
     return $game;
 }
 
-function renderUserNameTakenMessage() {
+function renderErrorMessage(err) {
     const $target = document.querySelector(".username-in-use");
 
     $target.classList.remove("none");
     $target.innerHTML =
-        `<p>${loadFromStorage("playerName")}: duplicate player name not allowed</p>`;
+        `<p>${err.cause}</p>`;
 
     setTimeout(() => $target.classList.add("none"), 10000)
 }
 
-export { renderPlayerInfo, renderPublicGames, renderUserNameTakenMessage };
+export { renderPlayerInfo, renderPublicGames, renderErrorMessage };
