@@ -65,8 +65,9 @@ function takeNobles(requestBody) {
 
 function forfeit() {
     const gameId = loadFromStorage("gameId");
-    const playerName = loadFromStorage("playerName");
-    return fetchFromServer(`/games/${gameId}/players/${playerName}/forfeit`, "POST");
+    joinGame(gameId, false, true)
+    .then(location.href = "../index.html")
+    .catch(location.href = "../index.html");
 }
 
 function getApiInfo() {
