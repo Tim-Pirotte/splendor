@@ -48,14 +48,22 @@ function removeRenderedPlayers(players, $joinedPlayerContainers) {
         let playerInPlayers = false;
 
         for (const player of players) {
-            if ($container.querySelector(".player-name")?.innerText === player.name) {
+            if ($container.querySelector(".player-name") && $container.querySelector(".player-name").innerText === player.name) {
                 player["alreadyRendered"] = true;
                 playerInPlayers = true;
                 break;
             }
         }
 
-        if (!playerInPlayers) $container.innerHTML = "";
+        /* we need to make sure the $container isn't empty
+        * this is because this timeout would empty the container after the players have been rendered */
+        if ($container.childNodes.length && !playerInPlayers) {
+            $container.style.animation = "rotateScaleUp 0.5s forwards reverse linear";
+            setTimeout(() => {
+                $container.innerHTML = "";
+                $container.style.animation = "";
+            }, 900);
+        }
     }
 }
 
