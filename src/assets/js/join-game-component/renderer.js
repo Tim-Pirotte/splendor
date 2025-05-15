@@ -25,8 +25,7 @@ function renderPublicGames(e) {
     API.getGames().then(gameObject => {
         const gamesToRender = filterGames(gameObject["games"]);
         const amountOfGamesToRender = gamesToRender.size;
-
-        if (amountOfGamesToRender !== (parseInt(document.querySelector("ul").dataset.renderedGames) || 0)) {
+        if (amountOfGamesToRender) {
             const $template = document.querySelector("#game-template");
             const $gameListCopy = $gameList.cloneNode(true);
 
@@ -34,14 +33,11 @@ function renderPublicGames(e) {
 
             $gameList.dataset.renderedGames = amountOfGamesToRender;
             gamesToRender.forEach(game => $gameListCopy.appendChild(populateGame($template, game)));
-
             $gameList.innerHTML = $gameListCopy.innerHTML;
-        } else if (amountOfGamesToRender === 0) {
+
+        } else {
             safeEmptyContainer($gameList);
             $gameList.insertAdjacentHTML("beforeend", "<p>There are no games based on your selections</p>");
-        } else {
-            // https://www.keyboardfaces.com/
-            //sonar: ( ︶︿︶)_╭∩╮ me: ლ(ಠ益ಠლ)
         }
 
         if (wasTriggeredByPolling) setTimeout(renderPublicGames, JOIN_GAME_PAGE_POLLING_TIME_OUT);
