@@ -140,8 +140,7 @@ function renderOtherPlayerReservedCard($numberedItemTemplate, reservedCard, cont
 }
 
 function renderHistory(history) {
-    //TODO set this back to minimumversion 2
-    checkCompatibility(3)
+    checkCompatibility(2)
         .then(isCompatible => {
             if (!isCompatible) {
                 renderIncompatibleServerMessage();
@@ -155,7 +154,9 @@ function renderHistory(history) {
             const amountOfNewItems = historyCurrentLength - historyPreviousLength;
 
             for (const entry of history.slice(-amountOfNewItems)) {
-                $history.appendChild(renderHistoryEntry(entry));
+                const $historyEntry = renderHistoryEntry(entry);
+
+                if ($historyEntry !== null) $history.appendChild($historyEntry);
             }
         });
 }
@@ -170,14 +171,25 @@ const HISTORY_ACTIONS = {
 };
 
 function renderHistoryEntry(entry) {
-    const renderedEntry = HISTORY_ACTIONS[entry["action"]](entry);
-    insertPlayerName(renderedEntry, entry["player"]);
-    return renderedEntry;
+    const isClientPlayer = entry["player"] === loadFromStorage("playerName");
+    const $renderedEntry = HISTORY_ACTIONS[entry["action"]](entry, isClientPlayer);
+
+    if (!$renderedEntry) return $renderedEntry
+
+    insertPlayerName($renderedEntry, entry["player"], isClientPlayer);
+    return $renderedEntry;
 }
 
-function renderTakeTokensEntry(entry) {
+function renderTakeTokensEntry(entry, isClientPlayer) {
     const $takeTokensEntry = copyNode(document.querySelector("#take-tokens-history-template"));
-    renderHistoryTokenList(entry["tokens"], $takeTokensEntry);
+
+    if (isClientPlayer) $takeTokensEntry.querySelector("span").innerText = "take";
+
+    const tokens = entry["tokens"];
+
+    if (Object.keys(tokens).length === 0) return null;
+
+    renderHistoryTokenList(entry["tokens"], $takeTokensEntry, isClientPlayer);
     return $takeTokensEntry;
 }
 
@@ -189,7 +201,7 @@ function renderDiscardTokensEntry(entry) {
 
 function renderHistoryTokenList(tokens, $tokensEntry) {
     for (const [tokenType, amount] of Object.entries(tokens)) {
-        $tokensEntry.insertAdjacentHTML("beforeend", amount);
+        $tokensEntry.insertAdjacentHTML("beforeend", `&nbsp${amount}`);
         insertImageInto($tokensEntry, `UI/tokens/${TOKEN_MAPPER[tokenType]}_chip`, false, `${TOKEN_MAPPER[tokenType]} chip`);
     }
 }
@@ -224,8 +236,8 @@ function renderIncompatibleServerMessage() {
     renderUnsupportedError($history, "History");
 }
 
-function insertPlayerName(renderedEntry, playerName) {
-    renderedEntry.querySelector("strong").textContent = playerName;
+function insertPlayerName(renderedEntry, playerName, isClientPlayer) {
+    renderedEntry.querySelector("strong").textContent = isClientPlayer ? "you": playerName;
 }
 
 export { renderOtherPlayers, renderHistory };
