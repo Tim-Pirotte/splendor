@@ -20,10 +20,4 @@ function spectateGame(gameId) {
         });
 }
 
-function stopSpectating() {
-    API.joinGame(loadFromStorage("gameId"), true, true)
-        .then(() => location.href = "../index.html")
-        .catch(() => location.href = "../index.html");
-}
-
-export { spectateGame, stopSpectating };
+export { spectateGame };

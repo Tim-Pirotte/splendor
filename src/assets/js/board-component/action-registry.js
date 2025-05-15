@@ -2,9 +2,9 @@ import { processBuyCardClick } from "./buy-reserve/buy-handler.js";
 import { processSkipTurn, processTakeTokensClick, processTakeTwoTokens } from "./tokens/token-handler.js";
 import { processTakeNoble } from "./nobles/nobles-handler.js";
 import { processDiscardTokens } from "./tokens/discard.js";
-import { stopSpectating } from "../join-game-component/spectate.js";
 import {getActionButton, isCurrentlyPlaying} from "./game-status-interface.js";
 import {getReserveCardButton} from "./buy-reserve/helper.js";
+import * as API from "../api.js"
 
 const ACTION_REGISTRY = {
     processTakeTokenClick: () => processTakeTokensClick(),
@@ -13,7 +13,7 @@ const ACTION_REGISTRY = {
     skipTurn: () => processSkipTurn(),
     processTakeNoble: () => processTakeNoble(),
     processDiscardTokens: () => processDiscardTokens(),
-    stopSpectating: () => stopSpectating(),
+    stopSpectating: () => API.leaveGame(),
     doNothing: () => {},
 };
 

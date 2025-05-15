@@ -46,4 +46,5 @@ function hideIncompatibleElements() {
         if (!isCompatible) document.querySelector(".leave-button").classList.add("none");
     });
 }
+
 export { loadLobbyInformation , copyGameId };

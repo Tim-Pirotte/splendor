@@ -43,7 +43,7 @@ function buyReserveInit() {
 }
 
 function forfeitInit() {
-    document.querySelector(".forfeit").addEventListener("click", API.forfeit);
+    document.querySelector(".forfeit").addEventListener("click", API.leaveGame);
 }
 
 function enterButtonInit() {
