@@ -6,7 +6,6 @@ import { initRoundBegin, saveCurrentPlayerAndGameStateInDom, saveGameState } fro
 import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
 import { locateToMainMenu } from "../utils/data-handler.js";
 import { IN_GAME_POLLING_TIME_OUT } from "../config.js";
-import {getGameState} from "../utils/game-object-handler.js";
 
 function handleGameDataError(err) {
     const forbidden = 403;

@@ -148,15 +148,14 @@ function renderHistory(history) {
             }
 
             const $history = document.querySelector(".history");
-
-            const historyPreviousLength = $history.querySelectorAll(":scope> *").length - AMOUNT_OF_TEMPLATES;
+            const historyPreviousLength = $history.querySelectorAll(":scope > li").length;
             const historyCurrentLength = history.length;
             const amountOfNewItems = historyCurrentLength - historyPreviousLength;
 
-            for (const entry of history.slice(-amountOfNewItems)) {
-                const $historyEntry = renderHistoryEntry(entry);
+            if (!amountOfNewItems) return;
 
-                $history.insertAdjacentElement("afterbegin", $historyEntry);
+            for (const entry of history.slice(-amountOfNewItems)) {
+                $history.insertAdjacentElement("afterbegin", renderHistoryEntry(entry));
             }
         });
 }
