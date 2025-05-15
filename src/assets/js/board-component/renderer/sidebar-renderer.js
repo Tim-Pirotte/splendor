@@ -156,7 +156,7 @@ function renderHistory(history) {
             for (const entry of history.slice(-amountOfNewItems)) {
                 const $historyEntry = renderHistoryEntry(entry);
 
-                if ($historyEntry !== null) $history.appendChild($historyEntry);
+                if ($historyEntry !== null) $history.insertAdjacentElement("afterbegin", $historyEntry);
             }
         });
 }
