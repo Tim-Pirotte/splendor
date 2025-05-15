@@ -11,7 +11,7 @@ import {
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { copyNode } from "../utils/data-handler.js";
 import { reflowCSS } from "../board-component/helper.js";
-import { getContainerToRenderPlayer } from "./helper.js";
+import {getContainerAnimationForLeaving, getContainerToRenderPlayer} from "./helper.js";
 
 function renderGameInfo(g, started) {
     document.querySelector("#game-name-id").innerHTML = `${getGameName(g)} / <span>${getGameId(g)}</span>`;
@@ -41,16 +41,6 @@ function renderPlayer(player, $joinedPlayerContainers, $template) {
     $li.querySelector("img").alt = $li.querySelector("img").title = avatar;
 
     $emptyJoinedPlayerContainer.innerHTML =  $li.innerHTML;
-}
-
-function getContainerAnimationForLeaving($container) {
-    //https://www.geeksforgeeks.org/how-to-get-current-value-of-a-css-property-in-javascript/
-    const currentContainerTransform = window.getComputedStyle($container).transform;
-
-    return [
-        { transform: `${currentContainerTransform} scale(1)` },
-        { transform: `${currentContainerTransform} scale(0)` },
-    ];
 }
 
 function removeRenderedPlayers(players, $joinedPlayerContainers) {
