@@ -24,7 +24,7 @@ function renderPlayersList(g, started) {
     const $joinedPlayerContainers = $joinedPlayers.querySelectorAll("li");
     const players = getPlayersObjects(g, started);
 
-    removeRenderedPlayers();
+    removeRenderedPlayers(players, $joinedPlayerContainers);
 
     renderNewPlayers(players, $joinedPlayerContainers, $template);
 }
@@ -43,8 +43,20 @@ function renderPlayer(player, $joinedPlayerContainers, $template) {
     $emptyJoinedPlayerContainer.innerHTML =  $li.innerHTML;
 }
 
-function removeRenderedPlayers() {
+function removeRenderedPlayers(players, $joinedPlayerContainers) {
+    for (const $container of $joinedPlayerContainers) {
+        let playerInPlayers = false;
 
+        for (const player of players) {
+            if ($container.querySelector(".player-name")?.innerText === player.name) {
+                player["alreadyRendered"] = true;
+                playerInPlayers = true;
+                break;
+            }
+        }
+
+        if (!playerInPlayers) $container.innerHTML = "";
+    }
 }
 
 function renderNewPlayers(players, $joinedPlayerContainers, $template) {
