@@ -156,7 +156,7 @@ function renderHistory(history) {
             for (const entry of history.slice(-amountOfNewItems)) {
                 const $historyEntry = renderHistoryEntry(entry);
 
-                if ($historyEntry !== null) $history.insertAdjacentElement("afterbegin", $historyEntry);
+                $history.insertAdjacentElement("afterbegin", $historyEntry);
             }
         });
 }
@@ -171,25 +171,24 @@ const HISTORY_ACTIONS = {
 };
 
 function renderHistoryEntry(entry) {
-    const isClientPlayer = entry["player"] === loadFromStorage("playerName");
-    const $renderedEntry = HISTORY_ACTIONS[entry["action"]](entry, isClientPlayer);
+    const $renderedEntry = HISTORY_ACTIONS[entry["action"]](entry, entry["player"] );
 
     if (!$renderedEntry) return $renderedEntry
 
-    insertPlayerName($renderedEntry, entry["player"], isClientPlayer);
+    insertPlayerName($renderedEntry, entry["player"]);
     return $renderedEntry;
 }
 
-function renderTakeTokensEntry(entry, isClientPlayer) {
-    const $takeTokensEntry = copyNode(document.querySelector("#take-tokens-history-template"));
-
-    if (isClientPlayer) $takeTokensEntry.querySelector("span").innerText = "take";
-
+function renderTakeTokensEntry(entry, playerName) {
     const tokens = entry["tokens"];
 
-    if (Object.keys(tokens).length === 0) return null;
+    if (Object.keys(tokens).length === 0) {
+        return renderSkipTurnHistory(playerName);
+    }
 
-    renderHistoryTokenList(entry["tokens"], $takeTokensEntry, isClientPlayer);
+    const $takeTokensEntry = copyNode(document.querySelector("#take-tokens-history-template"));
+
+    renderHistoryTokenList(tokens, $takeTokensEntry);
     return $takeTokensEntry;
 }
 
@@ -220,7 +219,7 @@ function renderReserveCardEntry(entry) {
 
 function renderHistoryCard($cardEntry, cardType) {
     insertImageInto($cardEntry, `UI/cards/${TOKEN_MAPPER[cardType]}_card_small`, false, `${TOKEN_MAPPER[cardType]} card`);
-    $cardEntry.insertAdjacentHTML("beforeend", "<p>card</p>");
+    $cardEntry.insertAdjacentHTML("beforeend", "<p>&nbspcard</p>");
 }
 
 function renderChooseNobleEntry() {
@@ -236,8 +235,15 @@ function renderIncompatibleServerMessage() {
     renderUnsupportedError($history, "History");
 }
 
-function insertPlayerName(renderedEntry, playerName, isClientPlayer) {
-    renderedEntry.querySelector("strong").textContent = isClientPlayer ? "you": playerName;
+function insertPlayerName(renderedEntry, playerName) {
+    renderedEntry.querySelector("strong").textContent = playerName === loadFromStorage("playerName") ? "you": playerName;
 }
 
+function renderSkipTurnHistory(playerName) {
+    const $skipTurnHistory = copyNode(document.querySelector("#skip-turn-history-template"));
+
+    $skipTurnHistory.querySelector("span").textContent = playerName === loadFromStorage("playerName") ? "your" : "their";
+
+    return $skipTurnHistory;
+}
 export { renderOtherPlayers, renderHistory };
