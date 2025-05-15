@@ -19,7 +19,7 @@ function createGame(e) {
                 requestBody.avatar = loadFromStorage("avatar").split("-")
                                                         .map(word => (word[0].toUpperCase() + word.slice(1)))
                                                         .join("");
-                requestBody.visibility = visibility;
+                requestBody.isPrivate = document.querySelector("#private").checked;
             }
 
             createGameWithBody(requestBody);
