@@ -11,6 +11,7 @@ import {
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { copyNode } from "../utils/data-handler.js";
 import { reflowCSS } from "../board-component/helper.js";
+import { getContainerToRenderPlayer } from "./helper.js";
 
 function renderGameInfo(g, started) {
     document.querySelector("#game-name-id").innerHTML = `${getGameName(g)} / <span>${getGameId(g)}</span>`;
@@ -20,10 +21,17 @@ function renderGameInfo(g, started) {
 function renderPlayersList(g, started) {
     const $template = document.querySelector("#joined-player-template");
     const $joinedPlayers = document.querySelector("#joined-players");
-    getPlayersObjects(g, started, $joinedPlayers).forEach(player => $joinedPlayers.appendChild(renderPlayer($template, player)));
+    const $joinedPlayerContainers = $joinedPlayers.querySelectorAll("li");
+    const players = getPlayersObjects(g, started);
+
+    removeRenderedPlayers();
+
+    renderNewPlayers(players, $joinedPlayerContainers, $template);
 }
 
-function renderPlayer($template, player) {
+function renderPlayer(player, $joinedPlayerContainers, $template) {
+    const $emptyJoinedPlayerContainer = getContainerToRenderPlayer($joinedPlayerContainers);
+
     const $li = copyNode($template);
     const avatar = determinePlayerAvatar(player.name, player.avatar);
 
@@ -32,7 +40,19 @@ function renderPlayer($template, player) {
     $li.querySelector("img").src = `../assets/images/fallback/avatars/${avatar}.png`;
     $li.querySelector("img").alt = $li.querySelector("img").title = avatar;
 
-    return $li;
+    $emptyJoinedPlayerContainer.innerHTML =  $li.innerHTML;
+}
+
+function removeRenderedPlayers() {
+
+}
+
+function renderNewPlayers(players, $joinedPlayerContainers, $template) {
+    for (const player of players) {
+        if (!player["alreadyRendered"]) {
+            renderPlayer(player, $joinedPlayerContainers, $template)
+        }
+    }
 }
 
 function determinePlayerAvatar(playerName, avatar) {

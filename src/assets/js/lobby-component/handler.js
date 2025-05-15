@@ -29,7 +29,8 @@ function loadLobbyInformation() {
 
             renderGameStartingCountdown(LOBBY_COUNTDOWN_DURATION, $countdownContainer);
         } else {
-            setTimeout(loadLobbyInformation, IN_GAME_POLLING_TIME_OUT);
+            //TODO enable polling
+            //setTimeout(loadLobbyInformation, IN_GAME_POLLING_TIME_OUT);
         }
     });
 }

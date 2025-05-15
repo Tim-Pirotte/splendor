@@ -22,10 +22,10 @@ function getGameCreator(gameData, started) {
     return started ? gameData["players"][0]["name"] : gameData["players"][0];
 }
 
-function getPlayersObjects(gameData, started, $joinedPlayers) {
+function getPlayersObjects(gameData, started) {
     const players = [];
 
-    for (const player of gameData["players"].slice($joinedPlayers.querySelectorAll("li").length)) {
+    for (const player of gameData["players"]) {
         players.push({
             "name": started ? player.name: player, "avatar": started ? player.avatar : gameData["avatars"][player]
         });
