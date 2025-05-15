@@ -1,5 +1,5 @@
 import { GEMS } from "../data.js";
-import {AMOUNT_OF_TEMPLATES, TOKEN_MAPPER} from "../config.js";
+import { TOKEN_MAPPER } from "../config.js";
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
 import {
     formatNumber,
@@ -165,7 +165,7 @@ const HISTORY_ACTIONS = {
     return: renderDiscardTokensEntry,
     buy: renderBuyCardEntry,
     reserve: renderReserveCardEntry,
-    noble: renderChooseNobleEntry,
+    pickNoble: renderChooseNobleEntry,
     forfeit: renderForfeitEntry,
 };
 

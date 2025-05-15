@@ -24,14 +24,37 @@ function renderPlayersList(g, started) {
     const $joinedPlayerContainers = $joinedPlayers.querySelectorAll("li");
     const players = getPlayersObjects(g, started);
 
-    removeRenderedPlayers(players, $joinedPlayerContainers);
+    for (let i = 0; i < players.length; i++) {
+        const player = players[i];
+        let $player = $joinedPlayerContainers[i];
 
-    renderNewPlayers(players, $joinedPlayerContainers, $template);
+        if (!$player) {
+            $player = document.createElement("li");
+
+            $player.classList.add("player");
+            $joinedPlayers.insertAdjacentElement("beforeend", $player);
+        }
+
+        if (player?.name === $player?.querySelector(".player-name")?.innerText) continue;
+
+        if (player == null) {
+            removeRenderedPlayer($player);
+            continue;
+        }
+
+        renderPlayer(player, $player, $template);
+    }
 }
 
-function renderPlayer(player, $joinedPlayerContainers, $template) {
-    const $emptyJoinedPlayerContainer = getContainerToRenderPlayer($joinedPlayerContainers);
+function removeRenderedPlayer($container) {
+    //https://developer.mozilla.org/en-US/docs/Web/API/Element/animate
+    $container.animate(getContainerAnimationForLeaving($container), {duration: 500})
+    setTimeout(() => {
+        $container.innerHTML = "";
+        }, 500);
+}
 
+function renderPlayer(player, $container, $template) {
     const $li = copyNode($template);
     const avatar = determinePlayerAvatar(player.name, player.avatar);
 
@@ -40,39 +63,7 @@ function renderPlayer(player, $joinedPlayerContainers, $template) {
     $li.querySelector("img").src = `../assets/images/fallback/avatars/${avatar}.png`;
     $li.querySelector("img").alt = $li.querySelector("img").title = avatar;
 
-    $emptyJoinedPlayerContainer.innerHTML =  $li.innerHTML;
-}
-
-function removeRenderedPlayers(players, $joinedPlayerContainers) {
-    for (const $container of $joinedPlayerContainers) {
-        if (!$container.childNodes.length) continue;
-
-        let playerInPlayers = false;
-
-        for (const player of players) {
-            if ($container.querySelector(".player-name").innerText === player.name) {
-                player["alreadyRendered"] = true;
-                playerInPlayers = true;
-                break;
-            }
-        }
-
-        if (!playerInPlayers) {
-            //https://developer.mozilla.org/en-US/docs/Web/API/Element/animate
-            $container.animate(getContainerAnimationForLeaving($container), {duration: 500})
-            setTimeout(() => {
-                $container.innerHTML = "";
-            }, 500);
-        }
-    }
-}
-
-function renderNewPlayers(players, $joinedPlayerContainers, $template) {
-    for (const player of players) {
-        if (!player["alreadyRendered"]) {
-            renderPlayer(player, $joinedPlayerContainers, $template)
-        }
-    }
+    $container.innerHTML =  $li.innerHTML;
 }
 
 function determinePlayerAvatar(playerName, avatar) {
