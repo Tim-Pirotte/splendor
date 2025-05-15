@@ -43,26 +43,36 @@ function renderPlayer(player, $joinedPlayerContainers, $template) {
     $emptyJoinedPlayerContainer.innerHTML =  $li.innerHTML;
 }
 
+function getContainerAnimationForLeaving($container) {
+    //https://www.geeksforgeeks.org/how-to-get-current-value-of-a-css-property-in-javascript/
+    const currentContainerTransform = window.getComputedStyle($container).transform;
+
+    return [
+        { transform: `${currentContainerTransform} scale(1)` },
+        { transform: `${currentContainerTransform} scale(0)` },
+    ];
+}
+
 function removeRenderedPlayers(players, $joinedPlayerContainers) {
     for (const $container of $joinedPlayerContainers) {
+        if (!$container.childNodes.length) continue;
+
         let playerInPlayers = false;
 
         for (const player of players) {
-            if ($container.querySelector(".player-name") && $container.querySelector(".player-name").innerText === player.name) {
+            if ($container.querySelector(".player-name").innerText === player.name) {
                 player["alreadyRendered"] = true;
                 playerInPlayers = true;
                 break;
             }
         }
 
-        /* we need to make sure the $container isn't empty
-        * this is because this timeout would empty the container after the players have been rendered */
-        if ($container.childNodes.length && !playerInPlayers) {
-            $container.style.animation = "rotateScaleUp 0.5s forwards reverse linear";
+        if (!playerInPlayers) {
+            //https://developer.mozilla.org/en-US/docs/Web/API/Element/animate
+            $container.animate(getContainerAnimationForLeaving($container), {duration: 500})
             setTimeout(() => {
                 $container.innerHTML = "";
-                $container.style.animation = "";
-            }, 900);
+            }, 500);
         }
     }
 }
