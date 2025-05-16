@@ -1,9 +1,13 @@
 import { MAX_TOKENS_ALLOWED } from "../config.js";
 import * as API from "../../api.js";
 import { setDiscardButtonStatuses } from "../renderer/current-player-renderer.js";
-import { getActionButton, setActionButtonState } from "../game-status-interface.js";
+import {getActionButton, isCurrentlyPlaying, setActionButtonState} from "../game-status-interface.js";
+import {getGameState} from "../../utils/game-object-handler.js";
+import {clientMustDiscardToken} from "../state-machine/valid-action-checker.js";
 
 function selectPlayerToken(e) {
+    if (!clientMustDiscardToken()) return;
+
     const $button = e.target.closest("button");
 
     if (!clickedOnDiscardButton($button)) return;
