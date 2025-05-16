@@ -22,7 +22,7 @@ function updateGameData() {
 
     if (gameId === null) {locateToMainMenu(); return;}
 
-    API.getGame().then(gameData => {
+    API.getGame(updateGameData).then(gameData => {
         if (!gameData.started) {
             location.href = "./lobby.html";
             return;

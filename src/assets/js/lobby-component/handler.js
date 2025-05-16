@@ -16,7 +16,7 @@ function loadLobbyInformation() {
         locateToMainMenu();
     }
 
-    API.getGame().then(gameData => {
+    API.getGame(loadLobbyInformation).then(gameData => {
         renderGameInfo(gameData, gameData.started);
         renderPlayersList(gameData, gameData.started);
         renderPlayerCount(gameData);

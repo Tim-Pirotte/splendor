@@ -224,7 +224,8 @@ main {
 .history li {
     display: flex;
     align-items: center;
-    padding: 0.4rem 0.2rem;
+    height: 1.5rem;
+    padding-left: 0.2rem;
 }
 
 .progress-bar picture {

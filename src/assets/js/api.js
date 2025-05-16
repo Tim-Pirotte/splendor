@@ -2,7 +2,7 @@ import { fetchFromServer } from "./data-connector/api-communication-abstractor.j
 import { loadFromStorage } from "./data-connector/local-storage-abstractor.js";
 import { checkCompatibility } from "./server-version-component/server-version.js";
 import {IN_GAME_POLLING_TIME_OUT} from "./config.js";
-import {handleGameDataError, updateGameData} from "./board-component/game-data-handler.js";
+import {handleGameDataError} from "./board-component/game-data-handler.js";
 
 /* Game Management */
 function getGames(hasStarted = "") {
@@ -17,11 +17,11 @@ function createGame(requestBody) {
     return fetchFromServer("/games", "POST", requestBody);
 }
 
-function getGame() {
+function getGame(functionToRunUponFailure) {
     const gameId = loadFromStorage("gameId");
     return fetchFromServer(`/games/${gameId}`).catch(err => {
         handleGameDataError(err);
-        setTimeout(updateGameData, IN_GAME_POLLING_TIME_OUT);
+        setTimeout(functionToRunUponFailure, IN_GAME_POLLING_TIME_OUT);
     });
 }
 
