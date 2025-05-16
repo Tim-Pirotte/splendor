@@ -39,7 +39,7 @@ function updateGameData() {
         } else {
             startRoundTimer(gameData["timePassedForCurrentRound"], gameData["gameState"]);
         }
-    }).catch(err => handleGameDataError(err));
+    });
 }
 
 function startGameStatePolling() {
@@ -121,4 +121,4 @@ function getClientTotalPrestigePoints() {
     return parseInt(document.querySelector(".player-points h4").dataset.totalPrestigePoints);
 }
 
-export { updateGameData, getClientTokens, getClientBonuses, getClientTotalPrestigePoints, startGameStatePolling };
+export { updateGameData, getClientTokens, getClientBonuses, getClientTotalPrestigePoints, startGameStatePolling, handleGameDataError };

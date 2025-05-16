@@ -1,6 +1,8 @@
 import { fetchFromServer } from "./data-connector/api-communication-abstractor.js";
 import { loadFromStorage } from "./data-connector/local-storage-abstractor.js";
 import { checkCompatibility } from "./server-version-component/server-version.js";
+import {IN_GAME_POLLING_TIME_OUT} from "./config.js";
+import {handleGameDataError, updateGameData} from "./board-component/game-data-handler.js";
 
 /* Game Management */
 function getGames(hasStarted = "") {
@@ -17,7 +19,10 @@ function createGame(requestBody) {
 
 function getGame() {
     const gameId = loadFromStorage("gameId");
-    return fetchFromServer(`/games/${gameId}`);
+    return fetchFromServer(`/games/${gameId}`).catch(err => {
+        handleGameDataError(err);
+        setTimeout(updateGameData, IN_GAME_POLLING_TIME_OUT);
+    });
 }
 
 function joinGame(gameId, spectatingEnabled, forfeit) {
