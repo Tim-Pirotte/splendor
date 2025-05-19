@@ -36,6 +36,11 @@ function renderGameStatusMessage(currentPlayer) {
     $statusMessage.dataset.currentlyPlaying = currentPlayer;
 }
 
+function renderAmountOfSpectators(spectators) {
+    //TODO add check for timesincelastpolling
+    document.querySelector(".amount-of-spectators").textContent = spectators.length;
+}
+
 function renderPlayerProfile(gameCreatorName, spectators) {
     const playerName = loadFromStorage("playerName");
 
@@ -306,4 +311,5 @@ export {
     renderGameStatusMessage,
     renderPlayerProfile,
     renderClientPlayerReserve,
+    renderAmountOfSpectators,
 };

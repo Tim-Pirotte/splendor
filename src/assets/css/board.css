@@ -25,9 +25,13 @@ body {
 }
 
 /* Header styles */
-.page-view h3, .page-view h2, .page-view h4 {
+.page-view h3, .page-view h2, .page-view h4, .amount-of-spectators {
     color: var(--light-text-color);
     text-shadow: var(--primary-text-shadow);
+}
+
+.amount-of-spectators {
+    font-size: 1.6rem;
 }
 
 /* Switch token buttons */
