@@ -138,10 +138,6 @@ main {
 }
 
 /* sound button */
-.sound-button img {
-    width: 2rem;
-}
-
 .sound-button {
     position: initial;
 }
@@ -677,4 +673,9 @@ body.client-player-turn-action .button-container button:hover {
 body div.page-view .button-container button:disabled {
     cursor: var(--disabled-button-cursor);
     filter: grayscale(80%);
+}
+
+.forfeited * {
+    filter: grayscale(1);
+    color: rgba(0, 0, 0, 0.75);
 }

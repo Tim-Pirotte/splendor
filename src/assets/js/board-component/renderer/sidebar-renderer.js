@@ -53,10 +53,12 @@ function renderOtherPlayer($playerTemplate, otherPlayer, highestScore, currentPl
     showOtherPlayerTurn(playerName, currentPlayer, $playerCard);
 
     insertImageInto($playerCard.querySelector("header"), `avatars/${avatar}`, true, avatar);
+
     if (isGameCreator) $playerCard.querySelector("img").classList.add("game-creator");
+    if (otherPlayer.forfeited) $playerCard.classList.add("forfeited");
 
     setPlayerName($playerCard, otherPlayer);
-    setPlayerPoints($playerCard, otherPlayer["totalPrestigePoints"], highestScore);
+    setPlayerPoints($playerCard, otherPlayer["totalPrestigePoints"], highestScore, otherPlayer.forfeited);
 
     renderTokenList($playerCard.querySelector(".tokens"), otherPlayer["tokens"], GEMS);
     renderCardList($playerCard.querySelector(".cards"), otherPlayer["bonuses"], GEMS);
@@ -73,9 +75,11 @@ function setPlayerName($playerCard, otherPlayer) {
     $playerCard.querySelector(".name").textContent = otherPlayer.name;
 }
 
-function setPlayerPoints($playerCard, prestigePoints, highestScore) {
+function setPlayerPoints($playerCard, prestigePoints, highestScore, hasForfeited) {
     const $playerPoints = $playerCard.querySelector(".points span");
     $playerPoints.textContent = formatNumber(prestigePoints);
+
+    if (hasForfeited) return;
 
     highlightPointsWinner(prestigePoints, $playerPoints);
 

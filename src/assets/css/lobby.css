@@ -106,11 +106,6 @@ footer {
     display: none;
 }
 
-.leave-button:hover {
-    filter: var(--button-hover-filter);
-    cursor: var(--clickable-item-cursor);
-}
-
 ul {
     position: relative;
     width: var(--players-container-width);

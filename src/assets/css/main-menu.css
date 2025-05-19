@@ -5,8 +5,8 @@ main {
     text-align: center;
     margin: 0 auto;
     background-color: #372b53;
-    border : var(--border-collor) solid 0.3rem;
-    outline: var(--outline-collor) solid 0.3rem;
+    border : var(--border-color) solid 0.3rem;
+    outline: var(--outline-color) solid 0.3rem;
     height: 12rem;
 }
 

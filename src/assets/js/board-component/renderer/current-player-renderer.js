@@ -38,7 +38,6 @@ function renderGameStatusMessage(currentPlayer) {
 }
 
 function renderAmountOfSpectators(spectators) {
-    //TODO add check for timesincelastpolling
     document.querySelector(".amount-of-spectators").textContent = spectators.filter(
     spectator => spectator.pollDelta < TIME_AFTER_SPECTATOR_DOESNT_GET_RENDERED
     ).length;
