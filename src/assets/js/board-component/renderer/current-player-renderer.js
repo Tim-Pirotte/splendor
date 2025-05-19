@@ -27,6 +27,7 @@ import { insertImageInto } from "../../utils/renderer.js";
 import { checkCompatibility } from "../../server-version-component/server-version.js";
 import { reflowCSS } from "../helper.js";
 import {isSpectator} from "../state-machine/state-machine.js";
+import {TIME_AFTER_SPECTATOR_DOESNT_GET_RENDERED} from "../../config.js";
 
 function renderGameStatusMessage(currentPlayer) {
     const isClientPlayerTurn = currentPlayer === loadFromStorage("playerName");
@@ -38,7 +39,9 @@ function renderGameStatusMessage(currentPlayer) {
 
 function renderAmountOfSpectators(spectators) {
     //TODO add check for timesincelastpolling
-    document.querySelector(".amount-of-spectators").textContent = spectators.length;
+    document.querySelector(".amount-of-spectators").textContent = spectators.filter(
+    spectator => spectator.timeSinceLastPolling < TIME_AFTER_SPECTATOR_DOESNT_GET_RENDERED
+    ).length;
 }
 
 function renderPlayerProfile(gameCreatorName, spectators) {
