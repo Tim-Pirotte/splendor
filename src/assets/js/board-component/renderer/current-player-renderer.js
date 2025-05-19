@@ -26,6 +26,7 @@ import { isCurrentlyPlaying } from "../game-status-interface.js";
 import { insertImageInto } from "../../utils/renderer.js";
 import { checkCompatibility } from "../../server-version-component/server-version.js";
 import { reflowCSS } from "../helper.js";
+import {isSpectator} from "../state-machine/state-machine.js";
 
 function renderGameStatusMessage(currentPlayer) {
     const isClientPlayerTurn = currentPlayer === loadFromStorage("playerName");
@@ -35,10 +36,12 @@ function renderGameStatusMessage(currentPlayer) {
     $statusMessage.dataset.currentlyPlaying = currentPlayer;
 }
 
-function renderPlayerProfile(gameCreatorName) {
-    document.querySelector(".top-bar h2").textContent = loadFromStorage("playerName");
+function renderPlayerProfile(gameCreatorName, spectators) {
+    const playerName = loadFromStorage("playerName");
+
+    document.querySelector(".top-bar h2").textContent = playerName;
     renderAvatar(gameCreatorName);
-    renderForfeitButton();
+    renderForfeitButton(playerName, spectators);
 }
 
 function renderAvatar(gameCreatorName) {
@@ -53,10 +56,11 @@ function renderAvatar(gameCreatorName) {
     if (loadFromStorage("playerName") === gameCreatorName) $avatar.querySelector("img").classList.add("game-creator");
 }
 
-function renderForfeitButton() {
+function renderForfeitButton(playerName, spectators) {
     checkCompatibility(2)
         .then(isCompatible => {
-            document.querySelector(".forfeit").classList.toggle("none", !isCompatible);
+            document.querySelector(".forfeit")
+                    .classList.toggle("none", !isCompatible || isSpectator(spectators, playerName));
         });
 }
 
