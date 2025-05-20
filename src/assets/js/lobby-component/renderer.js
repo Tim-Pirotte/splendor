@@ -30,16 +30,16 @@ function renderPlayersList(g, started) {
 
         if (!$player) {
             $player = document.createElement("li");
-
             $player.classList.add("player");
-            $joinedPlayers.insertAdjacentElement("beforeend", $player);
+
+            $joinedPlayers.appendChild($player);
         }
 
         /* NOSONAR_BEGIN
         *  this is here because sonar doesn't like continue*/
         if (player?.name === $player?.querySelector(".player-name")?.innerText) continue;
 
-        if (player === null) {
+        if (player.name === null) {
             removeRenderedPlayer($player);
             continue;
         }
