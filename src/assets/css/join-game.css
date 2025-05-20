@@ -201,5 +201,4 @@ button:hover, #filter-form input[type="reset"]:hover {
     margin: 1rem 0;
     box-shadow: 0 0 0.1rem 0.1rem #00000020, var(--buyable-card-box-shadow) #c98c08c2;
     animation: message 10s normal ease-in-out;
-    animation-fill-mode: forwards;
 }
