@@ -62,7 +62,7 @@ header {
     text-align: center;
     height: 15rem;
     width: fit-content;
-    margin: auto;
+    margin: 0 auto 4rem auto;
 }
 
 header p {
