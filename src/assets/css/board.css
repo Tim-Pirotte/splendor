@@ -149,6 +149,11 @@ main {
 .avatar img {
     width: 2rem;
 }
+
+.spectator-eye-indicator img {
+    width: 2rem;
+}
+
 /* Nobles I */
 .nobles img {
     width: 4.5rem;
@@ -585,10 +590,6 @@ aside {
 .game-creator {
     outline: solid #ffc107;
     border-radius: 50%;
-}
-
-.spectator-eye-indicator img {
-    width: 2rem;
 }
 
 /* History */
