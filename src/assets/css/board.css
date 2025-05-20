@@ -665,6 +665,11 @@ body.client-player-turn-action .board-tokens li:hover {
     cursor: var(--clickable-item-cursor);
 }
 
+body.client-player-turn-action .board-tokens li[data-type="Gold"]:hover {
+    filter: initial;
+    cursor: var(--disabled-button-cursor);
+}
+
 body.client-player-turn-action .button-container button:hover {
     filter: var(--button-hover-filter);
     cursor: var(--clickable-item-cursor);
