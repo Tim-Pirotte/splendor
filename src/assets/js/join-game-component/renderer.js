@@ -21,26 +21,47 @@ function renderPublicGames(e) {
     if (!wasTriggeredByPolling && e.target.value !== "Reset") e.preventDefault();
 
     const $gameList = document.querySelector("ul");
+    const $gameListCopy = $gameList.cloneNode(true);
+    const $renderedGames = [...$gameList.querySelectorAll("li")];
 
     API.getGames().then(gameObject => {
-        const gamesToRender = filterGames(gameObject["games"]);
-        const amountOfGamesToRender = gamesToRender.size;
-        if (amountOfGamesToRender) {
-            const $template = document.querySelector("#game-template");
-            const $gameListCopy = $gameList.cloneNode(true);
+        const gamesToRender = [...filterGames(gameObject["games"])].sort((game1, game2) => game1.gameId - game2.gameId);
+        const amountOfGamesToRender = gamesToRender.length;
+        const $template = document.querySelector("#game-template");
+        const scrolledDistance = $gameList.scrollTop;
+        const gamesListingHeight = $renderedGames[0]?.getBoundingClientRect().height;
+        const maxNrOfVisibleGames = Math.ceil($gameList.getBoundingClientRect().height / gamesListingHeight)
 
+        if (wasTriggeredByPolling) setTimeout(renderPublicGames, JOIN_GAME_PAGE_POLLING_TIME_OUT);
+
+        if (!amountOfGamesToRender) {
+            safeEmptyContainer($gameList);
+            $gameList.insertAdjacentHTML("beforeend", "<p>There are no games based on your selections</p>");
+
+            return;
+        }
+
+        if (!wasTriggeredByPolling || !$renderedGames.length ) {
             safeEmptyContainer($gameListCopy);
 
             $gameList.dataset.renderedGames = amountOfGamesToRender;
             gamesToRender.forEach(game => $gameListCopy.appendChild(populateGame($template, game)));
             $gameList.innerHTML = $gameListCopy.innerHTML;
 
-        } else {
-            safeEmptyContainer($gameList);
-            $gameList.insertAdjacentHTML("beforeend", "<p>There are no games based on your selections</p>");
+            return;
         }
 
-        if (wasTriggeredByPolling) setTimeout(renderPublicGames, JOIN_GAME_PAGE_POLLING_TIME_OUT);
+        const firstVisibleGameIndex = Math.floor(scrolledDistance / gamesListingHeight);
+        const $visibleGames = $renderedGames.slice(firstVisibleGameIndex, firstVisibleGameIndex + maxNrOfVisibleGames);
+        const visibleGameIds = $visibleGames.map($game => $game.dataset.gameId);
+
+
+        safeEmptyContainer($gameListCopy);
+
+        $gameList.dataset.renderedGames = amountOfGamesToRender;
+        gamesToRender.forEach(game => $gameListCopy.appendChild(populateGame($template, game)));
+        $gameList.innerHTML = $gameListCopy.innerHTML;
+
     });
 }
 
