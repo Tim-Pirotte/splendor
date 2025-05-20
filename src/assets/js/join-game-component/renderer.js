@@ -25,6 +25,7 @@ function renderPublicGames(e) {
     API.getGames().then(gameObject => {
         const gamesToRender = filterGames(gameObject["games"]);
         const amountOfGamesToRender = gamesToRender.size;
+
         if (amountOfGamesToRender) {
             const $template = document.querySelector("#game-template");
             const $gameListCopy = $gameList.cloneNode(true);

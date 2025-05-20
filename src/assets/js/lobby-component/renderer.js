@@ -11,7 +11,7 @@ import {
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { copyNode } from "../utils/data-handler.js";
 import { reflowCSS } from "../board-component/helper.js";
-import { getContainerAnimationForLeaving, getContainerToRenderPlayer } from "./helper.js";
+import { getContainerAnimationForLeaving } from "./helper.js";
 
 function renderGameInfo(g, started) {
     document.querySelector("#game-name-id").innerHTML = `${getGameName(g)} / <span>${getGameId(g)}</span>`;
@@ -37,7 +37,7 @@ function renderPlayersList(g, started) {
 
         if (player?.name === $player?.querySelector(".player-name")?.innerText) continue;
 
-        if (player == null) {
+        if (player === null) {
             removeRenderedPlayer($player);
             continue;
         }

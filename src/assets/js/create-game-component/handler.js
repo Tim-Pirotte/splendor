@@ -6,7 +6,6 @@ function createGame(e) {
     e.preventDefault();
     checkCompatibility(2)
         .then(isCompatible => {
-            const visibility = getCheckedRadioButtonValue(document.querySelectorAll("input[name=visibility]"));
             const requestBody = {
                 playerName: loadFromStorage("playerName"),
                 gameName: document.querySelector("#game-name").value.trim() || `${loadFromStorage("playerName")}'s game`,

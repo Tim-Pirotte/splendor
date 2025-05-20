@@ -1,5 +1,5 @@
 import { updateGameData } from "./game-data-handler.js";
-import { getActionButton, initGameStatusInterface } from "./game-status-interface.js";
+import { initGameStatusInterface } from "./game-status-interface.js";
 import { selectToken } from "./tokens/token-handler.js";
 import { selectNoble } from "./nobles/nobles-handler.js";
 import { selectCard } from "./buy-reserve/select.js";

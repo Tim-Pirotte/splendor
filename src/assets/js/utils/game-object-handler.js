@@ -30,7 +30,7 @@ function getPlayersObjects(gameData, started) {
     const players = [];
 
     for (const player of gameData["players"]) {
-        if (player == null) {
+        if (player === null) {
             players.push(null);
         } else {
             players.push({
