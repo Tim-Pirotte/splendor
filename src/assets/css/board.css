@@ -528,7 +528,7 @@ aside {
 
 .player-card.current-player::after {
     content: "";
-    width: 38.5%;
+    width: 14.5%;
     height: 97%;
     right: 0;
     bottom: 0;
@@ -561,7 +561,7 @@ aside {
 }
 
 .player-card.current-player {
-    transform: translateX(42%);
+    transform: translateX(18%);
     position: relative;
 }
 
