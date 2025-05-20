@@ -12,7 +12,7 @@ import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { copyNode } from "../utils/data-handler.js";
 import { reflowCSS } from "../board-component/helper.js";
 import { getContainerAnimationForLeaving } from "./helper.js";
-import {LEAVING_PLAYER_ANIMATION_DURATION} from "../config.js";
+import { LEAVING_PLAYER_ANIMATION_DURATION } from "../config.js";
 
 function renderGameInfo(g, started) {
     document.querySelector("#game-name-id").innerHTML = `${getGameName(g)} / <span>${getGameId(g)}</span>`;
