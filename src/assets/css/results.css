@@ -6,7 +6,7 @@ main {
     flex-flow: column nowrap;
     background-image: url("../images/results/results_banner.webp"), url("../images/fallback/results/results_banner.png");
     background-size: 100% 100%;
-    width: 22rem;
+    width: 25rem;
     height: 32rem;
 }
 
@@ -90,7 +90,6 @@ table tbody tr.winner td {
 #table-container {
     margin: 1rem auto;
     height: 14rem;
-    width: 20rem;
 }
 
 table li {
