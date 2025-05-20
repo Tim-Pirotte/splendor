@@ -3,6 +3,7 @@ import { loadFromStorage } from "./data-connector/local-storage-abstractor.js";
 import { checkCompatibility } from "./server-version-component/server-version.js";
 import { IN_GAME_POLLING_TIME_OUT } from "./config.js";
 import { handleGameDataError } from "./board-component/game-data-handler.js";
+import {locateToMainMenu} from "./utils/data-handler.js";
 
 /* Game Management */
 function getGames(hasStarted = "") {
@@ -70,8 +71,8 @@ function takeNobles(requestBody) {
 
 function leaveGame() {
     joinGame(loadFromStorage("gameId"), true, true)
-        .then(location.href = "../index.html")
-        .catch(location.href = "../index.html");
+        .then(() => locateToMainMenu())
+        .catch(() => locateToMainMenu());
 }
 
 function getApiInfo() {

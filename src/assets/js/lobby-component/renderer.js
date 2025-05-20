@@ -12,6 +12,7 @@ import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { copyNode } from "../utils/data-handler.js";
 import { reflowCSS } from "../board-component/helper.js";
 import { getContainerAnimationForLeaving } from "./helper.js";
+import {LEAVING_PLAYER_ANIMATION_DURATION} from "../config.js";
 
 function renderGameInfo(g, started) {
     document.querySelector("#game-name-id").innerHTML = `${getGameName(g)} / <span>${getGameId(g)}</span>`;
@@ -35,13 +36,15 @@ function renderPlayersList(g, started) {
             $joinedPlayers.insertAdjacentElement("beforeend", $player);
         }
 
+        /* NOSONAR_BEGIN
+        *  this is here because sonar doesn't like continue*/
         if (player?.name === $player?.querySelector(".player-name")?.innerText) continue;
 
         if (player === null) {
             removeRenderedPlayer($player);
             continue;
         }
-
+        // NOSONAR_END
         renderPlayer(player, $player, $template);
     }
 }
@@ -51,7 +54,7 @@ function removeRenderedPlayer($container) {
     $container.animate(getContainerAnimationForLeaving($container), { duration: 500 });
     setTimeout(() => {
         $container.innerHTML = "";
-    }, 500);
+    }, LEAVING_PLAYER_ANIMATION_DURATION);
 }
 
 function renderPlayer(player, $container, $template) {

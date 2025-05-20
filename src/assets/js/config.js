@@ -3,7 +3,7 @@ const GROUP_TOKEN = "Group4-9486-769";
 
 const ERROR_HANDLER_SELECTOR = ".errormessages p";
 
-const LOCAL_SERVER = "http://172.30.90.145:8080"; //TODO: change to the local server
+const LOCAL_SERVER = "http://localhost:8080";
 const DEPLOYED_SERVER = "https://project-1.ti.howest.be/2024-2025/splendor/api";
 const GROUP_DEPLOYED_SERVER = `https://project-1.ti.howest.be/2024-2025/group-${GROUP_NUMBER}/api`;
 
@@ -14,10 +14,10 @@ const JOIN_GAME_PAGE_POLLING_TIME_OUT = 10000;
 const IN_GAME_POLLING_TIME_OUT = 1000;
 const COPY_BUTTON_REMOVE_FEEDBACK_DELAY = 500;
 const LOBBY_COUNTDOWN_DURATION = 3;
+const LEAVING_PLAYER_ANIMATION_DURATION = 500;
 
 function getAPIUrl() {
-    // TODO set this back to the deployed server
-    return LOCAL_SERVER;
+    return GROUP_DEPLOYED_SERVER;
 }
 
 export {
@@ -30,4 +30,5 @@ export {
     LOBBY_COUNTDOWN_DURATION,
     JOIN_GAME_PAGE_POLLING_TIME_OUT,
     TIME_AFTER_SPECTATOR_DOESNT_GET_RENDERED,
+    LEAVING_PLAYER_ANIMATION_DURATION,
 };

@@ -6,10 +6,7 @@ import { checkCompatibility } from "../../server-version-component/server-versio
 function initRoundBegin(gameData) {
     const gameState = gameData["gameState"];
 
-    if (!gameData["started"]) {
-        location.href = "./lobby-page.html";
-        return;
-    }
+    if (!gameData["started"]) {location.href = "./lobby-page.html"; return;}
 
     switch (gameState) {
     case GAME_STATE.WINNER_IS_FOUND:

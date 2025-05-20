@@ -71,10 +71,7 @@ function setTimer(duration, timePassedForCurrentRound, $timerFill, gameState) {
 
         if (!isCurrentlyPlaying()) return;
 
-        if (remaining > 0) {
-            if (isCurrentlyPlaying() && sessionStorage.getItem("gameState") === gameState) requestAnimationFrame(update);
-            return;
-        }
+        if (remaining > 0 && isCurrentlyPlaying() && sessionStorage.getItem("gameState") === gameState) return;
 
         try {
             if (getActionButton().disabled) {
