@@ -25,9 +25,8 @@ function renderPlayersList(g, started) {
     const $joinedPlayerContainers = $joinedPlayers.querySelectorAll("li");
     const players = getPlayersObjects(g, started);
 
-    for (let i = 0; i < players.length; i++) {
-        const player = players[i];
-        let $player = $joinedPlayerContainers[i];
+    for (const [index, player] of players.entries()) {
+       let $player = $joinedPlayerContainers[index];
 
         if (!$player) {
             $player = document.createElement("li");
