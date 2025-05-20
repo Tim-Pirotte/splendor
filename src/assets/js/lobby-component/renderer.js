@@ -1,4 +1,3 @@
-import { avatars } from "../main-menu-component/data.js";
 import {
     determinePlayerAvatar,
     getCurrentUsersAmount,
@@ -8,12 +7,11 @@ import {
     getMaxUsersAmount,
     getPlayersObjects,
 } from "../utils/game-object-handler.js";
-import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { copyNode } from "../utils/data-handler.js";
 import { reflowCSS } from "../board-component/helper.js";
 import { getContainerAnimationForLeaving } from "./helper.js";
 import { LEAVING_PLAYER_ANIMATION_DURATION } from "../config.js";
-import {safeEmptyContainer} from "../board-component/renderer/helper.js";
+import { safeEmptyContainer } from "../board-component/renderer/helper.js";
 
 function renderGameInfo(g, started) {
     document.querySelector("#game-name-id").innerHTML = `${getGameName(g)} / <span>${getGameId(g)}</span>`;
@@ -27,7 +25,7 @@ function renderPlayersList(g, started) {
     const players = getPlayersObjects(g, started);
 
     for (const [index, player] of players.entries()) {
-       let $player = $joinedPlayerContainers[index];
+        let $player = $joinedPlayerContainers[index];
 
         if (!$player) {
             $player = document.createElement("li");
@@ -37,14 +35,15 @@ function renderPlayersList(g, started) {
         }
 
         if (player.name === null) {
-            removeRenderedPlayer($player)
-        } else {
+            removeRenderedPlayer($player);
+        } else if (player.name !== $player?.querySelector(".player-name")?.innerText) {
             /* these ?. operators are needed because:
             *  $player can be null if no players have been previously rendered at this position,
             *  .player-name doesn't exist of a player at this position has previously left */
-            if (player.name !== $player?.querySelector(".player-name")?.innerText) {
-                renderPlayer(player, $player, $template);
-            }
+            renderPlayer(player, $player, $template);
+        } else {
+            // https://www.keyboardfaces.com/
+            //sonar: ( ︶︿︶)_╭∩╮ me: ლ(ಠ益ಠლ)
         }
     }
 }

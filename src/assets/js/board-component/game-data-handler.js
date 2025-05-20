@@ -77,14 +77,11 @@ function setTimer(duration, timePassedForCurrentRound, $timerFill, gameState) {
         }
 
         try {
-            if (getActionButton().disabled) {
-                deselectAll();
-            }
+            if (getActionButton().disabled) deselectAll();
 
             getActionButton().click();
         } catch(err) {
             startGameStatePolling();
-            console.error(err);
         }
 
     }

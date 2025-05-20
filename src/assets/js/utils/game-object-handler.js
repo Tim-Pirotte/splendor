@@ -1,5 +1,4 @@
-import {loadFromStorage} from "../data-connector/local-storage-abstractor.js";
-import {avatars} from "../main-menu-component/data.js";
+import { avatars } from "../main-menu-component/data.js";
 
 function getGameState(gameData) {
     return gameData["started"] ? "spectate" : "join";
@@ -33,7 +32,7 @@ function getPlayersObjects(gameData, started) {
     const players = [];
 
     for (const player of gameData["players"]) {
-        players.push({"name": started ? player.name : player, "avatar": started ? player.avatar : gameData["avatars"][player]});
+        players.push({ "name": started ? player.name : player, "avatar": started ? player.avatar : gameData["avatars"][player] });
     }
 
     return players;

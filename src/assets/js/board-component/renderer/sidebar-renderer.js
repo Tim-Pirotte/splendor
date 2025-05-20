@@ -9,9 +9,8 @@ import {
     isCreator,
     safeEmptyContainer,
 } from "./helper.js";
-import { determinePlayerAvatar, getHighestScore} from "../../utils/game-object-handler.js";
+import { determinePlayerAvatar, getHighestScore } from "../../utils/game-object-handler.js";
 import { copyNode } from "../../utils/data-handler.js";
-import { avatars } from "../../main-menu-component/data.js";
 import { checkCompatibility } from "../../server-version-component/server-version.js";
 import { insertImageInto, renderUnsupportedError } from "../../utils/renderer.js";
 
