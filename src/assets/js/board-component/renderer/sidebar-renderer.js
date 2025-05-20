@@ -222,6 +222,8 @@ function renderReserveCardEntry(entry) {
 
 function renderHistoryCard($cardEntry, cardType) {
     insertImageInto($cardEntry, `UI/cards/${TOKEN_MAPPER[cardType]}_card_small`, false, `${TOKEN_MAPPER[cardType]} card`);
+
+    // &nbsp adds a space that doesn't get trimmed when rendering. This is needed since this text gets preceded by an image
     $cardEntry.insertAdjacentHTML("beforeend", "<p>&nbspcard</p>");
 }
 

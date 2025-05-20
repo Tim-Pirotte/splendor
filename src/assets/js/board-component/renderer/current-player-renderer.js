@@ -27,7 +27,7 @@ import { insertImageInto } from "../../utils/renderer.js";
 import { checkCompatibility } from "../../server-version-component/server-version.js";
 import { reflowCSS } from "../helper.js";
 import { isSpectator } from "../state-machine/state-machine.js";
-import { TIME_AFTER_SPECTATOR_DOESNT_GET_RENDERED } from "../../config.js";
+import { TIME_AFTER_SPECTATOR_DOES_NOT_GET_RENDERED } from "../../config.js";
 
 function renderGameStatusMessage(currentPlayer) {
     const isClientPlayerTurn = currentPlayer === loadFromStorage("playerName");
@@ -39,7 +39,7 @@ function renderGameStatusMessage(currentPlayer) {
 
 function renderAmountOfSpectators(spectators) {
     document.querySelector(".amount-of-spectators").textContent = spectators.filter(
-        spectator => spectator.pollDelta < TIME_AFTER_SPECTATOR_DOESNT_GET_RENDERED,
+        spectator => spectator.pollDelta < TIME_AFTER_SPECTATOR_DOES_NOT_GET_RENDERED,
     ).length;
 }
 
