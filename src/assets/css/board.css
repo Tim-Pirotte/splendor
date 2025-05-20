@@ -605,6 +605,7 @@ aside {
     border: none;
     width: fit-content;
     padding: 0;
+    transition: var(--hover-transition-duration);
 }
 
 .top-bar > div {
