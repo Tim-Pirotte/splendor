@@ -18,7 +18,7 @@ const LEAVING_PLAYER_ANIMATION_DURATION = 500;
 const ERROR_MESSAGE_TIMEOUT = 5000;
 
 function getAPIUrl() {
-    return GROUP_DEPLOYED_SERVER;
+    return LOCAL_SERVER;
 }
 
 export {
