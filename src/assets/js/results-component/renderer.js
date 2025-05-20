@@ -9,15 +9,23 @@ import {
 import { formatNumber } from "../board-component/renderer/helper.js";
 import { insertImageInto } from "../utils/renderer.js";
 import { locateToMainMenu } from "../utils/data-handler.js";
+import { isSpectator } from "../board-component/state-machine/state-machine.js";
+
 
 function renderResultMessage(isWinner) {
+    const $h1 = document.querySelector("h1");
+    const $img = $h1.querySelector("img");
+
     if (isWinner) {
-        const $h1 = document.querySelector("h1");
-        const $img = $h1.querySelector("img");
 
         $h1.querySelector("source").srcset = "../assets/images/results/winner_text.webp";
         $img.src = "../assets/images/fallback/results/winner_text.png";
         $img.title = $img.alt = "winner text";
+    }
+    else{
+        $h1.querySelector("source").srcset = "../assets/images/results/defeat_text.webp";
+        $img.src = "../assets/images/fallback/results/defeat_text.png";
+        $img.title = $img.alt = "defeat text";
     }
 }
 
@@ -26,7 +34,10 @@ function renderResults() {
     getSortedResults().then(gameResults => {
         for (const player of gameResults) {
             const isPlayer = player.name === loadFromStorage("playerName");
+            const gameData = loadFromStorage("gameData");
+            if (isSpectator(gameData["spectators"] , player.name)) {
 
+            }
             if (isPlayer) {
                 renderResultMessage(player.isWinner);
                 renderResultAnimation(player.isWinner);
