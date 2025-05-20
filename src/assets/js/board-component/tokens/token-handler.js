@@ -194,8 +194,4 @@ function processTakeTwoTokens() {
     API.takeTokens(requestBody).then(() => updateTokens(requestBody));
 }
 
-function processSkipTurn() {
-    API.takeTokens({ take: {} }).then();
-}
-
-export { selectToken, processTakeTokensClick, updateTokens, processTakeTwoTokens, processSkipTurn, unHighlightTokens };
+export { selectToken, processTakeTokensClick, updateTokens, processTakeTwoTokens, unHighlightTokens };

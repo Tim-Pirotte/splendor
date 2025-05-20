@@ -44,6 +44,10 @@ function joinGame(gameId, spectatingEnabled, forfeit) {
     });
 }
 
+function skipTurn() {
+    takeTokens({ take: {} });
+}
+
 /* Game Actions */
 function takeTokens(requestBody) {
     const gameId = loadFromStorage("gameId");
@@ -79,4 +83,4 @@ function getApiInfo() {
     return fetchFromServer("/info");
 }
 
-export { getGames, createGame, getGame, joinGame, takeTokens, buyCard, reserveCard, takeNobles, getApiInfo, leaveGame };
+export { getGames, createGame, getGame, joinGame, skipTurn, takeTokens, buyCard, reserveCard, takeNobles, getApiInfo, leaveGame };
