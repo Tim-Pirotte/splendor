@@ -402,6 +402,14 @@ main {
     font-size: 0.75rem;
 }
 
+.player-card h4.points {
+    font-size: 1rem;
+}
+
+.player-card h3.name {
+    font-size: 1.2rem;
+}
+
 .card:hover {
     cursor: var(--disabled-button-cursor);
 }
