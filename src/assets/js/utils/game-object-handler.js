@@ -19,7 +19,11 @@ function getMaxUsersAmount(gameData) {
 }
 
 function getGameCreator(gameData, started) {
-    return started ? gameData["players"][0]["name"] : gameData["players"][0];
+    for(const player of gameData["players"]) {
+        if (player !== null) {
+            return started ? player["name"] : player;
+        }
+    }
 }
 
 function getPlayersObjects(gameData, started) {
