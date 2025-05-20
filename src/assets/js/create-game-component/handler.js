@@ -17,8 +17,8 @@ function createGame(e) {
 
             if (isCompatible) {
                 requestBody.avatar = loadFromStorage("avatar").split("-")
-                                                        .map(word => (word[0].toUpperCase() + word.slice(1)))
-                                                        .join("");
+                    .map(word => (word[0].toUpperCase() + word.slice(1)))
+                    .join("");
                 requestBody.isPrivate = document.querySelector("#private").checked;
             }
 

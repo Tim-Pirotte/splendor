@@ -14,4 +14,4 @@ function getContainerAnimationForLeaving($container) {
     ];
 }
 
-export { getContainerToRenderPlayer, getContainerAnimationForLeaving }
+export { getContainerToRenderPlayer, getContainerAnimationForLeaving };

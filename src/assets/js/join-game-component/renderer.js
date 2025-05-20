@@ -30,7 +30,7 @@ function renderPublicGames(e) {
         const $template = document.querySelector("#game-template");
         const scrolledDistance = $gameList.scrollTop;
         const gamesListingHeight = $renderedGames[0]?.getBoundingClientRect().height;
-        const maxNrOfVisibleGames = Math.ceil($gameList.getBoundingClientRect().height / gamesListingHeight)
+        const maxNrOfVisibleGames = Math.ceil($gameList.getBoundingClientRect().height / gamesListingHeight);
 
         if (wasTriggeredByPolling) setTimeout(renderPublicGames, JOIN_GAME_PAGE_POLLING_TIME_OUT);
 
@@ -53,8 +53,7 @@ function renderPublicGames(e) {
 
         const firstVisibleGameIndex = Math.floor(scrolledDistance / gamesListingHeight);
         const $visibleGames = $renderedGames.slice(firstVisibleGameIndex, firstVisibleGameIndex + maxNrOfVisibleGames);
-        const visibleGameIds = $visibleGames.map($game => $game.dataset.gameId);
-
+        const visibleGameIds = $visibleGames.map($game => parseInt($game.dataset.gameId));
 
         safeEmptyContainer($gameListCopy);
 
@@ -86,7 +85,7 @@ function renderErrorMessage(err) {
     $target.innerHTML =
         `<p>${err.cause}</p>`;
 
-    setTimeout(() => $target.classList.add("none"), 10000)
+    setTimeout(() => $target.classList.add("none"), 10000);
 }
 
 export { renderPlayerInfo, renderPublicGames, renderErrorMessage };

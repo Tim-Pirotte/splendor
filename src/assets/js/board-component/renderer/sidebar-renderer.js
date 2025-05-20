@@ -9,7 +9,7 @@ import {
     isCreator,
     safeEmptyContainer,
 } from "./helper.js";
-import {convertAvatarToCorrectCasing, getHighestScore} from "../../utils/game-object-handler.js";
+import { convertAvatarToCorrectCasing, getHighestScore } from "../../utils/game-object-handler.js";
 import { copyNode } from "../../utils/data-handler.js";
 import { avatars } from "../../main-menu-component/data.js";
 import { checkCompatibility } from "../../server-version-component/server-version.js";
@@ -176,7 +176,7 @@ const HISTORY_ACTIONS = {
 function renderHistoryEntry(entry) {
     const $renderedEntry = HISTORY_ACTIONS[entry["action"]](entry, entry["player"] );
 
-    if (!$renderedEntry) return $renderedEntry
+    if (!$renderedEntry) return $renderedEntry;
 
     insertPlayerName($renderedEntry, entry["player"]);
     return $renderedEntry;
@@ -239,7 +239,7 @@ function renderIncompatibleServerMessage() {
 }
 
 function insertPlayerName(renderedEntry, playerName) {
-    renderedEntry.querySelector("strong").textContent = playerName === loadFromStorage("playerName") ? "you": playerName;
+    renderedEntry.querySelector("strong").textContent = playerName === loadFromStorage("playerName") ? "you" : playerName;
 }
 
 function renderSkipTurnHistory(playerName) {

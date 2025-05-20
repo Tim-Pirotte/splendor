@@ -25,7 +25,7 @@ function selectCard(e) {
 
     sessionStorage.removeItem("paymentMethod");
 
-    const previousSelectedCardName = getActionButton().dataset.name
+    const previousSelectedCardName = getActionButton().dataset.name;
     deselectAll();
 
     if (cardName === previousSelectedCardName) return;

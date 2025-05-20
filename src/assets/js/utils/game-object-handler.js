@@ -30,7 +30,7 @@ function getPlayersObjects(gameData, started) {
             players.push(null);
         } else {
             players.push({
-                "name": started ? player.name: player, "avatar": started ? player.avatar : gameData["avatars"][player]
+                "name": started ? player.name : player, "avatar": started ? player.avatar : gameData["avatars"][player],
             });
         }
     }

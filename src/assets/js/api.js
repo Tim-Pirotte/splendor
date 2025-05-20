@@ -1,8 +1,8 @@
 import { fetchFromServer } from "./data-connector/api-communication-abstractor.js";
 import { loadFromStorage } from "./data-connector/local-storage-abstractor.js";
 import { checkCompatibility } from "./server-version-component/server-version.js";
-import {IN_GAME_POLLING_TIME_OUT} from "./config.js";
-import {handleGameDataError} from "./board-component/game-data-handler.js";
+import { IN_GAME_POLLING_TIME_OUT } from "./config.js";
+import { handleGameDataError } from "./board-component/game-data-handler.js";
 
 /* Game Management */
 function getGames(hasStarted = "") {
@@ -30,11 +30,11 @@ function joinGame(gameId, spectatingEnabled, forfeit) {
         let body = {};
 
         if (isCompatible) {
-            body = {"avatar": loadFromStorage("avatar").split("-")
-                                            .map(word => (word[0].toUpperCase() + word.slice(1)))
-                                            .join(""),
-                "spectatingEnabled": spectatingEnabled,
-                "forfeit": forfeit,
+            body = { "avatar": loadFromStorage("avatar").split("-")
+                .map(word => (word[0].toUpperCase() + word.slice(1)))
+                .join(""),
+            "spectatingEnabled": spectatingEnabled,
+            "forfeit": forfeit,
             };
         }
 
@@ -70,8 +70,8 @@ function takeNobles(requestBody) {
 
 function leaveGame() {
     joinGame(loadFromStorage("gameId"), true, true)
-    .then(location.href = "../index.html")
-    .catch(location.href = "../index.html");
+        .then(location.href = "../index.html")
+        .catch(location.href = "../index.html");
 }
 
 function getApiInfo() {
