@@ -1,6 +1,6 @@
 import { avatars } from "../main-menu-component/data.js";
 import {
-    convertAvatarToCorrectCasing,
+    determinePlayerAvatar,
     getCurrentUsersAmount,
     getGameCreator,
     getGameId,
@@ -13,6 +13,7 @@ import { copyNode } from "../utils/data-handler.js";
 import { reflowCSS } from "../board-component/helper.js";
 import { getContainerAnimationForLeaving } from "./helper.js";
 import { LEAVING_PLAYER_ANIMATION_DURATION } from "../config.js";
+import {safeEmptyContainer} from "../board-component/renderer/helper.js";
 
 function renderGameInfo(g, started) {
     document.querySelector("#game-name-id").innerHTML = `${getGameName(g)} / <span>${getGameId(g)}</span>`;
@@ -35,24 +36,24 @@ function renderPlayersList(g, started) {
             $joinedPlayers.appendChild($player);
         }
 
-        /* NOSONAR_BEGIN
-        *  this is here because sonar doesn't like continue*/
-        if (player?.name === $player?.querySelector(".player-name")?.innerText) continue;
-
         if (player.name === null) {
-            removeRenderedPlayer($player);
-            continue;
+            removeRenderedPlayer($player)
+        } else {
+            /* these ?. operators are needed because:
+            *  $player can be null if no players have been previously rendered at this position,
+            *  .player-name doesn't exist of a player at this position has previously left */
+            if (player.name !== $player?.querySelector(".player-name")?.innerText) {
+                renderPlayer(player, $player, $template);
+            }
         }
-        // NOSONAR_END
-        renderPlayer(player, $player, $template);
     }
 }
 
 function removeRenderedPlayer($container) {
     //https://developer.mozilla.org/en-US/docs/Web/API/Element/animate
-    $container.animate(getContainerAnimationForLeaving($container), { duration: 500 });
+    $container.animate(getContainerAnimationForLeaving($container), { duration: LEAVING_PLAYER_ANIMATION_DURATION });
     setTimeout(() => {
-        $container.innerHTML = "";
+        safeEmptyContainer($container);
     }, LEAVING_PLAYER_ANIMATION_DURATION);
 }
 
@@ -66,18 +67,6 @@ function renderPlayer(player, $container, $template) {
     $li.querySelector("img").alt = $li.querySelector("img").title = avatar;
 
     $container.innerHTML =  $li.innerHTML;
-}
-
-function determinePlayerAvatar(playerName, avatar) {
-    if (playerName === loadFromStorage("playerName")) {
-        return loadFromStorage("avatar");
-    }
-
-    if (avatar) {
-        return convertAvatarToCorrectCasing(avatar);
-    } else {
-        return convertAvatarToCorrectCasing(avatars[playerName.toLowerCase().charCodeAt(0) % avatars.length]);
-    }
 }
 
 function renderPlayerCount(g) {

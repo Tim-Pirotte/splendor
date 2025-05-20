@@ -9,7 +9,7 @@ import {
     isCreator,
     safeEmptyContainer,
 } from "./helper.js";
-import { convertAvatarToCorrectCasing, getHighestScore } from "../../utils/game-object-handler.js";
+import { determinePlayerAvatar, getHighestScore} from "../../utils/game-object-handler.js";
 import { copyNode } from "../../utils/data-handler.js";
 import { avatars } from "../../main-menu-component/data.js";
 import { checkCompatibility } from "../../server-version-component/server-version.js";
@@ -37,18 +37,10 @@ function renderOtherPlayers(players, currentPlayer) {
     }
 }
 
-function getAvatar(otherPlayer) {
-    if ("avatar" in otherPlayer) {
-        return convertAvatarToCorrectCasing(otherPlayer.avatar);
-    } else {
-        return convertAvatarToCorrectCasing(avatars[otherPlayer.name.toLowerCase().charCodeAt(0) % avatars.length]);
-    }
-}
-
 function renderOtherPlayer($playerTemplate, otherPlayer, highestScore, currentPlayer, isGameCreator) {
     const $playerCard = copyNode($playerTemplate);
     const playerName = otherPlayer.name;
-    const avatar = getAvatar(otherPlayer);
+    const avatar = determinePlayerAvatar(otherPlayer.name, otherPlayer.avatar);
 
     showOtherPlayerTurn(playerName, currentPlayer, $playerCard);
 

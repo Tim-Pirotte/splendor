@@ -1,3 +1,6 @@
+import {loadFromStorage} from "../data-connector/local-storage-abstractor.js";
+import {avatars} from "../main-menu-component/data.js";
+
 function getGameState(gameData) {
     return gameData["started"] ? "spectate" : "join";
 }
@@ -56,8 +59,13 @@ function getPlayerByName(players, currentPlayerName) {
     }
 }
 
-function convertAvatarToCorrectCasing(avatar) {
-    return avatar.replaceAll(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
+function determinePlayerAvatar(playerName, avatar) {
+    if (!avatar) {
+        const avatarIndex = playerName.toLowerCase().charCodeAt(0) % avatars.length;
+        avatar =  avatars[avatarIndex];
+    }
+
+    return avatar.toLowerCase();
 }
 
 export {
@@ -72,6 +80,6 @@ export {
     sumObjectValues,
     getHighestScore,
     getPlayerByName,
-    convertAvatarToCorrectCasing,
+    determinePlayerAvatar,
 };
 
