@@ -51,7 +51,6 @@ function populateGame($template, game) {
     $game.dataset.gameId = getGameId(game);
 
     $game.querySelector("h3").textContent = getGameName(game);
-    $game.querySelector(".game-id").textContent = getGameId(game);
     $game.querySelector(".amount-of-players").textContent = `${getCurrentUsersAmount(game)}/${getMaxUsersAmount(game)}`;
     $game.querySelector("button").textContent = `${getGameState(game)} game`;
 
