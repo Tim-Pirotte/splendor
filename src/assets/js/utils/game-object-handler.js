@@ -11,7 +11,7 @@ function getGameId(gameData) {
 }
 
 function getCurrentUsersAmount(gameData) {
-    return gameData["players"].length;
+    return gameData["players"].filter(player => player !== null).length;
 }
 
 function getMaxUsersAmount(gameData) {
