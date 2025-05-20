@@ -8,7 +8,7 @@
 /* Sidebar and main content alignment */
 body {
     display: grid;
-    grid-template-columns: 20% 80%;
+    grid-template-columns: 25% 75%;
     height: 100vh;
 }
 
@@ -403,11 +403,12 @@ main {
 }
 
 .player-card h4.points {
-    font-size: 1rem;
+    font-size: 0.9rem;
+    font-weight: 500;
 }
 
 .player-card h3.name {
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
 
 .card:hover {
