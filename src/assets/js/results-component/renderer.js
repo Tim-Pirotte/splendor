@@ -19,8 +19,7 @@ function renderResultMessage(isWinner) {
         $h1.querySelector("source").srcset = "../assets/images/results/winner_text.webp";
         $img.src = "../assets/images/fallback/results/winner_text.png";
         $img.title = $img.alt = "winner text";
-    }
-    else{
+    } else {
         $h1.querySelector("source").srcset = "../assets/images/results/defeat_text.webp";
         $img.src = "../assets/images/fallback/results/defeat_text.png";
         $img.title = $img.alt = "defeat text";
@@ -34,7 +33,7 @@ function renderResults() {
             const isPlayer = player.name === loadFromStorage("playerName");
             const gameData = loadFromStorage("gameData");
 
-            if (isPlayer && !isSpectator(gameData["spectators"] ,player.name)) {
+            if (isPlayer && !isSpectator(gameData["spectators"], player.name)) {
                 renderResultMessage(player.isWinner);
                 renderResultAnimation(player.isWinner);
             }
