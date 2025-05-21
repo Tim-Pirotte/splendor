@@ -2,7 +2,8 @@ import { joinGameById, spectateGameById } from "./helper.js";
 
 function joinGameUsingUsersInputId(e) {
     e.preventDefault();
-    joinGameById(document.querySelector("#game-id").value, true);
+
+    joinGameById(document.querySelector("#game-id").value);
 }
 
 function joinGame(e) {
