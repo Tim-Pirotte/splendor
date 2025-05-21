@@ -15,8 +15,8 @@ function setupUI() {
 }
 
 function setupEventListeners() {
-    document.querySelector(".avatar-selector section").addEventListener("click", updateSelectedAvatar);
     document.addEventListener("click", closeAvatarVisibility);
+    document.querySelector(".avatar-selector section").addEventListener("click", updateSelectedAvatar);
     document.querySelectorAll("form .form-actions button")
         .forEach($button => $button.addEventListener("click", savePlayerInfo) );
 }

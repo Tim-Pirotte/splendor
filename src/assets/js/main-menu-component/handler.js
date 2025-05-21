@@ -19,8 +19,7 @@ function savePlayerInfo(e) {
     const playerName = document.querySelector("#username").value.trim();
 
     if (document.querySelector("form").reportValidity() && validatePlayerName(playerName)) {
-        saveToStorage("playerName", playerName);
-        saveToStorage("avatar", document.querySelector("#avatar li img").alt);
+        savePlayerInfoToLocalStorage(playerName);
 
         if (["join-game", "create-game"].includes(e.target.value)) {
             location.href = `./pages/${e.target.value}.html`;
@@ -28,6 +27,11 @@ function savePlayerInfo(e) {
     } else {
         renderErrorMessage("Invalid playername: (no spaces or special characters).");
     }
+}
+
+function savePlayerInfoToLocalStorage(playerName) {
+    saveToStorage("playerName", playerName);
+    saveToStorage("avatar", document.querySelector("#avatar li img").alt);
 }
 
 function closeAvatarVisibility(e) {
