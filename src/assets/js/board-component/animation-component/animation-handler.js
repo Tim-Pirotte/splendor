@@ -20,6 +20,7 @@ function animateShiftListItems($listItems, sourceBoundingBoxes, targetBoundingBo
     for (const [index, $listItem] of $listItems.entries()) {
         const animationCopy = deepCopyObject(animation);
         const invertedPosSize = getInvertedPositionSize(sourceBoundingBoxes[index], targetBoundingBoxes[index]);
+
         startTargetAnimation($listItem, invertedPosSize, animationCopy, null);
     }
 }
@@ -55,7 +56,10 @@ function startTargetAnimation($targetNode, invertedPosSize, animation, $sourceNo
         },
     );
 
-    animationPlayer.addEventListener("finish", () => cleanupAnimation($targetNode, animation.keyFrames, fnToRunAfterAnimation));
+    animationPlayer.addEventListener(
+        "finish",
+        () => cleanupAnimation($targetNode, animation.keyFrames, fnToRunAfterAnimation)
+    );
 }
 
 function insertVariablesIntoKeyframes(animation, invertedPosSize, $sourceNode, $targetNode) {
