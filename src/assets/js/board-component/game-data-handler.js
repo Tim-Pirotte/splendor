@@ -10,6 +10,7 @@ import {
     setAnimationDelayBeforePolling,
 } from "./animation-component/data.js";
 import {IN_GAME_POLLING_TIME_OUT} from "../config.js";
+
 function handleGameDataError(err) {
     const forbidden = 403;
     const unauthorized = 401;

@@ -3,7 +3,7 @@ const GROUP_TOKEN = "Group4-9486-769";
 
 const ERROR_HANDLER_SELECTOR = ".errormessages p";
 
-const LOCAL_SERVER = "http://172.30.90.152:8080";
+const LOCAL_SERVER = "http://localhost:8080";
 const DEPLOYED_SERVER = "https://project-1.ti.howest.be/2024-2025/splendor/api";
 const GROUP_DEPLOYED_SERVER = `https://project-1.ti.howest.be/2024-2025/group-${GROUP_NUMBER}/api`;
 
