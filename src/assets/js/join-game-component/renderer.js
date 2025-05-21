@@ -58,12 +58,4 @@ function populateGame($template, game) {
     return $game;
 }
 
-function renderErrorMessage(err) {
-    const $target = document.querySelector(".error-message");
-    $target.classList.remove("none");
-    $target.innerHTML = `<p>${err.cause}</p>`;
-
-    setTimeout(() => $target.classList.add("none"), ERROR_MESSAGE_TIMEOUT);
-}
-
-export { renderPlayerInfo, renderPublicGames, renderErrorMessage };
+export { renderPlayerInfo, renderPublicGames };

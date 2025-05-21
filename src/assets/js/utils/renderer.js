@@ -17,6 +17,14 @@ function setImageData($image, standardPath, alt, prefix) {
     $img.alt = $img.title = alt;
 }
 
+function renderErrorMessage(message) {
+    const $target = document.querySelector(".error-message");
+    $target.classList.remove("none");
+    $target.innerHTML = `<p>${message}</p>`;
+
+    setTimeout(() => $target.classList.add("none"), ERROR_MESSAGE_TIMEOUT);
+}
+
 function renderUnsupportedError($container, feature) {
     $container.innerHTML = `<p>${feature} is not supported on this server. Sorry for the inconvenience.</p>`;
 }
@@ -25,4 +33,4 @@ function renderDefaultGameNamePlaceholder($target) {
     $target.setAttribute("placeholder", `${loadFromStorage("playerName")}'s game`);
 }
 
-export { insertImageInto, renderUnsupportedError, renderDefaultGameNamePlaceholder };
+export { insertImageInto, renderUnsupportedError, renderDefaultGameNamePlaceholder, renderErrorMessage };

@@ -1,6 +1,6 @@
 import * as API from "../api.js";
 import { saveToStorage } from "../data-connector/local-storage-abstractor.js";
-import { renderErrorMessage } from "./renderer.js";
+import { renderErrorMessage } from "../utils/renderer.js";
 
 function joinGameById(gameId, spectatingEnabled) {
     API.joinGame(gameId, spectatingEnabled, false)
@@ -9,7 +9,7 @@ function joinGameById(gameId, spectatingEnabled) {
             saveToStorage("playerToken", response["playerToken"]);
             location.href = "./lobby.html";
         }).catch(err => {
-            renderErrorMessage(err);
+            renderErrorMessage(err.cause);
         });
 }
 

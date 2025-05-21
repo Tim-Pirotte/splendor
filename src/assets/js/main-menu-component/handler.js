@@ -1,5 +1,6 @@
 import { saveToStorage } from "../data-connector/local-storage-abstractor.js";
-import { renderNonValidPlayerName, renderPlayerInfo } from "./renderer.js";
+import { renderErrorMessage } from "../utils/renderer.js";
+import { renderPlayerInfo } from "./renderer.js";
 import { validatePlayerName } from "./validator.js";
 
 function toggleAvatarListVisibility(e) {
@@ -25,7 +26,7 @@ function savePlayerInfo(e) {
             location.href = `./pages/${e.target.value}.html`;
         }
     } else {
-        renderNonValidPlayerName();
+        renderErrorMessage("Invalid playername: (no spaces or special characters).");
     }
 }
 
