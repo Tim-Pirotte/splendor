@@ -1,6 +1,7 @@
 import { avatars } from "./data.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { insertImageInto } from "../utils/renderer.js";
+import { ERROR_MESSAGE_TIMEOUT } from "../config.js";
 
 function renderAvatarSelectionList() {
     const $avatarsSection = document.querySelector("section ul");
@@ -22,4 +23,12 @@ function renderPlayerInfo() {
     }
 }
 
-export { renderAvatarSelectionList, renderPlayerInfo };
+function renderNonValidPlayerName() {
+    const $target = document.querySelector(".error-message");
+    $target.classList.remove("none");
+    $target.innerHTML = `<p>Invalid playername</p>`;
+
+    setTimeout(() => $target.classList.add("none"), ERROR_MESSAGE_TIMEOUT);
+}
+
+export { renderAvatarSelectionList, renderPlayerInfo, renderNonValidPlayerName };

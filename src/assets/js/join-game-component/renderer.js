@@ -60,7 +60,6 @@ function populateGame($template, game) {
 
 function renderErrorMessage(err) {
     const $target = document.querySelector(".error-message");
-
     $target.classList.remove("none");
     $target.innerHTML = `<p>${err.cause}</p>`;
 
