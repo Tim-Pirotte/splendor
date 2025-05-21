@@ -11,7 +11,6 @@ import { insertImageInto } from "../utils/renderer.js";
 import { locateToMainMenu } from "../utils/data-handler.js";
 import { isSpectator } from "../board-component/state-machine/state-machine.js";
 
-
 function renderResultMessage(isWinner) {
     const $h1 = document.querySelector("h1");
     const $img = $h1.querySelector("img");
@@ -35,10 +34,8 @@ function renderResults() {
         for (const player of gameResults) {
             const isPlayer = player.name === loadFromStorage("playerName");
             const gameData = loadFromStorage("gameData");
-            if (isSpectator(gameData["spectators"] , player.name)) {
 
-            }
-            if (isPlayer) {
+            if (isPlayer && !isSpectator(gameData["spectators"] , player.name)) {
                 renderResultMessage(player.isWinner);
                 renderResultAnimation(player.isWinner);
             }
