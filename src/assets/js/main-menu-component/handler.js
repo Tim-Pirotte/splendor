@@ -30,4 +30,17 @@ function savePlayerInfo(e) {
     }
 }
 
-export { updateSelectedAvatar, toggleAvatarListVisibility, savePlayerInfo };
+function closeAvatarVisibility(e) {
+
+    if (e.target.closest("button")?.getAttribute("id") === "avatar") {
+        toggleAvatarListVisibility(e);
+        return;
+    }
+
+    if (!document.querySelector(".avatar-selector section").classList.contains("none")) {
+        toggleAvatarListVisibility(e);
+        return;
+    };
+}
+
+export { updateSelectedAvatar, toggleAvatarListVisibility, savePlayerInfo, closeAvatarVisibility };
