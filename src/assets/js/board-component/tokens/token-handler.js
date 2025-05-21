@@ -189,7 +189,7 @@ function playShakeAnimation(tokens, factor = 1) {
     toggleTokenShake(true, true);
     setTimeout(toggleTokenShake, 400);
 
-    function toggleTokenShake(start = false, updateTokenText=false) {
+    function toggleTokenShake(start = false, updateTokenText = false) {
         for (const token of Object.keys(tokens)) {
             const $tokenText = document.querySelector(`.player-tokens [data-type="${token}"] .amount`);
 

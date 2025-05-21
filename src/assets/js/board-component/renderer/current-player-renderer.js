@@ -27,8 +27,8 @@ import { checkCompatibility } from "../../server-version-component/server-versio
 import { reflowCSS } from "../helper.js";
 import { isSpectator } from "../state-machine/state-machine.js";
 import { TIME_AFTER_SPECTATOR_DOES_NOT_GET_RENDERED } from "../../config.js";
-import {animateShiftListItems, getVisibleListItemsBoundingBoxes} from "../animation-component/animation-handler.js";
-import {reserveCardShiftAnimation} from "../animation-component/data.js";
+import { animateShiftListItems, getVisibleListItemsBoundingBoxes } from "../animation-component/animation-handler.js";
+import { reserveCardShiftAnimation } from "../animation-component/data.js";
 
 function renderGameStatusMessage(currentPlayer) {
     const isClientPlayerTurn = currentPlayer === loadFromStorage("playerName");

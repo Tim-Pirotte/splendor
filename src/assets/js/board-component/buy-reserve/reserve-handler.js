@@ -16,7 +16,7 @@ import {
     reserveCardAnimation, reserveCardFromDeckAnimationBack, reserveCardFromDeckAnimationFront,
     setAnimationDelayBeforePolling,
 } from "../animation-component/data.js";
-import {removeBackFromCard} from "../renderer/board-renderer.js";
+import { removeBackFromCard } from "../renderer/board-renderer.js";
 
 function processReserve(){
     resetCurrentPlayer();

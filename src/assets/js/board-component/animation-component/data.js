@@ -3,7 +3,7 @@
 *  Inverted sizes: width, height
 *  Nodes: $sourceNode (Unless if it's a shift list animation), $targetNode */
 
-import {getCardScale} from "./animation-functions.js";
+import { getCardScale } from "./animation-functions.js";
 
 let animationDelayBeforePolling = 1000;
 
@@ -99,7 +99,7 @@ const cardMarketFadeAnimation = {
     ],
     duration: 200,
     easeFunction: "ease-in-out",
-}
+};
 
 export {
     setAnimationDelayBeforePolling,

@@ -7,7 +7,7 @@ import { loadFromStorage } from "../../data-connector/local-storage-abstractor.j
 import { hashDigest } from "../../utils/crypto.js";
 import { hashToNumber, trackCardEncounter } from "../card-collection-component/card-collection.js";
 import { CHANCE_CATEGORIES, CHANCES, ILLUSTRATIONS } from "../../card-collection-component/data.js";
-import {DEVELOPMENT_CARDS} from "../data.js";
+import { DEVELOPMENT_CARDS } from "../data.js";
 
 function addNodesToEmptiedContainer($container, list, mapFunction) {
     safeEmptyContainer($container);

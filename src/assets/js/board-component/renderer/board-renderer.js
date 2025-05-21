@@ -19,14 +19,14 @@ import {
 import { getUnclaimedTokens, sumObjectValues } from "../helper.js";
 import { copyNode } from "../../utils/data-handler.js";
 import { insertImageInto } from "../../utils/renderer.js";
-import {validCardBuy, validNobelPick} from "../state-machine/valid-action-checker.js";
+import { validCardBuy, validNobelPick } from "../state-machine/valid-action-checker.js";
 import { canSelectNoble } from "../nobles/nobles-handler.js";
-import {animateFromTo} from "../animation-component/animation-handler.js";
+import { animateFromTo } from "../animation-component/animation-handler.js";
 import {
     cardMarketFadeAnimation,
     reserveCardFromDeckAnimationBack,
     reserveCardFromDeckAnimationFront,
-    setAnimationDelayBeforePolling
+    setAnimationDelayBeforePolling,
 } from "../animation-component/data.js";
 
 function renderCards(market) {
@@ -37,38 +37,50 @@ function renderCards(market) {
 
         if ($currentDeck.children.length === 0) addNodesToEmptiedContainer($currentDeck, deck["visibleCards"], renderCard);
 
-        for (const [index, $previousCard] of $currentDeck.querySelectorAll(":scope > li").entries()) {
-            const cardData = deck["visibleCards"][index];
-
-            if (!cardData) continue;
-            
-            if ($previousCard.dataset.name === cardData["name"]) {
-                $previousCard.classList.toggle(
-                    `${TOKEN_MAPPER[cardData["bonus"]]}-buyable-card`,
-                    validCardBuy(cardData["name"]),
-                );
-
-                continue;
-            }
-
-            setAnimationDelayBeforePolling(
-                reserveCardFromDeckAnimationFront.duration + cardMarketFadeAnimation.duration
-            );
-
-            const animationPlayer = $previousCard.animate(
-                cardMarketFadeAnimation.keyFrames,
-                {
-                    duration: cardMarketFadeAnimation.duration,
-                    easing: cardMarketFadeAnimation.easeFunction,
-                },
-            );
-
-            animationPlayer.addEventListener(
-                "finish",
-                () => animateNewCard(deck, cardData, $previousCard)
-            );
-        }
+        renderDeck($currentDeck, deck);
     }
+}
+
+function renderDeck($currentDeck, deck) {
+    for (const [index, $previousCard] of $currentDeck.querySelectorAll(":scope > li").entries()) {
+        updateCard(deck, index, $previousCard);
+    }
+}
+
+function updateCard(deck, index, $previousCard) {
+    const cardData = deck["visibleCards"][index];
+
+    if (!cardData) return;
+
+    if ($previousCard.dataset.name === cardData["name"]) {
+        $previousCard.classList.toggle(
+            `${TOKEN_MAPPER[cardData["bonus"]]}-buyable-card`,
+            validCardBuy(cardData["name"]),
+        );
+
+        return;
+    }
+
+    playCardFakeAnimation($previousCard, deck, cardData);
+}
+
+function playCardFakeAnimation($previousCard, deck, cardData) {
+    setAnimationDelayBeforePolling(
+        reserveCardFromDeckAnimationFront.duration + cardMarketFadeAnimation.duration,
+    );
+
+    const animationPlayer = $previousCard.animate(
+        cardMarketFadeAnimation.keyFrames,
+        {
+            duration: cardMarketFadeAnimation.duration,
+            easing: cardMarketFadeAnimation.easeFunction,
+        },
+    );
+
+    animationPlayer.addEventListener(
+        "finish",
+        () => animateNewCard(deck, cardData, $previousCard),
+    );
 }
 
 function animateNewCard(deck, cardData, $previousCard) {

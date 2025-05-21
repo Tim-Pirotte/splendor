@@ -58,7 +58,7 @@ function startTargetAnimation($targetNode, invertedPosSize, animation, $sourceNo
 
     animationPlayer.addEventListener(
         "finish",
-        () => cleanupAnimation($targetNode, animation.keyFrames, fnToRunAfterAnimation)
+        () => cleanupAnimation($targetNode, animation.keyFrames, fnToRunAfterAnimation),
     );
 }
 

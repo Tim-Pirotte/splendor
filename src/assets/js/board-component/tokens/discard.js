@@ -3,7 +3,7 @@ import * as API from "../../api.js";
 import { setDiscardButtonStatuses } from "../renderer/current-player-renderer.js";
 import { getActionButton, setActionButtonState } from "../game-status-interface.js";
 import { clientMustDiscardToken } from "../state-machine/valid-action-checker.js";
-import {playShakeAnimation} from "./token-handler.js";
+import { playShakeAnimation } from "./token-handler.js";
 
 function selectPlayerToken(e) {
     if (!clientMustDiscardToken()) return;

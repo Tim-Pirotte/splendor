@@ -7,7 +7,6 @@ import {
     highlightPointsWinner,
     getOrderedPlayersWithoutClientPlayer,
     isCreator,
-    safeEmptyContainer,
 } from "./helper.js";
 import { determinePlayerAvatar, getHighestScore } from "../../utils/game-object-handler.js";
 import { copyNode } from "../../utils/data-handler.js";
@@ -35,7 +34,7 @@ function renderOtherPlayers(players, currentPlayer) {
             otherPlayers[index],
             highestScore,
             currentPlayer,
-            isCreator(players, otherPlayers)
+            isCreator(players, otherPlayers),
         ).innerHTML;
     }
 }

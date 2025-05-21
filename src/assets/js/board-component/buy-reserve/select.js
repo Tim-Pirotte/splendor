@@ -13,7 +13,6 @@ import {
     setActionToBuyReserve,
     unHighlightCards,
 } from "./buy-handler.js";
-import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
 import { GAME_STATE } from "../state-machine/data.js";
 
 function selectCard(e) {

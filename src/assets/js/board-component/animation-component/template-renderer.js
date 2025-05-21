@@ -125,9 +125,7 @@ function processFunctionCallEnd(currentTokenBuffer, tokenStack, varsToInsert, ex
         const token = tokenStack.pop();
 
         if (token.type === "functionName") {
-            if (!(token.name in functions)) funcDoesNotExistError(currentTokenBuffer, expression);
-            tokenStack.push({ type: "argument", value: functions[token.name](...args.toReversed()) });
-            currentTokenBuffer = "";
+            currentTokenBuffer = executeFunction(token, functions, currentTokenBuffer, expression, tokenStack, args);
             break;
         }
 
@@ -135,6 +133,12 @@ function processFunctionCallEnd(currentTokenBuffer, tokenStack, varsToInsert, ex
     }
 
     return currentTokenBuffer;
+}
+
+function executeFunction(token, functions, currentTokenBuffer, expression, tokenStack, args) {
+    if (!(token.name in functions)) funcDoesNotExistError(currentTokenBuffer, expression);
+    tokenStack.push({ type: "argument", value: functions[token.name](...args.toReversed()) });
+    return "";
 }
 
 function processFunctionArgument(tokenStack, varsToInsert, currentTokenBuffer, expression) {
