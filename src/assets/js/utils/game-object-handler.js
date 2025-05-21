@@ -34,7 +34,7 @@ function getPlayersObjects(gameData, started) {
     for (const player of gameData["players"]) {
         players.push({
             "name": started ? player.name : player,
-            "avatar": started ? player.avatar : gameData["avatars"][player]
+            "avatar": started ? player.avatar : gameData["avatars"][player],
         });
     }
 

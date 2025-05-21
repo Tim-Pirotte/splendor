@@ -82,6 +82,7 @@ function setTimer(duration, timePassedForCurrentRound, $timerFill, gameState) {
             getActionButton().click();
         } catch(err) {
             startGameStatePolling();
+            console.error(err);
         }
 
     }
