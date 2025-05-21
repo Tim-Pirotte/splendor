@@ -13,16 +13,16 @@ import { getContainerAnimationForLeaving } from "./helper.js";
 import { LEAVING_PLAYER_ANIMATION_DURATION } from "../config.js";
 import { safeEmptyContainer } from "../board-component/renderer/helper.js";
 
-function renderGameInfo(g, started) {
-    document.querySelector("#game-name-id").innerHTML = `${getGameName(g)} / <span>${getGameId(g)}</span>`;
-    document.querySelector("h3").textContent = `Created by ${getGameCreator(g, started)}`;
+function renderGameInfo(gameObject, started) {
+    document.querySelector("#game-name-id").innerHTML = `${getGameName(gameObject)} / <span>${getGameId(gameObject)}</span>`;
+    document.querySelector("h3").textContent = `Created by ${getGameCreator(gameObject, started)}`;
 }
 
-function renderPlayersList(g, started) {
+function renderPlayersList(gameObject, started) {
     const $template = document.querySelector("#joined-player-template");
     const $joinedPlayers = document.querySelector("#joined-players");
     const $joinedPlayerContainers = $joinedPlayers.querySelectorAll("li");
-    const players = getPlayersObjects(g, started);
+    const players = getPlayersObjects(gameObject, started);
 
     for (const [index, player] of players.entries()) {
         let $player = $joinedPlayerContainers[index];
@@ -68,8 +68,8 @@ function renderPlayer(player, $container, $template) {
     $container.innerHTML =  $li.innerHTML;
 }
 
-function renderPlayerCount(g) {
-    document.querySelector("#player-count").textContent = `${getCurrentUsersAmount(g)} / ${getMaxUsersAmount(g)}`;
+function renderPlayerCount(gameObject) {
+    document.querySelector("#player-count").textContent = `${getCurrentUsersAmount(gameObject)} / ${getMaxUsersAmount(gameObject)}`;
 }
 
 function setCopyGameIdImageColor(color) {
