@@ -6,6 +6,7 @@ import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { filterGames } from "./gamefilter.js";
 import { insertImageInto } from "../utils/renderer.js";
 import { safeEmptyContainer } from "../board-component/renderer/helper.js";
+import { checkCompatibility } from "../server-version-component/server-version.js";
 
 function renderPlayerInfo() {
     const playerName = loadFromStorage("playerName");
@@ -20,9 +21,15 @@ function renderPublicGames(e) {
 
     if (!triggeredByPolling && e.target.value !== "Reset") e.preventDefault();
 
+    checkCompatibility(2).then(isCompatible => { renderCorrectGames(isCompatible); });
+
+    if (triggeredByPolling) setTimeout(renderPublicGames, JOIN_GAME_PAGE_POLLING_TIME_OUT);
+}
+
+function renderCorrectGames(isCompatible) {
     API.getGames().then(gameObject => {
         const $gameList = document.querySelector("ul");
-        const gamesToRender = filterGames(gameObject["games"]);
+        const gamesToRender = filterGames(gameObject["games"], isCompatible);
         const numberOfGamesToRender = gamesToRender.size;
 
         if (numberOfGamesToRender) {
@@ -40,7 +47,6 @@ function renderPublicGames(e) {
             $gameList.insertAdjacentHTML("beforeend", "<p>There are no games based on your selections</p>");
         }
 
-        if (triggeredByPolling) setTimeout(renderPublicGames, JOIN_GAME_PAGE_POLLING_TIME_OUT);
     });
 }
 
