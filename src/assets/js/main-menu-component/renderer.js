@@ -23,6 +23,7 @@ function renderPlayerInfo() {
     }
 }
 
+// TODO: change this to the function that is used in the join-game-component -> change that function and put it in a utils folder
 function renderNonValidPlayerName() {
     const $target = document.querySelector(".error-message");
     $target.classList.remove("none");
