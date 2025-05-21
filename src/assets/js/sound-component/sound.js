@@ -5,4 +5,4 @@ function soundInit () {
     document.querySelector(".sound-button").addEventListener("click", toggleSound);
 }
 
-soundInit();
+export { soundInit };
