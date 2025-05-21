@@ -1,5 +1,6 @@
 import { copyNode } from "./data-handler.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
+import { ERROR_MESSAGE_TIMEOUT } from "../config.js";
 
 function insertImageInto($container, standardPath, insertAtStart, alt, prefix = "..") {
     const $image = copyNode(document.querySelector("#image-template"));
@@ -22,7 +23,7 @@ function renderErrorMessage(message) {
     $target.classList.remove("none");
     $target.innerHTML = `<p>${message}</p>`;
 
-    setTimeout(() => $target.classList.add("none"), ERROR_MESSAGE_TIMEOUT);
+    setTimeout(() => $target.remove(), ERROR_MESSAGE_TIMEOUT);
 }
 
 function renderUnsupportedError($container, feature) {
