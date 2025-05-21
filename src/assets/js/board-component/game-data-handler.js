@@ -9,6 +9,7 @@ import {
     getAnimationDelayBeforePolling,
     setAnimationDelayBeforePolling,
 } from "./animation-component/data.js";
+import {IN_GAME_POLLING_TIME_OUT} from "../config.js";
 function handleGameDataError(err) {
     const forbidden = 403;
     const unauthorized = 401;
@@ -42,7 +43,7 @@ function updateGameData() {
             startRoundTimer(gameData["timePassedForCurrentRound"], gameData["gameState"]);
         }
 
-        setAnimationDelayBeforePolling(POLLING_TIME_OUT);
+        setAnimationDelayBeforePolling(IN_GAME_POLLING_TIME_OUT);
     });
 }
 
