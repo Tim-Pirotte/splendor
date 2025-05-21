@@ -70,7 +70,17 @@ function renderOtherPlayer($playerTemplate, otherPlayer, highestScore, currentPl
 }
 
 function showOtherPlayerTurn(playerName, currentPlayer, $playerCard) {
-    $playerCard.classList.toggle("current-player", playerName === currentPlayer);
+    if (playerName === currentPlayer) {
+        $playerCard.classList.add("current-player");
+    } else {
+        $playerCard.classList.remove("current-player");
+        $playerCard.classList.add("end-animation");
+        setTimeout(removeCurrentPlayerClass,300);
+    }
+
+    function removeCurrentPlayerClass() {
+        $playerCard.classList.remove("end-animation");
+    }
 }
 
 function setPlayerName($playerCard, otherPlayer) {
