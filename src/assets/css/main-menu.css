@@ -51,6 +51,24 @@ header img {
     height: 8.75rem
 }
 
+.error-message {
+    overflow: clip;
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding-left: 1rem;
+}
+
+.error-message p {
+    background-color: #752b39;
+    border: 0.1rem solid #542434;
+    color: var(--light-text-color);
+    padding: 0.5rem;
+    margin: 1rem 0;
+    box-shadow: 0 0 0.1rem 0.1rem #00000020, var(--buyable-card-box-shadow) #c98c08c2;
+    animation: message 10s normal ease-in-out;
+}
+
 /* Form */
 label {
     display: inline-block;

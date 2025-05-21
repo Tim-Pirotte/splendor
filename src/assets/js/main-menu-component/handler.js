@@ -1,5 +1,4 @@
 import { saveToStorage } from "../data-connector/local-storage-abstractor.js";
-import { renderErrorMessage } from "../join-game-component/renderer.js";
 import { renderNonValidPlayerName, renderPlayerInfo } from "./renderer.js";
 import { validatePlayerName } from "./validator.js";
 
