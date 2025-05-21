@@ -19,7 +19,7 @@ import { GAME_STATE } from "../state-machine/data.js";
 function selectCard(e) {
     const $card = getCard(e);
 
-    if (!($card && isCurrentlyPlaying() && loadFromStorage("gameData")["gameState"] === GAME_STATE.TURN_ACTION)) return;
+    if (!($card && isCurrentlyPlaying() && sessionStorage.getItem("gameState") === GAME_STATE.TURN_ACTION)) return;
 
     const cardName = $card.dataset.name;
 
