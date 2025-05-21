@@ -24,12 +24,9 @@ body::before {
 }
 
 button {
-    vertical-align: middle;
-    background-color: black;
+    background-color: transparent;
     color: white;
-    border: none;
-    height: 2.5rem;
-    width: 10rem;
+    border: none
 }
 
 body {
@@ -130,7 +127,7 @@ li p {
     animation: nameAppear 0.5s ease-in-out forwards;
 }
 
-li img {
+li > img {
     width: 2rem;
     height: 2rem;
     animation: rotateScaleUp 0.5s forwards linear;
@@ -181,7 +178,22 @@ li img {
 #copy-game-id-button {
     background-color: transparent;
     margin-bottom: 1rem;
-    width: fit-content;
+    height: 2.5rem;
+    width: 2.5rem;
+}
+
+#joined-players button {
+    position: absolute;
+    width: 1.5rem;
+    height: 1.5rem;
+    top: -0.5rem;
+    right: -0.5rem;
+    padding: 0;
+}
+
+#joined-players button img {
+    height: 100%;
+    width: 100%;
 }
 
 @keyframes scaleUp {

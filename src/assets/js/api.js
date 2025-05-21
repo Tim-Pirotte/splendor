@@ -44,7 +44,6 @@ function joinGame(gameId, playerName, spectatingEnabled, forfeit) {
 }
 
 function joinBot(level) {
-    console.log(level + NPC_SUFFIX)
     joinGame(loadFromStorage("gameId"), level + NPC_SUFFIX, false, false).then(res => console.log(res));
 }
 

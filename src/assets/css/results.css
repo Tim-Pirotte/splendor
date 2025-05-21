@@ -112,7 +112,7 @@ footer {
 #return-to-menu {
     display: flex;
     align-items: center;
-    text-align: center;
+    justify-content: center;
     width: 7.65rem;
     height: 2.55rem;
     background-size: cover;

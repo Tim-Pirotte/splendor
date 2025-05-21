@@ -4,13 +4,11 @@ import {
     renderGameInfo,
     renderGameStartingCountdown, renderLobbyPlayers, renderPlayerContainers,
     renderPlayerCount,
-    renderPlayersList,
     setCopyGameIdImageColor,
 } from "./renderer.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { locateToMainMenu } from "../utils/data-handler.js";
 import { checkCompatibility } from "../server-version-component/server-version.js";
-import {joinBot} from "../api.js";
 
 function loadLobbyInformation() {
     if (!loadFromStorage("gameId")) {
@@ -18,7 +16,6 @@ function loadLobbyInformation() {
     }
 
     API.getGame(loadLobbyInformation).then(gameData => {
-        console.log(gameData)
         renderGameInfo(gameData, gameData.started);
         renderLobbyPlayers(gameData, gameData.started);
         renderPlayerCount(gameData);
@@ -52,10 +49,12 @@ function hideIncompatibleElements() {
 function processAddBot(e) {
     const $clickedListItem = e.target.closest("li");
 
+    if (!e.target.closest("button")) return;
     if (!$clickedListItem?.classList.contains("add-bot")) return;
 
     const selectedLevel = $clickedListItem.querySelector("select").value;
-    joinBot(selectedLevel);
+
+    API.joinBot(selectedLevel);
 }
 
 export { loadLobbyInformation , copyGameId, processAddBot };
