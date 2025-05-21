@@ -1,9 +1,12 @@
+import { setupSound } from "../sound-component/helper.js";
 import { savePlayerInfo, toggleAvatarListVisibility, updateSelectedAvatar } from "./handler.js";
 import { renderAvatarSelectionList, renderPlayerInfo } from "./renderer.js";
 
 function init() {
     setupUI();
     setupEventListeners();
+
+    setupSound();
 }
 
 function setupUI() {
