@@ -359,6 +359,18 @@ main {
     border-radius: 10%;
 }
 
+@keyframes shake {
+    0%   { transform: translateX(0); }
+    25%  { transform: translateX(-0.2rem); }
+    50%  { transform: translateX(0.2rem); }
+    75%  { transform: translateX(-0.2rem); }
+    100% { transform: translateX(0); }
+}
+
+.shake {
+    animation: shake 0.4s;
+}
+
 .button-container button {
     width: 7.65rem;
     height: 2.55rem;

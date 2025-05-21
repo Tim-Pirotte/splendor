@@ -182,6 +182,8 @@ function processTakeTokensClick() {
 
     const requestBody = setTokensTo(stackPointer, $actionButton, 1);
 
+    playShakeAnimation(requestBody);
+
     API.takeTokens(requestBody).then(() => updateTokens(requestBody));
 }
 
@@ -191,7 +193,24 @@ function processTakeTwoTokens() {
 
     const requestBody = setTokensTo(stackPointer, $actionButton, 2);
 
+    playShakeAnimation(requestBody);
+
     API.takeTokens(requestBody).then(() => updateTokens(requestBody));
+}
+
+function playShakeAnimation(requestBody) {
+    toggleTokenShake(requestBody, true);
+    setTimeout(toggleTokenShake, 400);
+
+    function toggleTokenShake(requestBody, start = false) {
+        for (const token of Object.keys(requestBody["take"])) {
+            const $tokenText = document.querySelector(`.player-tokens [data-type="${token}"] .amount`);
+
+            $tokenText.textContent = requestBody["take"][token];
+
+            $tokenText.classList.toggle("shake", start);
+        }
+    }
 }
 
 export { selectToken, processTakeTokensClick, updateTokens, processTakeTwoTokens, unHighlightTokens };
