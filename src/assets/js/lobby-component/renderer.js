@@ -7,9 +7,9 @@ import {
     getMaxUsersAmount,
     getPlayersObjects,
 } from "../utils/game-object-handler.js";
-import { copyNode } from "../utils/data-handler.js";
+import {copyNode, getAmountOfTemplateTags} from "../utils/data-handler.js";
 import { reflowCSS } from "../board-component/helper.js";
-import { getContainerAnimationForLeaving } from "./helper.js";
+import {getContainerAnimationForLeaving, hasSomethingRenderedInside, isAddBotButton} from "./helper.js";
 import { LEAVING_PLAYER_ANIMATION_DURATION } from "../config.js";
 import { safeEmptyContainer } from "../board-component/renderer/helper.js";
 
@@ -27,7 +27,7 @@ function renderLobbyPlayers(gameData, started) {
 }
 
 function renderPlayerContainers(amountOfPlayers, $joinedPlayersContainer) {
-    if ($joinedPlayersContainer.childElementCount > 1) return;
+    if ($joinedPlayersContainer.childElementCount > getAmountOfTemplateTags($joinedPlayersContainer)) return;
 
     if ($joinedPlayersContainer)
     for (let i = 0; i < amountOfPlayers; i++) {
@@ -42,9 +42,18 @@ function renderBotPlaceHolders($joinedPlayersContainer) {
     const $playerContainers = $joinedPlayersContainer.querySelectorAll("li");
 
     for (const $container of $playerContainers) {
+        if (isAddBotButton($container)) return;
+
         if ($container.childElementCount === 0) {
+            renderAddBot($container);
+            return;
         }
     }
+}
+
+function renderAddBot($container) {
+    $container.classList.add("add-bot");
+    $container.innerHTML = copyNode(document.querySelector("#add-bot-template")).innerHTML;
 }
 
 function renderPlayersList(gameObject, started) {
@@ -56,9 +65,9 @@ function renderPlayersList(gameObject, started) {
     for (const [index, player] of players.entries()) {
         let $player = $joinedPlayerContainers[index];
 
-        if (player.name === null) {
+        if (player.name === null && !isAddBotButton($player) && hasSomethingRenderedInside($player)) {
             removeRenderedPlayer($player);
-        } else if (player.name !== $player?.querySelector(".player-name")?.innerText) {
+        } else if (player.name !== null && player.name !== $player?.querySelector(".player-name")?.innerText) {
             renderPlayer(player, $player, $template);
         } else {
             // https://www.keyboardfaces.com/
@@ -84,6 +93,7 @@ function renderPlayer(player, $container, $template) {
     $li.querySelector("img").src = `../assets/images/fallback/avatars/${avatar}.png`;
     $li.querySelector("img").alt = $li.querySelector("img").title = avatar;
 
+    $container.classList.remove("add-bot")
     $container.innerHTML =  $li.innerHTML;
 }
 

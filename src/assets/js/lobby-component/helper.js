@@ -8,4 +8,12 @@ function getContainerAnimationForLeaving($container) {
     ];
 }
 
-export { getContainerAnimationForLeaving };
+function isAddBotButton($player) {
+    return $player.classList.contains("add-bot");
+}
+
+function hasSomethingRenderedInside($player) {
+    return $player.childElementCount > 0;
+}
+
+export { getContainerAnimationForLeaving, isAddBotButton, hasSomethingRenderedInside };
