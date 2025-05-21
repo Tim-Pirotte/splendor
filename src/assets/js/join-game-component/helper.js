@@ -1,6 +1,6 @@
 import * as API from "../api.js";
 import { saveToStorage } from "../data-connector/local-storage-abstractor.js";
-import { renderErrorMessage } from "./renderer.js";
+import { renderErrorMessage } from "../utils/renderer.js";
 import {checkCompatibility} from "../server-version-component/server-version.js";
 import {renderUnsupportedError} from "../utils/renderer.js";
 
@@ -24,7 +24,7 @@ function initiateGameSession(gameId, spectating) {
         saveToStorage("playerToken", response["playerToken"]);
         location.href = "./lobby.html";
     }).catch(err => {
-        renderErrorMessage(err);
+        renderErrorMessage(err.cause);
     });
 }
 

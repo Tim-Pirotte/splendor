@@ -1,5 +1,5 @@
 import * as API from "../api.js";
-import { ERROR_MESSAGE_TIMEOUT, JOIN_GAME_PAGE_POLLING_TIME_OUT } from "../config.js";
+import { JOIN_GAME_PAGE_POLLING_TIME_OUT } from "../config.js";
 import { copyNode } from "../utils/data-handler.js";
 import { getCurrentUsersAmount, getGameId, getGameName, getGameState, getMaxUsersAmount } from "../utils/game-object-handler.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
@@ -56,13 +56,4 @@ function populateGame($template, game) {
     return $game;
 }
 
-function renderErrorMessage(err) {
-    const $target = document.querySelector(".error-message");
-
-    $target.classList.remove("none");
-    $target.innerHTML = `<p>${err.cause}</p>`;
-
-    setTimeout(() => $target.classList.add("none"), ERROR_MESSAGE_TIMEOUT);
-}
-
-export { renderPlayerInfo, renderPublicGames, renderErrorMessage };
+export { renderPlayerInfo, renderPublicGames };

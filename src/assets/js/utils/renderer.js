@@ -1,5 +1,6 @@
 import { copyNode } from "./data-handler.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
+import { ERROR_MESSAGE_TIMEOUT } from "../config.js";
 
 function insertImageInto($container, standardPath, insertAtStart, alt, prefix = "..") {
     const $image = copyNode(document.querySelector("#image-template"));
@@ -17,6 +18,14 @@ function setImageData($image, standardPath, alt, prefix) {
     $img.alt = $img.title = alt;
 }
 
+function renderErrorMessage(message) {
+    const $target = document.querySelector(".error-message");
+    $target.classList.remove("none");
+    $target.innerHTML = `<p>${message}</p>`;
+
+    setTimeout(() => $target.remove(), ERROR_MESSAGE_TIMEOUT);
+}
+
 function renderUnsupportedError($container, feature) {
     $container.innerHTML = `<p>${feature} is not supported on this server. Sorry for the inconvenience.</p>`;
 }
@@ -25,4 +34,4 @@ function renderDefaultGameNamePlaceholder($target) {
     $target.setAttribute("placeholder", `${loadFromStorage("playerName")}'s game`);
 }
 
-export { insertImageInto, renderUnsupportedError, renderDefaultGameNamePlaceholder };
+export { insertImageInto, renderUnsupportedError, renderDefaultGameNamePlaceholder, renderErrorMessage };

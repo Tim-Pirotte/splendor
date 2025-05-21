@@ -3,10 +3,13 @@ import { joinGame, joinGameUsingUsersInputId } from "./handler.js";
 import { locateToMainMenu } from "../utils/data-handler.js";
 import { renderPlayerInfo, renderPublicGames } from "./renderer.js";
 import { renderDefaultGameNamePlaceholder } from "../utils/renderer.js";
+import { soundInit } from "../sound-component/sound.js";
 
 function joinInit() {
     setupUI();
     setupEventListeners();
+
+    soundInit();
 }
 
 function setupUI() {
