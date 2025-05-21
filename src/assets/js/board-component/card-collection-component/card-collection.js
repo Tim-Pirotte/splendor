@@ -16,6 +16,8 @@ function trackCardEncounter(bonusColor, illustrationName, variant, gameId, illus
 }
 
 function renderCardUnlockedMessage(variant) {
+    const cardUnlockedDuration = 10_050;
+
     if (variant !== "REGULAR") {
         const messageContainer = document.querySelector(".unlocked-card-message");
         const messageText = `${variant.charAt(0) + variant.slice(1).toLowerCase().replace("_", " ")} card discovered!`;
@@ -27,7 +29,7 @@ function renderCardUnlockedMessage(variant) {
 
         setTimeout(() => {
             p.remove();
-        }, 10_050);
+        }, cardUnlockedDuration);
     }
 }
 

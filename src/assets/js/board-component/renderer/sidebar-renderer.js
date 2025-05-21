@@ -69,12 +69,14 @@ function renderOtherPlayer($playerTemplate, otherPlayer, highestScore, currentPl
 }
 
 function showOtherPlayerTurn(playerName, currentPlayer, $playerCard) {
+    const playerCardAnimationDuration = 300;
+
     if (playerName === currentPlayer) {
         $playerCard.classList.add("current-player");
     } else {
         if ($playerCard.classList.contains("current-player")) $playerCard.classList.add("end-animation");
         $playerCard.classList.remove("current-player");
-        setTimeout(removeCurrentPlayerClass,300);
+        setTimeout(removeCurrentPlayerClass, playerCardAnimationDuration);
     }
 
     function removeCurrentPlayerClass() {

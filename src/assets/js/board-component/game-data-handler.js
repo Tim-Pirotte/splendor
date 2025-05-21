@@ -1,4 +1,4 @@
-import { SECONDS_PER_ROUND, SECONDS_WHEN_TURN_ALMOST_ENDS } from "./config.js";
+import { ANIMATION_FINISH_DELAY, SECONDS_PER_ROUND, SECONDS_WHEN_TURN_ALMOST_ENDS } from "./config.js";
 import * as API from "../api.js";
 import { renderPage } from "./renderer/renderer.js";
 import { deselectAll, getActionButton, isCurrentlyPlaying } from "./game-status-interface.js";
@@ -39,7 +39,7 @@ function updateGameData() {
 
         if (!isCurrentlyPlaying()) {
             // Add a delay to evade a race condition between the animation cleanup and the rendering system
-            setTimeout(updateGameData, getAnimationDelayBeforePolling() + 500);
+            setTimeout(updateGameData, getAnimationDelayBeforePolling() + ANIMATION_FINISH_DELAY);
         } else {
             startRoundTimer(gameData["timePassedForCurrentRound"], gameData["gameState"]);
         }

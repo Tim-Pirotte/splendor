@@ -101,6 +101,8 @@ const cardMarketFadeAnimation = {
     easeFunction: "ease-in-out",
 };
 
+const cardScale = 1.3;
+
 export {
     setAnimationDelayBeforePolling,
     getAnimationDelayBeforePolling,
@@ -111,4 +113,5 @@ export {
     buyCardAnimation,
     cardMarketFadeAnimation,
     ANIMATION_FUNCTIONS,
+    cardScale,
 };

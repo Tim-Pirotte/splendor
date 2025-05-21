@@ -186,8 +186,10 @@ function processTakeTwoTokens() {
 }
 
 function playShakeAnimation(tokens, factor = 1) {
+    const shakeAnimationDuration = 400;
+
     toggleTokenShake(true, true);
-    setTimeout(toggleTokenShake, 400);
+    setTimeout(toggleTokenShake, shakeAnimationDuration);
 
     function toggleTokenShake(start = false, updateTokenText = false) {
         for (const token of Object.keys(tokens)) {

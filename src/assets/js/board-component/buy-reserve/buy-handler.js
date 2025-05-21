@@ -231,9 +231,11 @@ function removePaidTokens() {
 function updateCurrentPlayerBonuses(bonus) {
     const currentBonus = getClientBonuses();
 
-    currentBonus[bonus]
-        ? currentBonus[bonus]++
-        : currentBonus[bonus] = 1;
+    if (currentBonus[bonus]) {
+        currentBonus[bonus]++;
+    } else {
+        currentBonus[bonus] = 1;
+    }
 
     return currentBonus;
 }

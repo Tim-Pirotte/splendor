@@ -130,10 +130,9 @@ function renderReservedCards($reserved, reservedCards) {
 
         if ($reservedCard) {
             $reservedCard.classList.toggle(`${TOKEN_MAPPER[card["bonus"]]}-buyable-card`, validCardBuy(card["name"]));
-            continue;
+        } else {
+            $reserved.appendChild(renderCard(card));
         }
-
-        $reserved.appendChild(renderCard(card));
     }
 }
 

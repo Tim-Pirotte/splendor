@@ -204,6 +204,20 @@ main {
     width: 100%;
 }
 
+.player-card header, .player-card li {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+.history li {
+    display: flex;
+    align-items: center;
+    height: 1.5rem;
+    padding-left: 0.2rem;
+    font-size: 0.8rem;
+}
+
 /* Cards */
 .card ul li {
     display: flex;
@@ -226,6 +240,21 @@ main {
     position: relative;
 }
 
+/* Cards II */
+.card {
+    flex: 0 1 6rem;
+    aspect-ratio: 70 / 100;
+    position: relative;
+    transition: filter 0.3s, transform 0.3s, box-shadow 0.3s;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 0.1rem 0.1rem #00000020;
+    backface-visibility: hidden;
+    /* This is needed to prevent a redraw on a new texture which causes sub-pixel shifting due to different anti-aliasing.
+       Usage of will-change outside of optimization is frowned upon so if there is another way to fix this please change this.
+       https://developer.mozilla.org/en-US/docs/Web/CSS/will-change */
+    will-change: filter;
+}
+
 .player-tokens .card {
     width: 6rem;
     position: absolute;
@@ -240,20 +269,6 @@ main {
 /* Discard tokens */
 .discard-container p {
     font-size: 0.9rem;
-}
-
-.player-card header, .player-card li {
-    display: flex;
-    align-items: center;
-    gap: 0.2rem;
-}
-
-.history li {
-    display: flex;
-    align-items: center;
-    height: 1.5rem;
-    padding-left: 0.2rem;
-    font-size: 0.8rem;
 }
 
 .progress-bar picture {
@@ -324,6 +339,39 @@ main {
     display: flex;
     align-items: flex-end;
     gap: 0 0.5rem;
+}
+
+.cards-in-deck div > li {
+    width: 100%;
+    height: 100%;
+}
+
+.board-tokens li:hover {
+    cursor: var(--disabled-button-cursor);
+}
+
+.player-card .reserved li {
+    position: relative;
+}
+
+.history li:nth-child(even) {
+    background-color: rgb(187 146 86);
+}
+
+.reserved-cards div > picture, .cards-in-deck div > picture {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    transform: rotateY(180deg);
+}
+
+.reserved-cards div, .cards-in-deck div {
+    position: relative;
+    flex: 0 1 6rem;
+    z-index: 10;
 }
 
 .player-tokens ul > li:first-of-type {
@@ -412,21 +460,6 @@ main {
 .selectable-noble img:hover {
     filter: var(--hover-effect);
     cursor: var(--clickable-item-cursor);
-}
-
-/* Cards II */
-.card {
-    flex: 0 1 6rem;
-    aspect-ratio: 70 / 100;
-    position: relative;
-    transition: filter 0.3s, transform 0.3s, box-shadow 0.3s;
-    border-radius: 0.5rem;
-    box-shadow: 0 0 0.1rem 0.1rem #00000020;
-    backface-visibility: hidden;
-    /* This is needed to prevent a redraw on a new texture which causes sub-pixel shifting due to different anti-aliasing.
-       Usage of will-change outside of optimization is frowned upon so if there is another way to fix this please change this.
-       https://developer.mozilla.org/en-US/docs/Web/CSS/will-change */
-    will-change: filter;
 }
 
 .card ul {
@@ -529,10 +562,6 @@ aside .amount {
     gap: 0 0.5rem;
     flex-wrap: wrap;
     height: 22rem;
-}
-
-.board-tokens li:hover {
-    cursor: var(--disabled-button-cursor);
 }
 
 .pulsing-text {
@@ -643,10 +672,6 @@ aside {
     margin-bottom: 0.5rem;
 }
 
-.player-card .reserved li {
-    position: relative;
-}
-
 .player-card .reserved .amount {
     text-shadow: var(--primary-text-shadow);
 }
@@ -678,10 +703,6 @@ aside {
     scrollbar-width: thin;
     border-top: rgb(187 146 86) solid 0.2rem;
     box-shadow: 0 -0.1875rem 0 0 rgb(121 85 72 / 11%);
-}
-
-.history li:nth-child(even) {
-    background-color: rgb(187 146 86);
 }
 
 /* HEADER */
@@ -721,27 +742,6 @@ aside {
 .reserved-cards .card {
     /* Removes a 1 pixel gap between the box shadow and the card */
     height: 99%;
-}
-
-.reserved-cards div, .cards-in-deck div {
-    position: relative;
-    flex: 0 1 6rem;
-    z-index: 10;
-}
-
-.cards-in-deck div > li {
-    width: 100%;
-    height: 100%;
-}
-
-.reserved-cards div > picture, .cards-in-deck div > picture {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    transform: rotateY(180deg);
 }
 
 /* TIMER */

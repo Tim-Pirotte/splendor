@@ -143,7 +143,7 @@ function executeFunction(token, functions, currentTokenBuffer, expression, token
 
 function processFunctionArgument(tokenStack, varsToInsert, currentTokenBuffer, expression) {
     // The buffer is empty when the argument itself is a function
-    if (currentTokenBuffer === "") return "";
+    if (currentTokenBuffer === "") return currentTokenBuffer;
     if (!(currentTokenBuffer in varsToInsert)) varDoesNotExistError(currentTokenBuffer, expression);
 
     tokenStack.push({ type: "argument", value: varsToInsert[currentTokenBuffer] });

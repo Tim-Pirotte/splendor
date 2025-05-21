@@ -1,8 +1,7 @@
 import * as API from "../../api.js";
 import { endBuyReserveAction, getReserveCardButton } from "./helper.js";
 import { startGameStatePolling } from "../game-data-handler.js";
-import { getCardObject } from "../state-machine/valid-action-checker.js";
-import { validDeckReserve } from "../state-machine/valid-action-checker.js";
+import { validDeckReserve, getCardObject } from "../state-machine/valid-action-checker.js";
 import { setActionToBuyReserve } from "./buy-handler.js";
 import { addGoldToken } from "../renderer/current-player-renderer.js";
 import {
@@ -23,24 +22,8 @@ function processReserve(){
 
     const selectedCardName = getReserveCardButton().dataset.name;
     const cardDeckLevel = getReserveCardButton().dataset.level;
-    let requestBody;
 
-    if (selectedCardName) {
-        playCardToReservedAnimation(selectedCardName);
-        setAnimationDelayBeforePolling(reserveCardAnimation.duration);
-
-        requestBody = {
-            "development": {
-                "name": selectedCardName,
-            },
-        };
-    } else {
-        requestBody = {
-            "development": {
-                "level": parseInt(cardDeckLevel),
-            },
-        };
-    }
+    const requestBody = getReserveRequestBody(selectedCardName, cardDeckLevel);
 
     API.reserveCard(requestBody).then(res => {
         if (!selectedCardName) {
@@ -52,6 +35,25 @@ function processReserve(){
     endBuyReserveAction();
 
     startGameStatePolling();
+}
+
+function getReserveRequestBody(selectedCardName, cardDeckLevel) {
+    if (selectedCardName) {
+        playCardToReservedAnimation(selectedCardName);
+        setAnimationDelayBeforePolling(reserveCardAnimation.duration);
+
+        return {
+            "development": {
+                "name": selectedCardName,
+            },
+        };
+    } else {
+        return {
+            "development": {
+                "level": parseInt(cardDeckLevel),
+            },
+        };
+    }
 }
 
 function playCardToReservedAnimation(selectedCardName) {
