@@ -93,6 +93,10 @@ table tbody tr.winner td {
     width: 20rem;
 }
 
+#table-container img {
+    width: 1.45rem;
+}
+
 table li {
     list-style-type: none;
 }
