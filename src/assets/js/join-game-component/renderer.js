@@ -17,6 +17,7 @@ function renderPlayerInfo() {
 
 function renderPublicGames(e) {
     const triggeredByPolling = e === undefined;
+
     if (!triggeredByPolling && e.target.value !== "Reset") e.preventDefault();
 
     API.getGames().then(gameObject => {
