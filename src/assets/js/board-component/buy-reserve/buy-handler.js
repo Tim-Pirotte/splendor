@@ -31,12 +31,14 @@ function setActionToBuyReserve($card, isValidCardBuy, isValidCardReserve, deckLe
 
     hideSwitchPaymentButtons();
     highlightCard($card);
+
     setActionButtonState(
         "buy",
         "processBuyCardClick",
         datasetParameters,
         true,
     );
+
     setReserveButtonData($card, deckLevel);
 
     if (isValidCardBuy) allowToBuy($card);

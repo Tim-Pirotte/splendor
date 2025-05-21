@@ -90,6 +90,15 @@ const buyCardAnimation = {
     easeFunction: "ease-in-out",
 };
 
+const cardMarketFadeAnimation = {
+    keyFrames: [
+        { opacity: "1" },
+        { opacity: "0" },
+    ],
+    duration: 200,
+    easeFunction: "ease-in-out",
+}
+
 export {
     setAnimationDelayBeforePolling,
     getAnimationDelayBeforePolling,
@@ -98,5 +107,6 @@ export {
     reserveCardFromDeckAnimationBack,
     reserveCardShiftAnimation,
     buyCardAnimation,
+    cardMarketFadeAnimation,
     ANIMATION_FUNCTIONS,
 };

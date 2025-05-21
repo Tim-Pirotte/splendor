@@ -23,6 +23,7 @@ import {validCardBuy, validNobelPick} from "../state-machine/valid-action-checke
 import { canSelectNoble } from "../nobles/nobles-handler.js";
 import {animateFromTo} from "../animation-component/animation-handler.js";
 import {
+    cardMarketFadeAnimation,
     reserveCardFromDeckAnimationBack,
     reserveCardFromDeckAnimationFront,
     setAnimationDelayBeforePolling
@@ -38,6 +39,7 @@ function renderCards(market) {
 
         for (const [index, $previousCard] of $currentDeck.querySelectorAll(":scope > li").entries()) {
             const cardData = deck["visibleCards"][index];
+
             if (!cardData) continue;
             
             if ($previousCard.dataset.name === cardData["name"]) {
@@ -49,21 +51,39 @@ function renderCards(market) {
                 continue;
             }
 
-            const $source = document.querySelector(`.level-${deck["level"]} picture`);
+            setAnimationDelayBeforePolling(
+                reserveCardFromDeckAnimationFront.duration + cardMarketFadeAnimation.duration
+            );
 
-            const $newCard = renderCard(cardData);
-            const $cardSidesContainer = document.createElement("div");
-            $cardSidesContainer.appendChild($newCard);
-            const $cardBack = $source.cloneNode(true);
-            $cardSidesContainer.appendChild($cardBack);
-            // outerHTML makes a copy of the nodes outerHTML attribute so you don't have a reference to the node in the DOM.
-            // I am using replaceWith because then I don't have to query the card again to get a new reference.
-            $previousCard.replaceWith($cardSidesContainer);
-            setAnimationDelayBeforePolling(reserveCardFromDeckAnimationFront.duration);
-            animateFromTo($source, $newCard, reserveCardFromDeckAnimationFront, removeBackFromCard);
-            animateFromTo($source, $cardBack, reserveCardFromDeckAnimationBack);
+            const animationPlayer = $previousCard.animate(
+                cardMarketFadeAnimation.keyFrames,
+                {
+                    duration: cardMarketFadeAnimation.duration,
+                    easing: cardMarketFadeAnimation.easeFunction,
+                },
+            );
+
+            animationPlayer.addEventListener(
+                "finish",
+                () => animateNewCard(deck, cardData, $previousCard)
+            );
         }
     }
+}
+
+function animateNewCard(deck, cardData, $previousCard) {
+    const $source = document.querySelector(`.level-${deck["level"]} picture`);
+
+    const $newCard = renderCard(cardData);
+    const $cardSidesContainer = document.createElement("div");
+    $cardSidesContainer.appendChild($newCard);
+    const $cardBack = $source.cloneNode(true);
+    $cardSidesContainer.appendChild($cardBack);
+    // outerHTML makes a copy of the nodes outerHTML attribute so you don't have a reference to the node in the DOM.
+    // I am using replaceWith because then I don't have to query the card again to get a new reference.
+    $previousCard.replaceWith($cardSidesContainer);
+    animateFromTo($source, $newCard, reserveCardFromDeckAnimationFront, removeBackFromCard);
+    animateFromTo($source, $cardBack, reserveCardFromDeckAnimationBack);
 }
 
 function removeBackFromCard($target) {
