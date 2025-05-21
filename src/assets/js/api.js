@@ -43,8 +43,9 @@ function joinGame(gameId, playerName, spectatingEnabled, forfeit) {
     });
 }
 
-function letBotJoin(level) {
-    joinGame(loadFromStorage("gameId", level + NPC_SUFFIX, false, false));
+function joinBot(level) {
+    console.log(level + NPC_SUFFIX)
+    joinGame(loadFromStorage("gameId"), level + NPC_SUFFIX, false, false).then(res => console.log(res));
 }
 
 /* Game Actions */
@@ -98,5 +99,5 @@ export {
     takeNobles,
     getApiInfo,
     leaveGame,
-    letBotJoin
+    joinBot,
 };
