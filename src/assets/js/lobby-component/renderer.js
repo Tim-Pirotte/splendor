@@ -7,9 +7,9 @@ import {
     getMaxUsersAmount,
     getPlayersObjects,
 } from "../utils/game-object-handler.js";
-import {copyNode, getAmountOfTemplateTags} from "../utils/data-handler.js";
+import { copyNode, getAmountOfTemplateTags } from "../utils/data-handler.js";
 import { reflowCSS } from "../board-component/helper.js";
-import {getContainerAnimationForLeaving, hasSomethingRenderedInside, isAddBotButton} from "./helper.js";
+import { getContainerAnimationForLeaving, hasSomethingRenderedInside, isAddBotButton } from "./helper.js";
 import { LEAVING_PLAYER_ANIMATION_DURATION } from "../config.js";
 import { safeEmptyContainer } from "../board-component/renderer/helper.js";
 
@@ -30,24 +30,31 @@ function renderPlayerContainers(amountOfPlayers, $joinedPlayersContainer) {
     if ($joinedPlayersContainer.childElementCount > getAmountOfTemplateTags($joinedPlayersContainer)) return;
 
     if ($joinedPlayersContainer)
-    for (let i = 0; i < amountOfPlayers; i++) {
+    {for (let i = 0; i < amountOfPlayers; i++) {
         const $player = document.createElement("li");
         $player.classList.add("player");
 
         $joinedPlayersContainer.appendChild($player);
-    }
+    }}
 }
 
 function renderBotPlaceHolders($joinedPlayersContainer) {
     const $playerContainers = $joinedPlayersContainer.querySelectorAll("li");
+    let aBotHasBeenRendered = false;
 
     for (const $container of $playerContainers) {
-        if (isAddBotButton($container)) return;
-
-        if ($container.childElementCount === 0) {
-            renderAddBot($container);
-            return;
+        if (isAddBotButton($container) && aBotHasBeenRendered) {
+            safeEmptyContainer($container);
+            continue;
         }
+
+        if ($container.childElementCount === 0 && !aBotHasBeenRendered) {
+            renderAddBot($container);
+            aBotHasBeenRendered = true;
+            continue;
+        }
+
+        if (isAddBotButton($container)) aBotHasBeenRendered = true;
     }
 }
 
@@ -63,7 +70,7 @@ function renderPlayersList(gameObject, started) {
     const players = getPlayersObjects(gameObject, started);
 
     for (const [index, player] of players.entries()) {
-        let $player = $joinedPlayerContainers[index];
+        const $player = $joinedPlayerContainers[index];
 
         if (player.name === null && !isAddBotButton($player) && hasSomethingRenderedInside($player)) {
             removeRenderedPlayer($player);
@@ -93,7 +100,7 @@ function renderPlayer(player, $container, $template) {
     $li.querySelector("img").src = `../assets/images/fallback/avatars/${avatar}.png`;
     $li.querySelector("img").alt = $li.querySelector("img").title = avatar;
 
-    $container.classList.remove("add-bot")
+    $container.classList.remove("add-bot");
     $container.innerHTML =  $li.innerHTML;
 }
 

@@ -1,5 +1,5 @@
 import * as API from "../api.js";
-import {loadFromStorage, saveToStorage} from "../data-connector/local-storage-abstractor.js";
+import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
 import { renderErrorMessage } from "./renderer.js";
 
 function joinGameById(gameId, spectatingEnabled) {
