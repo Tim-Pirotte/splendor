@@ -1,9 +1,9 @@
 import * as API from "../api.js";
-import { saveToStorage } from "../data-connector/local-storage-abstractor.js";
+import {loadFromStorage, saveToStorage} from "../data-connector/local-storage-abstractor.js";
 import { renderErrorMessage } from "./renderer.js";
 
 function joinGameById(gameId, spectatingEnabled) {
-    API.joinGame(gameId, spectatingEnabled, false)
+    API.joinGame(gameId, loadFromStorage("playerName"),spectatingEnabled, false)
         .then(response => {
             saveToStorage("gameId", response["gameId"]);
             saveToStorage("playerToken", response["playerToken"]);

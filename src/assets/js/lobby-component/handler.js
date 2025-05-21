@@ -47,4 +47,13 @@ function hideIncompatibleElements() {
     });
 }
 
-export { loadLobbyInformation , copyGameId };
+function processAddBot(e) {
+    const $clickedListItem = e.target.closest("li");
+
+    if (!$clickedListItem?.classList.contains("add-bot")) return;
+
+    const selectedLevel = $clickedListItem.querySelector("select").value;
+
+}
+
+export { loadLobbyInformation , copyGameId, processAddBot };

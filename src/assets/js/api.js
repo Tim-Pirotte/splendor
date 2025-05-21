@@ -1,7 +1,7 @@
 import { fetchFromServer } from "./data-connector/api-communication-abstractor.js";
 import { loadFromStorage } from "./data-connector/local-storage-abstractor.js";
 import { checkCompatibility } from "./server-version-component/server-version.js";
-import { IN_GAME_POLLING_TIME_OUT } from "./config.js";
+import {IN_GAME_POLLING_TIME_OUT, NPC_SUFFIX} from "./config.js";
 import { handleGameDataError } from "./board-component/game-data-handler.js";
 import { locateToMainMenu } from "./utils/data-handler.js";
 
@@ -26,7 +26,7 @@ function getGame(functionToRunUponFailure) {
     });
 }
 
-function joinGame(gameId, spectatingEnabled, forfeit) {
+function joinGame(gameId, playerName, spectatingEnabled, forfeit) {
     return checkCompatibility(2).then(isCompatible => {
         let body = {};
 
@@ -39,13 +39,12 @@ function joinGame(gameId, spectatingEnabled, forfeit) {
             };
         }
 
-        const playerName = loadFromStorage("playerName");
         return fetchFromServer(`/games/${gameId}/players/${playerName}`, "POST", body);
     });
 }
 
-function skipTurn() {
-    takeTokens({ take: {} });
+function letBotJoin(level) {
+    joinGame(loadFromStorage("gameId", level + NPC_SUFFIX, false, false));
 }
 
 /* Game Actions */
@@ -74,7 +73,7 @@ function takeNobles(requestBody) {
 }
 
 function leaveGame() {
-    joinGame(loadFromStorage("gameId"), true, true)
+    joinGame(loadFromStorage("gameId"), loadFromStorage("playerName"),true, true)
         .then(() => locateToMainMenu())
         .catch(() => locateToMainMenu());
 }
@@ -83,4 +82,21 @@ function getApiInfo() {
     return fetchFromServer("/info");
 }
 
-export { getGames, createGame, getGame, joinGame, skipTurn, takeTokens, buyCard, reserveCard, takeNobles, getApiInfo, leaveGame };
+function skipTurn() {
+    takeTokens({ take: {} });
+}
+
+export {
+    getGames,
+    createGame,
+    getGame,
+    joinGame,
+    skipTurn,
+    takeTokens,
+    buyCard,
+    reserveCard,
+    takeNobles,
+    getApiInfo,
+    leaveGame,
+    letBotJoin
+};
