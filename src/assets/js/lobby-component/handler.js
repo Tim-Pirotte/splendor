@@ -1,6 +1,12 @@
 import * as API from "../api.js";
-import { COPY_BUTTON_REMOVE_FEEDBACK_DELAY, POLLING_TIME_OUT } from "../config.js";
-import { renderGameInfo, renderPlayerCount, renderPlayersList, setCopyGameIdImageColor } from "./renderer.js";
+import { COPY_BUTTON_REMOVE_FEEDBACK_DELAY, IN_GAME_POLLING_TIME_OUT, LOBBY_COUNTDOWN_DURATION } from "../config.js";
+import {
+    renderGameInfo,
+    renderGameStartingCountdown,
+    renderPlayerCount,
+    renderPlayersList,
+    setCopyGameIdImageColor,
+} from "./renderer.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { locateToMainMenu } from "../utils/data-handler.js";
 import { checkCompatibility } from "../server-version-component/server-version.js";
@@ -10,15 +16,20 @@ function loadLobbyInformation() {
         locateToMainMenu();
     }
 
-    API.getGame().then(gameData => {
+    API.getGame(loadLobbyInformation).then(gameData => {
+        renderGameInfo(gameData, gameData.started);
+        renderPlayersList(gameData, gameData.started);
+        renderPlayerCount(gameData);
+        hideIncompatibleElements();
         if (gameData.started) {
-            location.href = "./board.html";
+            const $countdownContainer = document.createElement("li");
+            $countdownContainer.classList.add("starting-countdown");
+
+            document.querySelector("ul").insertAdjacentElement("beforeend", $countdownContainer);
+
+            renderGameStartingCountdown(LOBBY_COUNTDOWN_DURATION, $countdownContainer);
         } else {
-            renderGameInfo(gameData);
-            renderPlayersList(gameData);
-            renderPlayerCount(gameData);
-            hideIncompatibleElements();
-            setTimeout(loadLobbyInformation, POLLING_TIME_OUT);
+            setTimeout(loadLobbyInformation, IN_GAME_POLLING_TIME_OUT);
         }
     });
 }
@@ -27,7 +38,7 @@ function copyGameId(){
     setCopyGameIdImageColor("red");
     const gameId = loadFromStorage("gameId");
     navigator.clipboard.writeText(gameId);
-    setTimeout(setCopyGameIdImageColor, COPY_BUTTON_REMOVE_FEEDBACK_DELAY, "black");
+    setTimeout(setCopyGameIdImageColor, COPY_BUTTON_REMOVE_FEEDBACK_DELAY, "white");
 }
 
 function hideIncompatibleElements() {
@@ -35,4 +46,5 @@ function hideIncompatibleElements() {
         if (!isCompatible) document.querySelector(".leave-button").classList.add("none");
     });
 }
+
 export { loadLobbyInformation , copyGameId };

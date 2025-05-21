@@ -3,10 +3,11 @@ main {
     padding: 1rem 0 1rem 0;
     width: 40rem;
     text-align: center;
-    margin: 2.5rem auto 2.5rem auto;
+    margin: 0 auto;
     background-color: #372b53;
-    border : var(--border-collor) solid 0.3rem;
-    outline: var(--outline-collor) solid 0.3rem;
+    border : var(--border-color) solid 0.3rem;
+    outline: var(--outline-color) solid 0.3rem;
+    height: 12rem;
 }
 
 body {
@@ -29,7 +30,6 @@ body::before {
 }
 
 body > div {
-    padding-top: 5rem;
     box-sizing: border-box;
     display: flex;
     align-items: center;
@@ -44,8 +44,11 @@ body > div {
 
 /* Splendor logo */
 header {
-    margin: 2rem auto 5rem auto;
-    scale: 225%;
+    margin: 5rem auto 3rem auto;
+}
+
+header img {
+    height: 8.75rem
 }
 
 /* Form */
@@ -62,6 +65,14 @@ label {
     list-style-type: none;
 }
 
+.avatar-selector section ul li {
+    list-style: none;
+}
+
+.avatar-selector li:hover {
+    cursor: var(--clickable-item-cursor);
+}
+
 form .avatar-selector {
     transform: translateY(0.625rem);
 }
@@ -75,6 +86,8 @@ form .avatar-selector {
 .avatar-selector button {
     background-color: transparent;
     border: none;
+    width: 2rem;
+    height: 2rem;
 }
 
 .avatar-selector button img {
@@ -95,10 +108,6 @@ form .avatar-selector {
     z-index: 5;
 }
 
-.avatar-selector section ul li {
-    list-style: none;
-}
-
 .avatar-selector section h2 {
     font-size: 1.2rem;
     margin-bottom: 1rem;
@@ -111,6 +120,7 @@ form .avatar-selector {
     align-items: center;
     gap: 1rem;
     margin: 4rem auto 0 auto;
+    height: 2.55rem;
 }
 
 .form-actions button {
@@ -123,6 +133,7 @@ form .avatar-selector {
     color: var(--light-text-color);
     font-size: 0.7rem;
     transition: var(--hover-transition-duration);
+    animation: buttonAppear 0.5s ease-in-out forwards;
 }
 
 .form-actions button:hover {
@@ -135,6 +146,7 @@ main a {
     margin: 2rem 2rem auto 2rem;
     text-align: left;
     color: white;
+    width: fit-content;
 }
 
 /* Place the audio toggle at the right side of the footer */
@@ -149,4 +161,18 @@ footer .sound-button {
     height: 3rem;
     background-color: transparent;
     border: none;
+}
+
+@keyframes buttonAppear {
+    0% {
+        transform: scale(0);
+    }
+
+    85% {
+        transform: scale(1.07);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }

@@ -5,8 +5,11 @@ import { deselectCard } from "./select.js";
 import { getCardObject, validDeckReserve } from "../state-machine/valid-action-checker.js";
 import { highlightCard, setActionToBuyReserve } from "./buy-handler.js";
 import { addGoldToken } from "../renderer/current-player-renderer.js";
+import { validDeckReserve } from "../state-machine/valid-action-checker.js";
+import { setActionToBuyReserve } from "./buy-handler.js";
+import { addGoldToken, renderClientPlayerReserve } from "../renderer/current-player-renderer.js";
 import {
-    getActionButton,
+    deselectAll,
     isCurrentlyPlaying,
     resetCurrentPlayer,
 } from "../game-status-interface.js";
@@ -87,20 +90,14 @@ function selectDeckForReserving(e) {
     if (!isCurrentlyPlaying()) return;
 
     const $clickedDeck = e.currentTarget;
-    const $clickedCard = $clickedDeck.querySelector(".hidden-cards");
     const deckLevel = $clickedDeck.closest("li").dataset.deckLevel;
     const previousSelectedLevel = getReserveCardButton().dataset.level;
 
-    if (previousSelectedLevel === deckLevel) {
-        deselectCard(true);
-        return;
-    }
+    deselectAll();
 
-    highlightCard($clickedDeck);
-    setActionToBuyReserve($clickedCard, false, validDeckReserve(deckLevel), deckLevel);
+    if (previousSelectedLevel === deckLevel) return;
 
-    getActionButton().disabled = true;
-    getReserveCardButton().disabled = !validDeckReserve(deckLevel);
+    setActionToBuyReserve($clickedDeck, false, validDeckReserve(deckLevel), deckLevel);
 }
 
 export { processReserve, selectDeckForReserving };

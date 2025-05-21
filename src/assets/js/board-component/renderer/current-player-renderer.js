@@ -2,9 +2,8 @@ import { GEMS } from "../data.js";
 import { CHIP_SPACING, MAX_TOKENS_ALLOWED, PRESTIGE_POINTS_NEEDED_TO_WIN, TOKEN_MAPPER } from "../config.js";
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
 import { getTokenAmount, getTotalAmountDiscarded, getTotalTokenAmount } from "../tokens/discard.js";
-import {clientMustDiscardToken, validCardBuy} from "../state-machine/valid-action-checker.js";
+import { clientMustDiscardToken, validCardBuy } from "../state-machine/valid-action-checker.js";
 import {
-    addNodesToEmptiedContainer,
     addSwitchButton,
     formatNumber,
     getNumberedItemTemplate,
@@ -26,6 +25,8 @@ import { isCurrentlyPlaying } from "../game-status-interface.js";
 import { insertImageInto } from "../../utils/renderer.js";
 import { checkCompatibility } from "../../server-version-component/server-version.js";
 import { reflowCSS } from "../helper.js";
+import { isSpectator } from "../state-machine/state-machine.js";
+import { TIME_AFTER_SPECTATOR_DOES_NOT_GET_RENDERED } from "../../config.js";
 import {animateShiftListItems, getVisibleListItemsBoundingBoxes} from "../animation-component/animation-handler.js";
 import {reserveCardShiftAnimation} from "../animation-component/data.js";
 
@@ -37,10 +38,18 @@ function renderGameStatusMessage(currentPlayer) {
     $statusMessage.dataset.currentlyPlaying = currentPlayer;
 }
 
-function renderPlayerProfile(gameCreatorName) {
-    document.querySelector(".top-bar h2").textContent = loadFromStorage("playerName");
+function renderAmountOfSpectators(spectators) {
+    document.querySelector(".amount-of-spectators").textContent = spectators.filter(
+        spectator => spectator.pollDelta < TIME_AFTER_SPECTATOR_DOES_NOT_GET_RENDERED,
+    ).length;
+}
+
+function renderPlayerProfile(gameCreatorName, spectators) {
+    const playerName = loadFromStorage("playerName");
+
+    document.querySelector(".top-bar h2").textContent = playerName;
     renderAvatar(gameCreatorName);
-    renderForfeitButton();
+    renderForfeitButton(playerName, spectators);
 }
 
 function renderAvatar(gameCreatorName) {
@@ -55,10 +64,11 @@ function renderAvatar(gameCreatorName) {
     if (loadFromStorage("playerName") === gameCreatorName) $avatar.querySelector("img").classList.add("game-creator");
 }
 
-function renderForfeitButton() {
+function renderForfeitButton(playerName, spectators) {
     checkCompatibility(2)
         .then(isCompatible => {
-            document.querySelector(".forfeit").classList.toggle("none", !isCompatible);
+            document.querySelector(".forfeit")
+                .classList.toggle("none", !isCompatible || isSpectator(spectators, playerName));
         });
 }
 
@@ -88,7 +98,7 @@ function renderPrestigePointsProgressBar(totalPrestigePoints) {
 function addHighestScoreIndicator(totalPrestigePoints, highestScore) {
     const $highestScoreIndicator = document.querySelector(".player-points picture");
 
-    if (totalPrestigePoints >= highestScore) $highestScoreIndicator.classList.remove("hidden");
+    $highestScoreIndicator.classList.toggle("hidden", highestScore > totalPrestigePoints);
 }
 
 function renderClientPlayerReserve(reservedCards) {
@@ -345,4 +355,5 @@ export {
     renderGameStatusMessage,
     renderPlayerProfile,
     renderClientPlayerReserve,
+    renderAmountOfSpectators,
 };

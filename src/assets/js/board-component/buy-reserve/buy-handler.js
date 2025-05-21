@@ -1,6 +1,7 @@
 import * as API from "../../api.js";
 import { getActionButton, setActionButtonState } from "../game-status-interface.js";
 import {
+    hideSwitchPaymentButtons,
     renderSwitchPaymentButtons,
     renderUpdatedPlayerScore,
     renderUpdatedPlayerTokens,
@@ -28,7 +29,8 @@ function setActionToBuyReserve($card, isValidCardBuy, isValidCardReserve, deckLe
     const datasetParameters = deckLevel ? {} : { name: $card.dataset.name };
     const $reserveCardButton = getReserveCardButton();
 
-    unHighlightTokens();
+    hideSwitchPaymentButtons();
+    highlightCard($card);
     setActionButtonState(
         "buy",
         "processBuyCardClick",
@@ -55,10 +57,6 @@ function highlightCard($card) {
     unHighlightTokens();
     unHighlightCards();
     $card.classList.add("selected-card");
-}
-
-function cardAlreadySelected(cardName) {
-    return getActionButton().dataset.name === cardName;
 }
 
 function canBuy(name) {
@@ -257,7 +255,6 @@ export {
     canBuy,
     unHighlightCards,
     getCard,
-    cardAlreadySelected,
     highlightCard,
     setActionToBuyReserve,
     allowToBuy,

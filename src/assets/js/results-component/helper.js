@@ -7,11 +7,12 @@ function getSortedResults() {
         .then(gameData => {
             if (gameData.gameState !== GAME_STATE.WINNER_IS_FOUND) location.href = "./board.html";
 
-            const results = gameData.players.map(player => ({
-                name: player.name,
-                points: player["totalPrestigePoints"],
-                amountOfBonuses: getAmountOfBonuses(player),
-            })).sort((a, b) => compareByPointsThenBonuses(b, a));
+            const results = gameData.players.filter(player => !player.forfeited)
+                .map(player => ({
+                    name: player.name,
+                    points: player["totalPrestigePoints"],
+                    amountOfBonuses: getAmountOfBonuses(player),
+                })).sort((a, b) => compareByPointsThenBonuses(b, a));
 
             addPositionToPlayers(results);
 

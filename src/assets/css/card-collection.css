@@ -35,6 +35,11 @@ section {
 header a {
     display: block;
     margin: 1rem;
+    transition: var(--hover-transition-duration);
+}
+
+header a:hover {
+    filter: var(--button-hover-filter);
 }
 
 header a img {

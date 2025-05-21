@@ -32,6 +32,7 @@ header {
     flex-flow: row nowrap;
     justify-content: space-between;
     margin: 2rem 2rem 0 2rem;
+    height: 3rem;
 }
 
 header > a {
@@ -41,9 +42,10 @@ header > a {
 
 header > a img {
     width: 2.375rem;
+    transition: var(--hover-transition-duration);
 }
 
-header > a:hover {
+header > a img:hover {
     filter: var(--button-hover-filter);
 }
 
@@ -61,8 +63,8 @@ main {
     margin: auto;
     box-sizing: border-box;
     background-color: #372b53;
-    border : var(--border-collor) solid 0.5rem;
-    outline: var(--outline-collor) solid 0.5rem;
+    border : var(--border-color) solid 0.5rem;
+    outline: var(--outline-color) solid 0.5rem;
     background-size: 100% 100%;
 }
 
@@ -111,11 +113,6 @@ form > button {
     color: var(--light-text-color);
     font-size: 0.7rem;
     transition: var(--hover-transition-duration);
-}
-
-form > button:hover {
-    filter: var(--button-hover-filter);
-    cursor: var(--clickable-item-cursor);
 }
 
 /* footer */

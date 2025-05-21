@@ -3,14 +3,13 @@ import { validCardBuy, validCardReserve } from "../state-machine/valid-action-ch
 import { getReserveCardButton } from "./helper.js";
 import {
     clearDatasetAttributes,
+    deselectAll,
     getActionButton,
     isCurrentlyPlaying,
     setActionButtonState,
 } from "../game-status-interface.js";
 import {
-    cardAlreadySelected,
     getCard,
-    highlightCard,
     setActionToBuyReserve,
     unHighlightCards,
 } from "./buy-handler.js";
@@ -25,14 +24,12 @@ function selectCard(e) {
     const cardName = $card.dataset.name;
 
     sessionStorage.removeItem("paymentMethod");
-    hideSwitchPaymentButtons();
 
-    if (cardAlreadySelected(cardName)) {
-        deselectCard(true);
-        return;
-    }
+    const previousSelectedCardName = getActionButton().dataset.name;
+    deselectAll();
 
-    highlightCard($card);
+    if (cardName === previousSelectedCardName) return;
+
     setActionToBuyReserve($card, validCardBuy(cardName), validCardReserve($card));
 }
 

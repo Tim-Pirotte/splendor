@@ -9,9 +9,8 @@ import {
     isCreator,
     safeEmptyContainer,
 } from "./helper.js";
-import { getHighestScore } from "../../utils/game-object-handler.js";
+import { determinePlayerAvatar, getHighestScore } from "../../utils/game-object-handler.js";
 import { copyNode } from "../../utils/data-handler.js";
-import { avatars } from "../../main-menu-component/data.js";
 import { checkCompatibility } from "../../server-version-component/server-version.js";
 import { insertImageInto, renderUnsupportedError } from "../../utils/renderer.js";
 
@@ -37,26 +36,20 @@ function renderOtherPlayers(players, currentPlayer) {
     }
 }
 
-function getAvatar(otherPlayer) {
-    if ("avatar" in otherPlayer) {
-        return otherPlayer.avatar;
-    } else {
-        return avatars[otherPlayer.name.toLowerCase().charCodeAt(0) % avatars.length];
-    }
-}
-
 function renderOtherPlayer($playerTemplate, otherPlayer, highestScore, currentPlayer, isGameCreator) {
     const $playerCard = copyNode($playerTemplate);
     const playerName = otherPlayer.name;
-    const avatar = getAvatar(otherPlayer);
+    const avatar = determinePlayerAvatar(otherPlayer.name, otherPlayer.avatar);
 
     showOtherPlayerTurn(playerName, currentPlayer, $playerCard);
 
     insertImageInto($playerCard.querySelector("header"), `avatars/${avatar}`, true, avatar);
+
     if (isGameCreator) $playerCard.querySelector("img").classList.add("game-creator");
+    if (otherPlayer.forfeited) $playerCard.classList.add("forfeited");
 
     setPlayerName($playerCard, otherPlayer);
-    setPlayerPoints($playerCard, otherPlayer["totalPrestigePoints"], highestScore);
+    setPlayerPoints($playerCard, otherPlayer["totalPrestigePoints"], highestScore, otherPlayer.forfeited);
 
     renderTokenList($playerCard.querySelector(".tokens"), otherPlayer["tokens"], GEMS);
     renderCardList($playerCard.querySelector(".cards"), otherPlayer["bonuses"], GEMS);
@@ -73,9 +66,11 @@ function setPlayerName($playerCard, otherPlayer) {
     $playerCard.querySelector(".name").textContent = otherPlayer.name;
 }
 
-function setPlayerPoints($playerCard, prestigePoints, highestScore) {
+function setPlayerPoints($playerCard, prestigePoints, highestScore, hasForfeited) {
     const $playerPoints = $playerCard.querySelector(".points span");
     $playerPoints.textContent = formatNumber(prestigePoints);
+
+    if (hasForfeited) return;
 
     highlightPointsWinner(prestigePoints, $playerPoints);
 
@@ -148,13 +143,14 @@ function renderHistory(history) {
             }
 
             const $history = document.querySelector(".history");
-
-            const historyPreviousLength = $history.querySelectorAll(":scope> *").length;
+            const historyPreviousLength = $history.querySelectorAll(":scope > li").length;
             const historyCurrentLength = history.length;
             const amountOfNewItems = historyCurrentLength - historyPreviousLength;
 
+            if (!amountOfNewItems) return;
+
             for (const entry of history.slice(-amountOfNewItems)) {
-                $history.appendChild(renderHistoryEntry(entry));
+                $history.insertAdjacentElement("afterbegin", renderHistoryEntry(entry));
             }
         });
 }
@@ -164,19 +160,29 @@ const HISTORY_ACTIONS = {
     return: renderDiscardTokensEntry,
     buy: renderBuyCardEntry,
     reserve: renderReserveCardEntry,
-    noble: renderChooseNobleEntry,
+    pickNoble: renderChooseNobleEntry,
     forfeit: renderForfeitEntry,
 };
 
 function renderHistoryEntry(entry) {
-    const renderedEntry = HISTORY_ACTIONS[entry["action"]](entry);
-    insertPlayerName(renderedEntry, entry["player"]);
-    return renderedEntry;
+    const $renderedEntry = HISTORY_ACTIONS[entry["action"]](entry, entry["player"] );
+
+    if (!$renderedEntry) return $renderedEntry;
+
+    insertPlayerName($renderedEntry, entry["player"]);
+    return $renderedEntry;
 }
 
-function renderTakeTokensEntry(entry) {
+function renderTakeTokensEntry(entry, playerName) {
+    const tokens = entry["tokens"];
+
+    if (Object.keys(tokens).length === 0) {
+        return renderSkipTurnHistory(playerName);
+    }
+
     const $takeTokensEntry = copyNode(document.querySelector("#take-tokens-history-template"));
-    renderHistoryTokenList(entry["tokens"], $takeTokensEntry);
+
+    renderHistoryTokenList(tokens, $takeTokensEntry);
     return $takeTokensEntry;
 }
 
@@ -188,7 +194,7 @@ function renderDiscardTokensEntry(entry) {
 
 function renderHistoryTokenList(tokens, $tokensEntry) {
     for (const [tokenType, amount] of Object.entries(tokens)) {
-        $tokensEntry.insertAdjacentHTML("beforeend", amount);
+        $tokensEntry.insertAdjacentHTML("beforeend", `&nbsp${amount}`);
         insertImageInto($tokensEntry, `UI/tokens/${TOKEN_MAPPER[tokenType]}_chip`, false, `${TOKEN_MAPPER[tokenType]} chip`);
     }
 }
@@ -207,7 +213,9 @@ function renderReserveCardEntry(entry) {
 
 function renderHistoryCard($cardEntry, cardType) {
     insertImageInto($cardEntry, `UI/cards/${TOKEN_MAPPER[cardType]}_card_small`, false, `${TOKEN_MAPPER[cardType]} card`);
-    $cardEntry.insertAdjacentHTML("beforeend", "<p>card</p>");
+
+    // &nbsp adds a space that doesn't get trimmed when rendering. This is needed since this text gets preceded by an image
+    $cardEntry.insertAdjacentHTML("beforeend", "<p>&nbspcard</p>");
 }
 
 function renderChooseNobleEntry() {
@@ -224,7 +232,14 @@ function renderIncompatibleServerMessage() {
 }
 
 function insertPlayerName(renderedEntry, playerName) {
-    renderedEntry.querySelector("strong").textContent = playerName;
+    renderedEntry.querySelector("strong").textContent = playerName === loadFromStorage("playerName") ? "you" : playerName;
 }
 
+function renderSkipTurnHistory(playerName) {
+    const $skipTurnHistory = copyNode(document.querySelector("#skip-turn-history-template"));
+
+    $skipTurnHistory.querySelector("span").textContent = playerName === loadFromStorage("playerName") ? "your" : "their";
+
+    return $skipTurnHistory;
+}
 export { renderOtherPlayers, renderHistory };

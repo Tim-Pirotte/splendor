@@ -1,17 +1,14 @@
 import { SECONDS_PER_ROUND, SECONDS_WHEN_TURN_ALMOST_ENDS } from "./config.js";
 import * as API from "../api.js";
 import { renderPage } from "./renderer/renderer.js";
-import { getActionButton, isCurrentlyPlaying } from "./game-status-interface.js";
+import { deselectAll, getActionButton, isCurrentlyPlaying } from "./game-status-interface.js";
 import { initRoundBegin, saveCurrentPlayerAndGameStateInDom, saveGameState } from "./state-machine/state-machine.js";
-import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
-import { processSkipTurn } from "./tokens/token-handler.js";
+import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { locateToMainMenu } from "../utils/data-handler.js";
 import {
     getAnimationDelayBeforePolling,
     setAnimationDelayBeforePolling,
 } from "./animation-component/data.js";
-import { POLLING_TIME_OUT } from "../config.js";
-
 function handleGameDataError(err) {
     const forbidden = 403;
     const unauthorized = 401;
@@ -27,8 +24,11 @@ function updateGameData() {
 
     if (gameId === null) {locateToMainMenu(); return;}
 
-    API.getGame().then(gameData => {
-        if (!gameData.started) { location.href = "./lobby.html"; return; }
+    API.getGame(updateGameData).then(gameData => {
+        if (!gameData.started) {
+            location.href = "./lobby.html";
+            return;
+        }
 
         saveGameState(gameData["gameState"]);
         saveCurrentPlayerAndGameStateInDom(gameData);
@@ -39,11 +39,11 @@ function updateGameData() {
             // Add a delay to evade a race condition between the animation cleanup and the rendering system
             setTimeout(updateGameData, getAnimationDelayBeforePolling() + 500);
         } else {
-            startRoundTimer();
+            startRoundTimer(gameData["timePassedForCurrentRound"], gameData["gameState"]);
         }
 
         setAnimationDelayBeforePolling(POLLING_TIME_OUT);
-    }).catch(err => handleGameDataError(err));
+    });
 }
 
 function startGameStatePolling() {
@@ -56,39 +56,47 @@ The reason for the timer being implemented this way and not with setTimeOut and 
  - The execution time of the update function would have to also be subtracted from the delay
  - The execution order between js and CSS can differ which can make the timer bar go back and forth
  - Page inactivity can halt the execution of a timed out function in certain browsers
+
+The reason we need to compare the gameState and currentPlayer is so that we can stop the timer when the turn ends.
 */
-function setTimer(duration, $timerFill) {
-    const startTime = Date.now();
+function setTimer(duration, timePassedForCurrentRound, $timerFill, gameState) {
+    const startTime = Date.now() - timePassedForCurrentRound * 1000;
 
     function update() {
         const now = Date.now();
-        const elapsed = (now - startTime) / 1000;
-        const remaining = Math.max(0, duration - elapsed);
+        const elapsed = now - startTime;
+        const remaining = Math.max(0, duration * 1000 - elapsed);
 
-        const percent = (remaining / duration) * 100;
+        const percent = (remaining / (duration * 1000)) * 100;
         $timerFill.style.height = `${percent}%`;
         $timerFill.closest(".timer").setAttribute("aria-valuenow", Math.floor(remaining));
 
-        $timerFill.classList.toggle("time-almost-ends", remaining < SECONDS_WHEN_TURN_ALMOST_ENDS);
+        $timerFill.classList.toggle("time-almost-ends", remaining < SECONDS_WHEN_TURN_ALMOST_ENDS * 1000);
 
         if (!isCurrentlyPlaying()) return;
 
-        if (remaining > 0) {
+        if (remaining > 0 && isCurrentlyPlaying() && sessionStorage.getItem("gameState") === gameState) {
             requestAnimationFrame(update);
-        } else if (!getActionButton().disabled) {
+            return;
+        }
+
+        try {
+            if (getActionButton().disabled) deselectAll();
+
             getActionButton().click();
-        } else {
-            processSkipTurn();
+        } catch(err) {
+            startGameStatePolling();
+            console.error(err);
         }
     }
 
     requestAnimationFrame(update);
 }
 
-function startRoundTimer() {
+function startRoundTimer(timePassedForCurrentRound, gameState) {
     const $timerFill = document.querySelector(".timer-fill");
     $timerFill.classList.remove("time-almost-ends");
-    setTimer(SECONDS_PER_ROUND, $timerFill);
+    setTimer(SECONDS_PER_ROUND, timePassedForCurrentRound, $timerFill, gameState);
 }
 
 function getClientTokens() {
@@ -115,4 +123,4 @@ function getClientTotalPrestigePoints() {
     return parseInt(document.querySelector(".player-points h4").dataset.totalPrestigePoints);
 }
 
-export { updateGameData, getClientTokens, getClientBonuses, getClientTotalPrestigePoints, startGameStatePolling };
+export { updateGameData, getClientTokens, getClientBonuses, getClientTotalPrestigePoints, startGameStatePolling, handleGameDataError };

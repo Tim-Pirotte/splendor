@@ -31,7 +31,6 @@ function initRoundBegin(gameData) {
     }
 
     setSpectatorState(gameData, loadFromStorage("playerName"));
-
 }
 
 function setSpectatorState(gameData, playerName) {
@@ -40,12 +39,12 @@ function setSpectatorState(gameData, playerName) {
             if (isCompatible && isSpectator(gameData["spectators"], playerName)) {
                 setActionButtonState("Stop spectating", "stopSpectating", {});
                 getActionButton().disabled = false;
-            };
+            }
         });
 }
 
 function isSpectator(spectators, playerName) {
-    return spectators.includes(playerName);
+    return spectators.map(spectator => spectator.name).includes(playerName);
 }
 
 function saveGameState(gameState) {
@@ -61,4 +60,4 @@ function isClientPlayerTurnAction(gameState) {
     return gameState["currentPlayer"] === loadFromStorage("playerName") && gameState["gameState"] === GAME_STATE.TURN_ACTION;
 }
 
-export { initRoundBegin, saveGameState, saveCurrentPlayerAndGameStateInDom };
+export { initRoundBegin, saveGameState, saveCurrentPlayerAndGameStateInDom, isSpectator };
