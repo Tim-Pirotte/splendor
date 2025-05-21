@@ -55,7 +55,7 @@ function renderGamesToList($gameList, gamesToRender, numberOfGamesToRender) {
 }
 
 function sortGames(games) {
-    return Array.from(games).sort((game1, game2) => calculateGameSortingValue(game1) - calculateGameSortingValue(game2))
+    return Array.from(games).sort((game1, game2) => calculateGameSortingValue(game1) - calculateGameSortingValue(game2));
 }
 
 function calculateGameSortingValue(game) {

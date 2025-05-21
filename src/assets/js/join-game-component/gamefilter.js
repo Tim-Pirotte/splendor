@@ -2,6 +2,7 @@ import { intersection } from "./helper.js";
 
 function filterGames(gameList, isCompatible) {
     const standardFiltered = filterStandard(gameList);
+
     if (!isCompatible) {
         return intersection(standardFiltered, filterByStarted(gameList));
     }
