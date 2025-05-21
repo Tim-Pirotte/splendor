@@ -1,10 +1,24 @@
 import { intersection } from "./helper.js";
 
-function filterGames(gameList) {
+function filterGames(gameList, isCompatible) {
+    const standardFiltered = filterStandard(gameList);
+
+    if (!isCompatible) {
+        return intersection(standardFiltered, filterByStarted(gameList));
+    }
+
+    return standardFiltered;
+}
+
+function filterStandard(gameList) {
     return intersection(
         filterByPlayerCount(gameList, document.querySelector("#amount-filter").value),
         filterByName(gameList, document.querySelector("#game-name").value),
     );
+}
+
+function filterByStarted(gameList) {
+    return new Set(gameList.filter(game => !game.started));
 }
 
 function filterByPlayerCount(games, amount) {
