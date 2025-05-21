@@ -21,12 +21,17 @@ function createRequestBody(isCompatible) {
     };
 
     if (isCompatible) {
-        requestBody.avatar = loadFromStorage("avatar").split("-")
-            .map(word => (word[0].toUpperCase() + word.slice(1)))
-            .join("");
-        requestBody.isPrivate = document.querySelector("#private").checked;
+        addAvatarToRequestBody(requestBody);
     }
+
     return requestBody;
+}
+
+function addAvatarToRequestBody(requestBody) {
+    requestBody.avatar = loadFromStorage("avatar").split("-")
+        .map(word => (word[0].toUpperCase() + word.slice(1)))
+        .join("");
+    requestBody.isPrivate = document.querySelector("#private").checked;
 }
 
 export { createGame };
