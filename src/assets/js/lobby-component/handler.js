@@ -2,7 +2,7 @@ import * as API from "../api.js";
 import { COPY_BUTTON_REMOVE_FEEDBACK_DELAY, IN_GAME_POLLING_TIME_OUT, LOBBY_COUNTDOWN_DURATION } from "../config.js";
 import {
     renderGameInfo,
-    renderGameStartingCountdown,
+    renderGameStartingCountdown, renderLobbyPlayers, renderPlayerContainers,
     renderPlayerCount,
     renderPlayersList,
     setCopyGameIdImageColor,
@@ -18,7 +18,7 @@ function loadLobbyInformation() {
 
     API.getGame(loadLobbyInformation).then(gameData => {
         renderGameInfo(gameData, gameData.started);
-        renderPlayersList(gameData, gameData.started);
+        renderLobbyPlayers(gameData, gameData.started);
         renderPlayerCount(gameData);
         hideIncompatibleElements();
         if (gameData.started) {

@@ -18,6 +18,35 @@ function renderGameInfo(gameObject, started) {
     document.querySelector("h3").textContent = `Created by ${getGameCreator(gameObject, started)}`;
 }
 
+function renderLobbyPlayers(gameData, started) {
+    const $joinedPlayersContainer = document.querySelector("#joined-players");
+
+    renderPlayerContainers(gameData.numberOfPlayers, $joinedPlayersContainer);
+    renderPlayersList(gameData, started);
+    renderBotPlaceHolders($joinedPlayersContainer);
+}
+
+function renderPlayerContainers(amountOfPlayers, $joinedPlayersContainer) {
+    if ($joinedPlayersContainer.childElementCount > 1) return;
+
+    if ($joinedPlayersContainer)
+    for (let i = 0; i < amountOfPlayers; i++) {
+        const $player = document.createElement("li");
+        $player.classList.add("player");
+
+        $joinedPlayersContainer.appendChild($player);
+    }
+}
+
+function renderBotPlaceHolders($joinedPlayersContainer) {
+    const $playerContainers = $joinedPlayersContainer.querySelectorAll("li");
+
+    for (const $container of $playerContainers) {
+        if ($container.childElementCount === 0) {
+        }
+    }
+}
+
 function renderPlayersList(gameObject, started) {
     const $template = document.querySelector("#joined-player-template");
     const $joinedPlayers = document.querySelector("#joined-players");
@@ -27,19 +56,9 @@ function renderPlayersList(gameObject, started) {
     for (const [index, player] of players.entries()) {
         let $player = $joinedPlayerContainers[index];
 
-        if (!$player) {
-            $player = document.createElement("li");
-            $player.classList.add("player");
-
-            $joinedPlayers.appendChild($player);
-        }
-
         if (player.name === null) {
             removeRenderedPlayer($player);
         } else if (player.name !== $player?.querySelector(".player-name")?.innerText) {
-            /* these ?. operators are needed because:
-            *  $player can be null if no players have been previously rendered at this position,
-            *  .player-name doesn't exist of a player at this position has previously left */
             renderPlayer(player, $player, $template);
         } else {
             // https://www.keyboardfaces.com/
@@ -100,4 +119,12 @@ function renderGameStartingCountdown(count, $container) {
     setTimeout(renderGameStartingCountdown, 1000, count - 1, $container);
 }
 
-export { renderGameInfo, renderPlayersList, renderPlayerCount, setCopyGameIdImageColor, renderGameStartingCountdown };
+export {
+    renderGameInfo,
+    renderPlayersList,
+    renderPlayerCount,
+    setCopyGameIdImageColor,
+    renderGameStartingCountdown,
+    renderPlayerContainers,
+    renderLobbyPlayers,
+};
