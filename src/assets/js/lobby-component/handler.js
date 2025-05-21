@@ -20,6 +20,9 @@ function loadLobbyInformation(startedByPolling) {
         renderLobbyPlayers(gameData, gameData.started);
         renderPlayerCount(gameData);
         hideIncompatibleElements();
+
+        if (!startedByPolling) return;
+
         if (gameData.started) {
             const $countdownContainer = document.createElement("li");
             $countdownContainer.classList.add("starting-countdown");
@@ -28,7 +31,7 @@ function loadLobbyInformation(startedByPolling) {
 
             renderGameStartingCountdown(LOBBY_COUNTDOWN_DURATION, $countdownContainer);
         } else {
-            setTimeout(loadLobbyInformation, IN_GAME_POLLING_TIME_OUT);
+            setTimeout(loadLobbyInformation, IN_GAME_POLLING_TIME_OUT, true);
         }
     });
 }

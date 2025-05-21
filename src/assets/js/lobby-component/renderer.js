@@ -45,13 +45,11 @@ function renderBotPlaceHolders($joinedPlayersContainer) {
     for (const $container of $playerContainers) {
         if (isAddBotButton($container) && aBotHasBeenRendered) {
             safeEmptyContainer($container);
-            continue;
         }
 
         if ($container.childElementCount === 0 && !aBotHasBeenRendered) {
             renderAddBot($container);
             aBotHasBeenRendered = true;
-            continue;
         }
 
         if (isAddBotButton($container)) aBotHasBeenRendered = true;

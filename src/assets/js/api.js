@@ -50,8 +50,8 @@ function joinBot(level) {
 
 function leaveGame() {
     joinGame(loadFromStorage("gameId"), loadFromStorage("playerName"),true, true)
-    .then(() => locateToMainMenu())
-    .catch(() => locateToMainMenu());
+        .then(() => locateToMainMenu())
+        .catch(() => locateToMainMenu());
 }
 
 /* Game Actions */
