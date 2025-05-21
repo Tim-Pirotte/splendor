@@ -126,7 +126,7 @@ function processFunctionCallEnd(currentTokenBuffer, tokenStack, varsToInsert, ex
 
         if (token.type === "functionName") {
             if (!(token.name in functions)) funcDoesNotExistError(currentTokenBuffer, expression);
-            tokenStack.push({ type: "argument", value: functions[token.name](args.toReversed()) });
+            tokenStack.push({ type: "argument", value: functions[token.name](...args.toReversed()) });
             currentTokenBuffer = "";
             break;
         }
