@@ -4,8 +4,8 @@ import { renderErrorMessage } from "./renderer.js";
 import {checkCompatibility} from "../server-version-component/server-version.js";
 import {renderUnsupportedError} from "../utils/renderer.js";
 
-function joinGameById(gameId) {
-    initiateGameSession(gameId, true);
+function joinGameById(gameId, spectating) {
+    initiateGameSession(gameId, spectating);
 }
 
 function spectateGameById(gameId) {

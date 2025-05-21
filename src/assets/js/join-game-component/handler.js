@@ -3,7 +3,7 @@ import { joinGameById, spectateGameById } from "./helper.js";
 function joinGameUsingUsersInputId(e) {
     e.preventDefault();
 
-    joinGameById(document.querySelector("#game-id").value);
+    joinGameById(document.querySelector("#game-id").value, true);
 }
 
 function joinGame(e) {
@@ -14,7 +14,7 @@ function joinGame(e) {
         const gameId = e.target.closest("li").dataset.gameId;
 
         if(gameState === "join") {
-            joinGameById(gameId);
+            joinGameById(gameId, false);
         } else {
             spectateGameById(gameId);
         }
