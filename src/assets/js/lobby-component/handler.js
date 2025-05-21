@@ -10,7 +10,7 @@ import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { locateToMainMenu } from "../utils/data-handler.js";
 import { checkCompatibility } from "../server-version-component/server-version.js";
 
-function loadLobbyInformation() {
+function loadLobbyInformation(startedByPolling) {
     if (!loadFromStorage("gameId")) {
         locateToMainMenu();
     }
@@ -55,6 +55,7 @@ function processAddBot(e) {
     const selectedLevel = $clickedListItem.querySelector("select").value;
 
     API.joinBot(selectedLevel);
+    loadLobbyInformation(false);
 }
 
 export { loadLobbyInformation , copyGameId, processAddBot };

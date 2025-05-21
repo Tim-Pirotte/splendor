@@ -31,11 +31,12 @@ function joinGame(gameId, playerName, spectatingEnabled, forfeit) {
         let body = {};
 
         if (isCompatible) {
-            body = { "avatar": loadFromStorage("avatar").split("-")
-                .map(word => (word[0].toUpperCase() + word.slice(1)))
-                .join(""),
-            "spectatingEnabled": spectatingEnabled,
-            "forfeit": forfeit,
+            body = {
+                "avatar": loadFromStorage("avatar").split("-")
+                    .map(word => (word[0].toUpperCase() + word.slice(1)))
+                    .join(""),
+                "spectatingEnabled": spectatingEnabled,
+                "forfeit": forfeit,
             };
         }
 
@@ -45,6 +46,12 @@ function joinGame(gameId, playerName, spectatingEnabled, forfeit) {
 
 function joinBot(level) {
     joinGame(loadFromStorage("gameId"), level + NPC_SUFFIX, false, false);
+}
+
+function leaveGame() {
+    joinGame(loadFromStorage("gameId"), loadFromStorage("playerName"),true, true)
+    .then(() => locateToMainMenu())
+    .catch(() => locateToMainMenu());
 }
 
 /* Game Actions */
@@ -70,12 +77,6 @@ function takeNobles(requestBody) {
     const gameId = loadFromStorage("gameId");
     const playerName = loadFromStorage("playerName");
     return fetchFromServer(`/games/${gameId}/players/${playerName}/nobles`, "POST", requestBody);
-}
-
-function leaveGame() {
-    joinGame(loadFromStorage("gameId"), loadFromStorage("playerName"),true, true)
-        .then(() => locateToMainMenu())
-        .catch(() => locateToMainMenu());
 }
 
 function getApiInfo() {
