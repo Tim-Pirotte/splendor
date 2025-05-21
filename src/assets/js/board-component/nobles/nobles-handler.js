@@ -49,8 +49,7 @@ function processTakeNoble() {
     const actionButton = getActionButton();
     const nobleToTake = getNobleByName(actionButton.dataset.name);
 
-    API.takeNobles(nobleToTake)
-        .then();
+    API.takeNobles(nobleToTake);
 }
 
 function getNobleByName(name) {

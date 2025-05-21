@@ -16,7 +16,7 @@ function loadLobbyInformation() {
         locateToMainMenu();
     }
 
-    API.getGame().then(gameData => {
+    API.getGame(loadLobbyInformation).then(gameData => {
         renderGameInfo(gameData, gameData.started);
         renderPlayersList(gameData, gameData.started);
         renderPlayerCount(gameData);
@@ -46,4 +46,5 @@ function hideIncompatibleElements() {
         if (!isCompatible) document.querySelector(".leave-button").classList.add("none");
     });
 }
+
 export { loadLobbyInformation , copyGameId };

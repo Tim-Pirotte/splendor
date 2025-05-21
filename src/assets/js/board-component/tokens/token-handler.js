@@ -2,7 +2,6 @@ import { MAX_TAKE_TOKENS, MIN_TOKENS_FOR_PICKING_TWO } from "../config.js";
 import * as API from "../../api.js";
 import { deselectAll, getActionButton, setActionButtonState } from "../game-status-interface.js";
 import { validTokenTake } from "../state-machine/valid-action-checker.js";
-import { startGameStatePolling } from "../game-data-handler.js";
 import { getCurrentAction, reflowCSS } from "../helper.js";
 
 function clickedOnToken(target) {
@@ -195,8 +194,4 @@ function processTakeTwoTokens() {
     API.takeTokens(requestBody).then(() => updateTokens(requestBody));
 }
 
-function processSkipTurn() {
-    API.takeTokens({ take: {} }).then(startGameStatePolling);
-}
-
-export { selectToken, processTakeTokensClick, updateTokens, processTakeTwoTokens, processSkipTurn, unHighlightTokens };
+export { selectToken, processTakeTokensClick, updateTokens, processTakeTwoTokens, unHighlightTokens };

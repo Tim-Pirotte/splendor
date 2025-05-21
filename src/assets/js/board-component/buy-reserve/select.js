@@ -9,14 +9,12 @@ import {
     setActionButtonState,
 } from "../game-status-interface.js";
 import {
-    cardAlreadySelected,
     getCard,
     setActionToBuyReserve,
     unHighlightCards,
 } from "./buy-handler.js";
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
 import { GAME_STATE } from "../state-machine/data.js";
-import { getCurrentAction } from "../helper.js";
 
 function selectCard(e) {
     const $card = getCard(e);
@@ -27,12 +25,10 @@ function selectCard(e) {
 
     sessionStorage.removeItem("paymentMethod");
 
-    if (getCurrentAction() !== "processBuyCardClick") deselectAll();
+    const previousSelectedCardName = getActionButton().dataset.name;
+    deselectAll();
 
-    if (cardAlreadySelected(cardName)) {
-        deselectCard(true);
-        return;
-    }
+    if (cardName === previousSelectedCardName) return;
 
     setActionToBuyReserve($card, validCardBuy(cardName), validCardReserve($card));
 }

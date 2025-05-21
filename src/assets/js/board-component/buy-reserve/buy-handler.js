@@ -56,10 +56,6 @@ function highlightCard($card) {
     $card.classList.add("selected-card");
 }
 
-function cardAlreadySelected(cardName) {
-    return getActionButton().dataset.name === cardName;
-}
-
 function canBuy(name) {
     const cost = getCardData(name)["cost"];
     const wallet = getPlayerWallet();
@@ -242,7 +238,6 @@ export {
     canBuy,
     unHighlightCards,
     getCard,
-    cardAlreadySelected,
     highlightCard,
     setActionToBuyReserve,
     allowToBuy,

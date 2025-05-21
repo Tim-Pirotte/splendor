@@ -43,7 +43,7 @@
         <h1>Join game</h1>
         <form action="#" id="join-form">
             <label for="game-id">Game ID:</label>
-            <input type="number" id="game-id" name="game-id-holder" placeholder="E.g. 123456789">
+            <input type="number" id="game-id" name="game-id-holder" required placeholder="E.g. 123456789">
             <button type="submit">Join game</button>
         </form>
         <section>
@@ -64,7 +64,6 @@
                 <template id="game-template">
                     <li data-gameState="" data-gameId="">
                         <h3 class="game-name">...</h3>
-                        <p class="game-id"></p>
                         <p class="amount-of-players"></p>
                         <button type="button"></button>
                     </li>
@@ -80,5 +79,6 @@
             </picture>
         </button>
     </footer>
+<div class="error-message none"></div>
 </body>
 </html>

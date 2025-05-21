@@ -40,37 +40,43 @@
         <ol class="history">
             <template id="take-tokens-history-template">
                 <li>
-                    <p><strong></strong> takes</p>
+                    <p><strong></strong> <span>took</span></p>
                 </li>
             </template>
 
             <template id="discard-tokens-history-template">
                 <li>
-                    <p><strong></strong> discards</p>
+                    <p><strong></strong> discarded</p>
                 </li>
             </template>
 
             <template id="buy-card-history-template">
                 <li>
-                    <p><strong></strong> buys a </p>
+                    <p><strong></strong> bought a&nbsp</p>
                 </li>
             </template>
 
             <template id="reserve-card-history-template">
                 <li>
-                    <p><strong></strong> reserves a</p>
+                    <p><strong></strong> reserved a&nbsp</p>
                 </li>
             </template>
 
             <template id="receive-noble-history-template">
                 <li>
-                    <p><strong></strong> receives a noble</p>
+                    <p><strong></strong> received a noble</p>
                 </li>
             </template>
 
             <template id="forfeit-history-template">
                 <li>
-                    <p><strong></strong> forfeits, what a coward!</p>
+                    <p><strong></strong> forfeited, what a coward!</p>
+                </li>
+            </template>
+
+            <template id="skip-turn-history-template">
+                <li>
+                    <p><strong></strong> skipped <span></span>&nbspturn</p>
                 </li>
             </template>
         </ol>
@@ -80,6 +86,11 @@
         <header class="top-bar">
             <h1>It's your turn</h1>
             <div>
+                <p class="amount-of-spectators">0</p>
+                <picture class="spectator-eye-indicator">
+                    <source srcset="../assets/images/UI/spectator_indicator.webp" type="image/webp">
+                    <img src="../assets/images/fallback/UI/spectator_indicator.png" alt="spectators eye" title="spectators eye">
+                </picture>
                 <button type="button" class="sound-button">
                     <picture>
                         <source srcset="../assets/images/UI/sound_off.webp" type="image/webp">
@@ -89,10 +100,10 @@
                 <button type="button" class="forfeit">
                     <picture>
                         <source srcset="../assets/images/UI/forfeit.webp" type="image/webp">
-                        <img src="../assets/images/fallback/UI/forfeit.png" alt="Toggle sound" title="Toggle sound">
+                        <img src="../assets/images/fallback/UI/forfeit.png" alt="Forfeit" title="Forfeit">
                     </picture>
                 </button>
-                <h2>Username</h2>
+                <h2></h2>
                 <div class="avatar"></div>
             </div>
         </header>

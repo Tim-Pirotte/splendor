@@ -5,8 +5,8 @@
     --button-hover-filter: brightness(115%);
     --clickable-item-cursor: pointer;
     --disabled-button-cursor: not-allowed;
-    --border-collor: rgb(214, 141, 78);
-    --outline-collor: rgb(237, 191, 94);
+    --border-color: rgb(214, 141, 78);
+    --outline-color: rgb(237, 191, 94);
 }
 
 @font-face {
@@ -67,10 +67,6 @@ button, input {
     width: 2rem;
 }
 
-.sound-button:hover {
-    filter: var(--button-hover-filter);
-}
-
 .hidden {
     visibility: hidden;
 }
@@ -97,6 +93,7 @@ input[type="text"], input[type="number"], select {
 
 select:hover, button:hover, input[type="radio"] {
     cursor: var(--clickable-item-cursor);
+    filter: var(--button-hover-filter);
 }
 
 /* https://www.geeksforgeeks.org/how-to-disable-arrows-from-number-input/ */
@@ -111,4 +108,19 @@ input::-webkit-inner-spin-button {
 /* Hide spin buttons in Firefox */
 input[type="number"] {
     -moz-appearance: textfield;
+}
+
+@keyframes message {
+    from {
+        transform: translateX(100%);
+    }
+    10% {
+        transform: translateX(0);
+    }
+    75% {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
 }

@@ -1,17 +1,15 @@
 import * as API from "../api.js";
 import { saveToStorage } from "../data-connector/local-storage-abstractor.js";
-import { checkCompatibility } from "../server-version-component/server-version.js";
+import { renderErrorMessage } from "./renderer.js";
 
-function joinGameById(gameId) {
-    API.joinGame(gameId)
+function joinGameById(gameId, spectatingEnabled) {
+    API.joinGame(gameId, spectatingEnabled, false)
         .then(response => {
-            checkCompatibility(2)
-                .then(isCompatible => {
-                    if (isCompatible) saveToStorage("timeSync", response["gameId"]);
-                    saveToStorage("gameId", response["gameId"]);
-                    saveToStorage("playerToken", response["playerToken"]);
-                    location.href = "./lobby.html";
-                });
+            saveToStorage("gameId", response["gameId"]);
+            saveToStorage("playerToken", response["playerToken"]);
+            location.href = "./lobby.html";
+        }).catch(err => {
+            renderErrorMessage(err);
         });
 }
 

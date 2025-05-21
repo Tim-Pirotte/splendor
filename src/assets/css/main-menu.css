@@ -5,8 +5,8 @@ main {
     text-align: center;
     margin: 0 auto;
     background-color: #372b53;
-    border : var(--border-collor) solid 0.3rem;
-    outline: var(--outline-collor) solid 0.3rem;
+    border : var(--border-color) solid 0.3rem;
+    outline: var(--outline-color) solid 0.3rem;
     height: 12rem;
 }
 
@@ -65,6 +65,14 @@ label {
     list-style-type: none;
 }
 
+.avatar-selector section ul li {
+    list-style: none;
+}
+
+.avatar-selector li:hover {
+    cursor: var(--clickable-item-cursor);
+}
+
 form .avatar-selector {
     transform: translateY(0.625rem);
 }
@@ -98,10 +106,6 @@ form .avatar-selector {
     top: 2.5rem;
     left: 0;
     z-index: 5;
-}
-
-.avatar-selector section ul li {
-    list-style: none;
 }
 
 .avatar-selector section h2 {
