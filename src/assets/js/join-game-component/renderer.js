@@ -4,8 +4,8 @@ import { copyNode } from "../utils/data-handler.js";
 import { getCurrentUsersAmount, getGameId, getGameName, getGameState, getMaxUsersAmount } from "../utils/game-object-handler.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { filterGames } from "./gamefilter.js";
-import { safeEmptyContainer } from "../board-component/renderer/helper.js";
 import { insertImageInto } from "../utils/renderer.js";
+import { safeEmptyContainer } from "../board-component/renderer/helper.js";
 
 function renderPlayerInfo() {
     const playerName = loadFromStorage("playerName");
@@ -16,32 +16,30 @@ function renderPlayerInfo() {
 }
 
 function renderPublicGames(e) {
-    const wasTriggeredByPolling = e === undefined;
-
-    if (!wasTriggeredByPolling && e.target.value !== "Reset") e.preventDefault();
-
-    const $gameList = document.querySelector("ul");
+    const triggeredByPolling = e === undefined;
+    if (!triggeredByPolling && e.target.value !== "Reset") e.preventDefault();
 
     API.getGames().then(gameObject => {
+        const $gameList = document.querySelector("ul");
         const gamesToRender = filterGames(gameObject["games"]);
-        const amountOfGamesToRender = gamesToRender.size;
+        const numberOfGamesToRender = gamesToRender.size;
 
-        if (amountOfGamesToRender) {
+        if (numberOfGamesToRender) {
             const $template = document.querySelector("#game-template");
             const $gameListCopy = $gameList.cloneNode(true);
 
             safeEmptyContainer($gameListCopy);
 
-            $gameList.dataset.renderedGames = amountOfGamesToRender;
+            $gameList.dataset.renderedGames = numberOfGamesToRender;
             gamesToRender.forEach(game => $gameListCopy.appendChild(populateGame($template, game)));
             $gameList.innerHTML = $gameListCopy.innerHTML;
-
         } else {
             safeEmptyContainer($gameList);
+
             $gameList.insertAdjacentHTML("beforeend", "<p>There are no games based on your selections</p>");
         }
 
-        if (wasTriggeredByPolling) setTimeout(renderPublicGames, JOIN_GAME_PAGE_POLLING_TIME_OUT);
+        if (triggeredByPolling) setTimeout(renderPublicGames, JOIN_GAME_PAGE_POLLING_TIME_OUT);
     });
 }
 

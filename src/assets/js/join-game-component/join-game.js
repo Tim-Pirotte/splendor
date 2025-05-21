@@ -1,7 +1,7 @@
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { joinGame, joinGameUsingUsersInputId } from "./handler.js";
-import { renderPlayerInfo, renderPublicGames } from "./renderer.js";
 import { locateToMainMenu } from "../utils/data-handler.js";
+import { renderPlayerInfo, renderPublicGames } from "./renderer.js";
 import { renderDefaultGameNamePlaceholder } from "../utils/renderer.js";
 import { soundInit } from "../sound-component/sound.js";
 
