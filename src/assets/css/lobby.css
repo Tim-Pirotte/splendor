@@ -1,5 +1,5 @@
 :root {
-    --players-container-width: 20rem;
+    --players-container-width: 15rem;
 }
 /* general */
 
@@ -62,7 +62,7 @@ header {
     text-align: center;
     height: 15rem;
     width: fit-content;
-    margin: auto;
+    margin: 0 auto 3rem;
 }
 
 header p {
@@ -155,7 +155,7 @@ li img {
 }
 
 .starting-countdown {
-    font-size: 15rem;
+    font-size: 12rem;
     height: fit-content;
     width: 6rem;
     position: absolute;

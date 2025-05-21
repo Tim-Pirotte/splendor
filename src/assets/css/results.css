@@ -7,7 +7,7 @@ main {
     background-image: url("../images/results/results_banner.webp"), url("../images/fallback/results/results_banner.png");
     background-size: 100% 100%;
     width: 22rem;
-    height: 32rem;
+    height: 20rem;
 }
 
 body {

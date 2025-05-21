@@ -1,8 +1,8 @@
 import { checkCompatibility } from "../server-version-component/server-version.js";
-import {loadFromStorage, saveToStorage} from "../data-connector/local-storage-abstractor.js";
+import { saveToStorage } from "../data-connector/local-storage-abstractor.js";
 import { renderUnsupportedError } from "../utils/renderer.js";
 import * as API from "../api.js";
-import {renderErrorMessage} from "./renderer.js";
+import { renderErrorMessage } from "./renderer.js";
 
 function spectateGame(gameId) {
     checkCompatibility(2)

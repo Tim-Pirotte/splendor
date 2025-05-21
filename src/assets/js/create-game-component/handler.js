@@ -6,7 +6,6 @@ function createGame(e) {
     e.preventDefault();
     checkCompatibility(2)
         .then(isCompatible => {
-            const visibility = getCheckedRadioButtonValue(document.querySelectorAll("input[name=visibility]"));
             const requestBody = {
                 playerName: loadFromStorage("playerName"),
                 gameName: document.querySelector("#game-name").value.trim() || `${loadFromStorage("playerName")}'s game`,
@@ -17,8 +16,8 @@ function createGame(e) {
 
             if (isCompatible) {
                 requestBody.avatar = loadFromStorage("avatar").split("-")
-                                                        .map(word => (word[0].toUpperCase() + word.slice(1)))
-                                                        .join("");
+                    .map(word => (word[0].toUpperCase() + word.slice(1)))
+                    .join("");
                 requestBody.isPrivate = document.querySelector("#private").checked;
             }
 

@@ -1,57 +1,59 @@
-import { avatars } from "../main-menu-component/data.js";
 import {
-    convertAvatarToCorrectCasing,
+    determinePlayerAvatar,
     getCurrentUsersAmount,
     getGameCreator,
     getGameId,
     getGameName,
     getMaxUsersAmount,
-    getPlayersObjects
+    getPlayersObjects,
 } from "../utils/game-object-handler.js";
-import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { copyNode } from "../utils/data-handler.js";
 import { reflowCSS } from "../board-component/helper.js";
-import {getContainerAnimationForLeaving, getContainerToRenderPlayer} from "./helper.js";
+import { getContainerAnimationForLeaving } from "./helper.js";
+import { LEAVING_PLAYER_ANIMATION_DURATION } from "../config.js";
+import { safeEmptyContainer } from "../board-component/renderer/helper.js";
 
-function renderGameInfo(g, started) {
-    document.querySelector("#game-name-id").innerHTML = `${getGameName(g)} / <span>${getGameId(g)}</span>`;
-    document.querySelector("h3").textContent = `Created by ${getGameCreator(g, started)}`;
+function renderGameInfo(gameObject, started) {
+    document.querySelector("#game-name-id").innerHTML = `${getGameName(gameObject)} / <span>${getGameId(gameObject)}</span>`;
+    document.querySelector("h3").textContent = `Created by ${getGameCreator(gameObject, started)}`;
 }
 
-function renderPlayersList(g, started) {
+function renderPlayersList(gameObject, started) {
     const $template = document.querySelector("#joined-player-template");
     const $joinedPlayers = document.querySelector("#joined-players");
     const $joinedPlayerContainers = $joinedPlayers.querySelectorAll("li");
-    const players = getPlayersObjects(g, started);
+    const players = getPlayersObjects(gameObject, started);
 
-    for (let i = 0; i < players.length; i++) {
-        const player = players[i];
-        let $player = $joinedPlayerContainers[i];
+    for (const [index, player] of players.entries()) {
+        let $player = $joinedPlayerContainers[index];
 
         if (!$player) {
             $player = document.createElement("li");
-
             $player.classList.add("player");
-            $joinedPlayers.insertAdjacentElement("beforeend", $player);
+
+            $joinedPlayers.appendChild($player);
         }
 
-        if (player?.name === $player?.querySelector(".player-name")?.innerText) continue;
-
-        if (player == null) {
+        if (player.name === null) {
             removeRenderedPlayer($player);
-            continue;
+        } else if (player.name !== $player?.querySelector(".player-name")?.innerText) {
+            /* these ?. operators are needed because:
+            *  $player can be null if no players have been previously rendered at this position,
+            *  .player-name doesn't exist of a player at this position has previously left */
+            renderPlayer(player, $player, $template);
+        } else {
+            // https://www.keyboardfaces.com/
+            //sonar: ( ︶︿︶)_╭∩╮ me: ლ(ಠ益ಠლ)
         }
-
-        renderPlayer(player, $player, $template);
     }
 }
 
 function removeRenderedPlayer($container) {
     //https://developer.mozilla.org/en-US/docs/Web/API/Element/animate
-    $container.animate(getContainerAnimationForLeaving($container), {duration: 500})
+    $container.animate(getContainerAnimationForLeaving($container), { duration: LEAVING_PLAYER_ANIMATION_DURATION });
     setTimeout(() => {
-        $container.innerHTML = "";
-        }, 500);
+        safeEmptyContainer($container);
+    }, LEAVING_PLAYER_ANIMATION_DURATION);
 }
 
 function renderPlayer(player, $container, $template) {
@@ -66,20 +68,8 @@ function renderPlayer(player, $container, $template) {
     $container.innerHTML =  $li.innerHTML;
 }
 
-function determinePlayerAvatar(playerName, avatar) {
-    if (playerName === loadFromStorage("playerName")) {
-        return loadFromStorage("avatar");
-    }
-
-    if (avatar) {
-        return convertAvatarToCorrectCasing(avatar);
-    } else {
-        return convertAvatarToCorrectCasing(avatars[playerName.toLowerCase().charCodeAt(0) % avatars.length]);
-    }
-}
-
-function renderPlayerCount(g) {
-    document.querySelector("#player-count").textContent = `${getCurrentUsersAmount(g)} / ${getMaxUsersAmount(g)}`;
+function renderPlayerCount(gameObject) {
+    document.querySelector("#player-count").textContent = `${getCurrentUsersAmount(gameObject)} / ${getMaxUsersAmount(gameObject)}`;
 }
 
 function setCopyGameIdImageColor(color) {

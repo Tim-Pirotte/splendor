@@ -1,3 +1,5 @@
+import { avatars } from "../main-menu-component/data.js";
+
 function getGameState(gameData) {
     return gameData["started"] ? "spectate" : "join";
 }
@@ -11,7 +13,7 @@ function getGameId(gameData) {
 }
 
 function getCurrentUsersAmount(gameData) {
-    return gameData["players"].length;
+    return gameData["players"].filter(player => player !== null).length;
 }
 
 function getMaxUsersAmount(gameData) {
@@ -19,20 +21,21 @@ function getMaxUsersAmount(gameData) {
 }
 
 function getGameCreator(gameData, started) {
-    return started ? gameData["players"][0]["name"] : gameData["players"][0];
+    for(const player of gameData["players"]) {
+        if (player !== null) {
+            return started ? player["name"] : player;
+        }
+    }
 }
 
 function getPlayersObjects(gameData, started) {
     const players = [];
 
     for (const player of gameData["players"]) {
-        if (player == null) {
-            players.push(null);
-        } else {
-            players.push({
-                "name": started ? player.name: player, "avatar": started ? player.avatar : gameData["avatars"][player]
-            });
-        }
+        players.push({
+            "name": started ? player.name : player,
+            "avatar": started ? player.avatar : gameData["avatars"][player],
+        });
     }
 
     return players;
@@ -58,8 +61,13 @@ function getPlayerByName(players, currentPlayerName) {
     }
 }
 
-function convertAvatarToCorrectCasing(avatar) {
-    return avatar.replaceAll(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
+function determinePlayerAvatar(playerName, avatar) {
+    if (!avatar) {
+        const avatarIndex = playerName.toLowerCase().charCodeAt(0) % avatars.length;
+        avatar =  avatars[avatarIndex];
+    }
+
+    return avatar.toLowerCase();
 }
 
 export {
@@ -74,6 +82,6 @@ export {
     sumObjectValues,
     getHighestScore,
     getPlayerByName,
-    convertAvatarToCorrectCasing,
+    determinePlayerAvatar,
 };
 

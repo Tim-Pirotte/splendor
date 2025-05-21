@@ -71,19 +71,18 @@ function setTimer(duration, timePassedForCurrentRound, $timerFill, gameState) {
 
         if (!isCurrentlyPlaying()) return;
 
-        if (remaining > 0) {
-            if (isCurrentlyPlaying() && sessionStorage.getItem("gameState") === gameState) requestAnimationFrame(update);
+        if (remaining > 0 && isCurrentlyPlaying() && sessionStorage.getItem("gameState") === gameState) {
+            requestAnimationFrame(update);
             return;
         }
 
         try {
-            if (getActionButton().disabled) {
-                deselectAll();
-            }
+            if (getActionButton().disabled) deselectAll();
 
             getActionButton().click();
         } catch(err) {
             startGameStatePolling();
+            console.error(err);
         }
 
     }

@@ -9,9 +9,8 @@ import {
     isCreator,
     safeEmptyContainer,
 } from "./helper.js";
-import {convertAvatarToCorrectCasing, getHighestScore} from "../../utils/game-object-handler.js";
+import { determinePlayerAvatar, getHighestScore } from "../../utils/game-object-handler.js";
 import { copyNode } from "../../utils/data-handler.js";
-import { avatars } from "../../main-menu-component/data.js";
 import { checkCompatibility } from "../../server-version-component/server-version.js";
 import { insertImageInto, renderUnsupportedError } from "../../utils/renderer.js";
 
@@ -37,18 +36,10 @@ function renderOtherPlayers(players, currentPlayer) {
     }
 }
 
-function getAvatar(otherPlayer) {
-    if ("avatar" in otherPlayer) {
-        return convertAvatarToCorrectCasing(otherPlayer.avatar);
-    } else {
-        return convertAvatarToCorrectCasing(avatars[otherPlayer.name.toLowerCase().charCodeAt(0) % avatars.length]);
-    }
-}
-
 function renderOtherPlayer($playerTemplate, otherPlayer, highestScore, currentPlayer, isGameCreator) {
     const $playerCard = copyNode($playerTemplate);
     const playerName = otherPlayer.name;
-    const avatar = getAvatar(otherPlayer);
+    const avatar = determinePlayerAvatar(otherPlayer.name, otherPlayer.avatar);
 
     showOtherPlayerTurn(playerName, currentPlayer, $playerCard);
 
@@ -176,7 +167,7 @@ const HISTORY_ACTIONS = {
 function renderHistoryEntry(entry) {
     const $renderedEntry = HISTORY_ACTIONS[entry["action"]](entry, entry["player"] );
 
-    if (!$renderedEntry) return $renderedEntry
+    if (!$renderedEntry) return $renderedEntry;
 
     insertPlayerName($renderedEntry, entry["player"]);
     return $renderedEntry;
@@ -222,6 +213,8 @@ function renderReserveCardEntry(entry) {
 
 function renderHistoryCard($cardEntry, cardType) {
     insertImageInto($cardEntry, `UI/cards/${TOKEN_MAPPER[cardType]}_card_small`, false, `${TOKEN_MAPPER[cardType]} card`);
+
+    // &nbsp adds a space that doesn't get trimmed when rendering. This is needed since this text gets preceded by an image
     $cardEntry.insertAdjacentHTML("beforeend", "<p>&nbspcard</p>");
 }
 
@@ -239,7 +232,7 @@ function renderIncompatibleServerMessage() {
 }
 
 function insertPlayerName(renderedEntry, playerName) {
-    renderedEntry.querySelector("strong").textContent = playerName === loadFromStorage("playerName") ? "you": playerName;
+    renderedEntry.querySelector("strong").textContent = playerName === loadFromStorage("playerName") ? "you" : playerName;
 }
 
 function renderSkipTurnHistory(playerName) {

@@ -1,11 +1,5 @@
-function getContainerToRenderPlayer($joinedPlayerContainers) {
-    for (const $container of $joinedPlayerContainers) {
-        if (!$container.childNodes.length) return $container;
-    }
-}
-
 function getContainerAnimationForLeaving($container) {
-    //https://www.geeksforgeeks.org/how-to-get-current-value-of-a-css-property-in-javascript/
+    // https://developer.mozilla.org/en-US/docs/Web/API/Window/getComputedStyle
     const currentContainerTransform = window.getComputedStyle($container).transform;
 
     return [
@@ -14,4 +8,4 @@ function getContainerAnimationForLeaving($container) {
     ];
 }
 
-export { getContainerToRenderPlayer, getContainerAnimationForLeaving }
+export { getContainerAnimationForLeaving };

@@ -65,6 +65,10 @@ label {
     list-style-type: none;
 }
 
+.avatar-selector section ul li {
+    list-style: none;
+}
+
 .avatar-selector li:hover {
     cursor: var(--clickable-item-cursor);
 }
@@ -102,10 +106,6 @@ form .avatar-selector {
     top: 2.5rem;
     left: 0;
     z-index: 5;
-}
-
-.avatar-selector section ul li {
-    list-style: none;
 }
 
 .avatar-selector section h2 {

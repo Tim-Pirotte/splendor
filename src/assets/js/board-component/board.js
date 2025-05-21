@@ -1,5 +1,5 @@
 import { updateGameData } from "./game-data-handler.js";
-import {getActionButton, initGameStatusInterface} from "./game-status-interface.js";
+import { initGameStatusInterface } from "./game-status-interface.js";
 import { selectToken } from "./tokens/token-handler.js";
 import { selectNoble } from "./nobles/nobles-handler.js";
 import { selectCard } from "./buy-reserve/select.js";
@@ -7,7 +7,7 @@ import { processReserve, selectDeckForReserving } from "./buy-reserve/reserve-ha
 import { handlePaymentMethodChange } from "./buy-reserve/buy-handler.js";
 import { selectPlayerToken } from "./tokens/discard.js";
 import * as API from "../api.js";
-import {handleKeyPress} from "./action-registry.js";
+import { handleKeyPress } from "./action-registry.js";
 
 function init() {
     updateGameData();

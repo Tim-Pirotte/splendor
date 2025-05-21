@@ -52,13 +52,13 @@
 
             <template id="buy-card-history-template">
                 <li>
-                    <p><strong></strong> bought a&nbsp</p>
+                    <p><strong></strong> bought a&nbsp;</p>
                 </li>
             </template>
 
             <template id="reserve-card-history-template">
                 <li>
-                    <p><strong></strong> reserved a &nbsp</p>
+                    <p><strong></strong> reserved a&nbsp;</p>
                 </li>
             </template>
 
@@ -76,7 +76,7 @@
 
             <template id="skip-turn-history-template">
                 <li>
-                    <p><strong></strong> skipped <span></span>&nbspturn</p>
+                    <p><strong></strong> skipped <span></span>&nbsp;turn</p>
                 </li>
             </template>
         </ol>
@@ -87,9 +87,9 @@
             <h1>It's your turn</h1>
             <div>
                 <p class="amount-of-spectators">0</p>
-                <picture>
-                    <source srcset="../assets/images/UI/spectators_eye_ofzo.webp" type="image/webp">
-                    <img src="../assets/images/fallback/UI/spectators_eye_ofzo.png" alt="spectators eye" title="spectators eye">
+                <picture class="spectator-eye-indicator">
+                    <source srcset="../assets/images/UI/spectator_indicator.webp" type="image/webp">
+                    <img src="../assets/images/fallback/UI/spectator_indicator.png" alt="spectators eye" title="spectators eye">
                 </picture>
                 <button type="button" class="sound-button">
                     <picture>
@@ -103,7 +103,7 @@
                         <img src="../assets/images/fallback/UI/forfeit.png" alt="Forfeit" title="Forfeit">
                     </picture>
                 </button>
-                <h2></h2>
+                <h2>playerName</h2>
                 <div class="avatar"></div>
             </div>
         </header>

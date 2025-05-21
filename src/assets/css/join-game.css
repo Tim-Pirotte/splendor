@@ -185,7 +185,7 @@ button:hover, #filter-form input[type="reset"]:hover {
     cursor: var(--clickable-item-cursor);
 }
 
-.username-in-use {
+.error-message {
     overflow: clip;
     position: absolute;
     right: 0;
@@ -193,7 +193,7 @@ button:hover, #filter-form input[type="reset"]:hover {
     padding-left: 1rem;
 }
 
-.username-in-use p {
+.error-message p {
     background-color: #752b39;
     border: 0.1rem solid #542434;
     color: var(--light-text-color);
@@ -201,5 +201,4 @@ button:hover, #filter-form input[type="reset"]:hover {
     margin: 1rem 0;
     box-shadow: 0 0 0.1rem 0.1rem #00000020, var(--buyable-card-box-shadow) #c98c08c2;
     animation: message 10s normal ease-in-out;
-    animation-fill-mode: forwards;
 }
