@@ -1,5 +1,5 @@
 import * as API from "../api.js";
-import { ERROR_MESSAGE_TIMEOUT, JOIN_GAME_PAGE_POLLING_TIME_OUT } from "../config.js";
+import { JOIN_GAME_PAGE_POLLING_TIME_OUT } from "../config.js";
 import { copyNode } from "../utils/data-handler.js";
 import { getCurrentUsersAmount, getGameId, getGameName, getGameState, getMaxUsersAmount } from "../utils/game-object-handler.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";

@@ -27,7 +27,7 @@ function renderPlayerInfo() {
 function renderNonValidPlayerName() {
     const $target = document.querySelector(".error-message");
     $target.classList.remove("none");
-    $target.innerHTML = `<p>Invalid playername: (no spaces or special characters).</p>`;
+    $target.innerHTML = "<p>Invalid playername: (no spaces or special characters).</p>";
 
     setTimeout(() => $target.classList.add("none"), ERROR_MESSAGE_TIMEOUT);
 }

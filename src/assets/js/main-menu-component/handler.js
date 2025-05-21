@@ -17,7 +17,7 @@ function savePlayerInfo(e) {
     e.preventDefault();
 
     const playerName = document.querySelector("#username").value.trim();
- 
+
     if (document.querySelector("form").reportValidity() && validatePlayerName(playerName)) {
         saveToStorage("playerName", playerName);
         saveToStorage("avatar", document.querySelector("#avatar li img").alt);

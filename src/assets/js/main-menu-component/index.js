@@ -1,5 +1,5 @@
 import { soundInit } from "../sound-component/sound.js";
-import { closeAvatarVisibility, savePlayerInfo, toggleAvatarListVisibility, updateSelectedAvatar } from "./handler.js";
+import { closeAvatarVisibility, savePlayerInfo, updateSelectedAvatar } from "./handler.js";
 import { renderAvatarSelectionList, renderPlayerInfo } from "./renderer.js";
 
 function init() {
