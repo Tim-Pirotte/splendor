@@ -16,38 +16,42 @@ function renderPlayerInfo() {
     insertImageInto(document.querySelector("#player-information"), `avatars/${avatar}`, false, avatar);
 }
 
-function renderPublicGames(e) {
+function initGameRendering(e) {
     const triggeredByPolling = e === undefined;
 
     if (!triggeredByPolling && e.target.value !== "Reset") e.preventDefault();
 
-    checkCompatibility(2).then(isCompatible => { renderCorrectGames(isCompatible); });
+    checkCompatibility(2).then(isCompatible => { renderCompatibleGames(isCompatible); });
 
-    if (triggeredByPolling) setTimeout(renderPublicGames, JOIN_GAME_PAGE_POLLING_TIME_OUT);
+    if (triggeredByPolling) setTimeout(initGameRendering, JOIN_GAME_PAGE_POLLING_TIME_OUT);
 }
 
-function renderCorrectGames(isCompatible) {
+function renderCompatibleGames(isCompatible) {
     API.getGames().then(gameObject => {
         const $gameList = document.querySelector("ul");
         const gamesToRender = filterGames(gameObject["games"], isCompatible);
         const numberOfGamesToRender = gamesToRender.size;
 
         if (numberOfGamesToRender) {
-            const $template = document.querySelector("#game-template");
-            const $gameListCopy = $gameList.cloneNode(true);
+            renderGamesToList($gameList, gamesToRender, numberOfGamesToRender);
 
-            safeEmptyContainer($gameListCopy);
-
-            $gameList.dataset.renderedGames = numberOfGamesToRender;
-            gamesToRender.forEach(game => $gameListCopy.appendChild(populateGame($template, game)));
-            $gameList.innerHTML = $gameListCopy.innerHTML;
         } else {
             safeEmptyContainer($gameList);
 
             $gameList.insertAdjacentHTML("beforeend", "<p>There are no games based on your selections</p>");
         }
-
     });
+}
+
+function renderGamesToList($gameList, gamesToRender, numberOfGamesToRender) {
+    const $template = document.querySelector("#game-template");
+    const $gameListCopy = $gameList.cloneNode(true);
+
+    safeEmptyContainer($gameListCopy);
+
+    $gameList.dataset.renderedGames = numberOfGamesToRender;
+    gamesToRender.forEach(game => $gameListCopy.appendChild(populateGame($template, game)));
+    $gameList.innerHTML = $gameListCopy.innerHTML;
 }
 
 function populateGame($template, game) {
@@ -63,4 +67,4 @@ function populateGame($template, game) {
     return $game;
 }
 
-export { renderPlayerInfo, renderPublicGames };
+export { renderPlayerInfo, initGameRendering };
