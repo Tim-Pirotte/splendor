@@ -50,8 +50,16 @@ function renderGamesToList($gameList, gamesToRender, numberOfGamesToRender) {
     safeEmptyContainer($gameListCopy);
 
     $gameList.dataset.renderedGames = numberOfGamesToRender;
-    gamesToRender.forEach(game => $gameListCopy.appendChild(populateGame($template, game)));
+    sortGames(gamesToRender).forEach(game => $gameListCopy.appendChild(populateGame($template, game)));
     $gameList.innerHTML = $gameListCopy.innerHTML;
+}
+
+function sortGames(games) {
+    return Array.from(games).sort((game1, game2) => calculateGameSortingValue(game1) - calculateGameSortingValue(game2))
+}
+
+function calculateGameSortingValue(game) {
+    return game.players.length / game.numberOfPlayers;
 }
 
 function populateGame($template, game) {
