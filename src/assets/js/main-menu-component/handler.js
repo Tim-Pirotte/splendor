@@ -35,7 +35,6 @@ function savePlayerInfoToLocalStorage(playerName) {
 }
 
 function closeAvatarVisibility(e) {
-
     if (e.target.closest("button")?.getAttribute("id") === "avatar") {
         toggleAvatarListVisibility(e);
         return;
