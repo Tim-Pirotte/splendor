@@ -16,31 +16,31 @@ function loadLobbyInformation(startedByPolling) {
         locateToMainMenu();
     }
 
-    API.getGame().then(gameData => {
-        renderGameInfo(gameData, gameData.started);
-        renderLobbyPlayers(gameData, gameData.started);
-        renderPlayerCount(gameData);
-        hideIncompatibleElements();
+    API.getGame()
+        .then(gameData => {
+            renderGameInfo(gameData, gameData.started);
+            renderLobbyPlayers(gameData, gameData.started);
+            renderPlayerCount(gameData);
+            hideIncompatibleElements();
 
-        if (!startedByPolling) return;
+            if (!startedByPolling) return;
 
-        if (gameData.started) {
-            const $countdownContainer = document.createElement("li");
-            $countdownContainer.classList.add("starting-countdown");
+            if (gameData.started) {
+                const $countdownContainer = document.createElement("li");
+                $countdownContainer.classList.add("starting-countdown");
 
-            document.querySelector("ul").insertAdjacentElement("beforeend", $countdownContainer);
+                document.querySelector("ul").insertAdjacentElement("beforeend", $countdownContainer);
 
-            renderGameStartingCountdown(LOBBY_COUNTDOWN_DURATION, $countdownContainer);
-        } else {
-            setTimeout(loadLobbyInformation, IN_GAME_POLLING_TIME_OUT, true);
-        }
-    });
+                renderGameStartingCountdown(LOBBY_COUNTDOWN_DURATION, $countdownContainer);
+            } else {
+                setTimeout(loadLobbyInformation, IN_GAME_POLLING_TIME_OUT, true);
+            }
+        });
 }
 
-function copyGameId(){
+function copyGameId() {
     setCopyGameIdImageColor("red");
-    const gameId = loadFromStorage("gameId");
-    navigator.clipboard.writeText(gameId);
+    navigator.clipboard.writeText(loadFromStorage("gameId"));
     setTimeout(setCopyGameIdImageColor, COPY_BUTTON_REMOVE_FEEDBACK_DELAY, "white");
 }
 
@@ -62,4 +62,4 @@ function processAddBot(e) {
     loadLobbyInformation(false);
 }
 
-export { loadLobbyInformation , copyGameId, processAddBot };
+export { loadLobbyInformation, copyGameId, processAddBot };

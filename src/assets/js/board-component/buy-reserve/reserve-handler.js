@@ -1,41 +1,90 @@
 import * as API from "../../api.js";
 import { endBuyReserveAction, getReserveCardButton } from "./helper.js";
 import { startGameStatePolling } from "../game-data-handler.js";
-import { validDeckReserve } from "../state-machine/valid-action-checker.js";
+import { validDeckReserve, getCardObject } from "../state-machine/valid-action-checker.js";
 import { setActionToBuyReserve } from "./buy-handler.js";
-import { addGoldToken, renderClientPlayerReserve } from "../renderer/current-player-renderer.js";
+import { addGoldToken } from "../renderer/current-player-renderer.js";
 import {
     deselectAll,
     isCurrentlyPlaying,
     resetCurrentPlayer,
 } from "../game-status-interface.js";
+import { renderCard } from "../renderer/helper.js";
+import { animateFromTo } from "../animation-component/animation-handler.js";
+import {
+    reserveCardAnimation,
+    reserveCardFromDeckAnimationBack,
+    reserveCardFromDeckAnimationFront,
+    setAnimationDelayBeforePolling,
+} from "../animation-component/data.js";
+import { removeBackFromCard } from "../renderer/board-renderer.js";
 
 function processReserve(){
     resetCurrentPlayer();
 
     const selectedCardName = getReserveCardButton().dataset.name;
     const cardDeckLevel = getReserveCardButton().dataset.level;
-    let requestBody;
 
-    if( selectedCardName ) {
-        requestBody = {
+    const requestBody = getReserveRequestBody(selectedCardName, cardDeckLevel);
+
+    API.reserveCard(requestBody).then(res => {
+        if (!selectedCardName) {
+            playDeckToReservedAnimation(cardDeckLevel, res["reserve"][res["reserve"].length - 1]);
+        }
+    });
+
+    addGoldToken();
+    endBuyReserveAction();
+
+    startGameStatePolling();
+}
+
+function getReserveRequestBody(selectedCardName, cardDeckLevel) {
+    if (selectedCardName) {
+        playCardToReservedAnimation(selectedCardName);
+        setAnimationDelayBeforePolling(reserveCardAnimation.duration);
+
+        return {
             "development": {
                 "name": selectedCardName,
             },
         };
     } else {
-        requestBody = {
+        return {
             "development": {
                 "level": parseInt(cardDeckLevel),
             },
         };
     }
+}
 
-    API.reserveCard(requestBody).then(res => renderClientPlayerReserve(res["reserve"]));
+function playCardToReservedAnimation(selectedCardName) {
+    const $source = document.querySelector(`[data-name="${selectedCardName}"]`);
+    $source.classList.add("hidden");
 
-    addGoldToken();
-    endBuyReserveAction();
-    startGameStatePolling();
+    document.querySelector(".reserved-cards h4").textContent = "";
+
+    const $card = renderCard(getCardObject(selectedCardName));
+    document.querySelector(".reserved-cards ul").appendChild($card);
+
+    animateFromTo($source, $card, reserveCardAnimation);
+}
+
+function playDeckToReservedAnimation(deckLevel, cardData) {
+    const $source = document.querySelector(`[data-deck-level="${deckLevel}"] .hidden-cards`);
+
+    document.querySelector(".reserved-cards h4").textContent = "";
+
+    const $card = renderCard(cardData);
+    const $reservedCards = document.querySelector(".reserved-cards ul");
+    const $cardSidesContainer = document.createElement("div");
+    $cardSidesContainer.appendChild($card);
+    const $cardBack = $source.cloneNode(true);
+    $cardSidesContainer.appendChild($cardBack);
+    $reservedCards.appendChild($cardSidesContainer);
+
+    animateFromTo($source, $card, reserveCardFromDeckAnimationFront, removeBackFromCard);
+    animateFromTo($source, $cardBack, reserveCardFromDeckAnimationBack);
 }
 
 function selectDeckForReserving(e) {

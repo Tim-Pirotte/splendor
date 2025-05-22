@@ -61,6 +61,7 @@ button, input {
     bottom: 2rem;
     right: 2rem;
     transition: var(--hover-transition-duration);
+    will-change: filter;
 }
 
 .sound-button img {

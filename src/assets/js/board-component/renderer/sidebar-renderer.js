@@ -7,7 +7,6 @@ import {
     highlightPointsWinner,
     getOrderedPlayersWithoutClientPlayer,
     isCreator,
-    safeEmptyContainer,
 } from "./helper.js";
 import { determinePlayerAvatar, getHighestScore } from "../../utils/game-object-handler.js";
 import { copyNode } from "../../utils/data-handler.js";
@@ -18,38 +17,49 @@ function renderOtherPlayers(players, currentPlayer) {
     const currentPlayerName = loadFromStorage("playerName");
     const highestScore = getHighestScore(players);
 
+    const $otherPlayersContainer = document.querySelector(".other-players");
+
     const otherPlayers = getOrderedPlayersWithoutClientPlayer(players, currentPlayerName);
 
-    const $otherPlayerContainer = document.querySelector(".other-players");
-    safeEmptyContainer($otherPlayerContainer);
+    if ($otherPlayersContainer.childElementCount === 1) setupRenderOtherPlayers(players.length);
 
     const $playerTemplate = document.querySelector("#other-player-card-template");
 
-    for (const otherPlayer of otherPlayers) {
-        $otherPlayerContainer.appendChild(renderOtherPlayer(
+    for (const [index, $otherPlayer] of $otherPlayersContainer.querySelectorAll(":scope > li").entries()) {
+        const playerName = otherPlayers[index].name;
+        showOtherPlayerTurn(playerName, currentPlayer, $otherPlayer);
+
+        $otherPlayer.innerHTML = renderOtherPlayer(
             $playerTemplate,
-            otherPlayer,
+            otherPlayers[index],
             highestScore,
             currentPlayer,
-            isCreator(players, otherPlayer),
-        ));
+            isCreator(players, otherPlayers),
+        ).innerHTML;
+    }
+}
+
+function setupRenderOtherPlayers(amountOfPlayers) {
+    const $otherPlayersContainer = document.querySelector(".other-players");
+
+    for (let i = 0; i < amountOfPlayers - 1; i++) {
+        const $li = document.createElement("li");
+        $li.classList.add("player-card");
+        $otherPlayersContainer.appendChild($li);
     }
 }
 
 function renderOtherPlayer($playerTemplate, otherPlayer, highestScore, currentPlayer, isGameCreator) {
     const $playerCard = copyNode($playerTemplate);
-    const playerName = otherPlayer.name;
     const avatar = determinePlayerAvatar(otherPlayer.name, otherPlayer.avatar);
-
-    showOtherPlayerTurn(playerName, currentPlayer, $playerCard);
 
     insertImageInto($playerCard.querySelector("header"), `avatars/${avatar}`, true, avatar);
 
     if (isGameCreator) $playerCard.querySelector("img").classList.add("game-creator");
-    if (otherPlayer.forfeited) $playerCard.classList.add("forfeited");
+    if (otherPlayer["forfeited"]) $playerCard.classList.add("forfeited");
 
     setPlayerName($playerCard, otherPlayer);
-    setPlayerPoints($playerCard, otherPlayer["totalPrestigePoints"], highestScore, otherPlayer.forfeited);
+    setPlayerPoints($playerCard, otherPlayer["totalPrestigePoints"], highestScore, otherPlayer["forfeited"]);
 
     renderTokenList($playerCard.querySelector(".tokens"), otherPlayer["tokens"], GEMS);
     renderCardList($playerCard.querySelector(".cards"), otherPlayer["bonuses"], GEMS);
@@ -59,7 +69,19 @@ function renderOtherPlayer($playerTemplate, otherPlayer, highestScore, currentPl
 }
 
 function showOtherPlayerTurn(playerName, currentPlayer, $playerCard) {
-    if (playerName === currentPlayer) $playerCard.classList.add("current-player");
+    const playerCardAnimationDuration = 300;
+
+    if (playerName === currentPlayer) {
+        $playerCard.classList.add("current-player");
+    } else {
+        if ($playerCard.classList.contains("current-player")) $playerCard.classList.add("end-animation");
+        $playerCard.classList.remove("current-player");
+        setTimeout(removeCurrentPlayerClass, playerCardAnimationDuration);
+    }
+
+    function removeCurrentPlayerClass() {
+        $playerCard.classList.remove("end-animation");
+    }
 }
 
 function setPlayerName($playerCard, otherPlayer) {
