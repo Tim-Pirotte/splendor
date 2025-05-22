@@ -11,11 +11,10 @@ function handleGameDataError(err) {
     const forbidden = 403;
     const unauthorized = 401;
     const gameNotExists = 404;
-    const internalServerError = 500;
 
     const statusCode = err["failure"];
 
-    if (statusCode === forbidden || statusCode === unauthorized || statusCode === gameNotExists || statusCode === internalServerError) locateToMainMenu();
+    if (statusCode === forbidden || statusCode === unauthorized || statusCode === gameNotExists) locateToMainMenu();
     console.error(err);
 }
 
