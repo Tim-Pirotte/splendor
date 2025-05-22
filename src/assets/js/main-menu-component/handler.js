@@ -2,6 +2,7 @@ import { saveToStorage } from "../data-connector/local-storage-abstractor.js";
 import { renderErrorMessage } from "../utils/renderer.js";
 import { renderPlayerInfo } from "./renderer.js";
 import { validatePlayerName } from "./validator.js";
+import {createBotGame, joinBot} from "../api.js";
 
 function toggleAvatarListVisibility(e) {
     document.querySelector(".avatar-selector section").classList.toggle("none");
@@ -23,6 +24,10 @@ function savePlayerInfo(e) {
 
         if (["join-game", "create-game"].includes(e.target.value)) {
             location.href = `./pages/${e.target.value}.html`;
+        }
+        if (e.target.value === "demo") {
+            const gameId = createBotGame();
+            joinBot(3);
         }
     } else {
         renderErrorMessage("Invalid playername: (no spaces or special characters).");

@@ -61,8 +61,8 @@ function createBotGame(){
     return gameId;
 }
 
-function joinBot(level) {
-    joinGame(loadFromStorage("gameId"), level + NPC_SUFFIX, false, false);
+function joinBot(level , gameId) {
+    joinGame(gameId, level + NPC_SUFFIX, false, false);
 }
 
 function leaveGame() {
