@@ -15,6 +15,12 @@ function updateSelectedAvatar(e) {
     toggleAvatarListVisibility();
 }
 
+function addBotsToTheGame(level, gameId, numberOfPlayers) {
+    for (let i = 0; i <= numberOfPlayers; i++) {
+        API.joinBot(level, gameId);
+    }
+}
+
 function savePlayerInfo(e) {
     e.preventDefault();
 
@@ -34,10 +40,7 @@ function savePlayerInfo(e) {
 
             const gameId = loadFromStorage("gameId");
 
-            // eslint-disable-next-line max-depth
-            for (let i = 0; i <= numberOfPlayers; i++) {
-                API.joinBot(level, gameId);
-            }
+            addBotsToTheGame(level, gameId, numberOfPlayers);
 
             spectateBotGameById(gameId);
         }
