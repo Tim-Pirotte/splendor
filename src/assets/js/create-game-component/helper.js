@@ -14,7 +14,7 @@ function createGameWithBody(requestBody) {
             checkCompatibility(2)
                 .then(isCompatible => {
                     saveData(response, isCompatible);
-                    location.href = "./pages/lobby.html";
+                    location.href = "./lobby.html";
                 });
         });
 }
