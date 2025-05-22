@@ -46,7 +46,7 @@ function joinGame(gameId, playerName, spectatingEnabled, forfeit) {
 function createBotGame(level, numberOfPlayers){
     const requestBody = {
         playerName: level + NPC_SUFFIX,
-        gameName: "Demo_Game",
+        gameName: "Demo game",
         numberOfPlayers: numberOfPlayers,
         returnExcessTokensRequired: true,
         pickNobleRequired: true,

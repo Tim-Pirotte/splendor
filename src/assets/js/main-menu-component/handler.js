@@ -4,6 +4,7 @@ import { renderErrorMessage } from "../utils/renderer.js";
 import { renderPlayerInfo } from "./renderer.js";
 import { validatePlayerName } from "./validator.js";
 import { spectateBotGameById } from "../join-game-component/helper.js";
+import { LEVEL_OF_BOTS_IN_BOT_GAME, NUMBER_OF_PLAYERS_IN_BOT_GAME } from "../config.js";
 
 function toggleAvatarListVisibility(e) {
     document.querySelector(".avatar-selector section").classList.toggle("none");
@@ -34,13 +35,11 @@ function savePlayerInfo(e) {
         }
 
         if (e.target.value === "demo") {
-            const level = 3;
-            const numberOfPlayers = 4;
-            API.createBotGame(level, numberOfPlayers);
+            API.createBotGame(LEVEL_OF_BOTS_IN_BOT_GAME, NUMBER_OF_PLAYERS_IN_BOT_GAME);
 
             const gameId = loadFromStorage("gameId");
 
-            addBotsToTheGame(level, gameId, numberOfPlayers);
+            addBotsToTheGame(LEVEL_OF_BOTS_IN_BOT_GAME, gameId, NUMBER_OF_PLAYERS_IN_BOT_GAME);
 
             spectateBotGameById(gameId);
         }
