@@ -38,7 +38,9 @@ function renderGameStatusMessage(currentPlayer) {
     $statusMessage.dataset.currentlyPlaying = currentPlayer;
 }
 
-function renderAmountOfSpectators(spectators) {
+function renderAmountOfSpectators(spectators, compatible) {
+    if (!compatible) return;
+    
     document.querySelector(".amount-of-spectators").textContent = spectators.filter(
         spectator => spectator.pollDelta < TIME_AFTER_SPECTATOR_DOES_NOT_GET_RENDERED,
     ).length;
@@ -161,7 +163,7 @@ function setTotalTokensColor($totalTokenCount, totalTokens) {
     $totalTokenCount.classList.toggle("highlighted-number", totalTokens > MAX_TOKENS_ALLOWED);
 }
 
-function renderClientPlayer(players, gems) {
+function renderClientPlayer(players, gems, compatible) {
     let clientPlayer = getPlayerByName(players, loadFromStorage("playerName"));
 
     if(isNotCurrentActivePlayer(clientPlayer)) {
@@ -177,7 +179,7 @@ function renderClientPlayer(players, gems) {
     // Needs to know the player tokens to determine if a card should be highlighted
     renderClientPlayerReserve(clientPlayer["reserve"]);
 
-    renderTimer();
+    renderTimer(compatible);
 }
 
 function isNotCurrentActivePlayer(clientPlayer) {
@@ -326,8 +328,9 @@ function hideSwitchPaymentButtons() {
     });
 }
 
-function renderTimer() {
-    if (isCurrentlyPlaying()) {
+function renderTimer(compatible) {
+
+    if (isCurrentlyPlaying() && compatible) {
         document.querySelector(".timer").style.opacity = "1";
     } else {
         document.querySelector(".timer").style.opacity = "0";

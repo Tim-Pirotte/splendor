@@ -44,10 +44,9 @@ function updateGameData() {
             // Add a delay to evade a race condition between the animation cleanup and the rendering system
             setTimeout(updateGameData, getAnimationDelayBeforePolling() + ANIMATION_FINISH_DELAY);
         } else {
-            if(sessionStorage.getItem("serverVersion") === 2) { 
+            //startRoundTimer(gameData["timePassedForCurrentRound"], gameData["gameState"]); 
+            if(parseInt(sessionStorage.getItem("serverVersion")) === 2) { 
                 startRoundTimer(gameData["timePassedForCurrentRound"], gameData["gameState"]); 
-            } else {
-
             }
         }
 
@@ -103,6 +102,7 @@ function setTimer(duration, timePassedForCurrentRound, $timerFill, gameState) {
 }
 
 function startRoundTimer(timePassedForCurrentRound, gameState) {
+    console.log("HELLO")
     const $timerFill = document.querySelector(".timer-fill");
     $timerFill.classList.remove("time-almost-ends");
     setTimer(SECONDS_PER_ROUND, timePassedForCurrentRound, $timerFill, gameState);
