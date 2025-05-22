@@ -1,6 +1,5 @@
 import * as API from "../api.js";
-import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
-import { saveToStorage } from "../data-connector/local-storage-abstractor.js";
+import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
 import { renderErrorMessage, renderUnsupportedError } from "../utils/renderer.js";
 import { checkCompatibility } from "../server-version-component/server-version.js";
 
