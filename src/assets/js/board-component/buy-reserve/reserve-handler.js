@@ -12,7 +12,9 @@ import {
 import { renderCard } from "../renderer/helper.js";
 import { animateFromTo } from "../animation-component/animation-handler.js";
 import {
-    reserveCardAnimation, reserveCardFromDeckAnimationBack, reserveCardFromDeckAnimationFront,
+    reserveCardAnimation,
+    reserveCardFromDeckAnimationBack,
+    reserveCardFromDeckAnimationFront,
     setAnimationDelayBeforePolling,
 } from "../animation-component/data.js";
 import { removeBackFromCard } from "../renderer/board-renderer.js";
