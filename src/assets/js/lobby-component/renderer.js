@@ -71,11 +71,10 @@ function renderPlayersList(gameObject, started) {
 
         if (player.name === null && !isAddBotButton($player) && hasSomethingRenderedInside($player)) {
             removeRenderedPlayer($player);
-        } else if (player.name !== null && player.name !== $player?.querySelector(".player-name")?.innerText) {
+        }
+
+        if (player.name !== null && player.name !== $player?.querySelector(".player-name")?.innerText) {
             renderPlayer(player, $player, $template);
-        } else {
-            // https://www.keyboardfaces.com/
-            //sonar: ( ︶︿︶)_╭∩╮ me: ლ(ಠ益ಠლ)
         }
     }
 }
