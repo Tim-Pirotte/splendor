@@ -66,6 +66,7 @@ main {
     border : var(--border-color) solid 0.5rem;
     outline: var(--outline-color) solid 0.5rem;
     background-size: 100% 100%;
+    box-shadow: rgb(0 0 0 / 57%) 0.2rem 0.2rem 0.3rem;
 }
 
 p {
@@ -131,4 +132,8 @@ footer {
     align-self: flex-end;
     flex-flow: row nowrap;
     padding: 2rem;
+}
+
+h1, label {
+    text-shadow: rgb(0 0 0 / 57%) 0.2rem 0.2rem 0.3rem;
 }

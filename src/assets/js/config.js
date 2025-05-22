@@ -20,7 +20,7 @@ const ERROR_MESSAGE_TIMEOUT = 10000;
 const NPC_SUFFIX = "w817s2JgYDTjTR6x";
 
 function getAPIUrl() {
-    return DEPLOYED_SERVER;
+    return LOCAL_SERVER;
 }
 
 export {
