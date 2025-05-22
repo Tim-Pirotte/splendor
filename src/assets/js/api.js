@@ -4,7 +4,6 @@ import { checkCompatibility } from "./server-version-component/server-version.js
 import { NPC_SUFFIX } from "./config.js";
 import { handleGameDataError } from "./board-component/game-data-handler.js";
 import { locateToMainMenu } from "./utils/data-handler.js";
-import {createGameWithBody, getCheckedRadioButtonValue} from "./create-game-component/helper";
 
 /* Game Management */
 function getGames(hasStarted = "") {
