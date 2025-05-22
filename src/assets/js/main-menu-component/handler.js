@@ -29,7 +29,7 @@ function savePlayerInfo(e) {
 
         if (e.target.value === "demo") {
             const level = 3;
-            const numberOfPlayers = 3;
+            const numberOfPlayers = 4;
             API.createBotGame(level, numberOfPlayers);
 
             const gameId = loadFromStorage("gameId");
@@ -59,7 +59,6 @@ function closeAvatarVisibility(e) {
 
     if (!document.querySelector(".avatar-selector section").classList.contains("none")) {
         toggleAvatarListVisibility(e);
-        return;
     }
 }
 
