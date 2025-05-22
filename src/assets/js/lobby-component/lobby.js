@@ -1,5 +1,4 @@
 import { loadLobbyInformation, copyGameId, processAddBot } from "./handler.js";
-import { loadLobbyInformation, copyGameId } from "./handler.js";
 import { soundInit } from "../sound-component/sound.js";
 import * as API from "../api.js";
 

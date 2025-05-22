@@ -27,15 +27,14 @@ function renderLobbyPlayers(gameData, started) {
 }
 
 function renderPlayerContainers(amountOfPlayers, $joinedPlayersContainer) {
-    if ($joinedPlayersContainer.childElementCount > getAmountOfTemplateTags($joinedPlayersContainer)) return;
+    if ($joinedPlayersContainer.childElementCount === getAmountOfTemplateTags($joinedPlayersContainer) + amountOfPlayers) return;
 
-    if ($joinedPlayersContainer)
-    {for (let i = 0; i < amountOfPlayers; i++) {
+    for (let i = 0; i < amountOfPlayers; i++) {
         const $player = document.createElement("li");
         $player.classList.add("player");
 
         $joinedPlayersContainer.appendChild($player);
-    }}
+    }
 }
 
 function renderBotPlaceHolders($joinedPlayersContainer) {
