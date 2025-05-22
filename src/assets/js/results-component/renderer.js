@@ -33,7 +33,7 @@ function renderResults() {
             const isPlayer = player.name === loadFromStorage("playerName");
             const gameData = loadFromStorage("gameData");
 
-            if (isPlayer && !isSpectator(gameData["spectators"], player.name)) {
+            if (isPlayer && parseInt(sessionStorage.getItem("serverVersion") === "2") && !isSpectator(gameData["spectators"], player.name)) {
                 renderResultMessage(player.isWinner);
                 renderResultAnimation(player.isWinner);
             }
