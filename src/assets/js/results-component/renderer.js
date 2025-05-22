@@ -10,6 +10,7 @@ import { formatNumber } from "../board-component/renderer/helper.js";
 import { insertImageInto } from "../utils/renderer.js";
 import { locateToMainMenu } from "../utils/data-handler.js";
 import { isSpectator } from "../board-component/state-machine/state-machine.js";
+import { checkCompatibilityFromSessionStorage } from "../server-version-component/server-version.js";
 
 function renderResultMessage(isWinner) {
     const $h1 = document.querySelector("h1");

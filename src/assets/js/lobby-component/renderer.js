@@ -12,6 +12,7 @@ import { reflowCSS } from "../board-component/helper.js";
 import { getContainerAnimationForLeaving, hasSomethingRenderedInside, isAddBotButton } from "./helper.js";
 import { LEAVING_PLAYER_ANIMATION_DURATION } from "../config.js";
 import { safeEmptyContainer } from "../board-component/renderer/helper.js";
+import { checkCompatibilityFromSessionStorage } from "../server-version-component/server-version.js";
 
 function renderGameInfo(gameObject, started) {
     document.querySelector("#game-name-id").innerHTML = `${getGameName(gameObject)} / <span>${getGameId(gameObject)}</span>`;

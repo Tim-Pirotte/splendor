@@ -7,6 +7,7 @@ import {
 import { renderHistory, renderOtherPlayers } from "./sidebar-renderer.js";
 import { renderBoardTokens, renderCards, renderNobles } from "./board-renderer.js";
 import { GEMS } from "../data.js";
+import { checkCompatibilityFromSessionStorage } from "../../server-version-component/server-version.js";
 
 function renderPage(gameData) {
     const compatible = checkCompatibilityFromSessionStorage(2);
