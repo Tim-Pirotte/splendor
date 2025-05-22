@@ -42,11 +42,10 @@ function updateGameData() {
         if (!isCurrentlyPlaying()) {
             // Add a delay to evade a race condition between the animation cleanup and the rendering system
             setTimeout(updateGameData, getAnimationDelayBeforePolling() + ANIMATION_FINISH_DELAY);
-        } else {
-            //startRoundTimer(gameData["timePassedForCurrentRound"], gameData["gameState"]); 
-            if(checkCompatibilityFromSessionStorage(2)) { 
-                startRoundTimer(gameData["timePassedForCurrentRound"], gameData["gameState"]); 
-            }
+        }
+        
+        if(checkCompatibilityFromSessionStorage(2) && isCurrentlyPlaying()) {
+            startRoundTimer(gameData["timePassedForCurrentRound"], gameData["gameState"]); 
         }
 
         setAnimationDelayBeforePolling(IN_GAME_POLLING_TIME_OUT);

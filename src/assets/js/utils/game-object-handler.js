@@ -37,18 +37,18 @@ function getPlayersObjects(gameData, started) {
 
             for (const player of gameData["players"]) {
 
-                let avatar = undefined;
+                let avatar = null;
                 if (compatible) {
                     avatar = started ? player["avatar"] : gameData["avatars"][player];
                 }
-                
+
                 players.push({
                     "name": started ? player.name : player,
                     "avatar": avatar,
                 });
             }
             return players;
-        })
+        });
 }
 
 function hasGameStarted(gameData) {
@@ -77,7 +77,7 @@ function determinePlayerAvatar(playerName, avatar) {
         avatar = avatars[avatarIndex];
     }
 
-    if(playerName == loadFromStorage("playerName")) {
+    if (playerName === loadFromStorage("playerName")) {
         avatar = loadFromStorage("avatar");
     }
     return avatar.toLowerCase();

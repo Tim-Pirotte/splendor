@@ -78,7 +78,7 @@ function renderPlayersList(gameObject, started) {
                     renderPlayer(player, $player, $template);
                 }
             }
-        })
+        });
 }
 
 function removeRenderedPlayer($container) {
