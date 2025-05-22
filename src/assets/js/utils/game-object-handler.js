@@ -1,3 +1,4 @@
+import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { avatars } from "../main-menu-component/data.js";
 import { checkCompatibility } from "../server-version-component/server-version.js";
 
@@ -30,14 +31,13 @@ function getGameCreator(gameData, started) {
 }
 
 function getPlayersObjects(gameData, started) {
-
     return checkCompatibility(2)
         .then(compatible => {
             const players = [];
 
             for (const player of gameData["players"]) {
 
-                let avatar = avatars[0];
+                let avatar = undefined;
                 if (compatible) {
                     avatar = started ? player["avatar"] : gameData["avatars"][player];
                 }
@@ -47,7 +47,6 @@ function getPlayersObjects(gameData, started) {
                     "avatar": avatar,
                 });
             }
-            //console.log(players);
             return players;
         })
 }
@@ -78,6 +77,9 @@ function determinePlayerAvatar(playerName, avatar) {
         avatar = avatars[avatarIndex];
     }
 
+    if(playerName == loadFromStorage("playerName")) {
+        avatar = loadFromStorage("avatar");
+    }
     return avatar.toLowerCase();
 }
 
