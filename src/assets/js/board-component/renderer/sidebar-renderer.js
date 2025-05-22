@@ -9,7 +9,7 @@ import {
     isCreator,
 } from "./helper.js";
 import { determinePlayerAvatar, getHighestScore } from "../../utils/game-object-handler.js";
-import { copyNode } from "../../utils/data-handler.js";
+import {copyNode, getAmountOfTemplateTags} from "../../utils/data-handler.js";
 import { checkCompatibility } from "../../server-version-component/server-version.js";
 import { insertImageInto, renderUnsupportedError } from "../../utils/renderer.js";
 
@@ -21,7 +21,7 @@ function renderOtherPlayers(players, currentPlayer) {
 
     const otherPlayers = getOrderedPlayersWithoutClientPlayer(players, currentPlayerName);
 
-    if ($otherPlayersContainer.childElementCount === 1) setupRenderOtherPlayers(players.length);
+    if ($otherPlayersContainer.childElementCount === getAmountOfTemplateTags($otherPlayersContainer)) setupRenderOtherPlayers(players.length);
 
     const $playerTemplate = document.querySelector("#other-player-card-template");
 
@@ -31,15 +31,31 @@ function renderOtherPlayers(players, currentPlayer) {
 
         showOtherPlayerTurn(playerName, currentPlayer, $otherPlayer);
 
-        $otherPlayer.innerHTML = renderOtherPlayer(
+        renderNewOrUpdatedPlayerInDom($otherPlayer, renderOtherPlayer(
             $playerTemplate,
             otherPlayer,
             highestScore,
             currentPlayer,
             isCreator(players, otherPlayers),
-        ).innerHTML;
+        ));
 
         $otherPlayer.classList.toggle("forfeited", otherPlayer["forfeited"]);
+    }
+}
+
+function renderNewOrUpdatedPlayerInDom($otherPlayer, $newOtherPlayer) {
+    if ($otherPlayer.childElementCount === 0) {
+        $otherPlayer.innerHTML = $newOtherPlayer.innerHTML;
+    } else {
+        /* This alternative way of rendering the other players is to prevent jittering in Firefox.
+        *  The copy is needed since .children returns a live HTMLCollection.
+        *  https://developer.mozilla.org/en-US/docs/Web/API/HTMLCollection */
+        const $oldChildren = [...$otherPlayer.children];
+        const $newChildren = [...$newOtherPlayer.children];
+
+        for (let i = 0; i < $oldChildren.length; i++) {
+            $oldChildren[i].replaceWith($newChildren[i]);
+        }
     }
 }
 
