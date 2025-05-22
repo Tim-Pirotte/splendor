@@ -3,7 +3,7 @@ import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-
 import { renderErrorMessage } from "../utils/renderer.js";
 import { renderPlayerInfo } from "./renderer.js";
 import { validatePlayerName } from "./validator.js";
-import { spectateGameById } from "../join-game-component/helper.js";
+import { spectateBotGameById } from "../join-game-component/helper.js";
 
 function toggleAvatarListVisibility(e) {
     document.querySelector(".avatar-selector section").classList.toggle("none");
@@ -39,7 +39,7 @@ function savePlayerInfo(e) {
                 API.joinBot(level, gameId);
             }
 
-            spectateGameById(gameId);
+            spectateBotGameById(gameId);
         }
     } else {
         renderErrorMessage("Invalid playername: (no spaces or special characters).");
