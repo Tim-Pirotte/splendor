@@ -17,6 +17,7 @@ function spectateGameById(gameId) {
             }
         });
 }
+
 function spectateBotGameById(gameId) {
     API.joinGame(gameId, loadFromStorage("playerName"), true, false).then(response => {
         saveToStorage("gameId", response["gameId"]);
@@ -26,6 +27,7 @@ function spectateBotGameById(gameId) {
         renderErrorMessage(err.cause);
     });
 }
+
 function initiateGameSession(gameId, spectating) {
     API.joinGame(gameId, loadFromStorage("playerName"), spectating, false).then(response => {
         saveToStorage("gameId", response["gameId"]);
