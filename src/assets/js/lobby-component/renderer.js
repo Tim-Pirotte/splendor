@@ -27,7 +27,7 @@ function renderLobbyPlayers(gameData, started) {
 }
 
 function renderPlayerContainers(amountOfPlayers, $joinedPlayersContainer) {
-    if ($joinedPlayersContainer.childElementCount === getAmountOfTemplateTags($joinedPlayersContainer) + amountOfPlayers) return;
+    if ($joinedPlayersContainer.childElementCount === (getAmountOfTemplateTags($joinedPlayersContainer) + amountOfPlayers)) return;
 
     for (let i = 0; i < amountOfPlayers; i++) {
         const $player = document.createElement("li");
@@ -62,11 +62,9 @@ function renderAddBot($container) {
 
 function renderPlayersList(gameObject, started) {
     const $template = document.querySelector("#joined-player-template");
-    //const $joinedPlayers = document.querySelector("#joined-players");
     const $joinedPlayerContainers = document.querySelector("#joined-players").querySelectorAll("li");
-    const players = getPlayersObjects(gameObject, started);
 
-    for (const [index, player] of players.entries()) {
+    for (const [index, player] of getPlayersObjects(gameObject, started).entries()) {
         const $player = $joinedPlayerContainers[index];
 
         if (player.name === null && !isAddBotButton($player) && hasSomethingRenderedInside($player)) {

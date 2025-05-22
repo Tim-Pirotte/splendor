@@ -40,8 +40,7 @@ function loadLobbyInformation(startedByPolling) {
 
 function copyGameId() {
     setCopyGameIdImageColor("red");
-    const gameId = loadFromStorage("gameId");
-    navigator.clipboard.writeText(gameId);
+    navigator.clipboard.writeText(loadFromStorage("gameId"));
     setTimeout(setCopyGameIdImageColor, COPY_BUTTON_REMOVE_FEEDBACK_DELAY, "white");
 }
 
