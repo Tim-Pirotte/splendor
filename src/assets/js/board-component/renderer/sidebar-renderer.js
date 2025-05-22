@@ -39,7 +39,7 @@ function renderOtherPlayers(players, currentPlayer) {
             isCreator(players, otherPlayers),
         ).innerHTML;
 
-        $otherPlayer.classList.toggle("forfeited", otherPlayer["forfeited"])
+        $otherPlayer.classList.toggle("forfeited", otherPlayer["forfeited"]);
     }
 }
 

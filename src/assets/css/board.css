@@ -31,7 +31,7 @@ body {
 }
 
 .amount-of-spectators {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
 }
 
 /* Switch token buttons */
@@ -125,7 +125,7 @@ main {
 }
 
 .board-tokens li {
-    height: 30%;
+    height: 32%;
     width: 4rem;
     transition: var(--hover-transition-duration);
 }
@@ -216,6 +216,10 @@ main {
     height: 1.5rem;
     padding-left: 0.2rem;
     font-size: 0.8rem;
+}
+
+.history img {
+    height: 1rem;
 }
 
 /* Cards */
