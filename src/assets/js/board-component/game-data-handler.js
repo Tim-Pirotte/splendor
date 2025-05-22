@@ -38,11 +38,17 @@ function updateGameData() {
         renderPage(gameData);
         initRoundBegin(gameData);
 
+        console.log("Game data updated");
+
         if (!isCurrentlyPlaying()) {
             // Add a delay to evade a race condition between the animation cleanup and the rendering system
             setTimeout(updateGameData, getAnimationDelayBeforePolling() + ANIMATION_FINISH_DELAY);
         } else {
-            startRoundTimer(gameData["timePassedForCurrentRound"], gameData["gameState"]);
+            if(sessionStorage.getItem("serverVersion") === 2) { 
+                startRoundTimer(gameData["timePassedForCurrentRound"], gameData["gameState"]); 
+            } else {
+
+            }
         }
 
         setAnimationDelayBeforePolling(IN_GAME_POLLING_TIME_OUT);

@@ -45,7 +45,7 @@ function actionRegistryRouter() {
     const $actionButton = getActionButton();
 
     ACTION_REGISTRY[$actionButton.dataset.functionToRun]();
-
+    console.log("start polling")
     setActionButtonState("Waiting on server", "doNothing", {});
     getActionButton().disabled = true;
     startGameStatePolling();
