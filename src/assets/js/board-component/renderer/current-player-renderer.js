@@ -39,11 +39,19 @@ function renderGameStatusMessage(currentPlayer) {
 }
 
 function renderAmountOfSpectators(spectators, compatible) {
-    if (!compatible) return;
+    if (!compatible) {
+        makeSpectatorEyeInvisible();
+        return;
+    }
     
     document.querySelector(".amount-of-spectators").textContent = spectators.filter(
         spectator => spectator.pollDelta < TIME_AFTER_SPECTATOR_DOES_NOT_GET_RENDERED,
     ).length;
+}
+
+function makeSpectatorEyeInvisible() {
+    document.querySelector(".amount-of-spectators").classList.add("hidden");
+    document.querySelector(".spectator-eye-indicator").classList.add("hidden");
 }
 
 function renderPlayerProfile(gameCreatorName, spectators) {
