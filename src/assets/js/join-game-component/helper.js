@@ -22,7 +22,7 @@ function initiateGameSession(gameId, spectating) {
     API.joinGame(gameId, loadFromStorage("playerName"), spectating, false).then(response => {
         saveToStorage("gameId", response["gameId"]);
         saveToStorage("playerToken", response["playerToken"]);
-        location.href = "pages/lobby.html";
+        location.href = "./lobby.html";
     }).catch(err => {
         renderErrorMessage(err.cause);
     });
