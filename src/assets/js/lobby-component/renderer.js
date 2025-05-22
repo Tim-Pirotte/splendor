@@ -23,7 +23,7 @@ function renderLobbyPlayers(gameData, started) {
 
     renderPlayerContainers(gameData.numberOfPlayers, $joinedPlayersContainer);
     renderPlayersList(gameData, started);
-    if(parseInt(sessionStorage.getItem("serverVersion")) === 2) renderBotPlaceHolders($joinedPlayersContainer);
+    if(checkCompatibilityFromSessionStorage(2)) renderBotPlaceHolders($joinedPlayersContainer);
 }
 
 function renderPlayerContainers(amountOfPlayers, $joinedPlayersContainer) {

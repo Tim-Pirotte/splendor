@@ -13,4 +13,8 @@ function checkCompatibility(minimumServerVersion) {
         });
 }
 
-export { checkCompatibility };
+function checkCompatibilityFromSessionStorage(minimumServerVersion) {
+    return parseInt(sessionStorage.getItem("serverVersion")) >= minimumServerVersion;
+}
+
+export { checkCompatibility, checkCompatibilityFromSessionStorage };

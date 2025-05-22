@@ -10,6 +10,7 @@ import {
     setAnimationDelayBeforePolling,
 } from "./animation-component/data.js";
 import { IN_GAME_POLLING_TIME_OUT } from "../config.js";
+import { checkCompatibilityFromSessionStorage } from "../server-version-component/server-version.js";
 
 function handleGameDataError(err) {
     const forbidden = 403;
@@ -45,7 +46,7 @@ function updateGameData() {
             setTimeout(updateGameData, getAnimationDelayBeforePolling() + ANIMATION_FINISH_DELAY);
         } else {
             //startRoundTimer(gameData["timePassedForCurrentRound"], gameData["gameState"]); 
-            if(parseInt(sessionStorage.getItem("serverVersion")) === 2) { 
+            if(checkCompatibilityFromSessionStorage(2)) { 
                 startRoundTimer(gameData["timePassedForCurrentRound"], gameData["gameState"]); 
             }
         }

@@ -9,7 +9,7 @@ import { renderBoardTokens, renderCards, renderNobles } from "./board-renderer.j
 import { GEMS } from "../data.js";
 
 function renderPage(gameData) {
-    const compatible = parseInt(sessionStorage.getItem("serverVersion")) === 2;
+    const compatible = checkCompatibilityFromSessionStorage(2);
 
     renderPlayerProfile(gameData["players"][0]["name"], gameData["spectators"]);
     renderGameStatusMessage(gameData["currentPlayer"]);
