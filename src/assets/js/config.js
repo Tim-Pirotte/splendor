@@ -19,7 +19,7 @@ const ERROR_MESSAGE_TIMEOUT = 10000;
 
 const NPC_SUFFIX = "w817s2JgYDTjTR6x";
 function getAPIUrl() {
-    return GROUP_DEPLOYED_SERVER;
+    return DEPLOYED_SERVER; //TODO: Change to the GROUP_DEPLOYED_SERVER when deploying
 }
 
 export {

@@ -63,18 +63,20 @@ function renderAddBot($container) {
 function renderPlayersList(gameObject, started) {
     const $template = document.querySelector("#joined-player-template");
     const $joinedPlayerContainers = document.querySelector("#joined-players").querySelectorAll("li");
+    getPlayersObjects(gameObject, started)
+        .then(players => {
+            for (const [index, player] of players.entries()) {
+                const $player = $joinedPlayerContainers[index];
 
-    for (const [index, player] of getPlayersObjects(gameObject, started).entries()) {
-        const $player = $joinedPlayerContainers[index];
+                if (player.name === null && !isAddBotButton($player) && hasSomethingRenderedInside($player)) {
+                    removeRenderedPlayer($player);
+                }
 
-        if (player.name === null && !isAddBotButton($player) && hasSomethingRenderedInside($player)) {
-            removeRenderedPlayer($player);
-        }
-
-        if (player.name !== null && player.name !== $player?.querySelector(".player-name")?.innerText) {
-            renderPlayer(player, $player, $template);
-        }
-    }
+                if (player.name !== null && player.name !== $player?.querySelector(".player-name")?.innerText) {
+                    renderPlayer(player, $player, $template);
+                }
+            }
+        })
 }
 
 function removeRenderedPlayer($container) {
@@ -95,7 +97,7 @@ function renderPlayer(player, $container, $template) {
     $li.querySelector("img").alt = $li.querySelector("img").title = avatar;
 
     $container.classList.remove("add-bot");
-    $container.innerHTML =  $li.innerHTML;
+    $container.innerHTML = $li.innerHTML;
 }
 
 function renderPlayerCount(gameObject) {
