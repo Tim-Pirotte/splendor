@@ -7,6 +7,7 @@ import { loadFromStorage } from "../../data-connector/local-storage-abstractor.j
 import { hashDigest } from "../../utils/crypto.js";
 import { hashToNumber, trackCardEncounter } from "../card-collection-component/card-collection.js";
 import { CHANCE_CATEGORIES, CHANCES, ILLUSTRATIONS } from "../../card-collection-component/data.js";
+import { DEVELOPMENT_CARDS } from "../data.js";
 
 function addNodesToEmptiedContainer($container, list, mapFunction) {
     safeEmptyContainer($container);
@@ -71,7 +72,7 @@ function getNumberedItemTemplate() {
 }
 
 function renderCard(card) {
-    if (!card) return;
+    if (!card) return renderEmptySpace();
 
     const $card = copyNode(document.querySelector("#card-template"));
     $card.dataset.name = card["name"];
@@ -85,6 +86,13 @@ function renderCard(card) {
     renderCardGraphics($card, card);
 
     return $card;
+}
+
+function renderEmptySpace() {
+    const $placeHolderCard = renderCard(DEVELOPMENT_CARDS[0]);
+    $placeHolderCard.classList.add("hidden");
+
+    return $placeHolderCard;
 }
 
 function renderCardCost(card, $cardCost) {

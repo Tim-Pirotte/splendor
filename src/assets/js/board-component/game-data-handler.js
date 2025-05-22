@@ -1,10 +1,14 @@
-import { SECONDS_PER_ROUND, SECONDS_WHEN_TURN_ALMOST_ENDS } from "./config.js";
+import { ANIMATION_FINISH_DELAY, SECONDS_PER_ROUND, SECONDS_WHEN_TURN_ALMOST_ENDS } from "./config.js";
 import * as API from "../api.js";
 import { renderPage } from "./renderer/renderer.js";
 import { deselectAll, getActionButton, isCurrentlyPlaying } from "./game-status-interface.js";
 import { initRoundBegin, saveCurrentPlayerAndGameStateInDom, saveGameState } from "./state-machine/state-machine.js";
-import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
+import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { locateToMainMenu } from "../utils/data-handler.js";
+import {
+    getAnimationDelayBeforePolling,
+    setAnimationDelayBeforePolling,
+} from "./animation-component/data.js";
 import { IN_GAME_POLLING_TIME_OUT } from "../config.js";
 
 function handleGameDataError(err) {
@@ -29,29 +33,31 @@ function updateGameData() {
             return;
         }
 
-        saveToStorage("gameData", gameData);
         saveGameState(gameData["gameState"]);
         saveCurrentPlayerAndGameStateInDom(gameData);
         renderPage(gameData);
         initRoundBegin(gameData);
 
         if (!isCurrentlyPlaying()) {
-            startGameStatePolling();
+            // Add a delay to evade a race condition between the animation cleanup and the rendering system
+            setTimeout(updateGameData, getAnimationDelayBeforePolling() + ANIMATION_FINISH_DELAY);
         } else {
             startRoundTimer(gameData["timePassedForCurrentRound"], gameData["gameState"]);
         }
+
+        setAnimationDelayBeforePolling(IN_GAME_POLLING_TIME_OUT);
     });
 }
 
 function startGameStatePolling() {
-    setTimeout(updateGameData, IN_GAME_POLLING_TIME_OUT);
+    setTimeout(updateGameData, getAnimationDelayBeforePolling());
 }
 
 /* https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame
-The reason for the timer being implemented this way and not with setTimeOut and a css transition goes as follows:
+The reason for the timer being implemented this way and not with setTimeOut and a CSS transition goes as follows:
  - setTimeOut doesn't ensure that it runs exactly at the specified time
  - The execution time of the update function would have to also be subtracted from the delay
- - The execution order between js and css can differ which can make the timer bar go back and forth
+ - The execution order between js and CSS can differ which can make the timer bar go back and forth
  - Page inactivity can halt the execution of a timed out function in certain browsers
 
 The reason we need to compare the gameState and currentPlayer is so that we can stop the timer when the turn ends.
@@ -85,7 +91,6 @@ function setTimer(duration, timePassedForCurrentRound, $timerFill, gameState) {
             startGameStatePolling();
             console.error(err);
         }
-
     }
 
     requestAnimationFrame(update);

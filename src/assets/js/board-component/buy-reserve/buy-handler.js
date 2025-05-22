@@ -13,6 +13,9 @@ import { getClientBonuses, getClientTokens } from "../game-data-handler.js";
 import { binarySearchObjects } from "../../utils/data-handler.js";
 import { endBuyReserveAction, getReserveCardButton, setReserveButtonData } from "./helper.js";
 import { unHighlightTokens } from "../tokens/token-handler.js";
+import { renderCard } from "../renderer/helper.js";
+import { setAnimationDelayBeforePolling, buyCardAnimation } from "../animation-component/data.js";
+import { animateFromTo } from "../animation-component/animation-handler.js";
 
 function allowToBuy($card) {
     const cardData = getCardData($card.dataset.name);
@@ -28,12 +31,14 @@ function setActionToBuyReserve($card, isValidCardBuy, isValidCardReserve, deckLe
 
     hideSwitchPaymentButtons();
     highlightCard($card);
+
     setActionButtonState(
         "buy",
         "processBuyCardClick",
         datasetParameters,
         true,
     );
+
     setReserveButtonData($card, deckLevel);
 
     if (isValidCardBuy) allowToBuy($card);
@@ -73,10 +78,26 @@ function processBuyCardClick() {
 
     renderUpdatedPlayerTokens(cardData["bonus"]);
     renderUpdatedPlayerScore(cardData["prestigePoints"]);
+
     renderUpdatedBoardTokens(JSON.parse(sessionStorage.getItem("paymentMethod")));
     endBuyReserveAction();
 
+    playBuyCardAnimation(cardData);
+
     API.buyCard({ development: { name: cardData["name"] }, payment: getCurrentPaymentMethod() });
+}
+
+function playBuyCardAnimation(cardData) {
+    const $source = document.querySelector(`[data-name="${cardData["name"]}"]`);
+    $source.classList.add("hidden");
+
+    const $targetContainer = document.querySelector(`.player-tokens [data-type="${cardData["bonus"]}"]`);
+    setAnimationDelayBeforePolling(buyCardAnimation.duration);
+
+    const $card = renderCard(cardData);
+    $targetContainer.prepend($card);
+
+    animateFromTo($source, $card, buyCardAnimation);
 }
 
 function getCardData(cardName) {
@@ -210,10 +231,10 @@ function removePaidTokens() {
 function updateCurrentPlayerBonuses(bonus) {
     const currentBonus = getClientBonuses();
 
-    if (currentBonus[bonus] === undefined) {
-        currentBonus[bonus] = 1;
-    } else {
+    if (currentBonus[bonus]) {
         currentBonus[bonus]++;
+    } else {
+        currentBonus[bonus] = 1;
     }
 
     return currentBonus;
