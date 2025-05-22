@@ -27,7 +27,7 @@ function renderLobbyPlayers(gameData, started) {
 }
 
 function renderPlayerContainers(amountOfPlayers, $joinedPlayersContainer) {
-    if ($joinedPlayersContainer.childElementCount === getAmountOfTemplateTags($joinedPlayersContainer) + amountOfPlayers) return;
+    if ($joinedPlayersContainer.childElementCount === (getAmountOfTemplateTags($joinedPlayersContainer) + amountOfPlayers)) return;
 
     for (let i = 0; i < amountOfPlayers; i++) {
         const $player = document.createElement("li");
@@ -62,20 +62,17 @@ function renderAddBot($container) {
 
 function renderPlayersList(gameObject, started) {
     const $template = document.querySelector("#joined-player-template");
-    const $joinedPlayers = document.querySelector("#joined-players");
-    const $joinedPlayerContainers = $joinedPlayers.querySelectorAll("li");
-    const players = getPlayersObjects(gameObject, started);
+    const $joinedPlayerContainers = document.querySelector("#joined-players").querySelectorAll("li");
 
-    for (const [index, player] of players.entries()) {
+    for (const [index, player] of getPlayersObjects(gameObject, started).entries()) {
         const $player = $joinedPlayerContainers[index];
 
         if (player.name === null && !isAddBotButton($player) && hasSomethingRenderedInside($player)) {
             removeRenderedPlayer($player);
-        } else if (player.name !== null && player.name !== $player?.querySelector(".player-name")?.innerText) {
+        }
+
+        if (player.name !== null && player.name !== $player?.querySelector(".player-name")?.innerText) {
             renderPlayer(player, $player, $template);
-        } else {
-            // https://www.keyboardfaces.com/
-            //sonar: ( ︶︿︶)_╭∩╮ me: ლ(ಠ益ಠლ)
         }
     }
 }
