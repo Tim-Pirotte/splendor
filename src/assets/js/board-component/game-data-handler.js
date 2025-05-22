@@ -11,6 +11,7 @@ function handleGameDataError(err) {
     const forbidden = 403;
     const unauthorized = 401;
     const gameNotExists = 404;
+
     const statusCode = err["failure"];
 
     if (statusCode === forbidden || statusCode === unauthorized || statusCode === gameNotExists) locateToMainMenu();
@@ -22,7 +23,7 @@ function updateGameData() {
 
     if (gameId === null) {locateToMainMenu(); return;}
 
-    API.getGame(updateGameData).then(gameData => {
+    API.getGame().then(gameData => {
         if (!gameData.started) {
             location.href = "./lobby.html";
             return;

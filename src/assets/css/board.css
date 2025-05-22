@@ -545,6 +545,7 @@ aside {
     position: relative;
     /* This prevents the padding from increasing the box size */
     box-sizing: border-box;
+    height: 10.5rem;
 }
 
 .player-card.current-player::after {

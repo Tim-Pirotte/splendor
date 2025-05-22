@@ -1,5 +1,5 @@
 import * as API from "../api.js";
-import { saveToStorage } from "../data-connector/local-storage-abstractor.js";
+import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
 import { renderErrorMessage, renderUnsupportedError } from "../utils/renderer.js";
 import { checkCompatibility } from "../server-version-component/server-version.js";
 
@@ -8,17 +8,18 @@ function joinGameById(gameId, spectating) {
 }
 
 function spectateGameById(gameId) {
-    checkCompatibility(2).then(isCompatible => {
-        if (!isCompatible) {
-            renderUnsupportedError(document.querySelector(".error-messages"), "Spectating");
-        } else {
-            initiateGameSession(gameId, true);
-        }
-    });
+    checkCompatibility(2)
+        .then(isCompatible => {
+            if (!isCompatible) {
+                renderUnsupportedError(document.querySelector(".error-messages"), "Spectating");
+            } else {
+                initiateGameSession(gameId, true);
+            }
+        });
 }
 
 function initiateGameSession(gameId, spectating) {
-    API.joinGame(gameId, spectating, false).then(response => {
+    API.joinGame(gameId, loadFromStorage("playerName"), spectating, false).then(response => {
         saveToStorage("gameId", response["gameId"]);
         saveToStorage("playerToken", response["playerToken"]);
         location.href = "./lobby.html";

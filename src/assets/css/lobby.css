@@ -1,5 +1,6 @@
 :root {
     --players-container-width: 15rem;
+    --scaleUpAnimation: scaleUpToFullSize 0.5s ease-in-out forwards;
 }
 /* general */
 
@@ -24,12 +25,9 @@ body::before {
 }
 
 button {
-    vertical-align: middle;
-    background-color: black;
+    background-color: transparent;
     color: white;
-    border: none;
-    height: 2.5rem;
-    width: 10rem;
+    border: none
 }
 
 body {
@@ -127,10 +125,13 @@ li {
 }
 
 li p {
-    animation: nameAppear 0.5s ease-in-out forwards;
+    display: flex;
+    justify-content: center;
+    width: 10rem;
+    animation: var(--scaleUpAnimation);
 }
 
-li img {
+li > picture {
     width: 2rem;
     height: 2rem;
     animation: rotateScaleUp 0.5s forwards linear;
@@ -181,7 +182,27 @@ li img {
 #copy-game-id-button {
     background-color: transparent;
     margin-bottom: 1rem;
-    width: fit-content;
+    height: 2.5rem;
+    width: 2.5rem;
+}
+
+#joined-players button {
+    position: absolute;
+    width: 1.5rem;
+    height: 1.5rem;
+    top: -0.5rem;
+    right: -0.5rem;
+    padding: 0;
+    animation: var(--scaleUpAnimation);
+}
+
+#joined-players button img {
+    height: 100%;
+    width: 100%;
+}
+
+#joined-players select {
+    animation: var(--scaleUpAnimation);
 }
 
 @keyframes scaleUp {
@@ -206,7 +227,7 @@ li img {
     }
 }
 
-@keyframes nameAppear {
+@keyframes scaleUpToFullSize {
     from {
         opacity: 0.5;
         transform: scale(0);

@@ -3,24 +3,27 @@ import { COPY_BUTTON_REMOVE_FEEDBACK_DELAY, IN_GAME_POLLING_TIME_OUT, LOBBY_COUN
 import {
     renderGameInfo,
     renderGameStartingCountdown,
+    renderLobbyPlayers,
     renderPlayerCount,
-    renderPlayersList,
     setCopyGameIdImageColor,
 } from "./renderer.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { locateToMainMenu } from "../utils/data-handler.js";
 import { checkCompatibility } from "../server-version-component/server-version.js";
 
-function loadLobbyInformation() {
+function loadLobbyInformation(startedByPolling) {
     if (!loadFromStorage("gameId")) {
         locateToMainMenu();
     }
 
-    API.getGame(loadLobbyInformation).then(gameData => {
+    API.getGame().then(gameData => {
         renderGameInfo(gameData, gameData.started);
-        renderPlayersList(gameData, gameData.started);
+        renderLobbyPlayers(gameData, gameData.started);
         renderPlayerCount(gameData);
         hideIncompatibleElements();
+
+        if (!startedByPolling) return;
+
         if (gameData.started) {
             const $countdownContainer = document.createElement("li");
             $countdownContainer.classList.add("starting-countdown");
@@ -29,7 +32,7 @@ function loadLobbyInformation() {
 
             renderGameStartingCountdown(LOBBY_COUNTDOWN_DURATION, $countdownContainer);
         } else {
-            setTimeout(loadLobbyInformation, IN_GAME_POLLING_TIME_OUT);
+            setTimeout(loadLobbyInformation, IN_GAME_POLLING_TIME_OUT, true);
         }
     });
 }
@@ -47,4 +50,16 @@ function hideIncompatibleElements() {
     });
 }
 
-export { loadLobbyInformation , copyGameId };
+function processAddBot(e) {
+    const $clickedListItem = e.target.closest("li");
+
+    if (!e.target.closest("button")) return;
+    if (!$clickedListItem?.classList.contains("add-bot")) return;
+
+    const selectedLevel = $clickedListItem.querySelector("select").value;
+
+    API.joinBot(selectedLevel);
+    loadLobbyInformation(false);
+}
+
+export { loadLobbyInformation , copyGameId, processAddBot };

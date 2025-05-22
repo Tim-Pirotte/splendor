@@ -6,8 +6,9 @@ main {
     flex-flow: column nowrap;
     background-image: url("../images/results/results_banner.webp"), url("../images/fallback/results/results_banner.png");
     background-size: 100% 100%;
-    width: 22rem;
+    width: 25rem;
     height: 20rem;
+    padding: 0 1.25rem;
 }
 
 body {
@@ -90,7 +91,11 @@ table tbody tr.winner td {
 #table-container {
     margin: 1rem auto;
     height: 14rem;
-    width: 20rem;
+    width: 100%;
+}
+
+#table-container img {
+    width: 1.45rem;
 }
 
 table li {
@@ -108,7 +113,7 @@ footer {
 #return-to-menu {
     display: flex;
     align-items: center;
-    text-align: center;
+    justify-content: center;
     width: 7.65rem;
     height: 2.55rem;
     background-size: cover;

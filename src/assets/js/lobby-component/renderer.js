@@ -7,15 +7,57 @@ import {
     getMaxUsersAmount,
     getPlayersObjects,
 } from "../utils/game-object-handler.js";
-import { copyNode } from "../utils/data-handler.js";
+import { copyNode, getAmountOfTemplateTags } from "../utils/data-handler.js";
 import { reflowCSS } from "../board-component/helper.js";
-import { getContainerAnimationForLeaving } from "./helper.js";
+import { getContainerAnimationForLeaving, hasSomethingRenderedInside, isAddBotButton } from "./helper.js";
 import { LEAVING_PLAYER_ANIMATION_DURATION } from "../config.js";
 import { safeEmptyContainer } from "../board-component/renderer/helper.js";
 
 function renderGameInfo(gameObject, started) {
     document.querySelector("#game-name-id").innerHTML = `${getGameName(gameObject)} / <span>${getGameId(gameObject)}</span>`;
     document.querySelector("h3").textContent = `Created by ${getGameCreator(gameObject, started)}`;
+}
+
+function renderLobbyPlayers(gameData, started) {
+    const $joinedPlayersContainer = document.querySelector("#joined-players");
+
+    renderPlayerContainers(gameData.numberOfPlayers, $joinedPlayersContainer);
+    renderPlayersList(gameData, started);
+    renderBotPlaceHolders($joinedPlayersContainer);
+}
+
+function renderPlayerContainers(amountOfPlayers, $joinedPlayersContainer) {
+    if ($joinedPlayersContainer.childElementCount === getAmountOfTemplateTags($joinedPlayersContainer) + amountOfPlayers) return;
+
+    for (let i = 0; i < amountOfPlayers; i++) {
+        const $player = document.createElement("li");
+        $player.classList.add("player");
+
+        $joinedPlayersContainer.appendChild($player);
+    }
+}
+
+function renderBotPlaceHolders($joinedPlayersContainer) {
+    const $playerContainers = $joinedPlayersContainer.querySelectorAll("li");
+    let aBotHasBeenRendered = false;
+
+    for (const $container of $playerContainers) {
+        if (isAddBotButton($container) && aBotHasBeenRendered) {
+            safeEmptyContainer($container);
+        }
+
+        if ($container.childElementCount === 0 && !aBotHasBeenRendered) {
+            renderAddBot($container);
+            aBotHasBeenRendered = true;
+        }
+
+        if (isAddBotButton($container)) aBotHasBeenRendered = true;
+    }
+}
+
+function renderAddBot($container) {
+    $container.classList.add("add-bot");
+    $container.innerHTML = copyNode(document.querySelector("#add-bot-template")).innerHTML;
 }
 
 function renderPlayersList(gameObject, started) {
@@ -25,21 +67,11 @@ function renderPlayersList(gameObject, started) {
     const players = getPlayersObjects(gameObject, started);
 
     for (const [index, player] of players.entries()) {
-        let $player = $joinedPlayerContainers[index];
+        const $player = $joinedPlayerContainers[index];
 
-        if (!$player) {
-            $player = document.createElement("li");
-            $player.classList.add("player");
-
-            $joinedPlayers.appendChild($player);
-        }
-
-        if (player.name === null) {
+        if (player.name === null && !isAddBotButton($player) && hasSomethingRenderedInside($player)) {
             removeRenderedPlayer($player);
-        } else if (player.name !== $player?.querySelector(".player-name")?.innerText) {
-            /* these ?. operators are needed because:
-            *  $player can be null if no players have been previously rendered at this position,
-            *  .player-name doesn't exist of a player at this position has previously left */
+        } else if (player.name !== null && player.name !== $player?.querySelector(".player-name")?.innerText) {
             renderPlayer(player, $player, $template);
         } else {
             // https://www.keyboardfaces.com/
@@ -65,6 +97,7 @@ function renderPlayer(player, $container, $template) {
     $li.querySelector("img").src = `../assets/images/fallback/avatars/${avatar}.png`;
     $li.querySelector("img").alt = $li.querySelector("img").title = avatar;
 
+    $container.classList.remove("add-bot");
     $container.innerHTML =  $li.innerHTML;
 }
 
@@ -100,4 +133,12 @@ function renderGameStartingCountdown(count, $container) {
     setTimeout(renderGameStartingCountdown, 1000, count - 1, $container);
 }
 
-export { renderGameInfo, renderPlayersList, renderPlayerCount, setCopyGameIdImageColor, renderGameStartingCountdown };
+export {
+    renderGameInfo,
+    renderPlayersList,
+    renderPlayerCount,
+    setCopyGameIdImageColor,
+    renderGameStartingCountdown,
+    renderPlayerContainers,
+    renderLobbyPlayers,
+};

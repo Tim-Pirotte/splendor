@@ -22,4 +22,17 @@ function locateToMainMenu(e) {
     location.href = "../index.html";
 }
 
-export { copyNode, binarySearchObjects, locateToMainMenu };
+function getAmountOfTemplateTags($container) {
+    const children = $container.children;
+    let amountOfTemplateTags = 0;
+
+    for (const node of children) {
+        if (node.tagName.toLowerCase() === "template") {
+            amountOfTemplateTags++;
+        }
+    }
+
+    return amountOfTemplateTags;
+}
+
+export { copyNode, binarySearchObjects, locateToMainMenu, getAmountOfTemplateTags };
