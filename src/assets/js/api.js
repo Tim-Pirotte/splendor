@@ -50,7 +50,7 @@ function joinBot(level) {
 function leaveGame() {
     joinGame(loadFromStorage("gameId"), loadFromStorage("playerName"),true, true)
         .then(() => locateToMainMenu())
-        .catch(() => locateToMainMenu());
+        .catch(() => location.href = "./results.html");
 }
 
 /* Game Actions */

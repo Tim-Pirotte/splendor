@@ -8,11 +8,19 @@ import {
 } from "./config.js";
 import { formatNumber } from "../board-component/renderer/helper.js";
 import { insertImageInto } from "../utils/renderer.js";
-import { locateToMainMenu } from "../utils/data-handler.js";
+import {copyNode, locateToMainMenu} from "../utils/data-handler.js";
 import { isSpectator } from "../board-component/state-machine/state-machine.js";
 
 function renderResultMessage(isWinner) {
-    const $h1 = document.querySelector("h1");
+    const $message = copyNode(document.querySelector("#result-message-template"))
+    const $target = document.querySelector("header");
+
+    const message = isWinner ? "winner" : "defeat";
+
+    insertImageInto($message, `results/${message}_text`, true, message )
+
+    $target.innerHTML = $message.outerHTML;
+    /*const $h1 = document.querySelector("h1");
     const $img = $h1.querySelector("img");
 
     if (isWinner) {
@@ -23,7 +31,7 @@ function renderResultMessage(isWinner) {
         $h1.querySelector("source").srcset = "../assets/images/results/defeat_text.webp";
         $img.src = "../assets/images/fallback/results/defeat_text.png";
         $img.title = $img.alt = "defeat text";
-    }
+    }*/
 }
 
 function renderResults() {
@@ -31,9 +39,7 @@ function renderResults() {
     getSortedResults().then(gameResults => {
         for (const player of gameResults) {
             const isPlayer = player.name === loadFromStorage("playerName");
-            const gameData = loadFromStorage("gameData");
-
-            if (isPlayer && !isSpectator(gameData["spectators"], player.name)) {
+            if (isPlayer) {
                 renderResultMessage(player.isWinner);
                 renderResultAnimation(player.isWinner);
             }
