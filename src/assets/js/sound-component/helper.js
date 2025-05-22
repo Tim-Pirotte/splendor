@@ -1,30 +1,72 @@
-import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
 import { setSoundButtonImgSource } from "./renderer.js";
+import {
+    loadFromStorageWithDefault,
+    saveToStorage,
+} from "../data-connector/local-storage-abstractor.js";
+import { EFFECTS_BASE_PATH, EFFECTS_NAMES } from "./config.js";
+
+const EFFECTS = {};
+const BACKGROUND = document.querySelector("audio[autoplay]");
 
 function setupSound() {
-    if (loadFromStorage("sound") === null) {
-        saveToStorage("sound", "off");
-    }
+    EFFECTS_NAMES.forEach((effect) => {
+        EFFECTS[effect] = new Audio(`${EFFECTS_BASE_PATH}/${effect}.mp3`);
+    });
 
-    setSoundButtonImgSource(loadFromStorage("sound"));
+    const state = loadFromStorageWithDefault("sound", false);
+
+    if (BACKGROUND !== null){
+        if (state) {
+            BACKGROUND.play().then(() => { // check if autoplay is allowed
+                BACKGROUND.muted = false;
+                setSoundButtonImgSource(true);
+            }).catch(e => { // autoplay is blocked
+                saveToStorage("sound", false);
+                setSoundButtonImgSource(false);
+            });
+        } else { // autoplay is allowed, but user muted audio
+            BACKGROUND.pause();
+            BACKGROUND.currentTime = 0;
+
+            saveToStorage(false);
+            setSoundButtonImgSource(false);
+        }
+    } else {
+        saveToStorage("sound", state);
+        setSoundButtonImgSource(state);
+    }
 }
 
 function toggleSound() {
-    if(isSoundEnabled()) {
-        saveToStorage("sound", "off");
+    const state = ! loadFromStorageWithDefault("sound", false);
+
+    if (state) {
+        if (BACKGROUND !== null){
+            BACKGROUND.play();
+            BACKGROUND.muted = false;
+        }
     } else {
-        saveToStorage("sound", "on");
+        Object.values(EFFECTS).forEach((effect) => { // stop effects when mute btn pressed
+            effect.pause();
+            effect.currentTime = 0;
+        });
+
+        if (BACKGROUND !== null){
+            BACKGROUND.pause();
+            BACKGROUND.muted = true;
+        }
     }
 
-    setSoundButtonImgSource(loadFromStorage("sound"));
-}
-
-function isSoundEnabled() {
-    return loadFromStorage("sound") === "on";
+    saveToStorage("sound", state);
+    setSoundButtonImgSource(state);
 }
 
 function getRelativePathIndicators(isUserOnIndexPage) {
     return isUserOnIndexPage ? "." : "..";
 }
 
-export { setupSound, toggleSound, getRelativePathIndicators };
+function playEffect(effect) {
+    EFFECTS[effect].play();
+}
+
+export { setupSound, toggleSound, getRelativePathIndicators, playEffect };
