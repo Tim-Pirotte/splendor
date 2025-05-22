@@ -38,6 +38,7 @@ function getPlayersObjects(gameData, started) {
             for (const player of gameData["players"]) {
 
                 let avatar = null;
+
                 if (compatible) {
                     avatar = started ? player["avatar"] : gameData["avatars"][player];
                 }

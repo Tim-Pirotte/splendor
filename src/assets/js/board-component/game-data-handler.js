@@ -43,9 +43,9 @@ function updateGameData() {
             // Add a delay to evade a race condition between the animation cleanup and the rendering system
             setTimeout(updateGameData, getAnimationDelayBeforePolling() + ANIMATION_FINISH_DELAY);
         }
-        
+
         if(checkCompatibilityFromSessionStorage(2) && isCurrentlyPlaying()) {
-            startRoundTimer(gameData["timePassedForCurrentRound"], gameData["gameState"]); 
+            startRoundTimer(gameData["timePassedForCurrentRound"], gameData["gameState"]);
         }
 
         setAnimationDelayBeforePolling(IN_GAME_POLLING_TIME_OUT);

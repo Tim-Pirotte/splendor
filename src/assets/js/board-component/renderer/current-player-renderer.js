@@ -43,7 +43,7 @@ function renderAmountOfSpectators(spectators, compatible) {
         makeSpectatorEyeInvisible();
         return;
     }
-    
+
     document.querySelector(".amount-of-spectators").textContent = spectators.filter(
         spectator => spectator.pollDelta < TIME_AFTER_SPECTATOR_DOES_NOT_GET_RENDERED,
     ).length;
