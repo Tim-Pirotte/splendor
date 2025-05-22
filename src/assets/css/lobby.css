@@ -108,6 +108,8 @@ ul {
     position: relative;
     width: var(--players-container-width);
     height: var(--players-container-width);
+    background-image: url("../images/lobby.webp"), url("../images/fallback/lobby.png");
+    background-size: contain;
 }
 
 li {
@@ -138,21 +140,24 @@ li > picture {
 }
 
 .player:nth-of-type(1) {
-    transform: translateX(calc(var(--players-container-width) / 2 - 50%)) translateY(-50%);
+    transform: translateX(calc(var(--players-container-width) / 2 - 50%)) translateY(calc(-50% + 0.4rem));
 }
 
 .player:nth-of-type(2) {
-    transform: translateX(calc(var(--players-container-width) / 2 - 50%)) translateY(calc(var(--players-container-width) - 50%));
+    transform: translateX(calc(var(--players-container-width) / 2 - 50%)) translateY(calc(var(--players-container-width) - 50% - 2rem));
 }
 
 .player:nth-of-type(3) {
-    transform: translateX(calc(var(--players-container-width) - 50%)) translateY(calc(var(--players-container-width) / 2 - 50%));
+    transform: translateX(calc(var(--players-container-width) - 50% - 1rem)) translateY(calc(var(--players-container-width) / 2 - 50% - 0.8rem));
 }
 
 
-
 .player:nth-of-type(4) {
-    transform: translateX(-50%) translateY(calc(var(--players-container-width) / 2 - 50%));
+    transform: translateX(calc(-50% + 1rem)) translateY(calc(var(--players-container-width) / 2 - 50% - 0.7rem));
+}
+
+.player > picture img {
+    width: 2rem;
 }
 
 .starting-countdown {
@@ -176,14 +181,13 @@ li > picture {
 
 /* COPY ID BUTTON */
 #copy-game-id-button img {
-    max-height: 100%;
+    height: 2.5rem;
+    width: 2.5rem;
 }
 
 #copy-game-id-button {
     background-color: transparent;
     margin-bottom: 1rem;
-    height: 2.5rem;
-    width: 2.5rem;
 }
 
 #joined-players button {
@@ -194,11 +198,6 @@ li > picture {
     right: -0.5rem;
     padding: 0;
     animation: var(--scaleUpAnimation);
-}
-
-#joined-players button img {
-    height: 100%;
-    width: 100%;
 }
 
 #joined-players select {
@@ -237,4 +236,36 @@ li > picture {
         opacity: 1;
         transform: scale(1);
     }
+}
+
+.add-bot div {
+    display: flex;
+    padding: 0.25rem;
+    background: #322b3b;
+    border-radius: 5%;
+}
+
+.add-bot button img {
+    width: 1rem;
+}
+
+.add-bot > picture img {
+    opacity: 0.5;
+}
+
+select {
+    border: none;
+    outline: none;
+    box-shadow: none;
+    width: 1rem;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    display: inline-block;
+    font-size: 1rem;
+    text-align: center;
+}
+
+label {
+    display: inline-block;
+    padding-right: 0.2rem;
 }

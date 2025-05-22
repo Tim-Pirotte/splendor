@@ -24,8 +24,8 @@
             <h2 id="game-name-id">...</h2>
             <button type="button" id="copy-game-id-button">
                 <picture>
-                    <source srcset="../assets/images/UI/copyButton/copy_button_white.webp">
-                    <img src="../assets/images/fallback/UI/copyButton/copy_button_white.png" alt="copy game id to clipboard">
+                    <source srcset="../assets/images/UI/copy-button/copy_white.webp">
+                    <img src="../assets/images/fallback/UI/copy-button/copy_white.png" alt="copy game id to clipboard">
                 </picture>
             </button>
         </div>
@@ -57,11 +57,14 @@
                             <img src="../assets/images/fallback/UI/plus.png" alt="add bot" title="add bot">
                         </picture>
                     </button>
-                    <select id="level" name="level">
-                        <option value="1">level 1</option>
-                        <option value="2">level 2</option>
-                        <option value="3" selected>level 3</option>
-                    </select>
+                    <div>
+                        <label for="level">lvl</label>
+                        <select id="level" name="level">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3" selected>3</option>
+                        </select>
+                    </div>
                 </li>
             </template>
         </ul>
