@@ -30,10 +30,6 @@ body {
     text-shadow: var(--primary-text-shadow);
 }
 
-.amount-of-spectators {
-    font-size: 1.6rem;
-}
-
 /* Switch token buttons */
 .switch-token-container .hidden {
     display: none;
@@ -153,6 +149,7 @@ main {
 
 .spectator-eye-indicator img {
     width: 2rem;
+    margin-right: 1rem;
 }
 
 /* Nobles I */
@@ -320,7 +317,7 @@ main {
 }
 
 .player-card .reserved img {
-    height: 4.250rem;
+    height: 3rem;
     left: 0;
 }
 
@@ -600,7 +597,7 @@ aside {
     position: relative;
     /* This prevents the padding from increasing the box size */
     box-sizing: border-box;
-    height: 10.5rem;
+    height: 9rem;
 }
 
 .player-card.current-player::after {
