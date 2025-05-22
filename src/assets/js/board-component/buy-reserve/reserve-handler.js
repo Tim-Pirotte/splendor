@@ -35,7 +35,7 @@ function processReserve(){
 
     addGoldToken();
     endBuyReserveAction();
-
+    deselectAll();
     startGameStatePolling();
 }
 

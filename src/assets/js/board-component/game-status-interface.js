@@ -48,6 +48,7 @@ function actionRegistryRouter() {
 
     setActionButtonState("Waiting on server", "doNothing", {});
     getActionButton().disabled = true;
+    deselectAll();
     startGameStatePolling();
 }
 

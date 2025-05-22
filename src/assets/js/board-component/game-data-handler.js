@@ -83,14 +83,16 @@ function setTimer(duration, timePassedForCurrentRound, $timerFill, gameState) {
             return;
         }
 
-        try {
-            if (getActionButton().disabled) deselectAll();
+        if (getActionButton().disabled) deselectAll();
 
+        try {
             getActionButton().click();
         } catch(err) {
             startGameStatePolling();
             console.error(err);
         }
+
+
     }
 
     requestAnimationFrame(update);
