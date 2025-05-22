@@ -15,7 +15,7 @@ function loadLobbyInformation(startedByPolling) {
         locateToMainMenu();
     }
 
-    API.getGame(loadLobbyInformation).then(gameData => {
+    API.getGame().then(gameData => {
         renderGameInfo(gameData, gameData.started);
         renderLobbyPlayers(gameData, gameData.started);
         renderPlayerCount(gameData);

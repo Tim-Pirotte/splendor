@@ -18,11 +18,10 @@ function createGame(requestBody) {
     return fetchFromServer("/games", "POST", requestBody);
 }
 
-function getGame(functionToRunUponFailure) {
+function getGame() {
     const gameId = loadFromStorage("gameId");
     return fetchFromServer(`/games/${gameId}`).catch(err => {
         handleGameDataError(err);
-        setTimeout(functionToRunUponFailure, IN_GAME_POLLING_TIME_OUT);
     });
 }
 

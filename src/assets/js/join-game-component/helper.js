@@ -9,13 +9,14 @@ function joinGameById(gameId, spectating) {
 }
 
 function spectateGameById(gameId) {
-    checkCompatibility(2).then(isCompatible => {
-        if (!isCompatible) {
-            renderUnsupportedError(document.querySelector(".error-messages"), "Spectating");
-        } else {
-            initiateGameSession(gameId, true);
-        }
-    });
+    checkCompatibility(2)
+        .then(isCompatible => {
+            if (!isCompatible) {
+                renderUnsupportedError(document.querySelector(".error-messages"), "Spectating");
+            } else {
+                initiateGameSession(gameId, true);
+            }
+        });
 }
 
 function initiateGameSession(gameId, spectating) {
