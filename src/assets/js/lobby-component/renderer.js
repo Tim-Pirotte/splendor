@@ -62,8 +62,8 @@ function renderAddBot($container) {
 
 function renderPlayersList(gameObject, started) {
     const $template = document.querySelector("#joined-player-template");
-    const $joinedPlayers = document.querySelector("#joined-players");
-    const $joinedPlayerContainers = $joinedPlayers.querySelectorAll("li");
+    //const $joinedPlayers = document.querySelector("#joined-players");
+    const $joinedPlayerContainers = document.querySelector("#joined-players").querySelectorAll("li");
     const players = getPlayersObjects(gameObject, started);
 
     for (const [index, player] of players.entries()) {
