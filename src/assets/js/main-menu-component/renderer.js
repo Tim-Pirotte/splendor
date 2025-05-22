@@ -5,8 +5,11 @@ import { insertImageInto } from "../utils/renderer.js";
 function renderAvatarSelectionList() {
     const $avatarsSection = document.querySelector("section ul");
 
-    document.querySelectorAll("li").forEach(li => li.remove());
-    avatars.forEach(avatar => insertImageInto($avatarsSection, `avatars/${avatar}`, false, avatar, "."));
+    avatars.forEach(avatar => {
+        const $li = document.createElement("li");
+        insertImageInto($li, `avatars/${avatar}`, false, avatar, ".");
+        $avatarsSection.appendChild($li);
+    });
 }
 
 function renderPlayerInfo() {
@@ -14,7 +17,6 @@ function renderPlayerInfo() {
     const avatar = loadFromStorage("avatar") || "placeholder";
     const playerName = loadFromStorage("playerName");
 
-    $button.innerHTML = "";
     insertImageInto($button, `avatars/${avatar}`, false, avatar, ".");
 
     if (playerName) {
