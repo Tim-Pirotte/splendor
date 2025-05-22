@@ -16,12 +16,20 @@ function trackCardEncounter(bonusColor, illustrationName, variant, gameId, illus
 }
 
 function renderCardUnlockedMessage(variant) {
+    const cardUnlockedDuration = 10_050;
+
     if (variant !== "REGULAR") {
-        document.querySelector(".unlocked-card-message")
-            .insertAdjacentHTML(
-                "beforeend",
-                `<p>${variant.charAt(0) + variant.slice(1).toLowerCase().replace("_", " ")} card discovered!</p>`,
-            );
+        const messageContainer = document.querySelector(".unlocked-card-message");
+        const messageText = `${variant.charAt(0) + variant.slice(1).toLowerCase().replace("_", " ")} card discovered!`;
+
+        const p = document.createElement("p");
+
+        p.textContent = messageText;
+        messageContainer.appendChild(p);
+
+        setTimeout(() => {
+            p.remove();
+        }, cardUnlockedDuration);
     }
 }
 

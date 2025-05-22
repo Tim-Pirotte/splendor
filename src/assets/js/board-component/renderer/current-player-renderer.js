@@ -2,9 +2,8 @@ import { GEMS } from "../data.js";
 import { CHIP_SPACING, MAX_TOKENS_ALLOWED, PRESTIGE_POINTS_NEEDED_TO_WIN, TOKEN_MAPPER } from "../config.js";
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
 import { getTokenAmount, getTotalAmountDiscarded, getTotalTokenAmount } from "../tokens/discard.js";
-import { clientMustDiscardToken } from "../state-machine/valid-action-checker.js";
+import { clientMustDiscardToken, validCardBuy } from "../state-machine/valid-action-checker.js";
 import {
-    addNodesToEmptiedContainer,
     addSwitchButton,
     formatNumber,
     getNumberedItemTemplate,
@@ -28,6 +27,8 @@ import { checkCompatibility } from "../../server-version-component/server-versio
 import { reflowCSS } from "../helper.js";
 import { isSpectator } from "../state-machine/state-machine.js";
 import { TIME_AFTER_SPECTATOR_DOES_NOT_GET_RENDERED } from "../../config.js";
+import { animateShiftListItems, getVisibleListItemsBoundingBoxes } from "../animation-component/animation-handler.js";
+import { reserveCardShiftAnimation } from "../animation-component/data.js";
 
 function renderGameStatusMessage(currentPlayer) {
     const isClientPlayerTurn = currentPlayer === loadFromStorage("playerName");
@@ -106,11 +107,43 @@ function renderClientPlayerReserve(reservedCards) {
 
     if (reservedCards.length > 0) {
         $reservedContainer.querySelector("h4").innerHTML = "";
-        addNodesToEmptiedContainer($reserved, reservedCards, renderCard);
+        renderReservedCards($reserved, reservedCards);
     } else {
         safeEmptyContainer($reserved);
         $reservedContainer.querySelector("h4").innerHTML = "No reserved cards";
     }
+}
+
+function renderReservedCards($reserved, reservedCards) {
+    const originalReservedAmount = $reserved.children.length;
+
+    const sourceBoundingBoxes = getVisibleListItemsBoundingBoxes($reserved);
+    removeBoughtCards($reserved);
+    const targetBoundingBoxes = getVisibleListItemsBoundingBoxes($reserved);
+
+    if (originalReservedAmount !== $reserved.children.length) {
+        animateShiftListItems($reserved.querySelectorAll(":scope > li"), sourceBoundingBoxes, targetBoundingBoxes, reserveCardShiftAnimation);
+    }
+
+    for (const card of reservedCards) {
+        const $reservedCard = getCardFromReserve($reserved, card);
+
+        if ($reservedCard) {
+            $reservedCard.classList.toggle(`${TOKEN_MAPPER[card["bonus"]]}-buyable-card`, validCardBuy(card["name"]));
+        } else {
+            $reserved.appendChild(renderCard(card));
+        }
+    }
+}
+
+function removeBoughtCards($reserved) {
+    for (const $boughtCard of $reserved.querySelectorAll(".hidden")) {
+        $boughtCard.outerHTML = "";
+    }
+}
+
+function getCardFromReserve($reserved, card) {
+    return $reserved.querySelector(`[data-name="${card["name"]}"]`);
 }
 
 function renderClientPlayerTokenCount(tokens) {
@@ -141,7 +174,7 @@ function renderClientPlayer(players, gems) {
     renderClientPlayerTokenCount(clientPlayer["tokens"]);
     renderClientPlayerTokens(clientPlayer["tokens"], clientPlayer["bonuses"], gems);
 
-    // Needs to know the players tokens to determine if a card should be highlighted
+    // Needs to know the player tokens to determine if a card should be highlighted
     renderClientPlayerReserve(clientPlayer["reserve"]);
 
     renderTimer();
@@ -264,7 +297,15 @@ function renderUpdatedPlayerTokens(bonus) {
     const updatedBonuses = updateCurrentPlayerBonuses(bonus);
 
     renderClientPlayerTokenCount(getClientTokens());
-    renderClientPlayerTokens(updatedTokens, updatedBonuses, GEMS);
+
+    for (const token of GEMS) {
+        const $token = document.querySelector(`.player-tokens [data-type="${token}"]`);
+        $token.querySelector(".amount").innerHTML = `${(updatedTokens[token] || 0)}<span></span>`;
+
+        const $bonusCounter = $token.querySelector("p:not(.amount)");
+
+        if ($bonusCounter) $bonusCounter.textContent = updatedBonuses[token];
+    }
 }
 
 function renderUpdatedPlayerScore(extraScore) {

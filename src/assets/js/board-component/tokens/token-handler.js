@@ -163,26 +163,15 @@ function setTokensTo(stackPointer, $actionButton, amountOfTokens) {
     return requestBody;
 }
 
-function updateTokens(res) {
-    const beginIndexAmountText = 1;
-    const endIndexAmountText = 3;
-
-    for (const [token, taken] of Object.entries(res["take"])) {
-        const $token = document.querySelector(`.board-tokens [data-type="${token}"]`);
-        $token.dataset.amount = parseInt($token.dataset.amount) - parseInt(taken);
-
-        const $amountText = $token.querySelector("p");
-        $amountText.textContent = `${$token.dataset.amount}${$amountText.textContent.substring(beginIndexAmountText, endIndexAmountText)}`;
-    }
-}
-
 function processTakeTokensClick() {
     const $actionButton = getActionButton();
     const stackPointer = parseInt($actionButton.dataset.stackPointer);
 
     const requestBody = setTokensTo(stackPointer, $actionButton, 1);
 
-    API.takeTokens(requestBody).then(() => updateTokens(requestBody));
+    playShakeAnimation(requestBody["take"]);
+
+    API.takeTokens(requestBody);
 }
 
 function processTakeTwoTokens() {
@@ -191,7 +180,26 @@ function processTakeTwoTokens() {
 
     const requestBody = setTokensTo(stackPointer, $actionButton, 2);
 
-    API.takeTokens(requestBody).then(() => updateTokens(requestBody));
+    playShakeAnimation(requestBody["take"]);
+
+    API.takeTokens(requestBody);
 }
 
-export { selectToken, processTakeTokensClick, updateTokens, processTakeTwoTokens, unHighlightTokens };
+function playShakeAnimation(tokens, factor = 1) {
+    const shakeAnimationDuration = 400;
+
+    toggleTokenShake(true, true);
+    setTimeout(toggleTokenShake, shakeAnimationDuration);
+
+    function toggleTokenShake(start = false, updateTokenText = false) {
+        for (const token of Object.keys(tokens)) {
+            const $tokenText = document.querySelector(`.player-tokens [data-type="${token}"] .amount`);
+
+            if (updateTokenText) $tokenText.textContent = parseInt($tokenText.textContent) + tokens[token] * factor;
+
+            $tokenText.classList.toggle("shake", start);
+        }
+    }
+}
+
+export { selectToken, processTakeTokensClick, processTakeTwoTokens, unHighlightTokens, playShakeAnimation };

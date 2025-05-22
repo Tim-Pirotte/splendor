@@ -5,7 +5,7 @@ function renderPlayerInfo() {
     const playerName = loadFromStorage("playerName");
     const avatar = loadFromStorage("avatar");
 
-    document.querySelector("#playerName").textContent = playerName;
+    document.querySelector("#player-name").textContent = playerName;
     insertImageInto(document.querySelector("#player-information"), `avatars/${avatar}`, false, avatar);
 }
 

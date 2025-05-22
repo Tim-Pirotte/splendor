@@ -93,9 +93,10 @@ main {
 
 .hidden-cards img {
     width: 100%;
+    height: 100%;
 }
 
-.hidden-cards::before {
+.decks > li > .hidden-cards::before {
     content: "";
     position: absolute;
     width: 100%;
@@ -203,8 +204,22 @@ main {
     width: 100%;
 }
 
+.player-card header, .player-card li {
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+.history li {
+    display: flex;
+    align-items: center;
+    height: 1.5rem;
+    padding-left: 0.2rem;
+    font-size: 0.8rem;
+}
+
 /* Cards */
-.card li {
+.card ul li {
     display: flex;
     align-items: center;
     width: 20%;
@@ -219,28 +234,41 @@ main {
 }
 
 /* Player tokens */
-.player-tokens li {
+.player-tokens ul > li {
     display: flex;
     gap: 0.5rem;
+    position: relative;
+}
+
+/* Cards II */
+.card {
+    flex: 0 1 6rem;
+    aspect-ratio: 70 / 100;
+    position: relative;
+    transition: filter 0.3s, transform 0.3s, box-shadow 0.3s;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 0.1rem 0.1rem #00000020;
+    backface-visibility: hidden;
+    /* This is needed to prevent a redraw on a new texture which causes sub-pixel shifting due to different anti-aliasing.
+       Usage of will-change outside of optimization is frowned upon so if there is another way to fix this please change this.
+       https://developer.mozilla.org/en-US/docs/Web/CSS/will-change */
+    will-change: filter;
+}
+
+.player-tokens .card {
+    width: 6rem;
+    position: absolute;
+    left: 1.5rem;
+    top: 0;
+    flex: none;
+    transform: scale(0);
+    color: transparent;
+    box-shadow: var(--buyable-card-box-shadow) #ffffff00;
 }
 
 /* Discard tokens */
 .discard-container p {
     font-size: 0.9rem;
-}
-
-.player-card header, .player-card li {
-    display: flex;
-    align-items: baseline;
-    gap: 0.2rem;
-}
-
-.history li {
-    display: flex;
-    align-items: center;
-    height: 1.5rem;
-    padding-left: 0.2rem;
-    font-size: 0.8rem;
 }
 
 .progress-bar picture {
@@ -313,11 +341,44 @@ main {
     gap: 0 0.5rem;
 }
 
-.player-tokens li:first-of-type {
+.cards-in-deck div > li {
+    width: 100%;
+    height: 100%;
+}
+
+.board-tokens li:hover {
+    cursor: var(--disabled-button-cursor);
+}
+
+.player-card .reserved li {
+    position: relative;
+}
+
+.history li:nth-child(even) {
+    background-color: rgb(187 146 86);
+}
+
+.reserved-cards div > picture, .cards-in-deck div > picture {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    transform: rotateY(180deg);
+}
+
+.reserved-cards div, .cards-in-deck div {
+    position: relative;
+    flex: 0 1 6rem;
+    z-index: 10;
+}
+
+.player-tokens ul > li:first-of-type {
     margin: 1rem 0;
 }
 
-.player-tokens li picture:last-of-type {
+.player-tokens ul > li picture:last-of-type {
     margin-right: auto;
 }
 
@@ -344,6 +405,18 @@ main {
     background: linear-gradient(0deg,rgba(35, 35, 35, 1) 0%, rgb(45, 45, 45) 50%, rgba(35, 35, 35, 1) 100%);
     outline: 0.1rem solid #3d3d3d;
     border-radius: 10%;
+}
+
+@keyframes shake {
+    0%   { transform: translateX(0); }
+    25%  { transform: translateX(-0.1rem); }
+    50%  { transform: translateX(0.1rem); }
+    75%  { transform: translateX(-0.1rem); }
+    100% { transform: translateX(0); }
+}
+
+.shake {
+    animation: shake 0.4s;
 }
 
 .button-container button {
@@ -387,20 +460,6 @@ main {
 .selectable-noble img:hover {
     filter: var(--hover-effect);
     cursor: var(--clickable-item-cursor);
-}
-
-/* Cards II */
-.card {
-    flex: 0 1 6rem;
-    aspect-ratio: 70 / 100;
-    position: relative;
-    transition: 0.3s;
-    border-radius: 0.5rem;
-    box-shadow: 0 0 0.1rem 0.1rem #00000020;
-    /* This is needed to prevent a redraw on a new texture which causes sub-pixel shifting due to different anti-aliasing.
-       Usage of will-change outside of optimization is frowned upon so if there is another way to fix this please change this.
-       https://developer.mozilla.org/en-US/docs/Web/CSS/will-change */
-    will-change: filter;
 }
 
 .card ul {
@@ -505,10 +564,6 @@ aside .amount {
     height: 22rem;
 }
 
-.board-tokens li:hover {
-    cursor: var(--disabled-button-cursor);
-}
-
 .pulsing-text {
     animation: pulse-bright 1s ease-in-out infinite;
 }
@@ -538,7 +593,7 @@ aside {
 .player-card {
     gap: 0.4rem;
     background-color: #d9b56f;
-    transition: transform 2s;
+    transition: transform 0.3s linear;
     padding: 0.2rem 0.2rem 0.2rem 7%;
     margin-top: 0.5rem;
     width: 98%;
@@ -558,16 +613,64 @@ aside {
     border: rgb(187, 146, 86) solid 0.2rem;
     border-left: none;
     box-shadow: 0.2rem 0.2rem 0 0 rgba(121, 96, 72, 0.5);
+    animation: currentPlayerAnimation 0.3s linear forwards;
+}
+
+.end-animation::after {
+    content: "";
+    width: 14.5%;
+    height: 97%;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    border: rgb(187, 146, 86) solid 0.2rem;
+    border-left: none;
+    box-shadow: 0.2rem 0.2rem 0 0 rgba(121, 96, 72, 0.5);
+    animation: currentPlayerAnimationEnd 0.3s linear forwards;
+}
+
+@keyframes currentPlayerAnimation {
+    0% {
+        width: 0;
+        box-shadow: none;
+        border: none;
+    }
+    20% {
+        width: 0;
+        box-shadow: none;
+        border: rgb(187, 146, 86) solid 0.2rem;
+        border-left: none;
+    }
+    100% {
+        width: 14.5%;
+        box-shadow: 0.2rem 0.2rem 0 0 rgba(121, 96, 72, 0.5);
+    }
+}
+
+@keyframes currentPlayerAnimationEnd {
+    0% {
+        width: 14.5%;
+        box-shadow: 0.2rem 0.2rem 0 0 rgba(121, 96, 72, 0.5);
+        border: rgb(187, 146, 86) solid 0.2rem;
+        border-left: none;
+    }
+    70% {
+        width: 0;
+        box-shadow: none;
+        border: rgb(187, 146, 86) solid 0.2rem;
+        border-left: none;
+    }
+    100% {
+        width: 0;
+        box-shadow: none;
+        border: none;
+    }
 }
 
 .player-card > ul {
     display: flex;
     gap: 0 0.4rem;
     margin-bottom: 0.5rem;
-}
-
-.player-card .reserved li {
-    position: relative;
 }
 
 .player-card .reserved .amount {
@@ -603,16 +706,12 @@ aside {
     box-shadow: 0 -0.1875rem 0 0 rgb(121 85 72 / 11%);
 }
 
-.history li:nth-child(even) {
-    background-color: rgb(187 146 86);
-}
-
 /* HEADER */
 .top-bar {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    margin-right: 0.5rem;
+    margin-right: 2rem;
 }
 
 .top-bar h1 {
@@ -639,6 +738,11 @@ aside {
 .reserved-cards > ul {
     display: flex;
     gap: 0 1rem;
+}
+
+.reserved-cards .card {
+    /* Removes a 1 pixel gap between the box shadow and the card */
+    height: 99%;
 }
 
 /* TIMER */
