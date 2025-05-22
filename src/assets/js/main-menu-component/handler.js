@@ -16,10 +16,10 @@ function updateSelectedAvatar(e) {
     toggleAvatarListVisibility();
 }
 
-function addBotsToTheGame(level, gameId, numberOfPlayers) {
-    for (let i = 0; i <= numberOfPlayers; i++) {
-        API.joinBot(level, gameId);
-    }
+function addBotsToTheGame(level, gameId, amountToAdd) {
+    if (amountToAdd === 1) return API.joinBot(level, gameId);
+
+    return API.joinBot(level, gameId).then(() => addBotsToTheGame(level, gameId, amountToAdd - 1));
 }
 
 function savePlayerInfo(e) {
@@ -35,13 +35,14 @@ function savePlayerInfo(e) {
         }
 
         if (e.target.value === "demo") {
-            API.createBotGame(LEVEL_OF_BOTS_IN_BOT_GAME, NUMBER_OF_PLAYERS_IN_BOT_GAME);
-
-            const gameId = loadFromStorage("gameId");
-
-            addBotsToTheGame(LEVEL_OF_BOTS_IN_BOT_GAME, gameId, NUMBER_OF_PLAYERS_IN_BOT_GAME);
-
-            spectateBotGameById(gameId);
+            API.createBotGame(LEVEL_OF_BOTS_IN_BOT_GAME, NUMBER_OF_PLAYERS_IN_BOT_GAME)
+                .then(response => {
+                    return addBotsToTheGame(
+                        LEVEL_OF_BOTS_IN_BOT_GAME,
+                        response["gameId"],
+                    NUMBER_OF_PLAYERS_IN_BOT_GAME - 1,
+                    );
+                }).then(response => spectateBotGameById(response["gameId"]));
         }
     } else {
         renderErrorMessage("Invalid playername: (no spaces or special characters).");

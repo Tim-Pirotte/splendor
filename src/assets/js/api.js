@@ -48,15 +48,16 @@ function createBotGame(level, numberOfPlayers){
         playerName: level + NPC_SUFFIX,
         gameName: "Demo game",
         numberOfPlayers: numberOfPlayers,
+        isPrivate: true,
         returnExcessTokensRequired: true,
         pickNobleRequired: true,
     };
 
-    createGame(requestBody).then(response => saveToStorage("gameId", response["gameId"]));
+    return createGame(requestBody);
 }
 
 function joinBot(level , gameId) {
-    joinGame(gameId, level + NPC_SUFFIX, false, false);
+    return joinGame(gameId, level + NPC_SUFFIX, false, false);
 }
 
 function leaveGame() {
