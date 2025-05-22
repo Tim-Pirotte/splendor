@@ -1,8 +1,9 @@
-import {loadFromStorage, saveToStorage} from "../data-connector/local-storage-abstractor.js";
+import * as API from "../api.js";
+import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
 import { renderErrorMessage } from "../utils/renderer.js";
 import { renderPlayerInfo } from "./renderer.js";
 import { validatePlayerName } from "./validator.js";
-import {createBotGame, joinBot, joinGame} from "../api.js";
+import { spectateGameById } from "../join-game-component/helper.js";
 
 function toggleAvatarListVisibility(e) {
     document.querySelector(".avatar-selector section").classList.toggle("none");
@@ -21,13 +22,24 @@ function savePlayerInfo(e) {
 
     if (document.querySelector("form").reportValidity() && validatePlayerName(playerName)) {
         savePlayerInfoToLocalStorage(playerName);
+
         if (["join-game", "create-game"].includes(e.target.value)) {
             location.href = `./pages/${e.target.value}.html`;
-        } else if (e.target.value === "demo") {
-            const gameId = createBotGame();
-            joinBot(3 , gameId);
-            joinGame(gameId, loadFromStorage("playerName"),true, true );
-            location.href = "./pages/board.html";
+        }
+
+        if (e.target.value === "demo") {
+            const level = 3;
+            const numberOfPlayers = 3;
+            API.createBotGame(level, numberOfPlayers);
+
+            const gameId = loadFromStorage("gameId");
+
+            // eslint-disable-next-line max-depth
+            for (let i = 0; i <= numberOfPlayers; i++) {
+                API.joinBot(level, gameId);
+            }
+
+            spectateGameById(gameId);
         }
     } else {
         renderErrorMessage("Invalid playername: (no spaces or special characters).");
@@ -48,7 +60,7 @@ function closeAvatarVisibility(e) {
     if (!document.querySelector(".avatar-selector section").classList.contains("none")) {
         toggleAvatarListVisibility(e);
         return;
-    };
+    }
 }
 
 export { updateSelectedAvatar, toggleAvatarListVisibility, savePlayerInfo, closeAvatarVisibility };

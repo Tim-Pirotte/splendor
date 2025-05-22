@@ -1,5 +1,5 @@
 import { fetchFromServer } from "./data-connector/api-communication-abstractor.js";
-import { loadFromStorage } from "./data-connector/local-storage-abstractor.js";
+import { loadFromStorage, saveToStorage } from "./data-connector/local-storage-abstractor.js";
 import { checkCompatibility } from "./server-version-component/server-version.js";
 import { NPC_SUFFIX } from "./config.js";
 import { handleGameDataError } from "./board-component/game-data-handler.js";
@@ -43,21 +43,16 @@ function joinGame(gameId, playerName, spectatingEnabled, forfeit) {
     });
 }
 
-function createBotGame(){
-    const level = 3;
-    const numberOfPlayers = 2;
-    let gameId;
+function createBotGame(level, numberOfPlayers){
     const requestBody = {
         playerName: level + NPC_SUFFIX,
-        gameName: "BotGame",
+        gameName: "BotGame_version 2",
         numberOfPlayers: numberOfPlayers,
         returnExcessTokensRequired: true,
         pickNobleRequired: true,
     };
-    createGame(requestBody).then(response => {
-        gameId =   response["gameId"];
-    });
-    return gameId;
+
+    createGame(requestBody).then(response => saveToStorage("gameId", response["gameId"]));
 }
 
 function joinBot(level , gameId) {
