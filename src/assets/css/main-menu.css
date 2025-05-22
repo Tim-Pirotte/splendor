@@ -39,17 +39,17 @@ body > div {
 
 /* Splendor logo */
 header {
-    margin: 1rem auto 3rem auto;
+    margin: 1rem auto 2rem auto;
 }
 
 header img {
-    height: 15rem;
+    height: 13rem;
 }
 
 /* Form */
 label {
     display: block;
-    margin-right: 10rem;
+    margin-right: 7.5rem;
     font-size: 1.1rem;
     text-shadow: 0 0 0.2rem #3d3d3d;
 }
@@ -84,6 +84,7 @@ form .avatar-selector {
     background-color: transparent;
     border: none;
     padding: 0;
+    transition: 0.3s;
 }
 
 .avatar-selector button img {
@@ -104,6 +105,7 @@ form .avatar-selector {
     top: 2.5rem;
     left: 0;
     z-index: 5;
+    width: 12rem;
 }
 
 .avatar-selector section h2 {
