@@ -39,8 +39,6 @@ function updateGameData() {
         renderPage(gameData);
         initRoundBegin(gameData);
 
-        console.log("Game data updated");
-
         if (!isCurrentlyPlaying()) {
             // Add a delay to evade a race condition between the animation cleanup and the rendering system
             setTimeout(updateGameData, getAnimationDelayBeforePolling() + ANIMATION_FINISH_DELAY);
@@ -103,7 +101,6 @@ function setTimer(duration, timePassedForCurrentRound, $timerFill, gameState) {
 }
 
 function startRoundTimer(timePassedForCurrentRound, gameState) {
-    console.log("HELLO")
     const $timerFill = document.querySelector(".timer-fill");
     $timerFill.classList.remove("time-almost-ends");
     setTimer(SECONDS_PER_ROUND, timePassedForCurrentRound, $timerFill, gameState);
