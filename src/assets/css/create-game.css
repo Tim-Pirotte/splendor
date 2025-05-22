@@ -79,12 +79,12 @@ h1 {
 
 form {
     margin: 1.5rem auto;
-    text-align: center;
+    width: fit-content;
 }
 
 label {
     font-size: 1.3rem;
-    margin-right: 0.4rem;
+    padding: 0.25rem;
 }
 
 input {
@@ -92,12 +92,23 @@ input {
 }
 
 input[type="radio"] {
-    margin-right: 0.4rem;
-    accent-color: #e9bd5c;
+    visibility: hidden;
+}
+
+input[type="radio"]:checked + label{
+    text-decoration: underline 0.2rem var(--border-color);
 }
 
 input[type="text"] {
     width: 14rem;
+}
+
+.label-header {
+    font-size: 1.4rem;
+}
+
+label:not(.label-header) {
+    font-size: 1rem;
 }
 
 /* confirm button */
