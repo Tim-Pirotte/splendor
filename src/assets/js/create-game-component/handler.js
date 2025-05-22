@@ -6,23 +6,32 @@ function createGame(e) {
     e.preventDefault();
     checkCompatibility(2)
         .then(isCompatible => {
-            const requestBody = {
-                playerName: loadFromStorage("playerName"),
-                gameName: document.querySelector("#game-name").value.trim() || `${loadFromStorage("playerName")}'s game`,
-                numberOfPlayers: parseInt(getCheckedRadioButtonValue(document.querySelectorAll("input[name=players]"))),
-                returnExcessTokensRequired: true,
-                pickNobleRequired: true,
-            };
-
-            if (isCompatible) {
-                requestBody.avatar = loadFromStorage("avatar").split("-")
-                    .map(word => (word[0].toUpperCase() + word.slice(1)))
-                    .join("");
-                requestBody.isPrivate = document.querySelector("#private").checked;
-            }
-
+            const requestBody = createRequestBody(isCompatible);
             createGameWithBody(requestBody);
         });
+}
+
+function createRequestBody(isCompatible) {
+    const requestBody = {
+        playerName: loadFromStorage("playerName"),
+        gameName: document.querySelector("#game-name").value.trim() || `${loadFromStorage("playerName")}'s game`,
+        numberOfPlayers: parseInt(getCheckedRadioButtonValue(document.querySelectorAll("input[name=players]"))),
+        returnExcessTokensRequired: true,
+        pickNobleRequired: true,
+    };
+
+    if (isCompatible) {
+        addAvatarToRequestBody(requestBody);
+    }
+
+    return requestBody;
+}
+
+function addAvatarToRequestBody(requestBody) {
+    requestBody.avatar = loadFromStorage("avatar").split("-")
+        .map(word => (word[0].toUpperCase() + word.slice(1)))
+        .join("");
+    requestBody.isPrivate = document.querySelector("#private").checked;
 }
 
 export { createGame };

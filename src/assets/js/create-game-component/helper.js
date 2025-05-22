@@ -13,13 +13,17 @@ function createGameWithBody(requestBody) {
         .then(response => {
             checkCompatibility(2)
                 .then(isCompatible => {
-                    if (isCompatible) saveToStorage("timeSync", response["gameId"]);
-                    saveToStorage("gameId", response["gameId"]);
-                    saveToStorage("playerToken", response["playerToken"]);
-                    saveToStorage("playerName", response["playerName"]);
+                    saveData(response, isCompatible);
                     location.href = "./lobby.html";
                 });
         });
+}
+
+function saveData(response, isCompatible) {
+    if (isCompatible) saveToStorage("timeSync", response["gameId"]);
+    saveToStorage("gameId", response["gameId"]);
+    saveToStorage("playerToken", response["playerToken"]);
+    saveToStorage("playerName", response["playerName"]);
 }
 
 export { getCheckedRadioButtonValue, createGameWithBody };

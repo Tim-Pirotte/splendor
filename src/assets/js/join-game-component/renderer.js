@@ -1,11 +1,12 @@
 import * as API from "../api.js";
-import { ERROR_MESSAGE_TIMEOUT, JOIN_GAME_PAGE_POLLING_TIME_OUT } from "../config.js";
+import { JOIN_GAME_PAGE_POLLING_TIME_OUT } from "../config.js";
 import { copyNode } from "../utils/data-handler.js";
 import { getCurrentUsersAmount, getGameId, getGameName, getGameState, getMaxUsersAmount } from "../utils/game-object-handler.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { filterGames } from "./gamefilter.js";
-import { safeEmptyContainer } from "../board-component/renderer/helper.js";
 import { insertImageInto } from "../utils/renderer.js";
+import { safeEmptyContainer } from "../board-component/renderer/helper.js";
+import { checkCompatibility } from "../server-version-component/server-version.js";
 
 function renderPlayerInfo() {
     const playerName = loadFromStorage("playerName");
@@ -15,34 +16,50 @@ function renderPlayerInfo() {
     insertImageInto(document.querySelector("#player-information"), `avatars/${avatar}`, false, avatar);
 }
 
-function renderPublicGames(e) {
-    const wasTriggeredByPolling = e === undefined;
+function initGameRendering(e) {
+    const triggeredByPolling = e === undefined;
 
-    if (!wasTriggeredByPolling && e.target.value !== "Reset") e.preventDefault();
+    if (!triggeredByPolling && e.target.value !== "Reset") e.preventDefault();
 
-    const $gameList = document.querySelector("ul");
+    checkCompatibility(2).then(isCompatible => { renderCompatibleGames(isCompatible); });
 
+    if (triggeredByPolling) setTimeout(initGameRendering, JOIN_GAME_PAGE_POLLING_TIME_OUT);
+}
+
+function renderCompatibleGames(isCompatible) {
     API.getGames().then(gameObject => {
-        const gamesToRender = filterGames(gameObject["games"]);
-        const amountOfGamesToRender = gamesToRender.size;
+        const $gameList = document.querySelector("ul");
+        const gamesToRender = filterGames(gameObject["games"], isCompatible);
+        const numberOfGamesToRender = gamesToRender.size;
 
-        if (amountOfGamesToRender) {
-            const $template = document.querySelector("#game-template");
-            const $gameListCopy = $gameList.cloneNode(true);
-
-            safeEmptyContainer($gameListCopy);
-
-            $gameList.dataset.renderedGames = amountOfGamesToRender;
-            gamesToRender.forEach(game => $gameListCopy.appendChild(populateGame($template, game)));
-            $gameList.innerHTML = $gameListCopy.innerHTML;
+        if (numberOfGamesToRender) {
+            renderGamesToList($gameList, gamesToRender, numberOfGamesToRender);
 
         } else {
             safeEmptyContainer($gameList);
+
             $gameList.insertAdjacentHTML("beforeend", "<p>There are no games based on your selections</p>");
         }
-
-        if (wasTriggeredByPolling) setTimeout(renderPublicGames, JOIN_GAME_PAGE_POLLING_TIME_OUT);
     });
+}
+
+function renderGamesToList($gameList, gamesToRender, numberOfGamesToRender) {
+    const $template = document.querySelector("#game-template");
+    const $gameListCopy = $gameList.cloneNode(true);
+
+    safeEmptyContainer($gameListCopy);
+
+    $gameList.dataset.renderedGames = numberOfGamesToRender;
+    sortGames(gamesToRender).forEach(game => $gameListCopy.appendChild(populateGame($template, game)));
+    $gameList.innerHTML = $gameListCopy.innerHTML;
+}
+
+function sortGames(games) {
+    return Array.from(games).sort((game1, game2) => calculateGameSortingValue(game1) - calculateGameSortingValue(game2));
+}
+
+function calculateGameSortingValue(game) {
+    return game.players.length / game.numberOfPlayers;
 }
 
 function populateGame($template, game) {
@@ -58,13 +75,4 @@ function populateGame($template, game) {
     return $game;
 }
 
-function renderErrorMessage(err) {
-    const $target = document.querySelector(".error-message");
-
-    $target.classList.remove("none");
-    $target.innerHTML = `<p>${err.cause}</p>`;
-
-    setTimeout(() => $target.classList.add("none"), ERROR_MESSAGE_TIMEOUT);
-}
-
-export { renderPlayerInfo, renderPublicGames, renderErrorMessage };
+export { renderPlayerInfo, initGameRendering };
