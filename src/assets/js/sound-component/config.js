@@ -1,7 +1,3 @@
-const EFFECTS_BASE_PATH = "./assets/audio/effects/";
-const EFFECTS_NAMES = [
-    "fart",
-];
-const BACKGROUND_PATH = "./assets/audio/background.mp3";
+const EFFECTS_BASE_PATH = "../assets/audio/effects/";
 
-export { EFFECTS_BASE_PATH, EFFECTS_NAMES, BACKGROUND_PATH };
+export { EFFECTS_BASE_PATH };
