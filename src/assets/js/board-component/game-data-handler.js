@@ -32,7 +32,8 @@ function updateGameData() {
             location.href = "./lobby.html";
             return;
         }
-
+        //TODO remove this
+        console.log(gameData);
         saveGameState(gameData["gameState"]);
         saveCurrentPlayerAndGameStateInDom(gameData);
         renderPage(gameData);

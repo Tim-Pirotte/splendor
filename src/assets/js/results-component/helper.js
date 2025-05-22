@@ -5,6 +5,8 @@ import { GAME_STATE } from "../board-component/state-machine/data.js";
 function getSortedResults() {
     return API.getGame()
         .then(gameData => {
+            //TODO remove this
+            console.log(gameData)
             if (gameData.gameState !== GAME_STATE.WINNER_IS_FOUND) location.href = "./board.html";
 
             const results = gameData.players.filter(player => !player.forfeited)

@@ -26,16 +26,20 @@ function renderOtherPlayers(players, currentPlayer) {
     const $playerTemplate = document.querySelector("#other-player-card-template");
 
     for (const [index, $otherPlayer] of $otherPlayersContainer.querySelectorAll(":scope > li").entries()) {
-        const playerName = otherPlayers[index].name;
+        const otherPlayer = otherPlayers[index];
+        const playerName = otherPlayer.name;
+
         showOtherPlayerTurn(playerName, currentPlayer, $otherPlayer);
 
         $otherPlayer.innerHTML = renderOtherPlayer(
             $playerTemplate,
-            otherPlayers[index],
+            otherPlayer,
             highestScore,
             currentPlayer,
             isCreator(players, otherPlayers),
         ).innerHTML;
+
+        $otherPlayer.classList.toggle("forfeited", otherPlayer["forfeited"])
     }
 }
 
@@ -56,7 +60,6 @@ function renderOtherPlayer($playerTemplate, otherPlayer, highestScore, currentPl
     insertImageInto($playerCard.querySelector("header"), `avatars/${avatar}`, true, avatar);
 
     if (isGameCreator) $playerCard.querySelector("img").classList.add("game-creator");
-    if (otherPlayer["forfeited"]) $playerCard.classList.add("forfeited");
 
     setPlayerName($playerCard, otherPlayer);
     setPlayerPoints($playerCard, otherPlayer["totalPrestigePoints"], highestScore, otherPlayer["forfeited"]);
