@@ -167,7 +167,7 @@ li > picture {
     position: absolute;
     text-align: center;
     top: calc(var(--players-container-width) / 2);
-    left: calc(var(--players-container-width) / 2);
+    left: calc(var(--players-container-width) / 2 + 0.4rem);
     transform: translate(-50%, -50%);
     animation: scaleUp linear 1s forwards;
     transform-origin: center;
