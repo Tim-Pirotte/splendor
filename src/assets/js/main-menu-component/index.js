@@ -1,10 +1,11 @@
 import { soundInit } from "../sound-component/sound.js";
 import { closeAvatarVisibility, savePlayerInfo, updateSelectedAvatar } from "./handler.js";
-import { renderAvatarSelectionList, renderPlayerInfo } from "./renderer.js";
+import { renderAuthors, renderAvatarSelectionList, renderPlayerInfo } from "./renderer.js";
 
 function init() {
     setupUI();
     setupEventListeners();
+    renderAuthors();
 
     soundInit();
 }
