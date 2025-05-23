@@ -172,7 +172,7 @@ function renderNobles(unclaimedNobles) {
     let index = 0;
     for (const $noble of $noblesContainer.querySelectorAll(":scope > li")) {
         if ($noble.dataset.name !== unclaimedNobles[index]["name"]) {
-            $noble.classList.add("shrink");
+            $noble.querySelector("img").classList.add("shrink");
             setAnimationDelayBeforePolling(getAnimationDelayBeforePolling()  + 1000);
             setTimeout(() => $noble.outerHTML = "", 1000);
         } else {
