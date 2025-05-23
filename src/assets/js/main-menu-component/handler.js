@@ -35,18 +35,22 @@ function savePlayerInfo(e) {
         }
 
         if (e.target.value === "demo") {
-            API.createBotGame(LEVEL_OF_BOTS_IN_BOT_GAME, NUMBER_OF_PLAYERS_IN_BOT_GAME)
-                .then(response => {
-                    return addBotsToTheGame(
-                        LEVEL_OF_BOTS_IN_BOT_GAME,
-                        response["gameId"],
-                    NUMBER_OF_PLAYERS_IN_BOT_GAME - 1,
-                    );
-                }).then(response => spectateBotGameById(response["gameId"]));
+            startBotGame();
         }
     } else {
         renderErrorMessage("Invalid playername: (no spaces or special characters).");
     }
+}
+
+function startBotGame() {
+    API.createBotGame(LEVEL_OF_BOTS_IN_BOT_GAME, NUMBER_OF_PLAYERS_IN_BOT_GAME)
+    .then(response => {
+        return addBotsToTheGame(
+        LEVEL_OF_BOTS_IN_BOT_GAME,
+        response["gameId"],
+        NUMBER_OF_PLAYERS_IN_BOT_GAME - 1,
+        );
+    }).then(response => spectateBotGameById(response["gameId"]));
 }
 
 function savePlayerInfoToLocalStorage(playerName) {
