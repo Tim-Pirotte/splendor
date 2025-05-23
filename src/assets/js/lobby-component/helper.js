@@ -19,9 +19,9 @@ function hasSomethingRenderedInside($player) {
 }
 
 // https://developer.mozilla.org/en-US/docs/Web/API/URL/searchParams
-function getSharingLink() {
+function getLinkWithGameIdParam(page) {
     const splittedLink = window.location.href.split("/");
-    splittedLink[splittedLink.length - 1] = "join-game.html";
+    splittedLink[splittedLink.length - 1] = `${page}.html`;
 
     const link = new URL(splittedLink.join("/"))
     link.searchParams.set("gameId", loadFromStorage("gameId"))
@@ -29,4 +29,4 @@ function getSharingLink() {
     return link.toString();
 }
 
-export { getContainerAnimationForLeaving, isAddBotButton, hasSomethingRenderedInside, getSharingLink };
+export { getContainerAnimationForLeaving, isAddBotButton, hasSomethingRenderedInside, getLinkWithGameIdParam };
