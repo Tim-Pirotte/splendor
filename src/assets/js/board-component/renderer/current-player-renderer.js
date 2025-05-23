@@ -353,7 +353,8 @@ function addGoldToken() {
 export {
     renderClientPlayer,
     renderSwitchPaymentButtons,
-    renderClientPlayerTokenCount, renderClientPlayerTokens,
+    renderClientPlayerTokenCount, 
+    renderClientPlayerTokens,
     renderUpdatedPlayerTokens,
     renderUpdatedPlayerScore,
     hideSwitchPaymentButtons,
