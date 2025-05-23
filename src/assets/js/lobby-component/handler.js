@@ -39,7 +39,7 @@ function loadLobbyInformation(startedByPolling) {
         });
 }
 
-function copyGameId() {
+function copySharingLink() {
     setCopyGameIdImageColor("red");
     navigator.clipboard.writeText(getSharingLink());
     setTimeout(setCopyGameIdImageColor, COPY_BUTTON_REMOVE_FEEDBACK_DELAY, "white");
@@ -63,4 +63,4 @@ function processAddBot(e) {
     loadLobbyInformation(false);
 }
 
-export { loadLobbyInformation, copyGameId, processAddBot };
+export { loadLobbyInformation, copySharingLink, processAddBot };
