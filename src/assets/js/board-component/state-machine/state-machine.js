@@ -9,20 +9,20 @@ function initRoundBegin(gameData) {
     if (!gameData["started"]) { location.href = "./lobby-page.html"; return; }
 
     switch (gameState) {
-        case GAME_STATE.WINNER_IS_FOUND:
-            location.href = "./results.html";
-            break;
-        case GAME_STATE.CHOOSE_NOBEL:
-            setActionButtonState("Choose a nobel", "doNothing", {});
-            getActionButton().disabled = true;
-            break;
-        case GAME_STATE.RETURN_GEMS:
-            setActionButtonState("Choose tokens to discard", "doNothing", {});
-            getActionButton().disabled = true;
-            break;
-        default:
-            setActionButtonState("skip turn", "skipTurn", {});
-            getActionButton().disabled = false;
+    case GAME_STATE.WINNER_IS_FOUND:
+        location.href = "./results.html";
+        break;
+    case GAME_STATE.CHOOSE_NOBEL:
+        setActionButtonState("Choose a nobel", "doNothing", {});
+        getActionButton().disabled = true;
+        break;
+    case GAME_STATE.RETURN_GEMS:
+        setActionButtonState("Choose tokens to discard", "doNothing", {});
+        getActionButton().disabled = true;
+        break;
+    default:
+        setActionButtonState("skip turn", "skipTurn", {});
+        getActionButton().disabled = false;
     }
 
     if (!isCurrentlyPlaying()) {
