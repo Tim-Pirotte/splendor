@@ -19,7 +19,7 @@ function updateSelectedAvatar(e) {
 function addBotsToTheGame(level, gameId, amountToAdd) {
     if (amountToAdd === 1) return API.joinBot(level, gameId);
 
-    return API.joinBot(level, gameId).then(() => addBotsToTheGame(level, gameId, amountToAdd - 1));
+    return API.joinBot(Math.max(level, 1), gameId).then(() => addBotsToTheGame(level - 1, gameId, amountToAdd - 1));
 }
 
 function savePlayerInfo(e) {
