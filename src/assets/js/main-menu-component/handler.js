@@ -1,7 +1,10 @@
-import { saveToStorage } from "../data-connector/local-storage-abstractor.js";
+import * as API from "../api.js";
+import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
 import { renderErrorMessage } from "../utils/renderer.js";
 import { renderPlayerInfo } from "./renderer.js";
 import { validatePlayerName } from "./validator.js";
+import { spectateBotGameById } from "../join-game-component/helper.js";
+import { LEVEL_OF_BOTS_IN_BOT_GAME, NUMBER_OF_PLAYERS_IN_BOT_GAME } from "../config.js";
 
 function toggleAvatarListVisibility(e) {
     document.querySelector(".avatar-selector section").classList.toggle("none");
@@ -11,6 +14,12 @@ function updateSelectedAvatar(e) {
     saveToStorage("avatar", e.target.closest("img").title);
     renderPlayerInfo();
     toggleAvatarListVisibility();
+}
+
+function addBotsToTheGame(level, gameId, numberOfPlayers) {
+    for (let i = 0; i <= numberOfPlayers; i++) {
+        API.joinBot(level, gameId);
+    }
 }
 
 function savePlayerInfo(e) {
@@ -23,6 +32,16 @@ function savePlayerInfo(e) {
 
         if (["join-game", "create-game"].includes(e.target.value)) {
             location.href = `./pages/${e.target.value}.html`;
+        }
+
+        if (e.target.value === "demo") {
+            API.createBotGame(LEVEL_OF_BOTS_IN_BOT_GAME, NUMBER_OF_PLAYERS_IN_BOT_GAME);
+
+            const gameId = loadFromStorage("gameId");
+
+            addBotsToTheGame(LEVEL_OF_BOTS_IN_BOT_GAME, gameId, NUMBER_OF_PLAYERS_IN_BOT_GAME);
+
+            spectateBotGameById(gameId);
         }
     } else {
         renderErrorMessage("Invalid playername: (no spaces or special characters).");
@@ -42,8 +61,7 @@ function closeAvatarVisibility(e) {
 
     if (!document.querySelector(".avatar-selector section").classList.contains("none")) {
         toggleAvatarListVisibility(e);
-        return;
-    };
+    }
 }
 
 export { updateSelectedAvatar, toggleAvatarListVisibility, savePlayerInfo, closeAvatarVisibility };

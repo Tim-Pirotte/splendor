@@ -58,7 +58,7 @@ function processAddBot(e) {
 
     const selectedLevel = $clickedListItem.querySelector("select").value;
 
-    API.joinBot(selectedLevel);
+    API.joinBot(selectedLevel , loadFromStorage("gameId"));
     loadLobbyInformation(false);
 }
 
