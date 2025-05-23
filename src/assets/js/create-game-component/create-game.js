@@ -9,8 +9,7 @@ import { soundInit } from "../sound-component/sound.js";
 function createInit() {
     setupUI();
     setupEventListeners();
-
-    soundInit();
+    setupSound();
 }
 
 function setupUI() {
@@ -24,6 +23,11 @@ function setupUI() {
 
 function setupEventListeners() {
     document.querySelector("form").addEventListener("submit", createGame);
+}
+
+function setupSound(){
+    soundInit();
+    document.querySelector("button[type=submit]")
 }
 
 createInit();

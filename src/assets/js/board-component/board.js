@@ -19,8 +19,9 @@ function init() {
 
 function initSound() {
     soundInit();
-    document.querySelectorAll("button").forEach(button => {
-        button.addEventListener("click", (e) => playEffect("button-press"));
+
+    document.querySelectorAll(".button-container button, .forfeit").forEach(button => {
+        button.addEventListener("click", () => playEffect("button-press"));
     });
 }
 

@@ -1,5 +1,6 @@
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
 import { addToTree } from "../../card-collection-component/helper.js";
+import { playEffect } from "../../sound-component/sound.js";
 
 function trackCardEncounter(bonusColor, illustrationName, variant, gameId, illustrationColor, cardName) {
     const seenTree = loadFromStorage("cardCollection") || {};
@@ -26,6 +27,8 @@ function renderCardUnlockedMessage(variant) {
 
         p.textContent = messageText;
         messageContainer.appendChild(p);
+
+        playEffect("level-up", false);
 
         setTimeout(() => {
             p.remove();

@@ -8,8 +8,7 @@ import { soundInit } from "../sound-component/sound.js";
 function joinInit() {
     setupUI();
     setupEventListeners();
-
-    soundInit();
+    setupSound();
 }
 
 function setupUI() {
@@ -17,6 +16,12 @@ function setupUI() {
     renderPlayerInfo();
     renderDefaultGameNamePlaceholder(document.querySelector("#game-name"));
     initGameRendering();
+}
+
+function setupSound() {
+    soundInit();
+
+
 }
 
 function setupEventListeners() {

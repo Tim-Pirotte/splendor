@@ -12,7 +12,10 @@ const background = document.querySelector("audio[autoplay]");
 function soundInit() {
     setupSound();
 
-    document.querySelector(".sound-button").addEventListener("click", toggleSound);
+    document.querySelector(".sound-button").addEventListener("click", () => {
+        toggleSound();
+        playEffect("button-press", false);
+    });
 }
 
 function setupSound() {
@@ -84,11 +87,13 @@ function playEffect(name, loop) {
             effects[name].currentTime = 0;
         }
         effects[name].play();
+        return effects[name];
     }
 }
 
 function playTimer() {
-    playEffect("timer", true);
+    const effect = playEffect("timer", true);
+    effect.volume = 0.20;
 }
 
 function stopTimer() {
@@ -99,4 +104,8 @@ function stopTimer() {
     }
 }
 
-export { soundInit, playEffect, playTimer, stopTimer };
+function playClick(){
+    playEffect("button-press", true);
+}
+
+export { soundInit, playEffect, playTimer, stopTimer, playClick };
