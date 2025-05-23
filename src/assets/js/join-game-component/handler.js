@@ -2,7 +2,7 @@ import * as API from "../api.js"
 import { joinGameById, spectateGameById } from "./helper.js";
 import {loadFromStorage} from "../data-connector/local-storage-abstractor.js";
 import {locateToMainMenu} from "../utils/data-handler.js";
-import {getLinkWithGameIdParam} from "../lobby-component/helper.js";
+import {getSharingLink} from "../lobby-component/helper.js";
 
 function joinGameUsingUsersInputId(e) {
     e.preventDefault();
@@ -33,11 +33,11 @@ function joinGameByIdParameter(gameId) {
         return;
     }
 
-    API.joinGame(gameId, playerName, true, false);
+    joinGameById(gameId, true, true)
 }
 
 function sendBackToMainMenuWithGameId(gameId) {
-    location.href = getLinkWithGameIdParam("index", gameId);
+    location.href = `../index.html?gameId=${gameId}`;
 }
 
-export { joinGameUsingUsersInputId, joinGame, joinGameByIdParameter };
+export { joinGameUsingUsersInputId, joinGame, joinGameByIdParameter, sendBackToMainMenuWithGameId };

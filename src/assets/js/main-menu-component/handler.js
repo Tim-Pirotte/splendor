@@ -3,7 +3,7 @@ import { saveToStorage } from "../data-connector/local-storage-abstractor.js";
 import { renderErrorMessage } from "../utils/renderer.js";
 import { renderPlayerInfo } from "./renderer.js";
 import { validatePlayerName } from "./validator.js";
-import { spectateBotGameById } from "../join-game-component/helper.js";
+import { spectateGameById} from "../join-game-component/helper.js";
 import { LEVEL_OF_BOTS_IN_BOT_GAME, NUMBER_OF_PLAYERS_IN_BOT_GAME } from "../config.js";
 
 function toggleAvatarListVisibility(e) {
@@ -30,15 +30,29 @@ function savePlayerInfo(e) {
     if (document.querySelector("form").reportValidity() && validatePlayerName(playerName)) {
         savePlayerInfoToLocalStorage(playerName);
 
-        if (["join-game", "create-game"].includes(e.target.value)) {
-            location.href = `./pages/${e.target.value}.html`;
-        }
-
-        if (e.target.value === "demo") {
-            startBotGame();
+        switch (e.target.value) {
+            case "join-game":
+                goToJoinPageWithGetParameter();
+                break;
+            case "create-game":
+                location.href = "./pages/create-game.html"
+                break;
+            default:
+                startBotGame();
+                break;
         }
     } else {
         renderErrorMessage("Invalid playername: (no spaces or special characters).");
+    }
+}
+
+function goToJoinPageWithGetParameter() {
+    const gameIdParameter = new URL(window.location.href).searchParams.get("gameId");
+
+    if (gameIdParameter) {
+        location.href = `./pages/join-game.html?gameId=${gameIdParameter}`
+    } else {
+        location.href = "./pages/join-game.html"
     }
 }
 
@@ -50,7 +64,7 @@ function startBotGame() {
                 response["gameId"],
                 NUMBER_OF_PLAYERS_IN_BOT_GAME - 1,
             );
-        }).then(response => spectateBotGameById(response["gameId"]));
+        }).then(response => spectateGameById(response["gameId"]));
 }
 
 function savePlayerInfoToLocalStorage(playerName) {

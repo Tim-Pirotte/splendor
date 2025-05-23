@@ -2,9 +2,10 @@ import * as API from "../api.js";
 import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
 import { renderErrorMessage, renderUnsupportedError } from "../utils/renderer.js";
 import { checkCompatibility } from "../server-version-component/server-version.js";
+import {sendBackToMainMenuWithGameId} from "./handler.js";
 
-function joinGameById(gameId, spectating) {
-    initiateGameSession(gameId, spectating);
+function joinGameById(gameId, spectating, joinBySharingLink = false) {
+    initiateGameSession(gameId, spectating, joinBySharingLink);
 }
 
 function spectateGameById(gameId) {
@@ -18,23 +19,17 @@ function spectateGameById(gameId) {
         });
 }
 
-function spectateBotGameById(gameId) {
-    API.joinGame(gameId, loadFromStorage("playerName"), true, false).then(response => {
-        saveToStorage("gameId", response["gameId"]);
-        saveToStorage("playerToken", response["playerToken"]);
-        location.href = "pages/lobby.html";
-    }).catch(err => {
-        renderErrorMessage(err.cause);
-    });
-}
-
-function initiateGameSession(gameId, spectating) {
+function initiateGameSession(gameId, spectating, joinBySharingLink) {
     API.joinGame(gameId, loadFromStorage("playerName"), spectating, false).then(response => {
         saveToStorage("gameId", response["gameId"]);
         saveToStorage("playerToken", response["playerToken"]);
         location.href = "./lobby.html";
     }).catch(err => {
-        renderErrorMessage(err.cause);
+        if (joinBySharingLink) {
+            sendBackToMainMenuWithGameId(gameId);
+        } else {
+            renderErrorMessage(err.cause);
+        }
     });
 }
 
@@ -50,4 +45,4 @@ function intersection(setA, setB) {
     return result;
 }
 
-export { joinGameById, intersection, spectateGameById, spectateBotGameById };
+export { joinGameById, intersection, spectateGameById };

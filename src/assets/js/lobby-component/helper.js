@@ -20,16 +20,15 @@ function hasSomethingRenderedInside($player) {
 
 /* https://developer.mozilla.org/en-US/docs/Web/API/URL/searchParams
 *  https://developer.mozilla.org/en-US/docs/Web/API/URL */
-function getLinkWithGameIdParam(page, gameId) {
+function getSharingLink() {
     const splittedLink = window.location.href.split("/");
-    splittedLink[splittedLink.length - 1] = `${page}.html`;
-
-    if (page === "index") splittedLink.splice(splittedLink.length - 2, 1);
+    splittedLink[splittedLink.length - 1] = "join-game.html";
 
     const link = new URL(splittedLink.join("/"))
-    link.searchParams.set("gameId", gameId)
+
+    link.searchParams.set("gameId", loadFromStorage("gameId"))
 
     return link.toString();
 }
 
-export { getContainerAnimationForLeaving, isAddBotButton, hasSomethingRenderedInside, getLinkWithGameIdParam };
+export { getContainerAnimationForLeaving, isAddBotButton, hasSomethingRenderedInside, getSharingLink };

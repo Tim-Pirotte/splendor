@@ -10,7 +10,7 @@ import {
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { locateToMainMenu } from "../utils/data-handler.js";
 import { checkCompatibility } from "../server-version-component/server-version.js";
-import {getLinkWithGameIdParam} from "./helper.js";
+import {getSharingLink} from "./helper.js";
 
 function loadLobbyInformation(startedByPolling) {
     if (!loadFromStorage("gameId")) {
@@ -41,7 +41,7 @@ function loadLobbyInformation(startedByPolling) {
 
 function copyGameId() {
     setCopyGameIdImageColor("red");
-    navigator.clipboard.writeText(getLinkWithGameIdParam("join-game", loadFromStorage("gameId")));
+    navigator.clipboard.writeText(getSharingLink());
     setTimeout(setCopyGameIdImageColor, COPY_BUTTON_REMOVE_FEEDBACK_DELAY, "white");
 }
 
