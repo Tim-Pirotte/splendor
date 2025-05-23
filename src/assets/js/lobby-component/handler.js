@@ -10,6 +10,7 @@ import {
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { locateToMainMenu } from "../utils/data-handler.js";
 import { checkCompatibility } from "../server-version-component/server-version.js";
+import {getSharingLink} from "./helper.js";
 
 function loadLobbyInformation(startedByPolling) {
     if (!loadFromStorage("gameId")) {
@@ -40,7 +41,10 @@ function loadLobbyInformation(startedByPolling) {
 
 function copyGameId() {
     setCopyGameIdImageColor("red");
-    navigator.clipboard.writeText(loadFromStorage("gameId"));
+
+    const sharingLink = getSharingLink();
+
+    //navigator.clipboard.writeText(loadFromStorage("gameId"));
     setTimeout(setCopyGameIdImageColor, COPY_BUTTON_REMOVE_FEEDBACK_DELAY, "white");
 }
 
