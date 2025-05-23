@@ -20,12 +20,14 @@ function hasSomethingRenderedInside($player) {
 
 /* https://developer.mozilla.org/en-US/docs/Web/API/URL/searchParams
 *  https://developer.mozilla.org/en-US/docs/Web/API/URL */
-function getLinkWithGameIdParam(page) {
+function getLinkWithGameIdParam(page, gameId) {
     const splittedLink = window.location.href.split("/");
     splittedLink[splittedLink.length - 1] = `${page}.html`;
 
+    if (page === "index") splittedLink.splice(splittedLink.length - 2, 1);
+
     const link = new URL(splittedLink.join("/"))
-    link.searchParams.set("gameId", loadFromStorage("gameId"))
+    link.searchParams.set("gameId", gameId)
 
     return link.toString();
 }

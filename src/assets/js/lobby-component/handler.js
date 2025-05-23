@@ -41,7 +41,7 @@ function loadLobbyInformation(startedByPolling) {
 
 function copyGameId() {
     setCopyGameIdImageColor("red");
-    navigator.clipboard.writeText(getLinkWithGameIdParam("join-game"));
+    navigator.clipboard.writeText(getLinkWithGameIdParam("join-game", loadFromStorage("gameId")));
     setTimeout(setCopyGameIdImageColor, COPY_BUTTON_REMOVE_FEEDBACK_DELAY, "white");
 }
 
