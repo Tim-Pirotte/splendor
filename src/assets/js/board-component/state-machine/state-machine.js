@@ -1,7 +1,7 @@
 import { setActionButtonState, getActionButton, isCurrentlyPlaying } from "../game-status-interface.js";
 import { GAME_STATE } from "./data.js";
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
-import { checkCompatibility } from "../../server-version-component/server-version.js";
+import { checkCompatibilityFromSessionStorage } from "../../server-version-component/server-version.js";
 
 function initRoundBegin(gameData) {
     const gameState = gameData["gameState"];
@@ -9,20 +9,20 @@ function initRoundBegin(gameData) {
     if (!gameData["started"]) { location.href = "./lobby-page.html"; return; }
 
     switch (gameState) {
-    case GAME_STATE.WINNER_IS_FOUND:
-        location.href = "./results.html";
-        break;
-    case GAME_STATE.CHOOSE_NOBEL:
-        setActionButtonState("Choose a nobel", "doNothing", {});
-        getActionButton().disabled = true;
-        break;
-    case GAME_STATE.RETURN_GEMS:
-        setActionButtonState("Choose tokens to discard", "doNothing", {});
-        getActionButton().disabled = true;
-        break;
-    default:
-        setActionButtonState("skip turn", "skipTurn", {});
-        getActionButton().disabled = false;
+        case GAME_STATE.WINNER_IS_FOUND:
+            location.href = "./results.html";
+            break;
+        case GAME_STATE.CHOOSE_NOBEL:
+            setActionButtonState("Choose a nobel", "doNothing", {});
+            getActionButton().disabled = true;
+            break;
+        case GAME_STATE.RETURN_GEMS:
+            setActionButtonState("Choose tokens to discard", "doNothing", {});
+            getActionButton().disabled = true;
+            break;
+        default:
+            setActionButtonState("skip turn", "skipTurn", {});
+            getActionButton().disabled = false;
     }
 
     if (!isCurrentlyPlaying()) {
@@ -34,13 +34,17 @@ function initRoundBegin(gameData) {
 }
 
 function setSpectatorState(gameData, playerName) {
-    checkCompatibility(2)
-        .then(isCompatible => {
-            if (isCompatible && isSpectator(gameData["spectators"], playerName)) {
-                setActionButtonState("Stop spectating", "stopSpectating", {});
-                getActionButton().disabled = false;
-            }
-        });
+    if (checkCompatibilityFromSessionStorage(2) && isSpectator(gameData["spectators"], playerName)) {
+        setActionButtonState("Stop spectating", "stopSpectating", {});
+        getActionButton().disabled = false;
+    }
+    // checkCompatibility(2)
+    //     .then(isCompatible => {
+    //         if (isCompatible && isSpectator(gameData["spectators"], playerName)) {
+    //             setActionButtonState("Stop spectating", "stopSpectating", {});
+    //             getActionButton().disabled = false;
+    //         }
+    //     });
 }
 
 function isSpectator(spectators, playerName) {
