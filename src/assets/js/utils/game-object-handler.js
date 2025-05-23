@@ -1,6 +1,6 @@
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { avatars } from "../main-menu-component/data.js";
-import { checkCompatibility } from "../server-version-component/server-version.js";
+import { checkCompatibilityFromSessionStorage } from "../server-version-component/server-version.js";
 
 function getGameState(gameData) {
     return gameData["started"] ? "spectate" : "join";
@@ -31,25 +31,23 @@ function getGameCreator(gameData, started) {
 }
 
 function getPlayersObjects(gameData, started) {
-    return checkCompatibility(2)
-        .then(compatible => {
-            const players = [];
+    const players = [];
 
-            for (const player of gameData["players"]) {
+    for (const player of gameData["players"]) {
 
-                let avatar;
+        let avatar;
 
-                if (compatible) {
-                    avatar = started ? player["avatar"] : gameData["avatars"][player];
-                }
+        if (checkCompatibilityFromSessionStorage(2)) {
+            avatar = started ? player["avatar"] : gameData["avatars"][player];
+        }
 
-                players.push({
-                    "name": started ? player.name : player,
-                    "avatar": avatar,
-                });
-            }
-            return players;
+        players.push({
+            "name": started ? player.name : player,
+            "avatar": avatar,
         });
+    }
+    
+    return players;
 }
 
 function hasGameStarted(gameData) {
