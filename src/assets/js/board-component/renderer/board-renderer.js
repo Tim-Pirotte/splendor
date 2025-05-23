@@ -14,6 +14,7 @@ import {
     constructVerticalBackground,
     getNumberedItemTemplate,
     renderCard,
+    renderEmptySpace,
     safeEmptyContainer,
 } from "./helper.js";
 import { getUnclaimedTokens, sumObjectValues } from "../helper.js";
@@ -50,7 +51,11 @@ function renderDeck($currentDeck, deck) {
 function updateCard(deck, index, $previousCard) {
     const cardData = deck["visibleCards"][index];
 
-    if (!cardData) return;
+    if (!cardData) {
+        $previousCard.replaceWith(renderEmptySpace());
+        //$previousCard.classList.add("hidden");
+        return;
+    }
 
     if ($previousCard.dataset.name === cardData["name"]) {
         $previousCard.classList.toggle(
