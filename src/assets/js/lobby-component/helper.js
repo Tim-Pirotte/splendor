@@ -18,7 +18,8 @@ function hasSomethingRenderedInside($player) {
     return $player.childElementCount > 0;
 }
 
-// https://developer.mozilla.org/en-US/docs/Web/API/URL/searchParams
+/* https://developer.mozilla.org/en-US/docs/Web/API/URL/searchParams
+*  https://developer.mozilla.org/en-US/docs/Web/API/URL */
 function getLinkWithGameIdParam(page) {
     const splittedLink = window.location.href.split("/");
     splittedLink[splittedLink.length - 1] = `${page}.html`;

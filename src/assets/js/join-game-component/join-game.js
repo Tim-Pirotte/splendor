@@ -1,15 +1,20 @@
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
-import { joinGame, joinGameUsingUsersInputId } from "./handler.js";
+import {joinGame, joinGameByIdParameter, joinGameUsingUsersInputId} from "./handler.js";
 import { locateToMainMenu } from "../utils/data-handler.js";
 import { renderPlayerInfo, initGameRendering } from "./renderer.js";
 import { renderDefaultGameNamePlaceholder } from "../utils/renderer.js";
 import { soundInit } from "../sound-component/sound.js";
 
 function joinInit() {
-    setupUI();
-    setupEventListeners();
+    const gameIdParameter = new URL(window.location.href).searchParams.get("gameId");
 
-    soundInit();
+    if (gameIdParameter) {
+        joinGameByIdParameter(gameIdParameter);
+    } else {
+        setupUI();
+        setupEventListeners();
+        soundInit();
+    }
 }
 
 function setupUI() {

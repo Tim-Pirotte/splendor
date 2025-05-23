@@ -21,4 +21,8 @@ function joinGame(e) {
     }
 }
 
-export { joinGameUsingUsersInputId, joinGame };
+function joinGameByIdParameter(gameId) {
+    joinGameById(gameId)
+}
+
+export { joinGameUsingUsersInputId, joinGame, joinGameByIdParameter };
