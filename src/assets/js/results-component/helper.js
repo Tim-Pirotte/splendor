@@ -16,8 +16,8 @@ function getSortedResults() {
 
             addPositionToPlayers(results);
 
-            const topPlayerScore = results[0].points;
-            const topPlayerBonuses = results[0].amountOfBonuses;
+            const topPlayerScore = results[0]?.points;
+            const topPlayerBonuses = results[0]?.amountOfBonuses;
 
             return results.map(player => ({ ...player, isWinner: getWinner(player, topPlayerScore, topPlayerBonuses) }));
         });
