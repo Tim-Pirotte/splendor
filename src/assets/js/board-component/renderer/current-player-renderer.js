@@ -75,11 +75,8 @@ function renderAvatar(gameCreatorName) {
 }
 
 function renderForfeitButton(playerName, spectators) {
-    const isCompatible = checkCompatibilityFromSessionStorage(2);
-    if (isCompatible) {
-        document.querySelector(".forfeit")
-            .classList.toggle("none", !isCompatible || isSpectator(spectators, playerName));
-    }
+    document.querySelector(".forfeit")
+        .classList.toggle("none", !checkCompatibilityFromSessionStorage(2) || isSpectator(spectators, playerName));
 }
 
 function renderClientPlayerPoints(totalPrestigePoints, highestScore) {
