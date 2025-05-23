@@ -15,13 +15,20 @@ function soundInit() {
         .then((allowed) => {
             let soundEnabled = loadFromStorageWithDefault("sound", false);
 
+            /*
+            Only enable sound if user enabled it and autoplay is allowed
+            It would be technically possible to play audio when a user clicks a button
+            while autoplay is disabled by the browser, but this behaviour is turned off.
+            This is because it wouldn't be possible to play for example the timer sound in this
+            situation. And this would lead to some effects being muted and others not.
+             */
             if (allowed && soundEnabled) {
                 playBackground();
             } else {
                 soundEnabled = false;
             }
 
-            saveToStorage(soundEnabled);
+            saveToStorage("sound", soundEnabled);
             setSoundButtonImgSource(soundEnabled);
 
             soundButton.addEventListener("click", () => {
@@ -51,15 +58,15 @@ function muteEffects() {
 }
 
 function playBackground() {
-    if (background !== null) {
+    if (!background) {
         background.volume = 0.20;
         background.muted = false;
-        background.play();
+        background.play().catch(() => {});
     }
 }
 
 function pauseBackground() {
-    if (background !== null) {
+    if (!background) {
         background.pause();
     }
 }
@@ -91,7 +98,7 @@ function playEffect(name, loop) {
 
     if (!effect.loop) effect.currentTime = 0;
     effect.muted = !soundEnabled;
-    effect.play();
+    effect.play().catch(() => {});
 
     return effect;
 }
