@@ -147,7 +147,7 @@ function removeBoughtCards($reserved, reservedCards) {
     let index = 0;
 
     for (const $reservedCard of $reserved.querySelectorAll(":scope > li")) {
-        if ($reservedCard.dataset.name !== reservedCards[index]["name"]) {
+        if (!reservedCards[index] || $reservedCard.dataset.name !== reservedCards[index]["name"]) {
             $reservedCard.outerHTML = "";
         } else {
             index++;

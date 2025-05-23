@@ -92,8 +92,12 @@ function animateNewCard(deck, cardData, $previousCard) {
 
     const $newCard = renderCard(cardData);
     const $cardSidesContainer = document.createElement("div");
+
     $cardSidesContainer.appendChild($newCard);
+
     const $cardBack = $source.cloneNode(true);
+    $cardBack.closest("picture").classList.remove("hidden");
+
     $cardSidesContainer.appendChild($cardBack);
     // outerHTML makes a copy of the nodes outerHTML attribute so you don't have a reference to the node in the DOM.
     // I am using replaceWith because then I don't have to query the card again to get a new reference.
@@ -117,7 +121,9 @@ function setAmountOfCardsInDeck($currentDeck, deck) {
 
 function renderDeckSize($currentDeck, amountOfCardsInDeck) {
     const $hiddenCard = $currentDeck.closest("li").querySelector(":scope > picture img");
+
     $hiddenCard.closest("picture").classList.toggle("hidden", amountOfCardsInDeck === 0);
+
     $hiddenCard.style.transform = `translateY(${-(amountOfCardsInDeck / CARDS_IN_DECK_TO_DECK_HEIGHT_SCALE) + CARDS_IN_DECK_TO_DECK_HEIGHT_OFFSET}rem)`;
 }
 
@@ -176,7 +182,7 @@ function renderNobles(unclaimedNobles) {
     let index = 0;
 
     for (const $noble of $noblesContainer.querySelectorAll(":scope > li")) {
-        if ($noble.dataset.name !== unclaimedNobles[index]["name"]) {
+        if (!unclaimedNobles[index] ||  $noble.dataset.name !== unclaimedNobles[index]["name"]) {
             $noble.querySelector("img").classList.add("shrink");
             setAnimationDelayBeforePolling(getAnimationDelayBeforePolling()  + 1000);
             setTimeout(() => $noble.outerHTML = "", 1000);
