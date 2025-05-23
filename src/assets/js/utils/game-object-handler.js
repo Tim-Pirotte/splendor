@@ -1,4 +1,6 @@
+import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { avatars } from "../main-menu-component/data.js";
+import { checkCompatibility } from "../server-version-component/server-version.js";
 
 function getGameState(gameData) {
     return gameData["started"] ? "spectate" : "join";
@@ -21,7 +23,7 @@ function getMaxUsersAmount(gameData) {
 }
 
 function getGameCreator(gameData, started) {
-    for(const player of gameData["players"]) {
+    for (const player of gameData["players"]) {
         if (player !== null) {
             return started ? player["name"] : player;
         }
@@ -29,16 +31,25 @@ function getGameCreator(gameData, started) {
 }
 
 function getPlayersObjects(gameData, started) {
-    const players = [];
+    return checkCompatibility(2)
+        .then(compatible => {
+            const players = [];
 
-    for (const player of gameData["players"]) {
-        players.push({
-            "name": started ? player.name : player,
-            "avatar": started ? player.avatar : gameData["avatars"][player],
+            for (const player of gameData["players"]) {
+
+                let avatar;
+
+                if (compatible) {
+                    avatar = started ? player["avatar"] : gameData["avatars"][player];
+                }
+
+                players.push({
+                    "name": started ? player.name : player,
+                    "avatar": avatar,
+                });
+            }
+            return players;
         });
-    }
-
-    return players;
 }
 
 function hasGameStarted(gameData) {
@@ -64,9 +75,12 @@ function getPlayerByName(players, currentPlayerName) {
 function determinePlayerAvatar(playerName, avatar) {
     if (!avatar) {
         const avatarIndex = playerName.toLowerCase().charCodeAt(0) % avatars.length;
-        avatar =  avatars[avatarIndex];
+        avatar = avatars[avatarIndex];
     }
 
+    if (playerName === loadFromStorage("playerName")) {
+        avatar = loadFromStorage("avatar");
+    }
     return avatar.toLowerCase();
 }
 
