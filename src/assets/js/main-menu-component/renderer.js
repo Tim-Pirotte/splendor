@@ -21,4 +21,8 @@ function renderPlayerInfo() {
     }
 }
 
-export { renderAvatarSelectionList, renderPlayerInfo };
+function disbleDemoButton(comaptible) {
+    if(!comaptible) document.querySelector("form .form-actions button[value=\"demo\"]").classList.add("none");
+}
+
+export { renderAvatarSelectionList, renderPlayerInfo, disbleDemoButton };
