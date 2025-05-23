@@ -80,11 +80,6 @@ function renderForfeitButton(playerName, spectators) {
         document.querySelector(".forfeit")
             .classList.toggle("none", !isCompatible || isSpectator(spectators, playerName));
     }
-    // checkCompatibility(2)
-    //     .then(isCompatible => {
-    //         document.querySelector(".forfeit")
-    //             .classList.toggle("none", !isCompatible || isSpectator(spectators, playerName));
-    //     });
 }
 
 function renderClientPlayerPoints(totalPrestigePoints, highestScore) {
