@@ -1,6 +1,7 @@
+import { checkCompatibility } from "../server-version-component/server-version.js";
 import { soundInit } from "../sound-component/sound.js";
 import { closeAvatarVisibility, savePlayerInfo, updateSelectedAvatar } from "./handler.js";
-import { renderAuthors, renderAvatarSelectionList, renderPlayerInfo } from "./renderer.js";
+import { hideDemoButton, renderAuthors, renderAvatarSelectionList, renderPlayerInfo } from "./renderer.js";
 
 function init() {
     setupUI();
@@ -11,8 +12,12 @@ function init() {
 }
 
 function setupUI() {
-    renderAvatarSelectionList();
-    renderPlayerInfo();
+    checkCompatibility(2)
+        .then(compatible => {
+            renderAvatarSelectionList();
+            renderPlayerInfo();
+            hideDemoButton(compatible);
+        });
 }
 
 function setupEventListeners() {

@@ -9,8 +9,8 @@ import {
     isCreator,
 } from "./helper.js";
 import { determinePlayerAvatar, getHighestScore } from "../../utils/game-object-handler.js";
-import { copyNode } from "../../utils/data-handler.js";
-import { checkCompatibility } from "../../server-version-component/server-version.js";
+import { copyNode, getAmountOfTemplateTags } from "../../utils/data-handler.js";
+import { checkCompatibilityFromSessionStorage } from "../../server-version-component/server-version.js";
 import { insertImageInto, renderUnsupportedError } from "../../utils/renderer.js";
 
 function renderOtherPlayers(players, currentPlayer) {
@@ -21,21 +21,40 @@ function renderOtherPlayers(players, currentPlayer) {
 
     const otherPlayers = getOrderedPlayersWithoutClientPlayer(players, currentPlayerName);
 
-    if ($otherPlayersContainer.childElementCount === 1) setupRenderOtherPlayers(players.length);
+    if ($otherPlayersContainer.childElementCount === getAmountOfTemplateTags($otherPlayersContainer)) setupRenderOtherPlayers(players.length);
 
     const $playerTemplate = document.querySelector("#other-player-card-template");
 
     for (const [index, $otherPlayer] of $otherPlayersContainer.querySelectorAll(":scope > li").entries()) {
-        const playerName = otherPlayers[index].name;
+        const otherPlayer = otherPlayers[index];
+        const playerName = otherPlayer.name;
+
         showOtherPlayerTurn(playerName, currentPlayer, $otherPlayer);
 
-        $otherPlayer.innerHTML = renderOtherPlayer(
+        renderNewOrUpdatedPlayerInDom($otherPlayer, renderOtherPlayer(
             $playerTemplate,
-            otherPlayers[index],
+            otherPlayer,
             highestScore,
-            currentPlayer,
             isCreator(players, otherPlayers),
-        ).innerHTML;
+        ));
+
+        $otherPlayer.classList.toggle("forfeited", otherPlayer["forfeited"]);
+    }
+}
+
+function renderNewOrUpdatedPlayerInDom($otherPlayer, $newOtherPlayer) {
+    if ($otherPlayer.childElementCount === 0) {
+        $otherPlayer.innerHTML = $newOtherPlayer.innerHTML;
+    } else {
+        /* This alternative way of rendering the other players is to prevent jittering in Firefox.
+        *  The copy is needed since .children returns a live HTMLCollection.
+        *  https://developer.mozilla.org/en-US/docs/Web/API/HTMLCollection */
+        const $oldChildren = [...$otherPlayer.children];
+        const $newChildren = [...$newOtherPlayer.children];
+
+        for (let i = 0; i < $oldChildren.length; i++) {
+            $oldChildren[i].replaceWith($newChildren[i]);
+        }
     }
 }
 
@@ -49,14 +68,13 @@ function setupRenderOtherPlayers(amountOfPlayers) {
     }
 }
 
-function renderOtherPlayer($playerTemplate, otherPlayer, highestScore, currentPlayer, isGameCreator) {
+function renderOtherPlayer($playerTemplate, otherPlayer, highestScore, isGameCreator) {
     const $playerCard = copyNode($playerTemplate);
     const avatar = determinePlayerAvatar(otherPlayer.name, otherPlayer.avatar);
 
     insertImageInto($playerCard.querySelector("header"), `avatars/${avatar}`, true, avatar);
 
     if (isGameCreator) $playerCard.querySelector("img").classList.add("game-creator");
-    if (otherPlayer["forfeited"]) $playerCard.classList.add("forfeited");
 
     setPlayerName($playerCard, otherPlayer);
     setPlayerPoints($playerCard, otherPlayer["totalPrestigePoints"], highestScore, otherPlayer["forfeited"]);
@@ -157,24 +175,21 @@ function renderOtherPlayerReservedCard($numberedItemTemplate, reservedCard, cont
 }
 
 function renderHistory(history) {
-    checkCompatibility(2)
-        .then(isCompatible => {
-            if (!isCompatible) {
-                renderIncompatibleServerMessage();
-                return;
-            }
+    if (!checkCompatibilityFromSessionStorage(2)) {
+        renderIncompatibleServerMessage();
+        return;
+    }
 
-            const $history = document.querySelector(".history");
-            const historyPreviousLength = $history.querySelectorAll(":scope > li").length;
-            const historyCurrentLength = history.length;
-            const amountOfNewItems = historyCurrentLength - historyPreviousLength;
+    const $history = document.querySelector(".history");
+    const historyPreviousLength = $history.querySelectorAll(":scope > li").length;
+    const historyCurrentLength = history.length;
+    const amountOfNewItems = historyCurrentLength - historyPreviousLength;
 
-            if (!amountOfNewItems) return;
+    if (!amountOfNewItems) return;
 
-            for (const entry of history.slice(-amountOfNewItems)) {
-                $history.insertAdjacentElement("afterbegin", renderHistoryEntry(entry));
-            }
-        });
+    for (const entry of history.slice(-amountOfNewItems)) {
+        $history.insertAdjacentElement("afterbegin", renderHistoryEntry(entry));
+    }
 }
 
 const HISTORY_ACTIONS = {
@@ -187,7 +202,7 @@ const HISTORY_ACTIONS = {
 };
 
 function renderHistoryEntry(entry) {
-    const $renderedEntry = HISTORY_ACTIONS[entry["action"]](entry, entry["player"] );
+    const $renderedEntry = HISTORY_ACTIONS[entry["action"]](entry, entry["player"]);
 
     if (!$renderedEntry) return $renderedEntry;
 

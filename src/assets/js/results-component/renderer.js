@@ -8,32 +8,25 @@ import {
 } from "./config.js";
 import { formatNumber } from "../board-component/renderer/helper.js";
 import { insertImageInto } from "../utils/renderer.js";
-import { locateToMainMenu } from "../utils/data-handler.js";
-import { isSpectator } from "../board-component/state-machine/state-machine.js";
+import { copyNode, locateToMainMenu } from "../utils/data-handler.js";
 
 function renderResultMessage(isWinner) {
-    const $h1 = document.querySelector("h1");
-    const $img = $h1.querySelector("img");
+    const $message = copyNode(document.querySelector("#result-message-template"));
+    const $target = document.querySelector("header");
+    const message = isWinner ? "winner" : "defeat";
 
-    if (isWinner) {
-        $h1.querySelector("source").srcset = "../assets/images/results/winner_text.webp";
-        $img.src = "../assets/images/fallback/results/winner_text.png";
-        $img.title = $img.alt = "winner text";
-    } else {
-        $h1.querySelector("source").srcset = "../assets/images/results/defeat_text.webp";
-        $img.src = "../assets/images/fallback/results/defeat_text.png";
-        $img.title = $img.alt = "defeat text";
-    }
+    insertImageInto($message, `results/${message}_text`, true, message );
+
+    $target.innerHTML = $message.outerHTML;
 }
 
 function renderResults() {
     if (loadFromStorage("gameId") === null) {locateToMainMenu(); return;}
     getSortedResults().then(gameResults => {
-        for (const player of gameResults) {
-            const isPlayer = player.name === loadFromStorage("playerName");
-            const gameData = loadFromStorage("gameData");
+        const playerName = loadFromStorage("playerName");
 
-            if (isPlayer && !isSpectator(gameData["spectators"], player.name)) {
+        for (const player of gameResults) {
+            if (player.name === playerName) {
                 renderResultMessage(player.isWinner);
                 renderResultAnimation(player.isWinner);
             }

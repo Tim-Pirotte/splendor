@@ -1,5 +1,5 @@
 import { fetchFromServer } from "./data-connector/api-communication-abstractor.js";
-import { loadFromStorage, saveToStorage } from "./data-connector/local-storage-abstractor.js";
+import { loadFromStorage } from "./data-connector/local-storage-abstractor.js";
 import { checkCompatibility } from "./server-version-component/server-version.js";
 import { NPC_SUFFIX } from "./config.js";
 import { handleGameDataError } from "./board-component/game-data-handler.js";
@@ -48,21 +48,21 @@ function createBotGame(level, numberOfPlayers){
         playerName: level + NPC_SUFFIX,
         gameName: "Demo game",
         numberOfPlayers: numberOfPlayers,
+        isPrivate: true,
         returnExcessTokensRequired: true,
         pickNobleRequired: true,
     };
 
-    createGame(requestBody).then(response => saveToStorage("gameId", response["gameId"]));
+    return createGame(requestBody);
 }
 
 function joinBot(level , gameId) {
-    joinGame(gameId, level + NPC_SUFFIX, false, false);
+    return joinGame(gameId, level + NPC_SUFFIX, false, false);
 }
 
 function leaveGame() {
     joinGame(loadFromStorage("gameId"), loadFromStorage("playerName"),true, true)
-        .then(() => locateToMainMenu())
-        .catch(() => locateToMainMenu());
+        .then(() => locateToMainMenu());
 }
 
 /* Game Actions */

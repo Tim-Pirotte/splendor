@@ -12,6 +12,7 @@ import { reflowCSS } from "../board-component/helper.js";
 import { getContainerAnimationForLeaving, hasSomethingRenderedInside, isAddBotButton } from "./helper.js";
 import { LEAVING_PLAYER_ANIMATION_DURATION } from "../config.js";
 import { safeEmptyContainer } from "../board-component/renderer/helper.js";
+import { checkCompatibilityFromSessionStorage } from "../server-version-component/server-version.js";
 
 function renderGameInfo(gameObject, started) {
     document.querySelector("#game-name-id").innerHTML = `${getGameName(gameObject)} / <span>${getGameId(gameObject)}</span>`;
@@ -23,7 +24,7 @@ function renderLobbyPlayers(gameData, started) {
 
     renderPlayerContainers(gameData.numberOfPlayers, $joinedPlayersContainer);
     renderPlayersList(gameData, started);
-    renderBotPlaceHolders($joinedPlayersContainer);
+    if (checkCompatibilityFromSessionStorage(2)) renderBotPlaceHolders($joinedPlayersContainer);
 }
 
 function renderPlayerContainers(amountOfPlayers, $joinedPlayersContainer) {
@@ -95,7 +96,7 @@ function renderPlayer(player, $container, $template) {
     $li.querySelector("img").alt = $li.querySelector("img").title = avatar;
 
     $container.classList.remove("add-bot");
-    $container.innerHTML =  $li.innerHTML;
+    $container.innerHTML = $li.innerHTML;
 }
 
 function renderPlayerCount(gameObject) {

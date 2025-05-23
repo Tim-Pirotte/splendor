@@ -121,7 +121,7 @@ main {
 }
 
 .board-tokens li {
-    height: 30%;
+    height: 32%;
     width: 4rem;
     transition: var(--hover-transition-duration);
 }
@@ -161,6 +161,10 @@ main {
        Usage of will-change outside of optimization is frowned upon so if there is another way to fix this please change this.
        https://developer.mozilla.org/en-US/docs/Web/CSS/will-change */
     will-change: filter;
+}
+
+.history img {
+    height: 1rem;
 }
 
 .selected-noble picture img {
@@ -504,7 +508,7 @@ aside .amount {
     color: var(--light-text-color);
 }
 
-/* greys out everything in the playercard of a forfeited player */
+/* greys out everything in the player card of a forfeited player */
 .forfeited * {
     filter: grayscale(1);
     color: rgba(0, 0, 0, 0.75);

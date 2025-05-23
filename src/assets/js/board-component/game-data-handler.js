@@ -10,6 +10,7 @@ import {
     setAnimationDelayBeforePolling,
 } from "./animation-component/data.js";
 import { IN_GAME_POLLING_TIME_OUT } from "../config.js";
+import { checkCompatibilityFromSessionStorage } from "../server-version-component/server-version.js";
 
 function handleGameDataError(err) {
     const forbidden = 403;
@@ -41,7 +42,9 @@ function updateGameData() {
         if (!isCurrentlyPlaying()) {
             // Add a delay to evade a race condition between the animation cleanup and the rendering system
             setTimeout(updateGameData, getAnimationDelayBeforePolling() + ANIMATION_FINISH_DELAY);
-        } else {
+        }
+
+        if(checkCompatibilityFromSessionStorage(2) && isCurrentlyPlaying()) {
             startRoundTimer(gameData["timePassedForCurrentRound"], gameData["gameState"]);
         }
 
@@ -83,14 +86,15 @@ function setTimer(duration, timePassedForCurrentRound, $timerFill, gameState) {
             return;
         }
 
-        try {
-            if (getActionButton().disabled) deselectAll();
+        if (getActionButton().disabled) deselectAll();
 
+        try {
             getActionButton().click();
         } catch(err) {
             startGameStatePolling();
             console.error(err);
         }
+
     }
 
     requestAnimationFrame(update);

@@ -1,4 +1,6 @@
+import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { avatars } from "../main-menu-component/data.js";
+import { checkCompatibilityFromSessionStorage } from "../server-version-component/server-version.js";
 
 function getGameState(gameData) {
     return gameData["started"] ? "spectate" : "join";
@@ -21,7 +23,7 @@ function getMaxUsersAmount(gameData) {
 }
 
 function getGameCreator(gameData, started) {
-    for(const player of gameData["players"]) {
+    for (const player of gameData["players"]) {
         if (player !== null) {
             return started ? player["name"] : player;
         }
@@ -32,12 +34,19 @@ function getPlayersObjects(gameData, started) {
     const players = [];
 
     for (const player of gameData["players"]) {
+
+        let avatar;
+
+        if (checkCompatibilityFromSessionStorage(2)) {
+            avatar = started ? player["avatar"] : gameData["avatars"][player];
+        }
+
         players.push({
             "name": started ? player.name : player,
-            "avatar": started ? player.avatar : gameData["avatars"][player],
+            "avatar": avatar,
         });
     }
-
+    
     return players;
 }
 
@@ -64,9 +73,12 @@ function getPlayerByName(players, currentPlayerName) {
 function determinePlayerAvatar(playerName, avatar) {
     if (!avatar) {
         const avatarIndex = playerName.toLowerCase().charCodeAt(0) % avatars.length;
-        avatar =  avatars[avatarIndex];
+        avatar = avatars[avatarIndex];
     }
 
+    if (playerName === loadFromStorage("playerName")) {
+        avatar = loadFromStorage("avatar");
+    }
     return avatar.toLowerCase();
 }
 

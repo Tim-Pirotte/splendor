@@ -6,8 +6,11 @@ import { copyNode } from "../utils/data-handler.js";
 function renderAvatarSelectionList() {
     const $avatarsSection = document.querySelector("section ul");
 
-    document.querySelectorAll(".avatar-selector li").forEach(li => li.remove());
-    avatars.forEach(avatar => insertImageInto($avatarsSection, `avatars/${avatar}`, false, avatar, "."));
+    avatars.forEach(avatar => {
+        const $li = document.createElement("li");
+        insertImageInto($li, `avatars/${avatar}`, false, avatar, ".");
+        $avatarsSection.appendChild($li);
+    });
 }
 
 function renderPlayerInfo() {
@@ -16,11 +19,16 @@ function renderPlayerInfo() {
     const playerName = loadFromStorage("playerName");
 
     $button.innerHTML = "";
+
     insertImageInto($button, `avatars/${avatar}`, false, avatar, ".");
 
     if (playerName) {
         document.querySelector("#username").value = playerName;
     }
+}
+
+function hideDemoButton(compatible) {
+    if(!compatible) document.querySelector("form .form-actions button[value='demo']").classList.add("none");
 }
 
 function renderAuthors() {
@@ -37,4 +45,4 @@ function renderAuthors() {
     }
 }
 
-export { renderAvatarSelectionList, renderPlayerInfo, renderAuthors };
+export { renderAvatarSelectionList, renderPlayerInfo, renderAuthors, hideDemoButton };

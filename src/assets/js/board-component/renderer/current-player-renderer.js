@@ -23,7 +23,7 @@ import { getClientTokens, getClientTotalPrestigePoints } from "../game-data-hand
 import { copyNode } from "../../utils/data-handler.js";
 import { isCurrentlyPlaying } from "../game-status-interface.js";
 import { insertImageInto } from "../../utils/renderer.js";
-import { checkCompatibility } from "../../server-version-component/server-version.js";
+import { checkCompatibilityFromSessionStorage } from "../../server-version-component/server-version.js";
 import { reflowCSS } from "../helper.js";
 import { isSpectator } from "../state-machine/state-machine.js";
 import { TIME_AFTER_SPECTATOR_DOES_NOT_GET_RENDERED } from "../../config.js";
@@ -38,10 +38,20 @@ function renderGameStatusMessage(currentPlayer) {
     $statusMessage.dataset.currentlyPlaying = currentPlayer;
 }
 
-function renderAmountOfSpectators(spectators) {
+function renderAmountOfSpectators(spectators, compatible) {
+    if (!compatible) {
+        makeSpectatorEyeInvisible();
+        return;
+    }
+
     document.querySelector(".amount-of-spectators").textContent = spectators.filter(
         spectator => spectator.pollDelta < TIME_AFTER_SPECTATOR_DOES_NOT_GET_RENDERED,
     ).length;
+}
+
+function makeSpectatorEyeInvisible() {
+    document.querySelector(".amount-of-spectators").classList.add("hidden");
+    document.querySelector(".spectator-eye-indicator").classList.add("hidden");
 }
 
 function renderPlayerProfile(gameCreatorName, spectators) {
@@ -65,11 +75,8 @@ function renderAvatar(gameCreatorName) {
 }
 
 function renderForfeitButton(playerName, spectators) {
-    checkCompatibility(2)
-        .then(isCompatible => {
-            document.querySelector(".forfeit")
-                .classList.toggle("none", !isCompatible || isSpectator(spectators, playerName));
-        });
+    document.querySelector(".forfeit")
+        .classList.toggle("none", !checkCompatibilityFromSessionStorage(2) || isSpectator(spectators, playerName));
 }
 
 function renderClientPlayerPoints(totalPrestigePoints, highestScore) {
@@ -161,15 +168,15 @@ function setTotalTokensColor($totalTokenCount, totalTokens) {
     $totalTokenCount.classList.toggle("highlighted-number", totalTokens > MAX_TOKENS_ALLOWED);
 }
 
-function renderClientPlayer(players, gems) {
+function renderClientPlayer(players, gems, compatible) {
     let clientPlayer = getPlayerByName(players, loadFromStorage("playerName"));
 
-    if(isNotCurrentActivePlayer(clientPlayer)) {
+    if (isNotCurrentActivePlayer(clientPlayer)) {
         clientPlayer = players[0];
     }
 
     const highestScore = getHighestScore(players);
-    renderClientPlayerPoints(clientPlayer["totalPrestigePoints"] , highestScore);
+    renderClientPlayerPoints(clientPlayer["totalPrestigePoints"], highestScore);
 
     renderClientPlayerTokenCount(clientPlayer["tokens"]);
     renderClientPlayerTokens(clientPlayer["tokens"], clientPlayer["bonuses"], gems);
@@ -177,7 +184,7 @@ function renderClientPlayer(players, gems) {
     // Needs to know the player tokens to determine if a card should be highlighted
     renderClientPlayerReserve(clientPlayer["reserve"]);
 
-    renderTimer();
+    renderTimer(compatible);
 }
 
 function isNotCurrentActivePlayer(clientPlayer) {
@@ -326,8 +333,9 @@ function hideSwitchPaymentButtons() {
     });
 }
 
-function renderTimer() {
-    if (isCurrentlyPlaying()) {
+function renderTimer(compatible) {
+
+    if (isCurrentlyPlaying() && compatible) {
         document.querySelector(".timer").style.opacity = "1";
     } else {
         document.querySelector(".timer").style.opacity = "0";
@@ -345,7 +353,8 @@ function addGoldToken() {
 export {
     renderClientPlayer,
     renderSwitchPaymentButtons,
-    renderClientPlayerTokenCount,renderClientPlayerTokens,
+    renderClientPlayerTokenCount, 
+    renderClientPlayerTokens,
     renderUpdatedPlayerTokens,
     renderUpdatedPlayerScore,
     hideSwitchPaymentButtons,

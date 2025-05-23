@@ -1,7 +1,7 @@
 import { setActionButtonState, getActionButton, isCurrentlyPlaying } from "../game-status-interface.js";
 import { GAME_STATE } from "./data.js";
 import { loadFromStorage } from "../../data-connector/local-storage-abstractor.js";
-import { checkCompatibility } from "../../server-version-component/server-version.js";
+import { checkCompatibilityFromSessionStorage } from "../../server-version-component/server-version.js";
 
 function initRoundBegin(gameData) {
     const gameState = gameData["gameState"];
@@ -34,13 +34,10 @@ function initRoundBegin(gameData) {
 }
 
 function setSpectatorState(gameData, playerName) {
-    checkCompatibility(2)
-        .then(isCompatible => {
-            if (isCompatible && isSpectator(gameData["spectators"], playerName)) {
-                setActionButtonState("Stop spectating", "stopSpectating", {});
-                getActionButton().disabled = false;
-            }
-        });
+    if (checkCompatibilityFromSessionStorage(2) && isSpectator(gameData["spectators"], playerName)) {
+        setActionButtonState("Stop spectating", "stopSpectating", {});
+        getActionButton().disabled = false;
+    }
 }
 
 function isSpectator(spectators, playerName) {
