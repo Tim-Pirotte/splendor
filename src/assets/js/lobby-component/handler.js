@@ -41,10 +41,7 @@ function loadLobbyInformation(startedByPolling) {
 
 function copyGameId() {
     setCopyGameIdImageColor("red");
-
-    const sharingLink = getSharingLink();
-
-    //navigator.clipboard.writeText(loadFromStorage("gameId"));
+    navigator.clipboard.writeText(getSharingLink());
     setTimeout(setCopyGameIdImageColor, COPY_BUTTON_REMOVE_FEEDBACK_DELAY, "white");
 }
 
