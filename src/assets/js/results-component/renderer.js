@@ -24,9 +24,9 @@ function renderResultMessage(isWinner) {
 function renderResults() {
     if (loadFromStorage("gameId") === null) {locateToMainMenu(); return;}
     getSortedResults().then(gameResults => {
+        const playerName = loadFromStorage("playerName");
         for (const player of gameResults) {
-            const isPlayer = player.name === loadFromStorage("playerName");
-            if (isPlayer) {
+            if (player.name === playerName) {
                 renderResultMessage(player.isWinner);
                 renderResultAnimation(player.isWinner);
             }
