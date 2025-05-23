@@ -51,7 +51,7 @@ function savePlayerInfo(e) {
 
 function savePlayerInfoToLocalStorage(playerName) {
     saveToStorage("playerName", playerName);
-    saveToStorage("avatar", document.querySelector("#avatar li img").alt);
+    saveToStorage("avatar", document.querySelector("#avatar img").alt);
 }
 
 function closeAvatarVisibility(e) {
