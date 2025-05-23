@@ -5,7 +5,11 @@ import { insertImageInto } from "../utils/renderer.js";
 function renderAvatarSelectionList() {
     const $avatarsSection = document.querySelector("section ul");
 
-    avatars.forEach(avatar => insertImageInto($avatarsSection, `avatars/${avatar}`, false, avatar, "."));
+    avatars.forEach(avatar => {
+        const $li = document.createElement("li");
+        insertImageInto($li, `avatars/${avatar}`, false, avatar, ".");
+        $avatarsSection.appendChild($li);
+    });
 }
 
 function renderPlayerInfo() {
@@ -14,6 +18,7 @@ function renderPlayerInfo() {
     const playerName = loadFromStorage("playerName");
 
     $button.innerHTML = "";
+
     insertImageInto($button, `avatars/${avatar}`, false, avatar, ".");
 
     if (playerName) {
@@ -21,8 +26,8 @@ function renderPlayerInfo() {
     }
 }
 
-function hideDemoButton(comaptible) {
-    if(!comaptible) document.querySelector("form .form-actions button[value='demo']").classList.add("none");
+function hideDemoButton(compatible) {
+    if(!compatible) document.querySelector("form .form-actions button[value='demo']").classList.add("none");
 }
 
 export { renderAvatarSelectionList, renderPlayerInfo, hideDemoButton };

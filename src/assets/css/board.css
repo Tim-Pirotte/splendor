@@ -31,7 +31,7 @@ body {
 }
 
 .amount-of-spectators {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
 }
 
 /* Switch token buttons */
@@ -125,7 +125,7 @@ main {
 }
 
 .board-tokens li {
-    height: 30%;
+    height: 32%;
     width: 4rem;
     transition: var(--hover-transition-duration);
 }
@@ -164,6 +164,10 @@ main {
        Usage of will-change outside of optimization is frowned upon so if there is another way to fix this please change this.
        https://developer.mozilla.org/en-US/docs/Web/CSS/will-change */
     will-change: filter;
+}
+
+.history img {
+    height: 1rem;
 }
 
 .selected-noble picture img {
