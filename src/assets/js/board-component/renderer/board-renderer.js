@@ -17,13 +17,13 @@ import {
     safeEmptyContainer,
 } from "./helper.js";
 import { getUnclaimedTokens, sumObjectValues } from "../helper.js";
-import { copyNode } from "../../utils/data-handler.js";
+import {copyNode, getAmountOfTemplateTags} from "../../utils/data-handler.js";
 import { insertImageInto } from "../../utils/renderer.js";
 import { validCardBuy, validNobelPick } from "../state-machine/valid-action-checker.js";
 import { canSelectNoble } from "../nobles/nobles-handler.js";
 import { animateFromTo } from "../animation-component/animation-handler.js";
 import {
-    cardMarketFadeAnimation,
+    cardMarketFadeAnimation, getAnimationDelayBeforePolling,
     reserveCardFromDeckAnimationBack,
     reserveCardFromDeckAnimationFront,
     setAnimationDelayBeforePolling,
@@ -164,14 +164,19 @@ function getNobleAlt(costs) {
 function renderNobles(unclaimedNobles) {
     const $noblesContainer = document.querySelector(".nobles");
 
-    if ($noblesContainer.children.length === 1) {
+    if ($noblesContainer.children.length === getAmountOfTemplateTags($noblesContainer)) {
         addNodesToEmptiedContainer($noblesContainer, unclaimedNobles, renderNoble);
         return;
     }
 
-    for (const [index, $noble] of $noblesContainer.querySelectorAll(":scope > li").entries()) {
+    let index = 0;
+    for (const $noble of $noblesContainer.querySelectorAll(":scope > li")) {
         if ($noble.dataset.name !== unclaimedNobles[index]["name"]) {
-            $noble.outerHTML = "";
+            $noble.classList.add("shrink");
+            setAnimationDelayBeforePolling(getAnimationDelayBeforePolling()  + 1000);
+            setTimeout(() => $noble.outerHTML = "", 1000);
+        } else {
+            index++;
         }
     }
 }

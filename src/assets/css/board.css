@@ -412,8 +412,17 @@ main {
     100% { transform: translateX(0); }
 }
 
+@keyframes shrink {
+    from { transform: scale(1); }
+    to { transform: scale(0); }
+}
+
 .shake {
     animation: shake 0.4s;
+}
+
+.shrink {
+    animation: shrink 1s;
 }
 
 .button-container button {
