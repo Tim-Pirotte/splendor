@@ -10,7 +10,7 @@ import {
 } from "./helper.js";
 import { determinePlayerAvatar, getHighestScore } from "../../utils/game-object-handler.js";
 import { copyNode, getAmountOfTemplateTags } from "../../utils/data-handler.js";
-import { checkCompatibility } from "../../server-version-component/server-version.js";
+import { checkCompatibility, checkCompatibilityFromSessionStorage } from "../../server-version-component/server-version.js";
 import { insertImageInto, renderUnsupportedError } from "../../utils/renderer.js";
 
 function renderOtherPlayers(players, currentPlayer) {
@@ -175,24 +175,21 @@ function renderOtherPlayerReservedCard($numberedItemTemplate, reservedCard, cont
 }
 
 function renderHistory(history) {
-    checkCompatibility(2)
-        .then(isCompatible => {
-            if (!isCompatible) {
-                renderIncompatibleServerMessage();
-                return;
-            }
+    if (!checkCompatibilityFromSessionStorage(2)) {
+        renderIncompatibleServerMessage();
+        return;
+    }
 
-            const $history = document.querySelector(".history");
-            const historyPreviousLength = $history.querySelectorAll(":scope > li").length;
-            const historyCurrentLength = history.length;
-            const amountOfNewItems = historyCurrentLength - historyPreviousLength;
+    const $history = document.querySelector(".history");
+    const historyPreviousLength = $history.querySelectorAll(":scope > li").length;
+    const historyCurrentLength = history.length;
+    const amountOfNewItems = historyCurrentLength - historyPreviousLength;
 
-            if (!amountOfNewItems) return;
+    if (!amountOfNewItems) return;
 
-            for (const entry of history.slice(-amountOfNewItems)) {
-                $history.insertAdjacentElement("afterbegin", renderHistoryEntry(entry));
-            }
-        });
+    for (const entry of history.slice(-amountOfNewItems)) {
+        $history.insertAdjacentElement("afterbegin", renderHistoryEntry(entry));
+    }
 }
 
 const HISTORY_ACTIONS = {
@@ -205,7 +202,7 @@ const HISTORY_ACTIONS = {
 };
 
 function renderHistoryEntry(entry) {
-    const $renderedEntry = HISTORY_ACTIONS[entry["action"]](entry, entry["player"] );
+    const $renderedEntry = HISTORY_ACTIONS[entry["action"]](entry, entry["player"]);
 
     if (!$renderedEntry) return $renderedEntry;
 
