@@ -1,11 +1,15 @@
 import { EFFECTS_BASE_PATH } from "./config.js";
-import { loadFromStorageWithDefault, saveToStorage } from "../data-connector/local-storage-abstractor.js";
+import {
+    loadFromStorage,
+    loadFromStorageWithDefault,
+    saveToStorage,
+} from "../data-connector/local-storage-abstractor.js";
 import { setSoundButtonImgSource } from "./renderer.js";
 
 const effects = {};
 const background = document.querySelector("audio[autoplay]");
 
-function soundInit () {
+function soundInit() {
     setupSound();
 
     document.querySelector(".sound-button").addEventListener("click", toggleSound);
@@ -14,7 +18,7 @@ function soundInit () {
 function setupSound() {
     const state = loadFromStorageWithDefault("sound", false);
 
-    if (background !== null){
+    if (background !== null) {
         if (state) {
             background.play().then(() => { // check if autoplay is allowed
                 background.muted = false;
@@ -25,6 +29,7 @@ function setupSound() {
             });
         } else { // autoplay is allowed, but user muted audio
             background.pause();
+            background.muted = false;
             background.currentTime = 0;
 
             saveToStorage(false);
@@ -37,34 +42,61 @@ function setupSound() {
 }
 
 function toggleSound() {
-    const state = ! loadFromStorageWithDefault("sound", false);
+    const state = !loadFromStorageWithDefault("sound", false);
 
     if (state) {
-        if (background !== null){
+        if (background !== null) {
             background.play();
-            background.muted = false;
         }
-    } else {
-        Object.values(effects).forEach((effect) => { // stop effects when mute btn pressed
-            effect.pause();
-            effect.currentTime = 0;
-        });
 
-        if (background !== null){
+        Object.values(effects)
+            .filter(effect => effect.loop)
+            .forEach(effect => effect.muted = false);
+    } else {
+        if (background !== null) {
             background.pause();
-            background.muted = true;
         }
+
+        Object.values(effects)
+            .forEach((effect) => {
+                if (effect.loop) {
+                    effect.muted = true;
+                } else {
+                    effect.pause();
+                    effect.currentTime = 0;
+                }
+            });
     }
 
     saveToStorage("sound", state);
     setSoundButtonImgSource(state);
 }
 
-function playEffect(effect) {
-    if (!(effect in effects)) {
-        effects[effect] = new Audio(`${EFFECTS_BASE_PATH}${effect}.mp3`);
+function playEffect(name, loop) {
+    if (loadFromStorage("sound")) {
+        if (effects[name] === undefined) {
+            const audio = new Audio(`${EFFECTS_BASE_PATH}${name}.mp3`);
+            audio.loop = loop;
+            effects[name] = audio;
+        }
+
+        if (effects[name].loop) {
+            effects[name].currentTime = 0;
+        }
+        effects[name].play();
     }
-    effects[effect].play();
 }
 
-export { soundInit, playEffect };
+function playTimer() {
+    playEffect("timer", true);
+}
+
+function stopTimer() {
+    if ("timer" in effects) {
+        const timer = effects["timer"];
+        timer.pause();
+        timer.currentTime = 0;
+    }
+}
+
+export { soundInit, playEffect, playTimer, stopTimer };

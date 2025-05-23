@@ -19,7 +19,7 @@ function init() {
 
 function initSound() {
     soundInit();
-    document.querySelectorAll(".button-container button").forEach(button => {
+    document.querySelectorAll("button").forEach(button => {
         button.addEventListener("click", (e) => playEffect("button-press"));
     });
 }

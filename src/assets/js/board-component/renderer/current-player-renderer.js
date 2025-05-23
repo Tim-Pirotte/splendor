@@ -29,6 +29,7 @@ import { isSpectator } from "../state-machine/state-machine.js";
 import { TIME_AFTER_SPECTATOR_DOES_NOT_GET_RENDERED } from "../../config.js";
 import { animateShiftListItems, getVisibleListItemsBoundingBoxes } from "../animation-component/animation-handler.js";
 import { reserveCardShiftAnimation } from "../animation-component/data.js";
+import { playTimer, stopTimer } from "../../sound-component/sound.js";
 
 function renderGameStatusMessage(currentPlayer) {
     const isClientPlayerTurn = currentPlayer === loadFromStorage("playerName");
@@ -329,8 +330,10 @@ function hideSwitchPaymentButtons() {
 function renderTimer() {
     if (isCurrentlyPlaying()) {
         document.querySelector(".timer").style.opacity = "1";
+        playTimer();
     } else {
         document.querySelector(".timer").style.opacity = "0";
+        stopTimer();
     }
 }
 
