@@ -1,8 +1,5 @@
-import * as API from "../api.js"
 import { joinGameById, spectateGameById } from "./helper.js";
-import {loadFromStorage} from "../data-connector/local-storage-abstractor.js";
-import {locateToMainMenu} from "../utils/data-handler.js";
-import {getSharingLink} from "../lobby-component/helper.js";
+import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 
 function joinGameUsingUsersInputId(e) {
     e.preventDefault();
@@ -33,7 +30,7 @@ function joinGameByIdParameter(gameId) {
         return;
     }
 
-    joinGameById(gameId, true, true)
+    joinGameById(gameId, true, true);
 }
 
 function sendBackToMainMenuWithGameId(gameId) {

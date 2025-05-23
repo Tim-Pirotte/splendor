@@ -1,6 +1,6 @@
 import { avatars } from "./data.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
-import {insertImageInto, renderErrorMessage} from "../utils/renderer.js";
+import { insertImageInto, renderErrorMessage } from "../utils/renderer.js";
 
 function renderAvatarSelectionList() {
     const $avatarsSection = document.querySelector("section ul");
@@ -33,11 +33,12 @@ function hideDemoButton(compatible) {
 function renderCorrectErrorMessage() {
     if (new URL(window.location.href).searchParams.get("gameId") === null) return;
 
+    // the user only gets send back to the main menu if he/she doesn't have a playerName or if it is already taken.
     renderErrorMessage(
         loadFromStorage("playerName")
             ? "Player name already taken"
-            : "Please choose a player name before going back to the join page"
+            : "Please choose a player name before going back to the join page",
     );
 }
 
-export { renderAvatarSelectionList, renderPlayerInfo, hideDemoButton, renderCorrectErrorMessage};
+export { renderAvatarSelectionList, renderPlayerInfo, hideDemoButton, renderCorrectErrorMessage };

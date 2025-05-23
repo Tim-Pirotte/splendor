@@ -46,7 +46,7 @@ function getPlayersObjects(gameData, started) {
             "avatar": avatar,
         });
     }
-    
+
     return players;
 }
 

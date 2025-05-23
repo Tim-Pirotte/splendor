@@ -1,7 +1,7 @@
 import { checkCompatibility } from "../server-version-component/server-version.js";
 import { soundInit } from "../sound-component/sound.js";
 import { closeAvatarVisibility, savePlayerInfo, updateSelectedAvatar } from "./handler.js";
-import {hideDemoButton, renderAvatarSelectionList, renderCorrectErrorMessage, renderPlayerInfo} from "./renderer.js";
+import { hideDemoButton, renderAvatarSelectionList, renderCorrectErrorMessage, renderPlayerInfo } from "./renderer.js";
 
 function init() {
     setupUI();

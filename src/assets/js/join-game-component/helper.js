@@ -2,7 +2,7 @@ import * as API from "../api.js";
 import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
 import { renderErrorMessage, renderUnsupportedError } from "../utils/renderer.js";
 import { checkCompatibility } from "../server-version-component/server-version.js";
-import {sendBackToMainMenuWithGameId} from "./handler.js";
+import { sendBackToMainMenuWithGameId } from "./handler.js";
 
 function joinGameById(gameId, spectating, joinBySharingLink = false) {
     initiateGameSession(gameId, spectating, joinBySharingLink);

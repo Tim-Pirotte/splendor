@@ -1,5 +1,5 @@
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
-import {joinGame, joinGameByIdParameter, joinGameUsingUsersInputId} from "./handler.js";
+import { joinGame, joinGameByIdParameter, joinGameUsingUsersInputId } from "./handler.js";
 import { locateToMainMenu } from "../utils/data-handler.js";
 import { renderPlayerInfo, initGameRendering } from "./renderer.js";
 import { renderDefaultGameNamePlaceholder } from "../utils/renderer.js";

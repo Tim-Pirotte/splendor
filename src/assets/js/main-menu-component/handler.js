@@ -3,7 +3,7 @@ import { saveToStorage } from "../data-connector/local-storage-abstractor.js";
 import { renderErrorMessage } from "../utils/renderer.js";
 import { renderPlayerInfo } from "./renderer.js";
 import { validatePlayerName } from "./validator.js";
-import { spectateGameById} from "../join-game-component/helper.js";
+import { spectateGameById } from "../join-game-component/helper.js";
 import { LEVEL_OF_BOTS_IN_BOT_GAME, NUMBER_OF_PLAYERS_IN_BOT_GAME } from "../config.js";
 
 function toggleAvatarListVisibility(e) {
@@ -31,15 +31,15 @@ function savePlayerInfo(e) {
         savePlayerInfoToLocalStorage(playerName);
 
         switch (e.target.value) {
-            case "join-game":
-                goToJoinPageWithGetParameter();
-                break;
-            case "create-game":
-                location.href = "./pages/create-game.html"
-                break;
-            default:
-                startBotGame();
-                break;
+        case "join-game":
+            goToJoinPageWithGetParameter();
+            break;
+        case "create-game":
+            location.href = "./pages/create-game.html";
+            break;
+        default:
+            startBotGame();
+            break;
         }
     } else {
         renderErrorMessage("Invalid playername: (no spaces or special characters).");
@@ -50,9 +50,9 @@ function goToJoinPageWithGetParameter() {
     const gameIdParameter = new URL(window.location.href).searchParams.get("gameId");
 
     if (gameIdParameter) {
-        location.href = `./pages/join-game.html?gameId=${gameIdParameter}`
+        location.href = `./pages/join-game.html?gameId=${gameIdParameter}`;
     } else {
-        location.href = "./pages/join-game.html"
+        location.href = "./pages/join-game.html";
     }
 }
 

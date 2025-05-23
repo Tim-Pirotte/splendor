@@ -1,4 +1,4 @@
-import {loadFromStorage} from "../data-connector/local-storage-abstractor.js";
+import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 
 function getContainerAnimationForLeaving($container) {
     // https://developer.mozilla.org/en-US/docs/Web/API/Window/getComputedStyle
@@ -24,9 +24,9 @@ function getSharingLink() {
     const splittedLink = window.location.href.split("/");
     splittedLink[splittedLink.length - 1] = "join-game.html";
 
-    const link = new URL(splittedLink.join("/"))
+    const link = new URL(splittedLink.join("/"));
 
-    link.searchParams.set("gameId", loadFromStorage("gameId"))
+    link.searchParams.set("gameId", loadFromStorage("gameId"));
 
     return link.toString();
 }
