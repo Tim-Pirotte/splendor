@@ -17,7 +17,7 @@ import {
     safeEmptyContainer,
 } from "./helper.js";
 import { getUnclaimedTokens, sumObjectValues } from "../helper.js";
-import {copyNode, getAmountOfTemplateTags} from "../../utils/data-handler.js";
+import { copyNode, getAmountOfTemplateTags } from "../../utils/data-handler.js";
 import { insertImageInto } from "../../utils/renderer.js";
 import { validCardBuy, validNobelPick } from "../state-machine/valid-action-checker.js";
 import { canSelectNoble } from "../nobles/nobles-handler.js";
@@ -170,6 +170,7 @@ function renderNobles(unclaimedNobles) {
     }
 
     let index = 0;
+
     for (const $noble of $noblesContainer.querySelectorAll(":scope > li")) {
         if ($noble.dataset.name !== unclaimedNobles[index]["name"]) {
             $noble.querySelector("img").classList.add("shrink");

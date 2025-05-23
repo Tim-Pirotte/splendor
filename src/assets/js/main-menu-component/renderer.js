@@ -1,7 +1,7 @@
-import {authors, avatars} from "./data.js";
+import { authors, avatars } from "./data.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { insertImageInto } from "../utils/renderer.js";
-import {copyNode} from "../utils/data-handler.js";
+import { copyNode } from "../utils/data-handler.js";
 
 function renderAvatarSelectionList() {
     const $avatarsSection = document.querySelector("section ul");

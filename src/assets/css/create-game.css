@@ -92,6 +92,14 @@ input {
     margin: 2rem 0;
 }
 
+.label-header {
+    font-size: 1.4rem;
+}
+
+label:not(.label-header) {
+    font-size: 1rem;
+}
+
 input[type="radio"] {
     visibility: hidden;
 }
@@ -102,14 +110,6 @@ input[type="radio"]:checked + label{
 
 input[type="text"] {
     width: 14rem;
-}
-
-.label-header {
-    font-size: 1.4rem;
-}
-
-label:not(.label-header) {
-    font-size: 1rem;
 }
 
 /* confirm button */

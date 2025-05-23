@@ -184,6 +184,14 @@ li > picture {
     width: 2.5rem;
 }
 
+.add-bot button img {
+    width: 1rem;
+}
+
+.add-bot > picture img {
+    opacity: 0.5;
+}
+
 #copy-game-id-button {
     background-color: transparent;
     margin-bottom: 1rem;
@@ -197,6 +205,18 @@ li > picture {
     right: -0.5rem;
     padding: 0;
     animation: var(--scaleUpAnimation);
+}
+
+select {
+    border: none;
+    outline: none;
+    box-shadow: none;
+    width: 1rem;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    display: inline-block;
+    font-size: 1rem;
+    text-align: center;
 }
 
 #joined-players select {
@@ -242,26 +262,6 @@ li > picture {
     padding: 0.25rem;
     background: #322b3b;
     border-radius: 5%;
-}
-
-.add-bot button img {
-    width: 1rem;
-}
-
-.add-bot > picture img {
-    opacity: 0.5;
-}
-
-select {
-    border: none;
-    outline: none;
-    box-shadow: none;
-    width: 1rem;
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    display: inline-block;
-    font-size: 1rem;
-    text-align: center;
 }
 
 label {
