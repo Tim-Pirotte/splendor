@@ -38,13 +38,6 @@ function setSpectatorState(gameData, playerName) {
         setActionButtonState("Stop spectating", "stopSpectating", {});
         getActionButton().disabled = false;
     }
-    // checkCompatibility(2)
-    //     .then(isCompatible => {
-    //         if (isCompatible && isSpectator(gameData["spectators"], playerName)) {
-    //             setActionButtonState("Stop spectating", "stopSpectating", {});
-    //             getActionButton().disabled = false;
-    //         }
-    //     });
 }
 
 function isSpectator(spectators, playerName) {
