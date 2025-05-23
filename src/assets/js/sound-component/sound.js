@@ -22,6 +22,7 @@ function setupSound() {
     const state = loadFromStorageWithDefault("sound", false);
 
     if (background !== null) {
+        background.volume = 0.20;
         if (state) {
             background.play().then(() => { // check if autoplay is allowed
                 background.muted = false;
@@ -76,7 +77,9 @@ function toggleSound() {
 }
 
 function playEffect(name, loop) {
-    if (loadFromStorage("sound")) {
+    const state = loadFromStorage("sound");
+
+    if (state || loop) { // if sound is disable create the loop effect but mute it
         if (effects[name] === undefined) {
             const audio = new Audio(`${EFFECTS_BASE_PATH}${name}.mp3`);
             audio.loop = loop;
@@ -85,7 +88,9 @@ function playEffect(name, loop) {
 
         if (effects[name].loop) {
             effects[name].currentTime = 0;
+            effects[name].muted = ! state;
         }
+
         effects[name].play();
         return effects[name];
     }
@@ -93,7 +98,10 @@ function playEffect(name, loop) {
 
 function playTimer() {
     const effect = playEffect("timer", true);
-    effect.volume = 0.20;
+
+    if (effect !== undefined) {
+        effect.volume = 0.1;
+    }
 }
 
 function stopTimer() {
@@ -105,7 +113,7 @@ function stopTimer() {
 }
 
 function playClick(){
-    playEffect("button-press", true);
+    playEffect("button-press", false);
 }
 
 export { soundInit, playEffect, playTimer, stopTimer, playClick };

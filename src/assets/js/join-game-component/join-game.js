@@ -20,8 +20,6 @@ function setupUI() {
 
 function setupSound() {
     soundInit();
-
-
 }
 
 function setupEventListeners() {

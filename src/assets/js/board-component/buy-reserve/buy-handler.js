@@ -16,6 +16,7 @@ import { unHighlightTokens } from "../tokens/token-handler.js";
 import { renderCard } from "../renderer/helper.js";
 import { setAnimationDelayBeforePolling, buyCardAnimation } from "../animation-component/data.js";
 import { animateFromTo } from "../animation-component/animation-handler.js";
+import { playEffect } from "../../sound-component/sound.js";
 
 function allowToBuy($card) {
     const cardData = getCardData($card.dataset.name);
@@ -56,6 +57,7 @@ function unHighlightCards() {
 }
 
 function highlightCard($card) {
+    playEffect("woosh", false);
     unHighlightTokens();
     unHighlightCards();
     $card.classList.add("selected-card");

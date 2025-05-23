@@ -9,7 +9,6 @@ import {
 import { formatNumber } from "../board-component/renderer/helper.js";
 import { insertImageInto } from "../utils/renderer.js";
 import { locateToMainMenu } from "../utils/data-handler.js";
-import { isSpectator } from "../board-component/state-machine/state-machine.js";
 import { playEffect } from "../sound-component/sound.js";
 
 function renderResultMessage(isWinner) {

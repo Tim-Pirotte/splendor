@@ -8,21 +8,22 @@ import { handlePaymentMethodChange } from "./buy-reserve/buy-handler.js";
 import { selectPlayerToken } from "./tokens/discard.js";
 import * as API from "../api.js";
 import { handleKeyPress } from "./action-registry.js";
-import { soundInit, playEffect } from "../sound-component/sound.js";
+import { playClick, soundInit } from "../sound-component/sound.js";
 
 function init() {
     updateGameData();
     initGameStatusInterface();
     initializeActions();
-    initSound();
+    setupSound();
 }
 
-function initSound() {
+function setupSound() {
     soundInit();
 
-    document.querySelectorAll(".button-container button, .forfeit").forEach(button => {
-        button.addEventListener("click", () => playEffect("button-press"));
-    });
+    document.querySelectorAll(".button-container button, .forfeit")
+        .forEach(button => {
+            button.addEventListener("click", playClick);
+        });
 }
 
 function initializeActions() {
@@ -33,7 +34,7 @@ function initializeActions() {
     enterButtonInit();
 }
 
-function tokenInit(){
+function tokenInit() {
     document.querySelector(".board-tokens").addEventListener("click", selectToken);
     document.querySelector(".player-tokens ul").addEventListener("click", selectPlayerToken);
 }
