@@ -34,26 +34,20 @@ function savePlayerInfo(e) {
             location.href = `./pages/${e.target.value}.html`;
         }
 
-        if (e.target.value==="demo") {
-            startDemoGame();
-
-        } else {
-            renderErrorMessage("Invalid playername: (no spaces or special characters).");
+        if (e.target.value === "demo") {
+            API.createBotGame(LEVEL_OF_BOTS_IN_BOT_GAME, NUMBER_OF_PLAYERS_IN_BOT_GAME)
+                .then(response => {
+                    return addBotsToTheGame(
+                        LEVEL_OF_BOTS_IN_BOT_GAME,
+                        response["gameId"],
+                    NUMBER_OF_PLAYERS_IN_BOT_GAME - 1,
+                    );
+                }).then(response => spectateBotGameById(response["gameId"]));
         }
+    } else {
+        renderErrorMessage("Invalid playername: (no spaces or special characters).");
     }
 }
-
-function startDemoGame() {
-    API.createBotGame(LEVEL_OF_BOTS_IN_BOT_GAME, NUMBER_OF_PLAYERS_IN_BOT_GAME)
-    .then(response => {
-        return addBotsToTheGame(
-        LEVEL_OF_BOTS_IN_BOT_GAME,
-        response["gameId"],
-        NUMBER_OF_PLAYERS_IN_BOT_GAME - 1,
-        );
-    }).then(response => spectateBotGameById(response["gameId"]));
-}
-
 
 function savePlayerInfoToLocalStorage(playerName) {
     saveToStorage("playerName", playerName);

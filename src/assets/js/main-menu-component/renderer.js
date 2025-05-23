@@ -17,6 +17,8 @@ function renderPlayerInfo() {
     const avatar = loadFromStorage("avatar") || "placeholder";
     const playerName = loadFromStorage("playerName");
 
+    $button.innerHTML = "";
+
     insertImageInto($button, `avatars/${avatar}`, false, avatar, ".");
 
     if (playerName) {
