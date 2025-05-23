@@ -23,7 +23,7 @@ import { getClientTokens, getClientTotalPrestigePoints } from "../game-data-hand
 import { copyNode } from "../../utils/data-handler.js";
 import { isCurrentlyPlaying } from "../game-status-interface.js";
 import { insertImageInto } from "../../utils/renderer.js";
-import { checkCompatibility } from "../../server-version-component/server-version.js";
+import { checkCompatibility, checkCompatibilityFromSessionStorage } from "../../server-version-component/server-version.js";
 import { reflowCSS } from "../helper.js";
 import { isSpectator } from "../state-machine/state-machine.js";
 import { TIME_AFTER_SPECTATOR_DOES_NOT_GET_RENDERED } from "../../config.js";
@@ -75,11 +75,16 @@ function renderAvatar(gameCreatorName) {
 }
 
 function renderForfeitButton(playerName, spectators) {
-    checkCompatibility(2)
-        .then(isCompatible => {
-            document.querySelector(".forfeit")
-                .classList.toggle("none", !isCompatible || isSpectator(spectators, playerName));
-        });
+    const isCompatible = checkCompatibilityFromSessionStorage(2);
+    if (isCompatible) {
+        document.querySelector(".forfeit")
+            .classList.toggle("none", !isCompatible || isSpectator(spectators, playerName));
+    }
+    // checkCompatibility(2)
+    //     .then(isCompatible => {
+    //         document.querySelector(".forfeit")
+    //             .classList.toggle("none", !isCompatible || isSpectator(spectators, playerName));
+    //     });
 }
 
 function renderClientPlayerPoints(totalPrestigePoints, highestScore) {
@@ -174,12 +179,12 @@ function setTotalTokensColor($totalTokenCount, totalTokens) {
 function renderClientPlayer(players, gems, compatible) {
     let clientPlayer = getPlayerByName(players, loadFromStorage("playerName"));
 
-    if(isNotCurrentActivePlayer(clientPlayer)) {
+    if (isNotCurrentActivePlayer(clientPlayer)) {
         clientPlayer = players[0];
     }
 
     const highestScore = getHighestScore(players);
-    renderClientPlayerPoints(clientPlayer["totalPrestigePoints"] , highestScore);
+    renderClientPlayerPoints(clientPlayer["totalPrestigePoints"], highestScore);
 
     renderClientPlayerTokenCount(clientPlayer["tokens"]);
     renderClientPlayerTokens(clientPlayer["tokens"], clientPlayer["bonuses"], gems);
@@ -356,7 +361,7 @@ function addGoldToken() {
 export {
     renderClientPlayer,
     renderSwitchPaymentButtons,
-    renderClientPlayerTokenCount,renderClientPlayerTokens,
+    renderClientPlayerTokenCount, renderClientPlayerTokens,
     renderUpdatedPlayerTokens,
     renderUpdatedPlayerScore,
     hideSwitchPaymentButtons,
