@@ -4,7 +4,7 @@ import { renderPlayerInfo, removeVisibilitySelector } from "./renderer.js";
 import { locateToMainMenu } from "../utils/data-handler.js";
 import { checkCompatibility } from "../server-version-component/server-version.js";
 import { renderDefaultGameNamePlaceholder } from "../utils/renderer.js";
-import { playClick, soundInit } from "../sound-component/sound.js";
+import { effects } from "../sound-component/sound.js";
 
 function createInit() {
     setupUI();
@@ -26,9 +26,9 @@ function setupEventListeners() {
 }
 
 function setupSound(){
-    soundInit();
+    //soundInit();
     document.querySelectorAll("button[type=submit], input[type=radio]")
-        .forEach(node => node.addEventListener("click", playClick));
+        .forEach(node => node.addEventListener("click", effects.playClick));
 }
 
 createInit();

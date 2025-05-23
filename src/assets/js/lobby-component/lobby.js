@@ -1,5 +1,5 @@
 import { copyGameId, loadLobbyInformation, processAddBot } from "./handler.js";
-import { playClick, soundInit } from "../sound-component/sound.js";
+import { effects, soundInit } from "../sound-component/sound.js";
 import * as API from "../api.js";
 
 function lobbyInit() {
@@ -14,7 +14,7 @@ function loadSound() {
     soundInit();
     document.querySelectorAll(".leave-button, #copy-game-id-button, #joined-players")
         .forEach(button => {
-            button.addEventListener("click", playClick);
+            button.addEventListener("click", effects.playClick);
         });
 }
 

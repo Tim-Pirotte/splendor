@@ -8,8 +8,8 @@ import {
 } from "./config.js";
 import { formatNumber } from "../board-component/renderer/helper.js";
 import { insertImageInto } from "../utils/renderer.js";
-import { copyNode, locateToMainMenu } from "../utils/data-handler.js"
-import { playEffect } from "../sound-component/sound.js";
+import { copyNode, locateToMainMenu } from "../utils/data-handler.js";
+import { effects } from "../sound-component/sound.js";
 
 function renderResultMessage(isWinner) {
     const $message = copyNode(document.querySelector("#result-message-template"));
@@ -77,7 +77,7 @@ function renderOneAnimation() {
 }
 
 function playSound(isWinner) {
-    if (isWinner) playEffect("win", false);
+    if (isWinner) effects.playWin();
 }
 
 export { renderResults };

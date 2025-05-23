@@ -33,7 +33,7 @@ function soundInit() {
 
             soundButton.addEventListener("click", () => {
                 toggleSound();
-                playEffect("button-press", false);
+                effects.playClick();
             });
         });
 }
@@ -58,15 +58,16 @@ function muteEffects() {
 }
 
 function playBackground() {
-    if (!background) {
+    if (background) {
         background.volume = 0.20;
         background.muted = false;
-        background.play().catch(() => {});
+        background.play().catch(() => {
+        });
     }
 }
 
 function pauseBackground() {
-    if (!background) {
+    if (background) {
         background.pause();
     }
 }
@@ -86,38 +87,54 @@ function toggleSound() {
     setSoundButtonImgSource(soundEnabled);
 }
 
-function playEffect(name, loop) {
+function playEffect(name, loop, volume) {
     const soundEnabled = loadFromStorage("sound");
     let effect = sounds[name];
 
     if (effect === undefined) {
         effect = new Audio(`${EFFECTS_BASE_PATH}${name}.mp3`);
         effect.loop = loop;
+        effect.volume = volume;
         sounds[name] = effect;
     }
 
     if (!effect.loop) effect.currentTime = 0;
     effect.muted = !soundEnabled;
-    effect.play().catch(() => {});
+    effect.play().catch(() => {
+    });
 
     return effect;
 }
 
-function playTimer() {
-    const effect = playEffect("timer", true);
-    effect.volume = 0.1;
-}
+const effects = {
+    playTimer() {
+        playEffect("timer", true, 0.1);
+    },
 
-function stopTimer() {
-    if ("timer" in sounds) {
-        const timer = sounds["timer"];
-        timer.pause();
-        timer.currentTime = 0;
-    }
-}
+    stopTimer() {
+        if ("timer" in sounds) {
+            const timer = sounds["timer"];
+            timer.pause();
+            timer.currentTime = 0;
+        }
+    },
 
-function playClick() {
-    playEffect("button-press", false);
-}
+    playClick() {
+        playEffect("button-press", false, 1.0);
+    },
+    playWin() {
+        playEffect("win", false, 1.0);
+    },
 
-export { soundInit, playEffect, playTimer, stopTimer, playClick };
+    playLevelUp() {
+        playEffect("level-up", false, 1.0);
+    },
+
+    playWoosh() {
+        playEffect("woosh", false, 1.0);
+    },
+};
+
+soundInit();
+
+export { effects };
