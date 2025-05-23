@@ -96,6 +96,10 @@ input {
     font-size: 1.4rem;
 }
 
+h1, label {
+    text-shadow: rgb(0 0 0 / 57%) 0.2rem 0.2rem 0.3rem;
+}
+
 label:not(.label-header) {
     font-size: 1rem;
 }
@@ -132,8 +136,4 @@ footer {
     align-self: flex-end;
     flex-flow: row nowrap;
     padding: 2rem;
-}
-
-h1, label {
-    text-shadow: rgb(0 0 0 / 57%) 0.2rem 0.2rem 0.3rem;
 }
