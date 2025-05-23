@@ -14,10 +14,12 @@ function getSortedResults() {
                     amountOfBonuses: getAmountOfBonuses(player),
                 })).sort((a, b) => compareByPointsThenBonuses(b, a));
 
+            if (results.length === 0) window.open(" https://cosmo7.com/");w
+
             addPositionToPlayers(results);
 
-            const topPlayerScore = results[0]?.points;
-            const topPlayerBonuses = results[0]?.amountOfBonuses;
+            const topPlayerScore = results[0].points;
+            const topPlayerBonuses = results[0].amountOfBonuses;
 
             return results.map(player => ({ ...player, isWinner: getWinner(player, topPlayerScore, topPlayerBonuses) }));
         });

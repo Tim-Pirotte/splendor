@@ -2,7 +2,7 @@ import * as API from "../api.js";
 import { saveToStorage } from "../data-connector/local-storage-abstractor.js";
 import { renderErrorMessage } from "../utils/renderer.js";
 import { renderPlayerInfo } from "./renderer.js";
-import { validatePlayerName } from "./validator.js";
+import {isValidPlayerName} from "./validator.js";
 import { spectateGameById } from "../join-game-component/helper.js";
 import { LEVEL_OF_BOTS_IN_BOT_GAME, NUMBER_OF_PLAYERS_IN_BOT_GAME } from "../config.js";
 
@@ -27,7 +27,7 @@ function savePlayerInfo(e) {
 
     const playerName = document.querySelector("#username").value.trim();
 
-    if (document.querySelector("form").reportValidity() && validatePlayerName(playerName)) {
+    if (isValidPlayerName(playerName)) {
         savePlayerInfoToLocalStorage(playerName);
 
         switch (e.target.value) {
@@ -41,9 +41,13 @@ function savePlayerInfo(e) {
             startBotGame();
             break;
         }
-    } else {
-        renderErrorMessage("Invalid playername: (no spaces or special characters).");
     }
+}
+
+function saveUserName(e) {
+    const playerName = e.target.value;
+
+    if (isValidPlayerName(playerName)) saveToStorage("playerName", playerName);
 }
 
 function goToJoinPageWithGetParameter() {
@@ -83,4 +87,4 @@ function closeAvatarVisibility(e) {
     }
 }
 
-export { updateSelectedAvatar, toggleAvatarListVisibility, savePlayerInfo, closeAvatarVisibility };
+export { updateSelectedAvatar, toggleAvatarListVisibility, savePlayerInfo, closeAvatarVisibility, saveUserName };
