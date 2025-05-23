@@ -1,6 +1,6 @@
 import { avatars } from "./data.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
-import { insertImageInto } from "../utils/renderer.js";
+import {insertImageInto, renderErrorMessage} from "../utils/renderer.js";
 
 function renderAvatarSelectionList() {
     const $avatarsSection = document.querySelector("section ul");
@@ -30,4 +30,14 @@ function hideDemoButton(compatible) {
     if(!compatible) document.querySelector("form .form-actions button[value='demo']").classList.add("none");
 }
 
-export { renderAvatarSelectionList, renderPlayerInfo, hideDemoButton };
+function renderCorrectErrorMessage() {
+    if (new URL(window.location.href).searchParams.get("gameId") === null) return;
+
+    renderErrorMessage(
+        loadFromStorage("playerName")
+            ? "Player name already taken"
+            : "Please choose a player name before going back to the join page"
+    );
+}
+
+export { renderAvatarSelectionList, renderPlayerInfo, hideDemoButton, renderCorrectErrorMessage};
