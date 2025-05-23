@@ -25,7 +25,8 @@ function initiateGameSession(gameId, spectating, joinBySharingLink) {
         saveToStorage("playerToken", response["playerToken"]);
         location.href = "./lobby.html";
     }).catch(err => {
-        if (joinBySharingLink && err.failure === 409) {
+        const codeForPlayerNameTaken = 409;
+        if (joinBySharingLink && err.failure === codeForPlayerNameTaken) {
             sendBackToMainMenuWithGameId(gameId);
         } else {
             renderErrorMessage(err.cause);
