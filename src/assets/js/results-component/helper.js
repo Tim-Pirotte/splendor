@@ -14,7 +14,8 @@ function getSortedResults() {
                     amountOfBonuses: getAmountOfBonuses(player),
                 })).sort((a, b) => compareByPointsThenBonuses(b, a));
 
-            if (results.length === 0) window.open(" https://cosmo7.com/");w
+            // this is a fun little Easter egg if you ask me
+            if (results.length === 0) window.open(" https://cosmo7.com/");
 
             addPositionToPlayers(results);
 
