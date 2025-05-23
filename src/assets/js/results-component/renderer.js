@@ -29,6 +29,7 @@ function renderResults() {
     if (loadFromStorage("gameId") === null) {locateToMainMenu(); return;}
     getSortedResults().then(gameResults => {
         const playerName = loadFromStorage("playerName");
+
         for (const player of gameResults) {
 
             if (playerName === player.name) {
