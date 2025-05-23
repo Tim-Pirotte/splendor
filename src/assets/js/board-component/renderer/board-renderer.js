@@ -53,7 +53,6 @@ function updateCard(deck, index, $previousCard) {
 
     if (!cardData) {
         $previousCard.replaceWith(renderEmptySpace());
-        //$previousCard.classList.add("hidden");
         return;
     }
 
