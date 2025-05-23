@@ -95,7 +95,6 @@ function setTimer(duration, timePassedForCurrentRound, $timerFill, gameState) {
             console.error(err);
         }
 
-
     }
 
     requestAnimationFrame(update);

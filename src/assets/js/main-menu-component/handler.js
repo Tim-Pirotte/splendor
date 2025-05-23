@@ -1,5 +1,5 @@
 import * as API from "../api.js";
-import { loadFromStorage, saveToStorage } from "../data-connector/local-storage-abstractor.js";
+import { saveToStorage } from "../data-connector/local-storage-abstractor.js";
 import { renderErrorMessage } from "../utils/renderer.js";
 import { renderPlayerInfo } from "./renderer.js";
 import { validatePlayerName } from "./validator.js";
@@ -44,13 +44,13 @@ function savePlayerInfo(e) {
 
 function startBotGame() {
     API.createBotGame(LEVEL_OF_BOTS_IN_BOT_GAME, NUMBER_OF_PLAYERS_IN_BOT_GAME)
-    .then(response => {
-        return addBotsToTheGame(
-        LEVEL_OF_BOTS_IN_BOT_GAME,
-        response["gameId"],
-        NUMBER_OF_PLAYERS_IN_BOT_GAME - 1,
-        );
-    }).then(response => spectateBotGameById(response["gameId"]));
+        .then(response => {
+            return addBotsToTheGame(
+                LEVEL_OF_BOTS_IN_BOT_GAME,
+                response["gameId"],
+                NUMBER_OF_PLAYERS_IN_BOT_GAME - 1,
+            );
+        }).then(response => spectateBotGameById(response["gameId"]));
 }
 
 function savePlayerInfoToLocalStorage(playerName) {

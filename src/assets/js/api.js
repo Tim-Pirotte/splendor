@@ -1,5 +1,5 @@
 import { fetchFromServer } from "./data-connector/api-communication-abstractor.js";
-import { loadFromStorage, saveToStorage } from "./data-connector/local-storage-abstractor.js";
+import { loadFromStorage } from "./data-connector/local-storage-abstractor.js";
 import { checkCompatibility } from "./server-version-component/server-version.js";
 import { NPC_SUFFIX } from "./config.js";
 import { handleGameDataError } from "./board-component/game-data-handler.js";
@@ -62,7 +62,7 @@ function joinBot(level , gameId) {
 
 function leaveGame() {
     joinGame(loadFromStorage("gameId"), loadFromStorage("playerName"),true, true)
-        .then(() => locateToMainMenu())
+        .then(() => locateToMainMenu());
 }
 
 /* Game Actions */
