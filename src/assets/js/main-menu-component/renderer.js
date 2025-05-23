@@ -22,7 +22,7 @@ function renderPlayerInfo() {
 }
 
 function disbleDemoButton(comaptible) {
-    if(!comaptible) document.querySelector("form .form-actions button[value=\"demo\"]").classList.add("none");
+    if(!comaptible) document.querySelector("form .form-actions button[value='demo']").classList.add("none");
 }
 
 export { renderAvatarSelectionList, renderPlayerInfo, disbleDemoButton };
