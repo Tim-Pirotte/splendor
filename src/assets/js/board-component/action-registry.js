@@ -38,9 +38,14 @@ function clickOnSelectedButton(activeElement) {
         return;
     }
 
-    getActionButton().disabled
+    const $actionButton = getActionButton();
+
+    $actionButton.disabled
         ? getReserveCardButton().click()
-        : getActionButton().click();
+        : $actionButton.click();
+
+    getReserveCardButton().disabled = true;
+    getActionButton().disabled = true;
 }
 
 function focusOtherButton(activeElement) {

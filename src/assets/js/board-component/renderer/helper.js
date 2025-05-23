@@ -188,6 +188,7 @@ export {
     addSwitchButton,
     getNumberedItemTemplate,
     addNodesToEmptiedContainer,
+    renderEmptySpace,
     renderCard,
     highlightPointsWinner,
     getOrderedPlayersWithoutClientPlayer,
