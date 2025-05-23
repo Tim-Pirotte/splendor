@@ -19,6 +19,7 @@ const LEAVING_PLAYER_ANIMATION_DURATION = 500;
 const ERROR_MESSAGE_TIMEOUT = 10000;
 
 const NPC_SUFFIX = "w817s2JgYDTjTR6x";
+
 function getAPIUrl() {
     return LOCAL_SERVER;
 }

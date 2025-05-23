@@ -12,6 +12,7 @@ import { reflowCSS } from "../board-component/helper.js";
 import { getContainerAnimationForLeaving, hasSomethingRenderedInside, isAddBotButton } from "./helper.js";
 import { LEAVING_PLAYER_ANIMATION_DURATION } from "../config.js";
 import { safeEmptyContainer } from "../board-component/renderer/helper.js";
+import { checkCompatibilityFromSessionStorage } from "../server-version-component/server-version.js";
 
 function renderGameInfo(gameObject, started) {
     document.querySelector("#game-name-id").innerHTML = `${getGameName(gameObject)} / <span>${getGameId(gameObject)}</span>`;
@@ -23,7 +24,7 @@ function renderLobbyPlayers(gameData, started) {
 
     renderPlayerContainers(gameData.numberOfPlayers, $joinedPlayersContainer);
     renderPlayersList(gameData, started);
-    renderBotPlaceHolders($joinedPlayersContainer);
+    if(checkCompatibilityFromSessionStorage(2)) renderBotPlaceHolders($joinedPlayersContainer);
 }
 
 function renderPlayerContainers(amountOfPlayers, $joinedPlayersContainer) {
@@ -64,17 +65,20 @@ function renderPlayersList(gameObject, started) {
     const $template = document.querySelector("#joined-player-template");
     const $joinedPlayerContainers = document.querySelector("#joined-players").querySelectorAll("li");
 
-    for (const [index, player] of getPlayersObjects(gameObject, started).entries()) {
-        const $player = $joinedPlayerContainers[index];
+    getPlayersObjects(gameObject, started)
+        .then(players => {
+            for (const [index, player] of players.entries()) {
+                const $player = $joinedPlayerContainers[index];
 
-        if (player.name === null && !isAddBotButton($player) && hasSomethingRenderedInside($player)) {
-            removeRenderedPlayer($player);
-        }
+                if (player.name === null && !isAddBotButton($player) && hasSomethingRenderedInside($player)) {
+                    removeRenderedPlayer($player);
+                }
 
-        if (player.name !== null && player.name !== $player?.querySelector(".player-name")?.innerText) {
-            renderPlayer(player, $player, $template);
-        }
-    }
+                if (player.name !== null && player.name !== $player?.querySelector(".player-name")?.innerText) {
+                    renderPlayer(player, $player, $template);
+                }
+            }
+        });
 }
 
 function removeRenderedPlayer($container) {
@@ -95,7 +99,7 @@ function renderPlayer(player, $container, $template) {
     $li.querySelector("img").alt = $li.querySelector("img").title = avatar;
 
     $container.classList.remove("add-bot");
-    $container.innerHTML =  $li.innerHTML;
+    $container.innerHTML = $li.innerHTML;
 }
 
 function renderPlayerCount(gameObject) {

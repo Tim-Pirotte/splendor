@@ -35,7 +35,6 @@ function renderOtherPlayers(players, currentPlayer) {
             $playerTemplate,
             otherPlayer,
             highestScore,
-            currentPlayer,
             isCreator(players, otherPlayers),
         ));
 
@@ -69,7 +68,7 @@ function setupRenderOtherPlayers(amountOfPlayers) {
     }
 }
 
-function renderOtherPlayer($playerTemplate, otherPlayer, highestScore, currentPlayer, isGameCreator) {
+function renderOtherPlayer($playerTemplate, otherPlayer, highestScore, isGameCreator) {
     const $playerCard = copyNode($playerTemplate);
     const avatar = determinePlayerAvatar(otherPlayer.name, otherPlayer.avatar);
 
