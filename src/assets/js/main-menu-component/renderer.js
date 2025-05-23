@@ -5,7 +5,6 @@ import { insertImageInto } from "../utils/renderer.js";
 function renderAvatarSelectionList() {
     const $avatarsSection = document.querySelector("section ul");
 
-    document.querySelectorAll("li").forEach(li => li.remove());
     avatars.forEach(avatar => insertImageInto($avatarsSection, `avatars/${avatar}`, false, avatar, "."));
 }
 

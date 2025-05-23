@@ -30,11 +30,10 @@ function renderResultMessage(isWinner) {
 function renderResults() {
     if (loadFromStorage("gameId") === null) {locateToMainMenu(); return;}
     getSortedResults().then(gameResults => {
+        const playerName = loadFromStorage("playerName");
         for (const player of gameResults) {
-            const isPlayer = player.name === loadFromStorage("playerName");
-            const gameData = loadFromStorage("gameData");
 
-            if (isPlayer && checkCompatibilityFromSessionStorage(2) && !isSpectator(gameData["spectators"], player.name)) {
+            if (playerName === player.name) {
                 renderResultMessage(player.isWinner);
                 renderResultAnimation(player.isWinner);
             }
