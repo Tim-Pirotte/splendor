@@ -9,7 +9,11 @@ function isValidPlayerName(playerName) {
     const isValid = document.querySelector("form").reportValidity() && validatePlayerName(playerName);
     if (isValid) return true;
 
-    renderErrorMessage("Invalid playername: (no spaces or special characters).");
+    if (playerName === "") {
+        renderErrorMessage("Please enter a username");
+    } else {
+        renderErrorMessage("Invalid playername: (no spaces or special characters).");
+    }
 }
 
 export { isValidPlayerName };
