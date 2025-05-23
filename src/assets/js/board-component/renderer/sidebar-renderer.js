@@ -10,7 +10,7 @@ import {
 } from "./helper.js";
 import { determinePlayerAvatar, getHighestScore } from "../../utils/game-object-handler.js";
 import { copyNode, getAmountOfTemplateTags } from "../../utils/data-handler.js";
-import { checkCompatibility, checkCompatibilityFromSessionStorage } from "../../server-version-component/server-version.js";
+import { checkCompatibilityFromSessionStorage } from "../../server-version-component/server-version.js";
 import { insertImageInto, renderUnsupportedError } from "../../utils/renderer.js";
 
 function renderOtherPlayers(players, currentPlayer) {

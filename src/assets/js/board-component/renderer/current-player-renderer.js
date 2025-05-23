@@ -23,7 +23,7 @@ import { getClientTokens, getClientTotalPrestigePoints } from "../game-data-hand
 import { copyNode } from "../../utils/data-handler.js";
 import { isCurrentlyPlaying } from "../game-status-interface.js";
 import { insertImageInto } from "../../utils/renderer.js";
-import { checkCompatibility, checkCompatibilityFromSessionStorage } from "../../server-version-component/server-version.js";
+import { checkCompatibilityFromSessionStorage } from "../../server-version-component/server-version.js";
 import { reflowCSS } from "../helper.js";
 import { isSpectator } from "../state-machine/state-machine.js";
 import { TIME_AFTER_SPECTATOR_DOES_NOT_GET_RENDERED } from "../../config.js";

@@ -1,6 +1,6 @@
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { avatars } from "../main-menu-component/data.js";
-import { checkCompatibility, checkCompatibilityFromSessionStorage } from "../server-version-component/server-version.js";
+import { checkCompatibilityFromSessionStorage } from "../server-version-component/server-version.js";
 
 function getGameState(gameData) {
     return gameData["started"] ? "spectate" : "join";
