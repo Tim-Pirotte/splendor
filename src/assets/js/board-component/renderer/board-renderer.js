@@ -61,10 +61,10 @@ function updateCard(deck, index, $previousCard) {
         return;
     }
 
-    playCardFakeAnimation($previousCard, deck, cardData);
+    playCardFadeAnimation($previousCard, deck, cardData);
 }
 
-function playCardFakeAnimation($previousCard, deck, cardData) {
+function playCardFadeAnimation($previousCard, deck, cardData) {
     setAnimationDelayBeforePolling(
         reserveCardFromDeckAnimationFront.duration + cardMarketFadeAnimation.duration,
     );
@@ -163,7 +163,17 @@ function getNobleAlt(costs) {
 
 function renderNobles(unclaimedNobles) {
     const $noblesContainer = document.querySelector(".nobles");
-    addNodesToEmptiedContainer($noblesContainer, unclaimedNobles, renderNoble);
+
+    if ($noblesContainer.children.length === 1) {
+        addNodesToEmptiedContainer($noblesContainer, unclaimedNobles, renderNoble);
+        return;
+    }
+
+    for (const [index, $noble] of $noblesContainer.querySelectorAll(":scope > li").entries()) {
+        if ($noble.dataset.name !== unclaimedNobles[index]["name"]) {
+            $noble.outerHTML = "";
+        }
+    }
 }
 
 function renderNoble(noble) {
