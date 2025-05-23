@@ -34,10 +34,12 @@ function savePlayerInfo(e) {
             location.href = `./pages/${e.target.value}.html`;
         }
 
-        if (e.target.value === "demo") {
+        if (e.target.value==="demo") {
             startDemoGame();
-    } else {
-        renderErrorMessage("Invalid playername: (no spaces or special characters).");
+
+        } else {
+            renderErrorMessage("Invalid playername: (no spaces or special characters).");
+        }
     }
 }
 
@@ -51,6 +53,7 @@ function startDemoGame() {
         );
     }).then(response => spectateBotGameById(response["gameId"]));
 }
+
 
 function savePlayerInfoToLocalStorage(playerName) {
     saveToStorage("playerName", playerName);
