@@ -1,5 +1,5 @@
 import * as API from "../../api.js";
-import {getActionButton, resetCurrentPlayer, setActionButtonState} from "../game-status-interface.js";
+import { getActionButton, setActionButtonState } from "../game-status-interface.js";
 import {
     hideSwitchPaymentButtons,
     renderSwitchPaymentButtons,

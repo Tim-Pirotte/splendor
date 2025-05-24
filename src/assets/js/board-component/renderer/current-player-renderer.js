@@ -45,7 +45,7 @@ function renderAmountOfSpectators(spectators, compatible) {
     }
 
     const amountOfSpectators = spectators.filter(
-    spectator => spectator.pollDelta < TIME_AFTER_SPECTATOR_DOES_NOT_GET_RENDERED,
+        spectator => spectator.pollDelta < TIME_AFTER_SPECTATOR_DOES_NOT_GET_RENDERED,
     ).length;
 
     document.querySelector(".amount-of-spectators").textContent = amountOfSpectators;

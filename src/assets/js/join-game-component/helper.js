@@ -26,6 +26,7 @@ function initiateGameSession(gameId, spectating, joinBySharingLink) {
         location.href = "./lobby.html";
     }).catch(err => {
         const codeForPlayerNameTaken = 409;
+
         if (joinBySharingLink && err.failure === codeForPlayerNameTaken) {
             sendBackToMainMenuWithGameId(gameId);
         } else {

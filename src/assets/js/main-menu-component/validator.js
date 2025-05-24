@@ -1,4 +1,4 @@
-import {renderErrorMessage} from "../utils/renderer.js";
+import { renderErrorMessage } from "../utils/renderer.js";
 
 function validatePlayerName(playerName) {
     const playerNameRegex = /^[a-zA-Z0-9]{1,16}$/;
@@ -7,6 +7,7 @@ function validatePlayerName(playerName) {
 
 function isValidPlayerName(playerName) {
     const isValid = document.querySelector("form").reportValidity() && validatePlayerName(playerName);
+
     if (isValid) return true;
 
     if (playerName === "") {

@@ -57,7 +57,7 @@ function initGameStatusInterface() {
 
 function resetCurrentPlayer() {
     document.querySelector("body").classList.remove("client-player-turn");
-    delete document.querySelector(".top-bar h1").dataset.currentlyPlaying
+    delete document.querySelector(".top-bar h1").dataset.currentlyPlaying;
 }
 
 function deselectAll() {

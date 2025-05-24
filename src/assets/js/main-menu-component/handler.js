@@ -1,8 +1,7 @@
 import * as API from "../api.js";
 import { saveToStorage } from "../data-connector/local-storage-abstractor.js";
-import { renderErrorMessage } from "../utils/renderer.js";
 import { renderPlayerInfo } from "./renderer.js";
-import {isValidPlayerName} from "./validator.js";
+import { isValidPlayerName } from "./validator.js";
 import { spectateGameById } from "../join-game-component/helper.js";
 import { LEVEL_OF_BOTS_IN_BOT_GAME, NUMBER_OF_PLAYERS_IN_BOT_GAME } from "../config.js";
 
