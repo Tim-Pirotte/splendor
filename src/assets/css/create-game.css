@@ -62,10 +62,9 @@ main {
     width: 40rem;
     margin: auto;
     box-sizing: border-box;
-    background-color: #372b53;
-    border : var(--border-color) solid 0.5rem;
-    outline: var(--outline-color) solid 0.5rem;
-    background-size: 100% 100%;
+    background-image: url("../images/join_game_background.webp"), url("../images/fallback/join_game_background.png");
+    border : var(--border-color) solid 0.25rem;
+    outline: var(--outline-color) solid 0.25rem;
     box-shadow: rgb(0 0 0 / 57%) 0.2rem 0.2rem 0.3rem;
 }
 
