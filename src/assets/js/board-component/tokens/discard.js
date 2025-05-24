@@ -6,7 +6,6 @@ import { clientMustDiscardToken } from "../state-machine/valid-action-checker.js
 import { playShakeAnimation } from "./token-handler.js";
 
 function selectPlayerToken(e) {
-    if (!clientMustDiscardToken()) return;
 
     const $button = e.target.closest("button");
 
@@ -36,7 +35,7 @@ function selectPlayerToken(e) {
 }
 
 function clickedOnDiscardButton(button) {
-    return button.tagName.toLowerCase() === "button" && button.closest("div").classList.contains("discard-container");
+    return button?.tagName.toLowerCase() === "button" && button.closest("div").classList.contains("discard-container");
 }
 
 function getButtonAction(target) {
