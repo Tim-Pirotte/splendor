@@ -11,7 +11,11 @@ function toggleAvatarListVisibility(e) {
 }
 
 function updateSelectedAvatar(e) {
-    saveToStorage("avatar", e.target.closest("img").title);
+    const $avatar = e.target.closest("img");
+
+    if (!$avatar) return;
+
+    saveToStorage("avatar", $avatar.title);
     renderPlayerInfo();
     toggleAvatarListVisibility();
 }
@@ -64,7 +68,10 @@ function closeAvatarVisibility(e) {
         return;
     }
 
-    if (!document.querySelector(".avatar-selector section").classList.contains("none")) {
+    if (
+        !document.querySelector(".avatar-selector section").classList.contains("none")
+        && !e.target.closest(".avatar-selector")
+    ) {
         toggleAvatarListVisibility(e);
     }
 }

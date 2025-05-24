@@ -1,13 +1,9 @@
 /* General styling for the body and main container */
 main {
-    z-index: 1;
-    flex: 1 0 auto;
-    display: flex;
-    flex-flow: column nowrap;
     background-image: url("../images/results/results_banner.webp"), url("../images/fallback/results/results_banner.png");
-    background-size: 100% 100%;
-    width: 25rem;
-    height: 20rem;
+    background-size: cover;
+    width: 21.2rem;
+    height: 32.6rem;
     padding: 0 1.25rem;
 }
 
@@ -90,7 +86,7 @@ table tbody tr.winner td {
 
 #table-container {
     margin: 1rem auto;
-    height: 14rem;
+    height: 17rem;
     width: 100%;
 }
 

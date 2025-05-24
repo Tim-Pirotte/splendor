@@ -25,11 +25,25 @@
                 <source srcset="./assets/images/logo.webp" type="image/webp">
                 <img src="./assets/images/fallback/logo.png" alt="A Splendor game logo made in pixel art" title="Splendor logo">
             </picture>
+            <h2>Created by</h2>
+            <ul class="authors">
+                <template id="author-template">
+                    <li>
+                        <span></span>
+                        <a href="#" target="_blank">
+                            <picture>
+                                <source srcset="./assets/images/UI/github.webp" type="image/webp">
+                                <img src="./assets/images/fallback/UI/github.png" alt="Github" title="Github">
+                            </picture>
+                        </a>
+                    </li>
+                </template>
+            </ul>
         </header>
         <main>
             <form action="#">
-                <label for="username">Username:</label>
-                <input type="text" name="username" id="username" placeholder="E.g. claryn" required maxlength="16">
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username" placeholder="E.g. Jeffke" required maxlength="16">
                 <div class="avatar-selector">
                     <button type="button" id="avatar"></button>
                     <section class="none">

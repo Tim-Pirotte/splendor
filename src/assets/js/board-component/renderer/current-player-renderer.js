@@ -125,7 +125,7 @@ function renderReservedCards($reserved, reservedCards) {
     const originalReservedAmount = $reserved.children.length;
 
     const sourceBoundingBoxes = getVisibleListItemsBoundingBoxes($reserved);
-    removeBoughtCards($reserved);
+    removeBoughtCards($reserved, reservedCards);
     const targetBoundingBoxes = getVisibleListItemsBoundingBoxes($reserved);
 
     if (originalReservedAmount !== $reserved.children.length) {
@@ -143,9 +143,15 @@ function renderReservedCards($reserved, reservedCards) {
     }
 }
 
-function removeBoughtCards($reserved) {
-    for (const $boughtCard of $reserved.querySelectorAll(".hidden")) {
-        $boughtCard.outerHTML = "";
+function removeBoughtCards($reserved, reservedCards) {
+    let index = 0;
+
+    for (const $reservedCard of $reserved.querySelectorAll(":scope > li")) {
+        if (!reservedCards[index] || $reservedCard.dataset.name !== reservedCards[index]["name"]) {
+            $reservedCard.outerHTML = "";
+        } else {
+            index++;
+        }
     }
 }
 
@@ -353,7 +359,7 @@ function addGoldToken() {
 export {
     renderClientPlayer,
     renderSwitchPaymentButtons,
-    renderClientPlayerTokenCount, 
+    renderClientPlayerTokenCount,
     renderClientPlayerTokens,
     renderUpdatedPlayerTokens,
     renderUpdatedPlayerScore,

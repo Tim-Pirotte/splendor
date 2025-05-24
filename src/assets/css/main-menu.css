@@ -1,13 +1,11 @@
 /* General styling for the body and main container */
 main {
-    padding: 1rem 0 1rem 0;
-    width: 40rem;
+    width: 22rem;
+    height: 25.7rem;
     text-align: center;
-    margin: 0 auto;
-    background-color: #372b53;
-    border : var(--border-color) solid 0.3rem;
-    outline: var(--outline-color) solid 0.3rem;
-    height: 12rem;
+    background-image: url("../images/banner.webp"), url("../images/fallback/banner.png");
+    background-size: cover;
+    padding-top: 2rem;
 }
 
 body {
@@ -32,8 +30,8 @@ body::before {
 body > div {
     box-sizing: border-box;
     display: flex;
+    justify-content: space-evenly;
     align-items: center;
-    flex-flow: column nowrap;
     height: 100vh;
 }
 
@@ -42,19 +40,67 @@ body > div {
     100% { filter: hue-rotate(360deg); }
 }
 
-/* Splendor logo */
 header {
-    margin: 5rem auto 3rem auto;
+    align-self: start;
+    margin-top: 8rem;
 }
 
-header img {
-    height: 8.75rem
+header h2, header li {
+    font-size: 1rem;
+    width: 42rem;
+    text-shadow: rgb(0 0 0 / 57%) 0.2rem 0.2rem 0.3rem;
+}
+
+header h2 {
+    font-size: 1.3rem;
+    margin-top: 2.75rem;
+    margin-bottom: 0.5rem;
+}
+
+header h3 {
+    line-height: 175%;
+}
+
+@keyframes wiggle {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(0.75rem);
+    }
+}
+
+header > picture img {
+    height: 15rem;
+    animation: wiggle 5s ease-in-out infinite;
+}
+
+.authors {
+    display: flex;
+    flex-flow: column wrap;
+    height: 5rem;
+    gap: 1rem;
+}
+
+header li {
+    line-height: 200%;
+    width: 15rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.authors img {
+    width: 1.35rem;
+    height: 1.35rem;
+    margin-right: 2rem;
 }
 
 /* Form */
 label {
-    display: inline-block;
-    font-size: 1.2rem;
+    display: block;
+    margin-right: 7.5rem;
+    font-size: 1.1rem;
+    text-shadow: 0 0 0.2rem #3d3d3d;
 }
 
 /* Avatar selector */
@@ -86,13 +132,15 @@ form .avatar-selector {
 .avatar-selector button {
     background-color: transparent;
     border: none;
-    width: 2rem;
-    height: 2rem;
+    padding: 0;
+    transition: 0.3s;
 }
 
 .avatar-selector button img {
-    width: 2rem;
-    height: 2rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    box-shadow: rgb(0 0 0 / 57%) 0.1rem 0.1rem 0.1rem;
+    border-radius: 50%;
 }
 
 .avatar-selector section {
@@ -103,9 +151,10 @@ form .avatar-selector {
     outline: rgb(237, 191, 94) solid 0.1rem;
     padding: 1rem;
     border-radius: 0.5rem;
-    top: 2.5rem;
+    top: 3.5rem;
     left: 0;
     z-index: 5;
+    width: 12rem;
 }
 
 .avatar-selector section h2 {
@@ -116,11 +165,11 @@ form .avatar-selector {
 /* Join and create buttons */
 .form-actions {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 1rem;
-    margin: 4rem auto 0 auto;
-    height: 2.55rem;
+    margin: 2rem auto 0 auto;
 }
 
 .form-actions button {
@@ -133,27 +182,20 @@ form .avatar-selector {
     color: var(--light-text-color);
     font-size: 0.7rem;
     transition: var(--hover-transition-duration);
-    animation: buttonAppear 0.5s ease-in-out forwards;
+    animation: buttonAppear 0.5s ease-in-out;
 }
 
 .form-actions button:hover {
     filter: brightness(115%);
+    transform: scale(1.1);
 }
 
 /* Link to card collection */
 main a {
     display: block;
-    margin: 2rem 2rem auto 2rem;
-    text-align: left;
+    text-align: center;
+    margin-top: 2rem;
     color: white;
-    width: fit-content;
-}
-
-/* Place the audio toggle at the right side of the footer */
-footer {
-    align-self: flex-end;
-    flex-flow: row nowrap;
-    padding: 2rem;
 }
 
 @keyframes buttonAppear {

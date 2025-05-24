@@ -66,6 +66,7 @@ main {
     border : var(--border-color) solid 0.5rem;
     outline: var(--outline-color) solid 0.5rem;
     background-size: 100% 100%;
+    box-shadow: rgb(0 0 0 / 57%) 0.2rem 0.2rem 0.3rem;
 }
 
 p {
@@ -79,21 +80,36 @@ h1 {
 
 form {
     margin: 1.5rem auto;
-    text-align: center;
+    width: fit-content;
 }
 
 label {
     font-size: 1.3rem;
-    margin-right: 0.4rem;
+    padding: 0.25rem;
 }
 
 input {
     margin: 2rem 0;
 }
 
+.label-header {
+    font-size: 1.4rem;
+}
+
+h1, label {
+    text-shadow: rgb(0 0 0 / 57%) 0.2rem 0.2rem 0.3rem;
+}
+
+label:not(.label-header) {
+    font-size: 1rem;
+}
+
 input[type="radio"] {
-    margin-right: 0.4rem;
-    accent-color: #e9bd5c;
+    visibility: hidden;
+}
+
+input[type="radio"]:checked + label{
+    text-decoration: underline 0.2rem var(--border-color);
 }
 
 input[type="text"] {

@@ -1,6 +1,7 @@
-import { avatars } from "./data.js";
+import { authors, avatars } from "./data.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { insertImageInto } from "../utils/renderer.js";
+import { copyNode } from "../utils/data-handler.js";
 
 function renderAvatarSelectionList() {
     const $avatarsSection = document.querySelector("section ul");
@@ -30,4 +31,18 @@ function hideDemoButton(compatible) {
     if(!compatible) document.querySelector("form .form-actions button[value='demo']").classList.add("none");
 }
 
-export { renderAvatarSelectionList, renderPlayerInfo, hideDemoButton };
+function renderAuthors() {
+    const $authors = document.querySelector(".authors");
+    const $authorTemplate = document.querySelector("#author-template");
+
+    for (const [author, github] of Object.entries(authors)) {
+        const $author = copyNode($authorTemplate);
+
+        $author.querySelector("span").textContent = author;
+        $author.querySelector("a").href = github;
+
+        $authors.appendChild($author);
+    }
+}
+
+export { renderAvatarSelectionList, renderPlayerInfo, renderAuthors, hideDemoButton };
