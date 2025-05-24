@@ -37,7 +37,7 @@ function setActionToBuyReserve($card, isValidCardBuy, isValidCardReserve, deckLe
     setReserveButtonData($card, deckLevel);
 
     if (isValidCardBuy) allowToBuy($card);
-    if (!isValidCardBuy && deckLevel === "") renderMissingTokens();
+    if (!isValidCardBuy && deckLevel === "") renderMissingTokens($card);
 
     $reserveCardButton.classList.remove("hidden");
 
@@ -180,6 +180,19 @@ function handlePaymentMethodChange(e) {
     }
 }
 
+function getMissingTokens(cost) {
+    const wallet = getPlayerWallet();
+    const missingTokens = {};
+
+    for (const tokenType in cost) {
+        if (wallet[tokenType] < cost[tokenType]) {
+            missingTokens[tokenType] = cost[tokenType] - wallet[tokenType];
+        }
+    }
+
+    return missingTokens;
+}
+
 function resetPayment(cost) {
     const paymentMethod = getDefaultPaymentMethod(cost);
 
@@ -246,5 +259,6 @@ export {
     getCard,
     highlightCard,
     setActionToBuyReserve,
-    allowToBuy,
+    getMissingTokens,
+    getCardData,
 };

@@ -13,8 +13,8 @@ import {
     constructBackground,
 } from "./helper.js";
 import {
-    allowedToSwitchToken,
-    getDefaultPaymentMethod,
+    allowedToSwitchToken, getCardData,
+    getDefaultPaymentMethod, getMissingTokens,
     removePaidTokens,
     updateCurrentPlayerBonuses,
 } from "../buy-reserve/buy-handler.js";
@@ -359,8 +359,9 @@ function addGoldToken() {
     }
 }
 
-function renderMissingTokens() {
-    //const missingTokens = getMissingTokens()
+function renderMissingTokens($card) {
+    const cost = getCardData($card.dataset.name)["cost"];
+    const missingTokens = getMissingTokens(cost);
 }
 
 export {
