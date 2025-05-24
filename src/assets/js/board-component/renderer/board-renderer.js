@@ -24,7 +24,8 @@ import { validCardBuy, validNobelPick } from "../state-machine/valid-action-chec
 import { canSelectNoble } from "../nobles/nobles-handler.js";
 import { animateFromTo } from "../animation-component/animation-handler.js";
 import {
-    cardMarketFadeAnimation, getAnimationDelayBeforePolling,
+    cardMarketFadeAnimation,
+    getAnimationDelayBeforePolling,
     reserveCardFromDeckAnimationBack,
     reserveCardFromDeckAnimationFront,
     setAnimationDelayBeforePolling,
