@@ -19,6 +19,14 @@ function spectateGameById(gameId) {
         });
 }
 
+function spectateBotGame(gameId) {
+    API.joinGame(gameId, loadFromStorage("playerName"), true, false).then(response => {
+        saveToStorage("gameId", response["gameId"]);
+        saveToStorage("playerToken", response["playerToken"]);
+        location.href = "./pages/lobby.html";
+    }).catch(err => renderErrorMessage(err.cause));
+}
+
 function initiateGameSession(gameId, spectating, joinBySharingLink) {
     API.joinGame(gameId, loadFromStorage("playerName"), spectating, false).then(response => {
         saveToStorage("gameId", response["gameId"]);
@@ -47,4 +55,4 @@ function intersection(setA, setB) {
     return result;
 }
 
-export { joinGameById, intersection, spectateGameById };
+export { joinGameById, intersection, spectateGameById, spectateBotGame };

@@ -2,7 +2,7 @@ import * as API from "../api.js";
 import { saveToStorage } from "../data-connector/local-storage-abstractor.js";
 import { renderPlayerInfo } from "./renderer.js";
 import { isValidPlayerName } from "./validator.js";
-import { spectateGameById } from "../join-game-component/helper.js";
+import {spectateBotGame, spectateGameById} from "../join-game-component/helper.js";
 import { LEVEL_OF_BOTS_IN_BOT_GAME, NUMBER_OF_PLAYERS_IN_BOT_GAME } from "../config.js";
 
 function toggleAvatarListVisibility(e) {
@@ -71,7 +71,7 @@ function startBotGame() {
                 response["gameId"],
                 NUMBER_OF_PLAYERS_IN_BOT_GAME - 1,
             );
-        }).then(response => spectateGameById(response["gameId"]));
+        }).then(response => spectateBotGame(response["gameId"]));
 }
 
 function savePlayerInfoToLocalStorage(playerName) {
