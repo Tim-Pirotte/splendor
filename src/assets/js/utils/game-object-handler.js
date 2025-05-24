@@ -77,7 +77,7 @@ function determinePlayerAvatar(playerName, avatar) {
     }
 
     if (playerName === loadFromStorage("playerName")) {
-        avatar = loadFromStorage("avatar");
+        avatar = loadFromStorage("avatar") || "placeholder";
     }
     return avatar.toLowerCase();
 }

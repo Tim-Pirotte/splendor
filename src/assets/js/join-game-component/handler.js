@@ -1,4 +1,5 @@
 import { joinGameById, spectateGameById } from "./helper.js";
+import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 
 function joinGameUsingUsersInputId(e) {
     e.preventDefault();
@@ -21,4 +22,19 @@ function joinGame(e) {
     }
 }
 
-export { joinGameUsingUsersInputId, joinGame };
+function joinGameByIdParameter(gameId) {
+    const playerName = loadFromStorage("playerName");
+
+    if (playerName === null) {
+        sendBackToMainMenuWithGameId(gameId);
+        return;
+    }
+
+    joinGameById(gameId, true, true);
+}
+
+function sendBackToMainMenuWithGameId(gameId) {
+    location.href = `../index.html?gameId=${gameId}`;
+}
+
+export { joinGameUsingUsersInputId, joinGame, joinGameByIdParameter, sendBackToMainMenuWithGameId };
