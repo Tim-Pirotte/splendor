@@ -107,7 +107,7 @@ function animateNewCard(deck, cardData, $previousCard) {
 }
 
 function removeBackFromCard($target) {
-    $target.closest("div").outerHTML = $target.outerHTML;
+    $target.closest("div").replaceWith($target);
 }
 
 function getDeck(deck) {
