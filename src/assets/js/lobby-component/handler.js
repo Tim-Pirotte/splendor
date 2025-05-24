@@ -5,11 +5,12 @@ import {
     renderGameStartingCountdown,
     renderLobbyPlayers,
     renderPlayerCount,
-    setCopyGameIdImageColor,
+    setShareLinkButtonColor,
 } from "./renderer.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { locateToMainMenu } from "../utils/data-handler.js";
 import { checkCompatibility } from "../server-version-component/server-version.js";
+import { getSharingLink } from "./helper.js";
 
 function loadLobbyInformation(startedByPolling) {
     if (!loadFromStorage("gameId")) {
@@ -38,10 +39,10 @@ function loadLobbyInformation(startedByPolling) {
         });
 }
 
-function copyGameId() {
-    setCopyGameIdImageColor("red");
-    navigator.clipboard.writeText(loadFromStorage("gameId"));
-    setTimeout(setCopyGameIdImageColor, COPY_BUTTON_REMOVE_FEEDBACK_DELAY, "white");
+function copySharingLink() {
+    setShareLinkButtonColor("red");
+    navigator.clipboard.writeText(getSharingLink());
+    setTimeout(setShareLinkButtonColor, COPY_BUTTON_REMOVE_FEEDBACK_DELAY, "black");
 }
 
 function hideIncompatibleElements() {
@@ -62,4 +63,4 @@ function processAddBot(e) {
     loadLobbyInformation(false);
 }
 
-export { loadLobbyInformation, copyGameId, processAddBot };
+export { loadLobbyInformation, copySharingLink, processAddBot };
