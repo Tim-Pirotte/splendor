@@ -21,7 +21,7 @@ import { removeBackFromCard } from "../renderer/board-renderer.js";
 
 function processReserve(){
     // This only happens explicitly in reserve since it uses a separate button.
-    // The action button handles this for other actions
+    // The action button handles this for other actions.
     resetCurrentPlayer();
 
     const selectedCardName = getReserveCardButton().dataset.name;
