@@ -15,9 +15,9 @@ function getSortedResults() {
                     amountOfBonuses: getAmountOfBonuses(player),
                 })).sort((a, b) => compareByPointsThenBonuses(b, a));
 
-            // this is a fun little Easter egg if you ask me
+            // This is a fun little Easter egg if you ask me
             if (results.length === 0) {
-                window.open("https://cosmo7.com/");
+                window.open("https://cosmo7.com/", "_blank");
                 locateToMainMenu();
             }
 
