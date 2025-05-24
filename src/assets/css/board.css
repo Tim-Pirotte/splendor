@@ -30,10 +30,6 @@ body {
     text-shadow: var(--primary-text-shadow);
 }
 
-.amount-of-spectators {
-    font-size: 1.5rem;
-}
-
 /* Switch token buttons */
 .switch-token-container .hidden {
     display: none;
@@ -153,6 +149,7 @@ main {
 
 .spectator-eye-indicator img {
     width: 2rem;
+    margin-right: 1rem;
 }
 
 /* Nobles I */
@@ -324,7 +321,7 @@ main {
 }
 
 .player-card .reserved img {
-    height: 4.250rem;
+    height: 3rem;
     left: 0;
 }
 
@@ -419,8 +416,17 @@ main {
     100% { transform: translateX(0); }
 }
 
+@keyframes shrink {
+    from { transform: scale(1); }
+    to { transform: scale(0); }
+}
+
 .shake {
     animation: shake 0.4s;
+}
+
+.shrink {
+    animation: shrink 1s;
 }
 
 .button-container button {
@@ -502,7 +508,7 @@ aside .amount {
     color: var(--light-text-color);
 }
 
-/* greys out everything in the playercard of a forfeited player */
+/* greys out everything in the player card of a forfeited player */
 .forfeited * {
     filter: grayscale(1);
     color: rgba(0, 0, 0, 0.75);
@@ -598,13 +604,13 @@ aside {
     gap: 0.4rem;
     background-color: #d9b56f;
     transition: transform 0.3s linear;
-    padding: 0.2rem 0.2rem 0.2rem 7%;
+    padding: 0.2rem 0.2rem 0.2rem 5%;
     margin-top: 0.5rem;
     width: 98%;
     position: relative;
     /* This prevents the padding from increasing the box size */
     box-sizing: border-box;
-    height: 10.5rem;
+    height: 9rem;
 }
 
 .player-card.current-player::after {

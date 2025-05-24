@@ -107,12 +107,12 @@ function setCopyGameIdImageColor(color) {
     const $copyButton = document.querySelector("#copy-game-id-button");
     $copyButton.querySelector("source").setAttribute(
         "srcset",
-        `../assets/images/UI/copyButton/copy_button_${color}.webp`,
+        `../assets/images/UI/copy-button/copy_${color}.webp`,
     );
 
     $copyButton.querySelector("img").setAttribute(
         "src",
-        `../assets/images/fallback/UI/copyButton/copy_button_${color}.png`);
+        `../assets/images/fallback/UI/copy-button/copy_${color}.png`);
 }
 
 function renderGameStartingCountdown(count, $container) {

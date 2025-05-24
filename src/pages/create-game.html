@@ -39,12 +39,12 @@
         <h1>Create game</h1>
         <form method="post" action="#">
             <div>
-                <label for="game-name">Game name:</label>
+                <label class="label-header" for="game-name">Game name</label>
                 <input type="text" id="game-name" placeholder="Alice's game" maxlength="24" spellcheck="false">
             </div>
 
             <div id="visibility-selector-container">
-                <label for="public">Visibility:</label>
+                <label class="label-header" for="public">Visibility</label>
                 <input type="radio" id="public" name="visibility" value="public" checked>
                 <label for="public">public</label>
                 <input type="radio" id="private" name="visibility" value="private">
@@ -52,7 +52,7 @@
             </div>
 
             <div>
-                <label for="two-players">Number of players:</label>
+                <label class="label-header" for="two-players">Number of players</label>
                 <input type="radio" id="two-players" name="players" value="2" checked>
                 <label for="two-players">2</label>
                 <input type="radio" id="three-players" name="players" value="3">

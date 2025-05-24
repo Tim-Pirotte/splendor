@@ -1,5 +1,6 @@
-import { avatars } from "./data.js";
+import { authors, avatars } from "./data.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
+import { copyNode } from "../utils/data-handler.js";
 import { insertImageInto, renderErrorMessage } from "../utils/renderer.js";
 
 function renderAvatarSelectionList() {
@@ -30,6 +31,20 @@ function hideDemoButton(compatible) {
     if(!compatible) document.querySelector("form .form-actions button[value='demo']").classList.add("none");
 }
 
+function renderAuthors() {
+    const $authors = document.querySelector(".authors");
+    const $authorTemplate = document.querySelector("#author-template");
+
+    for (const [author, github] of Object.entries(authors)) {
+        const $author = copyNode($authorTemplate);
+
+        $author.querySelector("span").textContent = author;
+        $author.querySelector("a").href = github;
+
+        $authors.appendChild($author);
+    }
+}
+
 function renderCorrectErrorMessage() {
     if (new URL(window.location.href).searchParams.get("gameId") === null) return;
 
@@ -41,4 +56,4 @@ function renderCorrectErrorMessage() {
     );
 }
 
-export { renderAvatarSelectionList, renderPlayerInfo, hideDemoButton, renderCorrectErrorMessage };
+export { renderAvatarSelectionList, renderPlayerInfo, hideDemoButton, renderAuthors, renderCorrectErrorMessage };
