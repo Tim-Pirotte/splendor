@@ -359,6 +359,10 @@ function addGoldToken() {
     }
 }
 
+function renderMissingTokens() {
+    //const missingTokens = getMissingTokens()
+}
+
 export {
     renderClientPlayer,
     renderSwitchPaymentButtons,
@@ -373,4 +377,5 @@ export {
     renderPlayerProfile,
     renderClientPlayerReserve,
     renderAmountOfSpectators,
+    renderMissingTokens,
 };

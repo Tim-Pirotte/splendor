@@ -1,7 +1,7 @@
 import * as API from "../../api.js";
 import { getActionButton, setActionButtonState } from "../game-status-interface.js";
 import {
-    hideSwitchPaymentButtons,
+    hideSwitchPaymentButtons, renderMissingTokens,
     renderSwitchPaymentButtons,
     renderUpdatedPlayerScore,
     renderUpdatedPlayerTokens,
@@ -37,6 +37,7 @@ function setActionToBuyReserve($card, isValidCardBuy, isValidCardReserve, deckLe
     setReserveButtonData($card, deckLevel);
 
     if (isValidCardBuy) allowToBuy($card);
+    if (!isValidCardBuy && deckLevel === "") renderMissingTokens();
 
     $reserveCardButton.classList.remove("hidden");
 
@@ -129,15 +130,12 @@ function getDefaultPaymentMethod(cost) {
 }
 
 function removeBonusesFromCost(cost, bonuses) {
-    const costWithoutBonuses = { ...cost };
+    const costWithoutBonuses = {};
 
-    for (const tokenType in costWithoutBonuses) {
-        if (costWithoutBonuses[tokenType] >= (bonuses[tokenType] || 0)) {
-            costWithoutBonuses[tokenType] -= bonuses[tokenType] || 0;
-        } else {
-            costWithoutBonuses[tokenType] = 0;
-        }
+    for (const tokenType in cost) {
+        costWithoutBonuses[tokenType] = Math.max(cost[tokenType] - bonuses[tokenType], 0)
     }
+
     return costWithoutBonuses;
 }
 
@@ -145,15 +143,8 @@ function calculateDefaultPayment(cost, tokens) {
     const payment = { "Gold": 0 };
 
     for (const [tokenType, amount] of Object.entries(cost)) {
-        if (!(tokenType in tokens)) {
-            payment[tokenType] = 0;
-            payment["Gold"] += amount;
-        } else if (amount > (tokens[tokenType])) {
-            payment[tokenType] = tokens[tokenType];
-            payment["Gold"] += (amount - tokens[tokenType]);
-        } else {
-            payment[tokenType] = amount;
-        }
+        payment[tokenType] = Math.min(amount, tokens[tokenType]);
+        payment["Gold"] += Math.max(amount - tokens[tokenType], 0);
     }
 
     return payment;
@@ -246,7 +237,6 @@ function setNewPaymentMethod(paymentMethod) {
 export {
     processBuyCardClick,
     allowedToSwitchToken,
-    getPlayerWallet,
     handlePaymentMethodChange,
     removePaidTokens,
     updateCurrentPlayerBonuses,
