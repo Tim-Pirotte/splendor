@@ -20,6 +20,8 @@ import {
 import { removeBackFromCard } from "../renderer/board-renderer.js";
 
 function processReserve(){
+    // This only happens explicitly in reserve since it uses a separate button.
+    // The action button handles this for other actions
     resetCurrentPlayer();
 
     const selectedCardName = getReserveCardButton().dataset.name;
@@ -27,15 +29,17 @@ function processReserve(){
 
     const requestBody = getReserveRequestBody(selectedCardName, cardDeckLevel);
 
-    API.reserveCard(requestBody).then(res => {
-        if (!selectedCardName) {
-            playDeckToReservedAnimation(cardDeckLevel, res["reserve"][res["reserve"].length - 1]);
-        }
-    });
+    API.reserveCard(requestBody).then(res => { checkDeckAnimation(res, selectedCardName, cardDeckLevel) });
 
     addGoldToken();
     endBuyReserveAction();
     startGameStatePolling();
+}
+
+function checkDeckAnimation(res, selectedCardName, cardDeckLevel) {
+    if (!selectedCardName) {
+        playDeckToReservedAnimation(cardDeckLevel, res["reserve"][res["reserve"].length - 1]);
+    }
 }
 
 function getReserveRequestBody(selectedCardName, cardDeckLevel) {
@@ -43,17 +47,9 @@ function getReserveRequestBody(selectedCardName, cardDeckLevel) {
         playCardToReservedAnimation(selectedCardName);
         setAnimationDelayBeforePolling(reserveCardAnimation.duration);
 
-        return {
-            "development": {
-                "name": selectedCardName,
-            },
-        };
+        return { "development": { "name": selectedCardName } };
     } else {
-        return {
-            "development": {
-                "level": parseInt(cardDeckLevel),
-            },
-        };
+        return { "development": { "level": parseInt(cardDeckLevel) } };
     }
 }
 
