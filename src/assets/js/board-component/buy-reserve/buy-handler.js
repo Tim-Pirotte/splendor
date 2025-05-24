@@ -12,7 +12,7 @@ import { sumObjectValues } from "../helper.js";
 import { getClientBonuses, getClientTokens } from "../game-data-handler.js";
 import { binarySearchObjects } from "../../utils/data-handler.js";
 import { endBuyReserveAction, getReserveCardButton, setReserveButtonData } from "./helper.js";
-import { unHighlightTokens } from "../tokens/token-handler.js";
+import { unHighlightBoardTokens } from "../tokens/token-handler.js";
 import { renderCard } from "../renderer/helper.js";
 import { setAnimationDelayBeforePolling, buyCardAnimation } from "../animation-component/data.js";
 import { animateFromTo } from "../animation-component/animation-handler.js";
@@ -46,7 +46,7 @@ function setActionToBuyReserve($card, isValidCardBuy, isValidCardReserve, deckLe
 }
 
 function highlightCard($card) {
-    unHighlightTokens();
+    unHighlightBoardTokens();
     unHighlightCards();
     $card.classList.add("selected-card");
 }
@@ -185,9 +185,7 @@ function getMissingTokens(cost) {
     const missingTokens = {};
 
     for (const tokenType in cost) {
-        if (wallet[tokenType] < cost[tokenType]) {
-            missingTokens[tokenType] = cost[tokenType] - wallet[tokenType];
-        }
+        missingTokens[tokenType] = Math.max(cost[tokenType] - wallet[tokenType], 0);
     }
 
     return missingTokens;

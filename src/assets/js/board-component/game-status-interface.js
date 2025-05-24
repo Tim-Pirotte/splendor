@@ -2,8 +2,9 @@ import { startGameStatePolling } from "./game-data-handler.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { ACTION_REGISTRY } from "./action-registry.js";
 import { getReserveCardButton } from "./buy-reserve/helper.js";
-import { unHighlightTokens } from "./tokens/token-handler.js";
+import { unHighlightBoardTokens } from "./tokens/token-handler.js";
 import { deselectCard } from "./buy-reserve/select.js";
+import {removeAllMissingTokenHighlights} from "./renderer/current-player-renderer.js";
 
 function isCurrentlyPlaying() {
     const playerName = loadFromStorage("playerName");
@@ -62,7 +63,8 @@ function resetCurrentPlayer() {
 
 function deselectAll() {
     clearDatasetAttributes(getReserveCardButton());
-    unHighlightTokens();
+    unHighlightBoardTokens();
+    removeAllMissingTokenHighlights();
     deselectCard();
     getReserveCardButton().classList.add("hidden");
     setActionButtonState("skip turn", "skipTurn", {}, true);

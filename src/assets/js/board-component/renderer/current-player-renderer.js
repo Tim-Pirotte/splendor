@@ -295,17 +295,20 @@ function renderSwitchPayment($tokenSwitchContainer, currentPayment, defaultPayme
     }
 
     if (Object.keys(cost).includes(tokenType) || (tokenType === "Gold" && tokensInWallet["Gold"] > 0)) {
-        renderAmountOfTokenSelected($tokenContainer, currentPayment[tokenType]);
+        renderAmountOfTokenSelected($tokenContainer, currentPayment[tokenType], false);
     }
 }
 
-function renderAmountOfTokenSelected($tokenContainer, amount) {
+function renderAmountOfTokenSelected($tokenContainer, amount, showsMissingTokens) {
     if (amount <= 0) return;
 
     const $amountToTake = $tokenContainer.querySelector(".amount span");
-    $amountToTake.textContent = ` - ${amount}`;
+    $amountToTake.textContent = ` ${showsMissingTokens ? "+" : "-"} ${amount}`;
     $amountToTake.classList.remove("none");
-    $tokenContainer.querySelector(".amount").classList.add("pulsing-text");
+
+    const $amount = $tokenContainer.querySelector(".amount");
+    $amount.classList.add("pulsing-text");
+    $amount.classList.toggle("red", showsMissingTokens);
 }
 
 function renderUpdatedPlayerTokens(bonus) {
@@ -362,6 +365,15 @@ function addGoldToken() {
 function renderMissingTokens($card) {
     const cost = getCardData($card.dataset.name)["cost"];
     const missingTokens = getMissingTokens(cost);
+    for (const tokenType in missingTokens) {
+        const $boardToken = document.querySelector(`.player-tokens li[data-type=${tokenType}]`);
+        renderAmountOfTokenSelected($boardToken, missingTokens[tokenType], true);
+    }
+}
+
+function removeAllMissingTokenHighlights() {
+    document.querySelectorAll(".player-tokens .red")
+            .forEach($tokenType => $tokenType.classList.remove("red"));
 }
 
 export {
@@ -379,4 +391,5 @@ export {
     renderClientPlayerReserve,
     renderAmountOfSpectators,
     renderMissingTokens,
+    removeAllMissingTokenHighlights,
 };

@@ -241,6 +241,11 @@ main {
     position: relative;
 }
 
+.player-tokens .red {
+    /* TODO find a better color for this */
+    color: #c30023;
+}
+
 /* Cards II */
 .card {
     flex: 0 1 6rem;
