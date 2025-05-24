@@ -44,7 +44,7 @@ function renderCards(market) {
 }
 
 function renderDeck($currentDeck, deck) {
-    for (const [index, $previousCard] of $currentDeck.querySelectorAll(":scope > li").entries()) {
+    for (const [index, $previousCard] of $currentDeck.querySelectorAll(":scope > *").entries()) {
         updateCard(deck, index, $previousCard);
     }
 }
@@ -93,6 +93,8 @@ function animateNewCard(deck, cardData, $previousCard) {
 
     const $newCard = renderCard(cardData);
     const $cardSidesContainer = document.createElement("div");
+
+    $cardSidesContainer.dataset.name = cardData["name"];
 
     $cardSidesContainer.appendChild($newCard);
 

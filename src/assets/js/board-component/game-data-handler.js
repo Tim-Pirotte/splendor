@@ -79,9 +79,9 @@ function setTimer(duration, timePassedForCurrentRound, $timerFill, gameState) {
 
         $timerFill.classList.toggle("time-almost-ends", remaining < SECONDS_WHEN_TURN_ALMOST_ENDS * 1000);
 
-        if (!isCurrentlyPlaying()) return;
+        if (!isCurrentlyPlaying() || sessionStorage.getItem("gameState") !== gameState) return;
 
-        if (remaining > 0 && isCurrentlyPlaying() && sessionStorage.getItem("gameState") === gameState) {
+        if (remaining > 0) {
             requestAnimationFrame(update);
             return;
         }
