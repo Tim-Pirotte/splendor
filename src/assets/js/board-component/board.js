@@ -8,7 +8,7 @@ import { handlePaymentMethodChange } from "./buy-reserve/buy-handler.js";
 import { selectPlayerToken } from "./tokens/discard.js";
 import * as API from "../api.js";
 import { handleKeyPress } from "./action-registry.js";
-import { effects, soundInit } from "../sound-component/sound.js";
+import { effects } from "../sound-component/sound.js";
 
 function init() {
     updateGameData();
@@ -18,7 +18,7 @@ function init() {
 }
 
 function setupSound() {
-    soundInit();
+    //soundInit();
 
     document.querySelectorAll(".button-container button, .forfeit")
         .forEach(button => {

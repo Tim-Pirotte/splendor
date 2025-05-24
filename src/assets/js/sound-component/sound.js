@@ -10,11 +10,13 @@ const sounds = {};
 const background = document.querySelector("audio[autoplay]");
 const soundButton = document.querySelector(".sound-button");
 
-function soundInit() {
-    canAutoplay()
-        .then((allowed) => {
+function init() {
+    const a = canAutoplay();
+    console.log(a);
+    a
+        .then(allowed => {
             let soundEnabled = loadFromStorageWithDefault("sound", false);
-
+            console.log("allowed: ", allowed);
             /*
             Only enable sound if user enabled it and autoplay is allowed
             It would be technically possible to play audio when a user clicks a button
@@ -23,8 +25,10 @@ function soundInit() {
             situation. And this would lead to some effects being muted and others not.
              */
             if (allowed && soundEnabled) {
+                console.log("yes");
                 playBackground();
             } else {
+                console.log("no");
                 soundEnabled = false;
             }
 
@@ -40,10 +44,16 @@ function soundInit() {
 
 function canAutoplay() { // check if unmuted audio can be autoplayed
     const audio = new Audio();
-    audio.muted = false;
-
+    audio.addEventListener("play", () => console.log("begun playing"));
+    audio.addEventListener("ended", () => console.log("stop playing"));
+    audio.addEventListener("canplay", () => console.log("canplay"))
+    audio.addEventListener("canplaythrough", () => console.log("canplaythrough"));
+    audio.muted = true;
     return audio.play()
-        .then(() => true)
+        .then((e) => {
+            console.log("play");
+            return true;
+        }).then(() => audio.pause())
         .catch((e) => false);
 }
 
@@ -135,6 +145,6 @@ const effects = {
     },
 };
 
-soundInit();
+init();
 
 export { effects };
