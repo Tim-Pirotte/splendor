@@ -1,7 +1,7 @@
 # Programming project web project group [04]
 
 ## Known bugs
-None to our knowledge.
+None, to our knowledge.
 
 ## Points of interest
 - A multifunctional button to perform in game actions: [game-status-interface.js](src/assets/js/board-component/game-status-interface.js)
