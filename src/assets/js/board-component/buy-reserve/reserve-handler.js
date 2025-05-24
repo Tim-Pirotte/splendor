@@ -29,7 +29,7 @@ function processReserve(){
 
     const requestBody = getReserveRequestBody(selectedCardName, cardDeckLevel);
 
-    API.reserveCard(requestBody).then(res => { checkDeckAnimation(res, selectedCardName, cardDeckLevel) });
+    API.reserveCard(requestBody).then(res => { checkDeckAnimation(res, selectedCardName, cardDeckLevel); });
 
     addGoldToken();
     endBuyReserveAction();
