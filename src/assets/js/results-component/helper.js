@@ -17,7 +17,7 @@ function getSortedResults() {
 
             // This is a fun little Easter egg if you ask me
             if (results.length === 0) {
-                window.open("https://cosmo7.com/", "_blank");
+                window.open("https://cosmo7.com/", "_blank", "noopener");
                 locateToMainMenu();
             }
 
