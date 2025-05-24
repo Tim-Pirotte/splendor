@@ -18,7 +18,7 @@ function copyNode($node) {
     return $node.content.firstElementChild.cloneNode(true);
 }
 
-function locateToMainMenu(e) {
+function locateToMainMenu() {
     location.href = "../index.html";
 }
 

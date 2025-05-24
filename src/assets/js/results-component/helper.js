@@ -1,6 +1,7 @@
 import * as API from "../api.js";
 import { sumObjectValues } from "../utils/game-object-handler.js";
 import { GAME_STATE } from "../board-component/state-machine/data.js";
+import {locateToMainMenu} from "../utils/data-handler.js";
 
 function getSortedResults() {
     return API.getGame()
@@ -15,7 +16,10 @@ function getSortedResults() {
                 })).sort((a, b) => compareByPointsThenBonuses(b, a));
 
             // this is a fun little Easter egg if you ask me
-            if (results.length === 0) window.open(" https://cosmo7.com/");
+            if (results.length === 0) {
+                window.open(" https://cosmo7.com/");
+                locateToMainMenu();
+            }
 
             addPositionToPlayers(results);
 

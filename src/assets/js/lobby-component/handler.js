@@ -5,7 +5,7 @@ import {
     renderGameStartingCountdown,
     renderLobbyPlayers,
     renderPlayerCount,
-    setCopyGameIdImageColor,
+    setShareLinkButtonColor,
 } from "./renderer.js";
 import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { locateToMainMenu } from "../utils/data-handler.js";
@@ -40,9 +40,9 @@ function loadLobbyInformation(startedByPolling) {
 }
 
 function copySharingLink() {
-    setCopyGameIdImageColor("red");
+    setShareLinkButtonColor("red");
     navigator.clipboard.writeText(getSharingLink());
-    setTimeout(setCopyGameIdImageColor, COPY_BUTTON_REMOVE_FEEDBACK_DELAY, "white");
+    setTimeout(setShareLinkButtonColor, COPY_BUTTON_REMOVE_FEEDBACK_DELAY, "black");
 }
 
 function hideIncompatibleElements() {
