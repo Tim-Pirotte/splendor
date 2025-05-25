@@ -118,6 +118,7 @@ const effects = {
     playClick() {
         playEffect("button-press", false, 1.0);
     },
+
     playWin() {
         playEffect("win", false, 1.0);
     },
@@ -136,6 +137,10 @@ const effects = {
 
     playLose(){
         playEffect("lose", false, 1.0);
+    },
+
+    playCountDown() {
+        playEffect("count-down", false, 0.5);
     },
 };
 
