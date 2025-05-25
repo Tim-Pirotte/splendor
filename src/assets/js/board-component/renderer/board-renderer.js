@@ -147,11 +147,27 @@ function getMaxTokens(playerLength, tokenType) {
 
 function renderBoardTokens(unclaimedTokens, playerLength) {
     const $boardTokensContainer = document.querySelector(".board-tokens");
-    safeEmptyContainer($boardTokensContainer);
+
+    const gems = GEMS.toReversed();
 
     const $numberedItemTemplate = getNumberedItemTemplate();
 
-    for (const token of GEMS.toReversed()) {
+    if ($boardTokensContainer.children.length === getAmountOfTemplateTags($boardTokensContainer)) {
+        renderInitialTokens(gems, $boardTokensContainer, $numberedItemTemplate, unclaimedTokens, playerLength);
+        return;
+    }
+
+    for (const [index, $token] of $boardTokensContainer.querySelectorAll(":scope > *").entries()) {
+        const tokenType = gems[index];
+
+        if ($token.dataset.amount !== unclaimedTokens[tokenType]) effects.playTokens();
+
+        $token.replaceWith(renderBoardToken($numberedItemTemplate, tokenType, unclaimedTokens, playerLength));
+    }
+}
+
+function renderInitialTokens(tokens, $boardTokensContainer, $numberedItemTemplate, unclaimedTokens, playerLength) {
+    for (const token of tokens) {
         $boardTokensContainer.appendChild(renderBoardToken($numberedItemTemplate, token, unclaimedTokens, playerLength));
     }
 }
