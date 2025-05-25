@@ -1,7 +1,8 @@
 import * as API from "../../api.js";
 import { getActionButton, setActionButtonState } from "../game-status-interface.js";
 import {
-    hideSwitchPaymentButtons, renderMissingTokens,
+    hideSwitchPaymentButtons,
+    renderMissingTokens,
     renderSwitchPaymentButtons,
     renderUpdatedPlayerScore,
     renderUpdatedPlayerTokens,

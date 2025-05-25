@@ -13,8 +13,10 @@ import {
     constructBackground,
 } from "./helper.js";
 import {
-    allowedToSwitchToken, getCardData,
-    getDefaultPaymentMethod, getMissingTokens,
+    allowedToSwitchToken,
+    getCardData,
+    getDefaultPaymentMethod,
+    getMissingTokens,
     removePaidTokens,
     updateCurrentPlayerBonuses,
 } from "../buy-reserve/buy-handler.js";
