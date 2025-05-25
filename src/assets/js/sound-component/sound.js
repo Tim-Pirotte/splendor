@@ -141,7 +141,7 @@ const effects = {
     },
 
     playCountDown() {
-        playEffect("count-down", false, 0.5);
+        playEffect("count-down", false, 0.2);
     },
 
     playTokens(){
