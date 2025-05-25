@@ -29,6 +29,10 @@ body {
 
 main {
     flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-shadow: rgb(0 0 0 / 57%) 0.2rem 0.2rem 0.3rem;
 }
 
 /* Header styling */
@@ -49,7 +53,7 @@ header {
 
 h1 {
     text-align: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.7rem;
     font-size: 2rem;
 }
 
@@ -73,29 +77,41 @@ form {
     text-align: center;
 }
 
-section {
+section, .join-by-id {
     display: flex;
     flex-flow: column nowrap;
-    padding-top: 1rem;
-    width: 50rem;
-    height: 30rem;
+    padding: 1.5rem 6rem 9rem 8rem;
+    width: 63.9rem;
+    height: 29.9rem;
     text-align: center;
-    margin: 2rem auto 0 auto;
+    margin: 1rem auto 0 auto;
     box-sizing: border-box;
-    background-color: #372b53;
-    border : var(--border-color) solid 0.5rem;
-    outline: var(--outline-color) solid 0.5rem;
+    background-image: url("../images/join_game_background.webp"), url("../images/fallback/join_game_background.png");
+    background-size: contain;
 }
 
-section h2 {
-    margin-bottom: 1.5rem;
-    font-size: 1.5rem;
+div.join-by-id {
+    height: fit-content;
+    padding: 0.5rem;
+    background-image: none;
+    background-color: #752b39;
+    margin-top: 2.5rem;
+    border: 0.38rem solid #542434;
+}
+
+#join-form {
+    display: flex;
+    align-items: center;
+}
+
+select {
+    width: 5rem;
 }
 
 #filter-form {
     display: flex;
     align-items: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
 }
 
 #game-id {
@@ -126,7 +142,7 @@ li {
     flex-flow: row nowrap;
     justify-content: space-around;
     align-items: center;
-    padding: 0.75rem 0;
+    padding: 0.6rem 0;
 }
 
 li:nth-child(even) {

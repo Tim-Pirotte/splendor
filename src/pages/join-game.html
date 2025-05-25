@@ -38,18 +38,12 @@
         </div>
     </header>
     <main>
-        <h1>Join game</h1>
-        <form action="#" id="join-form">
-            <label for="game-id">Game ID:</label>
-            <input type="number" id="game-id" name="game-id-holder" required placeholder="E.g. 123456789">
-            <button type="submit">Join game</button>
-        </form>
         <section>
-            <h2>Available games</h2>
+            <h1>Join game</h1>
             <form id="filter-form" action="#">
-                <label for="game-name">Game name:</label>
+                <label for="game-name">Game name</label>
                 <input type="text" id="game-name" name="game-name-holder" placeholder="E.g. Mobly's game" spellcheck="false">
-                <label for="amount-filter">Filter on amount:</label>
+                <label for="amount-filter">Filter on amount</label>
                 <select id="amount-filter" name="amount-filter">
                     <option value="any">Any</option>
                     <option value="2">2 players</option>
@@ -60,7 +54,7 @@
             </form>
             <ul>
                 <template id="game-template">
-                    <li data-gameState="" data-gameId="">
+                    <li>
                         <h3 class="game-name">...</h3>
                         <p class="amount-of-players"></p>
                         <button type="button"></button>
@@ -68,6 +62,13 @@
                 </template>
             </ul>
         </section>
+        <div class="join-by-id">
+            <form action="#" id="join-form">
+                <label for="game-id">Game ID</label>
+                <input type="number" id="game-id" name="game-id-holder" required placeholder="E.g. 123456789">
+                <button type="submit">Join game</button>
+            </form>
+        </div>
     </main>
     <footer>
         <button type="button" class="sound-button">
