@@ -108,7 +108,8 @@ function playEffect(name, loop, volume) {
 
     if (!effect.loop) effect.currentTime = 0;
     effect.muted = !soundEnabled;
-    effect.play().catch(() => {
+    waitForAudioToLoad(effect).then(() => {
+        effect.play().catch((e) => console.error(e));
     });
 
     return effect;
