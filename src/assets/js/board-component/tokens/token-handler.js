@@ -38,7 +38,7 @@ function deselectToken($selectedToken) {
     $selectedToken.querySelector("p").classList.remove("pulsing-text");
 }
 
-function unHighlightTokens() {
+function unHighlightBoardTokens() {
     document.querySelectorAll(".board-tokens > li").forEach($token => deselectToken($token));
 }
 
@@ -205,4 +205,4 @@ function playShakeAnimation(tokens, factor = 1) {
     }
 }
 
-export { selectToken, processTakeTokensClick, processTakeTwoTokens, unHighlightTokens, playShakeAnimation };
+export { selectToken, processTakeTokensClick, processTakeTwoTokens, unHighlightBoardTokens, playShakeAnimation };

@@ -2,6 +2,7 @@ import * as API from "../../api.js";
 import { getActionButton, setActionButtonState } from "../game-status-interface.js";
 import {
     hideSwitchPaymentButtons,
+    renderMissingTokens,
     renderSwitchPaymentButtons,
     renderUpdatedPlayerScore,
     renderUpdatedPlayerTokens,
@@ -12,7 +13,7 @@ import { sumObjectValues } from "../helper.js";
 import { getClientBonuses, getClientTokens } from "../game-data-handler.js";
 import { binarySearchObjects } from "../../utils/data-handler.js";
 import { endBuyReserveAction, getReserveCardButton, setReserveButtonData } from "./helper.js";
-import { unHighlightTokens } from "../tokens/token-handler.js";
+import { unHighlightBoardTokens } from "../tokens/token-handler.js";
 import { renderCard } from "../renderer/helper.js";
 import { setAnimationDelayBeforePolling, buyCardAnimation } from "../animation-component/data.js";
 import { animateFromTo } from "../animation-component/animation-handler.js";
@@ -38,6 +39,7 @@ function setActionToBuyReserve($card, isValidCardBuy, isValidCardReserve, deckLe
     setReserveButtonData($card, deckLevel);
 
     if (isValidCardBuy) allowToBuy($card);
+    if (!isValidCardBuy && deckLevel === "") renderMissingTokens($card);
 
     $reserveCardButton.classList.remove("hidden");
 
@@ -47,13 +49,15 @@ function setActionToBuyReserve($card, isValidCardBuy, isValidCardReserve, deckLe
 
 function highlightCard($card) {
     effects.playClick();
-    unHighlightTokens();
+
+    unHighlightBoardTokens();
     unHighlightCards();
     $card.classList.add("selected-card");
 }
 
 function unHighlightCards() {
     effects.playClick();
+
     for (const $cardToDeselect of document.querySelectorAll(".selected-card")) {
         $cardToDeselect.classList.remove("selected-card");
     }
@@ -133,15 +137,12 @@ function getDefaultPaymentMethod(cost) {
 }
 
 function removeBonusesFromCost(cost, bonuses) {
-    const costWithoutBonuses = { ...cost };
+    const costWithoutBonuses = {};
 
-    for (const tokenType in costWithoutBonuses) {
-        if (costWithoutBonuses[tokenType] >= (bonuses[tokenType] || 0)) {
-            costWithoutBonuses[tokenType] -= bonuses[tokenType] || 0;
-        } else {
-            costWithoutBonuses[tokenType] = 0;
-        }
+    for (const tokenType in cost) {
+        costWithoutBonuses[tokenType] = Math.max(cost[tokenType] - bonuses[tokenType], 0);
     }
+
     return costWithoutBonuses;
 }
 
@@ -149,15 +150,8 @@ function calculateDefaultPayment(cost, tokens) {
     const payment = { "Gold": 0 };
 
     for (const [tokenType, amount] of Object.entries(cost)) {
-        if (!(tokenType in tokens)) {
-            payment[tokenType] = 0;
-            payment["Gold"] += amount;
-        } else if (amount > (tokens[tokenType])) {
-            payment[tokenType] = tokens[tokenType];
-            payment["Gold"] += (amount - tokens[tokenType]);
-        } else {
-            payment[tokenType] = amount;
-        }
+        payment[tokenType] = Math.min(amount, tokens[tokenType]);
+        payment["Gold"] += Math.max(amount - tokens[tokenType], 0);
     }
 
     return payment;
@@ -191,6 +185,17 @@ function handlePaymentMethodChange(e) {
             updatePaymentMethod(tokenType, cost);
         }
     }
+}
+
+function getMissingTokens(cost) {
+    const wallet = getPlayerWallet();
+    const missingTokens = {};
+
+    for (const tokenType in cost) {
+        missingTokens[tokenType] = Math.max(cost[tokenType] - wallet[tokenType], 0);
+    }
+
+    return missingTokens;
 }
 
 function resetPayment(cost) {
@@ -250,7 +255,6 @@ function setNewPaymentMethod(paymentMethod) {
 export {
     processBuyCardClick,
     allowedToSwitchToken,
-    getPlayerWallet,
     handlePaymentMethodChange,
     removePaidTokens,
     updateCurrentPlayerBonuses,
@@ -260,5 +264,6 @@ export {
     getCard,
     highlightCard,
     setActionToBuyReserve,
-    allowToBuy,
+    getMissingTokens,
+    getCardData,
 };

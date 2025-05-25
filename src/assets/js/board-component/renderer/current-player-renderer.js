@@ -14,7 +14,9 @@ import {
 } from "./helper.js";
 import {
     allowedToSwitchToken,
+    getCardData,
     getDefaultPaymentMethod,
+    getMissingTokens,
     removePaidTokens,
     updateCurrentPlayerBonuses,
 } from "../buy-reserve/buy-handler.js";
@@ -296,17 +298,25 @@ function renderSwitchPayment($tokenSwitchContainer, currentPayment, defaultPayme
     }
 
     if (Object.keys(cost).includes(tokenType) || (tokenType === "Gold" && tokensInWallet["Gold"] > 0)) {
-        renderAmountOfTokenSelected($tokenContainer, currentPayment[tokenType]);
+        renderAmountOfTokenSelectedOrMissing($tokenContainer, currentPayment[tokenType], false);
     }
 }
 
-function renderAmountOfTokenSelected($tokenContainer, amount) {
+function renderAmountOfTokenSelectedOrMissing($tokenContainer, amount, showsMissingTokens) {
     if (amount <= 0) return;
 
     const $amountToTake = $tokenContainer.querySelector(".amount span");
-    $amountToTake.textContent = ` - ${amount}`;
+    $amountToTake.textContent = ` ${showsMissingTokens ? "+" : "-"} ${amount}`;
     $amountToTake.classList.remove("none");
-    $tokenContainer.querySelector(".amount").classList.add("pulsing-text");
+    $amountToTake.classList.toggle("highlighted-number", showsMissingTokens);
+
+    const $amount = $tokenContainer.querySelector(".amount");
+
+    if (showsMissingTokens) {
+        $amountToTake.classList.add("pulsing-text");
+    } else {
+        $amount.classList.add("pulsing-text");
+    }
 }
 
 function renderUpdatedPlayerTokens(bonus) {
@@ -362,6 +372,21 @@ function addGoldToken() {
     }
 }
 
+function renderMissingTokens($card) {
+    const cost = getCardData($card.dataset.name)["cost"];
+    const missingTokens = getMissingTokens(cost);
+
+    for (const tokenType in missingTokens) {
+        const $boardToken = document.querySelector(`.player-tokens li[data-type=${tokenType}]`);
+        renderAmountOfTokenSelectedOrMissing($boardToken, missingTokens[tokenType], true);
+    }
+}
+
+function removeAllMissingTokenHighlights() {
+    document.querySelectorAll(".player-tokens .red")
+        .forEach($tokenType => $tokenType.classList.remove("red"));
+}
+
 export {
     renderClientPlayer,
     renderSwitchPaymentButtons,
@@ -376,4 +401,6 @@ export {
     renderPlayerProfile,
     renderClientPlayerReserve,
     renderAmountOfSpectators,
+    renderMissingTokens,
+    removeAllMissingTokenHighlights,
 };
