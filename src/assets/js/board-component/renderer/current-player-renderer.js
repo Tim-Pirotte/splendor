@@ -295,18 +295,17 @@ function renderSwitchPayment($tokenSwitchContainer, currentPayment, defaultPayme
     }
 
     if (Object.keys(cost).includes(tokenType) || (tokenType === "Gold" && tokensInWallet["Gold"] > 0)) {
-        renderAmountOfTokenSelected($tokenContainer, currentPayment[tokenType], false);
+        renderAmountOfTokenSelectedOrMissing($tokenContainer, currentPayment[tokenType], false);
     }
 }
 
-// TODO find a more suitable name for this function
-function renderAmountOfTokenSelected($tokenContainer, amount, showsMissingTokens) {
+function renderAmountOfTokenSelectedOrMissing($tokenContainer, amount, showsMissingTokens) {
     if (amount <= 0) return;
 
     const $amountToTake = $tokenContainer.querySelector(".amount span");
     $amountToTake.textContent = ` ${showsMissingTokens ? "+" : "-"} ${amount}`;
     $amountToTake.classList.remove("none");
-    $amountToTake.classList.toggle("red", showsMissingTokens);
+    $amountToTake.classList.toggle("highlighted-number", showsMissingTokens);
 
     const $amount = $tokenContainer.querySelector(".amount");
     if (showsMissingTokens) {
@@ -372,7 +371,7 @@ function renderMissingTokens($card) {
     const missingTokens = getMissingTokens(cost);
     for (const tokenType in missingTokens) {
         const $boardToken = document.querySelector(`.player-tokens li[data-type=${tokenType}]`);
-        renderAmountOfTokenSelected($boardToken, missingTokens[tokenType], true);
+        renderAmountOfTokenSelectedOrMissing($boardToken, missingTokens[tokenType], true);
     }
 }
 
