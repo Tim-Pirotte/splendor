@@ -142,7 +142,10 @@ const effects = {
     },
 
     playCountDown() {
-        playEffect("count-down", false, 0.15);
+        // Really Sonar?
+        const countDownSoundDuration = 0.15;
+
+        playEffect("count-down", false, countDownSoundDuration);
     },
 
     playTokens(){
