@@ -30,6 +30,7 @@ import {
     reserveCardFromDeckAnimationFront,
     setAnimationDelayBeforePolling,
 } from "../animation-component/data.js";
+import { effects } from "../../sound-component/sound.js";
 
 function renderCards(market) {
     for (const deck of market) {
@@ -67,6 +68,7 @@ function updateCard(deck, index, $previousCard) {
     }
 
     playCardFadeAnimation($previousCard, deck, cardData);
+    effects.playWoosh();
 }
 
 function playCardFadeAnimation($previousCard, deck, cardData) {
@@ -104,9 +106,11 @@ function animateNewCard(deck, cardData, $previousCard) {
     $cardSidesContainer.appendChild($cardBack);
     // outerHTML makes a copy of the nodes outerHTML attribute so you don't have a reference to the node in the DOM.
     // I am using replaceWith because then I don't have to query the card again to get a new reference.
+
     $previousCard.replaceWith($cardSidesContainer);
     animateFromTo($source, $newCard, reserveCardFromDeckAnimationFront, removeBackFromCard);
     animateFromTo($source, $cardBack, reserveCardFromDeckAnimationBack);
+    effects.playFlip();
 }
 
 function removeBackFromCard($target) {

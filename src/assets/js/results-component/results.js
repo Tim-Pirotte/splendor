@@ -1,10 +1,13 @@
-import { soundInit } from "../sound-component/sound.js";
+import { effects } from "../sound-component/sound.js";
 import { renderResults } from "./renderer.js";
 
 function resultsInit() {
     renderResults();
+    setupSound();
+}
 
-    soundInit();
+function setupSound() {
+    document.querySelector("#return-to-menu").addEventListener("click", effects.playClick);
 }
 
 resultsInit();

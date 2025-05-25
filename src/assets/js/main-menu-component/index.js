@@ -1,14 +1,19 @@
 import { checkCompatibility } from "../server-version-component/server-version.js";
-import { soundInit } from "../sound-component/sound.js";
 import { closeAvatarVisibility, savePlayerInfo, saveUserName, updateSelectedAvatar } from "./handler.js";
-import { hideDemoButton, renderAvatarSelectionList, renderAuthors, renderCorrectErrorMessage, renderPlayerInfo } from "./renderer.js";
+import {
+    hideDemoButton,
+    renderAuthors,
+    renderAvatarSelectionList,
+    renderCorrectErrorMessage,
+    renderPlayerInfo,
+} from "./renderer.js";
+import { effects } from "../sound-component/sound.js";
 
 function init() {
     setupUI();
     setupEventListeners();
     renderAuthors();
-
-    soundInit();
+    setupSound();
 }
 
 function setupUI() {
@@ -19,6 +24,11 @@ function setupUI() {
             hideDemoButton(compatible);
             renderCorrectErrorMessage();
         });
+}
+
+function setupSound() {
+    document.querySelectorAll(".form-actions button, a, #avatar, .avatar-selector section")
+        .forEach(button => button.addEventListener("click", effects.playClick));
 }
 
 function setupEventListeners() {

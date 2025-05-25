@@ -1,98 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="author" content="Niels Clarysse, Alexander Engelrelst, Tristan Joos, Arne Persyn, Tim Pirotte, Niels Ryserhove">
-  <title>Splendor - Card collection</title>
+    <meta charset="UTF-8">
+    <meta name="author"
+          content="Niels Clarysse, Alexander Engelrelst, Tristan Joos, Arne Persyn, Tim Pirotte, Niels Ryserhove">
+    <title>Splendor - Card collection</title>
 
-  <link rel="icon" type="image/png" sizes="64x64" href="../favicon-64x64.png">
+    <link rel="icon" type="image/png" sizes="64x64" href="../favicon-64x64.png">
 
-  <link rel="stylesheet" href="../assets/css/reset.css">
-  <link rel="stylesheet" href="../assets/css/screen.css">
-  <link rel="stylesheet" href="../assets/css/card-collection.css" type="text/css">
+    <link rel="stylesheet" href="../assets/css/reset.css">
+    <link rel="stylesheet" href="../assets/css/screen.css">
+    <link rel="stylesheet" href="../assets/css/card-collection.css" type="text/css">
 
-  <script type="module" src="../assets/js/card-collection-component/card-collection.js"></script>
+    <script type="module" src="../assets/js/card-collection-component/card-collection.js"></script>
 </head>
 <body>
 <noscript>
-  Javascript is required for this experience to work properly. Please enable it or use a modern browser with support.
+    Javascript is required for this experience to work properly. Please enable it or use a modern browser with support.
 </noscript>
 <header>
-  <a href="../index.html">
-    <picture>
-      <source srcset="../assets/images/UI/back_button.webp" type="image/webp">
-      <img src="#" alt="Back to the main menu">
-    </picture>
-  </a>
-  <div class="top">
-    <h1>Card collection</h1>
-    <h2><span class="current-amount">00</span> / <span class="max-amount">100</span></h2>
-  </div>
+    <div class="error-message"></div>
+    <a href="../index.html">
+        <picture>
+            <source srcset="../assets/images/UI/back_button.webp" type="image/webp">
+            <img src="#" alt="Back to the main menu">
+        </picture>
+    </a>
+    <div class="top">
+        <h1>Card collection</h1>
+        <h2><span class="current-amount">00</span> / <span class="max-amount">100</span></h2>
+    </div>
 </header>
 <main>
-  <section id="REGULAR">
-    <h3 class="regular-cards-title">Regular cards</h3>
-    <h4><span class="current-amount">00</span> / <span class="max-amount">15</span></h4>
-    <ul></ul>
-  </section>
-  <section id="MISPRINT">
-    <h3 class="misprints-title">Mi<span class="down">s</span>prin<span class="up">t</span>s</h3>
-    <h4><span class="current-amount">00</span> / <span class="max-amount">75</span></h4>
-    <ul></ul>
-  </section>
-  <section id="GREYSCALE">
-    <h3 class="greyscale-cards-title">Greyscale cards</h3>
-    <h4><span class="current-amount">00</span> / <span class="max-amount">15</span></h4>
-    <ul></ul>
-  </section>
-  <section id="INVERTED">
-    <h3 class="inverted-cards-title">Inverted <span>cards</span></h3>
-    <h4><span class="current-amount">00</span> / <span class="max-amount">15</span></h4>
-    <ul></ul>
-  </section>
-  <section id="GLITCHED">
-    <h3 class="glitched-cards-title">Glitched cards</h3>
-    <h4><span class="current-amount">00</span> / <span class="max-amount">15</span></h4>
-    <ul></ul>
-  </section>
-
-  <template id="image-template">
-    <picture>
-      <source srcset="#" type="image/webp">
-      <img src="#" alt="" title="">
-    </picture>
-  </template>
-
-  <template id="corrupt-data-template">
-    <section class="corrupt-data-message">
-      <h3>A wild corrupt save file appeared!</h3>
-      <h4>What would you like to do?</h4>
-
-      <div class="corrupt-buttons">
-        <button type="button" data-action="deleteData">Delete all card collection data</button>
-        <button type="button" data-action="restoreData">Attempt restoring the data</button>
-      </div>
-
-      <p>Warning: These actions are not reversible!</p>
+    <section id="REGULAR">
+        <h3 class="regular-cards-title">Regular cards</h3>
+        <h4><span class="current-amount">00</span> / <span class="max-amount">15</span></h4>
+        <ul></ul>
     </section>
-  </template>
+    <section id="MISPRINT">
+        <h3 class="misprints-title">Mi<span class="down">s</span>prin<span class="up">t</span>s</h3>
+        <h4><span class="current-amount">00</span> / <span class="max-amount">75</span></h4>
+        <ul></ul>
+    </section>
+    <section id="GREYSCALE">
+        <h3 class="greyscale-cards-title">Greyscale cards</h3>
+        <h4><span class="current-amount">00</span> / <span class="max-amount">15</span></h4>
+        <ul></ul>
+    </section>
+    <section id="INVERTED">
+        <h3 class="inverted-cards-title">Inverted <span>cards</span></h3>
+        <h4><span class="current-amount">00</span> / <span class="max-amount">15</span></h4>
+        <ul></ul>
+    </section>
+    <section id="GLITCHED">
+        <h3 class="glitched-cards-title">Glitched cards</h3>
+        <h4><span class="current-amount">00</span> / <span class="max-amount">15</span></h4>
+        <ul></ul>
+    </section>
 
-  <template id="error-message-template">
-    <p class="error-message">
-      Could not restore the data.<br>
-      Sorry for the inconvenience.<br>
-      (Unless if you are trying to cheat. Then you totally deserve this.)<br>
-      If you think that something is wrong with our systems, feel free to contact us at
-      <a href="mailto:example@example.com" target="_blank">example@example.com</a>.</p>
-  </template>
+    <template id="image-template">
+        <picture>
+            <source srcset="#" type="image/webp">
+            <img src="#" alt="" title="">
+        </picture>
+    </template>
+
+    <template id="corrupt-data-template">
+        <section class="corrupt-data-message">
+            <h3>A wild corrupt save file appeared!</h3>
+            <h4>What would you like to do?</h4>
+
+            <div class="corrupt-buttons">
+                <button type="button" data-action="deleteData">Delete all card collection data</button>
+                <button type="button" data-action="restoreData">Attempt restoring the data</button>
+            </div>
+
+            <p>Warning: These actions are not reversible!</p>
+        </section>
+    </template>
+
+    <template id="error-message-template">
+        <p class="error-message">
+            Could not restore the data.<br>
+            Sorry for the inconvenience.<br>
+            (Unless if you are trying to cheat. Then you totally deserve this.)<br>
+            If you think that something is wrong with our systems, feel free to contact us at
+            <a href="mailto:example@example.com" target="_blank">example@example.com</a>.</p>
+    </template>
 </main>
 <footer>
-  <button type="button" class="sound-button">
-    <picture>
-      <source srcset="../assets/images/UI/sound_off.webp" type="image/webp">
-      <img src="../assets/images/fallback/UI/sound_off.png" title="sound button" alt="sound button">
-    </picture>
-  </button>
+    <button type="button" class="sound-button">
+        <picture>
+            <source srcset="../assets/images/UI/sound_off.webp" type="image/webp">
+            <img src="../assets/images/fallback/UI/sound_off.png" title="sound button" alt="sound button">
+        </picture>
+    </button>
 </footer>
 </body>
 </html>

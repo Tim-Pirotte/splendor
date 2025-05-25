@@ -11,6 +11,7 @@ import { loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { locateToMainMenu } from "../utils/data-handler.js";
 import { checkCompatibility } from "../server-version-component/server-version.js";
 import { getSharingLink } from "./helper.js";
+import { effects } from "../sound-component/sound.js";
 
 function loadLobbyInformation(startedByPolling) {
     if (!loadFromStorage("gameId")) {
@@ -31,7 +32,7 @@ function loadLobbyInformation(startedByPolling) {
                 $countdownContainer.classList.add("starting-countdown");
 
                 document.querySelector("ul").insertAdjacentElement("beforeend", $countdownContainer);
-
+                effects.playCountDown();
                 renderGameStartingCountdown(LOBBY_COUNTDOWN_DURATION, $countdownContainer);
             } else {
                 setTimeout(loadLobbyInformation, IN_GAME_POLLING_TIME_OUT, true);

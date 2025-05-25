@@ -16,6 +16,7 @@ import { unHighlightTokens } from "../tokens/token-handler.js";
 import { renderCard } from "../renderer/helper.js";
 import { setAnimationDelayBeforePolling, buyCardAnimation } from "../animation-component/data.js";
 import { animateFromTo } from "../animation-component/animation-handler.js";
+import { effects } from "../../sound-component/sound.js";
 
 function allowToBuy($card) {
     const cardData = getCardData($card.dataset.name);
@@ -45,12 +46,14 @@ function setActionToBuyReserve($card, isValidCardBuy, isValidCardReserve, deckLe
 }
 
 function highlightCard($card) {
+    effects.playClick();
     unHighlightTokens();
     unHighlightCards();
     $card.classList.add("selected-card");
 }
 
 function unHighlightCards() {
+    effects.playClick();
     for (const $cardToDeselect of document.querySelectorAll(".selected-card")) {
         $cardToDeselect.classList.remove("selected-card");
     }
@@ -99,6 +102,7 @@ function processBuyCardClick() {
     endBuyReserveAction();
 
     playBuyCardAnimation(cardData);
+    effects.playWoosh();
 
     API.buyCard({ development: { name: cardData["name"] }, payment: getCurrentPaymentMethod() });
 }
