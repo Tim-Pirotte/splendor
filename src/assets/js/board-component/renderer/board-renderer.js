@@ -214,7 +214,7 @@ function renderNobles(unclaimedNobles) {
             setAnimationDelayBeforePolling(getAnimationDelayBeforePolling()  + 1000);
             setTimeout(() => $noble.outerHTML = "", 1000);
         } else {
-            $noble.classList.toggle("selectable-noble", validNobelPick() && canSelectNoble($noble.dataset.name))
+            $noble.classList.toggle("selectable-noble", validNobelPick() && canSelectNoble($noble.dataset.name));
             index++;
         }
     }
