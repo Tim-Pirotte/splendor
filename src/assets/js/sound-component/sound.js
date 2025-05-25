@@ -6,7 +6,6 @@ import {
 } from "../data-connector/local-storage-abstractor.js";
 import { setSoundButtonImgSource } from "./renderer.js";
 import { renderErrorMessage } from "../utils/renderer.js";
-import {getRandomNumber} from "../results-component/helper.js";
 
 const sounds = {};
 const background = document.querySelector("audio[autoplay]");
@@ -133,7 +132,9 @@ const effects = {
     },
 
     playFlip() {
-        setTimeout(() => playEffect("flip", false, 1.0), 500);
+        const flipSoundTimeOut = 500;
+
+        setTimeout(() => playEffect("flip", false, 1.0), flipSoundTimeOut);
     },
 
     playLose(){

@@ -8,7 +8,6 @@ None, to our knowledge.
 - A centralized way to communicate with the server: [api.js](src/assets/js/api.js)
 - A state machine to properly control the flow of the game: [state-machine.js](src/assets/js/board-component/state-machine/state-machine.js)
 
-
 - A sharing link to easily share the game with friends: [handler.js](src/assets/js/lobby-component/handler.js)
 - A small animation library to add complex FLIP animations: [animation-handler.js](src/assets/js/board-component/animation-component/animation-handler.js)
 - A mini template language to inject variables and functions into animations: [template-renderer.js](src/assets/js/board-component/animation-component/template-renderer.js)
@@ -17,4 +16,6 @@ None, to our knowledge.
 - A way for players to collect cards that are saved in a tree structure to save on memory: [card-collection.js](src/assets/js/card-collection-component/card-collection.js)
 - A sound effects system: [sound.js](src/assets/js/sound-component/sound.js)
 
-All art is custom-made.
+All art is custom-made (With strong references to material on the internet).
+
+We have also configured ESLint for the project to keep the style of the codebase consistent: [eslint.config.mjs](eslint.config.mjs)

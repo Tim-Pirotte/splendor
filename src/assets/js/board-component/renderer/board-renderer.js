@@ -15,7 +15,6 @@ import {
     getNumberedItemTemplate,
     renderCard,
     renderEmptySpace,
-    safeEmptyContainer,
 } from "./helper.js";
 import { getUnclaimedTokens, sumObjectValues } from "../helper.js";
 import { copyNode, getAmountOfTemplateTags } from "../../utils/data-handler.js";
