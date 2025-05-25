@@ -38,8 +38,7 @@ body::before {
 
 /* Winner image */
 header {
-    margin-top: 3rem;
-    margin-bottom: 2rem;
+    margin: 1rem 0;
 }
 
 h1 {
