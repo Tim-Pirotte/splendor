@@ -39,7 +39,7 @@ function canAutoplay() { // check if unmuted audio can be autoplayed
     audio.muted = true;
 
     return audio.play()
-        .then((e) => true)
+        .then(() => true)
         .catch(() => false);
 }
 
