@@ -110,6 +110,7 @@ function animateNewCard(deck, cardData, $previousCard) {
     $previousCard.replaceWith($cardSidesContainer);
     animateFromTo($source, $newCard, reserveCardFromDeckAnimationFront, removeBackFromCard);
     animateFromTo($source, $cardBack, reserveCardFromDeckAnimationBack);
+
     effects.playFlip();
 }
 

@@ -83,6 +83,8 @@ function playDeckToReservedAnimation(deckLevel, cardData) {
 
     animateFromTo($source, $card, reserveCardFromDeckAnimationFront, removeBackFromCard);
     animateFromTo($source, $cardBack, reserveCardFromDeckAnimationBack);
+
+    effects.playFlip();
 }
 
 function selectDeckForReserving(e) {
