@@ -3,6 +3,7 @@ import * as API from "../../api.js";
 import { deselectAll, getActionButton, setActionButtonState } from "../game-status-interface.js";
 import { validTokenTake } from "../state-machine/valid-action-checker.js";
 import { getCurrentAction, reflowCSS } from "../helper.js";
+import { effects } from "../../sound-component/sound.js";
 
 function clickedOnToken(target) {
     return target.tagName.toLowerCase() === "li";
@@ -128,6 +129,8 @@ function selectToken(e) {
 
     if ($selectedToken.dataset.amount < 1) return;
 
+    effects.playClick();
+
     const $actionButton = getActionButton();
 
     if (!stackExists($actionButton)) createStack($actionButton);
@@ -170,7 +173,7 @@ function processTakeTokensClick() {
     const requestBody = setTokensTo(stackPointer, $actionButton, 1);
 
     playShakeAnimation(requestBody["take"]);
-
+    effects.playTokens();
     API.takeTokens(requestBody);
 }
 
@@ -181,7 +184,7 @@ function processTakeTwoTokens() {
     const requestBody = setTokensTo(stackPointer, $actionButton, 2);
 
     playShakeAnimation(requestBody["take"]);
-
+    effects.playTokens();
     API.takeTokens(requestBody);
 }
 

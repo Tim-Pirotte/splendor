@@ -25,6 +25,7 @@
                 <img src="./../assets/images/fallback/UI/back_button.png" alt="back arrow" title="back arrow">
             </picture>
         </a>
+        <div class="error-message"></div>
         <div id="player-information">
             <h2 id="player-name">playerName</h2>
             <template id="image-template">
@@ -36,33 +37,35 @@
         </div>
     </header>
     <main>
-        <h1>Create game</h1>
-        <form method="post" action="#">
-            <div>
-                <label class="label-header" for="game-name">Game name</label>
-                <input type="text" id="game-name" placeholder="Alice's game" maxlength="24" spellcheck="false">
-            </div>
+        <div>
+            <h1>Create game</h1>
+            <form method="post" action="#">
+                <div>
+                    <label class="label-header" for="game-name">Game name</label>
+                    <input type="text" id="game-name" placeholder="Alice's game" maxlength="24" spellcheck="false">
+                </div>
 
-            <div id="visibility-selector-container">
-                <label class="label-header" for="public">Visibility</label>
-                <input type="radio" id="public" name="visibility" value="public" checked>
-                <label for="public">public</label>
-                <input type="radio" id="private" name="visibility" value="private">
-                <label for="private">private</label>
-            </div>
+                <div id="visibility-selector-container">
+                    <label class="label-header" for="public">Visibility</label>
+                    <input type="radio" id="public" name="visibility" value="public" checked>
+                    <label for="public">public</label>
+                    <input type="radio" id="private" name="visibility" value="private">
+                    <label for="private">private</label>
+                </div>
 
-            <div>
-                <label class="label-header" for="two-players">Number of players</label>
-                <input type="radio" id="two-players" name="players" value="2" checked>
-                <label for="two-players">2</label>
-                <input type="radio" id="three-players" name="players" value="3">
-                <label for="three-players">3</label>
-                <input type="radio" id="four-players" name="players" value="4">
-                <label for="four-players">4</label>
-            </div>
+                <div>
+                    <label class="label-header" for="two-players">Number of players</label>
+                    <input type="radio" id="two-players" name="players" value="2" checked>
+                    <label for="two-players">2</label>
+                    <input type="radio" id="three-players" name="players" value="3">
+                    <label for="three-players">3</label>
+                    <input type="radio" id="four-players" name="players" value="4">
+                    <label for="four-players">4</label>
+                </div>
 
-            <button type="submit">Create game</button>
-        </form>
+                <button type="submit">Create game</button>
+            </form>
+        </div>
     </main>
     <footer>
         <button type="button" class="sound-button">

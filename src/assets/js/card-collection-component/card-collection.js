@@ -1,8 +1,4 @@
-import {
-    renderCannotRestoreMessage,
-    renderCardCollection,
-    renderCorruptDataMessage,
-} from "./renderer.js";
+import { renderCannotRestoreMessage, renderCardCollection, renderCorruptDataMessage } from "./renderer.js";
 import { hashToNumber } from "../board-component/card-collection-component/card-collection.js";
 import { hashDigest } from "../utils/crypto.js";
 import { CHANCE_CATEGORIES, CHANCES, ILLUSTRATIONS } from "./data.js";
@@ -10,7 +6,7 @@ import { getChanceCategory } from "../board-component/renderer/helper.js";
 import { TOKEN_MAPPER } from "../board-component/config.js";
 import { deleteFromStorage, loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { convertTreeToArray, removeFromTree, unpackMisprintObjects } from "./helper.js";
-import { soundInit } from "../sound-component/sound.js";
+import "../sound-component/sound.js";
 
 function init() {
     document.querySelector("main").addEventListener("click", handleCorruptButtonClick);
@@ -21,8 +17,6 @@ function init() {
         console.error(err);
         renderCorruptDataMessage();
     }
-
-    soundInit();
 }
 
 init();

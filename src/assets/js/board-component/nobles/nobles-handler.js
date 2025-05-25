@@ -2,6 +2,7 @@ import { NOBLES } from "../data.js";
 import * as API from "../../api.js";
 import { getActionButton, setActionButtonState } from "../game-status-interface.js";
 import { binarySearchObjects } from "../../utils/data-handler.js";
+import { effects } from "../../sound-component/sound.js";
 
 function selectNoble(e) {
     const $selectedNoble = e.target.closest("li");
@@ -40,6 +41,7 @@ function getPlayerBonuses() {
 }
 
 function setNobleHighlight($nobleToSelect) {
+    effects.playClick();
     for (const $noble of document.querySelectorAll(".nobles > li")) {
         $noble.classList.toggle("selected-noble", $noble === $nobleToSelect);
     }

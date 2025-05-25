@@ -9,6 +9,7 @@ import {
 import { formatNumber } from "../board-component/renderer/helper.js";
 import { insertImageInto } from "../utils/renderer.js";
 import { copyNode, locateToMainMenu } from "../utils/data-handler.js";
+import { effects } from "../sound-component/sound.js";
 
 function renderResultMessage(isWinner) {
     const $message = copyNode(document.querySelector("#result-message-template"));
@@ -29,6 +30,7 @@ function renderResults() {
             if (player.name === playerName) {
                 renderResultMessage(player.isWinner);
                 renderResultAnimation(player.isWinner);
+                playSound(player.isWinner);
             }
         }
         renderResultTable(gameResults);
@@ -72,6 +74,14 @@ function renderOneAnimation() {
     document.querySelector("body").appendChild($animationDiv);
 
     setTimeout(() => $animationDiv.remove(), TIMEOUT_BEFORE_ANIMATED_IMAGE_DELETION);
+}
+
+function playSound(isWinner) {
+    if (isWinner) {
+        effects.playWin();
+    } else {
+        effects.playLose();
+    }
 }
 
 export { renderResults };

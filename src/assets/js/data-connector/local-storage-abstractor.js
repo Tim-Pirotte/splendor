@@ -18,4 +18,9 @@ function loadFromStorage(key) {
     return null;
 }
 
-export { saveToStorage, loadFromStorage, deleteFromStorage };
+function loadFromStorageWithDefault(key, defaultValue){
+    const value = loadFromStorage(key);
+    return value === null ? defaultValue : value;
+}
+
+export { saveToStorage, loadFromStorage, loadFromStorageWithDefault, deleteFromStorage };

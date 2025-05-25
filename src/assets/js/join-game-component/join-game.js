@@ -3,7 +3,7 @@ import { joinGame, joinGameByIdParameter, joinGameUsingUsersInputId } from "./ha
 import { locateToMainMenu } from "../utils/data-handler.js";
 import { renderPlayerInfo, initGameRendering } from "./renderer.js";
 import { renderDefaultGameNamePlaceholder } from "../utils/renderer.js";
-import { soundInit } from "../sound-component/sound.js";
+import "../sound-component/sound.js";
 
 function joinInit() {
     const gameIdParameter = new URL(window.location.href).searchParams.get("gameId");
@@ -13,7 +13,6 @@ function joinInit() {
     } else {
         setupUI();
         setupEventListeners();
-        soundInit();
     }
 }
 
