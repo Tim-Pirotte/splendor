@@ -6,6 +6,7 @@ import {
 } from "../data-connector/local-storage-abstractor.js";
 import { setSoundButtonImgSource } from "./renderer.js";
 import { renderErrorMessage } from "../utils/renderer.js";
+import {getRandomNumber} from "../results-component/helper.js";
 
 const sounds = {};
 const background = document.querySelector("audio[autoplay]");
@@ -144,7 +145,7 @@ const effects = {
     },
 
     playTokens(){
-        playEffect("tokens", false, 0.5);
+        playEffect("tokens", false, 0.1);
     },
 };
 

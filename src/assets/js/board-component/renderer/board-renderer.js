@@ -157,13 +157,17 @@ function renderBoardTokens(unclaimedTokens, playerLength) {
         return;
     }
 
+    let playTokenSound = false;
+
     for (const [index, $token] of $boardTokensContainer.querySelectorAll(":scope > *").entries()) {
         const tokenType = gems[index];
 
-        if ($token.dataset.amount !== unclaimedTokens[tokenType]) effects.playTokens();
+        if (parseInt($token.dataset.amount) !== unclaimedTokens[tokenType]) playTokenSound = true;
 
         $token.replaceWith(renderBoardToken($numberedItemTemplate, tokenType, unclaimedTokens, playerLength));
     }
+
+    if (playTokenSound) effects.playTokens();
 }
 
 function renderInitialTokens(tokens, $boardTokensContainer, $numberedItemTemplate, unclaimedTokens, playerLength) {
