@@ -58,14 +58,12 @@ header > a img:hover {
 
 /* create game form styling */
 main {
-    padding: 1rem 1rem 0;
-    width: 40rem;
-    margin: auto;
+    padding: 1.5rem 6rem 9rem 8rem;
+    width: 63.9rem;
+    height: 29.9rem;
     box-sizing: border-box;
     background-image: url("../images/join_game_background.webp"), url("../images/fallback/join_game_background.png");
-    border : var(--border-color) solid 0.25rem;
-    outline: var(--outline-color) solid 0.25rem;
-    box-shadow: rgb(0 0 0 / 57%) 0.2rem 0.2rem 0.3rem;
+    background-size: contain;
 }
 
 p {
