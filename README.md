@@ -1,34 +1,19 @@
 # Programming project web project group [04]
 
-## Instructions for local CI testing
-You can **run** the validator and Sonar with CSS and JS rules **locally.** There is no need to push to the server to check if you are compliant with our rules. In the interest of sparing the server, please result to local testing as often as possible.
+## Known bugs
+None, to our knowledge.
 
-If everyone will push to test, the remote server will not last.
+## Points of interest
+- A multifunctional button to perform in game actions: [game-status-interface.js](src/assets/js/board-component/game-status-interface.js)
+- A centralized way to communicate with the server: [api.js](src/assets/js/api.js)
+- A state machine to properly control the flow of the game: [state-machine.js](src/assets/js/board-component/state-machine/state-machine.js)
 
-Please consult the Sonar guide [here](https://gitlab.ti.howest.be/ti/2024-2025/s2/programming-project/documentation/splendor-documentation/-/blob/main/sonar-guide/Sonar%20guide.md?ref_type=heads)
 
-## Client
-In order to help you along with planning, we've provided a client roadmap [https://gitlab.ti.howest.be/ti/2024-2025/s2/programming-project/documentation/splendor-documentation/-/blob/main/roadmaps/client-roadmap.md](https://gitlab.ti.howest.be/ti/2024-2025/s2/programming-project/documentation/splendor-documentation/-/blob/main/roadmaps/client-roadmap.md?ref_type=heads)
+- A sharing link to easily share the game with friends: [handler.js](src/assets/js/lobby-component/handler.js)
+- A small animation library to add complex FLIP animations: [animation-handler.js](src/assets/js/board-component/animation-component/animation-handler.js)
+- A mini template language to inject variables and functions into animations: [template-renderer.js](src/assets/js/board-component/animation-component/template-renderer.js)
+- A synchronous SHA256 implementation: [crypto.js](src/assets/js/utils/crypto.js)
+  - Pull request to fix an issue with the source: [Pull request](https://github.com/liangtengyu/wx_gzh_article/pull/6)
+- A way for players to collect cards that are saved in a tree structure to save on memory: [card-collection.js](src/assets/js/card-collection-component/card-collection.js)
 
-## File structure
-All files should be placed in the `src` directory.
-
-**Do not** change the file structure of the folders outside of that directory. Within, you may do as you please.
-
-## API URL
-[https://project-1.ti.howest.be/2024-2025/splendor/api/](https://project-1.ti.howest.be/2024-2025/splendor/api/)
-
-## Default files
-
-### CSS
-The `reset.css` has already been supplied, but it's up to you and your team to add the rest of the styles. Please feel free to split those up in multiple files. We'll handle efficient delivery for products in production in later semesters.
-
-### JavaScript
-A demonstration for connecting with the API has already been set up. We urge you to separate your JS files as **atomically as possible**. Add folders as you please. Make use of javascript modules (as seen in the Web Development Essentials classes).
-
-## Extra tips for CSS Grid
-In case you get stuck or confused
-https://learncssgrid.com/
-
-And for your convenience, yet use with caution
-https://grid.layoutit.com/ 
+All art is custom-made.

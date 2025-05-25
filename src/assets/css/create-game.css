@@ -58,15 +58,19 @@ header > a img:hover {
 
 /* create game form styling */
 main {
-    padding: 1rem 1rem 0;
-    width: 40rem;
-    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+main > div {
+    padding: 1.5rem 6rem 9rem 8rem;
+    width: 63.9rem;
+    height: 29.9rem;
     box-sizing: border-box;
-    background-color: #372b53;
-    border : var(--border-color) solid 0.5rem;
-    outline: var(--outline-color) solid 0.5rem;
-    background-size: 100% 100%;
-    box-shadow: rgb(0 0 0 / 57%) 0.2rem 0.2rem 0.3rem;
+    background-image: url("../images/join_game_background.webp"), url("../images/fallback/join_game_background.png");
+    background-size: contain;
 }
 
 p {
@@ -75,7 +79,7 @@ p {
 
 h1 {
     text-align: center;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
 }
 
 form {
@@ -89,7 +93,7 @@ label {
 }
 
 input {
-    margin: 2rem 0;
+    margin: 1.25rem 0;
 }
 
 .label-header {
