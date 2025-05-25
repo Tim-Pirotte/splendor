@@ -103,16 +103,16 @@ function renderPlayerCount(gameObject) {
     document.querySelector("#player-count").textContent = `${getCurrentUsersAmount(gameObject)} / ${getMaxUsersAmount(gameObject)}`;
 }
 
-function setCopyGameIdImageColor(color) {
-    const $copyButton = document.querySelector("#copy-game-id-button");
+function setShareLinkButtonColor(color) {
+    const $copyButton = document.querySelector("#share-link");
     $copyButton.querySelector("source").setAttribute(
         "srcset",
-        `../assets/images/UI/copyButton/copy_button_${color}.webp`,
+        `../assets/images/UI/share-button/share_${color}.webp`,
     );
 
     $copyButton.querySelector("img").setAttribute(
         "src",
-        `../assets/images/fallback/UI/copyButton/copy_button_${color}.png`);
+        `../assets/images/fallback/UI/share-button/share_${color}.png`);
 }
 
 function renderGameStartingCountdown(count, $container) {
@@ -135,7 +135,7 @@ export {
     renderGameInfo,
     renderPlayersList,
     renderPlayerCount,
-    setCopyGameIdImageColor,
+    setShareLinkButtonColor,
     renderGameStartingCountdown,
     renderPlayerContainers,
     renderLobbyPlayers,

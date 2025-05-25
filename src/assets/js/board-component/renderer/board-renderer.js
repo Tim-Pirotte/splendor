@@ -18,13 +18,14 @@ import {
     safeEmptyContainer,
 } from "./helper.js";
 import { getUnclaimedTokens, sumObjectValues } from "../helper.js";
-import { copyNode } from "../../utils/data-handler.js";
+import { copyNode, getAmountOfTemplateTags } from "../../utils/data-handler.js";
 import { insertImageInto } from "../../utils/renderer.js";
 import { validCardBuy, validNobelPick } from "../state-machine/valid-action-checker.js";
 import { canSelectNoble } from "../nobles/nobles-handler.js";
 import { animateFromTo } from "../animation-component/animation-handler.js";
 import {
     cardMarketFadeAnimation,
+    getAnimationDelayBeforePolling,
     reserveCardFromDeckAnimationBack,
     reserveCardFromDeckAnimationFront,
     setAnimationDelayBeforePolling,
@@ -43,7 +44,7 @@ function renderCards(market) {
 }
 
 function renderDeck($currentDeck, deck) {
-    for (const [index, $previousCard] of $currentDeck.querySelectorAll(":scope > li").entries()) {
+    for (const [index, $previousCard] of $currentDeck.querySelectorAll(":scope > *").entries()) {
         updateCard(deck, index, $previousCard);
     }
 }
@@ -65,10 +66,10 @@ function updateCard(deck, index, $previousCard) {
         return;
     }
 
-    playCardFakeAnimation($previousCard, deck, cardData);
+    playCardFadeAnimation($previousCard, deck, cardData);
 }
 
-function playCardFakeAnimation($previousCard, deck, cardData) {
+function playCardFadeAnimation($previousCard, deck, cardData) {
     setAnimationDelayBeforePolling(
         reserveCardFromDeckAnimationFront.duration + cardMarketFadeAnimation.duration,
     );
@@ -92,8 +93,14 @@ function animateNewCard(deck, cardData, $previousCard) {
 
     const $newCard = renderCard(cardData);
     const $cardSidesContainer = document.createElement("div");
+
+    $cardSidesContainer.dataset.name = cardData["name"];
+
     $cardSidesContainer.appendChild($newCard);
+
     const $cardBack = $source.cloneNode(true);
+    $cardBack.closest("picture").classList.remove("hidden");
+
     $cardSidesContainer.appendChild($cardBack);
     // outerHTML makes a copy of the nodes outerHTML attribute so you don't have a reference to the node in the DOM.
     // I am using replaceWith because then I don't have to query the card again to get a new reference.
@@ -103,7 +110,7 @@ function animateNewCard(deck, cardData, $previousCard) {
 }
 
 function removeBackFromCard($target) {
-    $target.closest("div").outerHTML = $target.outerHTML;
+    $target.closest("div").replaceWith($target);
 }
 
 function getDeck(deck) {
@@ -117,7 +124,9 @@ function setAmountOfCardsInDeck($currentDeck, deck) {
 
 function renderDeckSize($currentDeck, amountOfCardsInDeck) {
     const $hiddenCard = $currentDeck.closest("li").querySelector(":scope > picture img");
+
     $hiddenCard.closest("picture").classList.toggle("hidden", amountOfCardsInDeck === 0);
+
     $hiddenCard.style.transform = `translateY(${-(amountOfCardsInDeck / CARDS_IN_DECK_TO_DECK_HEIGHT_SCALE) + CARDS_IN_DECK_TO_DECK_HEIGHT_OFFSET}rem)`;
 }
 
@@ -167,7 +176,23 @@ function getNobleAlt(costs) {
 
 function renderNobles(unclaimedNobles) {
     const $noblesContainer = document.querySelector(".nobles");
-    addNodesToEmptiedContainer($noblesContainer, unclaimedNobles, renderNoble);
+
+    if ($noblesContainer.children.length === getAmountOfTemplateTags($noblesContainer)) {
+        addNodesToEmptiedContainer($noblesContainer, unclaimedNobles, renderNoble);
+        return;
+    }
+
+    let index = 0;
+
+    for (const $noble of $noblesContainer.querySelectorAll(":scope > li")) {
+        if (!unclaimedNobles[index] ||  $noble.dataset.name !== unclaimedNobles[index]["name"]) {
+            $noble.querySelector("img").classList.add("shrink");
+            setAnimationDelayBeforePolling(getAnimationDelayBeforePolling()  + 1000);
+            setTimeout(() => $noble.outerHTML = "", 1000);
+        } else {
+            index++;
+        }
+    }
 }
 
 function renderNoble(noble) {

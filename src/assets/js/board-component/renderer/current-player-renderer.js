@@ -41,18 +41,21 @@ function renderGameStatusMessage(currentPlayer) {
 
 function renderAmountOfSpectators(spectators, compatible) {
     if (!compatible) {
-        makeSpectatorEyeInvisible();
+        toggleSpectatorsEyeVisibility(false);
         return;
     }
 
-    document.querySelector(".amount-of-spectators").textContent = spectators.filter(
+    const amountOfSpectators = spectators.filter(
         spectator => spectator.pollDelta < TIME_AFTER_SPECTATOR_DOES_NOT_GET_RENDERED,
     ).length;
+
+    document.querySelector(".amount-of-spectators").textContent = amountOfSpectators;
+    toggleSpectatorsEyeVisibility(amountOfSpectators > 0);
 }
 
-function makeSpectatorEyeInvisible() {
-    document.querySelector(".amount-of-spectators").classList.add("hidden");
-    document.querySelector(".spectator-eye-indicator").classList.add("hidden");
+function toggleSpectatorsEyeVisibility(visible) {
+    document.querySelector(".amount-of-spectators").classList.toggle("hidden", !visible);
+    document.querySelector(".spectator-eye-indicator").classList.toggle("hidden", !visible);
 }
 
 function renderPlayerProfile(gameCreatorName, spectators) {
@@ -64,7 +67,7 @@ function renderPlayerProfile(gameCreatorName, spectators) {
 }
 
 function renderAvatar(gameCreatorName) {
-    const avatar = loadFromStorage("avatar");
+    const avatar = loadFromStorage("avatar") || "placeholder";
     const $avatar = document.querySelector("header div.avatar");
 
     if ($avatar.childElementCount > 0) return;
@@ -126,7 +129,7 @@ function renderReservedCards($reserved, reservedCards) {
     const originalReservedAmount = $reserved.children.length;
 
     const sourceBoundingBoxes = getVisibleListItemsBoundingBoxes($reserved);
-    removeBoughtCards($reserved);
+    removeBoughtCards($reserved, reservedCards);
     const targetBoundingBoxes = getVisibleListItemsBoundingBoxes($reserved);
 
     if (originalReservedAmount !== $reserved.children.length) {
@@ -144,9 +147,15 @@ function renderReservedCards($reserved, reservedCards) {
     }
 }
 
-function removeBoughtCards($reserved) {
-    for (const $boughtCard of $reserved.querySelectorAll(".hidden")) {
-        $boughtCard.outerHTML = "";
+function removeBoughtCards($reserved, reservedCards) {
+    let index = 0;
+
+    for (const $reservedCard of $reserved.querySelectorAll(":scope > li")) {
+        if (!reservedCards[index] || $reservedCard.dataset.name !== reservedCards[index]["name"]) {
+            $reservedCard.outerHTML = "";
+        } else {
+            index++;
+        }
     }
 }
 
@@ -356,7 +365,7 @@ function addGoldToken() {
 export {
     renderClientPlayer,
     renderSwitchPaymentButtons,
-    renderClientPlayerTokenCount, 
+    renderClientPlayerTokenCount,
     renderClientPlayerTokens,
     renderUpdatedPlayerTokens,
     renderUpdatedPlayerScore,

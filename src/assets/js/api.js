@@ -31,9 +31,7 @@ function joinGame(gameId, playerName, spectatingEnabled, forfeit) {
 
         if (isCompatible) {
             body = {
-                "avatar": loadFromStorage("avatar").split("-")
-                    .map(word => (word[0].toUpperCase() + word.slice(1)))
-                    .join(""),
+                "avatar": loadFromStorage("avatar"),
                 "spectatingEnabled": spectatingEnabled,
                 "forfeit": forfeit,
             };

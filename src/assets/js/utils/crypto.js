@@ -159,6 +159,7 @@ function compressWords(words, h0, h1, h2, h3, h4, h5, h6, h7) {
         h = g;
         g = f;
         // The tutorial above forgot to add this assigment. There goes an hour of my life trying to figure out what was wrong.
+        // Pull request: https://github.com/liangtengyu/wx_gzh_article/pull/6
         f = e;
         e = (d + temp1) >>> 0;
         d = c;

@@ -33,12 +33,7 @@ function setActionToBuyReserve($card, isValidCardBuy, isValidCardReserve, deckLe
     hideSwitchPaymentButtons();
     highlightCard($card);
 
-    setActionButtonState(
-        "buy",
-        "processBuyCardClick",
-        datasetParameters,
-        true,
-    );
+    setActionButtonState("buy",  "processBuyCardClick", datasetParameters, true);
 
     setReserveButtonData($card, deckLevel);
 
@@ -50,12 +45,6 @@ function setActionToBuyReserve($card, isValidCardBuy, isValidCardReserve, deckLe
     $reserveCardButton.disabled = !isValidCardReserve;
 }
 
-function unHighlightCards() {
-    for (const $cardToDeselect of document.querySelectorAll(".selected-card")) {
-        $cardToDeselect.classList.remove("selected-card");
-    }
-}
-
 function highlightCard($card) {
     effects.playWoosh();
     unHighlightTokens();
@@ -63,47 +52,17 @@ function highlightCard($card) {
     $card.classList.add("selected-card");
 }
 
+function unHighlightCards() {
+    for (const $cardToDeselect of document.querySelectorAll(".selected-card")) {
+        $cardToDeselect.classList.remove("selected-card");
+    }
+}
+
 function canBuy(name) {
     const cost = getCardData(name)["cost"];
     const wallet = getPlayerWallet();
 
     return isWalletHigher(wallet, cost);
-}
-
-function getCard(e) {
-    return e.target.closest(".card");
-}
-
-function processBuyCardClick() {
-    const $actionButton = getActionButton();
-    const cardData = getCardData($actionButton.dataset.name);
-
-    renderUpdatedPlayerTokens(cardData["bonus"]);
-    renderUpdatedPlayerScore(cardData["prestigePoints"]);
-
-    renderUpdatedBoardTokens(JSON.parse(sessionStorage.getItem("paymentMethod")));
-    endBuyReserveAction();
-
-    playBuyCardAnimation(cardData);
-
-    API.buyCard({ development: { name: cardData["name"] }, payment: getCurrentPaymentMethod() });
-}
-
-function playBuyCardAnimation(cardData) {
-    const $source = document.querySelector(`[data-name="${cardData["name"]}"]`);
-    $source.classList.add("hidden");
-
-    const $targetContainer = document.querySelector(`.player-tokens [data-type="${cardData["bonus"]}"]`);
-    setAnimationDelayBeforePolling(buyCardAnimation.duration);
-
-    const $card = renderCard(cardData);
-    $targetContainer.prepend($card);
-
-    animateFromTo($source, $card, buyCardAnimation);
-}
-
-function getCardData(cardName) {
-    return binarySearchObjects(DEVELOPMENT_CARDS, cardName, "name");
 }
 
 function getPlayerWallet() {
@@ -125,6 +84,42 @@ function isWalletHigher(wallet, cost) {
     }
 
     return minimumJokersNeeded <= (wallet["Gold"] || 0);
+}
+
+function getCard(e) {
+    return e.target.closest(".card");
+}
+
+function processBuyCardClick() {
+    const $actionButton = getActionButton();
+    const cardData = getCardData($actionButton.dataset.name);
+
+    renderUpdatedPlayerTokens(cardData["bonus"]);
+    renderUpdatedPlayerScore(cardData["prestigePoints"]);
+
+    renderUpdatedBoardTokens(JSON.parse(sessionStorage.getItem("paymentMethod")));
+    endBuyReserveAction();
+
+    playBuyCardAnimation(cardData);
+
+    API.buyCard({ development: { name: cardData["name"] }, payment: getCurrentPaymentMethod() });
+}
+
+function getCardData(cardName) {
+    return binarySearchObjects(DEVELOPMENT_CARDS, cardName, "name");
+}
+
+function playBuyCardAnimation(cardData) {
+    const $source = document.querySelector(`[data-name="${cardData["name"]}"]`);
+    $source.classList.add("hidden");
+
+    const $targetContainer = document.querySelector(`.player-tokens [data-type="${cardData["bonus"]}"]`);
+    setAnimationDelayBeforePolling(buyCardAnimation.duration);
+
+    const $card = renderCard(cardData);
+    $targetContainer.prepend($card);
+
+    animateFromTo($source, $card, buyCardAnimation);
 }
 
 function getDefaultPaymentMethod(cost) {

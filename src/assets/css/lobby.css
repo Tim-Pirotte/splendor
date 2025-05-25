@@ -1,5 +1,5 @@
 :root {
-    --players-container-width: 15rem;
+    --players-container-width: 17rem;
     --scaleUpAnimation: scaleUpToFullSize 0.5s ease-in-out forwards;
 }
 /* general */
@@ -52,7 +52,6 @@ div {
 main > div {
     justify-content: center;
     align-content: center;
-
 }
 
 /* header */
@@ -65,6 +64,12 @@ header {
 
 header p {
     text-align: left;
+}
+
+header div {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: baseline;
 }
 
 h1 {
@@ -88,13 +93,12 @@ footer {
 }
 
 .leave-button {
-    margin: 1rem auto 2rem;
     display: block;
     width: 7.65rem;
     height: 2.55rem;
     background-size: 100% 100%;
     background-color: transparent;
-    background-image: url("../images/UI/action_button.webp"), url("../images/fallback/UI/action_button.png");
+    background-image: url("../images/UI/leave_button.webp"), url("../images/fallback/UI/leave_button.png");
     color: var(--light-text-color);
     font-size: 0.7rem;
     transition: var(--hover-transition-duration);
@@ -108,6 +112,8 @@ ul {
     position: relative;
     width: var(--players-container-width);
     height: var(--players-container-width);
+    background-image: url("../images/lobby.webp"), url("../images/fallback/lobby.png");
+    background-size: contain;
 }
 
 li {
@@ -132,8 +138,6 @@ li p {
 }
 
 li > picture {
-    width: 2rem;
-    height: 2rem;
     animation: rotateScaleUp 0.5s forwards linear;
 }
 
@@ -142,17 +146,21 @@ li > picture {
 }
 
 .player:nth-of-type(2) {
-    transform: translateX(calc(var(--players-container-width) / 2 - 50%)) translateY(calc(var(--players-container-width) - 50%));
+    transform: translateX(calc(var(--players-container-width) / 2 - 50%)) translateY(calc(var(--players-container-width) - 50% - 2.4rem));
 }
 
 .player:nth-of-type(3) {
-    transform: translateX(calc(var(--players-container-width) - 50%)) translateY(calc(var(--players-container-width) / 2 - 50%));
+    transform: translateX(calc(var(--players-container-width) - 50% - 1.2rem)) translateY(calc(var(--players-container-width) / 2 - 50% - 1rem));
 }
 
 
-
 .player:nth-of-type(4) {
-    transform: translateX(-50%) translateY(calc(var(--players-container-width) / 2 - 50%));
+    transform: translateX(calc(-50% + 1.2rem)) translateY(calc(var(--players-container-width) / 2 - 50% - 1rem));
+}
+
+.player > picture img {
+    margin-top: 0.5rem;
+    width: 3rem;
 }
 
 .starting-countdown {
@@ -162,7 +170,7 @@ li > picture {
     position: absolute;
     text-align: center;
     top: calc(var(--players-container-width) / 2);
-    left: calc(var(--players-container-width) / 2);
+    left: calc(var(--players-container-width) / 2 + 0.4rem);
     transform: translate(-50%, -50%);
     animation: scaleUp linear 1s forwards;
     transform-origin: center;
@@ -174,16 +182,21 @@ li > picture {
     margin-left: 1rem;
 }
 
-/* COPY ID BUTTON */
-#copy-game-id-button img {
-    max-height: 100%;
+.add-bot button img {
+    width: 1rem;
 }
 
-#copy-game-id-button {
-    background-color: transparent;
-    margin-bottom: 1rem;
-    height: 2.5rem;
-    width: 2.5rem;
+.add-bot > picture img {
+    opacity: 0.5;
+}
+
+/* COPY ID BUTTON */
+#share-link:hover {
+    filter: none;
+}
+
+#share-link img {
+    width: 3.25rem;
 }
 
 #joined-players button {
@@ -196,9 +209,16 @@ li > picture {
     animation: var(--scaleUpAnimation);
 }
 
-#joined-players button img {
-    height: 100%;
-    width: 100%;
+select {
+    border: none;
+    outline: none;
+    box-shadow: none;
+    width: 1rem;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    display: inline-block;
+    font-size: 1rem;
+    text-align: center;
 }
 
 #joined-players select {
@@ -237,4 +257,16 @@ li > picture {
         opacity: 1;
         transform: scale(1);
     }
+}
+
+.add-bot div {
+    display: flex;
+    padding: 0.25rem;
+    background: #322b3b;
+    border-radius: 5%;
+}
+
+label {
+    display: inline-block;
+    padding-right: 0.2rem;
 }
