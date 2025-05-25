@@ -142,6 +142,10 @@ const effects = {
     playCountDown() {
         playEffect("count-down", false, 0.5);
     },
+
+    playTokens(){
+        playEffect("tokens", false, 0.5);
+    },
 };
 
 init();

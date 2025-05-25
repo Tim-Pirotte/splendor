@@ -173,7 +173,7 @@ function processTakeTokensClick() {
     const requestBody = setTokensTo(stackPointer, $actionButton, 1);
 
     playShakeAnimation(requestBody["take"]);
-
+    effects.playTokens();
     API.takeTokens(requestBody);
 }
 
@@ -184,7 +184,7 @@ function processTakeTwoTokens() {
     const requestBody = setTokensTo(stackPointer, $actionButton, 2);
 
     playShakeAnimation(requestBody["take"]);
-
+    effects.playTokens();
     API.takeTokens(requestBody);
 }
 
