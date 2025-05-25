@@ -16,48 +16,49 @@
     <script type="module" src="../assets/js/results-component/results.js"></script>
 </head>
 <body>
-    <noscript>
-        Javascript is required for this experience to work properly. Please enable it or use a modern browser with support.
-    </noscript>
-    <header>
-        <template id="result-message-template">
-            <h1>
+<noscript>
+    Javascript is required for this experience to work properly. Please enable it or use a modern browser with support.
+</noscript>
+<header>
+    <div class="error-message"></div>
+    <template id="result-message-template">
+        <h1>
 
-            </h1>
-        </template>
-    </header>
-    <main>
-        <!-- the table-container is needed to give this a set height
-             this way the return to main menu button is always in the same spot
-             giving the table itself a set height results in the table rows being stretched-->
-        <div id="table-container">
-            <table>
-                <thead>
+        </h1>
+    </template>
+</header>
+<main>
+    <!-- the table-container is needed to give this a set height
+         this way the return to main menu button is always in the same spot
+         giving the table itself a set height results in the table rows being stretched-->
+    <div id="table-container">
+        <table>
+            <thead>
+            <tr>
+                <th>Position</th>
+                <th>Name</th>
+                <th>Points</th>
+            </tr>
+            </thead>
+            <tbody>
+            <template id="result-template">
                 <tr>
-                    <th>Position</th>
-                    <th>Name</th>
-                    <th>Points</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
-                </thead>
-                <tbody>
-                <template id="result-template">
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </template>
-                </tbody>
-            </table>
-            <template id="image-template">
-                <picture>
-                    <source srcset="#" type="image/webp">
-                    <img src="#" alt="" title="">
-                </picture>
             </template>
-        </div>
-        <a id="return-to-menu" href="../index.html">Main menu</a>
-    </main>
+            </tbody>
+        </table>
+        <template id="image-template">
+            <picture>
+                <source srcset="#" type="image/webp">
+                <img src="#" alt="" title="">
+            </picture>
+        </template>
+    </div>
+    <a id="return-to-menu" href="../index.html">Main menu</a>
+</main>
 <footer>
     <button type="button" class="sound-button">
         <picture>

@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="Niels Clarysse, Alexander Engelrelst, Tristan Joos, Arne Persyn, Tim Pirotte, Niels Ryserhove">
+    <meta name="author"
+          content="Niels Clarysse, Alexander Engelrelst, Tristan Joos, Arne Persyn, Tim Pirotte, Niels Ryserhove">
     <title>Splendor - Lobby</title>
 
     <link rel="icon" type="image/png" sizes="64x64" href="../favicon-64x64.png">
@@ -15,69 +16,71 @@
     <script type="module" src="../assets/js/lobby-component/lobby.js"></script>
 </head>
 <body>
-    <noscript>
-        Javascript is required for this experience to work properly. Please enable it or use a modern browser with support.
-    </noscript>
-    <header>
-        <h1>Lobby</h1>
-        <div>
-            <h2 id="game-name-id">...</h2>
-            <button type="button" id="share-link">
-                <picture>
-                    <source srcset="../assets/images/UI/share-button/share_black.webp">
-                    <img src="../assets/images/fallback/UI/share-button/share_black.png" alt="save sharing link to clipboard">
-                </picture>
-            </button>
-        </div>
-        <div>
-            <h3>Created by ...</h3>
-            <h4 id="player-count">.../...</h4>
-        </div>
-    </header>
-    <main>
-        <ul id="joined-players">
-            <template id="joined-player-template">
-                <li class="player">
-                    <p class="player-name"></p>
-                    <picture>
-                        <source srcset="../assets/images/avatars/placeholder.webp">
-                        <img src="../assets/images/fallback/avatars/placeholder.png" alt="placeholder" title="placeholder">
-                    </picture>
-                </li>
-            </template>
-            <template id="add-bot-template">
-                <li>
-                    <picture>
-                        <source srcset="../assets/images/avatars/robot.webp" type="image/webp">
-                        <img src="../assets/images/fallback/avatars/robot.png" alt="add bot" title="add bot">
-                    </picture>
-                    <button type="button">
-                        <picture>
-                            <source srcset="../assets/images/UI/plus.webp" type="image/webp">
-                            <img src="../assets/images/fallback/UI/plus.png" alt="add bot" title="add bot">
-                        </picture>
-                    </button>
-                    <div>
-                        <label for="level">lvl</label>
-                        <select id="level" name="level">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3" selected>3</option>
-                        </select>
-                    </div>
-                </li>
-            </template>
-        </ul>
-    </main>
-    <footer>
-        <audio src="../assets/audio/background/lobby.mp3" loop autoplay preload="auto" muted></audio>
-        <button type="button" class="leave-button">Leave</button>
-        <button type="button" class="sound-button">
+<noscript>
+    Javascript is required for this experience to work properly. Please enable it or use a modern browser with support.
+</noscript>
+<header>
+    <div class="error-message"></div>
+    <h1>Lobby</h1>
+    <div>
+        <h2 id="game-name-id">...</h2>
+        <button type="button" id="share-link">
             <picture>
-                <source srcset="../assets/images/UI/sound_off.webp" type="image/webp">
-                <img src="../assets/images/fallback/UI/sound_off.png" title="sound button" alt="sound button">
+                <source srcset="../assets/images/UI/share-button/share_black.webp">
+                <img src="../assets/images/fallback/UI/share-button/share_black.png"
+                     alt="save sharing link to clipboard">
             </picture>
         </button>
-    </footer>
+    </div>
+    <div>
+        <h3>Created by ...</h3>
+        <h4 id="player-count">.../...</h4>
+    </div>
+</header>
+<main>
+    <ul id="joined-players">
+        <template id="joined-player-template">
+            <li class="player">
+                <p class="player-name"></p>
+                <picture>
+                    <source srcset="../assets/images/avatars/placeholder.webp">
+                    <img src="../assets/images/fallback/avatars/placeholder.png" alt="placeholder" title="placeholder">
+                </picture>
+            </li>
+        </template>
+        <template id="add-bot-template">
+            <li>
+                <picture>
+                    <source srcset="../assets/images/avatars/robot.webp" type="image/webp">
+                    <img src="../assets/images/fallback/avatars/robot.png" alt="add bot" title="add bot">
+                </picture>
+                <button type="button">
+                    <picture>
+                        <source srcset="../assets/images/UI/plus.webp" type="image/webp">
+                        <img src="../assets/images/fallback/UI/plus.png" alt="add bot" title="add bot">
+                    </picture>
+                </button>
+                <div>
+                    <label for="level">lvl</label>
+                    <select id="level" name="level">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3" selected>3</option>
+                    </select>
+                </div>
+            </li>
+        </template>
+    </ul>
+</main>
+<footer>
+    <audio src="../assets/audio/background/lobby.mp3" loop autoplay preload="auto" muted></audio>
+    <button type="button" class="leave-button">Leave</button>
+    <button type="button" class="sound-button">
+        <picture>
+            <source srcset="../assets/images/UI/sound_off.webp" type="image/webp">
+            <img src="../assets/images/fallback/UI/sound_off.png" title="sound button" alt="sound button">
+        </picture>
+    </button>
+</footer>
 </body>
 </html>
