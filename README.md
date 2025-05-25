@@ -15,5 +15,6 @@ None, to our knowledge.
 - A synchronous SHA256 implementation: [crypto.js](src/assets/js/utils/crypto.js)
   - Pull request to fix an issue with the source: [Pull request](https://github.com/liangtengyu/wx_gzh_article/pull/6)
 - A way for players to collect cards that are saved in a tree structure to save on memory: [card-collection.js](src/assets/js/card-collection-component/card-collection.js)
+- A sound effects system: [sound.js](src/assets/js/sound-component/sound.js)
 
 All art is custom-made.
