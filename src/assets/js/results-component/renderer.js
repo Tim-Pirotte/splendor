@@ -77,7 +77,11 @@ function renderOneAnimation() {
 }
 
 function playSound(isWinner) {
-    if (isWinner) effects.playWin();
+    if (isWinner) {
+        effects.playWin();
+    } else {
+        effects.playLose();
+    }
 }
 
 export { renderResults };

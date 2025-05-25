@@ -18,8 +18,6 @@ function init() {
 }
 
 function setupSound() {
-    //soundInit();
-
     document.querySelectorAll(".button-container button, .forfeit")
         .forEach(button => {
             button.addEventListener("click", effects.playClick);

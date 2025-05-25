@@ -1,8 +1,4 @@
-import {
-    renderCannotRestoreMessage,
-    renderCardCollection,
-    renderCorruptDataMessage,
-} from "./renderer.js";
+import { renderCannotRestoreMessage, renderCardCollection, renderCorruptDataMessage } from "./renderer.js";
 import { hashToNumber } from "../board-component/card-collection-component/card-collection.js";
 import { hashDigest } from "../utils/crypto.js";
 import { CHANCE_CATEGORIES, CHANCES, ILLUSTRATIONS } from "./data.js";
@@ -21,8 +17,6 @@ function init() {
         console.error(err);
         renderCorruptDataMessage();
     }
-
-    // soundInit();
 }
 
 init();

@@ -1,35 +1,27 @@
-import { EFFECTS_BASE_PATH } from "./config.js";
+import { AUDIO_BASE_PATH, EFFECTS_BASE_PATH } from "./config.js";
 import {
     loadFromStorage,
     loadFromStorageWithDefault,
     saveToStorage,
 } from "../data-connector/local-storage-abstractor.js";
 import { setSoundButtonImgSource } from "./renderer.js";
+import { renderErrorMessage } from "../utils/renderer.js";
 
 const sounds = {};
 const background = document.querySelector("audio[autoplay]");
 const soundButton = document.querySelector(".sound-button");
 
 function init() {
-    const a = canAutoplay();
-    console.log(a);
-    a
+    canAutoplay()
         .then(allowed => {
-            let soundEnabled = loadFromStorageWithDefault("sound", false);
-            console.log("allowed: ", allowed);
-            /*
-            Only enable sound if user enabled it and autoplay is allowed
-            It would be technically possible to play audio when a user clicks a button
-            while autoplay is disabled by the browser, but this behaviour is turned off.
-            This is because it wouldn't be possible to play for example the timer sound in this
-            situation. And this would lead to some effects being muted and others not.
-             */
-            if (allowed && soundEnabled) {
-                console.log("yes");
+            const soundEnabled = loadFromStorageWithDefault("sound", false);
+
+            if (soundEnabled) {
                 playBackground();
-            } else {
-                console.log("no");
-                soundEnabled = false;
+
+                if (!allowed) {
+                    renderErrorMessage("Please enable Autoplay in the browser");
+                }
             }
 
             saveToStorage("sound", soundEnabled);
@@ -43,18 +35,12 @@ function init() {
 }
 
 function canAutoplay() { // check if unmuted audio can be autoplayed
-    const audio = new Audio();
-    audio.addEventListener("play", () => console.log("begun playing"));
-    audio.addEventListener("ended", () => console.log("stop playing"));
-    audio.addEventListener("canplay", () => console.log("canplay"))
-    audio.addEventListener("canplaythrough", () => console.log("canplaythrough"));
+    const audio = new Audio(`${AUDIO_BASE_PATH}/silent.webm`); // short silent audio file to test autoplay
     audio.muted = true;
+
     return audio.play()
-        .then((e) => {
-            console.log("play");
-            return true;
-        }).then(() => audio.pause())
-        .catch((e) => false);
+        .then((e) => true)
+        .catch(() => false);
 }
 
 function unMuteEffects() {
@@ -69,7 +55,7 @@ function muteEffects() {
 
 function playBackground() {
     if (background) {
-        background.volume = 0.20;
+        background.volume = 0.05;
         background.muted = false;
         background.play().catch(() => {
         });
@@ -102,7 +88,7 @@ function playEffect(name, loop, volume) {
     let effect = sounds[name];
 
     if (effect === undefined) {
-        effect = new Audio(`${EFFECTS_BASE_PATH}${name}.mp3`);
+        effect = new Audio(`${EFFECTS_BASE_PATH}/${name}.mp3`);
         effect.loop = loop;
         effect.volume = volume;
         sounds[name] = effect;
@@ -137,11 +123,19 @@ const effects = {
     },
 
     playLevelUp() {
-        playEffect("level-up", false, 1.0);
+        playEffect("level-up", false, 0.5);
     },
 
     playWoosh() {
         playEffect("woosh", false, 1.0);
+    },
+
+    playFlip() {
+        playEffect("flip", false, 1.0);
+    },
+
+    playLose(){
+        playEffect("lose", false, 1.0);
     },
 };
 

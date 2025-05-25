@@ -26,7 +26,6 @@ function setupEventListeners() {
 }
 
 function setupSound(){
-    //soundInit();
     document.querySelectorAll("button[type=submit], input[type=radio]")
         .forEach(node => node.addEventListener("click", effects.playClick));
 }

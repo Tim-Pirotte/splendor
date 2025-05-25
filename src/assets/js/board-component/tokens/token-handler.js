@@ -3,6 +3,7 @@ import * as API from "../../api.js";
 import { deselectAll, getActionButton, setActionButtonState } from "../game-status-interface.js";
 import { validTokenTake } from "../state-machine/valid-action-checker.js";
 import { getCurrentAction, reflowCSS } from "../helper.js";
+import { effects } from "../../sound-component/sound.js";
 
 function clickedOnToken(target) {
     return target.tagName.toLowerCase() === "li";
@@ -127,6 +128,8 @@ function selectToken(e) {
     const $selectedToken = e.target;
 
     if ($selectedToken.dataset.amount < 1) return;
+
+    effects.playClick();
 
     const $actionButton = getActionButton();
 

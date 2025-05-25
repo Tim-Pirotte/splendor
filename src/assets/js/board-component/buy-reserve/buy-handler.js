@@ -46,13 +46,14 @@ function setActionToBuyReserve($card, isValidCardBuy, isValidCardReserve, deckLe
 }
 
 function highlightCard($card) {
-    effects.playWoosh();
+    effects.playClick();
     unHighlightTokens();
     unHighlightCards();
     $card.classList.add("selected-card");
 }
 
 function unHighlightCards() {
+    effects.playClick();
     for (const $cardToDeselect of document.querySelectorAll(".selected-card")) {
         $cardToDeselect.classList.remove("selected-card");
     }
@@ -101,6 +102,7 @@ function processBuyCardClick() {
     endBuyReserveAction();
 
     playBuyCardAnimation(cardData);
+    effects.playWoosh();
 
     API.buyCard({ development: { name: cardData["name"] }, payment: getCurrentPaymentMethod() });
 }
