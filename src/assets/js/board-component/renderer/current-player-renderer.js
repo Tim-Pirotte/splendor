@@ -308,8 +308,9 @@ function renderAmountOfTokenSelectedOrMissing($tokenContainer, amount, showsMiss
     $amountToTake.classList.toggle("highlighted-number", showsMissingTokens);
 
     const $amount = $tokenContainer.querySelector(".amount");
+
     if (showsMissingTokens) {
-        $amountToTake.classList.add("pulsing-text")
+        $amountToTake.classList.add("pulsing-text");
     } else {
         $amount.classList.add("pulsing-text");
     }
@@ -369,6 +370,7 @@ function addGoldToken() {
 function renderMissingTokens($card) {
     const cost = getCardData($card.dataset.name)["cost"];
     const missingTokens = getMissingTokens(cost);
+
     for (const tokenType in missingTokens) {
         const $boardToken = document.querySelector(`.player-tokens li[data-type=${tokenType}]`);
         renderAmountOfTokenSelectedOrMissing($boardToken, missingTokens[tokenType], true);
@@ -377,7 +379,7 @@ function renderMissingTokens($card) {
 
 function removeAllMissingTokenHighlights() {
     document.querySelectorAll(".player-tokens .red")
-            .forEach($tokenType => $tokenType.classList.remove("red"));
+        .forEach($tokenType => $tokenType.classList.remove("red"));
 }
 
 export {

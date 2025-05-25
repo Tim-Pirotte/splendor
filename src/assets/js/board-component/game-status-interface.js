@@ -4,7 +4,7 @@ import { ACTION_REGISTRY } from "./action-registry.js";
 import { getReserveCardButton } from "./buy-reserve/helper.js";
 import { unHighlightBoardTokens } from "./tokens/token-handler.js";
 import { deselectCard } from "./buy-reserve/select.js";
-import {removeAllMissingTokenHighlights} from "./renderer/current-player-renderer.js";
+import { removeAllMissingTokenHighlights } from "./renderer/current-player-renderer.js";
 
 function isCurrentlyPlaying() {
     const playerName = loadFromStorage("playerName");

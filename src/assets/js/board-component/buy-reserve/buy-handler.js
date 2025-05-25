@@ -133,7 +133,7 @@ function removeBonusesFromCost(cost, bonuses) {
     const costWithoutBonuses = {};
 
     for (const tokenType in cost) {
-        costWithoutBonuses[tokenType] = Math.max(cost[tokenType] - bonuses[tokenType], 0)
+        costWithoutBonuses[tokenType] = Math.max(cost[tokenType] - bonuses[tokenType], 0);
     }
 
     return costWithoutBonuses;
