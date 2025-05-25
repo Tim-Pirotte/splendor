@@ -1,5 +1,4 @@
 import { checkCompatibility } from "../server-version-component/server-version.js";
-import "../sound-component/sound.js";
 import { closeAvatarVisibility, savePlayerInfo, saveUserName, updateSelectedAvatar } from "./handler.js";
 import {
     hideDemoButton,
