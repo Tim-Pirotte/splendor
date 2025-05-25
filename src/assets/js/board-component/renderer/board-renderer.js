@@ -15,7 +15,6 @@ import {
     getNumberedItemTemplate,
     renderCard,
     renderEmptySpace,
-    safeEmptyContainer,
 } from "./helper.js";
 import { getUnclaimedTokens, sumObjectValues } from "../helper.js";
 import { copyNode, getAmountOfTemplateTags } from "../../utils/data-handler.js";
@@ -110,6 +109,7 @@ function animateNewCard(deck, cardData, $previousCard) {
     $previousCard.replaceWith($cardSidesContainer);
     animateFromTo($source, $newCard, reserveCardFromDeckAnimationFront, removeBackFromCard);
     animateFromTo($source, $cardBack, reserveCardFromDeckAnimationBack);
+
     effects.playFlip();
 }
 
@@ -146,11 +146,31 @@ function getMaxTokens(playerLength, tokenType) {
 
 function renderBoardTokens(unclaimedTokens, playerLength) {
     const $boardTokensContainer = document.querySelector(".board-tokens");
-    safeEmptyContainer($boardTokensContainer);
+
+    const gems = GEMS.toReversed();
 
     const $numberedItemTemplate = getNumberedItemTemplate();
 
-    for (const token of GEMS.toReversed()) {
+    if ($boardTokensContainer.children.length === getAmountOfTemplateTags($boardTokensContainer)) {
+        renderInitialTokens(gems, $boardTokensContainer, $numberedItemTemplate, unclaimedTokens, playerLength);
+        return;
+    }
+
+    let playTokenSound = false;
+
+    for (const [index, $token] of $boardTokensContainer.querySelectorAll(":scope > *").entries()) {
+        const tokenType = gems[index];
+
+        if (parseInt($token.dataset.amount) !== unclaimedTokens[tokenType]) playTokenSound = true;
+
+        $token.replaceWith(renderBoardToken($numberedItemTemplate, tokenType, unclaimedTokens, playerLength));
+    }
+
+    if (playTokenSound) effects.playTokens();
+}
+
+function renderInitialTokens(tokens, $boardTokensContainer, $numberedItemTemplate, unclaimedTokens, playerLength) {
+    for (const token of tokens) {
         $boardTokensContainer.appendChild(renderBoardToken($numberedItemTemplate, token, unclaimedTokens, playerLength));
     }
 }

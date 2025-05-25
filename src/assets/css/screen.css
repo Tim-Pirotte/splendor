@@ -82,6 +82,7 @@ header .error-message {
     right: 0;
     top: 0;
     padding-left: 1rem;
+    z-index: 100;
 }
 
 header .error-message p {

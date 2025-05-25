@@ -154,7 +154,7 @@ main {
 
 /* Nobles I */
 .nobles img {
-    width: 4.5rem;
+    width: 5.1rem;
     transition: var(--hover-transition-duration);
     box-shadow: 0 0 0.1rem 0.1rem #00000020;
     /* This is needed to prevent a redraw on a new texture which causes sub-pixel shifting due to different anti-aliasing.
@@ -288,6 +288,7 @@ main {
     right: 0;
     top: 0;
     padding-left: 1rem;
+    z-index: 100;
 }
 
 .unlocked-card-message p {
@@ -459,7 +460,6 @@ main {
     display: flex;
     flex-direction: column;
     gap: 0.5rem 0;
-    margin-top: 1.5rem;
 }
 
 .nobles img:hover {

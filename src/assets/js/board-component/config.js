@@ -5,16 +5,16 @@ const CARDS_IN_DECK_TO_DECK_HEIGHT_SCALE = 45;
 const CARDS_IN_DECK_TO_DECK_HEIGHT_OFFSET = 0.05;
 
 const NOBLES_MAPPER = {
-    "Elizabeth of Austria": "noble_border",
-    "Suleiman the Magnificent": "noble_border",
-    "Isabella of Castile": "noble_border",
-    "Mary Stuart": "noble_border",
-    "Henry VIII": "noble_border",
-    "Niccolo Machiavelli": "noble_border",
-    "Catherine de Medici": "noble_border",
-    "Anne of Brittany": "noble_border",
-    "Charles the Fifth": "noble_border",
-    "Francois the 1st": "noble_border",
+    "Elizabeth of Austria": "gert_samson",
+    "Suleiman the Magnificent": "trump",
+    "Isabella of Castile": "sam_altman",
+    "Mary Stuart": "boma",
+    "Henry VIII": "monopoly_man",
+    "Niccolo Machiavelli": "mark",
+    "Catherine de Medici": "dagobert_duck",
+    "Anne of Brittany": "frank_verstreaten",
+    "Charles the Fifth": "elon_musk",
+    "Francois the 1st": "jef_bezos",
 };
 
 const TOKEN_MAPPER = {

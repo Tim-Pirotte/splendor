@@ -132,7 +132,9 @@ const effects = {
     },
 
     playFlip() {
-        playEffect("flip", false, 1.0);
+        const flipSoundTimeOut = 500;
+
+        setTimeout(() => playEffect("flip", false, 1.0), flipSoundTimeOut);
     },
 
     playLose(){
@@ -140,11 +142,14 @@ const effects = {
     },
 
     playCountDown() {
-        playEffect("count-down", false, 0.5);
+        // Really Sonar?
+        const countDownSoundDuration = 0.15;
+
+        playEffect("count-down", false, countDownSoundDuration);
     },
 
     playTokens(){
-        playEffect("tokens", false, 0.5);
+        playEffect("tokens", false, 0.1);
     },
 };
 
