@@ -38,9 +38,21 @@ function canAutoplay() { // check if unmuted audio can be autoplayed
     const audio = new Audio(`${AUDIO_BASE_PATH}/silent.webm`); // short silent audio file to test autoplay
     audio.muted = true;
 
-    return audio.play()
-        .then(() => true)
+    return waitForAudioToLoad(audio)
+        .then(() => {
+            return audio.play()
+                .then(() => true)
+                .catch(() => false);
+        })
         .catch(() => false);
+}
+
+function waitForAudioToLoad(audio) {
+    return new Promise((resolve, reject) => {
+        audio.addEventListener("canplaythrough", resolve, { once: true });
+        audio.addEventListener("error", reject, { once: true });
+        audio.load();
+    });
 }
 
 function unMuteEffects() {
@@ -96,7 +108,8 @@ function playEffect(name, loop, volume) {
 
     if (!effect.loop) effect.currentTime = 0;
     effect.muted = !soundEnabled;
-    effect.play().catch(() => {
+    waitForAudioToLoad(effect).then(() => {
+        effect.play().catch((e) => console.error(e));
     });
 
     return effect;
