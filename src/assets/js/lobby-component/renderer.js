@@ -15,7 +15,13 @@ import { safeEmptyContainer } from "../board-component/renderer/helper.js";
 import { checkCompatibilityFromSessionStorage } from "../server-version-component/server-version.js";
 
 function renderGameInfo(gameObject, started) {
-    document.querySelector("#game-name-id").innerHTML = `${getGameName(gameObject)} / <span>${getGameId(gameObject)}</span>`;
+    const $gameNameId = document.querySelector("#game-name-id");
+    const gameId = getGameId(gameObject);
+
+    if (gameId === $gameNameId.dataset.gameId) return;
+
+    $gameNameId.innerHTML = `${getGameName(gameObject)} / <span>${getGameId(gameObject)}</span>`;
+    $gameNameId.dataset.gameId = gameId;
     document.querySelector("h3").textContent = `Created by ${getGameCreator(gameObject, started)}`;
 }
 
