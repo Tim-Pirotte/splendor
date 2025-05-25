@@ -299,16 +299,21 @@ function renderSwitchPayment($tokenSwitchContainer, currentPayment, defaultPayme
     }
 }
 
+// TODO find a more suitable name for this function
 function renderAmountOfTokenSelected($tokenContainer, amount, showsMissingTokens) {
     if (amount <= 0) return;
 
     const $amountToTake = $tokenContainer.querySelector(".amount span");
     $amountToTake.textContent = ` ${showsMissingTokens ? "+" : "-"} ${amount}`;
     $amountToTake.classList.remove("none");
+    $amountToTake.classList.toggle("red", showsMissingTokens);
 
     const $amount = $tokenContainer.querySelector(".amount");
-    $amount.classList.add("pulsing-text");
-    $amount.classList.toggle("red", showsMissingTokens);
+    if (showsMissingTokens) {
+        $amountToTake.classList.add("pulsing-text")
+    } else {
+        $amount.classList.add("pulsing-text");
+    }
 }
 
 function renderUpdatedPlayerTokens(bonus) {
