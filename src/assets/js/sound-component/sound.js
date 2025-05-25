@@ -133,7 +133,7 @@ const effects = {
     },
 
     playFlip() {
-        playEffect("flip", false, 1.0);
+        setTimeout(() => playEffect("flip", false, 1.0), 500);
     },
 
     playLose(){
@@ -141,7 +141,7 @@ const effects = {
     },
 
     playCountDown() {
-        playEffect("count-down", false, 0.2);
+        playEffect("count-down", false, 0.15);
     },
 
     playTokens(){
