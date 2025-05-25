@@ -77,7 +77,7 @@ form {
     text-align: center;
 }
 
-section {
+section, .join-by-id {
     display: flex;
     flex-flow: column nowrap;
     padding: 1.5rem 6rem 9rem 8rem;
@@ -90,7 +90,7 @@ section {
     background-size: contain;
 }
 
-section.join-by-id {
+div.join-by-id {
     height: fit-content;
     padding: 0.5rem;
     background-image: none;
