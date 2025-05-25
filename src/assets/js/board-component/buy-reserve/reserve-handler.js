@@ -18,11 +18,14 @@ import {
     setAnimationDelayBeforePolling,
 } from "../animation-component/data.js";
 import { removeBackFromCard } from "../renderer/board-renderer.js";
+import { effects } from "../../sound-component/sound.js";
 
 function processReserve(){
     // This only happens explicitly in reserve since it uses a separate button.
     // The action button handles this for other actions.
     resetCurrentPlayer();
+
+    effects.playWoosh();
 
     const selectedCardName = getReserveCardButton().dataset.name;
     const cardDeckLevel = getReserveCardButton().dataset.level;
