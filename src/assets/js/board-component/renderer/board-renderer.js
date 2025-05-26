@@ -53,7 +53,10 @@ function updateCard(deck, index, $previousCard) {
     const cardData = deck["visibleCards"][index];
 
     if (!cardData) {
-        $previousCard.replaceWith(renderEmptySpace());
+        if (!$previousCard.classList.contains("hidden")) {
+            playCardFadeAnimation($previousCard, deck, cardData, () => $previousCard.replaceWith(renderEmptySpace()));
+        }
+
         return;
     }
 
@@ -66,11 +69,11 @@ function updateCard(deck, index, $previousCard) {
         return;
     }
 
-    playCardFadeAnimation($previousCard, deck, cardData);
+    playCardFadeAnimation($previousCard, deck, cardData, () => animateNewCard(deck, cardData, $previousCard));
     effects.playWoosh();
 }
 
-function playCardFadeAnimation($previousCard, deck, cardData) {
+function playCardFadeAnimation($previousCard, deck, cardData, functionToRunOnFinish) {
     setAnimationDelayBeforePolling(
         reserveCardFromDeckAnimationFront.duration + cardMarketFadeAnimation.duration,
     );
@@ -85,7 +88,7 @@ function playCardFadeAnimation($previousCard, deck, cardData) {
 
     animationPlayer.addEventListener(
         "finish",
-        () => animateNewCard(deck, cardData, $previousCard),
+        functionToRunOnFinish,
     );
 }
 
