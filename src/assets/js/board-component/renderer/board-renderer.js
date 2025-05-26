@@ -166,6 +166,7 @@ function renderBoardTokens(unclaimedTokens, playerLength) {
         const tokenType = gems[index];
 
         const previousAmount = parseInt($token.dataset.amount);
+
         if (previousAmount > unclaimedTokens[tokenType]) tokenSoundVolume += 0.04;
         if (previousAmount < unclaimedTokens[tokenType]) tokenReturnSoundVolume += 0.04;
 
