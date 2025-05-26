@@ -155,7 +155,8 @@ main {
 /* Nobles I */
 .nobles img {
     width: 5.1rem;
-    transition: var(--hover-transition-duration);
+    position: relative;
+    transition: var(--hover-transition-duration), transform 0.3s;
     box-shadow: 0 0 0.1rem 0.1rem #00000020;
     /* This is needed to prevent a redraw on a new texture which causes sub-pixel shifting due to different anti-aliasing.
        Usage of will-change outside of optimization is frowned upon so if there is another way to fix this please change this.
