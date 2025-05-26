@@ -165,6 +165,10 @@ const effects = {
     playTokens(volume){
         playEffect("tokens", false, volume);
     },
+
+    playReturnTokens(volume) {
+        playEffect("tokens-return", false, volume);
+    }
 };
 
 init();

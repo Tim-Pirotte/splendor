@@ -160,16 +160,20 @@ function renderBoardTokens(unclaimedTokens, playerLength) {
     }
 
     let tokenSoundVolume = 0;
+    let tokenReturnSoundVolume = 0;
 
     for (const [index, $token] of $boardTokensContainer.querySelectorAll(":scope > *").entries()) {
         const tokenType = gems[index];
 
-        if (parseInt($token.dataset.amount) !== unclaimedTokens[tokenType]) tokenSoundVolume += 0.04;
+        const previousAmount = parseInt($token.dataset.amount);
+        if (previousAmount > unclaimedTokens[tokenType]) tokenSoundVolume += 0.04;
+        if (previousAmount < unclaimedTokens[tokenType]) tokenReturnSoundVolume += 0.04;
 
         $token.replaceWith(renderBoardToken($numberedItemTemplate, tokenType, unclaimedTokens, playerLength));
     }
 
     effects.playTokens(tokenSoundVolume);
+    effects.playReturnTokens(tokenReturnSoundVolume);
 }
 
 function renderInitialTokens(tokens, $boardTokensContainer, $numberedItemTemplate, unclaimedTokens, playerLength) {
