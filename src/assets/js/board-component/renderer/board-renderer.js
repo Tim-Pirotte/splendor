@@ -30,6 +30,7 @@ import {
     setAnimationDelayBeforePolling,
 } from "../animation-component/data.js";
 import { effects } from "../../sound-component/sound.js";
+import { tokenVolume } from "../../sound-component/config.js";
 
 function renderCards(market) {
     for (const deck of market) {
@@ -167,8 +168,8 @@ function renderBoardTokens(unclaimedTokens, playerLength) {
 
         const previousAmount = parseInt($token.dataset.amount);
 
-        if (previousAmount > unclaimedTokens[tokenType]) tokenSoundVolume += 0.04;
-        if (previousAmount < unclaimedTokens[tokenType]) tokenReturnSoundVolume += 0.04;
+        if (previousAmount > unclaimedTokens[tokenType]) tokenSoundVolume += tokenVolume;
+        if (previousAmount < unclaimedTokens[tokenType]) tokenReturnSoundVolume += tokenVolume;
 
         $token.replaceWith(renderBoardToken($numberedItemTemplate, tokenType, unclaimedTokens, playerLength));
     }
