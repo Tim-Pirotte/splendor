@@ -102,9 +102,10 @@ function playEffect(name, loop, volume) {
     if (effect === undefined) {
         effect = new Audio(`${EFFECTS_BASE_PATH}/${name}.mp3`);
         effect.loop = loop;
-        effect.volume = volume;
         sounds[name] = effect;
     }
+
+    effect.volume = volume;
 
     if (!effect.loop) effect.currentTime = 0;
     effect.muted = !soundEnabled;
@@ -161,8 +162,8 @@ const effects = {
         playEffect("count-down", false, countDownSoundDuration);
     },
 
-    playTokens(){
-        playEffect("tokens", false, 0.1);
+    playTokens(volume){
+        playEffect("tokens", false, volume);
     },
 };
 
