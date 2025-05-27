@@ -1,4 +1,4 @@
-import {CURSOR_GAP, DEAD_ZONE, LEFT_TRIGGER, RIGHT_TRIGGER, SPEED} from "./config.js";
+import {A_BUTTON, CURSOR_GAP, DEAD_ZONE, LEFT_TRIGGER, RIGHT_TRIGGER, SPEED} from "./config.js";
 
 function initController() {
     setCursor("none");
@@ -23,6 +23,7 @@ function setCursor(status) {
 
 let leftTriggerPressedPreviously = false;
 let rightTriggerPressedPreviously = false;
+let aButtonPressedPreviously = false;
 
 let posX = window.innerWidth / 2;
 let posY = window.innerHeight / 2;
@@ -33,15 +34,15 @@ function updateController($cursor) {
 
     if (!gamePad) return;
 
-    handleButtonPress(gamePad);
+    handleButtonPress(gamePad, $cursor);
     handleJoyStickMovement(gamePad, $cursor);
 
     requestAnimationFrame(() => updateController($cursor));
 }
 
-function handleButtonPress(gamepad) {
-    const rightTriggerPressed = gamepad.buttons[RIGHT_TRIGGER].pressed;
-    const leftTriggerPressed = gamepad.buttons[LEFT_TRIGGER].pressed;
+function handleButtonPress(gamePad, $cursor) {
+    const rightTriggerPressed = gamePad.buttons[RIGHT_TRIGGER].pressed;
+    const leftTriggerPressed = gamePad.buttons[LEFT_TRIGGER].pressed;
 
     if (rightTriggerPressed && !rightTriggerPressedPreviously) {
         document.querySelector(".action-button")?.click();
@@ -57,6 +58,8 @@ function handleButtonPress(gamepad) {
 }
 
 function handleJoyStickMovement(gamePad, $cursor) {
+    const aButtonPressed = gamePad.buttons[A_BUTTON].pressed;
+
     const xAxis = gamePad.axes[0];
     const yAxis = gamePad.axes[1];
 
@@ -73,6 +76,13 @@ function handleJoyStickMovement(gamePad, $cursor) {
 
     $cursor.style.left = `${posX}px`;
     $cursor.style.top = `${posY}px`;
+
+    if (aButtonPressed && !aButtonPressedPreviously) {
+        const target = document.elementFromPoint(posX + cursorSize / 2, posY + cursorSize / 2);
+        target?.click();
+    }
+
+    aButtonPressedPreviously = aButtonPressed;
 }
 
 export { initController };

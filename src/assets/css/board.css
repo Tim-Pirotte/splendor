@@ -827,6 +827,8 @@ body div.page-view .button-container button:disabled {
     height: fit-content;
     position: absolute;
     z-index: 1000;
+    /* This is to prevent the click target from being the cursor itself */
+    pointer-events: none;
 }
 
 #cursor img {
