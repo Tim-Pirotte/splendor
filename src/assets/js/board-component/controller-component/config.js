@@ -1,4 +1,7 @@
 const RIGHT_TRIGGER = 7;
 const LEFT_TRIGGER = 6;
 
-export { RIGHT_TRIGGER, LEFT_TRIGGER };
+const DEAD_ZONE = 0.15;
+const SPEED = 5;
+
+export { RIGHT_TRIGGER, LEFT_TRIGGER, DEAD_ZONE, SPEED };

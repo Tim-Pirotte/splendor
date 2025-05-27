@@ -825,6 +825,8 @@ body div.page-view .button-container button:disabled {
 #cursor {
     width: fit-content;
     height: fit-content;
+    position: absolute;
+    z-index: 1000;
 }
 
 #cursor img {

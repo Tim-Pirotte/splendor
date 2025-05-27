@@ -1,16 +1,20 @@
-import {LEFT_TRIGGER, RIGHT_TRIGGER} from "./config.js";
+import {DEAD_ZONE, LEFT_TRIGGER, RIGHT_TRIGGER, SPEED} from "./config.js";
 
 function initController() {
     setCursor("none");
 
     window.addEventListener("gamepadconnected", () => {
-        requestAnimationFrame(updateController);
+        requestAnimationFrame(() => updateController(getCursor()));
         setCursor("block");
     });
 
     window.addEventListener("gamepaddisconnected", () => {
         setCursor("none");
     });
+}
+
+function getCursor() {
+    return document.querySelector("#cursor");
 }
 
 function setCursor(status) {
@@ -20,15 +24,19 @@ function setCursor(status) {
 let leftTriggerPressedPreviously = false;
 let rightTriggerPressedPreviously = false;
 
-function updateController() {
+let posX = window.innerWidth / 2;
+let posY = window.innerHeight / 2;
+
+function updateController($cursor) {
     const gamepads = navigator.getGamepads();
     const gamePad = gamepads[0];
 
     if (!gamePad) return;
 
     handleButtonPress(gamePad);
+    handleJoyStickMovement(gamePad, $cursor);
 
-    requestAnimationFrame(updateController);
+    requestAnimationFrame(() => updateController($cursor));
 }
 
 function handleButtonPress(gamepad) {
@@ -46,6 +54,23 @@ function handleButtonPress(gamepad) {
 
     leftTriggerPressedPreviously = leftTriggerPressed;
     rightTriggerPressedPreviously = rightTriggerPressed;
+}
+
+function handleJoyStickMovement(gamePad, $cursor) {
+    const xAxis = gamePad.axes[0];
+    const yAxis = gamePad.axes[1];
+
+    const deltaX = Math.abs(xAxis) > DEAD_ZONE ? xAxis : 0;
+    const deltaY = Math.abs(yAxis) > DEAD_ZONE ? yAxis : 0;
+
+    posX += deltaX * SPEED;
+    posY += deltaY * SPEED;
+
+    posX = Math.max(0, Math.min(window.innerWidth, posX));
+    posY = Math.max(0, Math.min(window.innerHeight, posY));
+
+    $cursor.style.left = `${posX}px`;
+    $cursor.style.top = `${posY}px`;
 }
 
 export { initController };
