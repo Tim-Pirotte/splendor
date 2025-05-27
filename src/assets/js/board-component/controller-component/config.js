@@ -1,0 +1,4 @@
+const RIGHT_TRIGGER = 7;
+const LEFT_TRIGGER = 6;
+
+export { RIGHT_TRIGGER, LEFT_TRIGGER };
