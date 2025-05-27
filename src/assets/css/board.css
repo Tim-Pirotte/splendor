@@ -821,3 +821,12 @@ body div.page-view .button-container button:disabled {
     cursor: var(--disabled-button-cursor);
     filter: grayscale(80%);
 }
+
+#cursor {
+    width: fit-content;
+    height: fit-content;
+}
+
+#cursor img {
+    width: 1rem;
+}

@@ -1,7 +1,20 @@
 import {LEFT_TRIGGER, RIGHT_TRIGGER} from "./config.js";
 
 function initController() {
-    window.addEventListener("gamepadconnected", () => requestAnimationFrame(updateController))
+    setCursor("none");
+
+    window.addEventListener("gamepadconnected", () => {
+        requestAnimationFrame(updateController);
+        setCursor("block");
+    });
+
+    window.addEventListener("gamepaddisconnected", () => {
+        setCursor("none");
+    });
+}
+
+function setCursor(status) {
+    document.querySelector("#cursor").style.display = status;
 }
 
 let leftTriggerPressedPreviously = false;
@@ -23,12 +36,12 @@ function handleButtonPress(gamepad) {
     const leftTriggerPressed = gamepad.buttons[LEFT_TRIGGER].pressed;
 
     if (rightTriggerPressed && !rightTriggerPressedPreviously) {
-        document.querySelector(".action-button").click();
+        document.querySelector(".action-button")?.click();
     }
 
     if (leftTriggerPressed && !leftTriggerPressedPreviously) {
         const $reserveButton = document.querySelector(".reserve-button");
-        if (!$reserveButton.classList.contains("hidden")) $reserveButton.click();
+        if (!$reserveButton.classList.contains("hidden")) $reserveButton?.click();
     }
 
     leftTriggerPressedPreviously = leftTriggerPressed;
