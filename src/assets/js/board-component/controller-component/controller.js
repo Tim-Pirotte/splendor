@@ -1,4 +1,4 @@
-import {DEAD_ZONE, LEFT_TRIGGER, RIGHT_TRIGGER, SPEED} from "./config.js";
+import {CURSOR_GAP, DEAD_ZONE, LEFT_TRIGGER, RIGHT_TRIGGER, SPEED} from "./config.js";
 
 function initController() {
     setCursor("none");
@@ -66,8 +66,10 @@ function handleJoyStickMovement(gamePad, $cursor) {
     posX += deltaX * SPEED;
     posY += deltaY * SPEED;
 
-    posX = Math.max(0, Math.min(window.innerWidth, posX));
-    posY = Math.max(0, Math.min(window.innerHeight, posY));
+    const cursorSize = $cursor.getBoundingClientRect().width;
+
+    posX = Math.max(0, Math.min(window.innerWidth - cursorSize - CURSOR_GAP, posX));
+    posY = Math.max(0, Math.min(window.innerHeight - cursorSize - CURSOR_GAP, posY));
 
     $cursor.style.left = `${posX}px`;
     $cursor.style.top = `${posY}px`;

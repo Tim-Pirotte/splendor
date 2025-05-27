@@ -26,7 +26,7 @@ function handleGameDataError(err) {
 function updateGameData() {
     const gameId = loadFromStorage("gameId");
 
-    if (gameId === null) {locateToMainMenu(); return;}
+    if (gameId === null) { locateToMainMenu(); return; }
 
     API.getGame().then(gameData => {
         if (!gameData.started) {
