@@ -8,12 +8,14 @@ import {
     renderPlayerInfo,
 } from "./renderer.js";
 import { effects } from "../sound-component/sound.js";
+import {initController} from "../controller-component/controller.js";
 
 function init() {
     setupUI();
     setupEventListeners();
     renderAuthors();
     setupSound();
+    initController();
 }
 
 function setupUI() {

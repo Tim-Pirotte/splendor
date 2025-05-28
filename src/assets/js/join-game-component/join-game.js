@@ -4,6 +4,7 @@ import { locateToMainMenu } from "../utils/data-handler.js";
 import { renderPlayerInfo, initGameRendering } from "./renderer.js";
 import { renderDefaultGameNamePlaceholder } from "../utils/renderer.js";
 import "../sound-component/sound.js";
+import {initController} from "../controller-component/controller.js";
 
 function joinInit() {
     const gameIdParameter = new URL(window.location.href).searchParams.get("gameId");
@@ -13,6 +14,7 @@ function joinInit() {
     } else {
         setupUI();
         setupEventListeners();
+        initController();
     }
 }
 

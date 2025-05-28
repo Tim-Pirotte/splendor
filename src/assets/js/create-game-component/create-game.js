@@ -5,11 +5,13 @@ import { locateToMainMenu } from "../utils/data-handler.js";
 import { checkCompatibility } from "../server-version-component/server-version.js";
 import { renderDefaultGameNamePlaceholder } from "../utils/renderer.js";
 import { effects } from "../sound-component/sound.js";
+import {initController} from "../controller-component/controller.js";
 
 function createInit() {
     setupUI();
     setupEventListeners();
     setupSound();
+    initController();
 }
 
 function setupUI() {

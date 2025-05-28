@@ -7,6 +7,7 @@ import { TOKEN_MAPPER } from "../board-component/config.js";
 import { deleteFromStorage, loadFromStorage } from "../data-connector/local-storage-abstractor.js";
 import { convertTreeToArray, removeFromTree, unpackMisprintObjects } from "./helper.js";
 import "../sound-component/sound.js";
+import {initController} from "../controller-component/controller.js";
 
 function init() {
     document.querySelector("main").addEventListener("click", handleCorruptButtonClick);
@@ -17,6 +18,8 @@ function init() {
         console.error(err);
         renderCorruptDataMessage();
     }
+
+    initController();
 }
 
 init();
