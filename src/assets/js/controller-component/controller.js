@@ -49,7 +49,7 @@ function updateController($cursor) {
     requestAnimationFrame(() => updateController($cursor));
 }
 
-function handleButtonPress(gamePad, $cursor) {
+function handleButtonPress(gamePad) {
     const rightTriggerPressed = gamePad.buttons[RIGHT_TRIGGER].pressed;
     const leftTriggerPressed = gamePad.buttons[LEFT_TRIGGER].pressed;
 
@@ -84,8 +84,8 @@ function handleJoyStickMovement(gamePad, $cursor) {
     const deltaX = Math.abs(xAxis) > DEAD_ZONE ? xAxis : 0;
     const deltaY = Math.abs(yAxis) > DEAD_ZONE ? yAxis : 0;
 
-    posX += deltaX * SPEED;
-    posY += deltaY * SPEED;
+    posX += Math.sign(deltaX) * deltaX * deltaX * SPEED;
+    posY += Math.sign(deltaY) * deltaY * deltaY * SPEED;
 
     const cursorSize = $cursor.getBoundingClientRect().width;
 

@@ -8,7 +8,7 @@
 /* Sidebar and main content alignment */
 body {
     display: grid;
-    grid-template-columns: 20.8% 79.2%;
+    grid-template-columns: 21% 79%;
     height: 100vh;
 }
 
