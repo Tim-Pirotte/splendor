@@ -49,7 +49,7 @@ function updateController($cursor) {
     requestAnimationFrame(() => updateController($cursor));
 }
 
-function handleButtonPress(gamePad, $cursor) {
+function handleButtonPress(gamePad) {
     const rightTriggerPressed = gamePad.buttons[RIGHT_TRIGGER].pressed;
     const leftTriggerPressed = gamePad.buttons[LEFT_TRIGGER].pressed;
 
