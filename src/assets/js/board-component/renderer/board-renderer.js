@@ -30,6 +30,7 @@ import {
     setAnimationDelayBeforePolling,
 } from "../animation-component/data.js";
 import { effects } from "../../sound-component/sound.js";
+import { tokenVolume } from "../../sound-component/config.js";
 
 function renderCards(market) {
     for (const deck of market) {
@@ -53,7 +54,10 @@ function updateCard(deck, index, $previousCard) {
     const cardData = deck["visibleCards"][index];
 
     if (!cardData) {
-        $previousCard.replaceWith(renderEmptySpace());
+        if (!$previousCard.classList.contains("hidden")) {
+            playCardFadeAnimation($previousCard, deck, cardData, () => $previousCard.replaceWith(renderEmptySpace()));
+        }
+
         return;
     }
 
@@ -66,11 +70,11 @@ function updateCard(deck, index, $previousCard) {
         return;
     }
 
-    playCardFadeAnimation($previousCard, deck, cardData);
+    playCardFadeAnimation($previousCard, deck, cardData, () => animateNewCard(deck, cardData, $previousCard));
     effects.playWoosh();
 }
 
-function playCardFadeAnimation($previousCard, deck, cardData) {
+function playCardFadeAnimation($previousCard, deck, cardData, functionToRunOnFinish) {
     setAnimationDelayBeforePolling(
         reserveCardFromDeckAnimationFront.duration + cardMarketFadeAnimation.duration,
     );
@@ -85,7 +89,7 @@ function playCardFadeAnimation($previousCard, deck, cardData) {
 
     animationPlayer.addEventListener(
         "finish",
-        () => animateNewCard(deck, cardData, $previousCard),
+        functionToRunOnFinish,
     );
 }
 
@@ -156,17 +160,22 @@ function renderBoardTokens(unclaimedTokens, playerLength) {
         return;
     }
 
-    let playTokenSound = false;
+    let tokenSoundVolume = 0;
+    let tokenReturnSoundVolume = 0;
 
     for (const [index, $token] of $boardTokensContainer.querySelectorAll(":scope > *").entries()) {
         const tokenType = gems[index];
 
-        if (parseInt($token.dataset.amount) !== unclaimedTokens[tokenType]) playTokenSound = true;
+        const previousAmount = parseInt($token.dataset.amount);
+
+        if (previousAmount > unclaimedTokens[tokenType]) tokenSoundVolume += tokenVolume;
+        if (previousAmount < unclaimedTokens[tokenType]) tokenReturnSoundVolume += tokenVolume;
 
         $token.replaceWith(renderBoardToken($numberedItemTemplate, tokenType, unclaimedTokens, playerLength));
     }
 
-    if (playTokenSound) effects.playTokens();
+    effects.playTokens(tokenSoundVolume);
+    effects.playReturnTokens(tokenReturnSoundVolume);
 }
 
 function renderInitialTokens(tokens, $boardTokensContainer, $numberedItemTemplate, unclaimedTokens, playerLength) {
