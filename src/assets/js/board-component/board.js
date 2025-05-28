@@ -9,7 +9,7 @@ import { selectPlayerToken } from "./tokens/discard.js";
 import * as API from "../api.js";
 import { handleKeyPress } from "./action-registry.js";
 import { effects } from "../sound-component/sound.js";
-import {initController} from "./controller-component/controller.js";
+import {initController} from "../controller-component/controller.js";
 
 function init() {
     updateGameData();
