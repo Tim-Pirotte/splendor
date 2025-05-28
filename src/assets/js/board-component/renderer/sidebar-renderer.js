@@ -35,7 +35,7 @@ function renderOtherPlayers(players, currentPlayer) {
             $playerTemplate,
             otherPlayer,
             highestScore,
-            isCreator(players, otherPlayers),
+            isCreator(players, otherPlayer),
         ));
 
         $otherPlayer.classList.toggle("forfeited", otherPlayer["forfeited"]);
