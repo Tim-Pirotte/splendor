@@ -3,7 +3,7 @@ const LEFT_TRIGGER = 6;
 const A_BUTTON = 0;
 
 const DEAD_ZONE = 0.15;
-const SPEED = 3;
+const SPEED = 5;
 const CURSOR_GAP = 2;
 
 export { RIGHT_TRIGGER, LEFT_TRIGGER, A_BUTTON, DEAD_ZONE, SPEED, CURSOR_GAP };
