@@ -305,9 +305,9 @@ main {
 
 .card li p {
     position: absolute;
-    font-size: 0.7rem;
-    left: 36%;
-    top: 37%;
+    font-size: 0.8rem;
+    left: 32%;
+    top: 36%;
 }
 
 .reserved-cards > ul > p {
@@ -504,9 +504,13 @@ aside .amount {
     cursor: var(--disabled-button-cursor);
 }
 
-/* Makes text on the black chip readable */
-.card li[data-token-type="Onyx"] p {
+.card li p {
     color: var(--light-text-color);
+}
+
+/* Makes text on the white chip readable */
+.card li[data-token-type="Diamond"] p {
+    color: black;
 }
 
 /* greys out everything in the player card of a forfeited player */
